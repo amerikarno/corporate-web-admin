@@ -1,0 +1,44 @@
+@import "../src/assets/iconfonts/RemixIcons/fonts/remixicon.css";
+@import "../src/assets/iconfonts/tabler-icons/webfont/tabler-icons.css";
+
+//leaflet
+
+@import '../src/assets/css/style.css';
+
+
+////styles///
+[data-menu-styles="transparent"][data-nav-layout="horizontal"] {
+    &.dark {
+
+        .app-sidebar .slide.has-sub .slide-menu {
+            &.child1,
+            &.child2,
+            &.child3 {
+                border-color: rgba(255,255,255,0.1) !important;
+            }
+        }
+    }
+}
+
+[data-vertical-style="doublemenu"] {
+    .app-sidebar .slide.side-menu__label1 {
+        display: flex;
+        align-items: center;
+        padding-top: 4px !important;
+    }
+}
+
+[data-nav-layout="horizontal"] {
+    &.dark {
+        &[bg-img="bgimg5"],
+        &[bg-img="bgimg4"],
+        &[bg-img="bgimg3"],
+        &[bg-img="bgimg2"],
+        &[bg-img="bgimg1"] {
+            .app-sidebar {
+                 border-bottom: 0 !important;
+            }
+        }
+    }
+}
+
