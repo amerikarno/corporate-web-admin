@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import Input from "../component/Input";
 import CryptoJs from "crypto-js";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 const LoginForm = () => {
   const userRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -39,6 +40,10 @@ const LoginForm = () => {
           setError(err.message);
         });
       console.log(accessToken);
+      if (accessToken) {
+         const decoded = jwtDecode(accessToken);
+         console.log(decoded);
+      }
     }
   };
   return (
