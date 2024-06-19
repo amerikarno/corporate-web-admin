@@ -14,42 +14,27 @@ import Error404 from "./component/Authentication/errorpage/error404/error404";
 import ScrollToTop from "./ScrollToTop/ScrolltoTop";
 import Login from "./pages/login";
 import React from "react";
+import Layout from "./component/Layout";
 
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
 const root = createRoot(container!);
+
+/*
+ - disable react dev tools
+ - not set state for password by map specific response data
+ - send data in JWT token, jwt-decode lib
+*/
 root.render(
   <>
     <React.StrictMode>
       <HelmetProvider context={helmetContext}>
         <BrowserRouter>
-          <ScrollToTop />
           <Routes>
-            <Route index element={<Login />} />
-
-            {RouteData.map((idx) => (
-              <Fragment key={Math.random()}>
-                {/* //Main page */}
-                <Route path={`${import.meta.env.BASE_URL}`} element={<App />}>
-                  <Route path={idx.path} element={idx.element} />
-                </Route>
-                {/* Authentication */}
-
-                <Route
-                  path={`${import.meta.env.BASE_URL}`}
-                  element={<Authenticationlayout />}
-                >
-                  <Route path="*" element={<Error404 />} />
-                  <Route
-                    path={`${
-                      import.meta.env.BASE_URL
-                    }Authentication/errorpage/error404`}
-                    element={<Error404 />}
-                  />
-                </Route>
-              </Fragment>
-            ))}
+            <Route path="/" element={<Layout />}>
+              <Route path="login" element={<Login />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </HelmetProvider>

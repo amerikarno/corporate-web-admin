@@ -11213,7 +11213,7 @@ textarea, select{
 /* Start Authentication Styles */
 .authentication-page{
   display: flex;
-  height: auto;
+  height: 100%;
   align-items: center;
   justify-content: center;
 }
