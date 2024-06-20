@@ -1,4 +1,4 @@
-import React, { LegacyRef } from "react";
+import React from "react";
 
 const Input = React.forwardRef<
   HTMLInputElement,
