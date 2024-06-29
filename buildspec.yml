@@ -1,27 +1,27 @@
 version: 0.2
 
 phases:
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build
+      - npm test
   install:
     runtime-versions:
       nodejs: 20
     commands:
       - npm install -g typescript
       - npm install
-  pre_build:
-    commands:
-      - echo Nothing to do in the pre_build phase...
-  build:
-    commands:
-      - echo Build started on `date`
-      - npm run build
-      - npm test
   post_build:
     commands:
       - echo Build completed on `date`
-  cache:
-    paths:
-      - 'node_modules/**/*'
-  artifacts:
-    files:
-      - '**/*'
-    name: CorporateWebAdminBuild-$(date +%Y-%m-%d)
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+cache:
+  paths:
+    - 'node_modules/**/*'
+artifacts:
+  files:
+    - '**/*'
+  name: CorporateWebAdminBuild-$(date +%Y-%m-%d)
