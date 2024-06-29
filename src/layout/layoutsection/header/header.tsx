@@ -8,42 +8,42 @@ import store from "../../../redux/store";
 import { Closedmenu, Defaultmenu, DetachedFn, DoubletFn, iconOverayFn, iconText } from "../../../common/switcherdata";
 
 interface datatype {
-	local_varaiable: any
-	ThemeChanger: any
+    local_varaiable: any
+    ThemeChanger: any
 }
 
-const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
+const Header = ({ local_varaiable, ThemeChanger }: datatype) => {
     // window screen resize
     useEffect(() => {
-        
+
 
         function debounce<T extends (...args: any[]) => void>(
             func: T,
             delay: number
-          ): (...args: Parameters<T>) => void {
+        ): (...args: Parameters<T>) => void {
             let timeoutId: ReturnType<typeof setTimeout>;
-          
+
             const debounced: (...args: Parameters<T>) => void = function (
-              this: ThisParameterType<T>,
-              ...args: Parameters<T>
+                this: ThisParameterType<T>,
+                ...args: Parameters<T>
             ): void {
-              const context = this;
-          
-              clearTimeout(timeoutId);
-          
-              timeoutId = setTimeout(() => {
-                func.apply(context, args);
-              }, delay);
+                const context = this;
+
+                clearTimeout(timeoutId);
+
+                timeoutId = setTimeout(() => {
+                    func.apply(context, args);
+                }, delay);
             };
-          
+
             return debounced;
-          }
+        }
 
         const handleResize = () => {
             const windowObject = window;
             if (windowObject.innerWidth <= 991) {
-                    const theme = store.getState()
-                    ThemeChanger({...theme,"toggled":"close"})
+                const theme = store.getState()
+                ThemeChanger({ ...theme, "toggled": "close" })
             } else {
                 if (localStorage.Syntoverticalstyles) {
                     let verticalStyles = localStorage.getItem("Syntoverticalstyles");
@@ -67,9 +67,10 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
                             DoubletFn(ThemeChanger)
                             break;
                     }
-                }else{
+                } else {
                     const theme = store.getState()
-                    ThemeChanger({...theme,
+                    ThemeChanger({
+                        ...theme,
                         "toggled": '',
                         // "dataVerticalStyle":"default"
                     })
@@ -87,65 +88,65 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
 
     function menuClose() {
         const theme = store.getState()
-        ThemeChanger({...theme,"toggled":"close"})
+        ThemeChanger({ ...theme, "toggled": "close" })
     }
 
     const toggleSidebar = () => {
         const theme = store.getState()
         let sidemenuType = theme.dataNavLayout;
-       if (window.innerWidth <= 992) {
-        document.body.addEventListener("click", () => {
-            ThemeChanger({ ...theme, "toggled": "open" });
-        });
-       }
-       
+        if (window.innerWidth <= 992) {
+            document.body.addEventListener("click", () => {
+                ThemeChanger({ ...theme, "toggled": "open" });
+            });
+        }
+
         if (window.innerWidth >= 992) {
             if (sidemenuType === 'vertical') {
                 let verticalStyle = theme.dataVerticalStyle;
                 switch (verticalStyle) {
                     // closed
                     case "closed":
-                        ThemeChanger({...theme,"dataNavStyle":""})
+                        ThemeChanger({ ...theme, "dataNavStyle": "" })
                         if (theme.toggled === "close-menu-close") {
-                            ThemeChanger({...theme,"toggled":""})
+                            ThemeChanger({ ...theme, "toggled": "" })
                         } else {
-                            ThemeChanger({...theme,"toggled":"close-menu-close"})
+                            ThemeChanger({ ...theme, "toggled": "close-menu-close" })
                         }
                         break;
                     // icon-overlay
                     case "overlay":
-                        ThemeChanger({...theme,"dataNavStyle":""})
+                        ThemeChanger({ ...theme, "dataNavStyle": "" })
                         if (theme.toggled === "icon-overlay-close") {
-                            ThemeChanger({...theme,"toggled":""})
+                            ThemeChanger({ ...theme, "toggled": "" })
                         } else {
                             if (window.innerWidth >= 992) {
-                            ThemeChanger({...theme,"toggled":"icon-overlay-close"})
+                                ThemeChanger({ ...theme, "toggled": "icon-overlay-close" })
                             }
                         }
                         break;
                     // icon-text
                     case "icontext":
-                        ThemeChanger({...theme,"dataNavStyle":""})
+                        ThemeChanger({ ...theme, "dataNavStyle": "" })
                         if (theme.toggled === "icon-text-close") {
-                            ThemeChanger({...theme,"toggled":""})
+                            ThemeChanger({ ...theme, "toggled": "" })
                         } else {
-                            ThemeChanger({...theme,"toggled":"icon-text-close"})
+                            ThemeChanger({ ...theme, "toggled": "icon-text-close" })
                         }
                         break;
                     // doublemenu
                     case "doublemenu":
-                        ThemeChanger({...theme,"dataNavStyle":""})
+                        ThemeChanger({ ...theme, "dataNavStyle": "" })
                         if (theme.toggled === "double-menu-open") {
-                            ThemeChanger({...theme,"toggled":"double-menu-close"})
+                            ThemeChanger({ ...theme, "toggled": "double-menu-close" })
                         } else {
                             let sidemenu = document.querySelector(".side-menu__item.active");
                             if (sidemenu) {
-                                ThemeChanger({...theme,"toggled":"double-menu-open"})
+                                ThemeChanger({ ...theme, "toggled": "double-menu-open" })
                                 if (sidemenu.nextElementSibling) {
                                     sidemenu.nextElementSibling.classList.add("double-menu-active");
                                 } else {
-                                    
-                            ThemeChanger({...theme,"toggled":""})
+
+                                    ThemeChanger({ ...theme, "toggled": "" })
                                 }
                             }
                         }
@@ -155,27 +156,27 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
                     // detached
                     case "detached":
                         if (theme.toggled === "detached-close") {
-                            ThemeChanger({...theme,"toggled":""})
+                            ThemeChanger({ ...theme, "toggled": "" })
                         } else {
-                            ThemeChanger({...theme,"toggled":"detached-close"})
+                            ThemeChanger({ ...theme, "toggled": "detached-close" })
                         }
                         break;
                     // default
                     case "default":
-                        ThemeChanger({...theme,"toggled":""})
+                        ThemeChanger({ ...theme, "toggled": "" })
                 }
             }
         }
         else {
-              
+
             const theme = store.getState()
             if (theme.toggled === "close") {
-                ThemeChanger({...theme,"toggled":"open"})
+                ThemeChanger({ ...theme, "toggled": "open" })
                 setTimeout(() => {
                     if (theme.toggled == "open") {
                         document.querySelector("#responsive-overlay")?.classList.add("active");
                         document.querySelector("#responsive-overlay")?.addEventListener("click", () => {
-                        document.querySelector("#responsive-overlay")?.classList.remove("active");
+                            document.querySelector("#responsive-overlay")?.classList.remove("active");
                             menuClose();
                         });
                     }
@@ -186,7 +187,7 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
                     });
                 }, 100);
             } else {
-                ThemeChanger({...theme,"toggled":"close"})
+                ThemeChanger({ ...theme, "toggled": "close" })
             }
 
 
@@ -195,19 +196,21 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
 
     //Dark Model
     const ToggleDark = () => {
-        
-        ThemeChanger({...local_varaiable,
-            "class":local_varaiable.class =='dark' ? 'light' : 'dark',
-            "dataHeaderStyles": local_varaiable.dataHeaderStyles  == 'dark' ? 'light' : 'dark',
+
+        ThemeChanger({
+            ...local_varaiable,
+            "class": local_varaiable.class == 'dark' ? 'light' : 'dark',
+            "dataHeaderStyles": local_varaiable.dataHeaderStyles == 'dark' ? 'light' : 'dark',
             "dataMenuStyles": local_varaiable.dataNavLayout == 'horizontal' ? 'dark' : 'dark'
         })
         const theme = store.getState()
 
         if (theme.class != 'dark') {
-            ThemeChanger({...theme,
-                "bodyBg":'',
-                "darkBg":'',
-                "darkBgRGB":'',
+            ThemeChanger({
+                ...theme,
+                "bodyBg": '',
+                "darkBg": '',
+                "darkBgRGB": '',
             })
             localStorage.setItem("Syntolighttheme", "light")
             localStorage.removeItem("Syntodarktheme")
@@ -223,24 +226,24 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
     //full screen
     let elem = document.documentElement;
     let [i, seti] = useState(true);
-    const Fullscreen = (vale:any) => {
+    const Fullscreen = (vale: any) => {
         switch (vale) {
-            case true:
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) { /* Safari */
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { /* IE11 */
-                    elem.msRequestFullscreen();
-                }
-                seti(false)
-                break;
-            case false:
-                document.exitFullscreen()
-                seti(true)
-                break;
+          case true:
+            if ((elem as any).requestFullscreen) {
+              (elem as any).requestFullscreen();
+            } else if ((elem as any)['webkitRequestFullscreen']) { /* Safari */
+              (elem as any)['webkitRequestFullscreen']();
+            } else if ((elem as any)['msRequestFullscreen']) { /* IE11 */
+              (elem as any)['msRequestFullscreen']();
+            }
+            seti(false)
+            break;
+          case false:
+            document.exitFullscreen()
+            seti(true)
+            break;
         }
-    }
+      }
 
     const cartProduct = [
         {
@@ -683,6 +686,6 @@ const Header = ({local_varaiable,ThemeChanger}: datatype)=>{
 
 const mapStateToProps = (state: any) => ({
     local_varaiable: state
-  })
-export default connect(mapStateToProps,{ThemeChanger})(Header);
+})
+export default connect(mapStateToProps, { ThemeChanger })(Header);
 
