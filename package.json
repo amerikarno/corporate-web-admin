@@ -1,7 +1,6 @@
 {
-  "name": "synto-ts",
-  "private": true,
-  "version": "0.0.0",
+  "name": "corporate-web-admin",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
