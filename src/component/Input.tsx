@@ -5,7 +5,7 @@ const Input = React.forwardRef<
   { title: string; name: string }
 >((props, ref) => {
   return (
-    <div>
+    <>
       <div className="flex justify-between items-center">
         <label
           htmlFor={props.name}
@@ -24,7 +24,7 @@ const Input = React.forwardRef<
           required
         />
       </div>
-    </div>
+    </>
   );
 });
 

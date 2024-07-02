@@ -8,6 +8,7 @@ const LoginForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
