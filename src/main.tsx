@@ -1,10 +1,11 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./index.scss";
+import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
-import Login from "./pages/login";
+import Login from "./pages/login/login";
 import React from "react";
-import Layout from "./component/Layout";
+import Layout from "./components/Layout";
+import Welcome from "./pages/Welcome";
 
 const helmetContext = {};
 
@@ -23,6 +24,7 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route index element={<Welcome />} />
               <Route path="login" element={<Login />} />
             </Route>
           </Routes>
