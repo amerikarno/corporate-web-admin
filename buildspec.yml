@@ -19,6 +19,4 @@ cache:
     - 'node_modules/**/*'
 artifacts:
   files:
-    - 'dist/corporate-web-admin/**/*'
-    - appspec.yml
-    - 'deploy-scripts/**/*'
+    - 'dist/**/*'
