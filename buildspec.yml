@@ -19,6 +19,6 @@ cache:
     - 'node_modules/**/*'
 artifacts:
   files:
-    - 'dist/my-angular-project/**/*'
+    - 'dist/corporate-web-admin/**/*'
     - appspec.yml
     - 'deploy-scripts/**/*'
