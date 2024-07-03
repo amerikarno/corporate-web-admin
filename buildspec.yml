@@ -19,4 +19,6 @@ cache:
     - 'node_modules/**/*'
 artifacts:
   files:
-    - 'dist/**/*'
+    - '**/*'
+  base-directory: 'dist'
+  name: 'corporate-web-admin'
