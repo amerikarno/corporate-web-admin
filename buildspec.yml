@@ -6,21 +6,19 @@ phases:
       nodejs: latest
     commands:
       - npm install -g typescript
-      - npm install
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
+      - npm install
   build:
     commands:
       - echo Build started on `date`
       - npm run build
-  post_build:
-    commands:
-      - echo Build completed on `date`
 cache:
   paths:
     - 'node_modules/**/*'
 artifacts:
-  base-directory: 'dist/corporate-web-admin'
   files:
-    - '**/*'
+    - 'dist/my-angular-project/**/*'
+    - appspec.yml
+    - 'deploy-scripts/**/*'
