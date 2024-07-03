@@ -24,4 +24,3 @@ artifacts:
   base-directory: 'dist/corporate-web-admin'
   files:
     - '**/*'
-  name: CorporateWebAdminBuild-$(date +%Y-%m-%d)
