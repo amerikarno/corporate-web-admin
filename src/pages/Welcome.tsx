@@ -3,7 +3,7 @@ const Welcome = () => {
     <div className="flex flex-col">
       <p>Welcome to Finansia Digital Asset Admin page</p>
       <p>Edit by karn</p>
-      <p>8.0</p>
+      <p>10.0</p>
     </div>
   );
 };
