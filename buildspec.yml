@@ -19,6 +19,6 @@ cache:
     - 'node_modules/**/*'
 artifacts:
   files:
-    - '**/*'
-  base-directory: 'dist'
-  name: 'corporate-web-admin'
+    - 'dist/**/*'
+    - appspec.yml
+    - 'deploy-scripts/**/*'
