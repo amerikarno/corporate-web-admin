@@ -6,6 +6,8 @@ import Login from "./pages/login/login";
 import React from "react";
 import Layout from "./components/Layout";
 import Welcome from "./pages/Welcome";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 const helmetContext = {};
 
@@ -20,16 +22,18 @@ const root = createRoot(container!);
 root.render(
   <>
     <React.StrictMode>
-      <HelmetProvider context={helmetContext}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Welcome />} />
-              <Route path="login" element={<Login />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </HelmetProvider>
+      <Provider store={store}>
+        <HelmetProvider context={helmetContext}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Welcome />} />
+                <Route path="login" element={<Login />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </HelmetProvider>
+      </Provider>
     </React.StrictMode>
   </>
 );

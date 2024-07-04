@@ -3,11 +3,15 @@ import Input from "../../components/Input";
 import CryptoJs from "crypto-js";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../features/authen/authenSlice";
 const LoginForm = () => {
   const userRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
+  const token = useSelector((state: any) => state.authen.accessToken);
+  const dispatch = useDispatch();
+  // const [accessToken, setAccessToken] = useState(null);
   // const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,15 +38,15 @@ const LoginForm = () => {
           }
         )
         .then((res) => {
-          setAccessToken(res.data.accessToken);
           console.log(res);
+          dispatch(setToken(res.data.token));
         })
         .catch((err) => {
           setError(err.message);
         });
-      console.log(accessToken);
-      if (accessToken) {
-        const decoded = jwtDecode(accessToken);
+      console.log(token);
+      if (token) {
+        const decoded = jwtDecode(token);
         console.log(decoded);
       }
     }
