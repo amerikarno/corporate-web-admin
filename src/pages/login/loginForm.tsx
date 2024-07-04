@@ -4,7 +4,7 @@ import CryptoJs from "crypto-js";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../features/authen/authenSlice";
+import { setToken } from "../../features/authen/authenSlice";
 const LoginForm = () => {
   const userRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);

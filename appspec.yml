@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /
+  - source: dist
     destination: /var/www/corporate-web-admin
 permissions:
   - object: /var/www/corporate-web-admin
