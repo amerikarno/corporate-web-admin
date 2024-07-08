@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
-import Input from "../../components/Input";
+import Input from "@/components/Input";
 import CryptoJs from "crypto-js";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../features/authen/authenSlice";
+import { setToken } from "@/features/authen/authenSlice";
 const LoginForm = () => {
   const userRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -16,6 +16,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    e.target as typeof e.target & {};
     if (userRef.current && passwordRef.current) {
       const user = userRef.current?.value;
       const password = passwordRef.current?.value;
