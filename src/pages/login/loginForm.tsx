@@ -6,20 +6,22 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "@/features/authen/authenSlice";
 const LoginForm = () => {
-  const userRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState(null);
   const token = useSelector((state: any) => state.authen.accessToken);
   const dispatch = useDispatch();
   // const [accessToken, setAccessToken] = useState(null);
   // const [isLoading, setIsLoading] = useState(false);
 
+  type auth = {
+    email: string;
+    password: string;
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    e.target as typeof e.target & {};
-    if (userRef.current && passwordRef.current) {
-      const user = userRef.current?.value;
-      const password = passwordRef.current?.value;
+    const target = e.target as typeof e.target & auth;
+    if (target.email && target.password) {
+      const user = target.email;
+      const password = target.password;
       const hashedUsername = CryptoJs.SHA256(user).toString();
       const hashedPassword = CryptoJs.SHA256(password).toString();
       console.log(hashedUsername);
@@ -58,8 +60,8 @@ const LoginForm = () => {
         <p>{error}</p>
       ) : (
         <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
-          <Input title="Email" name="email" ref={userRef} />
-          <Input title="Password" name="password" ref={passwordRef} />
+          <Input title="Email" name="email" />
+          <Input title="Password" name="password" />
           <div className=" w-full pt-10">
             <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
               Sign in
