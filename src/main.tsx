@@ -7,6 +7,7 @@ import React from "react";
 import Layout from "./components/Layout";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import Welcome from "./pages/Welcome";
 
 const helmetContext = {};
 
@@ -28,6 +29,7 @@ root.render(
               <Route path="/" element={<Layout />}>
                 <Route index element={<Navigate to="/login" />} />
                 <Route path="login" element={<Login />} />
+                <Route path="welcome" element={<Welcome />} />
               </Route>
             </Routes>
           </BrowserRouter>
