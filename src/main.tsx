@@ -5,7 +5,6 @@ import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";
 import React from "react";
 import Layout from "./components/Layout";
-import Welcome from "./pages/Welcome";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 
