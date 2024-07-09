@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Input from "@/components/Input";
 import CryptoJs from "crypto-js";
 import axios from "axios";
@@ -10,15 +9,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginForm = () => {
-  // const [error, setError] = useState(null);
+  
   const token = useSelector((state: any) => state.authen.accessToken);
   const dispatch = useDispatch();
-  // const [accessToken, setAccessToken] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-  // type auth = {
-  //   email: string;
-  //   password: string;
-  // };
 
   const auth = z.object({
     email: z.string().email(),
@@ -70,44 +63,7 @@ const LoginForm = () => {
       }
     }
   };
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const target = e.target as typeof e.target & auth;
-  //   if (target.email && target.password) {
-  //     const user = target.email;
-  //     const password = target.password;
-  //     const hashedUsername = CryptoJs.SHA256(user).toString();
-  //     const hashedPassword = CryptoJs.SHA256(password).toString();
-  //     console.log(hashedUsername);
-  //     console.log(hashedPassword);
-
-  //     axios
-  //       .post(
-  //         "http://localhost:1323/admin/v2/login",
-  //         {
-  //           hashedUsername: `${hashedUsername}`,
-  //           hashedPassword: `${hashedPassword}`,
-  //         },
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       )
-  //       .then((res) => {
-  //         console.log(res);
-  //         dispatch(setToken(res.data.token));
-  //       })
-  //       .catch((err) => {
-  //         setError(err.message);
-  //       });
-  //     console.log(token);
-  //     if (token) {
-  //       const decoded = jwtDecode(token);
-  //       console.log(decoded);
-  //     }
-  //   }
-  // };
+  
   return (
     <>
       <form
