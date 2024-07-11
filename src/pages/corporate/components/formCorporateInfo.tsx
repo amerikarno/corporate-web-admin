@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TCorporateInfo } from "../constants/types";
 import Input from "@/components/Input";
 import { sleep } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -25,7 +26,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const onSubmit = async (data: TCorporateInfoSchema) => {
     await sleep(2000);
     reset();
-    // console.log(data);
     onsubmit(data);
   };
 
@@ -116,10 +116,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           required
           disabled={isSubmitting}
         />
-        <div className="flex justify-end items-end">
-          <button type="submit" className="w-1/2 h-1/2" disabled={isSubmitting}>
+        <div className="flex justify-end items-end py-5">
+          <Button type="submit" className="w-1/4" disabled={isSubmitting}>
             Submit
-          </button>
+          </Button>
         </div>
       </form>
     </>
