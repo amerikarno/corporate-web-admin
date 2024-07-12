@@ -5,9 +5,12 @@ import {
 } from "../constants/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TCorporateInfo } from "../constants/types";
-import Input from "@/components/Input";
 import { sleep } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { SideLabelInput } from "@/components/SideLabelInput";
+import { AddressForm } from "./addressForm";
+import { Input } from "@/components/ui/input";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -24,101 +27,158 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   });
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
-    await sleep(2000);
+    await sleep(5000);
     reset();
     onsubmit(data);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          {...register("name")}
-          title="name"
-          name="name"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("commercialRegisteredNo")}
-          title="commercialRegisteredNo"
-          name="commercialRegisteredNo"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("taxId")}
-          title="taxId"
-          name="taxId"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("dateIncorporation")}
-          title="dateIncorporation"
-          name="dateIncorporation"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("registeredCountry")}
-          title="registeredCountry"
-          name="registeredCountry"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("operateCountry")}
-          title="operateCountry"
-          name="operateCountry"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("registeredAddress")}
-          title="registeredAddress"
-          name="registeredAddress"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("incorporatedAddress")}
-          title="incorporatedAddress"
-          name="incorporatedAddress"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("financial.registeredCapital")}
-          title="financial.registeredCapital"
-          name="financial.registeredCapital"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("financial.netProfit")}
-          title="financial.netProfit"
-          name="financial.netProfit"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("financial.revenuePerYear")}
-          title="financial.revenuePerYear"
-          name="financial.revenuePerYear"
-          required
-          disabled={isSubmitting}
-        />
-        <Input
-          {...register("financial.shareholderEquity")}
-          title="financial.shareholderEquity"
-          name="financial.shareholderEquity"
-          required
-          disabled={isSubmitting}
-        />
-        <div className="flex justify-end items-end py-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-row gap-y-8">
+        <Card className="p-4 space-y-4">
+          <h1 className="col-span-4 font-bold pb-4">
+            Juristic Investor Informations :
+          </h1>
+          <SideLabelInput title="Juristic Investor Name">
+            <Input
+              {...register("name")}
+              name="name"
+              disabled={isSubmitting}
+              required
+            />
+            {errors.name && (
+              <p className="text-red-500">{errors.name.message}</p>
+            )}
+          </SideLabelInput>
+          <SideLabelInput title="Juristic Investor Address">
+            <Input
+              {...register("commercialRegisteredNo")}
+              name="commercialRegisteredNo"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.commercialRegisteredNo && (
+              <p className="text-red-500">
+                {errors.commercialRegisteredNo.message}
+              </p>
+            )}
+          </SideLabelInput>
+          <SideLabelInput title="Juristic Investor Tax ID">
+            <Input
+              {...register("taxId")}
+              name="taxId"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.taxId && (
+              <p className="text-red-500">{errors.taxId.message}</p>
+            )}
+          </SideLabelInput>
+          <SideLabelInput title="Juristic Investor Email">
+            <Input
+              {...register("dateIncorporation")}
+              name="dateIncorporation"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.dateIncorporation && (
+              <p className="text-red-500">{errors.dateIncorporation.message}</p>
+            )}
+          </SideLabelInput>
+        </Card>
+
+        <Card className="p-4 space-y-4">
+          <h1 className="font-bold pb-4">Registered / Business Address :</h1>
+          <SideLabelInput title="Registered Country">
+            <Input
+              {...register("registeredCountry")}
+              name="registeredCountry"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.registeredCountry && (
+              <p className="text-red-500">{errors.registeredCountry.message}</p>
+            )}
+          </SideLabelInput>
+          <AddressForm
+            isSubmitting={isSubmitting}
+            errors={errors.registeredAddress}
+            register={register}
+            keyType="registeredAddress"
+          />
+        </Card>
+
+        <Card className="p-4 space-y-4">
+          <h1 className="font-bold pb-4">Place Of Incorporate :</h1>
+          <SideLabelInput title="Primary Country Of Operation">
+            <Input
+              {...register("operateCountry")}
+              name="operateCountry"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.operateCountry && (
+              <p className="text-red-500">{errors.operateCountry.message}</p>
+            )}
+          </SideLabelInput>
+          <AddressForm
+            errors={errors.incorporatedAddress}
+            register={register}
+            isSubmitting={isSubmitting}
+            keyType="incorporatedAddress"
+          />
+        </Card>
+
+        <Card className="p-4 space-y-4">
+          <h1 className="col-span-4 font-bold">Financial Information :</h1>
+          <SideLabelInput title="Registered Capital">
+            <Input
+              {...register("financial.registeredCapital")}
+              name="financial.registeredCapital"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.financial && (
+              <p className="text-red-500">{errors.financial.message}</p>
+            )}
+          </SideLabelInput>
+          <SideLabelInput title="Net Profit (Loss)">
+            <Input
+              {...register("financial.netProfit")}
+              name="financial.netProfit"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.financial && (
+              <p className="text-red-500">{errors.financial.message}</p>
+            )}
+          </SideLabelInput>
+          <SideLabelInput title="Revenue Per Year">
+            <Input
+              {...register("financial.revenuePerYear")}
+              name="financial.revenuePerYear"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.financial && (
+              <p className="text-red-500">{errors.financial.message}</p>
+            )}
+          </SideLabelInput>
+          <SideLabelInput title="Operating Expense Per Year">
+            <Input
+              {...register("financial.shareholderEquity")}
+              name="financial.shareholderEquity"
+              required
+              disabled={isSubmitting}
+            />
+            {errors.financial && (
+              <p className="text-red-500">{errors.financial.message}</p>
+            )}
+          </SideLabelInput>
+        </Card>
+        <div className="flex justify-end my-5">
           <Button type="submit" className="w-1/4" disabled={isSubmitting}>
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </Button>
         </div>
       </form>

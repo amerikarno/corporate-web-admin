@@ -10,7 +10,8 @@ export type TAddress = {
   postalCode: string;
   country: string;
   phone: string;
-  type: number;
+  email: string;
+  type?: number;
 };
 
 export type TFinancailInfo = {
@@ -27,8 +28,6 @@ export type TCorporateInfo = {
   dateIncorporation: string;
   registeredCountry: string;
   operateCountry: string;
-  registeredAddress: string;
-  incorporatedAddress: string;
   // registeredAddress: TAddress;
   // incorporatedAddress: TAddress;
   financial?: TFinancailInfo;

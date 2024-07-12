@@ -1,4 +1,4 @@
-import Input from "@/components/Input";
+import { Input } from "@/components/ui/input";
 import CryptoJs from "crypto-js";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -9,7 +9,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginForm = () => {
-  
   const token = useSelector((state: any) => state.authen.accessToken);
   const dispatch = useDispatch();
 
@@ -63,7 +62,7 @@ const LoginForm = () => {
       }
     }
   };
-  
+
   return (
     <>
       <form
@@ -73,7 +72,9 @@ const LoginForm = () => {
         <Input {...register("email")} title="Email" name="email" />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         <Input {...register("password")} title="Password" name="password" />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
         <div className=" w-full pt-10">
           <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
             Sign in

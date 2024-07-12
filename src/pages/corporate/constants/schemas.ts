@@ -10,9 +10,8 @@ export const addressSchema = z.object({
   district: z.string().min(1, "district cannot be empty"),
   province: z.string().min(1, "province cannot be empty"),
   postalCode: z.string().min(1, "postalCode cannot be empty"),
-  country: z.string().min(1, "country cannot be empty"),
   phone: z.string().min(1, "phone cannot be empty"),
-  type: z.number(),
+  email: z.string().min(1, "email cannot be empty"),
 });
 
 export const financailInfoSchema = z.object({
@@ -31,9 +30,11 @@ export const corporateInfoSchema = z.object({
   dateIncorporation: z.string().min(1, "dateIncorporation cannot be empty"),
   registeredCountry: z.string().min(1, "registeredCountry cannot be empty"),
   operateCountry: z.string().min(1, "operateCountry cannot be empty"),
-  registeredAddress: z.string().min(1, "registeredAddress cannot be empty"),
-  incorporatedAddress: z.string().min(1, "incorporatedAddress cannot be empty"),
+  registeredAddress: addressSchema,
+  incorporatedAddress: addressSchema,
   financial: financailInfoSchema.optional(),
 });
 
 export type TCorporateInfoSchema = z.infer<typeof corporateInfoSchema>;
+export type TAddressSchema = z.infer<typeof addressSchema>;
+export type TFinancailInfoSchema = z.infer<typeof financailInfoSchema>;
