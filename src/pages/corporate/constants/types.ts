@@ -1,24 +1,23 @@
 export type TAddress = {
   addressNo: string;
-  building: string;
-  moo: string;
-  soi: string;
-  road: string;
+  building?: string;
+  moo?: string;
+  soi?: string;
+  road?: string;
   subDistrict: string;
   district: string;
   province: string;
   postalCode: string;
-  country: string;
   phone: string;
   email: string;
   type?: number;
 };
 
-export type TFinancailInfo = {
-  registeredCapital: string;
-  revenuePerYear: string;
-  netProfit: string;
-  shareholderEquity: string;
+export type TFinancialInfo = {
+  registeredCapital?: string;
+  revenuePerYear?: string;
+  netProfit?: string;
+  shareholderEquity?: string;
 };
 
 export type TCorporateInfo = {
@@ -28,7 +27,7 @@ export type TCorporateInfo = {
   dateIncorporation: string;
   registeredCountry: string;
   operateCountry: string;
-  // registeredAddress: TAddress;
-  // incorporatedAddress: TAddress;
-  financial?: TFinancailInfo;
+  registeredAddress: TAddress;
+  incorporatedAddress: TAddress;
+  financial?: TFinancialInfo;
 };

@@ -27,7 +27,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   });
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
-    await sleep(5000);
+    await sleep(500);
     reset();
     onsubmit(data);
   };
@@ -135,7 +135,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <Input
               {...register("financial.registeredCapital")}
               name="financial.registeredCapital"
-              required
               disabled={isSubmitting}
             />
             {errors.financial && (
@@ -146,7 +145,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <Input
               {...register("financial.netProfit")}
               name="financial.netProfit"
-              required
               disabled={isSubmitting}
             />
             {errors.financial && (
@@ -157,7 +155,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <Input
               {...register("financial.revenuePerYear")}
               name="financial.revenuePerYear"
-              required
               disabled={isSubmitting}
             />
             {errors.financial && (
@@ -168,7 +165,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <Input
               {...register("financial.shareholderEquity")}
               name="financial.shareholderEquity"
-              required
               disabled={isSubmitting}
             />
             {errors.financial && (

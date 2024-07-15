@@ -22,6 +22,13 @@ export function AddressForm({
   keyType,
 }: TAddressFormProps) {
   const fields = Object.entries(addressSchema.shape);
+  const optionalFields = ["building", "moo", "soi", "road"];
+  const isOptional = (name: string) => {
+    if (optionalFields.includes(name)) {
+      return false;
+    }
+    return true;
+  };
   return (
     <div className="grid grid-cols-2 gap-4">
       {fields.map(([fieldName], index) => {
@@ -32,8 +39,9 @@ export function AddressForm({
                 {...register(`${keyType}.${fieldName}` as any)}
                 name={`${keyType}.${fieldName}`}
                 id={fieldName}
-                required
+                required={isOptional(fieldName)}
                 disabled={isSubmitting}
+                type={fieldName == "email" ? "email" : "text"}
               />
             </SideLabelInput>
             {errors && errors[fieldName as keyof TAddressSchema] && (
