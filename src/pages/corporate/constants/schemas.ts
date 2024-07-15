@@ -58,3 +58,20 @@ export const corporateInfoSchema = z.object({
 export type TCorporateInfoSchema = z.infer<typeof corporateInfoSchema>;
 export type TAddressSchema = z.infer<typeof addressSchema>;
 export type TFinancailInfoSchema = z.infer<typeof financialInfoSchema>;
+
+export const corporateTypeAndIncomeSchema = z.object({
+  juristicType: z.string().min(1, "juristicType cannot be empty"),
+  juristicThai: z.string().optional(),
+  juristicForeign: z.string().optional(),
+  juristicOthers: z.string().optional(),
+  // businessType: z.string().min(1, "businessType cannot be empty"),
+  // sourceOfIncome: z.array(z.string().min(1, "sourceOfIncome cannot be empty")),
+  // countrySourceOfIncome: z
+  //   .string()
+  //   .min(1, "countrySourceOfIncome cannot be empty"),
+  // investmentObjective: z.string().min(1, "investmentObjective cannot be empty"),
+});
+
+export type TCorporateTypeAndIncomeSchema = z.infer<
+  typeof corporateTypeAndIncomeSchema
+>;

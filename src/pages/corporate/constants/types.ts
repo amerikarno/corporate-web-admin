@@ -31,3 +31,14 @@ export type TCorporateInfo = {
   incorporatedAddress: TAddress;
   financial?: TFinancialInfo;
 };
+
+export type TCorporateTypeAndIncome = {
+  juristicType: string;
+  juristicThai?: string;
+  juristicForeign?: string;
+  juristicOthers?: string;
+  businessType: string;
+  sourceOfIncome: string[];
+  countrySourceOfIncome: string;
+  investmentObjective: string;
+};

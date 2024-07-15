@@ -1,3 +1,5 @@
+import { TCorporateTypeAndIncome } from "./types";
+
 export const initCorporateInfo = {
   name: "",
   commercialRegisteredNo: "",
@@ -20,4 +22,12 @@ export const initAddress = {
   country: "",
   phone: "",
   type: 0,
+};
+
+export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
+  juristicType: "",
+  businessType: "",
+  sourceOfIncome: [],
+  countrySourceOfIncome: "",
+  investmentObjective: "",
 };
