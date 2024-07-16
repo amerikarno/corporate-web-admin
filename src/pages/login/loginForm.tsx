@@ -3,22 +3,34 @@ import CryptoJs from "crypto-js";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "@/features/authen/authenSlice";
+import { setAccessToken } from "@/features/authen/authenSlice";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RootState } from "@/app/store";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  
-  const token = useSelector((state: any) => state.authen.accessToken);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.authen.accessToken);
+  type jwtPayload = {
+    id: string;
+    email: string;
+    groups: number;
+    permission: number;
+  };
 
   const auth = z.object({
     email: z.string().email(),
     password: z.string(),
   });
 
-  type AuthForm = z.infer<typeof auth>;
+  type AuthForm = {
+    email: string;
+    password: string;
+    exp: any;
+  };
 
   const {
     register,
@@ -38,7 +50,7 @@ const LoginForm = () => {
 
       axios
         .post(
-          "http://localhost:1323/admin/v2/login",
+          "http://localhost:1323/api/v1/authen/login",
           {
             hashedUsername: `${hashedUsername}`,
             hashedPassword: `${hashedPassword}`,
@@ -47,33 +59,51 @@ const LoginForm = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         )
         .then((res) => {
-          console.log(res);
-          dispatch(setToken(res.data.token));
+          console.log("response", res);
+          sessionStorage.setItem("token", res.data.accessToken);
+          dispatch(setAccessToken(res.data.accessToken));
         })
         .catch((err) => {
           setError("root", { message: err.message });
         });
-      console.log(token);
+
+      // const cookie = Cookies.get("refreshToken");
+      // console.log("cookie", cookie);
       if (token) {
-        const decoded = jwtDecode(token);
-        console.log(decoded);
+        const decoded = jwtDecode<jwtPayload>(token);
+        console.log("decoded", decoded);
       }
+      navigate("/welcome");
     }
   };
-  
+
   return (
     <>
       <form
         className="flex flex-col space-y-5"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Input {...register("email")} title="Email" name="email" />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-        <Input {...register("password")} title="Password" name="password" />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        <Input
+          {...register("email")}
+          type="email"
+          title="Email"
+          name="email"
+          errors={errors.email}
+          errorsMsg={errors.email?.message}
+        />
+        <Input
+          {...register("password")}
+          type="password"
+          title="Password"
+          name="password"
+          errors={errors.password}
+          errorsMsg={errors.password?.message}
+        />
+
         <div className=" w-full pt-10">
           <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
             Sign in

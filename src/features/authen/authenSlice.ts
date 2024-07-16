@@ -1,22 +1,25 @@
+// import { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface AuthenState {
-  token: string | null;
+  accessToken: string | null;
 }
 
 const initialState: AuthenState = {
-  token: null,
+  accessToken: null,
 };
 
 export const authenSlice = createSlice({
   name: "authen",
   initialState,
   reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
+    setAccessToken: (state, action) => {
+      state.accessToken = action.payload;
+      console.log("state:",state.accessToken);
     },
   },
 });
 
-export const { setToken } = authenSlice.actions;
+export const { setAccessToken } = authenSlice.actions;
+// export const selectToken = (state: RootState) => state.authen;
 export default authenSlice.reducer;

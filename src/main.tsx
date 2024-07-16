@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import Welcome from "./pages/Welcome";
 import CreateCorporate from "./pages/corporate/createCorporate";
+import { ProtectedRoute } from "./routes/protectedRoute";
 
 const helmetContext = {};
 
@@ -30,8 +31,12 @@ root.render(
               <Route path="/" element={<Layout />}>
                 <Route index element={<Navigate to="/login" />} />
                 <Route path="login" element={<Login />} />
-                <Route path="welcome" element={<Welcome />} />
                 <Route path="/corporate/create" element={<CreateCorporate />} />
+                  <Route path="welcome" element={
+                <ProtectedRoute>
+                    <Welcome />
+                </ProtectedRoute>
+                    } />
               </Route>
             </Routes>
           </BrowserRouter>
