@@ -64,12 +64,14 @@ export const corporateTypeAndIncomeSchema = z.object({
   juristicThai: z.string().optional(),
   juristicForeign: z.string().optional(),
   juristicOthers: z.string().optional(),
-  // businessType: z.string().min(1, "businessType cannot be empty"),
-  // sourceOfIncome: z.array(z.string().min(1, "sourceOfIncome cannot be empty")),
-  // countrySourceOfIncome: z
-  //   .string()
-  //   .min(1, "countrySourceOfIncome cannot be empty"),
-  // investmentObjective: z.string().min(1, "investmentObjective cannot be empty"),
+  businessType: z.string().min(1, "businessType cannot be empty"),
+  sourceOfIncome: z
+    .array(z.string().min(1, "sourceOfIncome cannot be empty"))
+    .nonempty(),
+  countrySourceOfIncome: z
+    .string()
+    .min(1, "countrySourceOfIncome cannot be empty"),
+  investmentObjective: z.string().min(1, "investmentObjective cannot be empty"),
 });
 
 export type TCorporateTypeAndIncomeSchema = z.infer<

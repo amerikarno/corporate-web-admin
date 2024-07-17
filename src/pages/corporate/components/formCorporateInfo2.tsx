@@ -12,14 +12,22 @@ import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
 import { Input } from "@/components/ui/input";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
+import { TCorporateTypeAndIncome } from "../constants/types";
 
-export function FormCorporateTypeAndIncome() {
+type FormCorporateTypeAndIncomeProps = {
+  onsubmit: (data: TCorporateTypeAndIncome) => void;
+};
+
+export function FormCorporateTypeAndIncome({
+  onsubmit,
+}: FormCorporateTypeAndIncomeProps) {
   const {
     corporateTypeAndIncome,
     isBusinessTypeOthers,
     isSourceOfIncomeOthers,
     isCountrySourceOfIncomeOthers,
     isInvestmentObjectiveOthers,
+    errors,
     handleCheck,
     handleSubSelected,
     handeleBusinessType,
@@ -27,16 +35,22 @@ export function FormCorporateTypeAndIncome() {
     handeleInvestmentObjective,
     handeleSourceOfIncome,
     handleInputOthers,
+    getError,
     disableBusinessType,
     disableCountrySourceOfIncome,
     disableInvestmentObjective,
     isDiabledJuristicType,
     isDisableSubSelected,
+    validateForm,
   } = useFormCorporateInfo2();
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log(corporateTypeAndIncome);
+    if (validateForm()) {
+      onsubmit(corporateTypeAndIncome);
+    } else {
+      console.log("submit failed");
+    }
   };
 
   return (
@@ -80,6 +94,11 @@ export function FormCorporateTypeAndIncome() {
               </div>
             </div>
           ))}
+          {errors && getError(["juristicType"], errors) && (
+            <p className="text-red-500 p-4">
+              {getError(["juristicType"], errors)?.message}
+            </p>
+          )}
         </>
       </Card>
 
@@ -107,6 +126,11 @@ export function FormCorporateTypeAndIncome() {
             </div>
           )}
         </div>
+        {errors && getError(["businessType"], errors) && (
+          <p className="text-red-500 p-4">
+            {getError(["businessType"], errors)?.message}
+          </p>
+        )}
       </Card>
 
       <Card>
@@ -130,6 +154,11 @@ export function FormCorporateTypeAndIncome() {
                 onBlur={(e) => handleInputOthers(e, "sourceOfIncome")}
               />
             </div>
+          )}
+          {errors && getError(["sourceOfIncome"], errors) && (
+            <p className="text-red-500 p-4">
+              {getError(["sourceOfIncome"], errors)?.message}
+            </p>
           )}
         </div>
       </Card>
@@ -159,6 +188,11 @@ export function FormCorporateTypeAndIncome() {
               />
             </div>
           )}
+          {errors && getError(["countrySourceOfIncome"], errors) && (
+            <p className="text-red-500 px-4">
+              {getError(["countrySourceOfIncome"], errors)?.message}
+            </p>
+          )}
         </div>
         <div className="p-4 border-t">
           <h1 className="">Investment Objective</h1>
@@ -182,6 +216,11 @@ export function FormCorporateTypeAndIncome() {
               onChange={(e) => handleInputOthers(e, "investmentObjective")}
             />
           </div>
+        )}
+        {errors && getError(["investmentObjective"], errors) && (
+          <p className="text-red-500 p-4">
+            {getError(["investmentObjective"], errors)?.message}
+          </p>
         )}
       </Card>
 
