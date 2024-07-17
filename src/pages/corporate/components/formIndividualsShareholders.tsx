@@ -1,10 +1,4 @@
 import { Input } from "@/components/Input";
-import { TIndividualsShareholders } from "../constants/types";
-import { useState } from "react";
-import {
-  mockIndividualsShareholders1,
-  mockIndividualsShareholders2,
-} from "../constants/_mock/_data";
 import { Card } from "@/components/ui/card";
 import { CircleX, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,31 +8,20 @@ import {
   individualsShareholdersSchema,
   TIndividualsShareholdersSchema,
 } from "../constants/schemas";
-import { copy, sleep } from "@/lib/utils";
-import { individualShareholder } from "../constants/initialData";
+import { sleep } from "@/lib/utils";
+import { useFormIndividualsShareholder } from "../hook/useFormIndividualsShareholder";
+import { TIndividualsShareholders } from "../constants/types";
+import { Table } from "./dataTable";
 
 export function FormIndividualsShareholders() {
-  const [shareholders, setShareholders] = useState<TIndividualsShareholders[]>(
-    []
-  );
-  //   const [shareholders, setShareholders] = useState<TIndividualsShareholders[]>([
-  //     mockIndividualsShareholders1,
-  //     mockIndividualsShareholders2,
-  //   ]);
-  const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [individualsShareholder, setIndividualsShareholder] =
-    useState<TIndividualsShareholders>(copy(individualShareholder));
-
-  const removeIndividualsShareholders = (index: number) => {
-    const newShareholders = shareholders.filter((_, i) => i !== index);
-    setShareholders(newShareholders);
-  };
-
-  const editIndividualsShareholders = (index: number) => {
-    console.log(shareholders[index]);
-    setIsEdit(true);
-    setIndividualsShareholder(shareholders[index]);
-  };
+  const {
+    shareholders,
+    individualsShareholder,
+    removeIndividualsShareholders,
+    editIndividualsShareholders,
+    handleSetNewShareholder,
+    serializeData,
+  } = useFormIndividualsShareholder();
 
   const {
     register,
@@ -50,10 +33,18 @@ export function FormIndividualsShareholders() {
     values: individualsShareholder,
   });
 
+  const columns = [
+    { header: "Name-Surname", accessor: "nameSurname" },
+    { header: "ID Card / Passport", accessor: "idCard" },
+    { header: "Expiration Date", accessor: "expiredDate" },
+    { header: "Nationality", accessor: "nationality" },
+    { header: "% Shares", accessor: "shares" },
+  ];
+
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
     await sleep(500);
+    handleSetNewShareholder(data);
     reset();
-    setShareholders([...shareholders, data]);
   };
 
   return (
@@ -61,67 +52,12 @@ export function FormIndividualsShareholders() {
       <div id="Individuals Shareholders" className="space-y-10">
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
-          <table className="w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name-Surname
-                </th>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  ID Card / Passport
-                </th>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Expiration Date
-                </th>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nationality
-                </th>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  % Shares
-                </th>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Edit
-                </th>
-                <th className="p-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Delete
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {shareholders.map((shareholder, index) => (
-                <tr key={index}>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm font-medium text-gray-900">
-                    {`${shareholder.title} ${shareholder.firstName} ${shareholder.lastName}`}
-                  </td>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm text-gray-500">
-                    {shareholder.idCard}
-                  </td>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm text-gray-500">
-                    {shareholder.expiredDate}
-                  </td>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm text-gray-500">
-                    {shareholder.nationality}
-                  </td>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm text-gray-500">
-                    {shareholder.shares}
-                  </td>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm text-gray-500">
-                    <Pencil
-                      className="h-4 hover:cursor-pointer"
-                      onClick={() => editIndividualsShareholders(index)}
-                    />
-                  </td>
-                  <td className="p-2 overflow-hidden whitespace-nowrap text-sm text-gray-500">
-                    <CircleX
-                      className="h-4 hover:cursor-pointer"
-                      color="red"
-                      onClick={() => removeIndividualsShareholders(index)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table
+            columns={columns}
+            data={serializeData(shareholders)}
+            onEdit={editIndividualsShareholders}
+            onDelete={removeIndividualsShareholders}
+          />
         </Card>
 
         <Card className="p-4">
