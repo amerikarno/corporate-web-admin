@@ -1,5 +1,6 @@
 import { FormCorporateInfo } from "./components/formCorporateInfo";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
+import { FormIndividualsShareholders } from "./components/formIndividualsShareholders";
 import { TCorporateInfo, TCorporateTypeAndIncome } from "./constants/types";
 
 export default function CreateCorporate() {
@@ -13,11 +14,19 @@ export default function CreateCorporate() {
     console.log("submit successful");
   };
 
+  const handleSubmitIndividualsShareholders = (
+    data: TCorporateTypeAndIncome
+  ) => {
+    console.log(data);
+    console.log("submit successful");
+  };
+
   return (
     <>
       <div className="w-[1024px] mx-auto py-5 px-10">
         {/* <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} /> */}
-        <FormCorporateTypeAndIncome onsubmit={handleSubmitCorporateInfo2} />
+        {/* <FormCorporateTypeAndIncome onsubmit={handleSubmitCorporateInfo2} /> */}
+        <FormIndividualsShareholders />
       </div>
     </>
   );

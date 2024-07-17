@@ -1,44 +1,45 @@
-import React from "react";
+import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-type InputProps = {
-  [key: string]: any;
-  title: string;
-  name: string;
-  type?: string;
-  divClassName?: string;
-  labelClassName?: string;
+type TInputField = {
+  id: string;
+  label: string;
   inputClassName?: string;
+  labelClassName?: string;
 };
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({
-    title,
-    name,
-    type = "text",
-    divClassName,
-    labelClassName,
-    inputClassName,
-    ...rest
-  }) => {
-    return (
-      <div className={twMerge("flex flex-col mt-10", divClassName)}>
-        <label htmlFor={name} className={twMerge("block", labelClassName)}>
-          {title}
-        </label>
-        <input
-          className={twMerge(
-            "py-2 px-2 block w-full border-gray-400 border-2 rounded-sm text-sm focus:border-primary focus:ring-primary",
-            inputClassName
-          )}
-          id={name}
-          type={type}
-          name={name}
-          {...rest}
-        />
-      </div>
-    );
-  }
-);
+type TInputFieldProps = TInputField & ComponentProps<"input">;
+
+export const Input = ({
+  id,
+  label,
+  inputClassName,
+  labelClassName,
+  ...props
+}: TInputFieldProps) => {
+  return (
+    <div className="relative w-full">
+      <input
+        className={twMerge(
+          "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer",
+          inputClassName
+        )}
+        aria-describedby="outlined_success_help"
+        placeholder=" "
+        id={id}
+        {...props}
+      />
+      <label
+        htmlFor={id}
+        className={twMerge(
+          "absolute text-sm text-gray-600 dark:text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto",
+          labelClassName
+        )}
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
 
 export default Input;

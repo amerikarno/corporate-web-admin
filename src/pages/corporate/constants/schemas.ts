@@ -77,3 +77,17 @@ export const corporateTypeAndIncomeSchema = z.object({
 export type TCorporateTypeAndIncomeSchema = z.infer<
   typeof corporateTypeAndIncomeSchema
 >;
+
+const individualsShareholdersSchema = z.object({
+  title: z.string().min(1, { message: "Title cannot be empty" }),
+  firstName: z.string().min(1, { message: "First name cannot be empty" }),
+  lastName: z.string().min(1, { message: "Last name cannot be empty" }),
+  idCard: z.string().min(1, { message: "ID card cannot be empty" }),
+  expiredDate: z.date(),
+  nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
+  shares: z.string().min(1, { message: "Shares cannot be empty" }),
+});
+
+export type TIndividualsShareholdersSchema = z.infer<
+  typeof individualsShareholdersSchema
+>;

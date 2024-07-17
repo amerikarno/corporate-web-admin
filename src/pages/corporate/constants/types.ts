@@ -42,3 +42,13 @@ export type TCorporateTypeAndIncome = {
   countrySourceOfIncome: string;
   investmentObjective: string;
 };
+
+export type individualsShareholders = {
+  title: string;
+  firstName: string;
+  lastName: string;
+  idCard: string;
+  expiredDate: Date;
+  nationality: string;
+  shares: string;
+};
