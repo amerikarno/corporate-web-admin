@@ -10,9 +10,10 @@ import {
 } from "../constants/const_variables";
 import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
-import { Input } from "@/components/ui/input";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { TCorporateTypeAndIncome } from "../constants/types";
+import { Input } from "@/components/ui/input";
+// import Input from "@/components/Input";
 
 type FormCorporateTypeAndIncomeProps = {
   onsubmit: (data: TCorporateTypeAndIncome) => void;

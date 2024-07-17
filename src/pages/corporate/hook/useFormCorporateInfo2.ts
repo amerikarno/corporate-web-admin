@@ -2,7 +2,7 @@ import { copy } from "@/lib/utils";
 import { juristicType } from "../constants/const_variables";
 import { useState } from "react";
 import { TCorporateTypeAndIncome } from "../constants/types";
-import { emptyCorporateTypeAndIncome } from "../constants/initailData";
+import { emptyCorporateTypeAndIncome } from "../constants/initialData";
 import { boolean, z, ZodIssue } from "zod";
 import { corporateTypeAndIncomeSchema } from "../constants/schemas";
 

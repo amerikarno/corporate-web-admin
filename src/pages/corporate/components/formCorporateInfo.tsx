@@ -11,8 +11,6 @@ import { Card } from "@/components/ui/card";
 import { SideLabelInput } from "@/components/SideLabelInput";
 import { AddressForm } from "./addressForm";
 import { Input } from "@/components/Input";
-// import Input from "@/components/Input";
-// import { Input } from "@/components/ui/input";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;

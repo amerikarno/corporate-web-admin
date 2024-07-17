@@ -43,12 +43,12 @@ export type TCorporateTypeAndIncome = {
   investmentObjective: string;
 };
 
-export type individualsShareholders = {
+export type TIndividualsShareholders = {
   title: string;
   firstName: string;
   lastName: string;
   idCard: string;
-  expiredDate: Date;
+  expiredDate: string;
   nationality: string;
   shares: string;
 };
