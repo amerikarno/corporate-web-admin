@@ -1,3 +1,4 @@
+import { checkFormatIDCard } from "@/lib/utils";
 import { z } from "zod";
 
 export const addressSchema = z.object({
@@ -82,7 +83,26 @@ export const individualsShareholdersSchema = z.object({
   title: z.string().min(1, { message: "Title cannot be empty" }),
   firstName: z.string().min(1, { message: "First name cannot be empty" }),
   lastName: z.string().min(1, { message: "Last name cannot be empty" }),
-  idCard: z.string().min(1, { message: "ID card cannot be empty" }),
+  idCard: z
+    .string()
+    .min(1, { message: "ID card cannot be empty" })
+    .superRefine((val, ctx) => {
+      if (val.length != 13) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Should be 13 digits",
+          fatal: true,
+        });
+        return z.NEVER;
+      }
+
+      if (!checkFormatIDCard(val)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid number",
+        });
+      }
+    }),
   expiredDate: z
     .string()
     .min(1, { message: "expiration date cannot be empty" }),
