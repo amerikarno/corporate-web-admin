@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import Welcome from "./pages/Welcome";
 import CreateCorporate from "./pages/corporate/createCorporate";
+import ContactPerson from "./pages/contactperson/contactPerson";
 
 const helmetContext = {};
 
@@ -32,6 +33,7 @@ root.render(
                 <Route path="login" element={<Login />} />
                 <Route path="welcome" element={<Welcome />} />
                 <Route path="/corporate/create" element={<CreateCorporate />} />
+                <Route path="/contactperson/create" element={<ContactPerson />}/>
               </Route>
             </Routes>
           </BrowserRouter>

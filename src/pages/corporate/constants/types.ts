@@ -42,3 +42,11 @@ export type TCorporateTypeAndIncome = {
   countrySourceOfIncome: string;
   investmentObjective: string;
 };
+
+export type TContactPersonType = {
+  contactnamesurname: string;
+  contactposition: string;
+  contactdivision: string;
+  contacttelephone: string;
+  contactemail: string;
+}

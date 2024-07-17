@@ -55,6 +55,15 @@ export const corporateInfoSchema = z.object({
   financial: financialInfoSchema.optional(),
 });
 
+export const contactPersonSchema = z.object({
+  contactnamesurname: z.string().min(1, "name cannot be empty"),
+  contactposition:    z.string().min(1, "position cannot be empty"),
+  contactdivision:    z.string().min(1, "division cannot be empty"),
+  contacttelephone:   z.string().min(1, "telephone cannot be empty"),
+  contactemail:       z.string().min(1, "email cannot be empty"),
+})
+
+export type TContactPersonSchema = z.infer<typeof contactPersonSchema>;
 export type TCorporateInfoSchema = z.infer<typeof corporateInfoSchema>;
 export type TAddressSchema = z.infer<typeof addressSchema>;
 export type TFinancailInfoSchema = z.infer<typeof financialInfoSchema>;
