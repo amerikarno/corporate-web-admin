@@ -22,4 +22,3 @@ artifacts:
     - 'dist/**/*'
     - appspec.yml
     - 'deploy-scripts/**/*'
-  name: 'corporate-web-admin'

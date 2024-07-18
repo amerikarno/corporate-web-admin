@@ -1,13 +1,14 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";
 import React from "react";
 import Layout from "./components/Layout";
-import Welcome from "./pages/Welcome";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import Welcome from "./pages/Welcome";
+import CreateCorporate from "./pages/corporate/createCorporate";
 
 const helmetContext = {};
 
@@ -27,8 +28,10 @@ root.render(
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Layout />}>
-                <Route index element={<Welcome />} />
+                <Route index element={<Navigate to="/login" />} />
                 <Route path="login" element={<Login />} />
+                <Route path="welcome" element={<Welcome />} />
+                <Route path="/corporate/create" element={<CreateCorporate />} />
               </Route>
             </Routes>
           </BrowserRouter>
