@@ -70,3 +70,25 @@ export type TAuthorizePerson = {
   nationality: string;
   address: TAddress;
 };
+export type TContactPerson = {
+  contactname: string;
+  contactposition: string;
+  contactdivision: string;
+  contactphone: string;
+  contactemail: string;
+};
+
+export type TDirector = {
+  directorname: string;
+  directoridcard: string;
+  directorexpireddate: string;
+  directornationality: string;
+  directoraddress: TAddress;
+};
+
+export type TJuristicsShareholders = {
+  juristicName: string;
+  juristicRegisNo: string;
+  juristicRegisCountry: string;
+  juristicShares: string;
+};

@@ -3,7 +3,10 @@ import { FormBank } from "./components/formBank";
 import { FormCorporateInfo } from "./components/formCorporateInfo";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
 import { FormIndividualsShareholders } from "./components/formIndividualsShareholders";
+import { FormIndividualsContactPerson } from "./components/formContactPerson";
 import { TCorporateInfo, TCorporateTypeAndIncome } from "./constants/types";
+import { FormIndividualsDirector } from "./components/formDirectorInfo";
+import { FormJuristicShareholders } from "./components/formJuristicShareholders";
 
 export default function CreateCorporate() {
   const handleSubmitCorporateInfo = (data: TCorporateInfo) => {
@@ -31,6 +34,9 @@ export default function CreateCorporate() {
         <FormIndividualsShareholders />
         <FormBank />
         <FormAuthorizedPerson />
+        <FormIndividualsContactPerson />
+        <FormIndividualsDirector />
+        <FormJuristicShareholders />
       </div>
     </>
   );
