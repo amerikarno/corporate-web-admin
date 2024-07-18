@@ -52,3 +52,21 @@ export type TIndividualsShareholders = {
   nationality: string;
   shares: string;
 };
+
+export type TBank = {
+  accountType: string;
+  bankName: string;
+  accountNo: string;
+  accountLocation: string;
+  swiftCode: string;
+};
+
+export type TAuthorizePerson = {
+  title: string;
+  firstName: string;
+  lastName: string;
+  idCard: string;
+  expiredDate: string;
+  nationality: string;
+  address: TAddress;
+};

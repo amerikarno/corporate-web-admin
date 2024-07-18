@@ -50,7 +50,7 @@ export function FormIndividualsShareholders() {
   return (
     <>
       <div id="Individuals Shareholders" className="space-y-10">
-        <Card className="p-4">
+        {/* <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
           <Table
             columns={columns}
@@ -58,12 +58,10 @@ export function FormIndividualsShareholders() {
             onEdit={editIndividualsShareholders}
             onDelete={removeIndividualsShareholders}
           />
-        </Card>
+        </Card> */}
 
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">
-            New Individual Shareholder :
-          </h1>
+          <h1 className="font-bold text-xl py-4">Individual Shareholder :</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="w-1/4">
               <Input
@@ -71,6 +69,7 @@ export function FormIndividualsShareholders() {
                 label="Title"
                 id="Title"
                 disabled={isSubmitting}
+                required
               />
               {errors.title && (
                 <p className="text-red-500 text-sm px-2">
@@ -85,6 +84,7 @@ export function FormIndividualsShareholders() {
                   label="First Name"
                   id="First Name"
                   disabled={isSubmitting}
+                  required
                 />
                 {errors.firstName && (
                   <p className="text-red-500 text-sm px-2">
@@ -98,6 +98,7 @@ export function FormIndividualsShareholders() {
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
+                  required
                 />
                 {errors.lastName && (
                   <p className="text-red-500 text-sm px-2">
@@ -113,6 +114,7 @@ export function FormIndividualsShareholders() {
                   label="ID Card / Passport"
                   id="ID Card / Passport"
                   disabled={isSubmitting}
+                  required
                 />
                 {errors.idCard && (
                   <p className="text-red-500 text-sm px-2">
@@ -128,6 +130,7 @@ export function FormIndividualsShareholders() {
                   id="Expiration Date"
                   type="date"
                   disabled={isSubmitting}
+                  required
                 />
                 {errors.expiredDate && (
                   <p className="text-red-500 text-sm px-2">
@@ -143,6 +146,7 @@ export function FormIndividualsShareholders() {
                   label="Nationality"
                   id="Nationality"
                   disabled={isSubmitting}
+                  required
                 />
                 {errors.nationality && (
                   <p className="text-red-500 text-sm px-2">
@@ -156,6 +160,7 @@ export function FormIndividualsShareholders() {
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
+                  required
                 />
                 {errors.shares && (
                   <p className="text-red-500 text-sm px-2">

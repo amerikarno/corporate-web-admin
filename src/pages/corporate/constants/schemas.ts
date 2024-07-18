@@ -10,28 +10,8 @@ export const addressSchema = z.object({
   subDistrict: z.string().min(1, "subDistrict cannot be empty"),
   district: z.string().min(1, "district cannot be empty"),
   province: z.string().min(1, "province cannot be empty"),
-  postalCode: z
-    .string()
-    .min(1, "postalCode cannot be empty")
-    .refine(
-      (value) => {
-        return /^\d+$/.test(value);
-      },
-      {
-        message: "postal code must be number",
-      }
-    ),
-  phone: z
-    .string()
-    .min(1, "phone cannot be empty")
-    .refine(
-      (value) => {
-        return /^\d+$/.test(value);
-      },
-      {
-        message: "phone must be number",
-      }
-    ),
+  postalCode: z.string().min(1, "postalCode cannot be empty"),
+  phone: z.string().min(1, "phone cannot be empty"),
   email: z.string().email(),
 });
 
@@ -123,3 +103,46 @@ export const individualsShareholdersSchema = z.object({
 export type TIndividualsShareholdersSchema = z.infer<
   typeof individualsShareholdersSchema
 >;
+
+export const bankSchema = z.object({
+  bankName: z.string().min(1, "bankName cannot be empty"),
+  accountLocation: z.string().min(1, "bankBranch cannot be empty"),
+  accountNo: z
+    .string()
+    .min(1, "bankAccount cannot be empty")
+    .refine(
+      (value) => {
+        return /^\d+$/.test(value);
+      },
+      {
+        message: "bankAccount must be number",
+      }
+    ),
+  accountType: z.string().min(1, "accountType cannot be empty"),
+  swiftCode: z.string().min(1, "swiftCode cannot be empty"),
+});
+
+export type TBankSchema = z.infer<typeof bankSchema>;
+
+export const authorizedPersonSchema = z.object({
+  title: z.string().min(1, "title cannot be empty"),
+  firstName: z.string().min(1, "firstName cannot be empty"),
+  lastName: z.string().min(1, "lastName cannot be empty"),
+  idCard: z
+    .string()
+    .min(1, "idCard cannot be empty")
+    .superRefine((val, ctx) => {
+      if (val.length != 13) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Should be 13 digits",
+          fatal: true,
+        });
+        return z.NEVER;
+      }
+    }),
+  expiredDate: z.string().min(1, "date cannot be empty"),
+  address: addressSchema,
+});
+
+export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
