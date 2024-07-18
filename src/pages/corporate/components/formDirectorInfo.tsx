@@ -15,29 +15,31 @@ import { Table } from "./dataTable";
 import { AddressForm } from "./directorAddressForm";
 
 export function FormIndividualsDirector() {
-  const {
-    directors,
-    individualsDirector,
-    // removeIndividualsShareholders,
-    // editIndividualsShareholders,
-    // handleSetNewShareholder,
-    // serializeData,
-  } = useFormIndividualsDirector();
+//   const {
+//     directors,
+//     individualsDirector,
+//     // removeIndividualsShareholders,
+//     // editIndividualsShareholders,
+//     // handleSetNewShareholder,
+//     // serializeData,
+//   } = useFormIndividualsDirector();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<TIndividualsDirectorSchema>({
+  } = useForm<TDirector>({
     resolver: zodResolver(individualsDirectorSchema),
-    values: individualsDirector,
+    //values: individualsDirector,
   });
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
+    
     await sleep(500);
+    //handleSetNewShareholder(data);
     reset();
-    console.log(data);
+    console.log(data)
   };
 
   return (
@@ -56,26 +58,58 @@ export function FormIndividualsDirector() {
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Director Infomation :</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-            {/* <form className="space-y-4"> */}
-            <div className="w-1/4">
-              <Input
-                {...register("directorname")}
-                label="Name-Surname"
-                id="Name-Surname"
-                disabled={isSubmitting}
-              />
-              {errors.directorname && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.directorname.message}
-                </p>
-              )}
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2">
+                    <Input
+                    {...register("directortitle")}
+                    label="Title"
+                    id="Title"
+                    disabled={isSubmitting}
+                />
+                {errors.directortitle && (
+                    <p className="text-red-500 text-sm px-2">
+                    {errors.directortitle.message}
+                    </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+                <div className="w-1/2">
+                    <Input
+                        {...register("directorname")}
+                        label="Name"
+                        id="Name"
+                        disabled={isSubmitting}
+                    />
+                    {errors.directorname && (
+                        <p className="text-red-500 text-sm px-2">
+                        {errors.directorname.message}
+                        </p>
+                    )}
+                </div>
+                <div className="w-1/2">
+                    <Input
+                        {...register("directorsurname")}
+                        label="Surname"
+                        id="Surname"
+                        disabled={isSubmitting}
+                    />
+                    {errors.directorsurname && (
+                        <p className="text-red-500 text-sm px-2">
+                        {errors.directorsurname.message}
+                        </p>
+                    )}
+                </div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
                   {...register("directoridcard")}
-                  label="Passport/ID Number"
-                  id="Passport/ID Number"
+                  label="ID Number"
+                  id="ID Number"
                   disabled={isSubmitting}
                 />
                 {errors.directoridcard && (
@@ -86,16 +120,16 @@ export function FormIndividualsDirector() {
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("directorexpireddate")}
-                  label="Date of Expired"
-                  id="Date of Expired"
-                  disabled={isSubmitting}
-                />
-                {errors.directorexpireddate && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.directorexpireddate.message}
-                  </p>
-                )}
+                    {...register("directorpassport")}
+                    label="Passport"
+                    id="Passport"
+                    disabled={isSubmitting}
+                    />
+                    {errors.directorpassport && (
+                    <p className="text-red-500 text-sm px-2">
+                        {errors.directorpassport.message}
+                    </p>
+                    )}
               </div>
             </div>
             <div className="flex flex-row space-x-4">
@@ -112,9 +146,22 @@ export function FormIndividualsDirector() {
                   </p>
                 )}
               </div>
+              <div className="w-1/2">
+                <Input
+                    {...register("directorexpireddate")}
+                    label="Date of Expired"
+                    id="Date of Expired"
+                    type="date"
+                    disabled={isSubmitting}
+                    />
+                    {errors.directorexpireddate && (
+                    <p className="text-red-500 text-sm px-2">
+                        {errors.directorexpireddate.message}
+                    </p>
+                    )}
+              </div>
             </div>
-            {/* <div className="w-1/2">
-              </div> */}
+
             <h1 className="font-bold text-xl py-4">Director's Address</h1>
             <AddressForm
               isSubmitting={isSubmitting}

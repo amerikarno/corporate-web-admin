@@ -31,17 +31,21 @@ export function FormAuthorizedPerson() {
     <Card className="p-4">
       <h1 className="font-bold text-xl py-4">Authorized Person :</h1>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-1/4">
-          <Input
-            {...register("title")}
-            label="Title"
-            id="Title"
-            disabled={isSubmitting}
-            required
-          />
-          {errors.title && (
-            <p className="text-red-500 text-sm px-2">{errors.title.message}</p>
-          )}
+        <div className="flex flex-row space-x-4">
+          <div className="w-1/2">
+            <Input
+              {...register("title")}
+              label="Title"
+              id="Title"
+              disabled={isSubmitting}
+              required
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm px-2">{errors.title.message}</p>
+            )}
+          </div>
+          <div className="w-1/2">
+          </div>
         </div>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
@@ -120,6 +124,7 @@ export function FormAuthorizedPerson() {
               </p>
             )}
           </div>
+          <div className="w-1/2"></div>
         </div>
         <h1 className="font-bold text-xl py-4">
           Authorized Person's Address :

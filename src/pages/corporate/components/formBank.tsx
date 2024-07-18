@@ -104,6 +104,8 @@ export function FormBank() {
               </p>
             )}
           </div>
+          <div className="w-1/2">
+          </div>
         </div>
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>

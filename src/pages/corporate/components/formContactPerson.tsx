@@ -41,11 +41,12 @@ export function FormIndividualsContactPerson() {
 //     { header: "% Shares", accessor: "shares" },
 //   ];
 
-//   const onSubmit = async (data: TIndividualsContactPersonSchema) => {
-//     await sleep(500);
-//     handleSetNewShareholder(data);
-//     reset();
-//   };
+  const onSubmit = async (data: TIndividualsContactPersonSchema) => {
+    await sleep(500);
+    //handleSetNewShareholder(data);
+    reset();
+    console.log(data)
+  };
 
   return (
     <>
@@ -64,20 +65,52 @@ export function FormIndividualsContactPerson() {
           <h1 className="font-bold text-xl py-4">
             Contact Person Infomation :
           </h1>
-          {/* <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> */}
-          <form className="space-y-4">
-            <div className="w-1/4">
-              <Input
-                {...register("contactname")}
-                label="Name-Surname"
-                id="Name-Surname"
-                disabled={isSubmitting}
-              />
-              {errors.contactname && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.contactname.message}
-                </p>
-              )}
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2">
+                    <Input
+                    {...register("contacttitle")}
+                    label="Title"
+                    id="Title"
+                    disabled={isSubmitting}
+                />
+                {errors.contacttitle && (
+                    <p className="text-red-500 text-sm px-2">
+                    {errors.contacttitle.message}
+                    </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+                <div className="w-1/2">
+                    <Input
+                        {...register("contactname")}
+                        label="Name"
+                        id="Name"
+                        disabled={isSubmitting}
+                    />
+                    {errors.contactname && (
+                        <p className="text-red-500 text-sm px-2">
+                        {errors.contactname.message}
+                        </p>
+                    )}
+                </div>
+                <div className="w-1/2">
+                    <Input
+                        {...register("contactsurname")}
+                        label="Surname"
+                        id="Surname"
+                        disabled={isSubmitting}
+                    />
+                    {errors.contactsurname && (
+                        <p className="text-red-500 text-sm px-2">
+                        {errors.contactsurname.message}
+                        </p>
+                    )}
+                </div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">

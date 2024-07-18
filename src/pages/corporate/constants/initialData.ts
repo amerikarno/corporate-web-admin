@@ -37,26 +37,32 @@ export const individualShareholder = {
   firstName: "",
   lastName: "",
   idCard: "",
+  passPort: "",
   expiredDate: "",
   nationality: "",
   shares: "",
 };
 
 export const individualContact = {
+  contacttitle:"",
   contactname: "",
+  contactsurname: "",
   contactposition: "",
   contactdivision: "",
   contactphone: "",
   contactemail: ""
 }
 
-export const individualDirector = {
-  directorname: "",
-  directoridcard: "",
-  directorexpireddate: "", 
-  directornationality: "",
-  directoraddress: [],
-}
+// export const individualDirector = {
+//   directortitle:"",
+//   directorname: "",
+//   directorsurname: "",
+//   directoridcard: "",
+//   directorpassport: "",
+//   directorexpireddate: "", 
+//   directornationality: "",
+//   directoraddress:[],
+// }
 
 export const individualJuristicShareholders = {
   juristicName : "",

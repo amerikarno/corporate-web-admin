@@ -41,11 +41,12 @@ export function FormJuristicShareholders() {
 //     { header: "% Shares", accessor: "shares" },
 //   ];
 
-//   const onSubmit = async (data: TIndividualsContactPersonSchema) => {
-//     await sleep(500);
-//     handleSetNewShareholder(data);
-//     reset();
-//   };
+  const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
+    await sleep(500);
+    //handleSetNewShareholder(data);
+    reset();
+    console.log(data)
+  };
 
   return (
     <>
@@ -65,19 +66,24 @@ export function FormJuristicShareholders() {
             Juristics who shareholders of juristic's owner :
           </h1>
           {/* <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> */}
-          <form className="space-y-4">
-            <div className="w-1/4">
-              <Input
-                {...register("juristicName")}
-                label="Juristic-Name"
-                id="Juristic-Name"
-                disabled={isSubmitting}
-              />
-              {errors.juristicName && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.juristicName.message}
-                </p>
-              )}
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2">
+                <Input
+                    {...register("juristicName")}
+                    label="Juristic-Name"
+                    id="Juristic-Name"
+                    disabled={isSubmitting}
+                />
+                {errors.juristicName && (
+                    <p className="text-red-500 text-sm px-2">
+                    {errors.juristicName.message}
+                    </p>
+                )}
+              </div>
+              <div className="w-1/2">
+
+              </div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
@@ -111,8 +117,8 @@ export function FormJuristicShareholders() {
               <div className="w-1/2">
                 <Input
                   {...register("juristicShares")}
-                  label="% Shares"
-                  id="% Shares"
+                  label="Shares"
+                  id="Shares"
                   disabled={isSubmitting}
                 />
                 {errors.juristicShares && (
@@ -121,7 +127,9 @@ export function FormJuristicShareholders() {
                   </p>
                 )}
               </div>
+                <div className="w-1/2">
 
+                </div>
             </div>
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
