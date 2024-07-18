@@ -6,12 +6,13 @@ import Footer from "./footer/footer";
 const Layout = () => {
   return (
     <>
-      <Header />
-      <Sidebar />
-      <main className="mt-[60px] sm:ml-[270px]">
+      {/* <Header /> */}
+      {/* <Sidebar /> */}
+      <main className="App">
+        {/* <main className="mt-[60px] sm:ml-[270px]"> */}
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
