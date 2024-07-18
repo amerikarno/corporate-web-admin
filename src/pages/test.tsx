@@ -321,6 +321,69 @@ export function FormTest() {
           </div>
         </section>
 
+        {/* <div>
+          <h1 className="font-bold p-4 border-t">
+            Country's Source Of Income / Investment Fund
+          </h1>
+          <div className="p-4 border-t">
+            <div className="grid grid-cols-2 ">
+              {countrySourceOfIncome.map((item, i) => (
+                <CheckBox
+                  key={i}
+                  label={item}
+                  onChange={handeleCountrySourceOfIncome}
+                  name={item}
+                  disabled={disableCountrySourceOfIncome(item)}
+                />
+              ))}
+            </div>
+            {isCountrySourceOfIncomeOthers && (
+              <div className="flex justify-end px-4 py-2">
+                <Input
+                  className="w-1/2"
+                  placeholder="Please Specify"
+                  onChange={(e) =>
+                    handleInputOthers(e, "countrySourceOfIncome")
+                  }
+                />
+              </div>
+            )}
+            {errors && getError(["countrySourceOfIncome"], errors) && (
+              <p className="text-red-500 px-4">
+                {getError(["countrySourceOfIncome"], errors)?.message}
+              </p>
+            )}
+          </div>
+          <div className="p-4 border-t">
+            <h1 className="">Investment Objective</h1>
+          </div>
+          <div className="pt-4 px-4 border-t">
+            {investmentObjective.map((item, i) => (
+              <CheckBox
+                key={i}
+                label={item}
+                onChange={handeleInvestmentObjective}
+                name={item}
+                disabled={disableInvestmentObjective(item)}
+              />
+            ))}
+          </div>
+          {isInvestmentObjectiveOthers && (
+            <div className="flex justify-start px-4 py-2">
+              <Input
+                className="w-1/2"
+                placeholder="Please Specify"
+                onChange={(e) => handleInputOthers(e, "investmentObjective")}
+              />
+            </div>
+          )}
+          {errors && getError(["investmentObjective"], errors) && (
+            <p className="text-red-500 p-4">
+              {getError(["investmentObjective"], errors)?.message}
+            </p>
+          )}
+        </div> */}
+
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}
