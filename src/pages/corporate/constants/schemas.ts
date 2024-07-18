@@ -132,3 +132,38 @@ export const individualsShareholdersSchema = z.object({
 export type TIndividualsShareholdersSchema = z.infer<
   typeof individualsShareholdersSchema
 >;
+
+export const individualsContactPersonSchema = z.object({
+  contactname: z.string().min(1, { message: "Name cannot be empty" }),
+  contactposition: z.string().min(1, { message: "Position cannot be empty" }),
+  contactdivision: z.string().min(1, { message: "Division cannot be empty" }),
+  contactphone: z.string().min(1, { message: "Phone cannot be empty" }),
+  contactemail: z.string().min(1, { message: "Email cannot be empty" }),
+})
+
+export type TIndividualsContactPersonSchema = z.infer<
+  typeof individualsContactPersonSchema
+>;
+
+export const individualsDirectorSchema = z.object({
+  directorname: z.string().min(1, { message: "Name cannot be empty" }),
+  directoridcard: z.string().min(1, { message: "IDCard cannot be empty" }),
+  directorexpireddate: z.string().min(1, { message: "Expired Date cannot be empty" }),
+  directornationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
+  directoraddress: addressSchema,
+})
+
+export type TIndividualsDirectorSchema = z.infer<
+  typeof individualsDirectorSchema
+>;
+
+export const individualsJuristicShareholdersSchema = z.object({
+  juristicName : z.string().min(1, { message: "Name cannot be empty" }),
+  juristicRegisNo : z.string().min(1, { message: "Register Number cannot be empty" }),
+  juristicRegisCountry : z.string().min(1, { message: "Register Country cannot be empty" }),
+  juristicShares : z.string().min(1, { message: "Percent Share cannot be empty" }),
+})
+
+export type TIndividualsJuristicShareholdersSchema = z.infer<
+  typeof individualsJuristicShareholdersSchema
+>;

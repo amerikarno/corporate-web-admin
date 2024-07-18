@@ -41,3 +41,26 @@ export const individualShareholder = {
   nationality: "",
   shares: "",
 };
+
+export const individualContact = {
+  contactname: "",
+  contactposition: "",
+  contactdivision: "",
+  contactphone: "",
+  contactemail: ""
+}
+
+export const individualDirector = {
+  directorname: "",
+  directoridcard: "",
+  directorexpireddate: "", 
+  directornationality: "",
+  directoraddress: [],
+}
+
+export const individualJuristicShareholders = {
+  juristicName : "",
+  juristicRegisNo : "",
+  juristicRegisCountry : "",
+  juristicShares : "",
+}

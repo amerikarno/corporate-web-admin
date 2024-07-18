@@ -1,7 +1,10 @@
 import { FormCorporateInfo } from "./components/formCorporateInfo";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
 import { FormIndividualsShareholders } from "./components/formIndividualsShareholders";
+import { FormIndividualsContactPerson } from "./components/formContactPerson";
 import { TCorporateInfo, TCorporateTypeAndIncome } from "./constants/types";
+import { FormIndividualsDirector } from "./components/formDirectorInfo"
+import { FormJuristicShareholders } from "./components/formJuristicShareholders"
 
 export default function CreateCorporate() {
   const handleSubmitCorporateInfo = (data: TCorporateInfo) => {
@@ -26,7 +29,9 @@ export default function CreateCorporate() {
       <div className="w-[1024px] mx-auto py-5 px-10">
         {/* <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} /> */}
         {/* <FormCorporateTypeAndIncome onsubmit={handleSubmitCorporateInfo2} /> */}
-        <FormIndividualsShareholders />
+        <FormIndividualsContactPerson />
+        <FormIndividualsDirector />
+        <FormJuristicShareholders/>
       </div>
     </>
   );
