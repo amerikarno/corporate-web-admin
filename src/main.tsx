@@ -1,5 +1,11 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";
@@ -29,15 +35,14 @@ root.render(
         <HelmetProvider context={helmetContext}>
           <BrowserRouter>
             <Routes>
+              <Route path="/login" element={<Login />} />
               <Route path="/" element={<Layout />}>
-                <Route index element={<Navigate to="/login" />} />
-                <Route path="login" element={<Login />} />
-                <Route path="welcome" element={<Welcome />} />
-                <Route path="/corporate/create" element={<CreateCorporate />} />
-                <Route
-                  path="/contactperson/create"
-                  element={<ContactPerson />}
-                />
+                <Route index element={<Welcome />} />
+                <Route path="/corporate" element={<Outlet />}>
+                  <Route index element={<CreateCorporate />} />
+                  <Route path="create" element={<CreateCorporate />} />
+                  <Route path="contactperson" element={<ContactPerson />} />
+                </Route>
                 <Route path="/test" element={<FormTest />} />
               </Route>
             </Routes>

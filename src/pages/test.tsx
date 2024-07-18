@@ -1,7 +1,7 @@
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { checkFormatIDCard, sleep } from "@/lib/utils";
+import { checkFormatIDCard, isNumber, sleep } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { TAuthorizePerson } from "./corporate/constants/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,19 @@ const addressSchema = z.object({
   subDistrict: z.string().min(1, "subDistrict cannot be empty"),
   district: z.string().min(1, "district cannot be empty"),
   province: z.string().min(1, "province cannot be empty"),
-  postalCode: z.string().min(1, "postalCode cannot be empty"),
+  postalCode: z
+    .string()
+    .min(1, "postalCode cannot be empty")
+    .superRefine((val, ctx) => {
+      if (!isNumber(val)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Should be number",
+          fatal: true,
+        });
+        return z.NEVER;
+      }
+    }),
   phone: z.string().min(1, "phone cannot be empty"),
   email: z.string().email(),
 });
@@ -46,6 +58,7 @@ const authorizedPersonSchema = z.object({
       }
     }),
   expiredDate: z.string().min(1, "date cannot be empty"),
+  nationality: z.string().min(1, "nationality cannot be empty"),
   address: addressSchema,
 });
 
@@ -155,155 +168,159 @@ export function FormTest() {
             )}
           </div>
         </div>
-        <h1 className="font-bold text-xl py-4">
-          Authorized Person's Address :
-        </h1>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Input
-              {...register("address.addressNo")}
-              label="Address No"
-              id="Address No"
-              disabled={isSubmitting}
-            />
-            {errors.address?.addressNo && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.addressNo.message}
-              </p>
-            )}
+
+        <section id="address">
+          <h1 className="font-bold text-xl py-4">
+            Authorized Person's Address :
+          </h1>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Input
+                {...register("address.addressNo")}
+                label="Address No"
+                id="Address No"
+                disabled={isSubmitting}
+              />
+              {errors.address?.addressNo && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.addressNo.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.building")}
+                label="Building"
+                id="Building"
+                disabled={isSubmitting}
+              />
+              {errors.address?.building && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.building.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.moo")}
+                label="Moo"
+                id="Moo"
+                disabled={isSubmitting}
+              />
+              {errors.address?.moo && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.moo.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.soi")}
+                label="Soi"
+                id="Soi"
+                disabled={isSubmitting}
+              />
+              {errors.address?.soi && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.soi.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.road")}
+                label="Road"
+                id="Road"
+                disabled={isSubmitting}
+              />
+              {errors.address?.road && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.road.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.subDistrict")}
+                label="Sub-District"
+                id="Sub-District"
+                disabled={isSubmitting}
+              />
+              {errors.address?.subDistrict && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.subDistrict.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.district")}
+                label="District"
+                id="District"
+                disabled={isSubmitting}
+              />
+              {errors.address?.district && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.district.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.province")}
+                label="Province"
+                id="Province"
+                disabled={isSubmitting}
+              />
+              {errors.address?.province && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.province.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.postalCode")}
+                label="Postal Code"
+                id="Postal Code"
+                disabled={isSubmitting}
+              />
+              {errors.address?.postalCode && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.postalCode.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.phone")}
+                label="Phone"
+                id="Phone"
+                disabled={isSubmitting}
+              />
+              {errors.address?.phone && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.phone.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Input
+                {...register("address.email")}
+                label="Email"
+                id="Email"
+                type="email"
+                disabled={isSubmitting}
+              />
+              {errors.address?.email && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.address.email.message}
+                </p>
+              )}
+            </div>
           </div>
-          <div>
-            <Input
-              {...register("address.building")}
-              label="Building"
-              id="Building"
-              disabled={isSubmitting}
-            />
-            {errors.address?.building && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.building.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.moo")}
-              label="Moo"
-              id="Moo"
-              disabled={isSubmitting}
-            />
-            {errors.address?.moo && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.moo.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.soi")}
-              label="Soi"
-              id="Soi"
-              disabled={isSubmitting}
-            />
-            {errors.address?.soi && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.soi.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.road")}
-              label="Road"
-              id="Road"
-              disabled={isSubmitting}
-            />
-            {errors.address?.road && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.road.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.subDistrict")}
-              label="Sub-District"
-              id="Sub-District"
-              disabled={isSubmitting}
-            />
-            {errors.address?.subDistrict && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.subDistrict.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.district")}
-              label="District"
-              id="District"
-              disabled={isSubmitting}
-            />
-            {errors.address?.district && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.district.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.province")}
-              label="Province"
-              id="Province"
-              disabled={isSubmitting}
-            />
-            {errors.address?.province && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.province.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.postalCode")}
-              label="Postal Code"
-              id="Postal Code"
-              disabled={isSubmitting}
-            />
-            {errors.address?.postalCode && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.postalCode.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.phone")}
-              label="Phone"
-              id="Phone"
-              disabled={isSubmitting}
-            />
-            {errors.address?.phone && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.phone.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Input
-              {...register("address.email")}
-              label="Email"
-              id="Email"
-              type="email"
-              disabled={isSubmitting}
-            />
-            {errors.address?.email && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.address.email.message}
-              </p>
-            )}
-          </div>
-        </div>
+        </section>
+
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}
