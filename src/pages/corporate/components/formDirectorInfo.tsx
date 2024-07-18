@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-    individualsDirectorSchema,
-    TIndividualsDirectorSchema,
+  individualsDirectorSchema,
+  TIndividualsDirectorSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { useFormIndividualsDirector} from "../hook/useFormDirector"
+import { useFormIndividualsDirector } from "../hook/useFormDirector";
 import { TDirector } from "../constants/types";
 import { Table } from "./dataTable";
 import { AddressForm } from "./directorAddressForm";
@@ -34,19 +34,11 @@ export function FormIndividualsDirector() {
     values: individualsDirector,
   });
 
-//   const columns = [
-//     { header: "Name-Surname", accessor: "nameSurname" },
-//     { header: "ID Card / Passport", accessor: "idCard" },
-//     { header: "Expiration Date", accessor: "expiredDate" },
-//     { header: "Nationality", accessor: "nationality" },
-//     { header: "% Shares", accessor: "shares" },
-//   ];
-
-//   const onSubmit = async (data: TIndividualsContactPersonSchema) => {
-//     await sleep(500);
-//     handleSetNewShareholder(data);
-//     reset();
-//   };
+  const onSubmit = async (data: TIndividualsDirectorSchema) => {
+    await sleep(500);
+    reset();
+    console.log(data);
+  };
 
   return (
     <>
@@ -62,11 +54,9 @@ export function FormIndividualsDirector() {
         </Card> */}
 
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">
-            Director Infomation :
-          </h1>
-          {/* <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> */}
-          <form className="space-y-4">
+          <h1 className="font-bold text-xl py-4">Director Infomation :</h1>
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            {/* <form className="space-y-4"> */}
             <div className="w-1/4">
               <Input
                 {...register("directorname")}
@@ -122,22 +112,21 @@ export function FormIndividualsDirector() {
                   </p>
                 )}
               </div>
-
             </div>
-              {/* <div className="w-1/2">
+            {/* <div className="w-1/2">
               </div> */}
-              <h1 className="font-bold text-xl py-4">Director's Address</h1>
-                <AddressForm
-                    isSubmitting={isSubmitting}
-                    errors={errors.directoraddress}
-                    register={register}
-                    keyType="directoraddress"
-                 />
-                {errors.directoraddress && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.directoraddress.message}
-                  </p>
-                )}
+            <h1 className="font-bold text-xl py-4">Director's Address</h1>
+            <AddressForm
+              isSubmitting={isSubmitting}
+              errors={errors.directoraddress}
+              register={register}
+              keyType="directoraddress"
+            />
+            {errors.directoraddress && (
+              <p className="text-red-500 text-sm px-2">
+                {errors.directoraddress.message}
+              </p>
+            )}
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}

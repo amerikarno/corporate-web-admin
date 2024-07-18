@@ -31,12 +31,12 @@ export default function CreateCorporate() {
       <div className="w-[1024px] mx-auto py-5 px-10 space-y-6">
         <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
         <FormCorporateTypeAndIncome onsubmit={handleSubmitCorporateInfo2} />
-        <FormIndividualsShareholders />
-        <FormBank />
-        <FormAuthorizedPerson />
         <FormIndividualsContactPerson />
         <FormIndividualsDirector />
+        <FormIndividualsShareholders />
         <FormJuristicShareholders />
+        <FormAuthorizedPerson />
+        <FormBank />
       </div>
     </>
   );
