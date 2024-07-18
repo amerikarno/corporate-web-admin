@@ -43,13 +43,6 @@ export type TCorporateTypeAndIncome = {
   investmentObjective: string;
 };
 
-export type TContactPersonType = {
-  contactnamesurname: string;
-  contactposition: string;
-  contactdivision: string;
-  contacttelephone: string;
-  contactemail: string;
-}
 export type TIndividualsShareholders = {
   title: string;
   firstName: string;
