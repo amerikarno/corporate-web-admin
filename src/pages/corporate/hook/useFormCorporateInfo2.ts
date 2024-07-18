@@ -1,14 +1,10 @@
 import { copy } from "@/lib/utils";
-import {
-  businessType,
-  countrySourceOfIncome,
-  investmentObjective,
-  juristicType,
-  sourceOfIncome,
-} from "../constants/const_variables";
+import { juristicType } from "../constants/const_variables";
 import { useState } from "react";
 import { TCorporateTypeAndIncome } from "../constants/types";
-import { emptyCorporateTypeAndIncome } from "../constants/initailData";
+import { emptyCorporateTypeAndIncome } from "../constants/initialData";
+import { boolean, z, ZodIssue } from "zod";
+import { corporateTypeAndIncomeSchema } from "../constants/schemas";
 
 export function useFormCorporateInfo2() {
   const [corporateTypeAndIncome, setCorporateTypeAndIncome] =
@@ -21,87 +17,23 @@ export function useFormCorporateInfo2() {
     useState<boolean>(false);
   const [isInvestmentObjectiveOthers, setIsInvestmentObjectiveOthers] =
     useState<boolean>(false);
+  const [errors, setErrors] = useState<ZodIssue[] | null>(null);
 
-  const handleCheck = (e: any) => {
-    const { name, checked } = e.target;
-    let tmp = copy(corporateTypeAndIncome);
-    tmp.juristicType = checked ? name : "";
-    setCorporateTypeAndIncome(tmp);
-    console.log(tmp.juristicType);
+  const handleErrors = (error: ZodIssue[] | null) => {
+    setErrors(error);
   };
 
-  const handleSubSelected = (e: any) => {
-    const { name, checked } = e.target;
-    const [keyName, keyType] = name.split("_");
-    let tmp = copy(corporateTypeAndIncome);
-    switch (keyName) {
-      case juristicType[0]:
-        tmp.juristicThai = checked ? keyType : "";
-        console.log(tmp.juristicThai);
-        break;
+  const getError = (
+    keyName: string[],
+    errors: ZodIssue[] | null
+  ): ZodIssue | null => {
+    if (errors === null) return null;
 
-      case juristicType[1]:
-        tmp.juristicForeign = checked ? keyType : "";
-        console.log(tmp.juristicForeign);
-        break;
-
-      case juristicType[2]:
-        tmp.juristicOthers = checked ? keyType : "";
-        console.log(tmp.juristicOthers);
-        break;
-
-      default:
-        break;
-    }
-    setCorporateTypeAndIncome(tmp);
-  };
-
-  const handeleBusinessType = (e: any) => {
-    const { name, checked } = e.target;
-    let tmp = copy(corporateTypeAndIncome);
-    tmp.businessType = checked ? name : "";
-    setCorporateTypeAndIncome(tmp);
-    if (name == "Others (Please Specify)") {
-      setIsBusinessTypeOthers(checked);
-    }
-  };
-
-  const handeleCountrySourceOfIncome = (e: any) => {
-    const { name, checked } = e.target;
-    let tmp = copy(corporateTypeAndIncome);
-    tmp.countrySourceOfIncome = checked ? name : "";
-    setCorporateTypeAndIncome(tmp);
-    if (name == "Others Countries (Please Specify)") {
-      setIsCountrySourceOfIncomeOthers(checked);
-    }
-  };
-
-  const handeleInvestmentObjective = (e: any) => {
-    const { name, checked } = e.target;
-    let tmp = copy(corporateTypeAndIncome);
-    tmp.investmentObjective = checked ? name : "";
-    setCorporateTypeAndIncome(tmp);
-    if (name == "Others (Please Specify)") {
-      setIsInvestmentObjectiveOthers(checked);
-    }
-  };
-
-  const handeleSourceOfIncome = (e: any) => {
-    const { name, checked } = e.target;
-    let tmp = copy(corporateTypeAndIncome);
-    if (checked) {
-      if (!tmp.sourceOfIncome.includes(name)) {
-        tmp.sourceOfIncome.push(name);
-      }
-    } else {
-      tmp.sourceOfIncome = tmp.sourceOfIncome.filter(
-        (item: any) => item !== name
-      );
-    }
-    setCorporateTypeAndIncome(tmp);
-    if (name == "Others (Please Specify)") {
-      setIsSourceOfIncomeOthers(checked);
-    }
+    return (
+      errors.find((error) =>
+        keyName.every((key) => error.path!.map(String).includes(key))
+      ) || null
+    );
   };
 
   const disableBusinessType = (type: string): boolean => {
@@ -158,33 +90,150 @@ export function useFormCorporateInfo2() {
     }
   };
 
+  const handleCheck = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(corporateTypeAndIncome);
+    tmp.juristicType = checked ? name : "";
+    if (checked) {
+      tmp.juristicType = name;
+      errors ? validateLocal(tmp) : null;
+    } else {
+      tmp.juristicType = "";
+    }
+    setCorporateTypeAndIncome(tmp);
+  };
+
+  const handleSubSelected = (e: any) => {
+    const { name, checked } = e.target;
+    const [keyName, keyType] = name.split("_");
+    let tmp = copy(corporateTypeAndIncome);
+    switch (keyName) {
+      case juristicType[0]:
+        tmp.juristicThai = checked ? keyType : "";
+        console.log(tmp.juristicThai);
+        break;
+
+      case juristicType[1]:
+        tmp.juristicForeign = checked ? keyType : "";
+        console.log(tmp.juristicForeign);
+        break;
+
+      case juristicType[2]:
+        tmp.juristicOthers = checked ? keyType : "";
+        console.log(tmp.juristicOthers);
+        break;
+
+      default:
+        break;
+    }
+    setCorporateTypeAndIncome(tmp);
+  };
+
+  const handeleBusinessType = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(corporateTypeAndIncome);
+    // tmp.businessType = checked ? name : "";
+    if (checked) {
+      tmp.businessType = name;
+      errors ? validateLocal(tmp) : null;
+    } else {
+      tmp.businessType = "";
+    }
+    setCorporateTypeAndIncome(tmp);
+    if (name == "Others (Please Specify)") {
+      setIsBusinessTypeOthers(checked);
+    }
+    // errors ? validateLocal(tmp) : null;
+  };
+
+  const handeleCountrySourceOfIncome = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(corporateTypeAndIncome);
+    // tmp.countrySourceOfIncome = checked ? name : "";
+    if (checked) {
+      tmp.countrySourceOfIncome = name;
+      errors ? validateLocal(tmp) : null;
+    } else {
+      tmp.countrySourceOfIncome = "";
+    }
+    setCorporateTypeAndIncome(tmp);
+    if (name == "Others Countries (Please Specify)") {
+      setIsCountrySourceOfIncomeOthers(checked);
+    }
+    // errors ? validateLocal(tmp) : null;
+  };
+
+  const handeleInvestmentObjective = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(corporateTypeAndIncome);
+    // tmp.investmentObjective = checked ? name : "";
+    if (checked) {
+      tmp.investmentObjective = name;
+      errors ? validateLocal(tmp) : null;
+    } else {
+      tmp.investmentObjective = "";
+    }
+    setCorporateTypeAndIncome(tmp);
+    if (name == "Others (Please Specify)") {
+      setIsInvestmentObjectiveOthers(checked);
+    }
+    // errors ? validateLocal(tmp) : null;
+  };
+
+  const handeleSourceOfIncome = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(corporateTypeAndIncome);
+    if (checked) {
+      if (!tmp.sourceOfIncome.includes(name)) {
+        tmp.sourceOfIncome.push(name);
+      }
+      errors ? validateLocal(tmp) : null;
+    } else {
+      tmp.sourceOfIncome = tmp.sourceOfIncome.filter(
+        (item: any) => item !== name
+      );
+    }
+    setCorporateTypeAndIncome(tmp);
+    if (name == "Others (Please Specify)") {
+      setIsSourceOfIncomeOthers(checked);
+    }
+  };
+
   const handleInputOtherBusinessType = (e: any) => {
-    const { _, value } = e.target;
+    const { value } = e.target;
     let tmp = copy(corporateTypeAndIncome);
     tmp.businessType = value;
     setCorporateTypeAndIncome(tmp);
+    errors ? validateLocal(tmp) : null;
   };
+
   const handleInputOtherSourceOfIncome = (e: any) => {
     let tmp = copy(corporateTypeAndIncome);
     tmp.sourceOfIncome = tmp.sourceOfIncome.filter(
       (item: any) => item !== "Others (Please Specify)"
     );
-    const { _, value } = e.target;
+    const { value } = e.target;
     tmp.sourceOfIncome.push(value);
     setCorporateTypeAndIncome(tmp);
+    errors ? validateLocal(tmp) : null;
   };
+
   const handleInputOtherCountrySourceOfIncome = (e: any) => {
-    const { _, value } = e.target;
+    const { value } = e.target;
     let tmp = copy(corporateTypeAndIncome);
     tmp.countrySourceOfIncome = value;
     setCorporateTypeAndIncome(tmp);
+    errors ? validateLocal(tmp) : null;
   };
+
   const handleInputOtherInvestmentObjective = (e: any) => {
-    const { _, value } = e.target;
+    const { value } = e.target;
     let tmp = copy(corporateTypeAndIncome);
     tmp.investmentObjective = value;
     setCorporateTypeAndIncome(tmp);
+    errors ? validateLocal(tmp) : null;
   };
+
   const handleInputOthers = (e: any, name: string) => {
     switch (name) {
       case "businessType":
@@ -208,12 +257,40 @@ export function useFormCorporateInfo2() {
     }
   };
 
+  const validateForm = (): boolean => {
+    try {
+      corporateTypeAndIncomeSchema.parse(corporateTypeAndIncome);
+      return true;
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        handleErrors(e.errors);
+      } else {
+        console.log(e);
+      }
+      return false;
+    }
+  };
+  const validateLocal = (obj: TCorporateTypeAndIncome) => {
+    try {
+      corporateTypeAndIncomeSchema.parse(obj);
+      handleErrors(null);
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        console.log(e.errors);
+        handleErrors(e.errors);
+      } else {
+        console.log(e);
+      }
+    }
+  };
+
   return {
     corporateTypeAndIncome,
     isBusinessTypeOthers,
     isSourceOfIncomeOthers,
     isCountrySourceOfIncomeOthers,
     isInvestmentObjectiveOthers,
+    errors,
     handleCheck,
     handleSubSelected,
     handeleBusinessType,
@@ -221,10 +298,12 @@ export function useFormCorporateInfo2() {
     handeleInvestmentObjective,
     handeleSourceOfIncome,
     handleInputOthers,
+    getError,
     disableBusinessType,
     disableCountrySourceOfIncome,
     disableInvestmentObjective,
     isDiabledJuristicType,
     isDisableSubSelected,
+    validateForm,
   };
 }

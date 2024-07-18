@@ -27,3 +27,23 @@ export const mockCorporateInfo = {
     shareholderEquity: "200000",
   },
 };
+
+export const mockIndividualsShareholders1 = {
+  title: "นาย",
+  firstName: "ทดสอบ",
+  lastName: "ทดสอบ",
+  idCard: "1234567890121",
+  expiredDate: "1980-11-22",
+  nationality: "ไทย",
+  shares: "30",
+};
+
+export const mockIndividualsShareholders2 = {
+  title: "นาย",
+  firstName: "ทดสอบ2",
+  lastName: "ทดสอบ2",
+  idCard: "1234567890121",
+  expiredDate: "2020-01-01",
+  nationality: "ไทย",
+  shares: "50",
+};

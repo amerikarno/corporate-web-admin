@@ -50,3 +50,12 @@ export type TContactPersonType = {
   contacttelephone: string;
   contactemail: string;
 }
+export type TIndividualsShareholders = {
+  title: string;
+  firstName: string;
+  lastName: string;
+  idCard: string;
+  expiredDate: string;
+  nationality: string;
+  shares: string;
+};

@@ -1,3 +1,4 @@
+import { checkFormatIDCard } from "@/lib/utils";
 import { z } from "zod";
 
 export const addressSchema = z.object({
@@ -73,14 +74,61 @@ export const corporateTypeAndIncomeSchema = z.object({
   juristicThai: z.string().optional(),
   juristicForeign: z.string().optional(),
   juristicOthers: z.string().optional(),
-  // businessType: z.string().min(1, "businessType cannot be empty"),
-  // sourceOfIncome: z.array(z.string().min(1, "sourceOfIncome cannot be empty")),
-  // countrySourceOfIncome: z
-  //   .string()
-  //   .min(1, "countrySourceOfIncome cannot be empty"),
-  // investmentObjective: z.string().min(1, "investmentObjective cannot be empty"),
+  businessType: z.string().min(1, "businessType cannot be empty"),
+  sourceOfIncome: z
+    .array(z.string().min(1, "sourceOfIncome cannot be empty"))
+    .nonempty(),
+  countrySourceOfIncome: z
+    .string()
+    .min(1, "countrySourceOfIncome cannot be empty"),
+  investmentObjective: z.string().min(1, "investmentObjective cannot be empty"),
 });
 
 export type TCorporateTypeAndIncomeSchema = z.infer<
   typeof corporateTypeAndIncomeSchema
+>;
+
+export const individualsShareholdersSchema = z.object({
+  title: z.string().min(1, { message: "Title cannot be empty" }),
+  firstName: z.string().min(1, { message: "First name cannot be empty" }),
+  lastName: z.string().min(1, { message: "Last name cannot be empty" }),
+  idCard: z
+    .string()
+    .min(1, { message: "ID card cannot be empty" })
+    .superRefine((val, ctx) => {
+      if (val.length != 13) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Should be 13 digits",
+          fatal: true,
+        });
+        return z.NEVER;
+      }
+
+      if (!checkFormatIDCard(val)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid number",
+        });
+      }
+    }),
+  expiredDate: z
+    .string()
+    .min(1, { message: "expiration date cannot be empty" }),
+  nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
+  shares: z
+    .string()
+    .min(1, { message: "Shares cannot be empty" })
+    .refine(
+      (value) => {
+        return /^\d+$/.test(value);
+      },
+      {
+        message: "Shares must be number",
+      }
+    ),
+});
+
+export type TIndividualsShareholdersSchema = z.infer<
+  typeof individualsShareholdersSchema
 >;

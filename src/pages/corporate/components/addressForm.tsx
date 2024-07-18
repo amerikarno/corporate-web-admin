@@ -5,8 +5,8 @@ import {
   TAddressSchema,
   TCorporateInfoSchema,
 } from "../constants/schemas";
-import { Input } from "@/components/ui/input";
 import { mappingAddress } from "../constants/const_variables";
+import { Input } from "@/components/Input";
 
 export type TAddressFormProps = {
   isSubmitting: boolean;
@@ -36,6 +36,7 @@ export function AddressForm({
           <div key={index} className="flex-col">
             <SideLabelInput title={mappingAddress[fieldName]}>
               <Input
+                label={fieldName}
                 {...register(`${keyType}.${fieldName}` as any)}
                 name={`${keyType}.${fieldName}`}
                 id={fieldName}

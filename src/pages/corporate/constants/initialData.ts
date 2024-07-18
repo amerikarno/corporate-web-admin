@@ -31,3 +31,13 @@ export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
   countrySourceOfIncome: "",
   investmentObjective: "",
 };
+
+export const individualShareholder = {
+  title: "",
+  firstName: "",
+  lastName: "",
+  idCard: "",
+  expiredDate: "",
+  nationality: "",
+  shares: "",
+};
