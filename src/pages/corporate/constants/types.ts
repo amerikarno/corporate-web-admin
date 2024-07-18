@@ -48,6 +48,7 @@ export type TIndividualsShareholders = {
   firstName: string;
   lastName: string;
   idCard: string;
+  passPort: string;
   expiredDate: string;
   nationality: string;
   shares: string;
@@ -71,7 +72,9 @@ export type TAuthorizePerson = {
   address: TAddress;
 };
 export type TContactPerson = {
+  contacttitle: string;
   contactname: string;
+  contactsurname: string;
   contactposition: string;
   contactdivision: string;
   contactphone: string;
@@ -79,8 +82,11 @@ export type TContactPerson = {
 };
 
 export type TDirector = {
+  directortitle: string;
   directorname: string;
+  directorsurname: string;
   directoridcard: string;
+  directorpassport: string;
   directorexpireddate: string;
   directornationality: string;
   directoraddress: TAddress;

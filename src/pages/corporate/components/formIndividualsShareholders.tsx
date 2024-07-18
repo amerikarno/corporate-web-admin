@@ -33,18 +33,12 @@ export function FormIndividualsShareholders() {
     values: individualsShareholder,
   });
 
-  const columns = [
-    { header: "Name-Surname", accessor: "nameSurname" },
-    { header: "ID Card / Passport", accessor: "idCard" },
-    { header: "Expiration Date", accessor: "expiredDate" },
-    { header: "Nationality", accessor: "nationality" },
-    { header: "% Shares", accessor: "shares" },
-  ];
 
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
     await sleep(500);
-    handleSetNewShareholder(data);
+    //handleSetNewShareholder(data);
     reset();
+    console.log(data)
   };
 
   return (
@@ -63,19 +57,23 @@ export function FormIndividualsShareholders() {
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Individual Shareholder :</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-1/4">
-              <Input
-                {...register("title")}
-                label="Title"
-                id="Title"
-                disabled={isSubmitting}
-                required
-              />
-              {errors.title && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.title.message}
-                </p>
-              )}
+            <div className="flex flex-row space-x-4">
+                <div className="w-1/2">
+                <Input
+                  {...register("title")}
+                  label="Title"
+                  id="Title"
+                  disabled={isSubmitting}
+                  required
+                />
+                {errors.title && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.title.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+              </div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
@@ -125,50 +123,70 @@ export function FormIndividualsShareholders() {
 
               <div className="w-1/2">
                 <Input
-                  {...register("expiredDate")}
-                  label="Expiration Date"
-                  id="Expiration Date"
-                  type="date"
-                  disabled={isSubmitting}
-                  required
-                />
-                {errors.expiredDate && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.expiredDate.message}
-                  </p>
-                )}
+                    {...register("passPort")}
+                    label="Passport"
+                    id="Passport"
+                    disabled={isSubmitting}
+                    required
+                  />
+                  {errors.passPort && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.passPort.message}
+                    </p>
+                  )}
               </div>
             </div>
             <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                <Input
-                  {...register("nationality")}
-                  label="Nationality"
-                  id="Nationality"
-                  disabled={isSubmitting}
-                  required
-                />
-                {errors.nationality && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.nationality.message}
-                  </p>
-                )}
+                <div className="w-1/2">
+                  <Input
+                    {...register("nationality")}
+                    label="Nationality"
+                    id="Nationality"
+                    disabled={isSubmitting}
+                    required
+                  />
+                  {errors.nationality && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.nationality.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-1/2">
+                  <Input
+                      {...register("expiredDate")}
+                      label="Expiration Date"
+                      id="Expiration Date"
+                      type="date"
+                      disabled={isSubmitting}
+                      required
+                    />
+                    {errors.expiredDate && (
+                      <p className="text-red-500 text-sm px-2">
+                        {errors.expiredDate.message}
+                      </p>
+                    )}
+                </div>
               </div>
-              <div className="w-1/2">
-                <Input
+              <div className="flex flex-row space-x-4">
+                <div className="w-1/2">
+                  <Input
                   {...register("shares")}
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
                   required
-                />
-                {errors.shares && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.shares.message}
-                  </p>
-                )}
+                  />
+                  {errors.shares && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.shares.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-1/2">
+
+                </div>
               </div>
-            </div>
+
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}
