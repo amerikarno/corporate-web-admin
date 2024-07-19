@@ -130,19 +130,8 @@ export const authorizedPersonSchema = z.object({
   title: z.string().min(1, "title cannot be empty"),
   firstName: z.string().min(1, "firstName cannot be empty"),
   lastName: z.string().min(1, "lastName cannot be empty"),
-  idCard: z
-    .string()
-    .min(1, "idCard cannot be empty")
-    .superRefine((val, ctx) => {
-      if (val.length != 13) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Should be 13 digits",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
+  idCard: z.string().optional(),
+  passPort: z.string().optional(),
   expiredDate: z.string().min(1, "date cannot be empty"),
   address: addressSchema,
 });

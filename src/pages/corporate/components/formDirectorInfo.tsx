@@ -64,8 +64,7 @@ export function FormIndividualsDirector() {
   }
 
   useEffect(() => {  
-    console.log(idcardInput)
-    console.log(passportInput)
+
       handleDeleteError()
   }, [idcardInput,passportInput]);
 

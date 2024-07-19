@@ -10,8 +10,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TAuthorizePerson } from "../constants/types";
 import { AddressFormAuthorizedPerson } from "./addressFormAuthorizedPerson";
+import { useState,useEffect } from "react";
 
 export function FormAuthorizedPerson() {
+
+  const [idCardError,setIdCardError] = useState<boolean>(true);
+  const [passportError,setPassportError] = useState<boolean>(true);
+  const [idcardInput,setIdCardInput] = useState<string>("");
+  const [passportInput,setPassportInput] = useState<string>("");
+
+
   const {
     register,
     handleSubmit,
@@ -22,11 +30,47 @@ export function FormAuthorizedPerson() {
   });
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-    await sleep(500);
-    console.log(data);
-    reset();
+    console.log(data)
+    if(validateIDcardPassport(data)){
+      await sleep(500);
+      reset();
+      console.log(data)
+    }else{
+
+    }
   };
 
+
+  const validateIDcardPassport = (data : any) => {
+    let isValid = false;
+  
+    if (data.idCard || data.passPort) {
+      setIdCardError(false);   
+      setPassportError(false); 
+      isValid = true;          
+    } else {
+      setIdCardError(true);    
+      setPassportError(true);  
+    }
+    return isValid;
+  };
+
+
+  const handleDeleteError = () =>{
+    console.log(idcardInput)
+    console.log(passportInput)
+    if (idcardInput || passportInput ){
+      setIdCardError(false);    
+      setPassportError(false);
+    }else{
+      setIdCardError(!idCardError);    
+      setPassportError(!passportError);
+    }
+  }
+  useEffect(() => {  
+
+      handleDeleteError()
+  }, [idcardInput,passportInput]);
   return (
     <Card className="p-4">
       <h1 className="font-bold text-xl py-4">Authorized Person :</h1>
@@ -81,32 +125,31 @@ export function FormAuthorizedPerson() {
           <div className="w-1/2">
             <Input
               {...register("idCard")}
-              label="ID Card / Passport"
-              id="ID Card / Passport"
+              label="ID Card"
+              id="ID Card"
               disabled={isSubmitting}
-              
+              onChange={(e)=>setIdCardInput(e.target.value)}
             />
-            {errors.idCard && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.idCard.message}
-              </p>
-            )}
+            {idCardError &&  (
+                <p className="text-red-500 px-4">
+                  IDCard must be fill
+                </p>
+              )}
           </div>
 
           <div className="w-1/2">
-            <Input
-              {...register("expiredDate")}
-              label="Expiration Date"
-              id="Expiration Date"
-              type="date"
-              disabled={isSubmitting}
-              
-            />
-            {errors.expiredDate && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.expiredDate.message}
-              </p>
-            )}
+                <Input
+                    {...register("passPort")}
+                    label="Passport"
+                    id="Passport"
+                    disabled={isSubmitting}
+                    onChange={(e)=>setPassportInput(e.target.value)}
+                    />
+                    {passportError &&  (
+                <p className="text-red-500 px-4">
+                  Passport must be filled
+                </p>
+              )}
           </div>
         </div>
         <div className="flex flex-row space-x-4">
@@ -124,7 +167,21 @@ export function FormAuthorizedPerson() {
               </p>
             )}
           </div>
-          <div className="w-1/2"></div>
+          <div className="w-1/2">
+            <Input
+              {...register("expiredDate")}
+              label="Expiration Date"
+              id="Expiration Date"
+              type="date"
+              disabled={isSubmitting}
+              
+            />
+            {errors.expiredDate && (
+              <p className="text-red-500 text-sm px-2">
+                {errors.expiredDate.message}
+              </p>
+            )}
+          </div>
         </div>
         <h1 className="font-bold text-xl py-4">
           Authorized Person's Address :
