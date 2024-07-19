@@ -1,4 +1,4 @@
-import { TCorporateTypeAndIncome } from "./types";
+import { TCorporateTypeAndIncome,TRegisteredCountryPrimaryCountryOperation } from "./types";
 
 export const initCorporateInfo = {
   name: "",
@@ -23,6 +23,11 @@ export const initAddress = {
   phone: "",
   type: 0,
 };
+
+export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation = {
+  registeredCountry : "",
+  primaryCountryOfOperation: ""
+}
 
 export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
   juristicType: "",

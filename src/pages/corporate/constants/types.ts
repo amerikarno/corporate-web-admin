@@ -25,8 +25,8 @@ export type TCorporateInfo = {
   commercialRegisteredNo: string;
   taxId: string;
   dateIncorporation: string;
-  registeredCountry: string;
-  operateCountry: string;
+  registeredCountry:string;
+  primaryCountryOfOperation:string;
   registeredAddress: TAddress;
   incorporatedAddress: TAddress;
   financial?: TFinancialInfo;
@@ -42,6 +42,11 @@ export type TCorporateTypeAndIncome = {
   countrySourceOfIncome: string;
   investmentObjective: string;
 };
+
+export type TRegisteredCountryPrimaryCountryOperation = {
+  registeredCountry : string;
+  primaryCountryOfOperation: string;
+}
 
 export type TIndividualsShareholders = {
   title: string;

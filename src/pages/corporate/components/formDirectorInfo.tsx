@@ -9,7 +9,6 @@ import {
   TIndividualsDirectorSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { useFormIndividualsDirector } from "../hook/useFormDirector";
 import { TDirector } from "../constants/types";
 import { Table } from "./dataTable";
 import { AddressForm } from "./directorAddressForm";
