@@ -24,9 +24,10 @@ export function FormIndividualsDirector() {
 //     // handleSetNewShareholder,
 //     // serializeData,
 //   } = useFormIndividualsDirector();
-  const [idCardError,setIdCardError] = useState<boolean>(false);
-  const [passportError,setPassportError] = useState<boolean>(false);
-  const [directorInput,setDirectorInput] = useState<boolean>(true);
+  const [idCardError,setIdCardError] = useState<boolean>(true);
+  const [passportError,setPassportError] = useState<boolean>(true);
+  const [idcardInput,setIdCardInput] = useState<string>("");
+  const [passportInput,setPassportInput] = useState<string>("");
 
 
   const {
@@ -52,15 +53,21 @@ export function FormIndividualsDirector() {
     }
     return isValid;
   };
-  const handleDeleteError = (e : React.ChangeEvent<HTMLInputElement>) =>{
-    if (e.target.value){
+  const handleDeleteError = () =>{
+    if (idcardInput || passportInput ){
       setIdCardError(false);    
       setPassportError(false);
     }else{
-      setIdCardError(true);    
-      setPassportError(true);
+      setIdCardError(!idCardError);    
+      setPassportError(!passportError);
     }
   }
+
+  useEffect(() => {  
+    console.log(idcardInput)
+    console.log(passportInput)
+      handleDeleteError()
+  }, [idcardInput,passportInput]);
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     
@@ -142,7 +149,7 @@ export function FormIndividualsDirector() {
                   label="ID Number"
                   id="ID Number"
                   disabled={isSubmitting}
-                  onChange={handleDeleteError}
+                  onChange={(e)=>setIdCardInput(e.target.value)}
                 />
                 {idCardError &&  (
                 <p className="text-red-500 px-4">
@@ -156,7 +163,7 @@ export function FormIndividualsDirector() {
                     label="Passport"
                     id="Passport"
                     disabled={isSubmitting}
-                    onChange={handleDeleteError}
+                    onChange={(e)=>setPassportInput(e.target.value)}
                     />
                     {passportError &&  (
                 <p className="text-red-500 px-4">
