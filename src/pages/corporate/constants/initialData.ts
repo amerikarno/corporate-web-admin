@@ -24,6 +24,11 @@ export const initAddress = {
   type: 0,
 };
 
+export const registeredCountryPrimaryCountryOperation = {
+  registeredCountry : "",
+  
+}
+
 export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
   juristicType: "",
   businessType: "",

@@ -34,7 +34,7 @@ export function AddressForm({
       {fields.map(([fieldName], index) => {
         return (
           <div key={index} className="flex-col">
-            <SideLabelInput title={mappingAddress[fieldName]}>
+            {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
               <Input
                 label={fieldName}
                 {...register(`${keyType}.${fieldName}` as any)}
@@ -44,7 +44,7 @@ export function AddressForm({
                 disabled={isSubmitting}
                 type={fieldName == "email" ? "email" : "text"}
               />
-            </SideLabelInput>
+            {/* </SideLabelInput> */}
             {errors && errors[fieldName as keyof TAddressSchema] && (
               <p className="text-red-500">
                 {errors[fieldName as keyof TAddressSchema]?.message}

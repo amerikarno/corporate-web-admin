@@ -43,7 +43,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <h1 className="col-span-4 font-bold pb-4">
               Juristic Investor Informations :
             </h1>
-            <SideLabelInput title="Juristic Investor Name">
+            {/* <SideLabelInput title="Juristic Investor Name"> */}
               <Input
                 id={"Juristic Investor Name"}
                 label={"Juristic Investor Name"}
@@ -55,8 +55,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.name && (
                 <p className="text-red-500">{errors.name.message}</p>
               )}
-            </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Address">
+            {/* </SideLabelInput>
+            <SideLabelInput title="Juristic Investor Address"> */}
               <Input
                 id={"Juristic Investor Address"}
                 label={"Juristic Investor Address"}
@@ -70,8 +70,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                   {errors.commercialRegisteredNo.message}
                 </p>
               )}
-            </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Tax ID">
+            {/* </SideLabelInput>
+            <SideLabelInput title="Juristic Investor Tax ID"> */}
               <Input
                 id={"Juristic Investor Tax ID"}
                 label={"Juristic Investor Tax ID"}
@@ -83,8 +83,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.taxId && (
                 <p className="text-red-500">{errors.taxId.message}</p>
               )}
-            </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Email">
+            {/* </SideLabelInput>
+            <SideLabelInput title="Juristic Investor Email"> */}
               <Input
                 id={"Juristic Investor Email"}
                 label={"Juristic Investor Email"}
@@ -98,12 +98,12 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                   {errors.dateIncorporation.message}
                 </p>
               )}
-            </SideLabelInput>
+            {/* </SideLabelInput> */}
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Registered / Business Address :</h1>
-            <SideLabelInput title="Registered Country">
+            {/* <SideLabelInput title="Registered Country"> */}
               <Input
                 id={"Registered Country"}
                 label={"Registered Country"}
@@ -117,7 +117,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                   {errors.registeredCountry.message}
                 </p>
               )}
-            </SideLabelInput>
+            {/* </SideLabelInput> */}
             <AddressForm
               isSubmitting={isSubmitting}
               errors={errors.registeredAddress}
@@ -128,7 +128,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Place Of Incorporate :</h1>
-            <SideLabelInput title="Primary Country Of Operation">
+            {/* <SideLabelInput title="Primary Country Of Operation"> */}
               <Input
                 id={"Primary Country Of Operation"}
                 label={"Primary Country Of Operation"}
@@ -140,7 +140,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.operateCountry && (
                 <p className="text-red-500">{errors.operateCountry.message}</p>
               )}
-            </SideLabelInput>
+            {/* </SideLabelInput> */}
             <AddressForm
               errors={errors.incorporatedAddress}
               register={register}
@@ -151,7 +151,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information :</h1>
-            <SideLabelInput title="Registered Capital">
+            {/* <SideLabelInput title="Registered Capital"> */}
               <Input
                 id={"Registered Capital"}
                 label={"Registered Capital"}
@@ -162,8 +162,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.financial && (
                 <p className="text-red-500">{errors.financial.message}</p>
               )}
-            </SideLabelInput>
-            <SideLabelInput title="Net Profit (Loss)">
+            {/* </SideLabelInput>
+            <SideLabelInput title="Net Profit (Loss)"> */}
               <Input
                 id={"Net Profit (Loss)"}
                 label={"Net Profit (Loss)"}
@@ -174,8 +174,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.financial && (
                 <p className="text-red-500">{errors.financial.message}</p>
               )}
-            </SideLabelInput>
-            <SideLabelInput title="Revenue Per Year">
+            {/* </SideLabelInput>
+            <SideLabelInput title="Revenue Per Year"> */}
               <Input
                 id={"Revenue Per Year"}
                 label={"Revenue Per Year"}
@@ -186,8 +186,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.financial && (
                 <p className="text-red-500">{errors.financial.message}</p>
               )}
-            </SideLabelInput>
-            <SideLabelInput title="Operating Expense Per Year">
+            {/* </SideLabelInput>
+            <SideLabelInput title="Operating Expense Per Year"> */}
               <Input
                 id={"Operating Expense Per Year"}
                 label={"Operating Expense Per Year"}
@@ -198,7 +198,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {errors.financial && (
                 <p className="text-red-500">{errors.financial.message}</p>
               )}
-            </SideLabelInput>
+            {/* </SideLabelInput> */}
           </div>
           <div className="flex justify-end pb-4 pr-4">
             <Button type="submit" disabled={isSubmitting}>
