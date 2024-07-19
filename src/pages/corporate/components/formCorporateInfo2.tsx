@@ -13,15 +13,8 @@ import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { TCorporateTypeAndIncome } from "../constants/types";
 import { Input } from "@/components/ui/input";
-// import Input from "@/components/Input";
 
-type FormCorporateTypeAndIncomeProps = {
-  onsubmit: (data: TCorporateTypeAndIncome) => void;
-};
-
-export function FormCorporateTypeAndIncome({
-  onsubmit,
-}: FormCorporateTypeAndIncomeProps) {
+export function FormCorporateTypeAndIncome() {
   const {
     corporateTypeAndIncome,
     isBusinessTypeOthers,
@@ -48,7 +41,7 @@ export function FormCorporateTypeAndIncome({
   const onSubmit = (e: any) => {
     e.preventDefault();
     if (validateForm()) {
-      onsubmit(corporateTypeAndIncome);
+      console.log(corporateTypeAndIncome);
     } else {
       console.log("submit failed");
     }

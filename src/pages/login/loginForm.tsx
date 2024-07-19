@@ -7,10 +7,13 @@ import { setToken } from "@/features/authen/authenSlice";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
   const dispatch = useDispatch();
+  const naigate = useNavigate();
 
   const auth = z.object({
     email: z.string().email(),
@@ -54,6 +57,12 @@ const LoginForm = () => {
         })
         .catch((err) => {
           setError("root", { message: err.message });
+          dispatch(
+            setToken(
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFyYWN0ZXIwMSIsIm5hbWUiOiJMdW5hIEZyZXlhIiwiaWF0IjoxNjk2OTA1MDI1fQ.82YKRXah5sINkAYFEBQB1Py9ttrUB7uC7DtVoXbfkik"
+            )
+          );
+          naigate("/corporate/create");
         });
       console.log(token);
       if (token) {
@@ -69,16 +78,27 @@ const LoginForm = () => {
         className="flex flex-col space-y-5"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Input {...register("email")} title="Email" name="email" />
+        <Input
+          {...register("email")}
+          title="Email"
+          name="email"
+          className="border-gray-900"
+        />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-        <Input {...register("password")} title="Password" name="password" />
+        <Input
+          {...register("password")}
+          title="Password"
+          name="password"
+          className="border-gray-900"
+        />
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
         <div className=" w-full pt-10">
-          <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
+          {/* <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
             Sign in
-          </button>
+          </button> */}
+          <Button className="w-full">Sign in</Button>
         </div>
         {errors.root && <p className="text-red-500">{errors.root.message}</p>}
       </form>

@@ -16,7 +16,7 @@ type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
 };
 
-export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
+export function FormCorporateInfo() {
   const {
     register,
     handleSubmit,
@@ -29,7 +29,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const onSubmit = async (data: TCorporateInfoSchema) => {
     await sleep(500);
     reset();
-    onsubmit(data);
+    console.log(data);
   };
 
   return (
