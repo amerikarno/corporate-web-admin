@@ -25,8 +25,8 @@ export type TCorporateInfo = {
   commercialRegisteredNo: string;
   taxId: string;
   dateIncorporation: string;
-  registeredCountry:string;
-  primaryCountryOfOperation:string;
+  registeredCountry: string;
+  primaryCountryOfOperation: string;
   registeredAddress: TAddress;
   incorporatedAddress: TAddress;
   financial?: TFinancialInfo;
@@ -44,9 +44,9 @@ export type TCorporateTypeAndIncome = {
 };
 
 export type TRegisteredCountryPrimaryCountryOperation = {
-  registeredCountry : string;
+  registeredCountry: string;
   primaryCountryOfOperation: string;
-}
+};
 
 export type TIndividualsShareholders = {
   title: string;
@@ -72,7 +72,7 @@ export type TAuthorizePerson = {
   firstName: string;
   lastName: string;
   idCard: string;
-  passPort : string;
+  passPort: string;
   expiredDate: string;
   nationality: string;
   address: TAddress;
@@ -103,4 +103,11 @@ export type TJuristicsShareholders = {
   juristicRegisNo: string;
   juristicRegisCountry: string;
   juristicShares: string;
+};
+
+export type TInitailJuristicTypeAndIncome = {
+  [key: string]: boolean;
+};
+export type TInitailJuristicOther = {
+  [key: string]: string;
 };

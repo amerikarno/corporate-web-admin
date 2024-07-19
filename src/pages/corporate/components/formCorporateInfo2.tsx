@@ -3,15 +3,15 @@ import {
   businessType,
   countrySourceOfIncome,
   investmentObjective,
+  juristicForeign,
   juristicOthers,
-  juristicThaiForeign,
-  juristicType,
+  juristicThai,
   sourceOfIncome,
+  juristicType,
 } from "../constants/const_variables";
 import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
-import { TCorporateTypeAndIncome } from "../constants/types";
 import { Input } from "@/components/ui/input";
 
 export function FormCorporateTypeAndIncome() {
@@ -22,6 +22,8 @@ export function FormCorporateTypeAndIncome() {
     isCountrySourceOfIncomeOthers,
     isInvestmentObjectiveOthers,
     errors,
+    juristicAllType,
+    juristicAllOtherType,
     handleCheck,
     handleSubSelected,
     handeleBusinessType,
@@ -42,6 +44,9 @@ export function FormCorporateTypeAndIncome() {
     e.preventDefault();
     if (validateForm()) {
       console.log(corporateTypeAndIncome);
+      console.log("submit success");
+      console.log(juristicAllType);
+      console.log(juristicAllOtherType);
     } else {
       console.log("submit failed");
     }
@@ -61,31 +66,42 @@ export function FormCorporateTypeAndIncome() {
                 <div className="w-1/4">
                   <CheckBox
                     label={type}
-                    onChange={handleCheck}
+                    onChange={(e) => handleCheck(e, i)}
                     name={type}
                     disabled={isDiabledJuristicType(type)}
                   />
                 </div>
                 <div className="w-3/4">
-                  {i != 2
-                    ? juristicThaiForeign.map((item, j) => (
-                        <CheckBox
-                          key={`${i}_${j}`}
-                          label={item}
-                          onChange={handleSubSelected}
-                          name={`${type}_${item}`}
-                          disabled={isDisableSubSelected(type)}
-                        />
-                      ))
-                    : juristicOthers.map((item, j) => (
-                        <CheckBox
-                          key={`${i}_${j}`}
-                          label={item}
-                          onChange={handeleBusinessType}
-                          name={`${type}_${item}`}
-                          disabled={isDisableSubSelected(type)}
-                        />
-                      ))}
+                  {i == 0 &&
+                    juristicThai.map((item, j) => (
+                      <CheckBox
+                        key={`${i}_${j}`}
+                        label={item}
+                        onChange={(e) => handleSubSelected(e, i, j)}
+                        name={`${type}_${item}`}
+                        disabled={isDisableSubSelected(type)}
+                      />
+                    ))}
+                  {i == 1 &&
+                    juristicForeign.map((item, j) => (
+                      <CheckBox
+                        key={`${i}_${j}`}
+                        label={item}
+                        onChange={(e) => handleSubSelected(e, i, j)}
+                        name={`${type}_${item}`}
+                        disabled={isDisableSubSelected(type)}
+                      />
+                    ))}
+                  {i == 2 &&
+                    juristicOthers.map((item, j) => (
+                      <CheckBox
+                        key={`${i}_${j}`}
+                        label={item}
+                        onChange={(e) => handleSubSelected(e, i, j)}
+                        name={`${type}_${item}`}
+                        disabled={isDisableSubSelected(type)}
+                      />
+                    ))}
                 </div>
               </div>
             ))}
@@ -105,7 +121,7 @@ export function FormCorporateTypeAndIncome() {
                 <CheckBox
                   key={i}
                   label={item}
-                  onChange={handeleBusinessType}
+                  onChange={(e) => handeleBusinessType(e, i)}
                   name={item}
                   disabled={disableBusinessType(item)}
                 />
@@ -136,7 +152,7 @@ export function FormCorporateTypeAndIncome() {
                 <CheckBox
                   key={i}
                   label={item}
-                  onChange={handeleSourceOfIncome}
+                  onChange={(e) => handeleSourceOfIncome(e, i)}
                   name={item}
                 />
               ))}
@@ -168,7 +184,7 @@ export function FormCorporateTypeAndIncome() {
                 <CheckBox
                   key={i}
                   label={item}
-                  onChange={handeleCountrySourceOfIncome}
+                  onChange={(e) => handeleCountrySourceOfIncome(e, i)}
                   name={item}
                   disabled={disableCountrySourceOfIncome(item)}
                 />
@@ -199,7 +215,7 @@ export function FormCorporateTypeAndIncome() {
               <CheckBox
                 key={i}
                 label={item}
-                onChange={handeleInvestmentObjective}
+                onChange={(e) => handeleInvestmentObjective(e, i)}
                 name={item}
                 disabled={disableInvestmentObjective(item)}
               />
