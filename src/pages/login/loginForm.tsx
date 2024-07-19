@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
   const dispatch = useDispatch();
-  const naigate = useNavigate();
+  const navigate = useNavigate();
 
   const auth = z.object({
     email: z.string().email(),
@@ -54,6 +54,7 @@ const LoginForm = () => {
         .then((res) => {
           console.log(res);
           dispatch(setToken(res.data.token));
+          navigate("/corporate/create");
         })
         .catch((err) => {
           setError("root", { message: err.message });
@@ -62,7 +63,7 @@ const LoginForm = () => {
               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFyYWN0ZXIwMSIsIm5hbWUiOiJMdW5hIEZyZXlhIiwiaWF0IjoxNjk2OTA1MDI1fQ.82YKRXah5sINkAYFEBQB1Py9ttrUB7uC7DtVoXbfkik"
             )
           );
-          naigate("/corporate/create");
+          navigate("/corporate/create");
         });
       console.log(token);
       if (token) {
