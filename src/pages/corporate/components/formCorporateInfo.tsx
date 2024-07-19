@@ -63,7 +63,7 @@ export function FormCorporateInfo() {
     if (handleCheckboxError()) {
       await sleep(500);
       reset();
-      onsubmit(formData);
+      console.log(formData);
     } else {
       setShouldScrollUp(true);
     }
