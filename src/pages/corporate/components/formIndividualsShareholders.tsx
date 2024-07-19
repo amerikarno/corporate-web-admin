@@ -12,8 +12,15 @@ import { sleep } from "@/lib/utils";
 import { useFormIndividualsShareholder } from "../hook/useFormIndividualsShareholder";
 import { TIndividualsShareholders } from "../constants/types";
 import { Table } from "./dataTable";
+import { useState,useEffect } from "react";
 
 export function FormIndividualsShareholders() {
+
+  const [idCardError,setIdCardError] = useState<boolean>(true);
+  const [passportError,setPassportError] = useState<boolean>(true);
+  const [idcardInput,setIdCardInput] = useState<string>("");
+  const [passportInput,setPassportInput] = useState<string>("");
+
   const {
     shareholders,
     individualsShareholder,
@@ -35,11 +42,44 @@ export function FormIndividualsShareholders() {
 
 
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
-    await sleep(500);
-    //handleSetNewShareholder(data);
-    reset();
-    console.log(data)
+    if(validateIDcardPassport(data)){
+      await sleep(500);
+      reset();
+      console.log(data)
+    }else{
+
+    }
   };
+
+  const validateIDcardPassport = (data : any) => {
+    let isValid = false;
+  
+    if (data.idCard || data.passPort) {
+      setIdCardError(false);   
+      setPassportError(false); 
+      isValid = true;          
+    } else {
+      setIdCardError(true);    
+      setPassportError(true);  
+    }
+    return isValid;
+  };
+
+
+  const handleDeleteError = () =>{
+
+    if (idcardInput || passportInput ){
+      setIdCardError(false);    
+      setPassportError(false);
+    }else{
+      setIdCardError(!idCardError);    
+      setPassportError(!passportError);
+    }
+  }
+  useEffect(() => {  
+
+      handleDeleteError()
+  }, [idcardInput,passportInput]);
 
   return (
     <>
@@ -64,7 +104,7 @@ export function FormIndividualsShareholders() {
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.title && (
                   <p className="text-red-500 text-sm px-2">
@@ -82,7 +122,7 @@ export function FormIndividualsShareholders() {
                   label="First Name"
                   id="First Name"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.firstName && (
                   <p className="text-red-500 text-sm px-2">
@@ -96,7 +136,7 @@ export function FormIndividualsShareholders() {
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.lastName && (
                   <p className="text-red-500 text-sm px-2">
@@ -107,31 +147,31 @@ export function FormIndividualsShareholders() {
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
-                <Input
+                  <Input
                   {...register("idCard")}
-                  label="ID Card / Passport"
-                  id="ID Card / Passport"
+                  label="ID Card"
+                  id="ID Card"
                   disabled={isSubmitting}
-                  required
+                  onChange={(e)=>setIdCardInput(e.target.value)}
                 />
-                {errors.idCard && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.idCard.message}
-                  </p>
-                )}
+                {idCardError &&  (
+                    <p className="text-red-500 px-4">
+                      IDCard must be filled
+                    </p>
+                  )}
               </div>
 
               <div className="w-1/2">
-                <Input
-                    {...register("passPort")}
-                    label="Passport"
-                    id="Passport"
-                    disabled={isSubmitting}
-                    required
-                  />
-                  {errors.passPort && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.passPort.message}
+                  <Input
+                        {...register("passPort")}
+                        label="Passport"
+                        id="Passport"
+                        disabled={isSubmitting}
+                        onChange={(e)=>setPassportInput(e.target.value)}
+                        />
+                        {passportError &&  (
+                    <p className="text-red-500 px-4">
+                      Passport must be filled
                     </p>
                   )}
               </div>
@@ -143,7 +183,7 @@ export function FormIndividualsShareholders() {
                     label="Nationality"
                     id="Nationality"
                     disabled={isSubmitting}
-                    required
+                    
                   />
                   {errors.nationality && (
                     <p className="text-red-500 text-sm px-2">
@@ -158,7 +198,7 @@ export function FormIndividualsShareholders() {
                       id="Expiration Date"
                       type="date"
                       disabled={isSubmitting}
-                      required
+                      
                     />
                     {errors.expiredDate && (
                       <p className="text-red-500 text-sm px-2">
@@ -174,7 +214,7 @@ export function FormIndividualsShareholders() {
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
-                  required
+                  
                   />
                   {errors.shares && (
                     <p className="text-red-500 text-sm px-2">

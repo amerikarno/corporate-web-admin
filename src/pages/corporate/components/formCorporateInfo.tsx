@@ -72,7 +72,6 @@ export function FormCorporateInfo() {
   const handleCheckboxError = () => {
     let isValid = true;
 
-    // Check if registeredCountry is filled
     if (!registeredCountryPrimaryCountryOperation.registeredCountry) {
       setRegisteredCountryError(true);
       isValid = false;
@@ -80,7 +79,6 @@ export function FormCorporateInfo() {
       setRegisteredCountryError(false);
     }
 
-    // Check if primaryCountryOfOperation is filled
     if (!registeredCountryPrimaryCountryOperation.primaryCountryOfOperation) {
       setPrimaryCountryOfOperationError(true);
       isValid = false;
@@ -123,7 +121,6 @@ export function FormCorporateInfo() {
               {...register("name")}
               name="name"
               disabled={isSubmitting}
-              required
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
@@ -135,7 +132,6 @@ export function FormCorporateInfo() {
               label={"Juristic Investor Address"}
               {...register("commercialRegisteredNo")}
               name="commercialRegisteredNo"
-              required
               disabled={isSubmitting}
             />
             {errors.commercialRegisteredNo && (
@@ -150,7 +146,6 @@ export function FormCorporateInfo() {
               label={"Juristic Investor Tax ID"}
               {...register("taxId")}
               name="taxId"
-              required
               disabled={isSubmitting}
             />
             {errors.taxId && (
@@ -163,7 +158,6 @@ export function FormCorporateInfo() {
               label={"Juristic Investor Email"}
               {...register("dateIncorporation")}
               name="dateIncorporation"
-              required
               disabled={isSubmitting}
             />
             {errors.dateIncorporation && (
@@ -207,7 +201,7 @@ export function FormCorporateInfo() {
               )}
               {registeredCountryError && (
                 <p className="text-red-500 px-4">
-                  Register Country must be fill.
+                  Register Country must be filled.
                 </p>
               )}
             </div>
@@ -246,7 +240,7 @@ export function FormCorporateInfo() {
               )}
               {primaryCountryOfOperationError && (
                 <p className="text-red-500 px-4">
-                  Primary Country of Operation must be fill.
+                  Primary Country of Operation must be filled.
                 </p>
               )}
             </div>

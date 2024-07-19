@@ -72,6 +72,7 @@ export type TAuthorizePerson = {
   firstName: string;
   lastName: string;
   idCard: string;
+  passPort : string;
   expiredDate: string;
   nationality: string;
   address: TAddress;

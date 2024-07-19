@@ -40,7 +40,7 @@ export function AddressForm({
                 {...register(`${keyType}.${fieldName}` as any)}
                 name={`${keyType}.${fieldName}`}
                 id={fieldName}
-                required={isOptional(fieldName)}
+                //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={fieldName == "email" ? "email" : "text"}
               />
