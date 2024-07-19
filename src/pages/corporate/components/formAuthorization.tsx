@@ -38,7 +38,7 @@ export function FormAuthorizedPerson() {
               label="Title"
               id="Title"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.title && (
               <p className="text-red-500 text-sm px-2">{errors.title.message}</p>
@@ -54,7 +54,7 @@ export function FormAuthorizedPerson() {
               label="First Name"
               id="First Name"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.firstName && (
               <p className="text-red-500 text-sm px-2">
@@ -68,7 +68,7 @@ export function FormAuthorizedPerson() {
               label="Surname"
               id="Surname"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.lastName && (
               <p className="text-red-500 text-sm px-2">
@@ -84,7 +84,7 @@ export function FormAuthorizedPerson() {
               label="ID Card / Passport"
               id="ID Card / Passport"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.idCard && (
               <p className="text-red-500 text-sm px-2">
@@ -100,7 +100,7 @@ export function FormAuthorizedPerson() {
               id="Expiration Date"
               type="date"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.expiredDate && (
               <p className="text-red-500 text-sm px-2">
@@ -116,7 +116,7 @@ export function FormAuthorizedPerson() {
               label="Nationality"
               id="Nationality"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.nationality && (
               <p className="text-red-500 text-sm px-2">
@@ -133,7 +133,7 @@ export function FormAuthorizedPerson() {
           isSubmitting={isSubmitting}
           keyType="address"
           register={register}
-          errors={errors}
+          errors={errors.address}
         />
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>

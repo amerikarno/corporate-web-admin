@@ -52,7 +52,7 @@ export const contactPersonSchema = z.object({
   contactposition: z.string().min(1, "position cannot be empty"),
   contactdivision: z.string().min(1, "division cannot be empty"),
   contacttelephone: z.string().min(1, "telephone cannot be empty"),
-  contactemail: z.string().min(1, "email cannot be empty"),
+  contactemail: z.string().email(),
 });
 
 export type TContactPersonSchema = z.infer<typeof contactPersonSchema>;
@@ -83,26 +83,7 @@ export const individualsShareholdersSchema = z.object({
   title: z.string().min(1, { message: "Title cannot be empty" }),
   firstName: z.string().min(1, { message: "First name cannot be empty" }),
   lastName: z.string().min(1, { message: "Last name cannot be empty" }),
-  idCard: z
-    .string()
-    .min(1, { message: "ID card cannot be empty" })
-    .superRefine((val, ctx) => {
-      if (val.length != 13) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Should be 13 digits",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-
-      if (!checkFormatIDCard(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid number",
-        });
-      }
-    }),
+  idCard: z.string().optional(),
     passPort: z.string().optional(),
   expiredDate: z
     .string()
@@ -176,7 +157,7 @@ export const individualsContactPersonSchema = z.object({
   contactposition: z.string().min(1, { message: "Position cannot be empty" }),
   contactdivision: z.string().min(1, { message: "Division cannot be empty" }),
   contactphone: z.string().min(1, { message: "Phone cannot be empty" }),
-  contactemail: z.string().min(1, { message: "Email cannot be empty" }),
+  contactemail: z.string().email(),
 });
 
 export type TIndividualsContactPersonSchema = z.infer<
@@ -187,19 +168,7 @@ export const individualsDirectorSchema = z.object({
   directortitle: z.string().min(1, { message: "Title cannot be empty" }),
   directorname: z.string().min(1, { message: "Name cannot be empty" }),
   directorsurname: z.string().min(1, { message: "Surname cannot be empty" }),
-  directoridcard: z
-  .string()
-  .min(1, "idCard cannot be empty")
-  .superRefine((val, ctx) => {
-    if (val.length != 13) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Should be 13 digits",
-        fatal: true,
-      });
-      return z.NEVER;
-    }
-  }),
+  directoridcard: z.string().optional(),
   directorpassport: z.string().optional(),
   directorexpireddate: z
     .string()

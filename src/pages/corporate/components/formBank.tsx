@@ -34,7 +34,7 @@ export function FormBank() {
               label="Account Type"
               id="Account Type"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.accountType && (
               <p className="text-red-500 text-sm px-2">
@@ -48,7 +48,7 @@ export function FormBank() {
               label="Bank Name"
               id="Bank NAme"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.bankName && (
               <p className="text-red-500 text-sm px-2">
@@ -64,7 +64,7 @@ export function FormBank() {
               label="Account Number"
               id="Account Number"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.accountNo && (
               <p className="text-red-500 text-sm px-2">
@@ -79,7 +79,7 @@ export function FormBank() {
               label="Account Location"
               id="Account Location"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.accountLocation && (
               <p className="text-red-500 text-sm px-2">
@@ -96,7 +96,7 @@ export function FormBank() {
               label="SWIFT Code"
               id="SWIFT Code"
               disabled={isSubmitting}
-              required
+              
             />
             {errors.swiftCode && (
               <p className="text-red-500 text-sm px-2">

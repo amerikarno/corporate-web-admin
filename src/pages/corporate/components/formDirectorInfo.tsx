@@ -12,6 +12,8 @@ import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
 import { Table } from "./dataTable";
 import { AddressForm } from "./directorAddressForm";
+import { useState,useEffect } from "react";
+
 
 export function FormIndividualsDirector() {
 //   const {
@@ -22,6 +24,10 @@ export function FormIndividualsDirector() {
 //     // handleSetNewShareholder,
 //     // serializeData,
 //   } = useFormIndividualsDirector();
+  const [idCardError,setIdCardError] = useState<boolean>(false);
+  const [passportError,setPassportError] = useState<boolean>(false);
+  const [directorInput,setDirectorInput] = useState<boolean>(true);
+
 
   const {
     register,
@@ -33,12 +39,38 @@ export function FormIndividualsDirector() {
     //values: individualsDirector,
   });
 
+  const validateIDcardPassport = (data : any) => {
+    let isValid = false;
+  
+    if (data.directoridcard || data.directorpassport) {
+      setIdCardError(false);   
+      setPassportError(false); 
+      isValid = true;          
+    } else {
+      setIdCardError(true);    
+      setPassportError(true);  
+    }
+    return isValid;
+  };
+  const handleDeleteError = (e : React.ChangeEvent<HTMLInputElement>) =>{
+    if (e.target.value){
+      setIdCardError(false);    
+      setPassportError(false);
+    }else{
+      setIdCardError(true);    
+      setPassportError(true);
+    }
+  }
+
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     
-    await sleep(500);
-    //handleSetNewShareholder(data);
-    reset();
-    console.log(data)
+    if(validateIDcardPassport(data)){
+      await sleep(500);
+      reset();
+      console.log(data)
+    }else{
+
+    }
   };
 
   return (
@@ -110,12 +142,13 @@ export function FormIndividualsDirector() {
                   label="ID Number"
                   id="ID Number"
                   disabled={isSubmitting}
+                  onChange={handleDeleteError}
                 />
-                {errors.directoridcard && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.directoridcard.message}
-                  </p>
-                )}
+                {idCardError &&  (
+                <p className="text-red-500 px-4">
+                  IDCard must be fill
+                </p>
+              )}
               </div>
               <div className="w-1/2">
                 <Input
@@ -123,12 +156,13 @@ export function FormIndividualsDirector() {
                     label="Passport"
                     id="Passport"
                     disabled={isSubmitting}
+                    onChange={handleDeleteError}
                     />
-                    {errors.directorpassport && (
-                    <p className="text-red-500 text-sm px-2">
-                        {errors.directorpassport.message}
-                    </p>
-                    )}
+                    {passportError &&  (
+                <p className="text-red-500 px-4">
+                  Passport must be filled
+                </p>
+              )}
               </div>
             </div>
             <div className="flex flex-row space-x-4">

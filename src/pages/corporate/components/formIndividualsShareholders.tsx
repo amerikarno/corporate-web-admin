@@ -64,7 +64,7 @@ export function FormIndividualsShareholders() {
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.title && (
                   <p className="text-red-500 text-sm px-2">
@@ -82,7 +82,7 @@ export function FormIndividualsShareholders() {
                   label="First Name"
                   id="First Name"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.firstName && (
                   <p className="text-red-500 text-sm px-2">
@@ -96,7 +96,7 @@ export function FormIndividualsShareholders() {
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.lastName && (
                   <p className="text-red-500 text-sm px-2">
@@ -112,7 +112,7 @@ export function FormIndividualsShareholders() {
                   label="ID Card / Passport"
                   id="ID Card / Passport"
                   disabled={isSubmitting}
-                  required
+                  
                 />
                 {errors.idCard && (
                   <p className="text-red-500 text-sm px-2">
@@ -127,7 +127,7 @@ export function FormIndividualsShareholders() {
                     label="Passport"
                     id="Passport"
                     disabled={isSubmitting}
-                    required
+                    
                   />
                   {errors.passPort && (
                     <p className="text-red-500 text-sm px-2">
@@ -143,7 +143,7 @@ export function FormIndividualsShareholders() {
                     label="Nationality"
                     id="Nationality"
                     disabled={isSubmitting}
-                    required
+                    
                   />
                   {errors.nationality && (
                     <p className="text-red-500 text-sm px-2">
@@ -158,7 +158,7 @@ export function FormIndividualsShareholders() {
                       id="Expiration Date"
                       type="date"
                       disabled={isSubmitting}
-                      required
+                      
                     />
                     {errors.expiredDate && (
                       <p className="text-red-500 text-sm px-2">
@@ -174,7 +174,7 @@ export function FormIndividualsShareholders() {
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
-                  required
+                  
                   />
                   {errors.shares && (
                     <p className="text-red-500 text-sm px-2">

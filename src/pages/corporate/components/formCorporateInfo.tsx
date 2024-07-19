@@ -67,7 +67,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const handleCheckboxError = () => {
     let isValid = true;
 
-    // Check if registeredCountry is filled
     if (!registeredCountryPrimaryCountryOperation.registeredCountry) {
       setRegisteredCountryError(true);
       isValid = false;
@@ -75,7 +74,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
       setRegisteredCountryError(false);
     }
 
-    // Check if primaryCountryOfOperation is filled
     if (!registeredCountryPrimaryCountryOperation.primaryCountryOfOperation) {
       setPrimaryCountryOfOperationError(true);
       isValid = false;
@@ -119,7 +117,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 {...register("name")}
                 name="name"
                 disabled={isSubmitting}
-                required
+                
               />
               {errors.name && (
                 <p className="text-red-500">{errors.name.message}</p>
@@ -131,7 +129,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 label={"Juristic Investor Address"}
                 {...register("commercialRegisteredNo")}
                 name="commercialRegisteredNo"
-                required
+                
                 disabled={isSubmitting}
               />
               {errors.commercialRegisteredNo && (
@@ -146,7 +144,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 label={"Juristic Investor Tax ID"}
                 {...register("taxId")}
                 name="taxId"
-                required
+                
                 disabled={isSubmitting}
               />
               {errors.taxId && (
@@ -159,7 +157,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 label={"Juristic Investor Email"}
                 {...register("dateIncorporation")}
                 name="dateIncorporation"
-                required
+                
                 disabled={isSubmitting}
               />
               {errors.dateIncorporation && (
@@ -205,7 +203,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               )}
               {registeredCountryError &&  (
                 <p className="text-red-500 px-4">
-                  Register Country must be fill.
+                  Register Country must be filled.
                 </p>
               )}
             </div>
@@ -241,7 +239,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               )}
               {primaryCountryOfOperationError &&  (
                 <p className="text-red-500 px-4">
-                  Primary Country of Operation must be fill.
+                  Primary Country of Operation must be filled.
                 </p>
               )}
             </div>
