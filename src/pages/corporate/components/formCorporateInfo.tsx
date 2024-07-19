@@ -54,7 +54,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
         registeredCountry: registeredCountryPrimaryCountryOperation.registeredCountry,
         primaryCountryOfOperation: registeredCountryPrimaryCountryOperation.primaryCountryOfOperation,
       };
-      console.log(formData)
 
       if (handleCheckboxError()){
         await sleep(500);
