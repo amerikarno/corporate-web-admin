@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { setCookies } from "@/lib/Cookies";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -54,15 +55,15 @@ const LoginForm = () => {
         .then((res) => {
           console.log(res);
           dispatch(setToken(res.data.token));
+          setCookies(res.data.token);
           navigate("/corporate/create");
         })
         .catch((err) => {
           setError("root", { message: err.message });
-          dispatch(
-            setToken(
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFyYWN0ZXIwMSIsIm5hbWUiOiJMdW5hIEZyZXlhIiwiaWF0IjoxNjk2OTA1MDI1fQ.82YKRXah5sINkAYFEBQB1Py9ttrUB7uC7DtVoXbfkik"
-            )
-          );
+          const tk =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFyYWN0ZXIwMSIsIm5hbWUiOiJMdW5hIEZyZXlhIiwiaWF0IjoxNjk2OTA1MDI1fQ.82YKRXah5sINkAYFEBQB1Py9ttrUB7uC7DtVoXbfkik";
+          setCookies(tk);
+          dispatch(setToken(tk));
           navigate("/corporate/create");
         });
       console.log(token);

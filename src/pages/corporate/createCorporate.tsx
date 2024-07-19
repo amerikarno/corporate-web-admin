@@ -9,12 +9,15 @@ import { FormJuristicShareholders } from "./components/formJuristicShareholders"
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { getCookies } from "@/lib/Cookies";
 
 export default function CreateCorporate() {
   const token = useSelector((state: any) => state.authen.token);
-  console.log(token);
+  console.log("token", token);
+  const cookie = token || getCookies();
+  console.log("session", cookie);
 
-  if (!token) {
+  if (!cookie) {
     return (
       <div className="flex justify-center flex-col items-center">
         <h1 className="font-bold py-6">Unauthorized</h1>
