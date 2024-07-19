@@ -29,12 +29,23 @@ export const corporateInfoSchema = z.object({
     .min(1, "commercialRegisteredNo cannot be empty"),
   taxId: z.string().min(1, "taxId cannot be empty"),
   dateIncorporation: z.string().min(1, "dateIncorporation cannot be empty"),
-  registeredCountry: z.string().min(1, "registeredCountry cannot be empty"),
-  operateCountry: z.string().min(1, "operateCountry cannot be empty"),
+  registeredCountry: z
+  .string().optional(),
+  primaryCountryOfOperation: z
+  .string().optional(),
   registeredAddress: addressSchema,
   incorporatedAddress: addressSchema,
   financial: financialInfoSchema.optional(),
 });
+
+export const registeredCountryPrimaryCountryOperationSchema = z.object({
+  registeredCountry: z
+  .string()
+  .min(1, "registeredCountry cannot be empty"),
+  primaryCountryOfOperation: z
+  .string()
+  .min(1, "primaryCountryOfOperation cannot be empty"),
+})
 
 export const contactPersonSchema = z.object({
   contactnamesurname: z.string().min(1, "name cannot be empty"),

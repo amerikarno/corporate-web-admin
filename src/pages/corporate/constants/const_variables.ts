@@ -75,3 +75,13 @@ export const investmentObjective = [
   "Cash Management For Investment",
   "Others (Please Specify)",
 ];
+
+export const registeredCountryChoices = [
+  "Thailand",
+  "Others Countries (Please Specify)",
+]
+
+export const PrimaryCountryOfOperationChoices = [
+  "Thailand",
+  "Others Countries (Please Specify)",
+]
