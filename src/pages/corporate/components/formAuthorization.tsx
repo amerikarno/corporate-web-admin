@@ -30,7 +30,7 @@ export function FormAuthorizedPerson() {
   });
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-    console.log(data)
+
     if(validateIDcardPassport(data)){
       await sleep(500);
       reset();
@@ -57,8 +57,7 @@ export function FormAuthorizedPerson() {
 
 
   const handleDeleteError = () =>{
-    console.log(idcardInput)
-    console.log(passportInput)
+
     if (idcardInput || passportInput ){
       setIdCardError(false);    
       setPassportError(false);
@@ -71,6 +70,8 @@ export function FormAuthorizedPerson() {
 
       handleDeleteError()
   }, [idcardInput,passportInput]);
+
+
   return (
     <Card className="p-4">
       <h1 className="font-bold text-xl py-4">Authorized Person :</h1>
@@ -132,7 +133,7 @@ export function FormAuthorizedPerson() {
             />
             {idCardError &&  (
                 <p className="text-red-500 px-4">
-                  IDCard must be fill
+                  IDCard must be filled
                 </p>
               )}
           </div>
