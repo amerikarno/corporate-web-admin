@@ -259,7 +259,7 @@ export const urlConfig: TUrlConfig[] = [
     header: "Customer",
     icon: "icon",
     children: [
-      { label: "Login", href: "" },
+      { label: "Login", href: "/login" },
       { label: "DA", href: "" },
       { label: "Balance", href: "" },
       { label: "Deposit/Withdraw DA", href: "" },

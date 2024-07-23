@@ -56,7 +56,7 @@ const LoginForm = () => {
           console.log(res);
           dispatch(setToken(res.data.token));
           setCookies(res.data.token);
-          navigate("/corporate/create");
+          navigate("/");
         })
         .catch((err) => {
           setError("root", { message: err.message });
@@ -64,7 +64,7 @@ const LoginForm = () => {
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQiLCJncm91cHMiOlsxMDAxLDEwMDIsMjAwMSwyMDAyXX0.giOtpdNwExYzvd8yXzdWMrdXIdES8hkD0wCbJD2I_Ao";
           setCookies(tk);
           dispatch(setToken(tk));
-          navigate("/corporate/create");
+          navigate("/");
         });
       console.log(token);
       if (token) {
