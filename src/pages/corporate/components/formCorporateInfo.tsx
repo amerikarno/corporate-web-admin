@@ -124,8 +124,8 @@ export function FormCorporateInfo() {
             {/* </SideLabelInput>
             <SideLabelInput title="Juristic Investor Address"> */}
             <Input
-              id={"Juristic Investor Address"}
-              label={"Juristic Investor Address"}
+              id={"Commercial Registration No.*"}
+              label={"Commercial Registration No.*"}
               {...register("commercialRegisteredNo")}
               name="commercialRegisteredNo"
               disabled={isSubmitting}
@@ -150,11 +150,12 @@ export function FormCorporateInfo() {
             {/* </SideLabelInput>
             <SideLabelInput title="Juristic Investor Email"> */}
             <Input
-              id={"Juristic Investor Email"}
-              label={"Juristic Investor Email"}
+              id={"Date of Incorporation"}
+              label={"Date of Incorporation"}
               {...register("dateIncorporation")}
               name="dateIncorporation"
               disabled={isSubmitting}
+              type="date"
             />
             {errors.dateIncorporation && (
               <p className="text-red-500">{errors.dateIncorporation.message}</p>
@@ -163,9 +164,10 @@ export function FormCorporateInfo() {
           </div>
 
           <div className="p-4 space-y-4">
-            <h1 className="font-bold pb-4">Registered / Business Address :</h1>
             <div className="p-4 border-t">
               <div className="grid grid-cols-2 ">
+                <h1 className="font-bold text-xl">Registered Country:</h1>
+                <br />
                 {registeredCountryChoices.map((item, i) => (
                   <CheckBox
                     key={i}
@@ -203,6 +205,10 @@ export function FormCorporateInfo() {
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
+                <h1 className="font-bold text-xl">
+                  Primary Country of Operation:
+                </h1>
+                <br />
                 {PrimaryCountryOfOperationChoices.map((item, i) => (
                   <CheckBox
                     key={i}
@@ -240,6 +246,8 @@ export function FormCorporateInfo() {
                 </p>
               )}
             </div>
+            <h1 className="font-bold pb-4">Registered / Business Address :</h1>
+
             <AddressForm
               isSubmitting={isSubmitting}
               errors={errors.registeredAddress}
@@ -262,6 +270,7 @@ export function FormCorporateInfo() {
             <h1 className="col-span-4 font-bold">Financial Information :</h1>
             {/* <SideLabelInput title="Registered Capital"> */}
             <Input
+              type="number"
               id={"Registered Capital"}
               label={"Registered Capital"}
               {...register("financial.registeredCapital")}
@@ -274,6 +283,7 @@ export function FormCorporateInfo() {
             {/* </SideLabelInput>
             <SideLabelInput title="Net Profit (Loss)"> */}
             <Input
+              type="number"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("financial.netProfit")}
@@ -286,6 +296,7 @@ export function FormCorporateInfo() {
             {/* </SideLabelInput>
             <SideLabelInput title="Revenue Per Year"> */}
             <Input
+            type="number"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("financial.revenuePerYear")}
@@ -298,6 +309,7 @@ export function FormCorporateInfo() {
             {/* </SideLabelInput>
             <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
+            type="number"
               id={"Operating Expense Per Year"}
               label={"Operating Expense Per Year"}
               {...register("financial.shareholderEquity")}

@@ -8,6 +8,7 @@ export type TAddress = {
   district: string;
   province: string;
   postalCode: string;
+  country: string;
   phone: string;
   email: string;
   type?: number;

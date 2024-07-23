@@ -4,6 +4,7 @@ import { z } from "zod";
 export const addressSchema = z.object({
   addressNo: z.string().min(1, "addressNo cannot be empty"),
   building: z.string().optional(),
+  floor: z.string().optional(),
   moo: z.string().optional(),
   soi: z.string().optional(),
   road: z.string().optional(),
@@ -11,6 +12,7 @@ export const addressSchema = z.object({
   district: z.string().min(1, "district cannot be empty"),
   province: z.string().min(1, "province cannot be empty"),
   postalCode: z.string().min(1, "postalCode cannot be empty"),
+  country: z.string().min(1, "country cannot be empty"),
   phone: z.string().min(1, "phone cannot be empty"),
   email: z.string().email(),
 });

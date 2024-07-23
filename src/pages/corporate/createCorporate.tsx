@@ -25,13 +25,17 @@ export default function CreateCorporate() {
     <>
       <div className="max-w-[1024px] mx-auto py-5 px-10 space-y-6">
         <FormCorporateInfo />
+        {/* dropdown + freetext ** incorrect field name */}
         <FormCorporateTypeAndIncome />
         <FormIndividualsContactPerson />
         <FormIndividualsDirector />
+        {/* dropdown passport / citizen id */}
         <FormIndividualsShareholders />
         <FormJuristicShareholders />
         <FormAuthorizedPerson />
         <FormBank />
+        {/* self declare / crs / fatca */}
+        {/* group risks */}
       </div>
     </>
   );

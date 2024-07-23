@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-    individualsJuristicShareholdersSchema,
-    TIndividualsJuristicShareholdersSchema,
+  individualsJuristicShareholdersSchema,
+  TIndividualsJuristicShareholdersSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { useFormJuristicShareholders} from "../hook/useFormJuristicShareholders"
+import { useFormJuristicShareholders } from "../hook/useFormJuristicShareholders";
 import { TJuristicsShareholders } from "../constants/types";
 import { Table } from "./dataTable";
 
@@ -33,24 +33,27 @@ export function FormJuristicShareholders() {
     values: juristicShareholders,
   });
 
-//   const columns = [
-//     { header: "Name-Surname", accessor: "nameSurname" },
-//     { header: "ID Card / Passport", accessor: "idCard" },
-//     { header: "Expiration Date", accessor: "expiredDate" },
-//     { header: "Nationality", accessor: "nationality" },
-//     { header: "% Shares", accessor: "shares" },
-//   ];
+  //   const columns = [
+  //     { header: "Name-Surname", accessor: "nameSurname" },
+  //     { header: "ID Card / Passport", accessor: "idCard" },
+  //     { header: "Expiration Date", accessor: "expiredDate" },
+  //     { header: "Nationality", accessor: "nationality" },
+  //     { header: "% Shares", accessor: "shares" },
+  //   ];
 
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
     await sleep(500);
     //handleSetNewShareholder(data);
     reset();
-    console.log(data)
+    console.log(data);
   };
 
   return (
     <>
-      <div id="Juristics who shareholders of juristic's owner" className="space-y-10">
+      <div
+        id="Juristics who shareholders of juristic's owner"
+        className="space-y-10"
+      >
         {/* <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
           <Table
@@ -70,22 +73,17 @@ export function FormJuristicShareholders() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                    {...register("juristicName")}
-                    label="Juristic-Name"
-                    id="Juristic-Name"
-                    disabled={isSubmitting}
+                  {...register("juristicName")}
+                  label="Juristic-Name"
+                  id="Juristic-Name"
+                  disabled={isSubmitting}
                 />
                 {errors.juristicName && (
-                    <p className="text-red-500 text-sm px-2">
+                  <p className="text-red-500 text-sm px-2">
                     {errors.juristicName.message}
-                    </p>
+                  </p>
                 )}
               </div>
-              <div className="w-1/2">
-
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
                   {...register("juristicRegisNo")}
@@ -99,6 +97,8 @@ export function FormJuristicShareholders() {
                   </p>
                 )}
               </div>
+            </div>
+            <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
                   {...register("juristicRegisCountry")}
@@ -112,8 +112,6 @@ export function FormJuristicShareholders() {
                   </p>
                 )}
               </div>
-            </div>
-            <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
                   {...register("juristicShares")}
@@ -127,9 +125,6 @@ export function FormJuristicShareholders() {
                   </p>
                 )}
               </div>
-                <div className="w-1/2">
-
-                </div>
             </div>
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
