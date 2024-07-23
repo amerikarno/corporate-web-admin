@@ -68,6 +68,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
     "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.14.2",

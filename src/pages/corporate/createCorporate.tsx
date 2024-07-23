@@ -1,19 +1,33 @@
-import { Card } from "@/components/ui/card";
 import { FormCorporateInfo } from "./components/formCorporateInfo";
-import { initCorporateInfo } from "./constants/initailData";
-import { TCorporateInfo } from "./constants/types";
+import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
+import { FormIndividualsShareholders } from "./components/formIndividualsShareholders";
+import { TCorporateInfo, TCorporateTypeAndIncome } from "./constants/types";
 
 export default function CreateCorporate() {
-  const corpInfo = initCorporateInfo;
-  const handleSubmit = (data: TCorporateInfo) => {
+  const handleSubmitCorporateInfo = (data: TCorporateInfo) => {
     console.log(data);
+    console.log("submit successful");
   };
+
+  const handleSubmitCorporateInfo2 = (data: TCorporateTypeAndIncome) => {
+    console.log(data);
+    console.log("submit successful");
+  };
+
+  // const handleSubmitIndividualsShareholders = (
+  //   data: TCorporateTypeAndIncome
+  // ) => {
+  //   console.log(data);
+  //   console.log("submit successful");
+  // };
 
   return (
     <>
-      <Card className="w-[1024px] mx-auto p-5">
-        <FormCorporateInfo {...corpInfo} onsubmit={handleSubmit} />
-      </Card>
+      <div className="w-[1024px] mx-auto py-5 px-10">
+        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+        <FormCorporateTypeAndIncome onsubmit={handleSubmitCorporateInfo2} />
+        <FormIndividualsShareholders />
+      </div>
     </>
   );
 }

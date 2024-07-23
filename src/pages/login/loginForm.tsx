@@ -1,4 +1,4 @@
-import Input from "@/components/Input";
+import { Input } from "@/components/ui/input";
 import CryptoJs from "crypto-js";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -86,23 +86,12 @@ const LoginForm = () => {
         className="flex flex-col space-y-5"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Input
-          {...register("email")}
-          type="email"
-          title="Email"
-          name="email"
-          errors={errors.email}
-          errorsMsg={errors.email?.message}
-        />
-        <Input
-          {...register("password")}
-          type="password"
-          title="Password"
-          name="password"
-          errors={errors.password}
-          errorsMsg={errors.password?.message}
-        />
-
+        <Input {...register("email")} title="Email" name="email" />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+        <Input {...register("password")} title="Password" name="password" />
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
         <div className=" w-full pt-10">
           <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
             Sign in
