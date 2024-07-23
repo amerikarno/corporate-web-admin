@@ -56,9 +56,6 @@ const LoginForm = () => {
             hashedPassword: `${hashedPassword}`,
           },
           {
-            headers: {
-              "Content-Type": "application/json",
-            },
             withCredentials: true,
           }
         )
@@ -69,6 +66,8 @@ const LoginForm = () => {
         })
         .catch((err) => {
           setError("root", { message: err.message });
+        }).finally(() => {
+          navigate("/welcome");
         });
 
       // const cookie = Cookies.get("refreshToken");
@@ -77,7 +76,7 @@ const LoginForm = () => {
         const decoded = jwtDecode<jwtPayload>(token);
         console.log("decoded", decoded);
       }
-      navigate("/welcome");
+      // navigate("/welcome");
     }
   };
 

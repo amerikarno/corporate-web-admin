@@ -32,11 +32,14 @@ root.render(
                 <Route index element={<Navigate to="/login" />} />
                 <Route path="login" element={<Login />} />
                 <Route path="/corporate/create" element={<CreateCorporate />} />
-                  <Route path="welcome" element={
-                <ProtectedRoute>
-                    <Welcome />
-                </ProtectedRoute>
-                    } />
+                <Route
+                  path="welcome"
+                  element={
+                    <ProtectedRoute>
+                      <Welcome />
+                    </ProtectedRoute>
+                  }
+                />
               </Route>
             </Routes>
           </BrowserRouter>
