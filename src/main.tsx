@@ -54,7 +54,13 @@
 // );
 
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";
@@ -64,7 +70,6 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import Welcome from "./pages/Welcome";
 import CreateCorporate from "./pages/corporate/createCorporate";
-import ContactPerson from "./pages/contactperson/contactPerson";
 
 const helmetContext = {};
 
@@ -83,14 +88,12 @@ root.render(
         <HelmetProvider context={helmetContext}>
           <BrowserRouter>
             <Routes>
-              <Route index path="login" element={<Login />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/" element={<Layout />}>
-                <Route index path="welcome" element={<Welcome />} />
-                <Route path="/corporate/create" element={<CreateCorporate />} />
-                <Route
-                  path="/contactperson/create"
-                  element={<ContactPerson />}
-                />
+                <Route index element={<CreateCorporate />} />
+                <Route path="corporate" element={<Outlet />}>
+                  <Route path="create" element={<CreateCorporate />} />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>

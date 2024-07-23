@@ -61,7 +61,7 @@ const LoginForm = () => {
         .catch((err) => {
           setError("root", { message: err.message });
           const tk =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFyYWN0ZXIwMSIsIm5hbWUiOiJMdW5hIEZyZXlhIiwiaWF0IjoxNjk2OTA1MDI1fQ.82YKRXah5sINkAYFEBQB1Py9ttrUB7uC7DtVoXbfkik";
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQiLCJncm91cHMiOlsxMDAxLDEwMDIsMjAwMSwyMDAyXX0.giOtpdNwExYzvd8yXzdWMrdXIdES8hkD0wCbJD2I_Ao";
           setCookies(tk);
           dispatch(setToken(tk));
           navigate("/corporate/create");

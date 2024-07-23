@@ -7,25 +7,22 @@ import { FormIndividualsContactPerson } from "./components/formContactPerson";
 import { FormIndividualsDirector } from "./components/formDirectorInfo";
 import { FormJuristicShareholders } from "./components/formJuristicShareholders";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { getCookies } from "@/lib/Cookies";
+import { jwtDecode } from "jwt-decode";
 
 export default function CreateCorporate() {
   const token = useSelector((state: any) => state.authen.token);
   console.log("token", token);
   const cookie = token || getCookies();
-  console.log("session", cookie);
+  const navigate = useNavigate();
+  let userData = null;
 
-  if (!cookie) {
-    return (
-      <div className="flex justify-center flex-col items-center">
-        <h1 className="font-bold py-6">Unauthorized</h1>
-        <Button>
-          <Link to="/login">Login</Link>
-        </Button>
-      </div>
-    );
+  if (!cookie || cookie == null) {
+    navigate("/login");
+  } else {
+    userData = jwtDecode(cookie);
+    console.log("session", userData);
   }
 
   return (
