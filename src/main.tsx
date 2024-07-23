@@ -54,7 +54,7 @@
 // );
 
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";

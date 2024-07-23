@@ -5,7 +5,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { register } from "module";
 import * as pages from "@/const/pages";
 
 const Welcome = () => {
@@ -19,7 +18,7 @@ const Welcome = () => {
 
   const testUser = {
     name: "test",
-    groups: [ 3, 4],
+    groups: [3, 4],
   };
 
   const onSubmit1 = (event: React.FormEvent<HTMLFormElement>) => {

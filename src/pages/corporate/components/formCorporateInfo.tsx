@@ -7,8 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TCorporateInfo } from "../constants/types";
 import { sleep } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
-import { SideLabelInput } from "@/components/SideLabelInput";
+import { Card } from "@/components/ui/card";
 import { AddressForm } from "./addressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
@@ -20,9 +19,9 @@ import {
 } from "../constants/const_variables";
 import { useState, useEffect } from "react";
 
-type TCorporateInfoFormProps = {
-  onsubmit: (data: TCorporateInfo) => void;
-};
+// type TCorporateInfoFormProps = {
+//   onsubmit: (data: TCorporateInfo) => void;
+// };
 
 export function FormCorporateInfo() {
   const {
@@ -94,12 +93,9 @@ export function FormCorporateInfo() {
     disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
-    getError,
-    form1error,
     isPrimaryCountryOfOperationOthers,
     isRegisteredCountryOthers,
     registeredCountryPrimaryCountryOperation,
-    validateForm,
     handleInputOthers,
   } = useFormCorporateInfo();
 

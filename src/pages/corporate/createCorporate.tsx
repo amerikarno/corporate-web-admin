@@ -7,8 +7,7 @@ import { FormIndividualsContactPerson } from "./components/formContactPerson";
 import { FormIndividualsDirector } from "./components/formDirectorInfo";
 import { FormJuristicShareholders } from "./components/formJuristicShareholders";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { getCookies } from "@/lib/Cookies";
 
 export default function CreateCorporate() {
