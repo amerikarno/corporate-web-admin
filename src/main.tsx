@@ -83,9 +83,9 @@ root.render(
         <HelmetProvider context={helmetContext}>
           <BrowserRouter>
             <Routes>
-              <Route path="login" element={<Login />} />
+              <Route index path="login" element={<Login />} />
               <Route path="/" element={<Layout />}>
-                <Route path="welcome" element={<Welcome />} />
+                <Route index path="welcome" element={<Welcome />} />
                 <Route path="/corporate/create" element={<CreateCorporate />} />
                 <Route
                   path="/contactperson/create"
