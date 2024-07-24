@@ -26,9 +26,7 @@ export function useCorporateInfo() {
 
         if (user && user.exp) {
           const dateTime = new Date(user.exp * 1000);
-          console.log(dateTime);
           const isExpired = dateTime.getTime() < new Date().getTime();
-          console.log(dateTime.getTime(), new Date().getTime(), isExpired);
           setIsExpired(isExpired);
         } else {
           console.log("Invalid token: exp field is missing.");
@@ -38,8 +36,6 @@ export function useCorporateInfo() {
       }
     }
   }, [token]);
-  // const token =
-  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6Im5vdGUiLCJncm91cHMiOjAsInBlcm1pc3Npb24iOjAsInVzZXJJZCI6IiIsImxvZ2luU3RhdHVzIjoiIiwiRXJyb3IiOm51bGwsImV4cCI6MTcyMTgxMTcxMCwiaWF0IjoxNzIxODEwODEwfQ.Vu4EC9uBh7dO58gC-JW9fmyTuF0SKGd3V2iJ8UptkL0";
 
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     let body = {
