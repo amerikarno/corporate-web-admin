@@ -1,54 +1,37 @@
-import { Table } from "./component/dataTable";
-import { initCorporateInfo } from "./constant/initialData";
+import DataTable from "react-data-table-component";
+import { MoveUp } from "lucide-react";
+import { useCorporateInfo } from "./hook/useCorporateInfo";
+import { columnsCorporateInfo } from "./constants/columns";
+import { FormCorporateInfo } from "./component/formCorporateInfo";
+import { Card } from "@/components/ui/card";
 
 export default function CorporateAccountOpenning() {
-  const columns = [
-    {
-      header: "Juristic Name",
-      accessor: "juristicName",
-    },
-    {
-      header: "Comercial ID",
-      accessor: "comercialId",
-    },
-    {
-      header: "Tax ID",
-      accessor: "taxId",
-    },
-    {
-      header: "Date Of Incorporation",
-      accessor: "dateOfIncorporation",
-    },
-    {
-      header: "Registered Country",
-      accessor: "registeredCountry",
-    },
-    {
-      header: "Registered Capital",
-      accessor: "financial.registeredCapital",
-    },
-    {
-      header: "Revenue per year",
-      accessor: "financial.revenuePerYear",
-    },
-    {
-      header: "Net Profit",
-      accessor: "financial.netProfit",
-    },
-    {
-      header: "Shareholder's Equity",
-      accessor: "financial.shareholderEquity",
-    },
-  ];
+  const { corporates, handleSubmitCorporateInfo } = useCorporateInfo();
 
   return (
-    <div>
-      <Table
-        columns={columns}
-        data={[initCorporateInfo]}
-        onEdit={() => {}}
-        onDelete={() => {}}
-      />
-    </div>
+    <>
+      <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Corporate Infomations"
+            columns={columnsCorporateInfo}
+            data={corporates}
+            clearSelectedRows
+          />
+        </Card>
+        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+      </div>
+      {/* <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Corporate Infomations"
+            columns={columnsCorporateInfo}
+            data={corporates}
+            clearSelectedRows
+          />
+        </Card>
+        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+      </div> */}
+    </>
   );
 }
