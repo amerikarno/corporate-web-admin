@@ -13,6 +13,7 @@ import { useFormIndividualsShareholder } from "../hook/useFormIndividualsShareho
 import { TIndividualsShareholders } from "../constants/types";
 import { Table } from "./dataTable";
 import { useState,useEffect } from "react";
+import Dropbox from "@/components/Dropbox"
 
 export function FormIndividualsShareholders() {
 
@@ -20,7 +21,12 @@ export function FormIndividualsShareholders() {
   const [passportError,setPassportError] = useState<boolean>(true);
   const [idcardInput,setIdCardInput] = useState<string>("");
   const [passportInput,setPassportInput] = useState<string>("");
-
+  const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
+  const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice:string)=>{
+    setDropDownChoosed(choice)
+    setDropBoxHadChoosed(true)
+  }
   const {
     shareholders,
     individualsShareholder,
@@ -147,37 +153,6 @@ export function FormIndividualsShareholders() {
               </div>
             </div>
             <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                  <Input
-                  {...register("idCard")}
-                  label="ID Card"
-                  id="ID Card"
-                  disabled={isSubmitting}
-                  onChange={(e)=>setIdCardInput(e.target.value)}
-                />
-                {idCardError &&  (
-                    <p className="text-red-500 px-4">
-                      IDCard must be filled
-                    </p>
-                  )}
-              </div>
-
-              <div className="w-1/2">
-                  <Input
-                        {...register("passportID")}
-                        label="Passport"
-                        id="Passport"
-                        disabled={isSubmitting}
-                        onChange={(e)=>setPassportInput(e.target.value)}
-                        />
-                        {passportError &&  (
-                    <p className="text-red-500 px-4">
-                      Passport must be filled
-                    </p>
-                  )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
                 <div className="w-1/2">
                   <Input
                     {...register("nationality")}
@@ -192,42 +167,56 @@ export function FormIndividualsShareholders() {
                     </p>
                   )}
                 </div>
-                <div className="w-1/2">
-                  <Input
-                      {...register("expiredDate")}
-                      label="Expiration Date"
-                      id="Expiration Date"
-                      type="date"
-                      disabled={isSubmitting}
-                      
+                  <div className="w-1/2">
+                    <Input
+                    {...register("sharePercentage")}
+                    label="Shares"
+                    id="Shares"
+                    disabled={isSubmitting}
+                    
                     />
-                    {errors.expiredDate && (
+                    {errors.sharePercentage && (
                       <p className="text-red-500 text-sm px-2">
-                        {errors.expiredDate.message}
+                        {errors.sharePercentage.message}
                       </p>
                     )}
-                </div>
+                  </div>
               </div>
               <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
-                  <Input
-                  {...register("sharePercentage")}
-                  label="Shares"
-                  id="Shares"
-                  disabled={isSubmitting}
-                  
-                  />
-                  {errors.sharePercentage && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.sharePercentage.message}
-                    </p>
-                  )}
-                </div>
-                <div className="w-1/2">
-
-                </div>
-              </div>
-
+                  <div className="w-1/3">
+                    <Dropbox onDropdownSelect={handleDropboxChoice}/>
+                  </div>
+                  <div className="w-1/3">
+                  {dropDownChoosed ? (
+                dropDownChoosed === "IDCard" ? (
+                    <Input
+                        {...register("idCard")}
+                        label="IDCard"
+                        id="idCard"
+                        disabled={isSubmitting}
+                    />
+                ) : (
+                    <Input
+                        {...register("passportID")}
+                        label="Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                    />
+                )
+            ) : (
+                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div></>
+            )}
+                  </div>
+                  <div className="w-1/3">
+                    <Input
+                        {...register("expiredDate")}
+                        label="Date of Expired"
+                        id="Date of Expired"
+                        disabled={isSubmitting}
+                        type="date"
+                      />
+                  </div>
+            </div>
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}

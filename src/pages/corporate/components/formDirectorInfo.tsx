@@ -24,11 +24,8 @@ export function FormIndividualsDirector() {
 //     // handleSetNewShareholder,
 //     // serializeData,
 //   } = useFormIndividualsDirector();
-  const [idCardError,setIdCardError] = useState<boolean>(true);
-  const [passportError,setPassportError] = useState<boolean>(true);
+
   const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
-  const [idcardInput,setIdCardInput] = useState<string>("");
-  const [passportInput,setPassportInput] = useState<string>("");
   const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
   const handleDropboxChoice = (choice:string)=>{
     setDropDownChoosed(choice)
@@ -172,7 +169,7 @@ export function FormIndividualsDirector() {
                   </div>
                   <div className="w-1/3">
                     <Input
-                        {...register("expiryDate")}
+                        {...register("expiredDate")}
                         label="Date of Expired"
                         id="Date of Expired"
                         disabled={isSubmitting}

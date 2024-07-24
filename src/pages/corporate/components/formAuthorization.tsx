@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TAuthorizePerson } from "../constants/types";
 import { AddressFormAuthorizedPerson } from "./addressFormAuthorizedPerson";
 import { useState,useEffect } from "react";
+import Dropbox from "@/components/Dropbox"
 
 export function FormAuthorizedPerson() {
 
@@ -19,7 +20,12 @@ export function FormAuthorizedPerson() {
   const [idcardInput,setIdCardInput] = useState<string>("");
   const [passportInput,setPassportInput] = useState<string>("");
 
-
+  const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
+  const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice:string)=>{
+    setDropDownChoosed(choice)
+    setDropBoxHadChoosed(true)
+  }
   const {
     register,
     handleSubmit,
@@ -31,29 +37,11 @@ export function FormAuthorizedPerson() {
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
     const formData: TAuthorizePerson={ ...data,Types:"201"}
-    if(validateIDcardPassport(formData)){
       await sleep(500);
       reset();
       console.log(formData)
-    }else{
-
-    }
   };
 
-
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;  
-
-    if (data.idCard || data.passportID) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
-    } else {
-      setIdCardError(true);    
-      setPassportError(true);  
-    }
-    return isValid;
-  };
 
 
   const handleDeleteError = () =>{
@@ -122,37 +110,7 @@ export function FormAuthorizedPerson() {
             )}
           </div>
         </div>
-        <div className="flex flex-row space-x-4">
-          <div className="w-1/2">
-            <Input
-              {...register("idCard")}
-              label="ID Card"
-              id="ID Card"
-              disabled={isSubmitting}
-              onChange={(e)=>setIdCardInput(e.target.value)}
-            />
-            {idCardError &&  (
-                <p className="text-red-500 px-4">
-                  IDCard must be filled
-                </p>
-              )}
-          </div>
 
-          <div className="w-1/2">
-                <Input
-                    {...register("passportID")}
-                    label="Passport"
-                    id="Passport"
-                    disabled={isSubmitting}
-                    onChange={(e)=>setPassportInput(e.target.value)}
-                    />
-                    {passportError &&  (
-                <p className="text-red-500 px-4">
-                  Passport must be filled
-                </p>
-              )}
-          </div>
-        </div>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
@@ -170,23 +128,6 @@ export function FormAuthorizedPerson() {
           </div>
           <div className="w-1/2">
             <Input
-              {...register("expiredDate")}
-              label="Expiration Date"
-              id="Expiration Date"
-              type="date"
-              disabled={isSubmitting}
-              
-            />
-            {errors.expiredDate && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.expiredDate.message}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-row space-x-4">
-          <div className="w-1/2">
-            <Input
                 {...register("position")}
                 label="Position"
                 id="position"
@@ -199,9 +140,43 @@ export function FormAuthorizedPerson() {
                 </p>
               )}
           </div>
-          <div className="w-1/2">
-          </div>
         </div>
+
+        <div className="flex flex-row space-x-4">
+                  <div className="w-1/3">
+                    <Dropbox onDropdownSelect={handleDropboxChoice}/>
+                  </div>
+                  <div className="w-1/3">
+                  {dropDownChoosed ? (
+                dropDownChoosed === "IDCard" ? (
+                    <Input
+                        {...register("idCard")}
+                        label="IDCard"
+                        id="idCard"
+                        disabled={isSubmitting}
+                    />
+                ) : (
+                    <Input
+                        {...register("passportID")}
+                        label="Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                    />
+                )
+            ) : (
+                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div></>
+            )}
+                  </div>
+                  <div className="w-1/3">
+                    <Input
+                        {...register("expiredDate")}
+                        label="Date of Expired"
+                        id="Date of Expired"
+                        disabled={isSubmitting}
+                        type="date"
+                      />
+                  </div>
+            </div>
         <h1 className="font-bold text-xl py-4">
           Authorized Person's Address :
         </h1>

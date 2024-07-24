@@ -71,7 +71,7 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   idCard: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiredDate: z.string().min(1, "date cannot be empty"),
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
   addresses: subAddressSchema,
@@ -194,7 +194,7 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   idCard: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z
+  expiredDate: z
     .string()
     .min(1, { message: "Expired Date cannot be empty" }),
   nationality: z

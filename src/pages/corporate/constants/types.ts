@@ -115,7 +115,7 @@ export type TDirector = {
   fullNames: TFullName;
   idCard?: string;
   passportID?: string;
-  expiryDate: string;
+  expiredDate: string;
   nationality: string;
   position: string;
   addresses: TSubAddress;
