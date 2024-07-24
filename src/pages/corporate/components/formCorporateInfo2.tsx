@@ -45,8 +45,6 @@ export function FormCorporateTypeAndIncome() {
     if (validateForm()) {
       console.log(corporateTypeAndIncome);
       console.log("submit success");
-      console.log(juristicAllType);
-      console.log(juristicAllOtherType);
     } else {
       console.log("submit failed");
     }
