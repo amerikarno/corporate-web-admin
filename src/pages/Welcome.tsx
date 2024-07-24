@@ -19,7 +19,7 @@ const Welcome = () => {
 
   const testUser = {
     name: "test",
-    groups: [ 3, 4],
+    groups: [3, 4],
   };
 
   const onSubmit1 = (event: React.FormEvent<HTMLFormElement>) => {
