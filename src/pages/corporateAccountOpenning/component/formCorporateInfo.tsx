@@ -164,6 +164,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               <div className="grid grid-cols-2 ">
                 {registeredCountryChoices.map((item, i) => (
                   <CheckBox
+                    id={item}
                     key={i}
                     label={item}
                     onChange={(e) => {
@@ -201,6 +202,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               <div className="grid grid-cols-2 ">
                 {PrimaryCountryOfOperationChoices.map((item, i) => (
                   <CheckBox
+                    id={item}
                     key={i}
                     label={item}
                     onChange={(e) => {
