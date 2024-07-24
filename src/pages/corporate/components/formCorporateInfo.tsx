@@ -24,7 +24,7 @@ type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
 };
 
-export function FormCorporateInfo() {
+export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
   const {
     register,
     handleSubmit,
@@ -72,9 +72,11 @@ export function FormCorporateInfo() {
       await sleep(500);
       reset();
       console.log(formData);
+      onsubmit(formData)
     } else {
       setShouldScrollUp(true);
     }
+
   };
 
   const handleCheckboxError = () => {

@@ -12,6 +12,7 @@ import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useState,useEffect } from "react";
+import Dropbox from "@/components/Dropbox";
 
 
 export function FormIndividualsDirector() {
@@ -25,10 +26,14 @@ export function FormIndividualsDirector() {
 //   } = useFormIndividualsDirector();
   const [idCardError,setIdCardError] = useState<boolean>(true);
   const [passportError,setPassportError] = useState<boolean>(true);
+  const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
   const [idcardInput,setIdCardInput] = useState<string>("");
   const [passportInput,setPassportInput] = useState<string>("");
-
-
+  const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice:string)=>{
+    setDropDownChoosed(choice)
+    setDropBoxHadChoosed(true)
+  }
   const {
     register,
     handleSubmit,
@@ -39,44 +44,15 @@ export function FormIndividualsDirector() {
     //values: individualsDirector,
   });
 
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.idCard || data.passportID) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
-    } else {
-      setIdCardError(true);    
-      setPassportError(true);  
-    }
-    return isValid;
-  };
 
-  const handleDeleteError = () =>{
-    if (idcardInput || passportInput ){
-      setIdCardError(false);    
-      setPassportError(false);
-    }else{
-      setIdCardError(!idCardError);    
-      setPassportError(!passportError);
-    }
-  }
-
-  useEffect(() => {  
-
-      handleDeleteError()
-  }, [idcardInput,passportInput]);
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     const formData: TDirector={ ...data,Types:"101"}
-    if(validateIDcardPassport(formData)){
+    
       await sleep(500);
       reset();
       console.log(formData)
-    }else{
 
-    }
   };
 
   return (
@@ -144,36 +120,6 @@ export function FormIndividualsDirector() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("idCard")}
-                  label="ID Number"
-                  id="ID Number"
-                  disabled={isSubmitting}
-                  onChange={(e)=>setIdCardInput(e.target.value)}
-                />
-                {idCardError &&  (
-                <p className="text-red-500 px-4">
-                  IDCard must be fill
-                </p>
-              )}
-              </div>
-              <div className="w-1/2">
-                <Input
-                    {...register("passportID")}
-                    label="Passport"
-                    id="Passport"
-                    disabled={isSubmitting}
-                    onChange={(e)=>setPassportInput(e.target.value)}
-                    />
-                    {passportError &&  (
-                <p className="text-red-500 px-4">
-                  Passport must be filled
-                </p>
-              )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                <Input
                   {...register("nationality")}
                   label="Nationality"
                   id="Nationality"
@@ -185,22 +131,6 @@ export function FormIndividualsDirector() {
                   </p>
                 )}
               </div>
-              <div className="w-1/2">
-                <Input
-                    {...register("expiryDate")}
-                    label="Date of Expired"
-                    id="Date of Expired"
-                    type="date"
-                    disabled={isSubmitting}
-                    />
-                    {errors.expiryDate && (
-                    <p className="text-red-500 text-sm px-2">
-                        {errors.expiryDate.message}
-                    </p>
-                    )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                   <Input
                     {...register("position")}
@@ -214,9 +144,41 @@ export function FormIndividualsDirector() {
                     </p>
                   )}
                 </div>
-                <div>
-
-                </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+                  <div className="w-1/3">
+                    <Dropbox onDropdownSelect={handleDropboxChoice}/>
+                  </div>
+                  <div className="w-1/3">
+                  {dropDownChoosed ? (
+                dropDownChoosed === "IDCard" ? (
+                    <Input
+                        {...register("idCard")}
+                        label="IDCard"
+                        id="idCard"
+                        disabled={isSubmitting}
+                    />
+                ) : (
+                    <Input
+                        {...register("passportID")}
+                        label="Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                    />
+                )
+            ) : (
+                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div></>
+            )}
+                  </div>
+                  <div className="w-1/3">
+                    <Input
+                        {...register("expiryDate")}
+                        label="Date of Expired"
+                        id="Date of Expired"
+                        disabled={isSubmitting}
+                        type="date"
+                      />
+                  </div>
             </div>
 
             <h1 className="font-bold text-xl py-4">Director's Address</h1>
@@ -231,6 +193,7 @@ export function FormIndividualsDirector() {
                 {errors.addresses.message}
               </p>
             )}
+
 
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
