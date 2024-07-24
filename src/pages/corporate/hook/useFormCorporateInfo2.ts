@@ -81,8 +81,8 @@ export function useFormCorporateInfo2() {
     }
   };
   const disableInvestmentObjective = (type: string): boolean => {
-    if (corporateTypeAndIncome.investmentObjective !== "") {
-      if (type === corporateTypeAndIncome.investmentObjective) {
+    if (corporateTypeAndIncome.InvestmentObject !== "") {
+      if (type === corporateTypeAndIncome.InvestmentObject) {
         return false;
       } else {
         return true;
@@ -217,10 +217,10 @@ export function useFormCorporateInfo2() {
       [updateInvestmentObjectiveKey]: checked,
     });
     if (checked) {
-      tmp.investmentObjective = name;
+      tmp.InvestmentObject = name;
       errors ? validateLocal(tmp) : null;
     } else {
-      tmp.investmentObjective = "";
+      tmp.InvestmentObject = "";
     }
     setCorporateTypeAndIncome(tmp);
     if (name == "Others (Please Specify)") {
@@ -282,7 +282,7 @@ export function useFormCorporateInfo2() {
   const handleInputOtherInvestmentObjective = (e: any) => {
     const { value } = e.target;
     let tmp = copy(corporateTypeAndIncome);
-    tmp.investmentObjective = value;
+    tmp.InvestmentObject = value;
     setCorporateTypeAndIncome(tmp);
     errors ? validateLocal(tmp) : null;
   };

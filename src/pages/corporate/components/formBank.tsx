@@ -25,7 +25,7 @@ export function FormBank() {
 
   return (
     <Card className="p-4 space-y-4">
-      <h1 className="col-span-4 font-bold pb-4 text-xl">Bank Informations :</h1>
+      <h1 className="col-span-4 font-bold pb-4 text-xl">Bank Accounts Intended to Deposit and Withdraw Fiat Fund</h1>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">

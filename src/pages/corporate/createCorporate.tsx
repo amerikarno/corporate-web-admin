@@ -27,7 +27,7 @@ export default function CreateCorporate() {
 
   return (
     <>
-      <div className="w-[1024px] mx-auto py-5 px-10 space-y-6">
+      <div className="max-w-[1024px] mx-auto py-5 px-10 space-y-6">
         <FormCorporateInfo />
         <FormCorporateTypeAndIncome />
         <FormIndividualsContactPerson />

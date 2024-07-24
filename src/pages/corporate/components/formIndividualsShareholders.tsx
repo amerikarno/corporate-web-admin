@@ -42,10 +42,11 @@ export function FormIndividualsShareholders() {
 
 
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
-    if(validateIDcardPassport(data)){
+    const formData: TIndividualsShareholders={ ...data,Types:"301"}
+    if(validateIDcardPassport(formData)){
       await sleep(500);
       reset();
-      console.log(data)
+      console.log(formData)
     }else{
 
     }
@@ -95,20 +96,20 @@ export function FormIndividualsShareholders() {
         </Card> */}
 
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individual Shareholder :</h1>
+          <h1 className="font-bold text-xl py-4">Individuals who shareholders of juristic's owner</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
                 <div className="w-1/2">
                 <Input
-                  {...register("title")}
+                  {...register("fullNames.title")}
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
                   
                 />
-                {errors.title && (
+                {errors.fullNames && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.title.message}
+                    {errors.fullNames.message}
                   </p>
                 )}
               </div>
@@ -118,29 +119,29 @@ export function FormIndividualsShareholders() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("firstName")}
+                  {...register("fullNames.firstName")}
                   label="First Name"
                   id="First Name"
                   disabled={isSubmitting}
                   
                 />
-                {errors.firstName && (
+                {errors.fullNames && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.firstName.message}
+                    {errors.fullNames.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("lastName")}
+                  {...register("fullNames.lastName")}
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
                   
                 />
-                {errors.lastName && (
+                {errors.fullNames && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.lastName.message}
+                    {errors.fullNames.message}
                   </p>
                 )}
               </div>
@@ -163,7 +164,7 @@ export function FormIndividualsShareholders() {
 
               <div className="w-1/2">
                   <Input
-                        {...register("passPort")}
+                        {...register("passportID")}
                         label="Passport"
                         id="Passport"
                         disabled={isSubmitting}
@@ -210,15 +211,15 @@ export function FormIndividualsShareholders() {
               <div className="flex flex-row space-x-4">
                 <div className="w-1/2">
                   <Input
-                  {...register("shares")}
+                  {...register("sharePercentage")}
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
                   
                   />
-                  {errors.shares && (
+                  {errors.sharePercentage && (
                     <p className="text-red-500 text-sm px-2">
-                      {errors.shares.message}
+                      {errors.sharePercentage.message}
                     </p>
                   )}
                 </div>

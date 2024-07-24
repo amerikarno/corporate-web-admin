@@ -10,7 +10,6 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { useFormIndividualsContactPerson} from "../hook/useFormContactPerson"
-import { TContactPerson } from "../constants/types";
 import { Table } from "./dataTable";
 
 export function FormIndividualsContactPerson() {
@@ -63,20 +62,20 @@ export function FormIndividualsContactPerson() {
 
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">
-            Contact Person Infomation :
+            Contact Person
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                     <Input
-                    {...register("contacttitle")}
+                    {...register("fullNames.title")}
                     label="Title"
                     id="Title"
                     disabled={isSubmitting}
                 />
-                {errors.contacttitle && (
+                {errors.fullNames && (
                     <p className="text-red-500 text-sm px-2">
-                    {errors.contacttitle.message}
+                    {errors.fullNames.message}
                     </p>
                 )}
               </div>
@@ -87,27 +86,27 @@ export function FormIndividualsContactPerson() {
             <div className="flex flex-row space-x-4">
                 <div className="w-1/2">
                     <Input
-                        {...register("contactname")}
+                        {...register("fullNames.firstName")}
                         label="Name"
                         id="Name"
                         disabled={isSubmitting}
                     />
-                    {errors.contactname && (
+                    {errors.fullNames && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.contactname.message}
+                        {errors.fullNames.message}
                         </p>
                     )}
                 </div>
                 <div className="w-1/2">
                     <Input
-                        {...register("contactsurname")}
+                        {...register("fullNames.lastName")}
                         label="Surname"
                         id="Surname"
                         disabled={isSubmitting}
                     />
-                    {errors.contactsurname && (
+                    {errors.fullNames && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.contactsurname.message}
+                        {errors.fullNames.message}
                         </p>
                     )}
                 </div>
@@ -115,27 +114,27 @@ export function FormIndividualsContactPerson() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("contactposition")}
+                  {...register("Position")}
                   label="Position"
                   id="Position"
                   disabled={isSubmitting}
                 />
-                {errors.contactposition && (
+                {errors.Position && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.contactposition.message}
+                    {errors.Position.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("contactdivision")}
+                  {...register("Division")}
                   label="Division"
                   id="Division"
                   disabled={isSubmitting}
                 />
-                {errors.contactdivision && (
+                {errors.Division && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.contactdivision.message}
+                    {errors.Division.message}
                   </p>
                 )}
               </div>
@@ -143,28 +142,27 @@ export function FormIndividualsContactPerson() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("contactphone")}
-                  label="Telephone"
-                  id="Telephone"
-                  disabled={isSubmitting}
-                />
-                {errors.contactphone && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.contactphone.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="w-1/2">
-                <Input
-                  {...register("contactemail")}
+                  {...register("Email")}
                   label="Email"
                   id="Email"
                   disabled={isSubmitting}
                 />
-                {errors.contactemail && (
+                {errors.Email && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.contactemail.message}
+                    {errors.Email.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("Telephone")}
+                  label="Telephone"
+                  id="Telephone"
+                  disabled={isSubmitting}
+                />
+                {errors.Telephone && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.Telephone.message}
                   </p>
                 )}
               </div>

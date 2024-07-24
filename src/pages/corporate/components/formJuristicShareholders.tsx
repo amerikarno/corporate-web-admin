@@ -88,27 +88,27 @@ export function FormJuristicShareholders() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("juristicRegisNo")}
+                  {...register("registrationNo")}
                   label="Commercial Registration No."
                   id="Commercial Registration No."
                   disabled={isSubmitting}
                 />
-                {errors.juristicRegisNo && (
+                {errors.registrationNo && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.juristicRegisNo.message}
+                    {errors.registrationNo.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("juristicRegisCountry")}
+                  {...register("registeredCountry")}
                   label="Registration Country"
                   id="Registration Country"
                   disabled={isSubmitting}
                 />
-                {errors.juristicRegisCountry && (
+                {errors.registeredCountry && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.juristicRegisCountry.message}
+                    {errors.registeredCountry.message}
                   </p>
                 )}
               </div>
@@ -116,14 +116,14 @@ export function FormJuristicShareholders() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("juristicShares")}
+                  {...register("sharePercentage")}
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
                 />
-                {errors.juristicShares && (
+                {errors.sharePercentage && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.juristicShares.message}
+                    {errors.sharePercentage.message}
                   </p>
                 )}
               </div>

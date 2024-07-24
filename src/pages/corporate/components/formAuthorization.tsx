@@ -30,11 +30,11 @@ export function FormAuthorizedPerson() {
   });
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-
-    if(validateIDcardPassport(data)){
+    const formData: TAuthorizePerson={ ...data,Types:"201"}
+    if(validateIDcardPassport(formData)){
       await sleep(500);
       reset();
-      console.log(data)
+      console.log(formData)
     }else{
 
     }
@@ -42,9 +42,9 @@ export function FormAuthorizedPerson() {
 
 
   const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.idCard || data.passPort) {
+    let isValid = false;  
+
+    if (data.idCard || data.passportID) {
       setIdCardError(false);   
       setPassportError(false); 
       isValid = true;          
@@ -74,19 +74,19 @@ export function FormAuthorizedPerson() {
 
   return (
     <Card className="p-4">
-      <h1 className="font-bold text-xl py-4">Authorized Person :</h1>
+      <h1 className="font-bold text-xl py-4">Authorized person of Juristic Investor for traction</h1>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
-              {...register("title")}
+              {...register("fullNames.title")}
               label="Title"
               id="Title"
               disabled={isSubmitting}
               
             />
-            {errors.title && (
-              <p className="text-red-500 text-sm px-2">{errors.title.message}</p>
+            {errors.fullNames && (
+              <p className="text-red-500 text-sm px-2">{errors.fullNames.message}</p>
             )}
           </div>
           <div className="w-1/2">
@@ -95,29 +95,29 @@ export function FormAuthorizedPerson() {
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
-              {...register("firstName")}
+              {...register("fullNames.firstName")}
               label="First Name"
               id="First Name"
               disabled={isSubmitting}
               
             />
-            {errors.firstName && (
+            {errors.fullNames && (
               <p className="text-red-500 text-sm px-2">
-                {errors.firstName.message}
+                {errors.fullNames.message}
               </p>
             )}
           </div>
           <div className="w-1/2">
             <Input
-              {...register("lastName")}
+              {...register("fullNames.lastName")}
               label="Surname"
               id="Surname"
               disabled={isSubmitting}
               
             />
-            {errors.lastName && (
+            {errors.fullNames && (
               <p className="text-red-500 text-sm px-2">
-                {errors.lastName.message}
+                {errors.fullNames.message}
               </p>
             )}
           </div>
@@ -140,7 +140,7 @@ export function FormAuthorizedPerson() {
 
           <div className="w-1/2">
                 <Input
-                    {...register("passPort")}
+                    {...register("passportID")}
                     label="Passport"
                     id="Passport"
                     disabled={isSubmitting}
@@ -184,14 +184,32 @@ export function FormAuthorizedPerson() {
             )}
           </div>
         </div>
+        <div className="flex flex-row space-x-4">
+          <div className="w-1/2">
+            <Input
+                {...register("position")}
+                label="Position"
+                id="position"
+                disabled={isSubmitting}
+                
+              />
+              {errors.position && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.position.message}
+                </p>
+              )}
+          </div>
+          <div className="w-1/2">
+          </div>
+        </div>
         <h1 className="font-bold text-xl py-4">
           Authorized Person's Address :
         </h1>
         <AddressFormAuthorizedPerson
           isSubmitting={isSubmitting}
-          keyType="address"
+          keyType="addresses"
           register={register}
-          errors={errors.address}
+          errors={errors.addresses}
         />
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>

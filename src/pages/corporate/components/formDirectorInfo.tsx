@@ -10,9 +10,9 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
-import { Table } from "./dataTable";
-import { AddressForm } from "./directorAddressForm";
+import { DirectorAddressForm } from "./directorAddressForm";
 import { useState,useEffect } from "react";
+import Dropbox from "@/components/Dropbox";
 
 
 export function FormIndividualsDirector() {
@@ -26,10 +26,14 @@ export function FormIndividualsDirector() {
 //   } = useFormIndividualsDirector();
   const [idCardError,setIdCardError] = useState<boolean>(true);
   const [passportError,setPassportError] = useState<boolean>(true);
+  const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
   const [idcardInput,setIdCardInput] = useState<string>("");
   const [passportInput,setPassportInput] = useState<string>("");
-
-
+  const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice:string)=>{
+    setDropDownChoosed(choice)
+    setDropBoxHadChoosed(true)
+  }
   const {
     register,
     handleSubmit,
@@ -40,43 +44,15 @@ export function FormIndividualsDirector() {
     //values: individualsDirector,
   });
 
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.directoridcard || data.directorpassport) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
-    } else {
-      setIdCardError(true);    
-      setPassportError(true);  
-    }
-    return isValid;
-  };
-  const handleDeleteError = () =>{
-    if (idcardInput || passportInput ){
-      setIdCardError(false);    
-      setPassportError(false);
-    }else{
-      setIdCardError(!idCardError);    
-      setPassportError(!passportError);
-    }
-  }
 
-  useEffect(() => {  
-
-      handleDeleteError()
-  }, [idcardInput,passportInput]);
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
+    const formData: TDirector={ ...data,Types:"101"}
     
-    if(validateIDcardPassport(data)){
       await sleep(500);
       reset();
-      console.log(data)
-    }else{
+      console.log(formData)
 
-    }
   };
 
   return (
@@ -93,19 +69,19 @@ export function FormIndividualsDirector() {
         </Card> */}
 
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Director Infomation :</h1>
+          <h1 className="font-bold text-xl py-4">List of Director</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                     <Input
-                    {...register("directortitle")}
+                    {...register("fullNames.title")}
                     label="Title"
                     id="Title"
                     disabled={isSubmitting}
                 />
-                {errors.directortitle && (
+                {errors.fullNames && (
                     <p className="text-red-500 text-sm px-2">
-                    {errors.directortitle.message}
+                    {errors.fullNames.message}
                     </p>
                 )}
               </div>
@@ -116,27 +92,27 @@ export function FormIndividualsDirector() {
             <div className="flex flex-row space-x-4">
                 <div className="w-1/2">
                     <Input
-                        {...register("directorname")}
+                        {...register("fullNames.firstName")}
                         label="Name"
                         id="Name"
                         disabled={isSubmitting}
                     />
-                    {errors.directorname && (
+                    {errors.fullNames && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.directorname.message}
+                        {errors.fullNames.message}
                         </p>
                     )}
                 </div>
                 <div className="w-1/2">
                     <Input
-                        {...register("directorsurname")}
+                        {...register("fullNames.lastName")}
                         label="Surname"
                         id="Surname"
                         disabled={isSubmitting}
                     />
-                    {errors.directorsurname && (
+                    {errors.fullNames && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.directorsurname.message}
+                        {errors.fullNames.message}
                         </p>
                     )}
                 </div>
@@ -144,75 +120,81 @@ export function FormIndividualsDirector() {
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("directoridcard")}
-                  label="ID Number"
-                  id="ID Number"
-                  disabled={isSubmitting}
-                  onChange={(e)=>setIdCardInput(e.target.value)}
-                />
-                {idCardError &&  (
-                <p className="text-red-500 px-4">
-                  IDCard must be fill
-                </p>
-              )}
-              </div>
-              <div className="w-1/2">
-                <Input
-                    {...register("directorpassport")}
-                    label="Passport"
-                    id="Passport"
-                    disabled={isSubmitting}
-                    onChange={(e)=>setPassportInput(e.target.value)}
-                    />
-                    {passportError &&  (
-                <p className="text-red-500 px-4">
-                  Passport must be filled
-                </p>
-              )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                <Input
-                  {...register("directornationality")}
+                  {...register("nationality")}
                   label="Nationality"
                   id="Nationality"
                   disabled={isSubmitting}
                 />
-                {errors.directornationality && (
+                {errors.nationality && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.directornationality.message}
+                    {errors.nationality.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
-                <Input
-                    {...register("directorexpireddate")}
-                    label="Date of Expired"
-                    id="Date of Expired"
-                    type="date"
+                  <Input
+                    {...register("position")}
+                    label="Position"
+                    id="position"
                     disabled={isSubmitting}
-                    />
-                    {errors.directorexpireddate && (
+                  />
+                  {errors.position && (
                     <p className="text-red-500 text-sm px-2">
-                        {errors.directorexpireddate.message}
+                      {errors.position.message}
                     </p>
-                    )}
-              </div>
+                  )}
+                </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+                  <div className="w-1/3">
+                    <Dropbox onDropdownSelect={handleDropboxChoice}/>
+                  </div>
+                  <div className="w-1/3">
+                  {dropDownChoosed ? (
+                dropDownChoosed === "IDCard" ? (
+                    <Input
+                        {...register("idCard")}
+                        label="IDCard"
+                        id="idCard"
+                        disabled={isSubmitting}
+                    />
+                ) : (
+                    <Input
+                        {...register("passportID")}
+                        label="Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                    />
+                )
+            ) : (
+                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div></>
+            )}
+                  </div>
+                  <div className="w-1/3">
+                    <Input
+                        {...register("expiryDate")}
+                        label="Date of Expired"
+                        id="Date of Expired"
+                        disabled={isSubmitting}
+                        type="date"
+                      />
+                  </div>
             </div>
 
             <h1 className="font-bold text-xl py-4">Director's Address</h1>
-            <AddressForm
+            <DirectorAddressForm
               isSubmitting={isSubmitting}
-              errors={errors.directoraddress}
+              errors={errors.addresses}
               register={register}
-              keyType="directoraddress"
+              keyType="addresses"
             />
-            {errors.directoraddress && (
+            {errors.addresses && (
               <p className="text-red-500 text-sm px-2">
-                {errors.directoraddress.message}
+                {errors.addresses.message}
               </p>
             )}
+
+
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}
