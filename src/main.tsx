@@ -68,8 +68,9 @@ import React from "react";
 import Layout from "./components/Layout";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import Welcome from "./pages/Welcome";
 import CreateCorporate from "./pages/corporate/createCorporate";
+import BlankPage from "./pages/blankPages/blankPage";
+import CorporateAccountOpenning from "./pages/corporateAccountOpenning/CorporateAccountOpenning";
 
 const helmetContext = {};
 
@@ -92,8 +93,9 @@ root.render(
               <Route path="/" element={<Layout />}>
                 <Route index element={<CreateCorporate />} />
                 <Route path="corporate" element={<Outlet />}>
-                  <Route path="create" element={<CreateCorporate />} />
+                  <Route path="create" element={<CorporateAccountOpenning />} />
                 </Route>
+                <Route path="blankPages" element={<BlankPage />} />
               </Route>
             </Routes>
           </BrowserRouter>
