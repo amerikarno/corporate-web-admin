@@ -1,9 +1,9 @@
 import DataTable from "react-data-table-component";
-import { MoveUp } from "lucide-react";
 import { useCorporateInfo } from "./hook/useCorporateInfo";
 import { columnsCorporateInfo } from "./constants/columns";
-import { FormCorporateInfo } from "./component/formCorporateInfo";
+// import { FormCorporateInfo } from "./component/formCorporateInfo";
 import { Card } from "@/components/ui/card";
+import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
 
 export default function CorporateAccountOpenning() {
   const { corporates, handleSubmitCorporateInfo } = useCorporateInfo();
