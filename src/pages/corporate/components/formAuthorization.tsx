@@ -150,7 +150,7 @@ export function FormAuthorizedPerson() {
                   {dropDownChoosed ? (
                 dropDownChoosed === "IDCard" ? (
                     <Input
-                        {...register("idCard")}
+                        {...register("citizendId")}
                         label="IDCard"
                         id="idCard"
                         disabled={isSubmitting}

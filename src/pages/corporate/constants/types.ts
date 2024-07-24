@@ -12,6 +12,12 @@ export type TFullName = {
   lastName:string;
 }
 
+export type TFullNameForCorporateInfo = [{
+  title:string;
+  firstName:string;
+  lastName:string;
+}]
+
 export type TSubAddress = {
   AddressNo: string;
   Building?: string;
@@ -29,10 +35,10 @@ export type TSubAddress = {
 };
 
 export type TFinancialInfo = {
-  RegisteredCapital?: string;
-  RevenuePerYear?: string;
-  NetProFitLoss?: string;
-  ShareholderEquity?: string;
+  RegisteredCapital?: number;
+  RevenuePerYear?: number;
+  NetProFitLoss?: number;
+  ShareholderEquity?: number;
 };
 
 export type TCorporateInfo = {
@@ -77,7 +83,7 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 
 export type TIndividualsShareholders = {
   fullNames: TFullName;
-  idCard?: string;
+  citizendId?: string;
   passportID?: string;
   expiredDate: string;
   nationality: string;
@@ -95,7 +101,7 @@ export type TBank = {
 
 export type TAuthorizePerson = {
   fullNames: TFullName;
-  idCard?: string;
+  citizendId?: string;
   passportID?: string;
   expiredDate: string;
   nationality: string;
@@ -113,7 +119,7 @@ export type TContactPerson = {
 
 export type TDirector = {
   fullNames: TFullName;
-  idCard?: string;
+  citizendId?: string;
   passportID?: string;
   expiredDate: string;
   nationality: string;

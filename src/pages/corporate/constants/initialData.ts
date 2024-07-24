@@ -46,9 +46,11 @@ export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
 };
 
 export const individualShareholder = {
-  title: "",
-  firstName: "",
-  lastName: "",
+  fullNames:[{
+    title: "",
+    firstName: "",
+    lastName: ""
+  }],
   idCard: "",
   passportID: "",
   expiredDate: "",

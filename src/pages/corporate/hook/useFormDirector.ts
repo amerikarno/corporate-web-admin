@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
-import { individualDirector } from "../constants/initialData";
+//import { individualDirector } from "../constants/initialData";
 import { copy } from "@/lib/utils";
 
 export function useFormIndividualsDirector() {
   const [directors, setDirectors] = useState<TDirector[]>(
     []
   );
-  const [individualsDirector, setIndividualsContact] =
-    useState<TDirector>(copy(individualDirector));
+  // const [individualsDirector, setIndividualsContact] =
+  //   useState<TDirector>(copy(individualDirector));
 
 //   const removeIndividualsShareholders = (index: number) => {
 //     const newShareholders = shareholders.filter((_, i) => i !== index);
@@ -44,7 +44,7 @@ export function useFormIndividualsDirector() {
 
   return {
     directors,
-    individualsDirector,
+    //individualsDirector,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
     // handleSetNewShareholder,

@@ -27,14 +27,14 @@ export function FormIndividualsShareholders() {
     setDropDownChoosed(choice)
     setDropBoxHadChoosed(true)
   }
-  const {
-    shareholders,
-    individualsShareholder,
-    removeIndividualsShareholders,
-    editIndividualsShareholders,
-    handleSetNewShareholder,
-    serializeData,
-  } = useFormIndividualsShareholder();
+  // const {
+  //   shareholders,
+  //   individualsShareholder,
+  //   removeIndividualsShareholders,
+  //   editIndividualsShareholders,
+  //   handleSetNewShareholder,
+  //   serializeData,
+  // } = useFormIndividualsShareholder();
 
   const {
     register,
@@ -43,50 +43,16 @@ export function FormIndividualsShareholders() {
     reset,
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
-    values: individualsShareholder,
+    //values: individualsShareholder,
   });
 
 
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
     const formData: TIndividualsShareholders={ ...data,Types:"301"}
-    if(validateIDcardPassport(formData)){
       await sleep(500);
       reset();
       console.log(formData)
-    }else{
-
-    }
   };
-
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.idCard || data.passPort) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
-    } else {
-      setIdCardError(true);    
-      setPassportError(true);  
-    }
-    return isValid;
-  };
-
-
-  const handleDeleteError = () =>{
-
-    if (idcardInput || passportInput ){
-      setIdCardError(false);    
-      setPassportError(false);
-    }else{
-      setIdCardError(!idCardError);    
-      setPassportError(!passportError);
-    }
-  }
-  useEffect(() => {  
-
-      handleDeleteError()
-  }, [idcardInput,passportInput]);
 
   return (
     <>
@@ -190,7 +156,7 @@ export function FormIndividualsShareholders() {
                   {dropDownChoosed ? (
                 dropDownChoosed === "IDCard" ? (
                     <Input
-                        {...register("idCard")}
+                        {...register("citizendId")}
                         label="IDCard"
                         id="idCard"
                         disabled={isSubmitting}

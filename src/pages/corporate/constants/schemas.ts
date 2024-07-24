@@ -57,10 +57,10 @@ export const corporateInfoSchema = z.object({
   .string().optional(),
   RegistredBusinessAddress: subAddressSchema,
   PlaceIncorporateAddress: subAddressSchema,
-  RegisteredCapital: z.string().optional(),
-  RevenuePerYear: z.string().optional(),
-  NetProFitLoss: z.string().optional(),
-  ShareholderEquity: z.string().optional(),
+  RegisteredCapital: z.coerce.number().optional(),
+  RevenuePerYear: z.coerce.number().optional(),
+  NetProFitLoss: z.coerce.number().optional(),
+  ShareholderEquity: z.coerce.number().optional(),
   placeIncorporateEmail:z.string().email(),
   placeIncorporateTelephone:z.string().optional(),
   RegistredBusinessEmail:z.string().optional(),
@@ -69,7 +69,7 @@ export const corporateInfoSchema = z.object({
 
 export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
-  idCard: z.string().optional(),
+  citizendId: z.string().optional(),
   passportID: z.string().optional(),
   expiredDate: z.string().min(1, "date cannot be empty"),
   nationality: z.string().min(1, "nationality cannot be empty"),
@@ -122,12 +122,13 @@ export type TCorporateTypeAndIncomeSchema = z.infer<
 
 export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
-  idCard: z.string().optional(),
+  citizendId: z.string().optional(),
   passportID: z.string().optional(),
   expiredDate: z
     .string()
     .min(1, { message: "expiration date cannot be empty" }),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
+  Types: z.string().optional(),
   sharePercentage: z
     .string()
     .min(1, { message: "Shares cannot be empty" })
@@ -139,6 +140,7 @@ export const individualsShareholdersSchema = z.object({
         message: "Shares must be number",
       }
     ),
+    
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -167,7 +169,7 @@ export type TBankSchema = z.infer<typeof bankSchema>;
 
 export const authorizedPersonSchema = z.object({
   fullNames: fullNamesSchema,
-  idCard: z.string().optional(),
+  citizendId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportID: z.string().optional(),
   expiredDate: z.string().min(1, "date cannot be empty"),
@@ -192,7 +194,7 @@ export type TIndividualsContactPersonSchema = z.infer<
 
 export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
-  idCard: z.string().optional(),
+  citizendId: z.string().optional(),
   passportID: z.string().optional(),
   expiredDate: z
     .string()
