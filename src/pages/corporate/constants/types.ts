@@ -1,35 +1,58 @@
 export type TAddress = {
-  addressNo: string;
-  building?: string;
-  moo?: string;
-  soi?: string;
-  road?: string;
-  subDistrict: string;
-  district: string;
-  province: string;
-  postalCode: string;
-  phone: string;
-  email: string;
+  address: TSubAddress;
+  Telephone: string;
+  EmailAddress: string;
   type?: number;
+  //ขาด Country , Floor
+};
+
+export type TFullName = {
+  title:string;
+  firstName:string;
+  lastName:string;
+}
+
+export type TSubAddress = {
+  AddressNo: string;
+  Building?: string;
+  MooNo?: string;
+  Soi?: string;
+  Road?: string;
+  Tambon: string;
+  Amphoe: string;
+  Province: string;
+  PostalCode: string;
+  Floor?: string;
+  Country: string;
+  type?: number;
+  //ขาด Country , Floor
 };
 
 export type TFinancialInfo = {
-  registeredCapital?: string;
-  revenuePerYear?: string;
-  netProfit?: string;
-  shareholderEquity?: string;
+  RegisteredCapital?: string;
+  RevenuePerYear?: string;
+  NetProFitLoss?: string;
+  ShareholderEquity?: string;
 };
 
 export type TCorporateInfo = {
-  name: string;
-  commercialRegisteredNo: string;
-  taxId: string;
-  dateIncorporation: string;
-  registeredCountry: string;
-  primaryCountryOfOperation: string;
-  registeredAddress: TAddress;
-  incorporatedAddress: TAddress;
+  Name: string;
+  RegistrationNo: string;
+  TaxID: string;
+  dateofincorporation: string;
+  RegisteredThailand:boolean;
+  PrimaryCountry:boolean;
+  Registered: string;
+  RegisteredOther?:boolean;
+  Primary: string;
+  PrimaryOther?:boolean;
+  RegistredBusinessAddress: TSubAddress;
+  PlaceIncorporateAddress: TSubAddress;
   financial?: TFinancialInfo;
+  placeIncorporateEmail:string;
+  placeIncorporateTelephone:string;
+  RegistredBusinessEmail:string;
+  RegistredBusinessTelephone:string;
 };
 
 export type TCorporateTypeAndIncome = {
@@ -40,23 +63,26 @@ export type TCorporateTypeAndIncome = {
   businessType: string;
   sourceOfIncome: string[];
   countrySourceOfIncome: string;
-  investmentObjective: string;
+  InvestmentObject: string;
 };
 
 export type TRegisteredCountryPrimaryCountryOperation = {
-  registeredCountry: string;
-  primaryCountryOfOperation: string;
+  Registered: string;
+  Primary: string;
+  RegisteredThailand:boolean;
+  PrimaryCountry:boolean;
+  RegisteredOther?:boolean;
+  PrimaryOther?:boolean;
 };
 
 export type TIndividualsShareholders = {
-  title: string;
-  firstName: string;
-  lastName: string;
+  fullNames: TFullName;
   idCard: string;
-  passPort: string;
+  passportID: string;
   expiredDate: string;
   nationality: string;
-  shares: string;
+  sharePercentage: string;
+  Types?:string;
 };
 
 export type TBank = {
@@ -68,41 +94,39 @@ export type TBank = {
 };
 
 export type TAuthorizePerson = {
-  title: string;
-  firstName: string;
-  lastName: string;
-  idCard: string;
-  passPort: string;
+  fullNames: TFullName;
+  idCard?: string;
+  passportID?: string;
   expiredDate: string;
   nationality: string;
-  address: TAddress;
+  addresses: TSubAddress;
+  position: string;
+  Types?:string;
 };
 export type TContactPerson = {
-  contacttitle: string;
-  contactname: string;
-  contactsurname: string;
-  contactposition: string;
-  contactdivision: string;
-  contactphone: string;
-  contactemail: string;
+  fullNames: TFullName;
+  Position: string;
+  Division: string;
+  Telephone: string;
+  Email: string;
 };
 
 export type TDirector = {
-  directortitle: string;
-  directorname: string;
-  directorsurname: string;
-  directoridcard: string;
-  directorpassport: string;
-  directorexpireddate: string;
-  directornationality: string;
-  directoraddress: TAddress;
+  fullNames: TFullName;
+  idCard?: string;
+  passportID?: string;
+  expiryDate: string;
+  nationality: string;
+  position: string;
+  addresses: TSubAddress;
+  Types?:string;
 };
 
 export type TJuristicsShareholders = {
   juristicName: string;
-  juristicRegisNo: string;
-  juristicRegisCountry: string;
-  juristicShares: string;
+  registrationNo: string;
+  registeredCountry: string;
+  sharePercentage: string;
 };
 
 export type TInitailJuristicTypeAndIncome = {

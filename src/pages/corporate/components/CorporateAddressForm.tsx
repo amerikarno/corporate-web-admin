@@ -3,18 +3,18 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 import {
     subAddressSchema,
     TSubAddressSchema,
-    TDirectorInfoSchema,
+    TCorporateInfoSchema,
 } from "../constants/schemas";
 import { Input } from "@/components/Input";
 
 export type TSubAddressFormProps = {
   isSubmitting: boolean;
   errors?: FieldErrors<TSubAddressSchema>;
-  register: UseFormRegister<TDirectorInfoSchema>;
+  register: UseFormRegister<TCorporateInfoSchema>;
   keyType: string;
 };
 
-export function DirectorAddressForm({
+export function CorporateAddressForm({
   isSubmitting,
   errors,
   register,

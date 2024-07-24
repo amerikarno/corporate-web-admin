@@ -4,7 +4,7 @@ import { TRegisteredCountryPrimaryCountryOperation } from "../constants/types";
 import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants/initialData";
 import { boolean, z, ZodIssue } from "zod";
 import { registeredCountryPrimaryCountryOperationSchema } from "../constants/schemas";
-
+import { registeredCountryKey , PrimaryCountryOfOperationKey} from "../constants/const_variables";
 export function useFormCorporateInfo() {
     const [registeredCountryPrimaryCountryOperation, setRegisteredCountryPrimaryCountryOperation] =
     useState<TRegisteredCountryPrimaryCountryOperation>(emptyRegisteredCountryPrimaryCountryOperation);
@@ -38,10 +38,14 @@ export function useFormCorporateInfo() {
         let tmp = copy(registeredCountryPrimaryCountryOperation);
         // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
         if (checked) {
-          tmp.registeredCountry = name;
+          tmp.Registered = name;
+          tmp.RegisteredThailand = true;
+          tmp.RegisteredOther = false;
           form1error ? validateLocal(tmp) : null;
         } else {
-          tmp.registeredCountry = "";
+          tmp.Registered = "";
+          tmp.RegisteredThailand = false;
+          tmp.RegisteredOther = true;
         }
         setRegisteredCountryPrimaryCountryOperation(tmp);
         if (name == "Others Countries (Please Specify)") {
@@ -52,7 +56,9 @@ export function useFormCorporateInfo() {
     const handleInputRegisteredCountryOthers= (e: any) => {
       const { value } = e.target;
       let tmp = copy(registeredCountryPrimaryCountryOperation);
-      tmp.registeredCountry = value;
+      tmp.Registered = value;
+      tmp.RegisteredThailand = false;
+      tmp.RegisteredOther = true;
       setRegisteredCountryPrimaryCountryOperation(tmp);
       form1error ? validateLocal(tmp) : null;
     };
@@ -61,10 +67,14 @@ export function useFormCorporateInfo() {
         let tmp = copy(registeredCountryPrimaryCountryOperation);
         // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
         if (checked) {
-          tmp.primaryCountryOfOperation = name;
+          tmp.Primary = name;
+          tmp.PrimaryCountry = true;
+          tmp.PrimaryOther = false;
           form1error ? validateLocal(tmp) : null;
         } else {
-          tmp.primaryCountryOfOperation = "";
+          tmp.Primary = "";
+          tmp.PrimaryCountry = false;
+          tmp.PrimaryOther = true;
         }
         setRegisteredCountryPrimaryCountryOperation(tmp);
         if (name == "Others Countries (Please Specify)") {
@@ -75,13 +85,14 @@ export function useFormCorporateInfo() {
     const handleInputPrimaryCountryOfOperationOthers= (e: any) => {
       const { value } = e.target;
       let tmp = copy(registeredCountryPrimaryCountryOperation);
-      tmp.primaryCountryOfOperation = value;
+      tmp.Primary = value;
+      tmp.PrimaryCountry = false
       setRegisteredCountryPrimaryCountryOperation(tmp);
       form1error ? validateLocal(tmp) : null;
     };
     const disableRegisteredCountry = (type: string): boolean => {
-      if (registeredCountryPrimaryCountryOperation.registeredCountry !== "") {
-        if (type === registeredCountryPrimaryCountryOperation.registeredCountry) {
+      if (registeredCountryPrimaryCountryOperation.Registered !== "") {
+        if (type === registeredCountryPrimaryCountryOperation.Registered) {
           return false;
         } else {
           return true;
@@ -91,8 +102,8 @@ export function useFormCorporateInfo() {
       }
     };
     const disablePrimaryCountryOfOperation = (type: string): boolean => {
-      if (registeredCountryPrimaryCountryOperation.primaryCountryOfOperation !== "") {
-        if (type === registeredCountryPrimaryCountryOperation.primaryCountryOfOperation) {
+      if (registeredCountryPrimaryCountryOperation.Primary !== "") {
+        if (type === registeredCountryPrimaryCountryOperation.Primary) {
           return false;
         } else {
           return true;
@@ -131,11 +142,11 @@ export function useFormCorporateInfo() {
     };
     const handleInputOthers = (e: any, name: string) => {
       switch (name) {
-        case "registeredCountry":
+        case "Registered":
           handleInputRegisteredCountryOthers(e);
           break;
 
-        case "primaryCountryOfOperation":
+        case "Primary":
           handleInputPrimaryCountryOfOperationOthers(e);
           break;
         

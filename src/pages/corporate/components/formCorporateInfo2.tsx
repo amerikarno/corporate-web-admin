@@ -65,6 +65,7 @@ export function FormCorporateTypeAndIncome() {
               >
                 <div className="w-1/4">
                   <CheckBox
+                    id={`juristic type ${type}=${i}`}
                     label={type}
                     onChange={(e) => handleCheck(e, i)}
                     name={type}
@@ -75,6 +76,7 @@ export function FormCorporateTypeAndIncome() {
                   {i == 0 &&
                     juristicThai.map((item, j) => (
                       <CheckBox
+                        id={`${i}_${j}`}
                         key={`${i}_${j}`}
                         label={item}
                         onChange={(e) => handleSubSelected(e, i, j)}
@@ -85,6 +87,7 @@ export function FormCorporateTypeAndIncome() {
                   {i == 1 &&
                     juristicForeign.map((item, j) => (
                       <CheckBox
+                        id={`${i}_${j}`}
                         key={`${i}_${j}`}
                         label={item}
                         onChange={(e) => handleSubSelected(e, i, j)}
@@ -95,6 +98,7 @@ export function FormCorporateTypeAndIncome() {
                   {i == 2 &&
                     juristicOthers.map((item, j) => (
                       <CheckBox
+                        id={`${i}_${j}`}
                         key={`${i}_${j}`}
                         label={item}
                         onChange={(e) => handleSubSelected(e, i, j)}
@@ -119,6 +123,7 @@ export function FormCorporateTypeAndIncome() {
             <div className="grid grid-cols-2 ">
               {businessType.map((item, i) => (
                 <CheckBox
+                  id={`business-type-${i}`}
                   key={i}
                   label={item}
                   onChange={(e) => handeleBusinessType(e, i)}
@@ -150,6 +155,7 @@ export function FormCorporateTypeAndIncome() {
             <div className="grid grid-cols-2 ">
               {sourceOfIncome.map((item, i) => (
                 <CheckBox
+                  id={`sourceofincome-${i}`}
                   key={i}
                   label={item}
                   onChange={(e) => handeleSourceOfIncome(e, i)}
@@ -182,6 +188,7 @@ export function FormCorporateTypeAndIncome() {
             <div className="grid grid-cols-2 ">
               {countrySourceOfIncome.map((item, i) => (
                 <CheckBox
+                  id={`countrysourceofincome-${i}`}
                   key={i}
                   label={item}
                   onChange={(e) => handeleCountrySourceOfIncome(e, i)}
@@ -213,6 +220,7 @@ export function FormCorporateTypeAndIncome() {
           <div className="pt-4 px-4 border-t">
             {investmentObjective.map((item, i) => (
               <CheckBox
+                id={`investmentobjective-${i}`}
                 key={i}
                 label={item}
                 onChange={(e) => handeleInvestmentObjective(e, i)}
