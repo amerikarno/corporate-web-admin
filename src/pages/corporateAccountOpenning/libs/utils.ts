@@ -1,7 +1,5 @@
-// export const serializeCorpInfo = (data: any) => {
-//     let formData = new FormData();
-//     Object.entries(data).forEach(([key, value]) => {
-//         formData.append(key, value);
-//     });
-//     return formData;
-// }
+export function formatDateToIsoString(date: Date): string {
+  const isoString = date.toISOString();
+  const formattedDate = isoString.replace(/\.\d{3}Z$/, "+00:00");
+  return formattedDate;
+}

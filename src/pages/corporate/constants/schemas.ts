@@ -19,7 +19,7 @@ export const fullNamesSchema = z.object({
   title: z.string().min(1, "title cannot be empty"),
   firstName: z.string().min(1, "firstname cannot be empty"),
   lastName: z.string().min(1, "lastname cannot be empty"),
-})
+});
 
 export const addressSchema = z.object({
   // AddressNo: z.string().min(1, "addressNo cannot be empty"),
@@ -36,7 +36,6 @@ export const addressSchema = z.object({
   EmailAddress: z.string().email(),
 });
 
-
 // export const financialInfoSchema = z.object({
 //   RegisteredCapital: z.string().optional(),
 //   RevenuePerYear: z.string().optional(),
@@ -46,25 +45,27 @@ export const addressSchema = z.object({
 
 export const corporateInfoSchema = z.object({
   Name: z.string().min(1, "name cannot be empty"),
-  RegistrationNo: z
-    .string()
-    .min(1, "commercialRegisteredNo cannot be empty"),
+  RegistrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
   TaxID: z.string().min(1, "taxId cannot be empty"),
-  dateofincorporation: z.string().min(1, "dateIncorporation cannot be empty"),
-  Registered: z
-  .string().optional(),
-  Primary: z
-  .string().optional(),
+  dateofincorporation: z.string().transform((str) => {
+    const date = new Date(str);
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+    return date;
+  }),
+  Registered: z.string().optional(),
+  Primary: z.string().optional(),
   RegistredBusinessAddress: subAddressSchema,
   PlaceIncorporateAddress: subAddressSchema,
-  RegisteredCapital: z.string().optional(),
-  RevenuePerYear: z.string().optional(),
-  NetProFitLoss: z.string().optional(),
-  ShareholderEquity: z.string().optional(),
-  placeIncorporateEmail:z.string().email(),
-  placeIncorporateTelephone:z.string().optional(),
-  RegistredBusinessEmail:z.string().optional(),
-  RegistredBusinessTelephone:z.string().optional(),
+  RegisteredCapital: z.coerce.number().optional(),
+  RevenuePerYear: z.coerce.number().optional(),
+  NetProFitLoss: z.coerce.number().optional(),
+  ShareholderEquity: z.coerce.number().optional(),
+  placeIncorporateEmail: z.string().email(),
+  placeIncorporateTelephone: z.string().optional(),
+  RegistredBusinessEmail: z.string().optional(),
+  RegistredBusinessTelephone: z.string().optional(),
 });
 
 export const directorInfoSchema = z.object({
@@ -75,16 +76,12 @@ export const directorInfoSchema = z.object({
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
   addresses: subAddressSchema,
-})
+});
 
 export const registeredCountryPrimaryCountryOperationSchema = z.object({
-  Registered: z
-  .string()
-  .min(1, "registeredCountry cannot be empty"),
-  Primary: z
-  .string()
-  .min(1, "primaryCountryOfOperation cannot be empty"),
-})
+  Registered: z.string().min(1, "registeredCountry cannot be empty"),
+  Primary: z.string().min(1, "primaryCountryOfOperation cannot be empty"),
+});
 
 export const contactPersonSchema = z.object({
   firstName: z.string().min(1, "name cannot be empty"),
@@ -172,11 +169,10 @@ export const authorizedPersonSchema = z.object({
   passportID: z.string().optional(),
   expiredDate: z.string().min(1, "date cannot be empty"),
   addresses: subAddressSchema,
-  position:z.string().min(1, "position cannot be empty"),
+  position: z.string().min(1, "position cannot be empty"),
 });
 
 export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
-
 
 export const individualsContactPersonSchema = z.object({
   fullNames: fullNamesSchema,
@@ -194,15 +190,9 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   idCard: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, { message: "Expired Date cannot be empty" }),
-  nationality: z
-    .string()
-    .min(1, { message: "Natioonality cannot be empty" }),
-  position: z
-    .string()
-    .min(1, { message: "Position cannot be empty" }),
+  expiryDate: z.string().min(1, { message: "Expired Date cannot be empty" }),
+  nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
+  position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: subAddressSchema,
 });
 
@@ -219,16 +209,16 @@ export const individualsJuristicShareholdersSchema = z.object({
     .string()
     .min(1, { message: "Register Country cannot be empty" }),
   sharePercentage: z
-  .string()
-  .min(1, { message: "Shares cannot be empty" })
-  .refine(
-    (value) => {
-      return /^\d+$/.test(value);
-    },
-    {
-      message: "Shares must be number",
-    }
-  ),
+    .string()
+    .min(1, { message: "Shares cannot be empty" })
+    .refine(
+      (value) => {
+        return /^\d+$/.test(value);
+      },
+      {
+        message: "Shares must be number",
+      }
+    ),
 });
 
 export type TIndividualsJuristicShareholdersSchema = z.infer<

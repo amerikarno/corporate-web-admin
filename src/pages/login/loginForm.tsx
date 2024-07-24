@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import CryptoJs from "crypto-js";
-import axios from "axios";
+// import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "@/features/authen/authenSlice";
@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -41,7 +42,8 @@ const LoginForm = () => {
 
       axios
         .post(
-          "http://localhost:1323/admin/v2/login",
+          // "http://localhost:1323/admin/v2/login",
+          "/api/v1/authen/login",
           {
             hashedUsername: `${hashedUsername}`,
             hashedPassword: `${hashedPassword}`,
@@ -54,8 +56,8 @@ const LoginForm = () => {
         )
         .then((res) => {
           console.log(res);
-          dispatch(setToken(res.data.token));
-          setCookies(res.data.token);
+          dispatch(setToken(res.data.accessToken));
+          setCookies(res.data.accessToken);
           navigate("/");
         })
         .catch((err) => {

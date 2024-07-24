@@ -28,17 +28,17 @@ export type TSubAddress = {
 };
 
 export type TFinancialInfo = {
-  RegisteredCapital?: string;
-  RevenuePerYear?: string;
-  NetProFitLoss?: string;
-  ShareholderEquity?: string;
+  RegisteredCapital?: number;
+  RevenuePerYear?: number;
+  NetProFitLoss?: number;
+  ShareholderEquity?: number;
 };
 
 export type TCorporateInfo = {
   Name: string;
   RegistrationNo: string;
   TaxID: string;
-  dateofincorporation: string;
+  dateofincorporation: Date;
   RegisteredThailand: boolean;
   PrimaryCountry: boolean;
   Registered: string;
