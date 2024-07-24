@@ -24,8 +24,8 @@ export type TSubAddress = {
   PostalCode: string;
   Floor?: string;
   Country: string;
-  type?: number;
-  //ขาด Country , Floor
+  //type?: number;
+
 };
 
 export type TFinancialInfo = {
@@ -49,10 +49,10 @@ export type TCorporateInfo = {
   RegistredBusinessAddress: TSubAddress;
   PlaceIncorporateAddress: TSubAddress;
   financial?: TFinancialInfo;
-  placeIncorporateEmail:string;
-  placeIncorporateTelephone:string;
-  RegistredBusinessEmail:string;
-  RegistredBusinessTelephone:string;
+  placeIncorporateEmail?:string;
+  placeIncorporateTelephone?:string;
+  RegistredBusinessEmail?:string;
+  RegistredBusinessTelephone?:string;
 };
 
 export type TCorporateTypeAndIncome = {
@@ -77,8 +77,8 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 
 export type TIndividualsShareholders = {
   fullNames: TFullName;
-  idCard: string;
-  passportID: string;
+  idCard?: string;
+  passportID?: string;
   expiredDate: string;
   nationality: string;
   sharePercentage: string;

@@ -68,9 +68,7 @@ export const corporateInfoSchema = z.object({
 });
 
 export const directorInfoSchema = z.object({
-  directortitle: z.string().min(1, "title cannot be empty"),
-  firstName: z.string().min(1, "name cannot be empty"),
-  lastName: z.string().min(1, "surname cannot be empty"),
+  fullNames: fullNamesSchema,
   idCard: z.string().optional(),
   passportID: z.string().optional(),
   expiryDate: z.string().min(1, "date cannot be empty"),

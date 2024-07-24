@@ -231,6 +231,7 @@ export function FormIndividualsDirector() {
                 {errors.addresses.message}
               </p>
             )}
+
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}
