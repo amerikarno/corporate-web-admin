@@ -65,6 +65,7 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
 
         //const formData: TDirector={ ...data,Types:"101"}
         if (dropBoxHadChoosed){
+            setTriggerDropboxError(false)
             const formData = validateData(data)
             await sleep(500);
             reset();

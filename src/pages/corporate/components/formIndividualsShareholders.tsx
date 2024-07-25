@@ -19,11 +19,9 @@ type TShareHoldersFormProps = {
 };
 export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
 
-  const [idCardError,setIdCardError] = useState<boolean>(true);
-  const [passportError,setPassportError] = useState<boolean>(true);
-  const [idcardInput,setIdCardInput] = useState<string>("");
-  const [passportInput,setPassportInput] = useState<string>("");
+
   const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
+  const [triggerDropboxError,setTriggerDropboxError] = useState<boolean>(false)
   const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
   const handleDropboxChoice = (choice:string)=>{
     setDropDownChoosed(choice)
@@ -63,11 +61,16 @@ export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
 
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
       //const formData: TIndividualsShareholders={ ...data,Types:"301"}
+    if (dropBoxHadChoosed){
+      setTriggerDropboxError(false)
       const formData = validateData(data)
       await sleep(500);
       reset();
       console.log(formData)
       onsubmit(data)
+    }else{
+      setTriggerDropboxError(true)
+    }
   };
 
   return (
@@ -167,26 +170,48 @@ export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
               <div className="flex flex-row space-x-4">
                   <div className="w-1/3">
                     <Dropbox onDropdownSelect={handleDropboxChoice}/>
+                    {triggerDropboxError && (
+              <p className="text-red-500 text-sm px-2">Please Choose IDCard or Passport</p>)}
                   </div>
                   <div className="w-1/3">
                   {dropDownChoosed ? (
                 dropDownChoosed === "IDCard" ? (
+                  <>
                     <Input
                         {...register("citizendId")}
                         label="IDCard"
                         id="idCard"
                         disabled={isSubmitting}
                     />
+                    {triggerDropboxError && (
+                      <p className="text-red-500 text-sm px-2">
+                        Please Insert IDcard
+                      </p>
+                    )}
+                  </>
                 ) : (
+                  <>
                     <Input
                         {...register("passportID")}
                         label="Passport"
                         id="passportID"
                         disabled={isSubmitting}
                     />
+                    {triggerDropboxError && (
+                      <p className="text-red-500 text-sm px-2">
+                        Please Insert Passport
+                      </p>
+                    )}
+                  </>
                 )
             ) : (
-                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div></>
+                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div>
+                {triggerDropboxError && (
+                      <p className="text-red-500 text-sm px-2">
+                        Please Insert IDCard or Passport
+                      </p>
+                    )}
+                </>
             )}
                   </div>
                   <div className="w-1/3">
@@ -197,6 +222,11 @@ export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
                         disabled={isSubmitting}
                         type="date"
                       />
+                      {errors.expiredDate && (
+                      <p className="text-red-500 text-sm px-2">
+                        {errors.expiredDate.message}
+                      </p>
+                    )}
                   </div>
             </div>
             <div className="flex justify-end">
