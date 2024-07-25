@@ -3,3 +3,5 @@ export function formatDateToIsoString(date: Date): string {
   const formattedDate = isoString.replace(/\.\d{3}Z$/, "+00:00");
   return formattedDate;
 }
+
+export const serializeJuristicType = (juristicType: string) => {};

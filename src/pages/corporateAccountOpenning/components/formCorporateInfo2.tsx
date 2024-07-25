@@ -8,11 +8,12 @@ import {
   juristicThai,
   sourceOfIncome,
   juristicType,
-} from "../constants/const_variables";
+} from "@/pages/corporate/constants/const_variables";
 import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
-import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
+import { useFormCorporateInfo2 } from "@/pages/corporateAccountOpenning/hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
+import { juristicTypeObject } from "../constants/variables";
 
 type TCorporateTypeAndIncomeProps = {
   onsubmit: (data: any) => void;
@@ -31,31 +32,33 @@ export function FormCorporateTypeAndIncome({
     juristicAllType,
     juristicAllOtherType,
     handleCheck,
-    handleSubSelected,
-    handeleBusinessType,
-    handeleCountrySourceOfIncome,
-    handeleInvestmentObjective,
-    handeleSourceOfIncome,
-    handleInputOthers,
+    // handleSubSelected,
+    // handeleBusinessType,
+    // handeleCountrySourceOfIncome,
+    // handeleInvestmentObjective,
+    // handeleSourceOfIncome,
+    // handleInputOthers,
     getError,
-    disableBusinessType,
-    disableCountrySourceOfIncome,
-    disableInvestmentObjective,
-    isDiabledJuristicType,
-    isDisableSubSelected,
-    validateForm,
+    // disableBusinessType,
+    // disableCountrySourceOfIncome,
+    // disableInvestmentObjective,
+    // isDiabledJuristicType,
+    // isDisableSubSelected,
+    // validateForm,
+    juristicType,
   } = useFormCorporateInfo2();
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log(corporateTypeAndIncome);
-      console.log(juristicAllType);
-      console.log(juristicAllOtherType);
-      onsubmit("submit success");
-    } else {
-      console.log("submit failed");
-    }
+    console.log(juristicType);
+    // if (validateForm()) {
+    //   console.log(corporateTypeAndIncome);
+    //   console.log(juristicAllType);
+    //   console.log(juristicAllOtherType);
+    //   onsubmit("submit success");
+    // } else {
+    //   console.log("submit failed");
+    // }
   };
 
   return (
@@ -64,54 +67,30 @@ export function FormCorporateTypeAndIncome({
         <div>
           <>
             <h1 className="font-bold p-4">Juristic Type</h1>
-            {juristicType.map((type, i) => (
+            {juristicTypeObject.map((item, i) => (
               <div
                 key={i}
                 className="px-4 flex flex-row border-t border-gray-100"
               >
                 <div className="w-1/4">
                   <CheckBox
-                    id={`juristic type ${type}=${i}`}
-                    label={type}
-                    onChange={(e) => handleCheck(e, i)}
-                    name={type}
-                    disabled={isDiabledJuristicType(type)}
+                    id={`juristic-${item.main.id}`}
+                    name={`juristic-${item.main.id}`}
+                    label={item.main.name}
+                    onChange={(e) => handleCheck(item.main.id, e)}
                   />
                 </div>
                 <div className="w-3/4">
-                  {i == 0 &&
-                    juristicThai.map((item, j) => (
+                  {item.sub.map((subItem, j) => (
+                    <div key={j}>
                       <CheckBox
-                        id={`${i}_${j}`}
-                        key={`${i}_${j}`}
-                        label={item}
-                        onChange={(e) => handleSubSelected(e, i, j)}
-                        name={`${type}_${item}`}
-                        disabled={isDisableSubSelected(type)}
+                        id={`juristic-${subItem.id}`}
+                        name={`juristic-${subItem.id}`}
+                        label={subItem.name}
+                        onChange={(e) => handleCheck(subItem.id, e)}
                       />
-                    ))}
-                  {i == 1 &&
-                    juristicForeign.map((item, j) => (
-                      <CheckBox
-                        id={`${i}_${j}`}
-                        key={`${i}_${j}`}
-                        label={item}
-                        onChange={(e) => handleSubSelected(e, i, j)}
-                        name={`${type}_${item}`}
-                        disabled={isDisableSubSelected(type)}
-                      />
-                    ))}
-                  {i == 2 &&
-                    juristicOthers.map((item, j) => (
-                      <CheckBox
-                        id={`${i}_${j}`}
-                        key={`${i}_${j}`}
-                        label={item}
-                        onChange={(e) => handleSubSelected(e, i, j)}
-                        name={`${type}_${item}`}
-                        disabled={isDisableSubSelected(type)}
-                      />
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -123,7 +102,7 @@ export function FormCorporateTypeAndIncome({
           </>
         </div>
 
-        <div>
+        {/* <div>
           <h1 className="font-bold p-4 border-t">Business Type</h1>
           <div className="px-4 border-t">
             <div className="grid grid-cols-2 ">
@@ -249,7 +228,7 @@ export function FormCorporateTypeAndIncome({
               {getError(["investmentObjective"], errors)?.message}
             </p>
           )}
-        </div>
+        </div> */}
 
         <div className="flex justify-end pb-4 pr-4">
           <Button type="submit">Submit</Button>

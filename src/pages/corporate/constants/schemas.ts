@@ -62,9 +62,9 @@ export const corporateInfoSchema = z.object({
   RevenuePerYear: z.coerce.number().optional(),
   NetProFitLoss: z.coerce.number().optional(),
   ShareholderEquity: z.coerce.number().optional(),
-  placeIncorporateEmail: z.string().email(),
+  placeIncorporateEmail: z.string().email().optional(),
   placeIncorporateTelephone: z.string().optional(),
-  RegistredBusinessEmail: z.string().optional(),
+  RegistredBusinessEmail: z.string().email().optional(),
   RegistredBusinessTelephone: z.string().optional(),
 });
 
@@ -106,7 +106,7 @@ export const corporateTypeAndIncomeSchema = z.object({
   businessType: z.string().min(1, "businessType cannot be empty"),
   sourceOfIncome: z
     .array(z.string().min(1, "sourceOfIncome cannot be empty"))
-    .nonempty(),
+    .min(1),
   countrySourceOfIncome: z
     .string()
     .min(1, "countrySourceOfIncome cannot be empty"),
@@ -224,3 +224,70 @@ export const individualsJuristicShareholdersSchema = z.object({
 export type TIndividualsJuristicShareholdersSchema = z.infer<
   typeof individualsJuristicShareholdersSchema
 >;
+
+const corporateTypeSchema = z.object({
+  "11": z.coerce.number().min(1),
+  "12": z.coerce.number().min(1),
+  "13": z.coerce.number().min(1),
+  "21": z.coerce.number().min(1),
+  "22": z.coerce.number().min(1),
+  "23": z.coerce.number().min(1),
+  "31": z.coerce.number().min(1),
+  "32": z.coerce.number().min(1),
+  "33": z.coerce.number().min(1),
+  "34": z.coerce.number().min(1),
+});
+
+const businessTypeSchema = z.object({
+  "11": z.coerce.number().min(1),
+  "12": z.coerce.number().min(1),
+  "13": z.coerce.number().min(1),
+  "14": z.coerce.number().min(1),
+  "15": z.coerce.number().min(1),
+  "16": z.coerce.number().min(1),
+  "17": z.coerce.number().min(1),
+  "18": z.coerce.number().min(1),
+  "19": z.coerce.number().min(1),
+  "20": z.coerce.number().min(1),
+  "21": z.coerce.number().min(1),
+  "22": z.coerce.number().min(1),
+  "23": z.coerce.number().min(1),
+  "24": z.coerce.number().min(1),
+  "25": z.coerce.number().min(1),
+  "26": z.coerce.number().min(1),
+  "27": z.coerce.number().min(1),
+});
+
+const sourceOfIncomeSchema = z.object({
+  "11": z.coerce.number().min(1),
+  "12": z.coerce.number().min(1),
+  "13": z.coerce.number().min(1),
+  "14": z.coerce.number().min(1),
+  "15": z.coerce.number().min(1),
+  "16": z.coerce.number().min(1),
+});
+
+const countrySourceOfIncomeSchema = z.object({
+  "11": z.coerce.number().min(1),
+  "12": z.coerce.number().min(1),
+});
+
+const investmentObjectiveSchema = z.object({
+  "11": z.coerce.number().min(1),
+  "12": z.coerce.number().min(1),
+  "13": z.coerce.number().min(1),
+  "14": z.coerce.number().min(1),
+});
+
+const juristAllTypeSchema = z.object({
+  corpprateType: corporateTypeSchema,
+  businessType: businessTypeSchema,
+  businessTypeOther: z.string().min(1),
+  sourceOfIncome: sourceOfIncomeSchema,
+  sourceOfIncomeOther: z.string().min(1),
+  countrySourceOfIncome: countrySourceOfIncomeSchema,
+  countrySourceOfIncomeOther: z.string().min(1),
+  investmentObjective: investmentObjectiveSchema,
+  investmentObjectiveOther: z.string().min(1),
+});
+export type TJuristAllTypeSchema = z.infer<typeof juristAllTypeSchema>;

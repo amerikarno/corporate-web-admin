@@ -98,12 +98,9 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
-    getError,
-    form1error,
     isPrimaryCountryOfOperationOthers,
     isRegisteredCountryOthers,
     registeredCountryPrimaryCountryOperation,
-    validateForm,
     handleInputOthers,
   } = useFormCorporateInfo();
 
@@ -266,12 +263,22 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id="placeIncorporateEmail"
               disabled={isSubmitting}
             />
+            {errors.placeIncorporateEmail && (
+              <p className="text-red-500">
+                {errors.placeIncorporateEmail.message}
+              </p>
+            )}
             <Input
               {...register("placeIncorporateTelephone")}
               label="Telephone"
               id="placeIncorporateTelephone"
               disabled={isSubmitting}
             />
+            {errors.placeIncorporateTelephone && (
+              <p className="text-red-500">
+                {errors.placeIncorporateTelephone.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -288,12 +295,22 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id="RegistredBusinessEmail"
               disabled={isSubmitting}
             />
+            {errors.RegistredBusinessAddress && (
+              <p className="text-red-500">
+                {errors.RegistredBusinessAddress.message}
+              </p>
+            )}
             <Input
               {...register("RegistredBusinessTelephone")}
               label="Telephone"
               id="RegistredBusinessTelephone"
               disabled={isSubmitting}
             />
+            {errors.RegistredBusinessTelephone && (
+              <p className="text-red-500">
+                {errors.RegistredBusinessTelephone.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">

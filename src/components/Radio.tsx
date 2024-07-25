@@ -1,19 +1,19 @@
 import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
 
-interface TCheckbox {
+interface TRadio {
   id: string;
   label: string;
   className?: string;
   type?: string;
 }
-type checkboxProps = TCheckbox & ComponentProps<"input">;
+type checkboxProps = TRadio & ComponentProps<"input">;
 
-export function CheckBox({
+export function Radio({
   id,
   label,
   className,
-  type = "checkbox",
+  type = "radio",
   ...props
 }: checkboxProps) {
   return (

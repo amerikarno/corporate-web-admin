@@ -134,3 +134,40 @@ export type TInitailJuristicTypeAndIncome = {
 export type TInitailJuristicOther = {
   [key: string]: string;
 };
+
+export type TJuristicTypeObject = {
+  id: string;
+  name: string;
+  value: number;
+};
+
+export type TObjectJuristicType = {
+  id: string;
+  name: string;
+  value: number;
+};
+
+export type TJuristicType = {
+  main: TObjectJuristicType;
+  sub: TObjectJuristicType[];
+};
+
+export type TNumber = {
+  [key: string]: number;
+};
+export type TCorporateType = TNumber;
+export type TJuristicBusinessType = TNumber;
+export type TJuristicSourceOfIncome = TNumber;
+export type TJusristicInvestmentObjective = TNumber;
+export type TJuristicTypeAll = {
+  corporateCode: string;
+  corporateType: TCorporateType;
+  businessType: TJuristicBusinessType;
+  businessTypeOther: string;
+  sourceOfIncome: TJuristicSourceOfIncome;
+  sourceOfIncomeOther: string;
+  countrySourceOfIncomeThai: boolean;
+  countrySourceOfIncomeOther: string;
+  investmentObjective: TJusristicInvestmentObjective;
+  investmentObjectiveOther: string;
+};
