@@ -7,7 +7,11 @@ import { useForm } from "react-hook-form";
 import { bankSchema, TBankSchema } from "../constants/schemas";
 import { Button } from "@/components/ui/button";
 
-export function FormBank() {
+type TBankTBankFormProps = {
+  onsubmit: (data: TBank) => void;
+};
+
+export function FormBank({onsubmit}:TBankTBankFormProps) {
   const {
     register,
     handleSubmit,
@@ -21,6 +25,7 @@ export function FormBank() {
     await sleep(500);
     console.log(data);
     reset();
+    onsubmit(data)
   };
 
   return (

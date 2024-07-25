@@ -12,8 +12,10 @@ import { sleep } from "@/lib/utils";
 import { useFormJuristicShareholders} from "../hook/useFormJuristicShareholders"
 import { TJuristicsShareholders } from "../constants/types";
 import { Table } from "./dataTable";
-
-export function FormJuristicShareholders() {
+type TJuristicsShareholdersFormProps = {
+  onsubmit: (data: TJuristicsShareholders) => void;
+};
+export function FormJuristicShareholders({onsubmit}:TJuristicsShareholdersFormProps) {
   const {
     juristics,
     juristicShareholders,
@@ -46,6 +48,7 @@ export function FormJuristicShareholders() {
     //handleSetNewShareholder(data);
     reset();
     console.log(data)
+    onsubmit(data)
   };
 
   return (
@@ -82,23 +85,20 @@ export function FormJuristicShareholders() {
                 )}
               </div>
               <div className="w-1/2">
-
+                <Input
+                    {...register("registrationNo")}
+                    label="Commercial Registration No."
+                    id="Commercial Registration No."
+                    disabled={isSubmitting}
+                  />
+                  {errors.registrationNo && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.registrationNo.message}
+                    </p>
+                  )}
               </div>
             </div>
             <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                <Input
-                  {...register("registrationNo")}
-                  label="Commercial Registration No."
-                  id="Commercial Registration No."
-                  disabled={isSubmitting}
-                />
-                {errors.registrationNo && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.registrationNo.message}
-                  </p>
-                )}
-              </div>
               <div className="w-1/2">
                 <Input
                   {...register("registeredCountry")}
@@ -112,25 +112,21 @@ export function FormJuristicShareholders() {
                   </p>
                 )}
               </div>
-            </div>
-            <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("sharePercentage")}
-                  label="Shares"
-                  id="Shares"
-                  disabled={isSubmitting}
-                />
-                {errors.sharePercentage && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.sharePercentage.message}
-                  </p>
-                )}
+                    {...register("sharePercentage")}
+                    label="Shares"
+                    id="Shares"
+                    disabled={isSubmitting}
+                  />
+                  {errors.sharePercentage && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.sharePercentage.message}
+                    </p>
+                  )}
               </div>
-                <div className="w-1/2">
-
-                </div>
             </div>
+
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}
