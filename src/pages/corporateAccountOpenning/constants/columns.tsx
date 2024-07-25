@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { TCorporateInfo,TDirector,TAuthorizePerson,TContactPerson,
-  TIndividualsShareholders,TJuristicsShareholders } from "@/pages/corporate/constants/types";
+  TIndividualsShareholders,TJuristicsShareholders,TBank } from "@/pages/corporate/constants/types";
 import { TableColumn } from "react-data-table-component";
 
 export const columnsCorporateInfo = [
@@ -285,3 +285,36 @@ export const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] 
   },
 ];
 
+export const columnsBank: TableColumn<TBank>[] = [
+  {
+    name: "AccountType",
+    selector: (row: TBank) => row.accountType || '',
+  },
+  {
+    name: "BankName",
+    selector: (row: TBank) => row.bankName || '',
+  },
+  {
+    name: "AccountNo",
+    selector: (row: TBank) => row.accountNo || '',
+  },
+  {
+    name: "AccountLocation",
+    selector: (row: TBank) => row.accountLocation || '',
+  },
+  {
+    name: "SwiftCode",
+    selector: (row: TBank) => row.swiftCode || '',
+  },
+  // {
+  //   name: "Address",
+  //   selector: (row: TDirector) => row.addresses || '',
+  // },
+  {
+    name: "Actions",
+    cell: (row: TBank) => (
+      <Button onClick={() => console.log(row)}>Action</Button>
+    ),
+    ignoreRowClick: true,
+  },
+];
