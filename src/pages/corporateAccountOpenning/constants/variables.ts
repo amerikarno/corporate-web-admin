@@ -19,6 +19,19 @@ export const mappingAddress: TMappingAddress = {
   email: "Email",
 };
 
+export const registeredCountryKey = ["isThailand", "isOtherThailand"];
+export const registeredCountryChoices = [
+  "Thailand",
+  "Others Countries (Please Specify)",
+];
+
+export const PrimaryCountryOfOperationKey = ["isThailand", "isOtherThailand"];
+export const PrimaryCountryOfOperationChoices = [
+  "Thailand",
+  "Others Countries (Please Specify)",
+];
+
+
 export const juristicTypeObject: TJuristicType[] = [
   {
     main: { id: "11", name: "Juristic (Thailand)", value: 0 },

@@ -10,7 +10,7 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { useFormIndividualsContactPerson } from "../hook/useFormContactPerson";
-import { Table } from "./dataTable";
+//import { Table } from "./dataTable";
 import { TContactPerson } from "../constants/types";
 
 type TContactPersonFormProps = {

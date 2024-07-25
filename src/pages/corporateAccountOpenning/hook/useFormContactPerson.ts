@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { TJuristicsShareholders } from "../constants/types";
-import { individualJuristicShareholders } from "../constants/initialData";
+import { TContactPerson } from "../constants/types";
+import { individualContact } from "../constants/initialData";
 import { copy } from "@/lib/utils";
 
-export function useFormJuristicShareholders() {
-  const [juristics, setJuristics] = useState<TJuristicsShareholders[]>(
+export function useFormIndividualsContactPerson() {
+  const [contacts, setContacts] = useState<TContactPerson[]>(
     []
   );
-  const [juristicShareholders, setJuristicShareholders] =
-    useState<TJuristicsShareholders>(copy(individualJuristicShareholders));
+  const [individualsContact, setIndividualsContact] =
+    useState<TContactPerson>(copy(individualContact));
 
 //   const removeIndividualsShareholders = (index: number) => {
 //     const newShareholders = shareholders.filter((_, i) => i !== index);
@@ -43,8 +43,8 @@ export function useFormJuristicShareholders() {
 //   };
 
   return {
-    juristics,
-    juristicShareholders,
+    contacts,
+    individualsContact,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
     // handleSetNewShareholder,

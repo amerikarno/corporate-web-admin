@@ -1,9 +1,5 @@
-import {
-  TCorporateTypeAndIncome,
-  TInitailJuristicTypeAndIncome,
-  TJuristicTypeAll,
-  TRegisteredCountryPrimaryCountryOperation,
-} from "@/pages/corporate/constants/types";
+import { TInitailJuristicTypeAndIncome, TJuristicTypeAll } from "./types";
+
 
 export const initCorporateInfo = {
   name: "",
@@ -132,13 +128,15 @@ export const individualShareholder = {
 };
 
 export const individualContact = {
-  contacttitle: "",
-  contactname: "",
-  contactsurname: "",
-  contactposition: "",
-  contactdivision: "",
-  contactphone: "",
-  contactemail: "",
+  fullNames: {
+    title: "",
+    firstName: "",
+    lastName: ""
+  },
+  Position: "",
+  Division: "",
+  Telephone: "",
+  Email: "",
 };
 
 // export const individualDirector = {
@@ -154,9 +152,9 @@ export const individualContact = {
 
 export const individualJuristicShareholders = {
   juristicName: "",
-  juristicRegisNo: "",
-  juristicRegisCountry: "",
-  juristicShares: "",
+  registrationNo: "",
+  registeredCountry: "",
+  sharePercentage: "",
 };
 
 export const initailJuristicOther = {

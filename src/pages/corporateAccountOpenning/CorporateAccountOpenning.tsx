@@ -32,6 +32,7 @@ import { Card } from "@/components/ui/card";
 import { useListOfDirector } from "./hook/useListOfDirector";
 import DataTable from "react-data-table-component";
 import {
+  columnsCorporateInfo,
   columnsAuthorizePerson,
   columnsBank,
   columnsContactPerson,
@@ -39,6 +40,8 @@ import {
   columnsListOfDirectors,
   columnsShareHolders,
 } from "./constants/columns";
+import { FormCorporateInfo } from "./components/formCorporateInfo"
+import { useCorporateInfo } from "./hook/useCorporateInfo";
 import { FormIndividualsDirector } from "./components/formDirectorInfo";
 import { useAuthorizePerson } from "./hook/useAuthorizePerson";
 import { FormAuthorizedPerson } from "./components/formAuthorization";

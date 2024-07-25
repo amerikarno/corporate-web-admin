@@ -8,16 +8,16 @@ import { TCorporateInfo } from "../constants/types";
 import { sleep } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { SideLabelInput } from "@/components/SideLabelInput";
+//import { SideLabelInput } from "@/components/SideLabelInput";
 import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
 import { CheckBox } from "@/components/Checkbox";
-import { useFormCorporateInfo } from "../hook/useFormCorporateInfo";
+import { useFormCorporateInfo } from "@/pages/corporate/hook/useFormCorporateInfo";
 import {
   registeredCountryChoices,
   PrimaryCountryOfOperationChoices,
-} from "../constants/const_variables";
+} from "../constants/variables";
 import { useState, useEffect } from "react";
 
 type TCorporateInfoFormProps = {
@@ -285,28 +285,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               register={register}
               keyType="PlaceIncorporateAddress"
             />
-            <Input
-              {...register("placeIncorporateEmail")}
-              label="E-mail Address"
-              id="placeIncorporateEmail"
-              disabled={isSubmitting}
-            />
-            {errors.placeIncorporateEmail && (
-              <p className="text-red-500">
-                {errors.placeIncorporateEmail.message}
-              </p>
-            )}
-            <Input
-              {...register("placeIncorporateTelephone")}
-              label="Telephone"
-              id="placeIncorporateTelephone"
-              disabled={isSubmitting}
-            />
-            {errors.placeIncorporateTelephone && (
-              <p className="text-red-500">
-                {errors.placeIncorporateTelephone.message}
-              </p>
-            )}
+
           </div>
 
           <div className="p-4 space-y-4">
@@ -345,28 +324,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               isSubmitting={isSubmitting}
               keyType="RegistredBusinessAddress"
             />
-            <Input
-              {...register("RegistredBusinessEmail")}
-              label="E-mail Address"
-              id="RegistredBusinessEmail"
-              disabled={isSubmitting}
-            />
-            {errors.RegistredBusinessAddress && (
-              <p className="text-red-500">
-                {errors.RegistredBusinessAddress.message}
-              </p>
-            )}
-            <Input
-              {...register("RegistredBusinessTelephone")}
-              label="Telephone"
-              id="RegistredBusinessTelephone"
-              disabled={isSubmitting}
-            />
-            {errors.RegistredBusinessTelephone && (
-              <p className="text-red-500">
-                {errors.RegistredBusinessTelephone.message}
-              </p>
-            )}
+
           </div>
 
           <div className="p-4 space-y-4">
