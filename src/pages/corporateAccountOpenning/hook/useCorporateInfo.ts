@@ -8,6 +8,8 @@ import { TCorporateInfo } from "../constants/types";
 export function useCorporateInfo() {
   const token = getCookies();
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
+  const [currentCorporatesInfo, setCurrentCorporatesInfo] =
+    useState<TCorporateInfo>();
   //TODO: remove key and data after testing
   const [corporateCode, setCorporateCode] = useState<string>(
     "50feb95e-d771-466d-a028-09fcee10065f"
@@ -19,10 +21,6 @@ export function useCorporateInfo() {
     } else {
       console.log("session expired");
     }
-  };
-
-  const handleSubmitJuristicType = (data: any) => {
-    console.log(data);
   };
 
   const isExpiredToken = (): boolean => {
@@ -57,8 +55,10 @@ export function useCorporateInfo() {
         },
       });
       // console.log(res);
+      data.corporateCode = res.data.referenceID;
       setCorporatesInfo([...corporatesInfo, data]);
       setCorporateCode(res.data.referenceID);
+      setCurrentCorporatesInfo(data);
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +66,8 @@ export function useCorporateInfo() {
 
   return {
     corporatesInfo,
+    corporateCode,
+    currentCorporatesInfo,
     handleSubmitCorporateInfo,
-    handleSubmitJuristicType,
   };
 }

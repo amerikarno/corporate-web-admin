@@ -12,11 +12,13 @@ export type TFullName = {
   lastName: string;
 };
 
-export type TFullNameForCorporateInfo = [{
-  title:string;
-  firstName:string;
-  lastName:string;
-}]
+export type TFullNameForCorporateInfo = [
+  {
+    title: string;
+    firstName: string;
+    lastName: string;
+  }
+];
 
 export type TSubAddress = {
   AddressNo: string;
@@ -41,6 +43,7 @@ export type TFinancialInfo = {
 };
 
 export type TCorporateInfo = {
+  corporateCode?: string;
   Name: string;
   RegistrationNo: string;
   TaxID: string;
