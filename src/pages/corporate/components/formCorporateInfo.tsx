@@ -173,7 +173,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           <div className="p-4 space-y-4">
             <div className="p-4 border-t">
               <div className="grid grid-cols-2 ">
-                <h1 className="font-bold pb-4">Registered Country*</h1>
+                <h1 className="font-bold pb-4">Registered Country</h1>
                 <div></div>
                 {registeredCountryChoices.map((item, i) => (
                   <CheckBox
@@ -254,45 +254,77 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Place Of Incorporate :</h1>
+            <div className="flex flex-row space-x-4 pb-8">
+              <div className="w-1/2">
+                <Input
+                  {...register("placeIncorporateEmail")}
+                  label="E-mail Address"
+                  id="placeIncorporateEmail"
+                  disabled={isSubmitting}
+                />
+                {errors.placeIncorporateEmail && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.placeIncorporateEmail.message}
+                </p>
+              )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("placeIncorporateTelephone")}
+                  label="Telephone"
+                  id="placeIncorporateTelephone"
+                  disabled={isSubmitting}
+                />
+                {errors.placeIncorporateTelephone && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.placeIncorporateTelephone.message}
+                </p>
+              )}
+              </div>
+            </div>
             <CorporateAddressForm
               isSubmitting={isSubmitting}
               errors={errors.RegistredBusinessAddress}
               register={register}
               keyType="PlaceIncorporateAddress"
             />
-            <Input
-              {...register("placeIncorporateEmail")}
-              label="E-mail Address"
-              id="placeIncorporateEmail"
-              disabled={isSubmitting}
-            />
-            <Input
-              {...register("placeIncorporateTelephone")}
-              label="Telephone"
-              id="placeIncorporateTelephone"
-              disabled={isSubmitting}
-            />
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Registered/Business address :</h1>
+            <div className="flex flex-row space-x-4 pb-8">
+              <div className="w-1/2">
+                <Input
+                  {...register("RegistredBusinessEmail")}
+                  label="E-mail Address"
+                  id="RegistredBusinessEmail"
+                  disabled={isSubmitting}
+                />
+                {errors.RegistredBusinessEmail && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.RegistredBusinessEmail.message}
+                </p>
+              )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("RegistredBusinessTelephone")}
+                  label="Telephone"
+                  id="RegistredBusinessTelephone"
+                  disabled={isSubmitting}
+                />
+                {errors.RegistredBusinessTelephone && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.RegistredBusinessTelephone.message}
+                </p>
+              )}
+              </div>
+            </div>
             <CorporateAddressForm
               errors={errors.RegistredBusinessAddress}
               register={register}
               isSubmitting={isSubmitting}
               keyType="RegistredBusinessAddress"
-            />
-            <Input
-              {...register("RegistredBusinessEmail")}
-              label="E-mail Address"
-              id="RegistredBusinessEmail"
-              disabled={isSubmitting}
-            />
-            <Input
-              {...register("RegistredBusinessTelephone")}
-              label="Telephone"
-              id="RegistredBusinessTelephone"
-              disabled={isSubmitting}
             />
           </div>
 

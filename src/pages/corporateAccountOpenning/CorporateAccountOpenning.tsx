@@ -21,23 +21,23 @@ import { Card } from "@/components/ui/card";
 import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
 
 export default function CorporateAccountOpenning() {
-  // const { corporates, handleSubmitCorporateInfo } = useCorporateInfo();
-  // return (
-  //   <>
+  const { corporates, handleSubmitCorporateInfo } = useCorporateInfo();
+  return (
+    <>
 
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="Juristic Investor Information-For Account Opening"
-  //           columns={columnsCorporateInfo}
-  //           data={corporates}
-  //           clearSelectedRows
-  //         />
-  //       </Card>
-  //       <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
-  //     </div> 
-  //   </>
-  // );
+      <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Juristic Investor Information-For Account Opening"
+            columns={columnsCorporateInfo}
+            data={corporates}
+            clearSelectedRows
+          />
+        </Card>
+        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+      </div> 
+    </>
+  );
 //------------------------------------------------------------------------------
   // const { directors, handleSubmitDirectors } = useListOfDirector();
   // return (
@@ -91,22 +91,22 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
 //------------------------------------------------------------------------------
-  const { shareholders, handleSubmitShareholders } = useShareholders();
-  return (
-    <>
-      <div className="p-4 space-y-8">
-        <Card>
-          <DataTable
-            title="Individuals who shareholders of juristic's owner"
-            columns={columnsShareHolders}
-            data={shareholders}
-            clearSelectedRows
-          />
-        </Card>
-        <FormIndividualsShareholders onsubmit={handleSubmitShareholders} />
-      </div> 
-    </>
-  );
+  // const { shareholders, handleSubmitShareholders } = useShareholders();
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card>
+  //         <DataTable
+  //           title="Individuals who shareholders of juristic's owner"
+  //           columns={columnsShareHolders}
+  //           data={shareholders}
+  //           clearSelectedRows
+  //         />
+  //       </Card>
+  //       <FormIndividualsShareholders onsubmit={handleSubmitShareholders} />
+  //     </div> 
+  //   </>
+  // );
 //------------------------------------------------------------------------------
   // const { juristics, handleSubmitJuristics } = useJuristicShareholders();
   // return (
