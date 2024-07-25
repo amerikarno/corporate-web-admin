@@ -35,6 +35,19 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
     setDropDownChoosed(choice)
     setDropBoxHadChoosed(true)
   }
+
+  const validateData = (data: TDirector): TDirector => {
+    let tmp = { ...data };
+    if (tmp.citizendId) {
+      tmp = { ...tmp, passportID: "" };
+    }
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
+    tmp = { ...tmp, Types: "101" };
+    return tmp;
+  };
+
   const {
     register,
     handleSubmit,
@@ -45,16 +58,16 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
     //values: individualsDirector,
   });
 
-
+  
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
-    const formData: TDirector={ ...data,Types:"101"}
-    
-      await sleep(500);
-      reset();
-      console.log(formData)
-      onsubmit(formData)
 
+        //const formData: TDirector={ ...data,Types:"101"}
+        const formData = validateData(data)
+        await sleep(500);
+        reset();
+        console.log(formData)
+        onsubmit(formData)
   };
 
   return (

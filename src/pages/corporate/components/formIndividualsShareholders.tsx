@@ -38,6 +38,18 @@ export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
   //   serializeData,
   // } = useFormIndividualsShareholder();
 
+  const validateData = (data: TIndividualsShareholders): TIndividualsShareholders => {
+    let tmp = { ...data };
+    if (tmp.citizendId) {
+      tmp = { ...tmp, passportID: "" };
+    }
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
+    tmp = { ...tmp, Types: "301" };
+    return tmp;
+  };
+
   const {
     register,
     handleSubmit,
@@ -50,7 +62,8 @@ export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
 
 
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
-    const formData: TIndividualsShareholders={ ...data,Types:"301"}
+      //const formData: TIndividualsShareholders={ ...data,Types:"301"}
+      const formData = validateData(data)
       await sleep(500);
       reset();
       console.log(formData)

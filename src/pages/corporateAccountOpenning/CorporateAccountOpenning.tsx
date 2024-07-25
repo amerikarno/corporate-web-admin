@@ -57,22 +57,22 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
 //------------------------------------------------------------------------------
-  // const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
-  // return (
-  //   <>
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="Authorized person of Juristic Investor for traction"
-  //           columns={columnsAuthorizePerson}
-  //           data={authorize}
-  //           clearSelectedRows
-  //         />
-  //       </Card>
-  //       <FormAuthorizedPerson onsubmit={handleSubmitAuthorize} />
-  //     </div> 
-  //   </>
-  // );
+  const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
+  return (
+    <>
+      <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Authorized person of Juristic Investor for traction"
+            columns={columnsAuthorizePerson}
+            data={authorize}
+            clearSelectedRows
+          />
+        </Card>
+        <FormAuthorizedPerson onsubmit={handleSubmitAuthorize} />
+      </div> 
+    </>
+  );
 //------------------------------------------------------------------------------
   // const { contact, handleSubmitContactPerson } = useContactPerson();
   // return (
@@ -108,22 +108,22 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
 //------------------------------------------------------------------------------
-  const { juristics, handleSubmitJuristics } = useJuristicShareholders();
-  return (
-    <>
-      <div className="p-4 space-y-8">
-        <Card>
-          <DataTable
-            title="Juristics who shareholders of juristic's owner"
-            columns={columnsJuristicShareHolders}
-            data={juristics}
-            clearSelectedRows
-          />
-        </Card>
-        <FormJuristicShareholders onsubmit={handleSubmitJuristics} />
-      </div> 
-    </>
-  );
+  // const { juristics, handleSubmitJuristics } = useJuristicShareholders();
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card>
+  //         <DataTable
+  //           title="Juristics who shareholders of juristic's owner"
+  //           columns={columnsJuristicShareHolders}
+  //           data={juristics}
+  //           clearSelectedRows
+  //         />
+  //       </Card>
+  //       <FormJuristicShareholders onsubmit={handleSubmitJuristics} />
+  //     </div> 
+  //   </>
+  // );
 //------------------------------------------------------------------------------
   // const { bank, handleSubmitBank } = useBank();
   // return (

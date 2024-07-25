@@ -29,6 +29,19 @@ export function FormAuthorizedPerson({onsubmit}:TAuthorizePersonFormProps) {
     setDropDownChoosed(choice)
     setDropBoxHadChoosed(true)
   }
+
+  const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
+    let tmp = { ...data };
+    if (tmp.citizendId) {
+      tmp = { ...tmp, passportID: "" };
+    }
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
+    tmp = { ...tmp, Types: "201" };
+    return tmp;
+  };
+
   const {
     register,
     handleSubmit,
@@ -39,7 +52,8 @@ export function FormAuthorizedPerson({onsubmit}:TAuthorizePersonFormProps) {
   });
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-    const formData: TAuthorizePerson={ ...data,Types:"201"}
+    //const formData: TAuthorizePerson={ ...data,Types:"201"}
+      const formData = validateData(data)
       await sleep(500);
       reset();
       console.log(formData)
