@@ -7,10 +7,10 @@ export type TAddress = {
 };
 
 export type TFullName = {
-  title:string;
-  firstName:string;
-  lastName:string;
-}
+  title: string;
+  firstName: string;
+  lastName: string;
+};
 
 export type TFullNameForCorporateInfo = [{
   title:string;
@@ -31,7 +31,6 @@ export type TSubAddress = {
   Floor?: string;
   Country: string;
   //type?: number;
-
 };
 
 export type TFinancialInfo = {
@@ -45,20 +44,20 @@ export type TCorporateInfo = {
   Name: string;
   RegistrationNo: string;
   TaxID: string;
-  dateofincorporation: string;
-  RegisteredThailand:boolean;
-  PrimaryCountry:boolean;
+  dateofincorporation: Date;
+  RegisteredThailand: boolean;
+  PrimaryCountry: boolean;
   Registered: string;
-  RegisteredOther?:boolean;
+  RegisteredOther?: boolean;
   Primary: string;
-  PrimaryOther?:boolean;
+  PrimaryOther?: boolean;
   RegistredBusinessAddress: TSubAddress;
   PlaceIncorporateAddress: TSubAddress;
   financial?: TFinancialInfo;
-  placeIncorporateEmail?:string;
-  placeIncorporateTelephone?:string;
-  RegistredBusinessEmail?:string;
-  RegistredBusinessTelephone?:string;
+  placeIncorporateEmail?: string;
+  placeIncorporateTelephone?: string;
+  RegistredBusinessEmail?: string;
+  RegistredBusinessTelephone?: string;
 };
 
 export type TCorporateTypeAndIncome = {
@@ -75,10 +74,10 @@ export type TCorporateTypeAndIncome = {
 export type TRegisteredCountryPrimaryCountryOperation = {
   Registered: string;
   Primary: string;
-  RegisteredThailand:boolean;
-  PrimaryCountry:boolean;
-  RegisteredOther?:boolean;
-  PrimaryOther?:boolean;
+  RegisteredThailand: boolean;
+  PrimaryCountry: boolean;
+  RegisteredOther?: boolean;
+  PrimaryOther?: boolean;
 };
 
 export type TIndividualsShareholders = {
@@ -88,7 +87,7 @@ export type TIndividualsShareholders = {
   expiredDate: string;
   nationality: string;
   sharePercentage: string;
-  Types?:string;
+  Types?: string;
 };
 
 export type TBank = {
@@ -107,7 +106,7 @@ export type TAuthorizePerson = {
   nationality: string;
   addresses: TSubAddress;
   position: string;
-  Types?:string;
+  Types?: string;
 };
 export type TContactPerson = {
   fullNames: TFullName;
@@ -125,7 +124,7 @@ export type TDirector = {
   nationality: string;
   position: string;
   addresses: TSubAddress;
-  Types?:string;
+  Types?: string;
 };
 
 export type TJuristicsShareholders = {

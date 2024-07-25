@@ -24,7 +24,7 @@ type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
 };
 
-export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
+export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const {
     register,
     handleSubmit,
@@ -54,29 +54,23 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
   const onSubmit = async (data: TCorporateInfoSchema) => {
     const formData: TCorporateInfo = {
       ...data,
-      Registered:
-        registeredCountryPrimaryCountryOperation.Registered,
-      RegisteredOther:
-        registeredCountryPrimaryCountryOperation.RegisteredOther,
+      Registered: registeredCountryPrimaryCountryOperation.Registered,
+      RegisteredOther: registeredCountryPrimaryCountryOperation.RegisteredOther,
       RegisteredThailand:
         registeredCountryPrimaryCountryOperation.RegisteredThailand,
-      Primary:
-        registeredCountryPrimaryCountryOperation.Primary,
-      PrimaryCountry : 
-        registeredCountryPrimaryCountryOperation.PrimaryCountry,
-      PrimaryOther:
-        registeredCountryPrimaryCountryOperation.PrimaryOther,
+      Primary: registeredCountryPrimaryCountryOperation.Primary,
+      PrimaryCountry: registeredCountryPrimaryCountryOperation.PrimaryCountry,
+      PrimaryOther: registeredCountryPrimaryCountryOperation.PrimaryOther,
     };
 
     if (handleCheckboxError()) {
       await sleep(500);
       reset();
       console.log(formData);
-      onsubmit(formData)
+      onsubmit(formData);
     } else {
       setShouldScrollUp(true);
     }
-
   };
 
   const handleCheckboxError = () => {
@@ -145,9 +139,7 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
               disabled={isSubmitting}
             />
             {errors.RegistrationNo && (
-              <p className="text-red-500">
-                {errors.RegistrationNo.message}
-              </p>
+              <p className="text-red-500">{errors.RegistrationNo.message}</p>
             )}
             {/* </SideLabelInput>
             <SideLabelInput title="Juristic Investor Tax ID"> */}
@@ -171,7 +163,9 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
               disabled={isSubmitting}
             />
             {errors.dateofincorporation && (
-              <p className="text-red-500">{errors.dateofincorporation.message}</p>
+              <p className="text-red-500">
+                {errors.dateofincorporation.message}
+              </p>
             )}
             {/* </SideLabelInput> */}
           </div>
@@ -179,10 +173,8 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
           <div className="p-4 space-y-4">
             <div className="p-4 border-t">
               <div className="grid grid-cols-2 ">
-              <h1 className="font-bold pb-4">Registered Country*</h1>
-              <div>
-                
-              </div>
+                <h1 className="font-bold pb-4">Registered Country*</h1>
+                <div></div>
                 {registeredCountryChoices.map((item, i) => (
                   <CheckBox
                     id={`checkbox-${i}`}
@@ -221,10 +213,8 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
-              <h1 className="font-bold pb-4">Primary Country of Operation</h1>
-              <div>
-
-              </div>
+                <h1 className="font-bold pb-4">Primary Country of Operation</h1>
+                <div></div>
                 {PrimaryCountryOfOperationChoices.map((item, i) => (
                   <CheckBox
                     id={`checkbox2-${i}`}
@@ -233,8 +223,7 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
                     onChange={(e) => {
                       handlePrimaryCountryOfOperationOthers(e);
                       if (
-                        registeredCountryPrimaryCountryOperation.Primary ==
-                        ""
+                        registeredCountryPrimaryCountryOperation.Primary == ""
                       ) {
                         setPrimaryCountryOfOperationError(false);
                       } else {
@@ -251,9 +240,7 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
-                    onChange={(e) =>
-                      handleInputOthers(e, "Primary")
-                    }
+                    onChange={(e) => handleInputOthers(e, "Primary")}
                   />
                 </div>
               )}
@@ -264,29 +251,27 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
               )}
             </div>
           </div>
-          
+
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Place Of Incorporate :</h1>
-              <CorporateAddressForm
-                isSubmitting={isSubmitting}
-                errors={errors.RegistredBusinessAddress}
-                register={register}
-                keyType="PlaceIncorporateAddress"
-              />
-              <Input
-                    {...register("placeIncorporateEmail")}
-                    label="E-mail Address"
-                    id="placeIncorporateEmail"
-                    disabled={isSubmitting}
-                    
-                  />
-              <Input
-                    {...register("placeIncorporateTelephone")}
-                    label="Telephone"
-                    id="placeIncorporateTelephone"
-                    disabled={isSubmitting}
-                    
-                  />
+            <CorporateAddressForm
+              isSubmitting={isSubmitting}
+              errors={errors.RegistredBusinessAddress}
+              register={register}
+              keyType="PlaceIncorporateAddress"
+            />
+            <Input
+              {...register("placeIncorporateEmail")}
+              label="E-mail Address"
+              id="placeIncorporateEmail"
+              disabled={isSubmitting}
+            />
+            <Input
+              {...register("placeIncorporateTelephone")}
+              label="Telephone"
+              id="placeIncorporateTelephone"
+              disabled={isSubmitting}
+            />
           </div>
 
           <div className="p-4 space-y-4">
@@ -298,19 +283,17 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
               keyType="RegistredBusinessAddress"
             />
             <Input
-                    {...register("RegistredBusinessEmail")}
-                    label="E-mail Address"
-                    id="RegistredBusinessEmail"
-                    disabled={isSubmitting}
-                    
-                />
+              {...register("RegistredBusinessEmail")}
+              label="E-mail Address"
+              id="RegistredBusinessEmail"
+              disabled={isSubmitting}
+            />
             <Input
-                    {...register("RegistredBusinessTelephone")}
-                    label="Telephone"
-                    id="RegistredBusinessTelephone"
-                    disabled={isSubmitting}
-                    
-                />
+              {...register("RegistredBusinessTelephone")}
+              label="Telephone"
+              id="RegistredBusinessTelephone"
+              disabled={isSubmitting}
+            />
           </div>
 
           <div className="p-4 space-y-4">
@@ -362,7 +345,6 @@ export function FormCorporateInfo({onsubmit}:TCorporateInfoFormProps) {
             {errors.ShareholderEquity && (
               <p className="text-red-500">{errors.ShareholderEquity.message}</p>
             )}
-           
           </div>
           <div className="flex justify-end pb-4 pr-4">
             <Button type="submit" disabled={isSubmitting}>

@@ -1,12 +1,12 @@
 import DataTable from "react-data-table-component";
-//import { MoveUp } from "lucide-react";
 import { useCorporateInfo } from "./hook/useCorporateInfo";
 import { useListOfDirector } from "./hook/useListOfDirector";
 import { columnsCorporateInfo } from "./constants/columns";
-import { FormCorporateInfo } from "./component/formCorporateInfo";
+// import { FormCorporateInfo } from "./component/formCorporateInfo";
 import { FormCorporateTypeAndIncome } from "../corporate/components/formCorporateInfo2"
 import { FormIndividualsDirector } from "../corporate/components/formDirectorInfo";
 import { Card } from "@/components/ui/card";
+import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
 
 export default function CorporateAccountOpenning() {
   const { directors, handleSubmitDirectors } = useListOfDirector();
