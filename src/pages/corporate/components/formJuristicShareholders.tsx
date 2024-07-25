@@ -12,8 +12,10 @@ import { sleep } from "@/lib/utils";
 import { useFormJuristicShareholders} from "../hook/useFormJuristicShareholders"
 import { TJuristicsShareholders } from "../constants/types";
 import { Table } from "./dataTable";
-
-export function FormJuristicShareholders() {
+type TJuristicsShareholdersFormProps = {
+  onsubmit: (data: TJuristicsShareholders) => void;
+};
+export function FormJuristicShareholders({onsubmit}:TJuristicsShareholdersFormProps) {
   const {
     juristics,
     juristicShareholders,
@@ -46,6 +48,7 @@ export function FormJuristicShareholders() {
     //handleSetNewShareholder(data);
     reset();
     console.log(data)
+    onsubmit(data)
   };
 
   return (

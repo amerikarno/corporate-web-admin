@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { TCorporateInfo,TDirector,TAuthorizePerson,TContactPerson } from "@/pages/corporate/constants/types";
+import { TCorporateInfo,TDirector,TAuthorizePerson,TContactPerson,
+  TIndividualsShareholders,TJuristicsShareholders } from "@/pages/corporate/constants/types";
 import { TableColumn } from "react-data-table-component";
 
 export const columnsCorporateInfo = [
@@ -165,7 +166,7 @@ export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
   },
 ];
 
-export const columnContactPerson: TableColumn<TContactPerson>[] = [
+export const columnsContactPerson: TableColumn<TContactPerson>[] = [
   {
     name: "Title",
     selector: (row: TContactPerson) => row.fullNames.title || '',
@@ -201,6 +202,83 @@ export const columnContactPerson: TableColumn<TContactPerson>[] = [
   {
     name: "Actions",
     cell: (row: TContactPerson) => (
+      <Button onClick={() => console.log(row)}>Action</Button>
+    ),
+    ignoreRowClick: true,
+  },
+];
+
+export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
+  {
+    name: "Title",
+    selector: (row: TIndividualsShareholders) => row.fullNames.title || '',
+  },
+  {
+    name: "Firstname",
+    selector: (row: TIndividualsShareholders) => row.fullNames.firstName || '',
+  },
+  {
+    name: "Lastname",
+    selector: (row: TIndividualsShareholders) => row.fullNames.lastName || '',
+  },
+  {
+    name: "CitizenID",
+    selector: (row: TIndividualsShareholders) => row.citizendId || '',
+  },
+  {
+    name: "PassportID",
+    selector: (row: TIndividualsShareholders) => row.passportID || '',
+  },
+  {
+    name: "Expired Date",
+    selector: (row: TIndividualsShareholders) => row.expiredDate || '',
+  },
+  {
+    name: "Nationality",
+    selector: (row: TIndividualsShareholders) => row.nationality || '',
+  },
+  {
+    name: "Share Percentage",
+    selector: (row: TIndividualsShareholders) => row.sharePercentage || '',
+  },
+
+  // {
+  //   name: "Address",
+  //   selector: (row: TDirector) => row.addresses || '',
+  // },
+  {
+    name: "Actions",
+    cell: (row: TIndividualsShareholders) => (
+      <Button onClick={() => console.log(row)}>Action</Button>
+    ),
+    ignoreRowClick: true,
+  },
+];
+
+export const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] = [
+  {
+    name: "Name",
+    selector: (row: TJuristicsShareholders) => row.juristicName || '',
+  },
+  {
+    name: "RegistrationNo",
+    selector: (row: TJuristicsShareholders) => row.registrationNo || '',
+  },
+  {
+    name: "Registered Country",
+    selector: (row: TJuristicsShareholders) => row.registeredCountry || '',
+  },
+  {
+    name: "Share Percentage",
+    selector: (row: TJuristicsShareholders) => row.sharePercentage || '',
+  },
+  // {
+  //   name: "Address",
+  //   selector: (row: TDirector) => row.addresses || '',
+  // },
+  {
+    name: "Actions",
+    cell: (row: TJuristicsShareholders) => (
       <Button onClick={() => console.log(row)}>Action</Button>
     ),
     ignoreRowClick: true,

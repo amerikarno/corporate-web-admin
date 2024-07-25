@@ -14,8 +14,10 @@ import { TIndividualsShareholders } from "../constants/types";
 import { Table } from "./dataTable";
 import { useState,useEffect } from "react";
 import Dropbox from "@/components/Dropbox"
-
-export function FormIndividualsShareholders() {
+type TShareHoldersFormProps = {
+  onsubmit: (data: TIndividualsShareholders) => void;
+};
+export function FormIndividualsShareholders({onsubmit}:TShareHoldersFormProps) {
 
   const [idCardError,setIdCardError] = useState<boolean>(true);
   const [passportError,setPassportError] = useState<boolean>(true);
@@ -52,6 +54,7 @@ export function FormIndividualsShareholders() {
       await sleep(500);
       reset();
       console.log(formData)
+      onsubmit(data)
   };
 
   return (
@@ -79,9 +82,9 @@ export function FormIndividualsShareholders() {
                   disabled={isSubmitting}
                   
                 />
-                {errors.fullNames && (
+                {errors.fullNames?.title && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames.message}
+                    {errors.fullNames?.title.message}
                   </p>
                 )}
               </div>
@@ -97,9 +100,9 @@ export function FormIndividualsShareholders() {
                   disabled={isSubmitting}
                   
                 />
-                {errors.fullNames && (
+                {errors.fullNames?.firstName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames.message}
+                    {errors.fullNames?.firstName.message}
                   </p>
                 )}
               </div>
@@ -111,9 +114,9 @@ export function FormIndividualsShareholders() {
                   disabled={isSubmitting}
                   
                 />
-                {errors.fullNames && (
+                {errors.fullNames?.lastName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames.message}
+                    {errors.fullNames?.lastName.message}
                   </p>
                 )}
               </div>
