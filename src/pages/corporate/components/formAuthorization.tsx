@@ -77,8 +77,8 @@ export function FormAuthorizedPerson({onsubmit}:TAuthorizePersonFormProps) {
               disabled={isSubmitting}
               
             />
-            {errors.fullNames && (
-              <p className="text-red-500 text-sm px-2">{errors.fullNames.message}</p>
+            {errors.fullNames?.title && (
+              <p className="text-red-500 text-sm px-2">{errors.fullNames?.title.message}</p>
             )}
           </div>
           <div className="w-1/2">
@@ -93,9 +93,9 @@ export function FormAuthorizedPerson({onsubmit}:TAuthorizePersonFormProps) {
               disabled={isSubmitting}
               
             />
-            {errors.fullNames && (
+            {errors.fullNames?.firstName && (
               <p className="text-red-500 text-sm px-2">
-                {errors.fullNames.message}
+                {errors.fullNames?.firstName.message}
               </p>
             )}
           </div>
@@ -107,9 +107,9 @@ export function FormAuthorizedPerson({onsubmit}:TAuthorizePersonFormProps) {
               disabled={isSubmitting}
               
             />
-            {errors.fullNames && (
+            {errors.fullNames?.lastName && (
               <p className="text-red-500 text-sm px-2">
-                {errors.fullNames.message}
+                {errors.fullNames?.lastName.message}
               </p>
             )}
           </div>

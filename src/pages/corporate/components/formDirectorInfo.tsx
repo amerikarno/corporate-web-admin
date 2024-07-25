@@ -81,9 +81,9 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
                     id="Title"
                     disabled={isSubmitting}
                 />
-                {errors.fullNames && (
+                {errors.fullNames?.title && (
                     <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames.message}
+                    {errors.fullNames?.title.message}
                     </p>
                 )}
               </div>
@@ -99,9 +99,9 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
                         id="Name"
                         disabled={isSubmitting}
                     />
-                    {errors.fullNames && (
+                    {errors.fullNames?.firstName && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames.message}
+                        {errors.fullNames?.firstName.message}
                         </p>
                     )}
                 </div>
@@ -112,9 +112,9 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
                         id="Surname"
                         disabled={isSubmitting}
                     />
-                    {errors.fullNames && (
+                    {errors.fullNames?.lastName && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames.message}
+                        {errors.fullNames?.lastName.message}
                         </p>
                     )}
                 </div>
