@@ -1,4 +1,4 @@
-import { TCorporateInfo } from "./types";
+import { TCorporateInfo,TDirector } from "./types";
 import { Button } from "@/components/ui/button";
 
 export const columnsCorporateInfo = [
@@ -65,6 +65,53 @@ export const columnsCorporateInfo = [
   {
     name: "Actions",
     cell: (row: TCorporateInfo) => (
+      <Button onClick={() => console.log(row)}>Action</Button>
+    ),
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+  },
+];
+
+export const columnsListOfDirectors = [
+  {
+    name: "Director Name",
+    selector: (row: TCorporateInfo) => row.name,
+    //sortable: true,
+  },
+  {
+    name: "CitizendID",
+    selector: (row: TCorporateInfo) => row.commercialRegisteredNo,
+    //sortable: true,
+  },
+  {
+    name: "PassportID",
+    selector: (row: TCorporateInfo) => row.taxId,
+    //sortable: true,
+  },
+  {
+    name: "Expired Date",
+    selector: (row: TCorporateInfo) => row.dateIncorporation,
+    //sortable: true,
+  },
+  {
+    name: "Nationality",
+    selector: (row: TCorporateInfo) => row.registeredCountry,
+    //sortable: true,
+  },
+  {
+    name: "Position",
+    selector: (row: TCorporateInfo) => row.primaryCountryOfOperation,
+    //sortable: true,
+  },
+  {
+    name: "Address",
+    selector: (row: TCorporateInfo) => row.registeredAddress.addressNo,
+    //sortable: true,
+  },
+  {
+    name: "Actions",
+    cell: (row: TDirector) => (
       <Button onClick={() => console.log(row)}>Action</Button>
     ),
     ignoreRowClick: true,

@@ -44,7 +44,7 @@ export function useFormIndividualsDirector() {
 
   return {
     directors,
-    //individualsDirector,
+    // individualsDirector,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
     // handleSetNewShareholder,

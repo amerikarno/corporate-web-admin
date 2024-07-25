@@ -1,26 +1,28 @@
 import DataTable from "react-data-table-component";
 //import { MoveUp } from "lucide-react";
 import { useCorporateInfo } from "./hook/useCorporateInfo";
+import { useListOfDirector } from "./hook/useListOfDirector";
 import { columnsCorporateInfo } from "./constants/columns";
 import { FormCorporateInfo } from "./component/formCorporateInfo";
 import { FormCorporateTypeAndIncome } from "../corporate/components/formCorporateInfo2"
+import { FormIndividualsDirector } from "../corporate/components/formDirectorInfo";
 import { Card } from "@/components/ui/card";
 
 export default function CorporateAccountOpenning() {
-  const { corporates, handleSubmitCorporateInfo } = useCorporateInfo();
+  const { directors, handleSubmitDirectors } = useListOfDirector();
   return (
     <>
 
       <div className="p-4 space-y-8">
         <Card>
           <DataTable
-            title="Corporate Infomations"
+            title="List of Directors"
             columns={columnsCorporateInfo}
-            data={corporates}
+            data={directors}
             clearSelectedRows
           />
         </Card>
-        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+        <FormIndividualsDirector onsubmit={handleSubmitDirectors} />
       </div> 
     </>
   );

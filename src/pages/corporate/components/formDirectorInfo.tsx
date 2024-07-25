@@ -15,15 +15,19 @@ import { useState,useEffect } from "react";
 import Dropbox from "@/components/Dropbox";
 
 
-export function FormIndividualsDirector() {
-//   const {
-//     directors,
-//     individualsDirector,
-//     // removeIndividualsShareholders,
-//     // editIndividualsShareholders,
-//     // handleSetNewShareholder,
-//     // serializeData,
-//   } = useFormIndividualsDirector();
+type TDirectorFormProps = {
+  onsubmit: (data: TDirector) => void;
+};
+
+export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
+  // const {
+  //   directors,
+  //   individualsDirector,
+  //   // removeIndividualsShareholders,
+  //   // editIndividualsShareholders,
+  //   // handleSetNewShareholder,
+  //   // serializeData,
+  // } = useFormIndividualsDirector();
 
   const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
   const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
@@ -49,6 +53,7 @@ export function FormIndividualsDirector() {
       await sleep(500);
       reset();
       console.log(formData)
+      onsubmit(formData)
 
   };
 
