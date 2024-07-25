@@ -25,7 +25,7 @@ import { FormJuristicShareholders } from "../corporate/components/formJuristicSh
 import { FormBank } from "../corporate/components/formBank";
 import { Card } from "@/components/ui/card";
 import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
-import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
+// import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
 // import { FormCorporateTypeAndIncome } from "@/pages/corporate/components/formCorporateInfo2";
 
 export default function CorporateAccountOpenning() {
