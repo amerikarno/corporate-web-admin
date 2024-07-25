@@ -11,8 +11,14 @@ import {
 import { sleep } from "@/lib/utils";
 import { useFormIndividualsContactPerson} from "../hook/useFormContactPerson"
 import { Table } from "./dataTable";
+import {TContactPerson} from "../constants/types"
 
-export function FormIndividualsContactPerson() {
+
+type TContactPersonFormProps = {
+  onsubmit: (data: TContactPerson) => void;
+};
+
+export function FormIndividualsContactPerson({onsubmit}:TContactPersonFormProps) {
   const {
     contacts,
     individualsContact,
@@ -45,6 +51,7 @@ export function FormIndividualsContactPerson() {
     //handleSetNewShareholder(data);
     reset();
     console.log(data)
+    onsubmit(data)
   };
 
   return (
@@ -73,9 +80,9 @@ export function FormIndividualsContactPerson() {
                     id="Title"
                     disabled={isSubmitting}
                 />
-                {errors.fullNames && (
+                {errors.fullNames?.title && (
                     <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames.message}
+                    {errors.fullNames?.title.message}
                     </p>
                 )}
               </div>
@@ -91,9 +98,9 @@ export function FormIndividualsContactPerson() {
                         id="Name"
                         disabled={isSubmitting}
                     />
-                    {errors.fullNames && (
+                    {errors.fullNames?.firstName && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames.message}
+                        {errors.fullNames?.firstName.message}
                         </p>
                     )}
                 </div>
@@ -104,9 +111,9 @@ export function FormIndividualsContactPerson() {
                         id="Surname"
                         disabled={isSubmitting}
                     />
-                    {errors.fullNames && (
+                    {errors.fullNames?.lastName && (
                         <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames.message}
+                        {errors.fullNames?.lastName.message}
                         </p>
                     )}
                 </div>

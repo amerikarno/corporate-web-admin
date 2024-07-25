@@ -85,6 +85,7 @@ export const registeredCountryPrimaryCountryOperationSchema = z.object({
 
 export const contactPersonSchema = z.object({
   firstName: z.string().min(1, "name cannot be empty"),
+  lastName:z.string().min(1, "lastname cannot be empty"),
   Position: z.string().min(1, "position cannot be empty"),
   Division: z.string().min(1, "division cannot be empty"),
   Telephone: z.string().min(1, "telephone cannot be empty"),

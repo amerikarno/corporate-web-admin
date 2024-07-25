@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { TCorporateInfo,TDirector,TAuthorizePerson } from "@/pages/corporate/constants/types";
+import { TCorporateInfo,TDirector,TAuthorizePerson,TContactPerson } from "@/pages/corporate/constants/types";
 import { TableColumn } from "react-data-table-component";
 
 export const columnsCorporateInfo = [
@@ -159,6 +159,48 @@ export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
   {
     name: "Actions",
     cell: (row: TAuthorizePerson) => (
+      <Button onClick={() => console.log(row)}>Action</Button>
+    ),
+    ignoreRowClick: true,
+  },
+];
+
+export const columnContactPerson: TableColumn<TContactPerson>[] = [
+  {
+    name: "Title",
+    selector: (row: TContactPerson) => row.fullNames.title || '',
+  },
+  {
+    name: "Firstname",
+    selector: (row: TContactPerson) => row.fullNames.firstName || '',
+  },
+  {
+    name: "Lastname",
+    selector: (row: TContactPerson) => row.fullNames.lastName || '',
+  },
+  {
+    name: "CitizenID",
+    selector: (row: TContactPerson) => row.Position || '',
+  },
+  {
+    name: "PassportID",
+    selector: (row: TContactPerson) => row.Division || '',
+  },
+  {
+    name: "Email",
+    selector: (row: TContactPerson) => row.Email || '',
+  },
+  {
+    name: "Phone Number",
+    selector: (row: TContactPerson) => row.Telephone || '',
+  },
+  // {
+  //   name: "Address",
+  //   selector: (row: TDirector) => row.addresses || '',
+  // },
+  {
+    name: "Actions",
+    cell: (row: TContactPerson) => (
       <Button onClick={() => console.log(row)}>Action</Button>
     ),
     ignoreRowClick: true,
