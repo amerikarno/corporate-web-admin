@@ -210,3 +210,11 @@ export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
   isOtherInvestMent: false,
   // OtherInvestMent: "",
 };
+
+export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
+  juristicType: "",
+  businessType: "",
+  sourceOfIncome: [],
+  countrySourceOfIncome: "",
+  InvestmentObject: "",
+};
