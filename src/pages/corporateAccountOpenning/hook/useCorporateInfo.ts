@@ -1,9 +1,9 @@
 import axios from "@/api/axios";
-import { TCorporateInfo } from "@/pages/corporate/constants/types";
 import { useState } from "react";
 import { formatDateToIsoString } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
+import { TCorporateInfo } from "../constants/types";
 
 export function useCorporateInfo() {
   const token = getCookies();

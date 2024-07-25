@@ -1,5 +1,24 @@
 import { TJuristicType } from "@/pages/corporate/constants/types";
 
+export type TMappingAddress = {
+  [key: string]: string;
+};
+
+export const mappingAddress: TMappingAddress = {
+  addressNo: "Address No.",
+  building: "Building",
+  moo: "Moo",
+  soi: "Soi",
+  road: "Road",
+  subDistrict: "Sub District",
+  district: "District",
+  province: "Province",
+  postalCode: "Postal Code",
+  country: "Country",
+  phone: "Phone",
+  email: "Email",
+};
+
 export const juristicTypeObject: TJuristicType[] = [
   {
     main: { id: "11", name: "Juristic (Thailand)", value: 0 },

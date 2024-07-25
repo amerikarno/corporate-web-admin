@@ -1,51 +1,74 @@
-import DataTable from "react-data-table-component";
-import { useCorporateInfo } from "./hook/useCorporateInfo";
-import { useListOfDirector } from "./hook/useListOfDirector";
-import { useAuthorizePerson } from "./hook/useAuthorizePerson";
-import { useContactPerson } from "./hook/useContactPerson";
-import { useShareholders } from "./hook/useShareholders";
-import { useJuristicShareholders } from "./hook/useJuristicShareholders";
-import { useBank } from "./hook/useBank";
-import {
-  columnsCorporateInfo,
-  columnsListOfDirectors,
-  columnsAuthorizePerson,
-  columnsContactPerson,
-  columnsShareHolders,
-  columnsJuristicShareHolders,
-  columnsBank,
-} from "./constants/columns";
-// import { FormCorporateInfo } from "./component/formCorporateInfo";
-import { FormCorporateTypeAndIncome } from "../corporate/components/formCorporateInfo2";
-import { FormIndividualsDirector } from "../corporate/components/formDirectorInfo";
-import { FormAuthorizedPerson } from "../corporate/components/formAuthorization";
-import { FormIndividualsContactPerson } from "../corporate/components/formContactPerson";
-import { FormIndividualsShareholders } from "../corporate/components/formIndividualsShareholders";
-import { FormJuristicShareholders } from "../corporate/components/formJuristicShareholders";
-import { FormBank } from "../corporate/components/formBank";
-import { Card } from "@/components/ui/card";
-import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
+// import DataTable from "react-data-table-component";
+// import { useCorporateInfo } from "./hook/useCorporateInfo";
+// import { useListOfDirector } from "./hook/useListOfDirector";
+// import { useAuthorizePerson } from "./hook/useAuthorizePerson";
+// import { useContactPerson } from "./hook/useContactPerson";
+// import { useShareholders } from "./hook/useShareholders";
+// import { useJuristicShareholders } from "./hook/useJuristicShareholders";
+// import { useBank } from "./hook/useBank";
+// import {
+//   columnsCorporateInfo,
+//   columnsListOfDirectors,
+//   columnsAuthorizePerson,
+//   columnsContactPerson,
+//   columnsShareHolders,
+//   columnsJuristicShareHolders,
+//   columnsBank,
+// } from "./constants/columns";
+// // import { FormCorporateInfo } from "./component/formCorporateInfo";
+// import { FormCorporateTypeAndIncome } from "../corporate/components/formCorporateInfo2";
+// import { FormIndividualsDirector } from "../corporate/components/formDirectorInfo";
+// import { FormAuthorizedPerson } from "../corporate/components/formAuthorization";
+// import { FormIndividualsContactPerson } from "../corporate/components/formContactPerson";
+// import { FormIndividualsShareholders } from "../corporate/components/formIndividualsShareholders";
+// import { FormJuristicShareholders } from "../corporate/components/formJuristicShareholders";
+// import { FormBank } from "../corporate/components/formBank";
+// import { Card } from "@/components/ui/card";
+// import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
 // import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
 // import { FormCorporateTypeAndIncome } from "@/pages/corporate/components/formCorporateInfo2";
 
-export default function CorporateAccountOpenning() {
-  const { corporatesInfo, handleSubmitCorporateInfo } = useCorporateInfo();
+import { Card } from "@/components/ui/card";
+import { useListOfDirector } from "./hook/useListOfDirector";
+import DataTable from "react-data-table-component";
+import {
+  columnsAuthorizePerson,
+  columnsBank,
+  columnsContactPerson,
+  columnsJuristicShareHolders,
+  columnsListOfDirectors,
+  columnsShareHolders,
+} from "./constants/columns";
+import { FormIndividualsDirector } from "./components/formDirectorInfo";
+import { useAuthorizePerson } from "./hook/useAuthorizePerson";
+import { FormAuthorizedPerson } from "./components/formAuthorization";
+import { useContactPerson } from "./hook/useContactPerson";
+import { FormIndividualsContactPerson } from "./components/formContactPerson";
+import { useShareholders } from "./hook/useShareholders";
+import { FormIndividualsShareholders } from "./components/formIndividualsShareholders";
+import { useJuristicShareholders } from "./hook/useJuristicShareholders";
+import { FormJuristicShareholders } from "./components/formJuristicShareholders";
+import { useBank } from "./hook/useBank";
+import { FormBank } from "./components/formBank";
 
-  return (
-    <>
-      <div className="p-4 space-y-8">
-        <Card>
-          <DataTable
-            title="Juristic Investor Information-For Account Opening"
-            columns={columnsCorporateInfo}
-            data={corporatesInfo}
-          />
-        </Card>
-        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
-      </div>
-    </>
-  );
-  //------------------------------------------------------------------------------
+export default function CorporateAccountOpenning() {
+  // const { corporatesInfo, handleSubmitCorporateInfo } = useCorporateInfo();
+
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card>
+  //         <DataTable
+  //           title="Juristic Investor Information-For Account Opening"
+  //           columns={columnsCorporateInfo}
+  //           data={corporatesInfo}
+  //         />
+  //       </Card>
+  //       <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+  //     </div>
+  //   </>
+  // );
+  // ------------------------------------------------------------------------------
   // const { directors, handleSubmitDirectors } = useListOfDirector();
   // return (
   //   <>
@@ -131,20 +154,20 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
   //------------------------------------------------------------------------------
-  //   const { bank, handleSubmitBank } = useBank();
-  //   return (
-  //     <>
-  //       <div className="p-4 space-y-8">
-  //         <Card>
-  //           <DataTable
-  //             title="Bank Accounts Intended to Deposit and Withdraw Fiat Fund"
-  //             columns={columnsBank}
-  //             data={bank}
-  //             clearSelectedRows
-  //           />
-  //         </Card>
-  //         <FormBank onsubmit={handleSubmitBank} />
-  //       </div>
-  //     </>
-  //   );
+  const { bank, handleSubmitBank } = useBank();
+  return (
+    <>
+      <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Bank Accounts Intended to Deposit and Withdraw Fiat Fund"
+            columns={columnsBank}
+            data={bank}
+            clearSelectedRows
+          />
+        </Card>
+        <FormBank onsubmit={handleSubmitBank} />
+      </div>
+    </>
+  );
 }

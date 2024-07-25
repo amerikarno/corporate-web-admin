@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TBank } from "@/pages/corporate/constants/types";
+import { TBank } from "../constants/types";
 
 export function useBank() {
   const [bank, setBank] = useState<TBank[]>([]);

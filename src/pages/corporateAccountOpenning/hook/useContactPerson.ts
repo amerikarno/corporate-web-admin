@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TContactPerson } from "@/pages/corporate/constants/types";
+import { TContactPerson } from "../constants/types";
 
 export function useContactPerson() {
   const [contact, setContactPerson] = useState<TContactPerson[]>([]);

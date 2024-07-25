@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TAuthorizePerson } from "@/pages/corporate/constants/types";
+import { TAuthorizePerson } from "../constants/types";
 
 export function useAuthorizePerson() {
   const [authorize, setAuthorize] = useState<TAuthorizePerson[]>([]);

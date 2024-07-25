@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TJuristicsShareholders } from "@/pages/corporate/constants/types";
+import { TJuristicsShareholders } from "../constants/types";
 
 export function useJuristicShareholders() {
   const [juristics, setJuristics] = useState<TJuristicsShareholders[]>([]);
