@@ -39,40 +39,40 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
 //------------------------------------------------------------------------------
-  // const { directors, handleSubmitDirectors } = useListOfDirector();
-  // return (
-  //   <>
-
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="List of Directors"
-  //           columns={columnsListOfDirectors}
-  //           data={directors}
-  //           clearSelectedRows
-  //         />
-  //       </Card>
-  //       <FormIndividualsDirector onsubmit={handleSubmitDirectors} />
-  //     </div> 
-  //   </>
-  // );
-//------------------------------------------------------------------------------
-  const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
+  const { directors, handleSubmitDirectors } = useListOfDirector();
   return (
     <>
+
       <div className="p-4 space-y-8">
         <Card>
           <DataTable
-            title="Authorized person of Juristic Investor for traction"
-            columns={columnsAuthorizePerson}
-            data={authorize}
+            title="List of Directors"
+            columns={columnsListOfDirectors}
+            data={directors}
             clearSelectedRows
           />
         </Card>
-        <FormAuthorizedPerson onsubmit={handleSubmitAuthorize} />
+        <FormIndividualsDirector onsubmit={handleSubmitDirectors} />
       </div> 
     </>
   );
+//------------------------------------------------------------------------------
+  // const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card>
+  //         <DataTable
+  //           title="Authorized person of Juristic Investor for traction"
+  //           columns={columnsAuthorizePerson}
+  //           data={authorize}
+  //           clearSelectedRows
+  //         />
+  //       </Card>
+  //       <FormAuthorizedPerson onsubmit={handleSubmitAuthorize} />
+  //     </div> 
+  //   </>
+  // );
 //------------------------------------------------------------------------------
   // const { contact, handleSubmitContactPerson } = useContactPerson();
   // return (
