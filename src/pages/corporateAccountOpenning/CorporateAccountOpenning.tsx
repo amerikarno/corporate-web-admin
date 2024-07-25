@@ -29,11 +29,7 @@ import { FormCorporateInfo } from "../corporate/components/formCorporateInfo";
 // import { FormCorporateTypeAndIncome } from "@/pages/corporate/components/formCorporateInfo2";
 
 export default function CorporateAccountOpenning() {
-  const {
-    corporatesInfo,
-    handleSubmitCorporateInfo,
-    handleSubmitJuristicType,
-  } = useCorporateInfo();
+  const { corporatesInfo, handleSubmitCorporateInfo } = useCorporateInfo();
 
   return (
     <>
@@ -53,7 +49,6 @@ export default function CorporateAccountOpenning() {
   // const { directors, handleSubmitDirectors } = useListOfDirector();
   // return (
   //   <>
-
   //     <div className="p-4 space-y-8">
   //       <Card>
   //         <DataTable
@@ -136,20 +131,20 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
   //------------------------------------------------------------------------------
-  // const { bank, handleSubmitBank } = useBank();
-  // return (
-  //   <>
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="Bank Accounts Intended to Deposit and Withdraw Fiat Fund"
-  //           columns={columnsBank}
-  //           data={bank}
-  //           clearSelectedRows
-  //         />
-  //       </Card>
-  //       <FormBank onsubmit={handleSubmitBank} />
-  //     </div>
-  //   </>
-  // );
+  //   const { bank, handleSubmitBank } = useBank();
+  //   return (
+  //     <>
+  //       <div className="p-4 space-y-8">
+  //         <Card>
+  //           <DataTable
+  //             title="Bank Accounts Intended to Deposit and Withdraw Fiat Fund"
+  //             columns={columnsBank}
+  //             data={bank}
+  //             clearSelectedRows
+  //           />
+  //         </Card>
+  //         <FormBank onsubmit={handleSubmitBank} />
+  //       </div>
+  //     </>
+  //   );
 }
