@@ -1,6 +1,7 @@
-import { TCorporateInfo,TDirector } from "./types";
+
 import { Button } from "@/components/ui/button";
-import { TCorporateInfo } from "@/pages/corporate/constants/types";
+import { TCorporateInfo,TDirector,TAuthorizePerson } from "@/pages/corporate/constants/types";
+import { TableColumn } from "react-data-table-component";
 
 export const columnsCorporateInfo = [
   {
@@ -72,96 +73,95 @@ export const columnsCorporateInfo = [
   },
 ];
 
-export const columnsListOfDirectors = [
+export const columnsListOfDirectors: TableColumn<TDirector>[] = [
   {
-    name: "Director Name",
-    selector: (row: TCorporateInfo) => row.name,
-    //sortable: true,
+    name: "Title",
+    selector: (row: TDirector) => row.fullNames.title || '',
   },
   {
-    name: "CitizendID",
-    selector: (row: TCorporateInfo) => row.commercialRegisteredNo,
-    //sortable: true,
+    name: "Firstname",
+    selector: (row: TDirector) => row.fullNames.firstName || '',
+  },
+  {
+    name: "Lastname",
+    selector: (row: TDirector) => row.fullNames.lastName || '',
+  },
+  {
+    name: "CitizenID",
+    selector: (row: TDirector) => row.citizendId || '',
   },
   {
     name: "PassportID",
-    selector: (row: TCorporateInfo) => row.taxId,
-    //sortable: true,
+    selector: (row: TDirector) => row.passportID || '',
   },
   {
     name: "Expired Date",
-    selector: (row: TCorporateInfo) => row.dateIncorporation,
-    //sortable: true,
+    selector: (row: TDirector) => row.expiredDate || '',
   },
   {
     name: "Nationality",
-    selector: (row: TCorporateInfo) => row.registeredCountry,
-    //sortable: true,
+    selector: (row: TDirector) => row.nationality || '',
   },
   {
     name: "Position",
-    selector: (row: TCorporateInfo) => row.primaryCountryOfOperation,
-    //sortable: true,
+    selector: (row: TDirector) => row.position || '',
   },
-  {
-    name: "Address",
-    selector: (row: TCorporateInfo) => row.registeredAddress.addressNo,
-    //sortable: true,
-  },
+  // {
+  //   name: "Address",
+  //   selector: (row: TDirector) => row.addresses || '',
+  // },
   {
     name: "Actions",
     cell: (row: TDirector) => (
       <Button onClick={() => console.log(row)}>Action</Button>
     ),
     ignoreRowClick: true,
-    allowOverflow: true,
-    button: true,
   },
 ];
 
-export const columnsListOfDirectors = [
+export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
   {
-    name: "Director Name",
-    selector: (row: TCorporateInfo) => row.name,
-    //sortable: true,
+    name: "Title",
+    selector: (row: TAuthorizePerson) => row.fullNames.title || '',
   },
   {
-    name: "CitizendID",
-    selector: (row: TCorporateInfo) => row.commercialRegisteredNo,
-    //sortable: true,
+    name: "Firstname",
+    selector: (row: TAuthorizePerson) => row.fullNames.firstName || '',
+  },
+  {
+    name: "Lastname",
+    selector: (row: TAuthorizePerson) => row.fullNames.lastName || '',
+  },
+  {
+    name: "CitizenID",
+    selector: (row: TAuthorizePerson) => row.citizendId || '',
   },
   {
     name: "PassportID",
-    selector: (row: TCorporateInfo) => row.taxId,
-    //sortable: true,
+    selector: (row: TAuthorizePerson) => row.passportID || '',
   },
   {
     name: "Expired Date",
-    selector: (row: TCorporateInfo) => row.dateIncorporation,
-    //sortable: true,
+    selector: (row: TAuthorizePerson) => row.expiredDate || '',
   },
   {
     name: "Nationality",
-    selector: (row: TCorporateInfo) => row.registeredCountry,
-    //sortable: true,
+    selector: (row: TAuthorizePerson) => row.nationality || '',
   },
   {
     name: "Position",
-    selector: (row: TCorporateInfo) => row.primaryCountryOfOperation,
-    //sortable: true,
+    selector: (row: TAuthorizePerson) => row.position || '',
   },
-  {
-    name: "Address",
-    selector: (row: TCorporateInfo) => row.registeredAddress.addressNo,
-    //sortable: true,
-  },
+  // {
+  //   name: "Address",
+  //   selector: (row: TDirector) => row.addresses || '',
+  // },
   {
     name: "Actions",
-    cell: (row: TDirector) => (
+    cell: (row: TAuthorizePerson) => (
       <Button onClick={() => console.log(row)}>Action</Button>
     ),
     ignoreRowClick: true,
-    allowOverflow: true,
-    button: true,
   },
 ];
+

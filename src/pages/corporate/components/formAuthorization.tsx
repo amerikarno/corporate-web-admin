@@ -13,7 +13,10 @@ import { AddressFormAuthorizedPerson } from "./addressFormAuthorizedPerson";
 import { useState,useEffect } from "react";
 import Dropbox from "@/components/Dropbox"
 
-export function FormAuthorizedPerson() {
+type TAuthorizePersonFormProps = {
+  onsubmit: (data: TAuthorizePerson) => void;
+};
+export function FormAuthorizedPerson({onsubmit}:TAuthorizePersonFormProps) {
 
   const [idCardError,setIdCardError] = useState<boolean>(true);
   const [passportError,setPassportError] = useState<boolean>(true);
@@ -40,6 +43,7 @@ export function FormAuthorizedPerson() {
       await sleep(500);
       reset();
       console.log(formData)
+      onsubmit(formData)
   };
 
 

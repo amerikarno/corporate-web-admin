@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TDirector } from "../constants/types";
+import { TDirector } from "@/pages/corporate/constants/types";
 
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
