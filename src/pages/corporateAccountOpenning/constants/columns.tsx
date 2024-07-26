@@ -9,7 +9,35 @@ import {
   TIndividualsShareholders,
   TJuristicsShareholders,
 } from "./types";
+type FullName = {
+  title : string;
+  firstName: string;
+  lastName: string;
+};
 
+type Address = {
+  addressNo: string;
+  mooNo?: string;
+  soi?: string;
+  road?: string;
+  tambon: string;
+  amphoe: string;
+  province: string;
+  postalCode: string;
+  country: string;
+};
+
+type Person = {
+  fullNames: FullName[];
+  corporateCode: string;
+  citizendId?:string;
+  passportID?: string;
+  expiryDate: Date;
+  nationality: string;
+  position: string;
+  types: number;
+  addresses: Address[];
+};
 export const columnsCorporateInfo = [
   {
     name: "Juristic Name",
@@ -60,38 +88,38 @@ export const columnsCorporateInfo = [
   },
 ];
 
-export const columnsListOfDirectors: TableColumn<TDirector>[] = [
+export const columnsListOfDirectors: TableColumn<Person>[] = [
   {
     name: "Title",
-    selector: (row: TDirector) => row.fullNames.title || "",
+    selector: (row: Person) => row.fullNames[0].title || "",
   },
   {
     name: "Firstname",
-    selector: (row: TDirector) => row.fullNames.firstName || "",
+    selector: (row: Person) => row.fullNames[0].firstName || "",
   },
   {
     name: "Lastname",
-    selector: (row: TDirector) => row.fullNames.lastName || "",
+    selector: (row: Person) => row.fullNames[0].lastName || "",
   },
   {
     name: "CitizenID",
-    selector: (row: TDirector) => row.citizendId || "",
+    selector: (row: Person) => row.citizendId || "",
   },
   {
     name: "PassportID",
-    selector: (row: TDirector) => row.passportID || "",
+    selector: (row: Person) => row.passportID || "",
   },
   {
     name: "Expired Date",
-    selector: (row: TDirector) => row.expiredDate || "",
+    selector: (row: Person) => row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
   },
   {
     name: "Nationality",
-    selector: (row: TDirector) => row.nationality || "",
+    selector: (row: Person) => row.nationality || "",
   },
   {
     name: "Position",
-    selector: (row: TDirector) => row.position || "",
+    selector: (row: Person) => row.position || "",
   },
   // {
   //   name: "Address",
@@ -99,7 +127,7 @@ export const columnsListOfDirectors: TableColumn<TDirector>[] = [
   // },
   {
     name: "Actions",
-    cell: (row: TDirector) => (
+    cell: (row: Person) => (
       <Button onClick={() => console.log(row)}>Action</Button>
     ),
     ignoreRowClick: true,
@@ -155,31 +183,31 @@ export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
 export const columnsContactPerson: TableColumn<TContactPerson>[] = [
   {
     name: "Title",
-    selector: (row: TContactPerson) => row.fullNames.title || "",
+    selector: (row: TContactPerson) => row.fullNames[0].title || "",
   },
   {
     name: "Firstname",
-    selector: (row: TContactPerson) => row.fullNames.firstName || "",
+    selector: (row: TContactPerson) => row.fullNames[0].firstName || "",
   },
   {
     name: "Lastname",
-    selector: (row: TContactPerson) => row.fullNames.lastName || "",
+    selector: (row: TContactPerson) => row.fullNames[0].lastName || "",
   },
   {
     name: "CitizenID",
-    selector: (row: TContactPerson) => row.Position || "",
+    selector: (row: TContactPerson) => row.position || "",
   },
   {
     name: "PassportID",
-    selector: (row: TContactPerson) => row.Division || "",
+    selector: (row: TContactPerson) => row.division || "",
   },
   {
     name: "Email",
-    selector: (row: TContactPerson) => row.Email || "",
+    selector: (row: TContactPerson) => row.email || "",
   },
   {
     name: "Phone Number",
-    selector: (row: TContactPerson) => row.Telephone || "",
+    selector: (row: TContactPerson) => row.telephone || "",
   },
   // {
   //   name: "Address",

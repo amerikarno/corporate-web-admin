@@ -14,7 +14,7 @@ import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
 
 type TDirectorFormProps = {
-  onsubmit: (data: TDirector) => void;
+  onsubmit: (data: Person) => void;
   corporateCode: string;
 };
 
@@ -38,10 +38,10 @@ type Address = {
 
 type Person = {
   fullNames: FullName[];
-  referenceID: string;
+  corporateCode: string;
   citizendId?:string;
   passportID?: string;
-  expiryDate: string;
+  expiryDate: Date;
   nationality: string;
   position: string;
   types: number;
@@ -96,10 +96,10 @@ export function FormIndividualsDirector({
         ...formData,
         types: 101,
         addresses: [data.addresses],
-        fullNames: [data.fullNames],
-        referenceID: corporateCode,
+        fullNames: data.fullNames,
+        corporateCode: corporateCode,
       };
-
+      console.log(body)
       onsubmit(body);
     } else {
       setTriggerDropboxError(true);
@@ -125,14 +125,14 @@ export function FormIndividualsDirector({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.title")}
+                  {...register("fullNames.0.title")}
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.title && (
+                {errors.fullNames?.[0]?.title && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.title.message}
+                    {errors.fullNames?.[0]?.title.message}
                   </p>
                 )}
               </div>
@@ -141,27 +141,27 @@ export function FormIndividualsDirector({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.firstName")}
+                  {...register("fullNames.0.firstName")}
                   label="Name"
                   id="Name"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.firstName && (
+                {errors.fullNames?.[0]?.firstName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.firstName.message}
+                    {errors.fullNames?.[0]?.firstName.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.lastName")}
+                  {...register("fullNames.0.lastName")}
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.lastName && (
+                {errors.fullNames?.[0]?.lastName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.lastName.message}
+                    {errors.fullNames?.[0]?.lastName.message}
                   </p>
                 )}
               </div>

@@ -15,19 +15,21 @@ import { TContactPerson } from "../constants/types";
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPerson) => void;
+  corporateCode: string;
 };
 
 export function FormIndividualsContactPerson({
   onsubmit,
+  corporateCode,
 }: TContactPersonFormProps) {
-  const {
-    contacts,
-    individualsContact,
-    // removeIndividualsShareholders,
-    // editIndividualsShareholders,
-    // handleSetNewShareholder,
-    // serializeData,
-  } = useFormIndividualsContactPerson();
+  // const {
+  //   contacts,
+  //   individualsContact,
+  //   // removeIndividualsShareholders,
+  //   // editIndividualsShareholders,
+  //   // handleSetNewShareholder,
+  //   // serializeData,
+  // } = useFormIndividualsContactPerson();
 
   const {
     register,
@@ -36,7 +38,7 @@ export function FormIndividualsContactPerson({
     reset,
   } = useForm<TIndividualsContactPersonSchema>({
     resolver: zodResolver(individualsContactPersonSchema),
-    values: individualsContact,
+    //values: individualsContact,
   });
 
   //   const columns = [
@@ -48,11 +50,14 @@ export function FormIndividualsContactPerson({
   //   ];
 
   const onSubmit = async (data: TIndividualsContactPersonSchema) => {
+    let formData:TContactPerson = {
+      ...data,corporateCode: corporateCode,
+    }
     await sleep(500);
     //handleSetNewShareholder(data);
     reset();
-    console.log(data);
-    onsubmit(data);
+    console.log(formData);
+    onsubmit(formData);
   };
 
   return (
@@ -74,14 +79,14 @@ export function FormIndividualsContactPerson({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.title")}
+                  {...register("fullNames.0.title")}
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.title && (
+                {errors.fullNames?.[0]?.title && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.title.message}
+                    {errors.fullNames?.[0]?.title.message}
                   </p>
                 )}
               </div>
@@ -90,27 +95,27 @@ export function FormIndividualsContactPerson({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.firstName")}
+                  {...register("fullNames.0.firstName")}
                   label="Name"
                   id="Name"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.firstName && (
+                {errors.fullNames?.[0]?.firstName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.firstName.message}
+                    {errors.fullNames?.[0]?.firstName.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.lastName")}
+                  {...register("fullNames.0.lastName")}
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.lastName && (
+                {errors.fullNames?.[0]?.lastName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.lastName.message}
+                    {errors.fullNames?.[0]?.lastName.message}
                   </p>
                 )}
               </div>
@@ -118,27 +123,27 @@ export function FormIndividualsContactPerson({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("Position")}
+                  {...register("position")}
                   label="Position"
                   id="Position"
                   disabled={isSubmitting}
                 />
-                {errors.Position && (
+                {errors.position && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Position.message}
+                    {errors.position.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("Division")}
-                  label="Division"
-                  id="Division"
+                  {...register("division")}
+                  label="division"
+                  id="division"
                   disabled={isSubmitting}
                 />
-                {errors.Division && (
+                {errors.division && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Division.message}
+                    {errors.division.message}
                   </p>
                 )}
               </div>
@@ -146,27 +151,27 @@ export function FormIndividualsContactPerson({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("Email")}
-                  label="Email"
-                  id="Email"
+                  {...register("email")}
+                  label="email"
+                  id="email"
                   disabled={isSubmitting}
                 />
-                {errors.Email && (
+                {errors.email && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Email.message}
+                    {errors.email.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("Telephone")}
+                  {...register("telephone")}
                   label="Telephone"
                   id="Telephone"
                   disabled={isSubmitting}
                 />
-                {errors.Telephone && (
+                {errors.telephone && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Telephone.message}
+                    {errors.telephone.message}
                   </p>
                 )}
               </div>

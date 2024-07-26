@@ -16,7 +16,6 @@ export function useCorporateInfo() {
       dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
       registredBusinessAddress: {
         addressNo: "a",
-        building: "a",
         mooNo: "a",
         soi: "a",
         road: "a",
@@ -25,11 +24,9 @@ export function useCorporateInfo() {
         province: "a",
         postalCode: "a",
         country: "a",
-        floor: "a",
       },
       placeIncorporateAddress: {
         addressNo: "a",
-        building: "a",
         mooNo: "aa",
         soi: "aa",
         road: "a",
@@ -38,7 +35,6 @@ export function useCorporateInfo() {
         province: "aa",
         postalCode: "a",
         country: "a",
-        floor: "a",
       },
       registeredCapital: 3,
       revenuePerYear: 0,

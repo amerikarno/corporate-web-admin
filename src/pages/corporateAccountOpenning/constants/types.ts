@@ -114,19 +114,20 @@ export type TAuthorizePerson = {
   Types?: string;
 };
 export type TContactPerson = {
-  fullNames: TFullName;
-  Position: string;
-  Division: string;
-  Telephone: string;
-  Email: string;
+  corporateCode?:string;
+  fullNames: TFullName[];
+  position: string;
+  division: string;
+  telephone: string;
+  email: string;
 };
 
 export type TDirector = {
   corporateCode?: string;
-  fullNames: TFullName;
+  fullNames: TFullName[];
   citizendId?: string;
   passportID?: string;
-  expiryDate: string;
+  expiryDate: Date;
   nationality: string;
   position: string;
   addresses: TSubAddress;

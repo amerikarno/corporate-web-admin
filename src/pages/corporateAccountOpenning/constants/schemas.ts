@@ -13,11 +13,13 @@ export const subAddressSchema = z.object({
   country: z.string().min(1, "Country cannot be empty"),
 });
 
-export const fullNamesSchema = z.object({
-  title: z.string().min(1, "title cannot be empty"),
-  firstName: z.string().min(1, "firstname cannot be empty"),
-  lastName: z.string().min(1, "lastname cannot be empty"),
-});
+const fullNamesSchema = z.array(
+  z.object({
+    title: z.string().min(1, "title cannot be empty"),
+    firstName: z.string().min(1, "firstName cannot be empty"),
+    lastName: z.string().min(1, "lastName cannot be empty"),
+  })
+);
 
 export const addressSchema = z.object({
   // AddressNo: z.string().min(1, "addressNo cannot be empty"),
@@ -70,7 +72,13 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().transform((str) => {
+    const date = new Date(str);
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+    return date;
+  }),
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
   addresses: subAddressSchema,
@@ -176,10 +184,10 @@ export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
 
 export const individualsContactPersonSchema = z.object({
   fullNames: fullNamesSchema,
-  Position: z.string().min(1, { message: "Position cannot be empty" }),
-  Division: z.string().min(1, { message: "Division cannot be empty" }),
-  Telephone: z.string().min(1, { message: "Phone cannot be empty" }),
-  Email: z.string().email(),
+  position: z.string().min(1, { message: "Position cannot be empty" }),
+  division: z.string().min(1, { message: "Division cannot be empty" }),
+  telephone: z.string().min(1, { message: "Phone cannot be empty" }),
+  email: z.string().email(),
 });
 
 export type TIndividualsContactPersonSchema = z.infer<
@@ -187,11 +195,16 @@ export type TIndividualsContactPersonSchema = z.infer<
 >;
 
 export const individualsDirectorSchema = z.object({
-  referenceID: z.string().optional(),
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1, { message: "Expired Date cannot be empty" }),
+  expiryDate: z.string().transform((str) => {
+    const date = new Date(str);
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+    return date;
+  }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: subAddressSchema,
