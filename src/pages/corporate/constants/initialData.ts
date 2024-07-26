@@ -29,12 +29,12 @@ export const initAddress = {
 
 export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation =
   {
-    Registered: "",
-    Primary: "",
-    RegisteredThailand:false,
-    PrimaryCountry:false,
-    RegisteredOther:false,
-  PrimaryOther:false,
+    registered: "",
+    primary: "",
+    registeredThailand:false,
+    primaryCountry:false,
+    registeredOther:false,
+    primaryOther:false,
   };
 
 export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {

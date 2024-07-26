@@ -44,9 +44,9 @@ export const addressSchema = z.object({
 // });
 
 export const corporateInfoSchema = z.object({
-  Name: z.string().min(1, "name cannot be empty"),
-  RegistrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
-  TaxID: z.string().min(1, "taxId cannot be empty"),
+  name: z.string().min(1, "name cannot be empty"),
+  registrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
+  taxID: z.string().min(1, "taxId cannot be empty"),
   dateofincorporation: z.string().transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
@@ -54,18 +54,18 @@ export const corporateInfoSchema = z.object({
     }
     return date;
   }),
-  Registered: z.string().optional(),
-  Primary: z.string().optional(),
-  RegistredBusinessAddress: subAddressSchema,
-  PlaceIncorporateAddress: subAddressSchema,
-  RegisteredCapital: z.coerce.number().optional(),
-  RevenuePerYear: z.coerce.number().optional(),
-  NetProFitLoss: z.coerce.number().optional(),
-  ShareholderEquity: z.coerce.number().optional(),
+  registered: z.string().optional(),
+  primary: z.string().optional(),
+  registredBusinessAddress: subAddressSchema,
+  placeIncorporateAddress: subAddressSchema,
+  registeredCapital: z.coerce.number().optional(),
+  revenuePerYear: z.coerce.number().optional(),
+  netProFitLoss: z.coerce.number().optional(),
+  shareholderEquity: z.coerce.number().optional(),
   placeIncorporateEmail: z.string().email().optional(),
   placeIncorporateTelephone: z.string().optional(),
-  RegistredBusinessEmail: z.string().email().optional(),
-  RegistredBusinessTelephone: z.string().optional(),
+  registredBusinessEmail: z.string().email().optional(),
+  registredBusinessTelephone: z.string().optional(),
 });
 
 export const directorInfoSchema = z.object({

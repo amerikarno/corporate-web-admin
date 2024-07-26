@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const subAddressSchema = z.object({
   addressNo: z.string().min(1, "addressNo cannot be empty"),
-  building: z.string().optional(),
   mooNo: z.string().optional(),
   soi: z.string().optional(),
   road: z.string().optional(),
@@ -12,7 +11,6 @@ export const subAddressSchema = z.object({
   province: z.string().min(1, "province cannot be empty"),
   postalCode: z.string().min(1, "postalCode cannot be empty"),
   country: z.string().min(1, "Country cannot be empty"),
-  floor: z.string().optional(),
 });
 
 export const fullNamesSchema = z.object({
@@ -44,9 +42,9 @@ export const addressSchema = z.object({
 // });
 
 export const corporateInfoSchema = z.object({
-  Name: z.string().min(1, "name cannot be empty"),
-  RegistrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
-  TaxID: z.string().min(1, "taxId cannot be empty"),
+  name: z.string().min(1, "name cannot be empty"),
+  registrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
+  taxID: z.string().min(1, "taxId cannot be empty"),
   dateofincorporation: z.string().transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
@@ -54,25 +52,25 @@ export const corporateInfoSchema = z.object({
     }
     return date;
   }),
-  Registered: z.string().optional(),
-  Primary: z.string().optional(),
-  RegistredBusinessAddress: subAddressSchema,
-  PlaceIncorporateAddress: subAddressSchema,
-  RegisteredCapital: z.coerce.number().optional(),
-  RevenuePerYear: z.coerce.number().optional(),
-  NetProFitLoss: z.coerce.number().optional(),
-  ShareholderEquity: z.coerce.number().optional(),
+  registered: z.string().optional(),
+  primary: z.string().optional(),
+  registredBusinessAddress: subAddressSchema,
+  placeIncorporateAddress: subAddressSchema,
+  registeredCapital: z.coerce.number().optional(),
+  revenuePerYear: z.coerce.number().optional(),
+  netProFitLoss: z.coerce.number().optional(),
+  shareholderEquity: z.coerce.number().optional(),
   placeIncorporateEmail: z.string().email().optional(),
   placeIncorporateTelephone: z.string().optional(),
-  RegistredBusinessEmail: z.string().email().optional(),
-  RegistredBusinessTelephone: z.string().optional(),
+  registredBusinessEmail: z.string().email().optional(),
+  registredBusinessTelephone: z.string().optional(),
 });
 
 export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiredDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty"),
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
   addresses: subAddressSchema,
@@ -193,7 +191,7 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiredDate: z.string().min(1, { message: "Expired Date cannot be empty" }),
+  expiryDate: z.string().min(1, { message: "Expired Date cannot be empty" }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: subAddressSchema,

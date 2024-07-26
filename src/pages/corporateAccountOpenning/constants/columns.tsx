@@ -37,19 +37,19 @@ export const columnsCorporateInfo = [
   },
   {
     name: "Registered Capital",
-    selector: (row: TCorporateInfo) => row.financial?.RegisteredCapital ?? "",
+    selector: (row: TCorporateInfo) => row.registeredCapital ?? "",
   },
   {
     name: "Revenue per year",
-    selector: (row: TCorporateInfo) => row.financial?.RevenuePerYear ?? "",
+    selector: (row: TCorporateInfo) => row.revenuePerYear ?? "",
   },
   {
     name: "Net Profit (Loss)",
-    selector: (row: TCorporateInfo) => row.financial?.NetProFitLoss ?? "",
+    selector: (row: TCorporateInfo) => row.netProFitLoss ?? "",
   },
   {
     name: "Shareholder's Equity",
-    selector: (row: TCorporateInfo) => row.financial?.ShareholderEquity ?? "",
+    selector: (row: TCorporateInfo) => row.shareholderEquity ?? "",
   },
   {
     name: "Actions",
@@ -298,9 +298,9 @@ export const columnsBank: TableColumn<TBank>[] = [
   //   selector: (row: TDirector) => row.addresses || '',
   // },
   {
-    name: "Actions",
+
     cell: (row: TBank) => (
-      <Button onClick={() => console.log(row)}>Action</Button>
+      <Button onClick={() => console.log(row)}>Delete</Button>
     ),
     ignoreRowClick: true,
   },
