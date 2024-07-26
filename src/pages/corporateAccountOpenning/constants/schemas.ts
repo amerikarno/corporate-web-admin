@@ -3,7 +3,6 @@ import { z } from "zod";
 
 export const subAddressSchema = z.object({
   addressNo: z.string().min(1, "addressNo cannot be empty"),
-  building: z.string().optional(),
   mooNo: z.string().optional(),
   soi: z.string().optional(),
   road: z.string().optional(),
@@ -12,7 +11,6 @@ export const subAddressSchema = z.object({
   province: z.string().min(1, "province cannot be empty"),
   postalCode: z.string().min(1, "postalCode cannot be empty"),
   country: z.string().min(1, "Country cannot be empty"),
-  floor: z.string().optional(),
 });
 
 export const fullNamesSchema = z.object({
@@ -72,7 +70,7 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiredDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty"),
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
   addresses: subAddressSchema,
@@ -193,7 +191,7 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiredDate: z.string().min(1, { message: "Expired Date cannot be empty" }),
+  expiryDate: z.string().min(1, { message: "Expired Date cannot be empty" }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: subAddressSchema,

@@ -22,7 +22,6 @@ export type TFullNameForCorporateInfo = [
 
 export type TSubAddress = {
   addressNo: string;
-  building?: string;
   mooNo?: string;
   soi?: string;
   road?: string;
@@ -30,7 +29,6 @@ export type TSubAddress = {
   amphoe: string;
   province: string;
   postalCode: string;
-  floor?: string;
   country: string;
   //type?: number;
 };
@@ -124,10 +122,11 @@ export type TContactPerson = {
 };
 
 export type TDirector = {
+  corporateCode?: string;
   fullNames: TFullName;
   citizendId?: string;
   passportID?: string;
-  expiredDate: string;
+  expiryDate: string;
   nationality: string;
   position: string;
   addresses: TSubAddress;

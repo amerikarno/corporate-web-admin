@@ -281,9 +281,9 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             </div>
             <CorporateAddressForm
               isSubmitting={isSubmitting}
-              errors={errors.registredBusinessAddress}
+              errors={errors.placeIncorporateAddress}
               register={register}
-              keyType="PlaceIncorporateAddress"
+              keyType="placeIncorporateAddress"
             />
 
           </div>

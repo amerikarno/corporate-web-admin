@@ -19,6 +19,7 @@ type TDirectorFormProps = {
 };
 
 type FullName = {
+  title : string;
   firstName: string;
   lastName: string;
 };
@@ -36,8 +37,9 @@ type Address = {
 };
 
 type Person = {
-  fullnames: FullName[];
+  fullNames: FullName[];
   referenceID: string;
+  citizendId?:string;
   passportID?: string;
   expiryDate: string;
   nationality: string;
@@ -68,7 +70,7 @@ export function FormIndividualsDirector({
     if (tmp.passportID) {
       tmp = { ...tmp, citizendId: "" };
     }
-    tmp = { ...tmp, types: "101" };
+    //tmp = { ...tmp, types: "101" };
     return tmp;
   };
 
@@ -91,15 +93,14 @@ export function FormIndividualsDirector({
       // console.log(formData);
 
       let body: Person = {
-        ...data,
+        ...formData,
         types: 101,
-        expiryDate: data.expiredDate,
         addresses: [data.addresses],
-        fullnames: [data.fullNames],
+        fullNames: [data.fullNames],
         referenceID: corporateCode,
       };
 
-      onsubmit(formData);
+      onsubmit(body);
     } else {
       setTriggerDropboxError(true);
     }
@@ -248,15 +249,15 @@ export function FormIndividualsDirector({
               </div>
               <div className="w-1/3">
                 <Input
-                  {...register("expiredDate")}
+                  {...register("expiryDate")}
                   label="Date of Expired"
                   id="Date of Expired"
                   disabled={isSubmitting}
                   type="date"
                 />
-                {errors.expiredDate && (
+                {errors.expiryDate && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.expiredDate.message}
+                    {errors.expiryDate.message}
                   </p>
                 )}
               </div>
