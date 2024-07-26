@@ -2,17 +2,17 @@ import { checkFormatIDCard } from "@/lib/utils";
 import { z } from "zod";
 
 export const subAddressSchema = z.object({
-  AddressNo: z.string().min(1, "addressNo cannot be empty"),
-  Building: z.string().optional(),
-  MooNo: z.string().optional(),
-  Soi: z.string().optional(),
-  Road: z.string().optional(),
-  Tambon: z.string().min(1, "subDistrict cannot be empty"),
-  Amphoe: z.string().min(1, "district cannot be empty"),
-  Province: z.string().min(1, "province cannot be empty"),
-  PostalCode: z.string().min(1, "postalCode cannot be empty"),
-  Country: z.string().min(1, "Country cannot be empty"),
-  Floor: z.string().optional(),
+  addressNo: z.string().min(1, "addressNo cannot be empty"),
+  building: z.string().optional(),
+  mooNo: z.string().optional(),
+  soi: z.string().optional(),
+  road: z.string().optional(),
+  tambon: z.string().min(1, "subDistrict cannot be empty"),
+  amphoe: z.string().min(1, "district cannot be empty"),
+  province: z.string().min(1, "province cannot be empty"),
+  postalCode: z.string().min(1, "postalCode cannot be empty"),
+  country: z.string().min(1, "Country cannot be empty"),
+  floor: z.string().optional(),
 });
 
 export const fullNamesSchema = z.object({
@@ -85,7 +85,7 @@ export const registeredCountryPrimaryCountryOperationSchema = z.object({
 
 export const contactPersonSchema = z.object({
   firstName: z.string().min(1, "name cannot be empty"),
-  lastName:z.string().min(1, "lastname cannot be empty"),
+  lastName: z.string().min(1, "lastname cannot be empty"),
   Position: z.string().min(1, "position cannot be empty"),
   Division: z.string().min(1, "division cannot be empty"),
   Telephone: z.string().min(1, "telephone cannot be empty"),
@@ -138,7 +138,6 @@ export const individualsShareholdersSchema = z.object({
         message: "Shares must be number",
       }
     ),
-    
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -190,6 +189,7 @@ export type TIndividualsContactPersonSchema = z.infer<
 >;
 
 export const individualsDirectorSchema = z.object({
+  referenceID: z.string().optional(),
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
@@ -197,6 +197,7 @@ export const individualsDirectorSchema = z.object({
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: subAddressSchema,
+  types: z.string().optional(),
 });
 
 export type TIndividualsDirectorSchema = z.infer<

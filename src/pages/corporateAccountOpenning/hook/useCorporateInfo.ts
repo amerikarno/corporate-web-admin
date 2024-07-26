@@ -9,7 +9,53 @@ export function useCorporateInfo() {
   const token = getCookies();
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
   const [currentCorporatesInfo, setCurrentCorporatesInfo] =
-    useState<TCorporateInfo>();
+    useState<TCorporateInfo>({
+      name: "a",
+      registrationNo: "a",
+      taxID: "a",
+      dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
+      registredBusinessAddress: {
+        AddressNo: "a",
+        Building: "a",
+        MooNo: "a",
+        Soi: "a",
+        Road: "a",
+        Tambon: "a",
+        Amphoe: "a",
+        Province: "a",
+        PostalCode: "a",
+        Country: "a",
+        Floor: "a",
+      },
+      placeIncorporateAddress: {
+        AddressNo: "a",
+        Building: "a",
+        MooNo: "aa",
+        Soi: "aa",
+        Road: "a",
+        Tambon: "a",
+        Amphoe: "a",
+        Province: "aa",
+        PostalCode: "a",
+        Country: "a",
+        Floor: "a",
+      },
+      registeredCapital: 3,
+      revenuePerYear: 0,
+      netProFitLoss: 0,
+      shareholderEquity: 0,
+      placeIncorporateEmail: "a@asf.coz",
+      placeIncorporateTelephone: "a",
+      registredBusinessEmail: "aa@dgsd.com",
+      registredBusinessTelephone: "a",
+      registered: "Thailand",
+      registeredOther: false,
+      registeredThailand: true,
+      primary: "Thailand",
+      primaryCountry: true,
+      primaryOther: false,
+      corporateCode: "C20240725004",
+    });
   //TODO: remove key and data after testing
   const [corporateCode, setCorporateCode] = useState<string>(
     "50feb95e-d771-466d-a028-09fcee10065f"

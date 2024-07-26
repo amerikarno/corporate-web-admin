@@ -15,18 +15,41 @@ import Dropbox from "@/components/Dropbox";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
+  corporateCode: string;
 };
 
-export function FormIndividualsDirector({ onsubmit }: TDirectorFormProps) {
-  // const {
-  //   directors,
-  //   individualsDirector,
-  //   // removeIndividualsShareholders,
-  //   // editIndividualsShareholders,
-  //   // handleSetNewShareholder,
-  //   // serializeData,
-  // } = useFormIndividualsDirector();
+type FullName = {
+  firstName: string;
+  lastName: string;
+};
 
+type Address = {
+  addressNo: string;
+  mooNo?: string;
+  soi?: string;
+  road?: string;
+  tambon: string;
+  amphoe: string;
+  province: string;
+  postalCode: string;
+  country: string;
+};
+
+type Person = {
+  fullnames: FullName[];
+  referenceID: string;
+  passportID?: string;
+  expiryDate: string;
+  nationality: string;
+  position: string;
+  types: number;
+  addresses: Address[];
+};
+
+export function FormIndividualsDirector({
+  onsubmit,
+  corporateCode,
+}: TDirectorFormProps) {
   const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
   const [triggerDropboxError, setTriggerDropboxError] =
     useState<boolean>(false);
@@ -45,7 +68,7 @@ export function FormIndividualsDirector({ onsubmit }: TDirectorFormProps) {
     if (tmp.passportID) {
       tmp = { ...tmp, citizendId: "" };
     }
-    tmp = { ...tmp, Types: "101" };
+    tmp = { ...tmp, types: "101" };
     return tmp;
   };
 
@@ -56,7 +79,6 @@ export function FormIndividualsDirector({ onsubmit }: TDirectorFormProps) {
     reset,
   } = useForm<TDirector>({
     resolver: zodResolver(individualsDirectorSchema),
-    //values: individualsDirector,
   });
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
@@ -65,8 +87,18 @@ export function FormIndividualsDirector({ onsubmit }: TDirectorFormProps) {
       setTriggerDropboxError(false);
       const formData = validateData(data);
       await sleep(500);
-      reset();
-      console.log(formData);
+      // reset();
+      // console.log(formData);
+
+      let body: Person = {
+        ...data,
+        types: 101,
+        expiryDate: data.expiredDate,
+        addresses: [data.addresses],
+        fullnames: [data.fullNames],
+        referenceID: corporateCode,
+      };
+
       onsubmit(formData);
     } else {
       setTriggerDropboxError(true);
