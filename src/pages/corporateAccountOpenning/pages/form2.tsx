@@ -10,24 +10,32 @@ export function Form2({ currentCorporatesInfo, corporateCode }: TForm2Props) {
   return (
     <>
       <div className="p-4 space-y-8">
-        <Card className="h-80 p-4">
+        <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
           <div className="flex flex-row">
-            <h1 className="w-1/4">Juristic Name</h1>
-            <h1 className="w-3/4">{currentCorporatesInfo?.name ?? ""}</h1>
-          </div>
-          <div className="flex flex-row">
-            <h1 className="w-1/4">Commercial Number</h1>
+            <h1 className="w-1/4 font-bold">Juristic ID</h1>
             <h1 className="w-3/4">
-              {currentCorporatesInfo?.registrationNo ?? ""}
+              : {currentCorporatesInfo?.corporateCode ?? ""}
             </h1>
           </div>
           <div className="flex flex-row">
-            <h1 className="w-1/4">Tax ID</h1>
-            <h1 className="w-3/4">{currentCorporatesInfo?.taxID ?? ""}</h1>
+            <h1 className="w-1/4 font-bold">Juristic Name</h1>
+            <h1 className="w-3/4">: {currentCorporatesInfo?.name ?? ""}</h1>
           </div>
           <div className="flex flex-row">
-            <h1 className="w-1/4">Date Of Incorporation</h1>
+            <h1 className="w-1/4 font-bold">Commercial Number</h1>
             <h1 className="w-3/4">
+              : {currentCorporatesInfo?.registrationNo ?? ""}
+            </h1>
+          </div>
+          <div className="flex flex-row">
+            <h1 className="w-1/4 font-bold">Tax ID</h1>
+            <h1 className="w-3/4">: {currentCorporatesInfo?.taxID ?? ""}</h1>
+          </div>
+          <div className="flex flex-row">
+            <h1 className="w-1/4 font-bold">Date Of Incorporation</h1>
+            <h1 className="w-3/4">
+              :{" "}
               {currentCorporatesInfo?.dateofincorporation.toLocaleDateString(
                 "th-TH"
               ) ?? ""}
