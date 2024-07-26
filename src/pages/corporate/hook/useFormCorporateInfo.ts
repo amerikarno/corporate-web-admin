@@ -102,7 +102,7 @@ export function useFormCorporateInfo() {
       }
     };
     const disablePrimaryCountryOfOperation = (type: string): boolean => {
-      console.log(registeredCountryPrimaryCountryOperation)
+
       if (registeredCountryPrimaryCountryOperation.primary !== "") {
         if (type === registeredCountryPrimaryCountryOperation.primary) {
           return false;
