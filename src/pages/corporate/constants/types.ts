@@ -41,23 +41,23 @@ export type TFinancialInfo = {
 };
 
 export type TCorporateInfo = {
-  Name: string;
-  RegistrationNo: string;
-  TaxID: string;
+  name: string;
+  registrationNo: string;
+  taxID: string;
   dateofincorporation: Date;
-  RegisteredThailand: boolean;
-  PrimaryCountry: boolean;
-  Registered: string;
-  RegisteredOther?: boolean;
-  Primary: string;
-  PrimaryOther?: boolean;
-  RegistredBusinessAddress: TSubAddress;
-  PlaceIncorporateAddress: TSubAddress;
+  registeredThailand: boolean;
+  primaryCountry: boolean;
+  registered: string;
+  registeredOther?: boolean;
+  primary: string;
+  primaryOther?: boolean;
+  registredBusinessAddress: TSubAddress;
+  placeIncorporateAddress: TSubAddress;
   financial?: TFinancialInfo;
   placeIncorporateEmail?: string;
   placeIncorporateTelephone?: string;
-  RegistredBusinessEmail?: string;
-  RegistredBusinessTelephone?: string;
+  registredBusinessEmail?: string;
+  registredBusinessTelephone?: string;
 };
 
 export type TCorporateTypeAndIncome = {
@@ -72,12 +72,12 @@ export type TCorporateTypeAndIncome = {
 };
 
 export type TRegisteredCountryPrimaryCountryOperation = {
-  Registered: string;
-  Primary: string;
-  RegisteredThailand: boolean;
-  PrimaryCountry: boolean;
-  RegisteredOther?: boolean;
-  PrimaryOther?: boolean;
+  registered: string;
+  primary: string;
+  registeredThailand: boolean;
+  primaryCountry: boolean;
+  registeredOther?: boolean;
+  primaryOther?: boolean;
 };
 
 export type TIndividualsShareholders = {

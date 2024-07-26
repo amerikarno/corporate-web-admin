@@ -79,12 +79,12 @@ export type TCorporateTypeAndIncome = {
 };
 
 export type TRegisteredCountryPrimaryCountryOperation = {
-  Registered: string;
-  Primary: string;
-  RegisteredThailand: boolean;
-  PrimaryCountry: boolean;
-  RegisteredOther?: boolean;
-  PrimaryOther?: boolean;
+  registered: string;
+  primary: string;
+  registeredThailand: boolean;
+  primaryCountry: boolean;
+  registeredOther?: boolean;
+  primaryOther?: boolean;
 };
 
 export type TIndividualsShareholders = {

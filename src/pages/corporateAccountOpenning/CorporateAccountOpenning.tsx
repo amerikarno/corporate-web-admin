@@ -24,28 +24,29 @@ import { FormJuristicShareholders } from "./components/formJuristicShareholders"
 import { useBank } from "./hook/useBank";
 import { FormBank } from "./components/formBank";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
-
+import { useState } from "react";
 export default function CorporateAccountOpenning() {
+  
   const {
     corporatesInfo,
     handleSubmitCorporateInfo,
     currentCorporatesInfo,
     corporateCode,
   } = useCorporateInfo();
-  // return (
-  //   <>
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="Juristic Investor Information-For Account Opening"
-  //           columns={columnsCorporateInfo}
-  //           data={corporatesInfo}
-  //         />
-  //       </Card>
-  //       <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
-  //     </div>
-  //   </>
-  // );
+  return (
+    <>
+      <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Juristic Investor Information-For Account Opening"
+            columns={columnsCorporateInfo}
+            data={corporatesInfo}
+          />
+        </Card>
+        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+      </div>
+    </>
+  );
   // ------------------------------------------------------------------------------
   // const handleOnSubmit = (data: any) => {
   //   console.log(data);
@@ -85,25 +86,49 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
   // ------------------------------------------------------------------------------
-  const { directors, handleSubmitDirectors } = useListOfDirector();
-  return (
-    <>
-      <div className="p-4 space-y-8">
-        <Card>
-          <DataTable
-            title="List of Directors"
-            columns={columnsListOfDirectors}
-            data={directors}
-            clearSelectedRows
-          />
-        </Card>
-        <FormIndividualsDirector
-          onsubmit={handleSubmitDirectors}
-          corporateCode={corporateCode}
-        />
-      </div>
-    </>
-  );
+  // const {
+  //     corporatesInfo,
+  //     handleSubmitCorporateInfo,
+  //     currentCorporatesInfo,
+  //     corporateCode,
+  //   } = useCorporateInfo();
+  // const handleOnSubmit = (data: any) => {
+  //   console.log(data);
+  // };
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card className="h-80 p-4">
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Juristic Name</h1>
+  //           <h1 className="w-3/4">{currentCorporatesInfo?.name ?? ""}</h1>
+  //         </div>
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Commercial Number</h1>
+  //           <h1 className="w-3/4">
+  //             {currentCorporatesInfo?.registrationNo ?? ""}
+  //           </h1>
+  //         </div>
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Tax ID</h1>
+  //           <h1 className="w-3/4">{currentCorporatesInfo?.taxID ?? ""}</h1>
+  //         </div>
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Date Of Incorporation</h1>
+  //           <h1 className="w-3/4">
+  //             {currentCorporatesInfo?.dateofincorporation.toLocaleDateString(
+  //               "th-TH"
+  //             ) ?? ""}
+  //           </h1>
+  //         </div>
+  //       </Card>
+  //       <FormCorporateTypeAndIncome
+  //         onsubmit={handleOnSubmit}
+  //         corporateCode={currentCorporatesInfo}
+  //       />
+  //     </div>
+  //   </>
+  // );
   //------------------------------------------------------------------------------
   // const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
   // return (
