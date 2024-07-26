@@ -24,7 +24,7 @@ import { FormJuristicShareholders } from "./components/formJuristicShareholders"
 import { useBank } from "./hook/useBank";
 import { FormBank } from "./components/formBank";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
-import { useCorporateInfo } from "./hook/useCorporateInfo";
+
 
 export default function CorporateAccountOpenning() {
   // const { corporatesInfo, handleSubmitCorporateInfo } = useCorporateInfo();
@@ -43,23 +43,23 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
   // ------------------------------------------------------------------------------
-  const { currentCorporatesInfo, corporateCode } = useCorporateInfo();
-  const handleOnSubmit = (data: any) => {
-    console.log(data);
-  };
-  return (
-    <>
-      <div className="p-4 space-y-8">
-        <Card>
-          <h1 className="h-80">Corporate type and income infoamtions</h1>
-        </Card>
-        <FormCorporateTypeAndIncome
-          onsubmit={handleOnSubmit}
-          corporateInfo={currentCorporatesInfo}
-        />
-      </div>
-    </>
-  );
+  // const { currentCorporatesInfo, corporateCode } = useCorporateInfo();
+  // const handleOnSubmit = (data: any) => {
+  //   console.log(data);
+  // };
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card>
+  //         <h1 className="h-80">Corporate type and income infoamtions</h1>
+  //       </Card>
+  //       <FormCorporateTypeAndIncome
+  //         onsubmit={handleOnSubmit}
+  //         corporateInfo={currentCorporatesInfo}
+  //       />
+  //     </div>
+  //   </>
+  // );
   // ------------------------------------------------------------------------------
   // const { directors, handleSubmitDirectors } = useListOfDirector();
   // return (
@@ -146,20 +146,21 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
   //------------------------------------------------------------------------------
-  // const { bank, handleSubmitBank } = useBank();
-  // return (
-  //   <>
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="Bank Accounts Intended to Deposit and Withdraw Fiat Fund"
-  //           columns={columnsBank}
-  //           data={bank}
-  //           clearSelectedRows
-  //         />
-  //       </Card>
-  //       <FormBank onsubmit={handleSubmitBank} />
-  //     </div>
-  //   </>
-  // );
+  const { bank, handleSubmitBank } = useBank();
+  return (
+    <>
+      <div className="p-4 space-y-8">
+        <Card>
+          <DataTable
+            title="Bank Accounts Intended to Deposit and Withdraw Fiat Fund"
+            columns={columnsBank}
+            data={bank}
+            selectableRows
+            
+          />
+        </Card>
+        <FormBank onsubmit={handleSubmitBank} />
+      </div>
+    </>
+  );
 }

@@ -311,9 +311,9 @@ export const columnsBank: TableColumn<TBank>[] = [
   //   selector: (row: TDirector) => row.addresses || '',
   // },
   {
-    name: "Actions",
+
     cell: (row: TBank) => (
-      <Button onClick={() => console.log(row)}>Action</Button>
+      <Button onClick={() => console.log(row)}>Delete</Button>
     ),
     ignoreRowClick: true,
   },
