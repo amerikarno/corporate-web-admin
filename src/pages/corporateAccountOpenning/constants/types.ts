@@ -184,3 +184,7 @@ export type TJuristicTypeAll = {
   investmentObjective: TJusristicInvestmentObjective;
   investmentObjectiveOther: string;
 };
+
+export type TMapPages = {
+  [key: number]: JSX.Element;
+};

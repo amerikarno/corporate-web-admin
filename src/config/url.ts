@@ -63,7 +63,7 @@ export const urlConfig: TUrlConfig[] = [
     children: [
       {
         label: "Added Corporate Account",
-        href: "/blankPages",
+        href: "/corporate/create",
       },
       {
         label: "Added Individual Account",
@@ -155,7 +155,7 @@ export const urlConfig: TUrlConfig[] = [
     header: " TO DO List",
     icon: "icon",
     children: [
-      { label: "corporate account opening", href: "/corporate/create" },
+      { label: "corporate account opening", href: "/blankPages" },
       { label: "individual account opening", href: "/blankPages" },
       { label: "whitelist(bank)", href: "/blankPages" },
       { label: "change info", href: "/blankPages" },

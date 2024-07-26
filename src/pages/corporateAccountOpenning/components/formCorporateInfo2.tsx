@@ -16,13 +16,11 @@ import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 
 type TCorporateTypeAndIncomeProps = {
-  onsubmit: (data: any) => void;
   corporateInfo?: TCorporateInfo;
   corporateCode?: string;
 };
 
 export function FormCorporateTypeAndIncome({
-  onsubmit,
   corporateInfo,
   corporateCode,
 }: TCorporateTypeAndIncomeProps) {
@@ -59,7 +57,7 @@ export function FormCorporateTypeAndIncome({
         ...juristicAllOtherType,
         corporateCode: corporateCode,
       };
-      onsubmit(mergeObj);
+      console.log(mergeObj);
     } else {
       console.log("submit failed");
     }

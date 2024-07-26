@@ -93,7 +93,13 @@ root.render(
               <Route path="/" element={<Layout />}>
                 <Route index element={<CreateCorporate />} />
                 <Route path="corporate" element={<Outlet />}>
-                  <Route path="create" element={<CorporateAccountOpenning />} />
+                  <Route path="create" element={<Outlet />}>
+                    <Route index element={<CorporateAccountOpenning />} />
+                    <Route
+                      path=":page"
+                      element={<CorporateAccountOpenning />}
+                    />
+                  </Route>
                 </Route>
                 <Route path="blankPages" element={<BlankPage />} />
               </Route>
