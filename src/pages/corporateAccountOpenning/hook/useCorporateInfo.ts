@@ -101,10 +101,12 @@ export function useCorporateInfo() {
         },
       });
       // console.log(res);
-      data.corporateCode = res.data.referenceID;
-      setCorporatesInfo([...corporatesInfo, data]);
-      setCorporateCode(res.data.referenceID);
-      setCurrentCorporatesInfo(data);
+      if (res.status === 200) {
+        data.corporateCode = res.data.referenceID;
+        setCorporatesInfo([...corporatesInfo, data]);
+        setCorporateCode(res.data.referenceID);
+        setCurrentCorporatesInfo(data);
+      }
     } catch (error) {
       console.log(error);
     }
