@@ -10,7 +10,7 @@ import {
   columnsListOfDirectors,
   columnsShareHolders,
 } from "./constants/columns";
-import { FormCorporateInfo } from "./components/formCorporateInfo"
+import { FormCorporateInfo } from "./components/formCorporateInfo";
 import { useCorporateInfo } from "./hook/useCorporateInfo";
 import { FormIndividualsDirector } from "./components/formDirectorInfo";
 import { useAuthorizePerson } from "./hook/useAuthorizePerson";
@@ -24,10 +24,14 @@ import { FormJuristicShareholders } from "./components/formJuristicShareholders"
 import { useBank } from "./hook/useBank";
 import { FormBank } from "./components/formBank";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
-import { useCorporateInfo } from "./hook/useCorporateInfo";
 
 export default function CorporateAccountOpenning() {
-  // const { corporatesInfo, handleSubmitCorporateInfo } = useCorporateInfo();
+  const {
+    corporatesInfo,
+    handleSubmitCorporateInfo,
+    currentCorporatesInfo,
+    corporateCode,
+  } = useCorporateInfo();
   // return (
   //   <>
   //     <div className="p-4 space-y-8">
@@ -43,40 +47,63 @@ export default function CorporateAccountOpenning() {
   //   </>
   // );
   // ------------------------------------------------------------------------------
-  const { currentCorporatesInfo, corporateCode } = useCorporateInfo();
-  const handleOnSubmit = (data: any) => {
-    console.log(data);
-  };
+  // const handleOnSubmit = (data: any) => {
+  //   console.log(data);
+  // };
+  // return (
+  //   <>
+  //     <div className="p-4 space-y-8">
+  //       <Card className="h-80 p-4">
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Juristic Name</h1>
+  //           <h1 className="w-3/4">{currentCorporatesInfo?.name ?? ""}</h1>
+  //         </div>
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Commercial Number</h1>
+  //           <h1 className="w-3/4">
+  //             {currentCorporatesInfo?.registrationNo ?? ""}
+  //           </h1>
+  //         </div>
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Tax ID</h1>
+  //           <h1 className="w-3/4">{currentCorporatesInfo?.taxID ?? ""}</h1>
+  //         </div>
+  //         <div className="flex flex-row">
+  //           <h1 className="w-1/4">Date Of Incorporation</h1>
+  //           <h1 className="w-3/4">
+  //             {currentCorporatesInfo?.dateofincorporation.toLocaleDateString(
+  //               "th-TH"
+  //             ) ?? ""}
+  //           </h1>
+  //         </div>
+  //       </Card>
+  //       <FormCorporateTypeAndIncome
+  //         onsubmit={handleOnSubmit}
+  //         corporateInfo={currentCorporatesInfo}
+  //       />
+  //     </div>
+  //   </>
+  // );
+  // ------------------------------------------------------------------------------
+  const { directors, handleSubmitDirectors } = useListOfDirector();
   return (
     <>
       <div className="p-4 space-y-8">
         <Card>
-          <h1 className="h-80">Corporate type and income infoamtions</h1>
+          <DataTable
+            title="List of Directors"
+            columns={columnsListOfDirectors}
+            data={directors}
+            clearSelectedRows
+          />
         </Card>
-        <FormCorporateTypeAndIncome
-          onsubmit={handleOnSubmit}
-          corporateInfo={currentCorporatesInfo}
+        <FormIndividualsDirector
+          onsubmit={handleSubmitDirectors}
+          corporateCode={corporateCode}
         />
       </div>
     </>
   );
-  // ------------------------------------------------------------------------------
-  // const { directors, handleSubmitDirectors } = useListOfDirector();
-  // return (
-  //   <>
-  //     <div className="p-4 space-y-8">
-  //       <Card>
-  //         <DataTable
-  //           title="List of Directors"
-  //           columns={columnsListOfDirectors}
-  //           data={directors}
-  //           clearSelectedRows
-  //         />
-  //       </Card>
-  //       <FormIndividualsDirector onsubmit={handleSubmitDirectors} />
-  //     </div>
-  //   </>
-  // );
   //------------------------------------------------------------------------------
   // const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
   // return (

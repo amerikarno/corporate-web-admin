@@ -21,46 +21,50 @@ export type TFullNameForCorporateInfo = [
 ];
 
 export type TSubAddress = {
-  AddressNo: string;
-  Building?: string;
-  MooNo?: string;
-  Soi?: string;
-  Road?: string;
-  Tambon: string;
-  Amphoe: string;
-  Province: string;
-  PostalCode: string;
-  Floor?: string;
-  Country: string;
+  addressNo: string;
+  building?: string;
+  mooNo?: string;
+  soi?: string;
+  road?: string;
+  tambon: string;
+  amphoe: string;
+  province: string;
+  postalCode: string;
+  floor?: string;
+  country: string;
   //type?: number;
 };
 
 export type TFinancialInfo = {
-  RegisteredCapital?: number;
-  RevenuePerYear?: number;
-  NetProFitLoss?: number;
-  ShareholderEquity?: number;
+  registeredCapital?: number;
+  revenuePerYear?: number;
+  netProFitLoss?: number;
+  shareholderEquity?: number;
 };
 
 export type TCorporateInfo = {
   corporateCode?: string;
-  Name: string;
-  RegistrationNo: string;
-  TaxID: string;
+  name: string;
+  registrationNo: string;
+  taxID: string;
   dateofincorporation: Date;
-  RegisteredThailand: boolean;
-  PrimaryCountry: boolean;
-  Registered: string;
-  RegisteredOther?: boolean;
-  Primary: string;
-  PrimaryOther?: boolean;
-  RegistredBusinessAddress: TSubAddress;
-  PlaceIncorporateAddress: TSubAddress;
-  financial?: TFinancialInfo;
+  registeredThailand: boolean;
+  primaryCountry: boolean;
+  registered: string;
+  registeredOther?: boolean;
+  primary: string;
+  primaryOther?: boolean;
+  registredBusinessAddress: TSubAddress;
+  placeIncorporateAddress: TSubAddress;
+  // financial?: TFinancialInfo;
   placeIncorporateEmail?: string;
   placeIncorporateTelephone?: string;
-  RegistredBusinessEmail?: string;
-  RegistredBusinessTelephone?: string;
+  registredBusinessEmail?: string;
+  registredBusinessTelephone?: string;
+  registeredCapital?: number;
+  revenuePerYear?: number;
+  netProFitLoss?: number;
+  shareholderEquity?: number;
 };
 
 export type TCorporateTypeAndIncome = {
@@ -127,7 +131,7 @@ export type TDirector = {
   nationality: string;
   position: string;
   addresses: TSubAddress;
-  Types?: string;
+  types?: string;
 };
 
 export type TJuristicsShareholders = {

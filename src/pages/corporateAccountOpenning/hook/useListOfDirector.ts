@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
+import { copy } from "@/lib/utils";
 
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
