@@ -1,12 +1,11 @@
 import axios from "@/api/axios";
 import { useState } from "react";
-import { formatDateToIsoString } from "../libs/utils";
+import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 import { TCorporateInfo } from "../constants/types";
 
 export function useCorporateInfo() {
-  const token = getCookies();
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
   const [currentCorporatesInfo, setCurrentCorporatesInfo] =
     useState<TCorporateInfo>({
@@ -16,7 +15,6 @@ export function useCorporateInfo() {
       dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
       registredBusinessAddress: {
         addressNo: "a",
-        building: "a",
         mooNo: "a",
         soi: "a",
         road: "a",
@@ -25,11 +23,9 @@ export function useCorporateInfo() {
         province: "a",
         postalCode: "a",
         country: "a",
-        floor: "a",
       },
       placeIncorporateAddress: {
         addressNo: "a",
-        building: "a",
         mooNo: "aa",
         soi: "aa",
         road: "a",
@@ -38,7 +34,6 @@ export function useCorporateInfo() {
         province: "aa",
         postalCode: "a",
         country: "a",
-        floor: "a",
       },
       registeredCapital: 3,
       revenuePerYear: 0,
@@ -57,9 +52,7 @@ export function useCorporateInfo() {
       corporateCode: "C20240725004",
     });
   //TODO: remove key and data after testing
-  const [corporateCode, setCorporateCode] = useState<string>(
-    "50feb95e-d771-466d-a028-09fcee10065f"
-  );
+  const [corporateCode, setCorporateCode] = useState<string>("C20240725004");
 
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
@@ -69,25 +62,6 @@ export function useCorporateInfo() {
     }
   };
 
-  const isExpiredToken = (): boolean => {
-    let isExpired = true;
-    if (token && token !== null) {
-      try {
-        const user = jwtDecode(token);
-
-        if (user && user.exp) {
-          const dateTime = new Date(user.exp * 1000);
-          isExpired = dateTime.getTime() < new Date().getTime();
-        } else {
-          console.log("Invalid token: exp field is missing.");
-        }
-      } catch (error) {
-        console.error("Failed to decode token:", error);
-      }
-    }
-    return isExpired;
-  };
-
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     let body = {
       ...data,
@@ -95,6 +69,7 @@ export function useCorporateInfo() {
     };
     // console.log("body", body);
     try {
+      const token = getCookies();
       const res = await axios.post("/api/v1/corporate/create", body, {
         headers: {
           Authorization: `Bearer ${token}`,

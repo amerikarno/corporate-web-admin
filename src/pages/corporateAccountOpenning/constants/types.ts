@@ -86,13 +86,14 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 };
 
 export type TIndividualsShareholders = {
+  corporateCode?: string;
   fullNames: TFullName;
-  citizendId?: string;
+  citizendID?: string;
   passportID?: string;
   expiredDate: string;
   nationality: string;
   sharePercentage: string;
-  Types?: string;
+  types?: string;
 };
 
 export type TBank = {
@@ -134,6 +135,7 @@ export type TDirector = {
 };
 
 export type TJuristicsShareholders = {
+  corporateCode?: string;
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
@@ -186,4 +188,15 @@ export type TJuristicTypeAll = {
 
 export type TMapPages = {
   [key: number]: JSX.Element;
+};
+
+export type TBodyFormIndividualsShareholders = {
+  fullNames: TFullName[];
+  corporateCode: string;
+  passportID?: string;
+  citizendID?: string;
+  expiryDate: string;
+  nationality: string;
+  sharePercentage: string;
+  types?: number;
 };

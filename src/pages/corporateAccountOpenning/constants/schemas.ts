@@ -203,6 +203,7 @@ export type TIndividualsDirectorSchema = z.infer<
 >;
 
 export const individualsJuristicShareholdersSchema = z.object({
+  corporateCode: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
   registrationNo: z
     .string()
