@@ -62,11 +62,6 @@ const LoginForm = () => {
         })
         .catch((err) => {
           setError("root", { message: err.message });
-          const tk =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQiLCJncm91cHMiOlsxMDAxLDEwMDIsMjAwMSwyMDAyXX0.giOtpdNwExYzvd8yXzdWMrdXIdES8hkD0wCbJD2I_Ao";
-          setCookies(tk);
-          dispatch(setToken(tk));
-          navigate("/");
         });
       console.log(token);
       if (token) {

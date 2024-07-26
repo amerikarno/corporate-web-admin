@@ -65,6 +65,7 @@ import { store } from "./app/store";
 import CreateCorporate from "./pages/corporate/createCorporate";
 import BlankPage from "./pages/blankPages/blankPage";
 import CorporateAccountOpenning from "./pages/corporateAccountOpenning/CorporateAccountOpenning";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const helmetContext = {};
 
@@ -85,13 +86,31 @@ root.render(
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Layout />}>
-                <Route index element={<CreateCorporate />} />
+                <Route
+                  index
+                  element={
+                    // <ProtectedRoute>
+                    <CorporateAccountOpenning />
+                    // </ProtectedRoute>
+                  }
+                />
                 <Route path="corporate" element={<Outlet />}>
                   <Route path="create" element={<Outlet />}>
-                    <Route index element={<CorporateAccountOpenning />} />
+                    <Route
+                      index
+                      element={
+                        // <ProtectedRoute>
+                        <CorporateAccountOpenning />
+                        // </ProtectedRoute>
+                      }
+                    />
                     <Route
                       path=":page"
-                      element={<CorporateAccountOpenning />}
+                      element={
+                        // <ProtectedRoute>
+                        <CorporateAccountOpenning />
+                        // </ProtectedRoute>
+                      }
                     />
                   </Route>
                 </Route>
