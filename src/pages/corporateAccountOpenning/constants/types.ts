@@ -95,7 +95,7 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 };
 
 export type TIndividualsShareholders = {
-  fullNames: TFullName;
+  fullNames: TFullName[];
   citizendId?: string;
   passportID?: string;
   expiredDate: string;

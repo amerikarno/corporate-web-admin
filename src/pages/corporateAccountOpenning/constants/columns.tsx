@@ -197,15 +197,15 @@ export const columnsContactPerson: TableColumn<TContactPerson>[] = [
 export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
   {
     name: "Title",
-    selector: (row: TIndividualsShareholders) => row.fullNames.title || "",
+    selector: (row: TIndividualsShareholders) => row.fullNames[0].title || "",
   },
   {
     name: "Firstname",
-    selector: (row: TIndividualsShareholders) => row.fullNames.firstName || "",
+    selector: (row: TIndividualsShareholders) => row.fullNames[0].firstName || "",
   },
   {
     name: "Lastname",
-    selector: (row: TIndividualsShareholders) => row.fullNames.lastName || "",
+    selector: (row: TIndividualsShareholders) => row.fullNames[0].lastName || "",
   },
   {
     name: "CitizenID",
