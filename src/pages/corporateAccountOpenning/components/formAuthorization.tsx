@@ -15,8 +15,9 @@ import { Button } from "@/components/ui/button";
 
 type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
+  corporateCode: string;
 };
-export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
+export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePersonFormProps) {
   const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
   const [triggerDropboxError, setTriggerDropboxError] =
     useState<boolean>(false);
@@ -34,7 +35,7 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
     if (tmp.passportID) {
       tmp = { ...tmp, citizendId: "" };
     }
-    tmp = { ...tmp, Types: "201" };
+    //tmp = { ...tmp, types: "201" };
     return tmp;
   };
 
@@ -43,7 +44,7 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<TAuthorizePerson>({
+  } = useForm<TAuthorizedPersonSchema>({
     resolver: zodResolver(authorizedPersonSchema),
   });
 
@@ -53,9 +54,16 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
       setTriggerDropboxError(false);
       const formData = validateData(data);
       await sleep(500);
-      reset();
-      console.log(formData);
-      onsubmit(formData);
+      //reset();
+      let body: TAuthorizePerson = {
+        ...formData,
+        types: 201,
+        addresses: data.addresses,
+        fullNames: data.fullNames,
+        corporateCode: corporateCode,
+      };
+      console.log(body);
+      onsubmit(body);
     } else {
       setTriggerDropboxError(true);
     }
@@ -70,14 +78,14 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
-              {...register("fullNames.title")}
+              {...register("fullNames.0.title")}
               label="Title"
               id="Title"
               disabled={isSubmitting}
             />
-            {errors.fullNames?.title && (
+            {errors.fullNames?.[0]?.title && (
               <p className="text-red-500 text-sm px-2">
-                {errors.fullNames?.title.message}
+                {errors.fullNames?.[0]?.title.message}
               </p>
             )}
           </div>
@@ -86,27 +94,27 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
-              {...register("fullNames.firstName")}
+              {...register("fullNames.0.firstName")}
               label="First Name"
               id="First Name"
               disabled={isSubmitting}
             />
-            {errors.fullNames?.firstName && (
+            {errors.fullNames?.[0]?.firstName && (
               <p className="text-red-500 text-sm px-2">
-                {errors.fullNames?.firstName.message}
+                {errors.fullNames?.[0]?.firstName.message}
               </p>
             )}
           </div>
           <div className="w-1/2">
             <Input
-              {...register("fullNames.lastName")}
+              {...register("fullNames.0.lastName")}
               label="Surname"
               id="Surname"
               disabled={isSubmitting}
             />
-            {errors.fullNames?.lastName && (
+            {errors.fullNames?.[0]?.lastName && (
               <p className="text-red-500 text-sm px-2">
-                {errors.fullNames?.lastName.message}
+                {errors.fullNames?.[0]?.lastName.message}
               </p>
             )}
           </div>
@@ -196,15 +204,15 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
           </div>
           <div className="w-1/3">
             <Input
-              {...register("expiredDate")}
+              {...register("expiryDate")}
               label="Date of Expired"
               id="Date of Expired"
               disabled={isSubmitting}
               type="date"
             />
-            {errors.expiredDate && (
+            {errors.expiryDate && (
               <p className="text-red-500 text-sm px-2">
-                {errors.expiredDate.message}
+                {errors.expiryDate.message}
               </p>
             )}
           </div>
@@ -218,6 +226,11 @@ export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
           register={register}
           errors={errors.addresses}
         />
+        {errors.addresses?.[0] && (
+              <p className="text-red-500 text-sm px-2">
+                {errors.addresses?.[0]?.message}
+              </p>
+            )}
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}

@@ -6,37 +6,9 @@ import { formatDateToIsoString } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 
-type FullName = {
-  title : string;
-  firstName: string;
-  lastName: string;
-};
 
-type Address = {
-  addressNo: string;
-  mooNo?: string;
-  soi?: string;
-  road?: string;
-  tambon: string;
-  amphoe: string;
-  province: string;
-  postalCode: string;
-  country: string;
-};
-
-type Person = {
-  fullNames: FullName[];
-  corporateCode: string;
-  citizendId?:string;
-  passportID?: string;
-  expiryDate: Date;
-  nationality: string;
-  position: string;
-  types: number;
-  addresses: Address[];
-};
 export function useListOfDirector() {
-  const [directors, setDirectors] = useState<Person[]>([]);
+  const [directors, setDirectors] = useState<TDirector[]>([]);
 
   const token = getCookies();
   const isExpiredToken = (): boolean => {
@@ -57,7 +29,7 @@ export function useListOfDirector() {
     }
     return isExpired;
   };
-  const saveCorporateInfo = async (data: Person) => {
+  const saveListOfDirector = async (data: TDirector) => {
     let body = {
       ...data,
       expiryDate: formatDateToIsoString(data.expiryDate),
@@ -77,10 +49,10 @@ export function useListOfDirector() {
       console.log(error);
     }
   };
-  const handleSubmitDirectors = async (data: Person) => {
+  const handleSubmitDirectors = async (data: TDirector) => {
     if (!isExpiredToken()) {
       setDirectors([...directors, data]);
-      await saveCorporateInfo(data);
+      await saveListOfDirector(data);
     } else {
       console.log("session expired");
     }

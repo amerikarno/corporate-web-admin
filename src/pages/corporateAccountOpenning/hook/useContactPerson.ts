@@ -5,7 +5,10 @@ import { formatDateToIsoString } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 
-
+type TContactPersonArray = {
+  contacts:TContactPerson[];
+  corporateCode?:string;
+}
 
 export function useContactPerson() {
   const [contact, setContactPerson] = useState<TContactPerson[]>([]);
@@ -30,7 +33,7 @@ export function useContactPerson() {
     return isExpired;
   };
 
-  const saveCorporateInfo = async (data: TContactPerson) => {
+  const saveContactPerson = async (data: TContactPersonArray) => {
     let body = {
       ...data,
     };
@@ -51,11 +54,11 @@ export function useContactPerson() {
   };
 
 
-  const handleSubmitContactPerson = async (data: TContactPerson) => {
+  const handleSubmitContactPerson = async (data: TContactPersonArray) => {
     
     if (!isExpiredToken()) {
-      setContactPerson([...contact, data]);
-      await saveCorporateInfo(data);
+      setContactPerson(prevContactPerson => [...prevContactPerson, ...data.contacts]);
+      await saveContactPerson(data);
     } else {
       console.log("session expired");
     }

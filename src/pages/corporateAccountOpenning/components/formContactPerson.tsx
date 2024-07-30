@@ -13,8 +13,13 @@ import { useFormIndividualsContactPerson } from "../hook/useFormContactPerson";
 //import { Table } from "./dataTable";
 import { TContactPerson } from "../constants/types";
 
+type TContactPersonArray = {
+  contacts:TContactPerson[];
+  corporateCode?:string;
+}
+
 type TContactPersonFormProps = {
-  onsubmit: (data: TContactPerson) => void;
+  onsubmit: (data: TContactPersonArray) => void;
   corporateCode: string;
 };
 
@@ -49,9 +54,10 @@ export function FormIndividualsContactPerson({
   //     { header: "% Shares", accessor: "shares" },
   //   ];
 
-  const onSubmit = async (data: TIndividualsContactPersonSchema) => {
-    let formData:TContactPerson = {
-      ...data,corporateCode: corporateCode,
+  const onSubmit = async (data: TContactPerson) => {
+    let formData:TContactPersonArray = {
+      contacts:[data],
+      corporateCode:corporateCode
     }
     await sleep(500);
     //handleSetNewShareholder(data);

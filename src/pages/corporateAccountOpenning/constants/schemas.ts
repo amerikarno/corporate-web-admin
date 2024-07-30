@@ -81,7 +81,7 @@ export const directorInfoSchema = z.object({
   }),
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
-  addresses: subAddressSchema,
+  addresses: z.array(subAddressSchema)
 });
 
 export const registeredCountryPrimaryCountryOperationSchema = z.object({
@@ -175,8 +175,14 @@ export const authorizedPersonSchema = z.object({
   citizendId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportID: z.string().optional(),
-  expiredDate: z.string().min(1, "date cannot be empty"),
-  addresses: subAddressSchema,
+  expiryDate: z.string().transform((str) => {
+    const date = new Date(str);
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+    return date;
+  }),
+  addresses: z.array(subAddressSchema),
   position: z.string().min(1, "position cannot be empty"),
 });
 
@@ -207,8 +213,8 @@ export const individualsDirectorSchema = z.object({
   }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   position: z.string().min(1, { message: "Position cannot be empty" }),
-  addresses: subAddressSchema,
-  types: z.string().optional(),
+  addresses: z.array(subAddressSchema),
+
 });
 
 export type TIndividualsDirectorSchema = z.infer<

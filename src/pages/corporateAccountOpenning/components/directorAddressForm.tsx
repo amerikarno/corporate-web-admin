@@ -21,7 +21,7 @@ export function DirectorAddressForm({
   keyType,
 }: TSubAddressFormProps) {
   const fields = Object.entries(subAddressSchema.shape);
-  const optionalFields = ["Building", "MooNo", "Soi", "Road"];
+  const optionalFields = ["mooNo", "soi", "road"];
   const isOptional = (name: string) => {
     if (optionalFields.includes(name)) {
       return false;
@@ -36,8 +36,8 @@ export function DirectorAddressForm({
             {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
               <Input
                 label={fieldName}
-                {...register(`${keyType}.${fieldName}` as any)}
-                name={`${keyType}.${fieldName}`}
+                {...register(`${keyType}.0.${fieldName}` as any)}
+                name={`${keyType}.0.${fieldName}`}
                 id={fieldName}
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}

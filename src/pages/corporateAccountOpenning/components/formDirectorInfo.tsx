@@ -14,39 +14,10 @@ import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
 
 type TDirectorFormProps = {
-  onsubmit: (data: Person) => void;
+  onsubmit: (data: TDirector) => void;
   corporateCode: string;
 };
 
-type FullName = {
-  title : string;
-  firstName: string;
-  lastName: string;
-};
-
-type Address = {
-  addressNo: string;
-  mooNo?: string;
-  soi?: string;
-  road?: string;
-  tambon: string;
-  amphoe: string;
-  province: string;
-  postalCode: string;
-  country: string;
-};
-
-type Person = {
-  fullNames: FullName[];
-  corporateCode: string;
-  citizendId?:string;
-  passportID?: string;
-  expiryDate: Date;
-  nationality: string;
-  position: string;
-  types: number;
-  addresses: Address[];
-};
 
 export function FormIndividualsDirector({
   onsubmit,
@@ -92,10 +63,10 @@ export function FormIndividualsDirector({
       // reset();
       // console.log(formData);
 
-      let body: Person = {
+      let body: TDirector = {
         ...formData,
         types: 101,
-        addresses: [data.addresses],
+        addresses: data.addresses,
         fullNames: data.fullNames,
         corporateCode: corporateCode,
       };
@@ -269,10 +240,11 @@ export function FormIndividualsDirector({
               errors={errors.addresses}
               register={register}
               keyType="addresses"
+
             />
-            {errors.addresses && (
+            {errors.addresses?.[0] && (
               <p className="text-red-500 text-sm px-2">
-                {errors.addresses.message}
+                {errors.addresses?.[0]?.message}
               </p>
             )}
 

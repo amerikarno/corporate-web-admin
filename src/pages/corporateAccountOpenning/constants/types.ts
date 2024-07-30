@@ -96,6 +96,7 @@ export type TIndividualsShareholders = {
 };
 
 export type TBank = {
+  corporateCode?:string;
   accountType: string;
   bankName: string;
   accountNo: string;
@@ -104,14 +105,15 @@ export type TBank = {
 };
 
 export type TAuthorizePerson = {
-  fullNames: TFullName;
+  corporateCode?:string;
+  fullNames: TFullName[];
   citizendId?: string;
   passportID?: string;
-  expiredDate: string;
+  expiryDate: Date;
   nationality: string;
-  addresses: TSubAddress;
+  addresses: TSubAddress[];
   position: string;
-  Types?: string;
+  types?: number;
 };
 export type TContactPerson = {
   corporateCode?:string;
@@ -130,8 +132,8 @@ export type TDirector = {
   expiryDate: Date;
   nationality: string;
   position: string;
-  addresses: TSubAddress;
-  types?: string;
+  addresses: TSubAddress[];
+  types?: number;
 };
 
 export type TJuristicsShareholders = {

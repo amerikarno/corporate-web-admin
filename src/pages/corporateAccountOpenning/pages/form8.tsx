@@ -20,7 +20,9 @@ export function Form8({ corporateCode }: TForm8Props) {
             clearSelectedRows
           />
         </Card>
-        <FormBank onsubmit={handleSubmitBank} />
+        <FormBank onsubmit={handleSubmitBank}
+        corporateCode={corporateCode}
+        />
       </div>
     </>
   );

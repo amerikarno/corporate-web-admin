@@ -16,11 +16,16 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 
-type TBankTBankFormProps = {
-  onsubmit: (data: TBank) => void;
+type TBankFormProps = {
+  onsubmit: (data: TBankArray) => void;
+  corporateCode:string;
 };
 
-export function FormBank({ onsubmit }: TBankTBankFormProps) {
+type TBankArray = {
+  bank:TBank[];
+  corporateCode?:string;
+}
+export function FormBank({ onsubmit,corporateCode }: TBankFormProps) {
   const {
     register,
     handleSubmit,
@@ -30,11 +35,16 @@ export function FormBank({ onsubmit }: TBankTBankFormProps) {
     resolver: zodResolver(bankSchema),
   });
 
-  const onSubmit = async (data: TBankSchema) => {
+  const onSubmit = async (data: TBank) => {
+    let body: TBankArray = {
+      bank:[data],
+      corporateCode:corporateCode
+
+    }
     await sleep(500);
-    console.log(data);
+    console.log(body);
     reset();
-    onsubmit(data);
+    onsubmit(body);
   };
 
   return (
