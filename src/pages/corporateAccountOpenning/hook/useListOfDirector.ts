@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { TDirector } from "../constants/types";
-import { copy } from "@/lib/utils";
+import { Person, TDirector } from "../constants/types";
 
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
-  const handleSubmitDirectors = (data: TDirector) => {
-    setDirectors([...directors, data]);
+  const handleSubmitDirectors = (data: Person) => {
+    console.log(data);
   };
 
   return {
     directors,
     handleSubmitDirectors,
+    setDirectors,
   };
 }

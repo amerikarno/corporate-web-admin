@@ -5,7 +5,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { register } from "module";
 import * as pages from "@/const/pages";
 
 const Welcome = () => {

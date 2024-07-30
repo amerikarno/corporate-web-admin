@@ -85,7 +85,7 @@ export function FormCorporateTypeAndIncome({
                         id={`${i}_${j}`}
                         key={`${i}_${j}`}
                         label={item}
-                        onChange={(e) => handleSubSelected(e, i, j)}
+                        onChange={(e) => handleSubSelected(e, j)}
                         name={`${type}_${item}`}
                         disabled={isDisableSubSelected(type)}
                       />
@@ -96,7 +96,7 @@ export function FormCorporateTypeAndIncome({
                         id={`${i}_${j}`}
                         key={`${i}_${j}`}
                         label={item}
-                        onChange={(e) => handleSubSelected(e, i, j)}
+                        onChange={(e) => handleSubSelected(e, j)}
                         name={`${type}_${item}`}
                         disabled={isDisableSubSelected(type)}
                       />
@@ -107,7 +107,7 @@ export function FormCorporateTypeAndIncome({
                         id={`${i}_${j}`}
                         key={`${i}_${j}`}
                         label={item}
-                        onChange={(e) => handleSubSelected(e, i, j)}
+                        onChange={(e) => handleSubSelected(e, j)}
                         name={`${type}_${item}`}
                         disabled={isDisableSubSelected(type)}
                       />

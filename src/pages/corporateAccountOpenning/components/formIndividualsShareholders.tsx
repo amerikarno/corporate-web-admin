@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  TBodyFormIndividualsShareholders,
+  // TBodyFormIndividualsShareholders,
   TIndividualsShareholders,
 } from "../constants/types";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import Dropbox from "@/components/Dropbox";
 import { Button } from "@/components/ui/button";
-import { formatDateToIsoString } from "../libs/utils";
+// import { formatDateToIsoString } from "../libs/utils";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;

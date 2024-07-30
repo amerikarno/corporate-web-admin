@@ -3,7 +3,7 @@ import { TableColumn } from "react-data-table-component";
 import {
   TAuthorizePerson,
   TBank,
-  TBodyFormIndividualsShareholders,
+  // TBodyFormIndividualsShareholders,
   TContactPerson,
   TCorporateInfo,
   TDirector,

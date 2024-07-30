@@ -1,26 +1,25 @@
 import { Input } from "@/components/Input";
 import { Card } from "@/components/ui/card";
-//import { CircleX, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-    individualsContactPersonSchema,
-    TIndividualsContactPersonSchema,
+  individualsContactPersonSchema,
+  TIndividualsContactPersonSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { useFormIndividualsContactPerson} from "../hook/useFormContactPerson"
-import { Table } from "./dataTable";
-import {TContactPerson} from "../constants/types"
-
+import { useFormIndividualsContactPerson } from "../hook/useFormContactPerson";
+import { TContactPerson } from "../constants/types";
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPerson) => void;
 };
 
-export function FormIndividualsContactPerson({onsubmit}:TContactPersonFormProps) {
+export function FormIndividualsContactPerson({
+  onsubmit,
+}: TContactPersonFormProps) {
   const {
-    contacts,
+    // contacts,
     individualsContact,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
@@ -38,110 +37,88 @@ export function FormIndividualsContactPerson({onsubmit}:TContactPersonFormProps)
     values: individualsContact,
   });
 
-//   const columns = [
-//     { header: "Name-Surname", accessor: "nameSurname" },
-//     { header: "ID Card / Passport", accessor: "idCard" },
-//     { header: "Expiration Date", accessor: "expiredDate" },
-//     { header: "Nationality", accessor: "nationality" },
-//     { header: "% Shares", accessor: "shares" },
-//   ];
-
   const onSubmit = async (data: TIndividualsContactPersonSchema) => {
     await sleep(500);
     //handleSetNewShareholder(data);
     reset();
-    console.log(data)
-    onsubmit(data)
+    console.log(data);
+    onsubmit(data);
   };
 
   return (
     <>
       <div id="Contact Person" className="space-y-10">
-        {/* <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
-          <Table
-            columns={columns}
-            data={serializeData(shareholders)}
-            onEdit={editIndividualsShareholders}
-            onDelete={removeIndividualsShareholders}
-          />
-        </Card> */}
-
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">
-            Contact Person
-          </h1>
+          <h1 className="font-bold text-xl py-4">Contact Person</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
-                    <Input
-                    {...register("fullNames.title")}
-                    label="Title"
-                    id="Title"
-                    disabled={isSubmitting}
+                <Input
+                  {...register("fullNames.title")}
+                  label="Title"
+                  id="Title"
+                  disabled={isSubmitting}
                 />
                 {errors.fullNames?.title && (
-                    <p className="text-red-500 text-sm px-2">
+                  <p className="text-red-500 text-sm px-2">
                     {errors.fullNames?.title.message}
-                    </p>
+                  </p>
                 )}
               </div>
-              <div className="w-1/2">
-                
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
-                    <Input
-                        {...register("fullNames.firstName")}
-                        label="Name"
-                        id="Name"
-                        disabled={isSubmitting}
-                    />
-                    {errors.fullNames?.firstName && (
-                        <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames?.firstName.message}
-                        </p>
-                    )}
-                </div>
-                <div className="w-1/2">
-                    <Input
-                        {...register("fullNames.lastName")}
-                        label="Surname"
-                        id="Surname"
-                        disabled={isSubmitting}
-                    />
-                    {errors.fullNames?.lastName && (
-                        <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames?.lastName.message}
-                        </p>
-                    )}
-                </div>
+              <div className="w-1/2"></div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("Position")}
+                  {...register("fullNames.firstName")}
+                  label="Name"
+                  id="Name"
+                  disabled={isSubmitting}
+                />
+                {errors.fullNames?.firstName && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.fullNames?.firstName.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("fullNames.lastName")}
+                  label="Surname"
+                  id="Surname"
+                  disabled={isSubmitting}
+                />
+                {errors.fullNames?.lastName && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.fullNames?.lastName.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2">
+                <Input
+                  {...register("position")}
                   label="Position"
                   id="Position"
                   disabled={isSubmitting}
                 />
-                {errors.Position && (
+                {errors.position && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Position.message}
+                    {errors.position.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("Division")}
+                  {...register("division")}
                   label="Division"
                   id="Division"
                   disabled={isSubmitting}
                 />
-                {errors.Division && (
+                {errors.division && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Division.message}
+                    {errors.division.message}
                   </p>
                 )}
               </div>
@@ -149,27 +126,27 @@ export function FormIndividualsContactPerson({onsubmit}:TContactPersonFormProps)
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("Email")}
+                  {...register("email")}
                   label="Email"
                   id="Email"
                   disabled={isSubmitting}
                 />
-                {errors.Email && (
+                {errors.email && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Email.message}
+                    {errors.email.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("Telephone")}
+                  {...register("telephone")}
                   label="Telephone"
                   id="Telephone"
                   disabled={isSubmitting}
                 />
-                {errors.Telephone && (
+                {errors.telephone && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.Telephone.message}
+                    {errors.telephone.message}
                   </p>
                 )}
               </div>

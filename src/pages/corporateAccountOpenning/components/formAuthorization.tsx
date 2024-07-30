@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 
 type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
+  corporateCode: string;
 };
 export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
   const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);

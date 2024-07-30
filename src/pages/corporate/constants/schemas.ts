@@ -1,4 +1,4 @@
-import { checkFormatIDCard } from "@/lib/utils";
+// import { checkFormatIDCard } from "@/lib/utils";
 import { z } from "zod";
 
 export const subAddressSchema = z.object({
@@ -85,7 +85,7 @@ export const registeredCountryPrimaryCountryOperationSchema = z.object({
 
 export const contactPersonSchema = z.object({
   firstName: z.string().min(1, "name cannot be empty"),
-  lastName:z.string().min(1, "lastname cannot be empty"),
+  lastName: z.string().min(1, "lastname cannot be empty"),
   Position: z.string().min(1, "position cannot be empty"),
   Division: z.string().min(1, "division cannot be empty"),
   Telephone: z.string().min(1, "telephone cannot be empty"),
@@ -138,7 +138,6 @@ export const individualsShareholdersSchema = z.object({
         message: "Shares must be number",
       }
     ),
-    
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -179,10 +178,10 @@ export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
 
 export const individualsContactPersonSchema = z.object({
   fullNames: fullNamesSchema,
-  Position: z.string().min(1, { message: "Position cannot be empty" }),
-  Division: z.string().min(1, { message: "Division cannot be empty" }),
-  Telephone: z.string().min(1, { message: "Phone cannot be empty" }),
-  Email: z.string().email(),
+  position: z.string().min(1, { message: "Position cannot be empty" }),
+  division: z.string().min(1, { message: "Division cannot be empty" }),
+  telephone: z.string().min(1, { message: "Phone cannot be empty" }),
+  email: z.string().email(),
 });
 
 export type TIndividualsContactPersonSchema = z.infer<

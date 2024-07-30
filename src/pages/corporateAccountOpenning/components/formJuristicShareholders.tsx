@@ -20,7 +20,7 @@ export function FormJuristicShareholders({
   corporateCode,
 }: TJuristicsShareholdersFormProps) {
   const {
-    juristics,
+    // juristics,
     juristicShareholders,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,

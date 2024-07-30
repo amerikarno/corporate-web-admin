@@ -30,12 +30,12 @@ export default function CreateCorporate() {
       <div className="max-w-[1024px] mx-auto py-5 px-10 space-y-6">
         <FormCorporateInfo onsubmit={() => {}} />
         <FormCorporateTypeAndIncome onsubmit={() => {}} />
-        <FormIndividualsContactPerson />
-        <FormIndividualsDirector />
-        <FormIndividualsShareholders />
-        <FormJuristicShareholders />
-        <FormAuthorizedPerson />
-        <FormBank />
+        <FormIndividualsContactPerson onsubmit={() => {}} />
+        <FormIndividualsDirector onsubmit={() => {}} />
+        <FormIndividualsShareholders onsubmit={() => {}} />
+        <FormJuristicShareholders onsubmit={() => {}} />
+        <FormAuthorizedPerson onsubmit={() => {}} />
+        <FormBank onsubmit={() => {}} />
       </div>
     </>
   );

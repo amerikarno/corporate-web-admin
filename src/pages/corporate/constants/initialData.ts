@@ -1,4 +1,5 @@
 import {
+  TContactPerson,
   TCorporateTypeAndIncome,
   TInitailJuristicTypeAndIncome,
   TRegisteredCountryPrimaryCountryOperation,
@@ -31,10 +32,10 @@ export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPr
   {
     registered: "",
     primary: "",
-    registeredThailand:false,
-    primaryCountry:false,
-    registeredOther:false,
-    primaryOther:false,
+    registeredThailand: false,
+    primaryCountry: false,
+    registeredOther: false,
+    primaryOther: false,
   };
 
 export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
@@ -46,11 +47,13 @@ export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
 };
 
 export const individualShareholder = {
-  fullNames:[{
-    title: "",
-    firstName: "",
-    lastName: ""
-  }],
+  fullNames: [
+    {
+      title: "",
+      firstName: "",
+      lastName: "",
+    },
+  ],
   idCard: "",
   passportID: "",
   expiredDate: "",
@@ -58,14 +61,16 @@ export const individualShareholder = {
   sharePercentage: "",
 };
 
-export const individualContact = {
-  contacttitle: "",
-  FirstName: "",
-  LastName: "",
-  Position: "",
-  Division: "",
-  Telephone: "",
-  Email: "",
+export const individualContact: TContactPerson = {
+  fullNames: {
+    title: "",
+    firstName: "",
+    lastName: "",
+  },
+  position: "",
+  division: "",
+  telephone: "",
+  email: "",
 };
 
 // export const individualDirector = {

@@ -15,13 +15,14 @@ import { TContactPerson } from "../constants/types";
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPerson) => void;
+  corporateCode: string;
 };
 
 export function FormIndividualsContactPerson({
   onsubmit,
 }: TContactPersonFormProps) {
   const {
-    contacts,
+    // contacts,
     individualsContact,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
@@ -39,17 +40,8 @@ export function FormIndividualsContactPerson({
     values: individualsContact,
   });
 
-  //   const columns = [
-  //     { header: "Name-Surname", accessor: "nameSurname" },
-  //     { header: "ID Card / Passport", accessor: "idCard" },
-  //     { header: "Expiration Date", accessor: "expiredDate" },
-  //     { header: "Nationality", accessor: "nationality" },
-  //     { header: "% Shares", accessor: "shares" },
-  //   ];
-
   const onSubmit = async (data: TIndividualsContactPersonSchema) => {
     await sleep(500);
-    //handleSetNewShareholder(data);
     reset();
     console.log(data);
     onsubmit(data);
@@ -58,16 +50,6 @@ export function FormIndividualsContactPerson({
   return (
     <>
       <div id="Contact Person" className="space-y-10">
-        {/* <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
-          <Table
-            columns={columns}
-            data={serializeData(shareholders)}
-            onEdit={editIndividualsShareholders}
-            onDelete={removeIndividualsShareholders}
-          />
-        </Card> */}
-
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Contact Person</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

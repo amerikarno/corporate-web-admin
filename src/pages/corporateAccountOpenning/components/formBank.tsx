@@ -1,12 +1,3 @@
-// import { Input } from "@/components/Input";
-// import { Card } from "@/components/ui/card";
-// import { sleep } from "@/lib/utils";
-// import { TBank } from "../constants/types";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { useForm } from "react-hook-form";
-// import { bankSchema, TBankSchema } from "../constants/schemas";
-// import { Button } from "@/components/ui/button";
-
 import { useForm } from "react-hook-form";
 import { TBank } from "../constants/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 type TBankTBankFormProps = {
   onsubmit: (data: TBank) => void;
+  coporateCode: string;
 };
 
 export function FormBank({ onsubmit }: TBankTBankFormProps) {

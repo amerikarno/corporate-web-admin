@@ -12,11 +12,13 @@ export type TFullName = {
   lastName: string;
 };
 
-export type TFullNameForCorporateInfo = [{
-  title:string;
-  firstName:string;
-  lastName:string;
-}]
+export type TFullNameForCorporateInfo = [
+  {
+    title: string;
+    firstName: string;
+    lastName: string;
+  }
+];
 
 export type TSubAddress = {
   AddressNo: string;
@@ -110,10 +112,10 @@ export type TAuthorizePerson = {
 };
 export type TContactPerson = {
   fullNames: TFullName;
-  Position: string;
-  Division: string;
-  Telephone: string;
-  Email: string;
+  position: string;
+  division: string;
+  telephone: string;
+  email: string;
 };
 
 export type TDirector = {

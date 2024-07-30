@@ -200,3 +200,15 @@ export type TBodyFormIndividualsShareholders = {
   sharePercentage: string;
   types?: number;
 };
+
+export type Person = {
+  fullNames: TFullName[];
+  referenceID: string;
+  citizendId?: string;
+  passportID?: string;
+  expiryDate: string;
+  nationality: string;
+  position: string;
+  types: number;
+  addresses: TSubAddress[];
+};

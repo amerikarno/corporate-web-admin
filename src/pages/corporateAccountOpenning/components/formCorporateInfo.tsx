@@ -7,8 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TCorporateInfo } from "../constants/types";
 import { sleep } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
-//import { SideLabelInput } from "@/components/SideLabelInput";
+import { Card } from "@/components/ui/card";
 import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
@@ -285,7 +284,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               register={register}
               keyType="placeIncorporateAddress"
             />
-
           </div>
 
           <div className="p-4 space-y-4">
@@ -324,7 +322,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               isSubmitting={isSubmitting}
               keyType="registredBusinessAddress"
             />
-
           </div>
 
           <div className="p-4 space-y-4">
