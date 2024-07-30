@@ -63,5 +63,6 @@ export function useListOfDirector() {
   return {
     directors,
     handleSubmitDirectors,
+    setDirectors,
   };
 }

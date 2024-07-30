@@ -3,6 +3,7 @@ import { TableColumn } from "react-data-table-component";
 import {
   TAuthorizePerson,
   TBank,
+  // TBodyFormIndividualsShareholders,
   TContactPerson,
   TCorporateInfo,
   TDirector,
@@ -209,7 +210,7 @@ export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
   },
   {
     name: "CitizenID",
-    selector: (row: TIndividualsShareholders) => row.citizendId || "",
+    selector: (row: TIndividualsShareholders) => row.citizendID || "",
   },
   {
     name: "PassportID",
@@ -298,7 +299,6 @@ export const columnsBank: TableColumn<TBank>[] = [
   //   selector: (row: TDirector) => row.addresses || '',
   // },
   {
-
     cell: (row: TBank) => (
       <Button onClick={() => console.log(row)}>Delete</Button>
     ),

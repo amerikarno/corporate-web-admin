@@ -11,15 +11,14 @@ import {
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
 import { DirectorAddressForm } from "./directorAddressForm";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
-
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
 };
 
-export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
+export function FormIndividualsDirector({ onsubmit }: TDirectorFormProps) {
   // const {
   //   directors,
   //   individualsDirector,
@@ -29,13 +28,14 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
   //   // serializeData,
   // } = useFormIndividualsDirector();
 
-  const [dropBoxHadChoosed,setDropBoxHadChoosed] = useState<boolean>(false);
-  const [triggerDropboxError,setTriggerDropboxError] = useState<boolean>(false)
-  const [dropDownChoosed,setDropDownChoosed] = useState<string>("");
-  const handleDropboxChoice = (choice:string)=>{
-    setDropDownChoosed(choice)
-    setDropBoxHadChoosed(true)
-  }
+  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
+  const [triggerDropboxError, setTriggerDropboxError] =
+    useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice: string) => {
+    setDropDownChoosed(choice);
+    setDropBoxHadChoosed(true);
+  };
 
   const validateData = (data: TDirector): TDirector => {
     let tmp = { ...data };
@@ -60,20 +60,18 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
     //values: individualsDirector,
   });
 
-
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
-
-        //const formData: TDirector={ ...data,Types:"101"}
-        if (dropBoxHadChoosed){
-            setTriggerDropboxError(false)
-            const formData = validateData(data)
-            await sleep(500);
-            reset();
-            console.log(formData)
-            onsubmit(formData)
-        }else{
-          setTriggerDropboxError(true)
-        }
+    //const formData: TDirector={ ...data,Types:"101"}
+    if (dropBoxHadChoosed) {
+      setTriggerDropboxError(false);
+      const formData = validateData(data);
+      await sleep(500);
+      reset();
+      console.log(formData);
+      onsubmit(formData);
+    } else {
+      setTriggerDropboxError(true);
+    }
   };
 
   return (
@@ -94,49 +92,47 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
-                    <Input
-                    {...register("fullNames.title")}
-                    label="Title"
-                    id="Title"
-                    disabled={isSubmitting}
+                <Input
+                  {...register("fullNames.title")}
+                  label="Title"
+                  id="Title"
+                  disabled={isSubmitting}
                 />
                 {errors.fullNames?.title && (
-                    <p className="text-red-500 text-sm px-2">
+                  <p className="text-red-500 text-sm px-2">
                     {errors.fullNames?.title.message}
-                    </p>
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2"></div>
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2">
+                <Input
+                  {...register("fullNames.firstName")}
+                  label="Name"
+                  id="Name"
+                  disabled={isSubmitting}
+                />
+                {errors.fullNames?.firstName && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.fullNames?.firstName.message}
+                  </p>
                 )}
               </div>
               <div className="w-1/2">
-                
+                <Input
+                  {...register("fullNames.lastName")}
+                  label="Surname"
+                  id="Surname"
+                  disabled={isSubmitting}
+                />
+                {errors.fullNames?.lastName && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.fullNames?.lastName.message}
+                  </p>
+                )}
               </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
-                    <Input
-                        {...register("fullNames.firstName")}
-                        label="Name"
-                        id="Name"
-                        disabled={isSubmitting}
-                    />
-                    {errors.fullNames?.firstName && (
-                        <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames?.firstName.message}
-                        </p>
-                    )}
-                </div>
-                <div className="w-1/2">
-                    <Input
-                        {...register("fullNames.lastName")}
-                        label="Surname"
-                        id="Surname"
-                        disabled={isSubmitting}
-                    />
-                    {errors.fullNames?.lastName && (
-                        <p className="text-red-500 text-sm px-2">
-                        {errors.fullNames?.lastName.message}
-                        </p>
-                    )}
-                </div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
@@ -153,79 +149,86 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
                 )}
               </div>
               <div className="w-1/2">
-                  <Input
-                    {...register("position")}
-                    label="Position"
-                    id="position"
-                    disabled={isSubmitting}
-                  />
-                  {errors.position && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.position.message}
-                    </p>
-                  )}
-                </div>
+                <Input
+                  {...register("position")}
+                  label="Position"
+                  id="position"
+                  disabled={isSubmitting}
+                />
+                {errors.position && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.position.message}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex flex-row space-x-4">
-                  <div className="w-1/3">
-                    <Dropbox onDropdownSelect={handleDropboxChoice}/>
-                    {triggerDropboxError && (
-              <p className="text-red-500 text-sm px-2">Please Choose IDCard or Passport</p>)}
-                  </div>
-                  <div className="w-1/3">
-                  {dropDownChoosed ? (
-                dropDownChoosed === "IDCard" ? (
-                  <>
-                    <Input
+              <div className="w-1/3">
+                <Dropbox onDropdownSelect={handleDropboxChoice} />
+                {triggerDropboxError && (
+                  <p className="text-red-500 text-sm px-2">
+                    Please Choose IDCard or Passport
+                  </p>
+                )}
+              </div>
+              <div className="w-1/3">
+                {dropDownChoosed ? (
+                  dropDownChoosed === "IDCard" ? (
+                    <>
+                      <Input
                         {...register("citizendId")}
                         label="IDCard"
                         id="idCard"
                         disabled={isSubmitting}
-                    />{triggerDropboxError && (
-                      <p className="text-red-500 text-sm px-2">
-                        Please Insert IDcard
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <Input
+                      />
+                      {triggerDropboxError && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert IDcard
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Input
                         {...register("passportID")}
                         label="Passport"
                         id="passportID"
                         disabled={isSubmitting}
-                    />
+                      />
+                      {triggerDropboxError && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert Passport
+                        </p>
+                      )}
+                    </>
+                  )
+                ) : (
+                  <>
+                    <div className="relative w-full">
+                      <Input label="IDCard or Passport" id="passportID" />
+                    </div>
                     {triggerDropboxError && (
-                      <p className="text-red-500 text-sm px-2">
-                        Please Insert Passport
-                      </p>
-                    )}
-                  </>
-                )
-            ) : (
-                <><div className="relative w-full"><Input label="IDCard or Passport" id="passportID"/></div>
-                {triggerDropboxError && (
                       <p className="text-red-500 text-sm px-2">
                         Please Insert IDCard or Passport
                       </p>
                     )}
-                </>
-            )}
-                  </div>
-                  <div className="w-1/3">
-                    <Input
-                        {...register("expiredDate")}
-                        label="Date of Expired"
-                        id="Date of Expired"
-                        disabled={isSubmitting}
-                        type="date"
-                      />
-                      {errors.expiredDate && (
-                      <p className="text-red-500 text-sm px-2">
-                        {errors.expiredDate.message}
-                      </p>
-                    )}
-                  </div>
+                  </>
+                )}
+              </div>
+              <div className="w-1/3">
+                <Input
+                  {...register("expiredDate")}
+                  label="Date of Expired"
+                  id="Date of Expired"
+                  disabled={isSubmitting}
+                  type="date"
+                />
+                {errors.expiredDate && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.expiredDate.message}
+                  </p>
+                )}
+              </div>
             </div>
 
             <h1 className="font-bold text-xl py-4">Director's Address</h1>
@@ -240,7 +243,6 @@ export function FormIndividualsDirector({onsubmit}:TDirectorFormProps) {
                 {errors.addresses.message}
               </p>
             )}
-
 
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>

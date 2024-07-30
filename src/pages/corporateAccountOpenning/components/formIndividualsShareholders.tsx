@@ -1,21 +1,8 @@
-// import { Input } from "@/components/Input";
-// import { Card } from "@/components/ui/card";
-// import { CircleX, Pencil } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import {
-//   individualsShareholdersSchema,
-//   TIndividualsShareholdersSchema,
-// } from "../constants/schemas";
-// import { sleep } from "@/lib/utils";
-// import { useFormIndividualsShareholder } from "../hook/useFormIndividualsShareholder";
-// import { TIndividualsShareholders } from "../constants/types";
-// import { Table } from "./dataTable";
-// import { useState,useEffect } from "react";
-
 import { useState } from "react";
-import { TIndividualsShareholders } from "../constants/types";
+import {
+  // TBodyFormIndividualsShareholders,
+  TIndividualsShareholders,
+} from "../constants/types";
 import { useForm } from "react-hook-form";
 import {
   individualsShareholdersSchema,
@@ -27,13 +14,16 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import Dropbox from "@/components/Dropbox";
 import { Button } from "@/components/ui/button";
+// import { formatDateToIsoString } from "../libs/utils";
 
-// import Dropbox from "@/components/Dropbox"
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
+  corporateCode: string;
 };
+
 export function FormIndividualsShareholders({
   onsubmit,
+  corporateCode,
 }: TShareHoldersFormProps) {
   const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
   const [triggerDropboxError, setTriggerDropboxError] =
@@ -43,26 +33,19 @@ export function FormIndividualsShareholders({
     setDropDownChoosed(choice);
     setDropBoxHadChoosed(true);
   };
-  // const {
-  //   shareholders,
-  //   individualsShareholder,
-  //   removeIndividualsShareholders,
-  //   editIndividualsShareholders,
-  //   handleSetNewShareholder,
-  //   serializeData,
-  // } = useFormIndividualsShareholder();
 
   const validateData = (
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
     let tmp = { ...data };
-    if (tmp.citizendId) {
+    if (tmp.citizendID) {
       tmp = { ...tmp, passportID: "" };
     }
     if (tmp.passportID) {
-      tmp = { ...tmp, citizendId: "" };
+      tmp = { ...tmp, citizendID: "" };
     }
-    tmp = { ...tmp, Types: "301" };
+    tmp.types = "301";
+    tmp.corporateCode = corporateCode;
     return tmp;
   };
 
@@ -73,18 +56,15 @@ export function FormIndividualsShareholders({
     reset,
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
-    //values: individualsShareholder,
   });
 
-  const onSubmit = async (data: TIndividualsShareholdersSchema) => {
-    //const formData: TIndividualsShareholders={ ...data,Types:"301"}
+  const onSubmit = async (data: TIndividualsShareholders) => {
     if (dropBoxHadChoosed) {
       setTriggerDropboxError(false);
       const formData = validateData(data);
       await sleep(500);
       reset();
-      console.log(formData);
-      onsubmit(data);
+      onsubmit(formData);
     } else {
       setTriggerDropboxError(true);
     }
@@ -93,16 +73,6 @@ export function FormIndividualsShareholders({
   return (
     <>
       <div id="Individuals Shareholders" className="space-y-10">
-        {/* <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
-          <Table
-            columns={columns}
-            data={serializeData(shareholders)}
-            onEdit={editIndividualsShareholders}
-            onDelete={removeIndividualsShareholders}
-          />
-        </Card> */}
-
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">
             Individuals who shareholders of juristic's owner

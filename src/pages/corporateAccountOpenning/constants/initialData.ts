@@ -1,5 +1,8 @@
-import { TCorporateTypeAndIncome, TInitailJuristicTypeAndIncome, TJuristicTypeAll } from "./types";
-
+import {
+  TCorporateTypeAndIncome,
+  TInitailJuristicTypeAndIncome,
+  TJuristicTypeAll,
+} from "./types";
 
 export const initCorporateInfo = {
   name: "",
@@ -135,7 +138,7 @@ export const individualContact = {
   fullNames: {
     title: "",
     firstName: "",
-    lastName: ""
+    lastName: "",
   },
   Position: "",
   Division: "",

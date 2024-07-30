@@ -1,12 +1,10 @@
 import axios from "@/api/axios";
 import { useState } from "react";
-import { formatDateToIsoString } from "../libs/utils";
+import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
-import { jwtDecode } from "jwt-decode";
 import { TCorporateInfo } from "../constants/types";
 
 export function useCorporateInfo() {
-  const token = getCookies();
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
   const [currentCorporatesInfo, setCurrentCorporatesInfo] =
     useState<TCorporateInfo>({
@@ -61,9 +59,7 @@ export function useCorporateInfo() {
       corporateCode: "C20240725004",
     });
   //TODO: remove key and data after testing
-  const [corporateCode, setCorporateCode] = useState<string>(
-    "50feb95e-d771-466d-a028-09fcee10065f"
-  );
+  const [corporateCode, setCorporateCode] = useState<string>("C20240725004");
 
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
@@ -100,6 +96,7 @@ export function useCorporateInfo() {
     };
     // console.log("body", body);
     try {
+      const token = getCookies();
       const res = await axios.post("/api/v1/corporate/create", body, {
         headers: {
           Authorization: `Bearer ${token}`,

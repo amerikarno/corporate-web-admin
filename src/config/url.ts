@@ -63,7 +63,7 @@ export const urlConfig: TUrlConfig[] = [
     children: [
       {
         label: "Added Corporate Account",
-        href: "/corporate/create",
+        href: "/create-job/added-corporate-account",
       },
       {
         label: "Added Individual Account",

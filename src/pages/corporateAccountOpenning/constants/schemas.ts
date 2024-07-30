@@ -1,4 +1,4 @@
-import { checkFormatIDCard } from "@/lib/utils";
+// import { checkFormatIDCard } from "@/lib/utils";
 import { z } from "zod";
 
 export const subAddressSchema = z.object({
@@ -234,6 +234,7 @@ export type TIndividualsDirectorSchema = z.infer<
 >;
 
 export const individualsJuristicShareholdersSchema = z.object({
+  corporateCode: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
   registrationNo: z
     .string()

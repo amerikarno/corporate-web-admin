@@ -60,7 +60,6 @@ export function FormIndividualsContactPerson({
       corporateCode:corporateCode
     }
     await sleep(500);
-    //handleSetNewShareholder(data);
     reset();
     console.log(formData);
     onsubmit(formData);
@@ -69,16 +68,6 @@ export function FormIndividualsContactPerson({
   return (
     <>
       <div id="Contact Person" className="space-y-10">
-        {/* <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
-          <Table
-            columns={columns}
-            data={serializeData(shareholders)}
-            onEdit={editIndividualsShareholders}
-            onDelete={removeIndividualsShareholders}
-          />
-        </Card> */}
-
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">Contact Person</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

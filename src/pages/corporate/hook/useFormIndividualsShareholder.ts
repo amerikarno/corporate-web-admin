@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { TIndividualsShareholders } from "../constants/types";
 //import { individualShareholder } from "../constants/initialData";
-import { copy } from "@/lib/utils";
 
 export function useFormIndividualsShareholder() {
   const [shareholders, setShareholders] = useState<TIndividualsShareholders[]>(
@@ -45,6 +44,7 @@ export function useFormIndividualsShareholder() {
 
   return {
     shareholders,
+    setShareholders,
     //individualsShareholder,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,

@@ -20,8 +20,9 @@ export function Form4({ corporateCode }: TForm4Props) {
             data={authorize}
           />
         </Card>
-        <FormAuthorizedPerson onsubmit={handleSubmitAuthorize}
-        corporateCode = {corporateCode}
+        <FormAuthorizedPerson
+          onsubmit={handleSubmitAuthorize}
+          corporateCode={corporateCode}
         />
       </div>
     </>

@@ -62,10 +62,10 @@ import React from "react";
 import Layout from "./components/Layout";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import CreateCorporate from "./pages/corporate/createCorporate";
+// import CreateCorporate from "./pages/corporate/createCorporate";
 import BlankPage from "./pages/blankPages/blankPage";
 import CorporateAccountOpenning from "./pages/corporateAccountOpenning/CorporateAccountOpenning";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+// import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const helmetContext = {};
 
@@ -94,8 +94,8 @@ root.render(
                     // </ProtectedRoute>
                   }
                 />
-                <Route path="corporate" element={<Outlet />}>
-                  <Route path="create" element={<Outlet />}>
+                <Route path="create-job" element={<Outlet />}>
+                  <Route path="added-corporate-account" element={<Outlet />}>
                     <Route
                       index
                       element={

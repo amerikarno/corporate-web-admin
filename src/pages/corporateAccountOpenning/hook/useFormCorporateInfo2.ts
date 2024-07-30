@@ -127,7 +127,7 @@ export function useFormCorporateInfo2() {
     setCorporateTypeAndIncome(tmp);
   };
 
-  const handleSubSelected = (e: any, i: number, j: number) => {
+  const handleSubSelected = (e: any, j: number) => {
     const { name, checked } = e.target;
     const [keyName, keyType] = name.split("_");
     let tmp = copy(corporateTypeAndIncome);

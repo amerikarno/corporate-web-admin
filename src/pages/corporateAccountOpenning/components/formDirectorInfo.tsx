@@ -8,13 +8,13 @@ import {
   TIndividualsDirectorSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { TDirector } from "../constants/types";
+import { Person, TDirector } from "../constants/types";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
 
 type TDirectorFormProps = {
-  onsubmit: (data: TDirector) => void;
+  onsubmit: (data: Person) => void;
   corporateCode: string;
 };
 
@@ -60,7 +60,7 @@ export function FormIndividualsDirector({
       setTriggerDropboxError(false);
       const formData = validateData(data);
       await sleep(500);
-      // reset();
+      reset();
       // console.log(formData);
 
       let body: TDirector = {

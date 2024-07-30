@@ -21,7 +21,10 @@ export function Form7({ corporateCode }: TForm7Props) {
             clearSelectedRows
           />
         </Card>
-        <FormJuristicShareholders onsubmit={handleSubmitJuristics} />
+        <FormJuristicShareholders
+          onsubmit={handleSubmitJuristics}
+          corporateCode={corporateCode}
+        />
       </div>
     </>
   );

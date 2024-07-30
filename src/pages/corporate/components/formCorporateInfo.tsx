@@ -7,8 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TCorporateInfo } from "../constants/types";
 import { sleep } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
-import { SideLabelInput } from "@/components/SideLabelInput";
+import { Card } from "@/components/ui/card";
 import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
@@ -54,13 +53,13 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const onSubmit = async (data: TCorporateInfoSchema) => {
     const formData: TCorporateInfo = {
       ...data,
-      Registered: registeredCountryPrimaryCountryOperation.Registered,
-      RegisteredOther: registeredCountryPrimaryCountryOperation.RegisteredOther,
-      RegisteredThailand:
-        registeredCountryPrimaryCountryOperation.RegisteredThailand,
-      Primary: registeredCountryPrimaryCountryOperation.Primary,
-      PrimaryCountry: registeredCountryPrimaryCountryOperation.PrimaryCountry,
-      PrimaryOther: registeredCountryPrimaryCountryOperation.PrimaryOther,
+      registered: registeredCountryPrimaryCountryOperation.registered,
+      registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
+      registeredThailand:
+        registeredCountryPrimaryCountryOperation.registeredThailand,
+      primary: registeredCountryPrimaryCountryOperation.primary,
+      primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
+      primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
     };
 
     if (handleCheckboxError()) {
@@ -76,14 +75,14 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const handleCheckboxError = () => {
     let isValid = true;
 
-    if (!registeredCountryPrimaryCountryOperation.Registered) {
+    if (!registeredCountryPrimaryCountryOperation.registered) {
       setRegisteredCountryError(true);
       isValid = false;
     } else {
       setRegisteredCountryError(false);
     }
 
-    if (!registeredCountryPrimaryCountryOperation.Primary) {
+    if (!registeredCountryPrimaryCountryOperation.primary) {
       setPrimaryCountryOfOperationError(true);
       isValid = false;
     } else {
@@ -115,43 +114,36 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <h1 className="col-span-4 font-bold pb-4">
               Juristic Investor Information-For Account Opening
             </h1>
-            {/* <SideLabelInput title="Juristic Investor Name"> */}
             <Input
               id={"Juristic Investor Name"}
               label={"Juristic Investor Name"}
-              {...register("Name")}
+              {...register("name")}
               name="Name"
               disabled={isSubmitting}
             />
-            {errors.Name && (
-              <p className="text-red-500">{errors.Name.message}</p>
+            {errors.name && (
+              <p className="text-red-500">{errors.name.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Address"> */}
             <Input
               id={"Commercial Registration No."}
               label={"Commercial Registration No."}
-              {...register("RegistrationNo")}
+              {...register("registrationNo")}
               name="RegistrationNo"
               disabled={isSubmitting}
             />
-            {errors.RegistrationNo && (
-              <p className="text-red-500">{errors.RegistrationNo.message}</p>
+            {errors.registrationNo && (
+              <p className="text-red-500">{errors.registrationNo.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Tax ID"> */}
             <Input
               id={"Juristic Investor Tax ID"}
               label={"Tax ID"}
-              {...register("TaxID")}
+              {...register("taxID")}
               name="TaxID"
               disabled={isSubmitting}
             />
-            {errors.TaxID && (
-              <p className="text-red-500">{errors.TaxID.message}</p>
+            {errors.taxID && (
+              <p className="text-red-500">{errors.taxID.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Email"> */}
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
@@ -164,7 +156,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 {errors.dateofincorporation.message}
               </p>
             )}
-            {/* </SideLabelInput> */}
           </div>
 
           <div className="p-4 space-y-4">
@@ -180,7 +171,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                     onChange={(e) => {
                       handleRegisteredCountryOthers(e);
                       if (
-                        registeredCountryPrimaryCountryOperation.Registered ==
+                        registeredCountryPrimaryCountryOperation.registered ==
                         ""
                       ) {
                         setRegisteredCountryError(false);
@@ -220,7 +211,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                     onChange={(e) => {
                       handlePrimaryCountryOfOperationOthers(e);
                       if (
-                        registeredCountryPrimaryCountryOperation.Primary == ""
+                        registeredCountryPrimaryCountryOperation.primary == ""
                       ) {
                         setPrimaryCountryOfOperationError(false);
                       } else {
@@ -281,7 +272,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             </div>
             <CorporateAddressForm
               isSubmitting={isSubmitting}
-              errors={errors.RegistredBusinessAddress}
+              errors={errors.registredBusinessAddress}
               register={register}
               keyType="PlaceIncorporateAddress"
             />
@@ -314,109 +305,102 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <div className="flex flex-row space-x-4 pb-8">
               <div className="w-1/2">
                 <Input
-                  {...register("RegistredBusinessEmail")}
+                  {...register("registredBusinessEmail")}
                   label="E-mail Address"
                   id="RegistredBusinessEmail"
                   disabled={isSubmitting}
                 />
-                {errors.RegistredBusinessEmail && (
+                {errors.registredBusinessEmail && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.RegistredBusinessEmail.message}
+                    {errors.registredBusinessEmail.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("RegistredBusinessTelephone")}
+                  {...register("registredBusinessTelephone")}
                   label="Telephone"
                   id="RegistredBusinessTelephone"
                   disabled={isSubmitting}
                 />
-                {errors.RegistredBusinessTelephone && (
+                {errors.registredBusinessTelephone && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.RegistredBusinessTelephone.message}
+                    {errors.registredBusinessTelephone.message}
                   </p>
                 )}
               </div>
             </div>
             <CorporateAddressForm
-              errors={errors.RegistredBusinessAddress}
+              errors={errors.registredBusinessAddress}
               register={register}
               isSubmitting={isSubmitting}
               keyType="RegistredBusinessAddress"
             />
             <Input
-              {...register("RegistredBusinessEmail")}
+              {...register("registredBusinessEmail")}
               label="E-mail Address"
               id="RegistredBusinessEmail"
               disabled={isSubmitting}
             />
-            {errors.RegistredBusinessAddress && (
+            {errors.registredBusinessAddress && (
               <p className="text-red-500">
-                {errors.RegistredBusinessAddress.message}
+                {errors.registredBusinessAddress.message}
               </p>
             )}
             <Input
-              {...register("RegistredBusinessTelephone")}
+              {...register("registredBusinessTelephone")}
               label="Telephone"
               id="RegistredBusinessTelephone"
               disabled={isSubmitting}
             />
-            {errors.RegistredBusinessTelephone && (
+            {errors.registredBusinessTelephone && (
               <p className="text-red-500">
-                {errors.RegistredBusinessTelephone.message}
+                {errors.registredBusinessTelephone.message}
               </p>
             )}
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information :</h1>
-            {/* <SideLabelInput title="Registered Capital"> */}
             <Input
               id={"Registered Capital"}
               label={"Registered Capital"}
-              {...register("RegisteredCapital")}
+              {...register("registeredCapital")}
               name="RegisteredCapital"
               disabled={isSubmitting}
             />
-            {errors.RegisteredCapital && (
-              <p className="text-red-500">{errors.RegisteredCapital.message}</p>
+            {errors.registeredCapital && (
+              <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Net Profit (Loss)"> */}
             <Input
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
-              {...register("NetProFitLoss")}
+              {...register("netProFitLoss")}
               name="financial.NetProFitLoss"
               disabled={isSubmitting}
             />
-            {errors.NetProFitLoss && (
-              <p className="text-red-500">{errors.NetProFitLoss.message}</p>
+            {errors.netProFitLoss && (
+              <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Revenue Per Year"> */}
             <Input
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
-              {...register("RevenuePerYear")}
+              {...register("revenuePerYear")}
               name="financial.RevenuePerYear"
               disabled={isSubmitting}
             />
-            {errors.RevenuePerYear && (
-              <p className="text-red-500">{errors.RevenuePerYear.message}</p>
+            {errors.revenuePerYear && (
+              <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
               id={"Operating Expense Per Year"}
               label={"Operating Expense Per Year"}
-              {...register("ShareholderEquity")}
+              {...register("shareholderEquity")}
               name="financial.ShareholderEquity"
               disabled={isSubmitting}
             />
-            {errors.ShareholderEquity && (
-              <p className="text-red-500">{errors.ShareholderEquity.message}</p>
+            {errors.shareholderEquity && (
+              <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
           </div>
           <div className="flex justify-end pb-4 pr-4">

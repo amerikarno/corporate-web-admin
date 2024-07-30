@@ -20,8 +20,9 @@ export function Form5({ corporateCode }: TForm5Props) {
             clearSelectedRows
           />
         </Card>
-        <FormIndividualsContactPerson onsubmit={handleSubmitContactPerson}
-        corporateCode = {corporateCode}
+        <FormIndividualsContactPerson
+          onsubmit={handleSubmitContactPerson}
+          corporateCode={corporateCode}
         />
       </div>
     </>

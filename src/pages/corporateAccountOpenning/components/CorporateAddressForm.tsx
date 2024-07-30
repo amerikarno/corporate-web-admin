@@ -1,9 +1,8 @@
-
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import {
-    subAddressSchema,
-    TSubAddressSchema,
-    TCorporateInfoSchema,
+  subAddressSchema,
+  TSubAddressSchema,
+  TCorporateInfoSchema,
 } from "../constants/schemas";
 import { Input } from "@/components/Input";
 
@@ -21,13 +20,13 @@ export function CorporateAddressForm({
   keyType,
 }: TSubAddressFormProps) {
   const fields = Object.entries(subAddressSchema.shape);
-  const optionalFields = ["Building", "MooNo", "Soi", "Road"];
-  const isOptional = (name: string) => {
-    if (optionalFields.includes(name)) {
-      return false;
-    }
-    return true;
-  };
+  // const optionalFields = ["Building", "MooNo", "Soi", "Road"];
+  // const isOptional = (name: string) => {
+  //   if (optionalFields.includes(name)) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
   return (
     <>
     <div className="flex-col">

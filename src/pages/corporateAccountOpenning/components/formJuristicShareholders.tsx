@@ -1,17 +1,3 @@
-// import { Input } from "@/components/Input";
-// import { Card } from "@/components/ui/card";
-// //import { CircleX, Pencil } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import {
-//     individualsJuristicShareholdersSchema,
-//     TIndividualsJuristicShareholdersSchema,
-// } from "../constants/schemas";
-// import { sleep } from "@/lib/utils";
-// import { useFormJuristicShareholders} from "../hook/useFormJuristicShareholders"
-// import { TJuristicsShareholders } from "../constants/types";
-
 import { useForm } from "react-hook-form";
 import { TJuristicsShareholders } from "../constants/types";
 import { useFormJuristicShareholders } from "../hook/useFormJuristicShareholders";
@@ -25,15 +11,16 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 
-// import { Table } from "./dataTable";
 type TJuristicsShareholdersFormProps = {
   onsubmit: (data: TJuristicsShareholders) => void;
+  corporateCode: string;
 };
 export function FormJuristicShareholders({
   onsubmit,
+  corporateCode,
 }: TJuristicsShareholdersFormProps) {
   const {
-    juristics,
+    // juristics,
     juristicShareholders,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
@@ -51,20 +38,13 @@ export function FormJuristicShareholders({
     values: juristicShareholders,
   });
 
-  //   const columns = [
-  //     { header: "Name-Surname", accessor: "nameSurname" },
-  //     { header: "ID Card / Passport", accessor: "idCard" },
-  //     { header: "Expiration Date", accessor: "expiredDate" },
-  //     { header: "Nationality", accessor: "nationality" },
-  //     { header: "% Shares", accessor: "shares" },
-  //   ];
-
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
     await sleep(500);
-    //handleSetNewShareholder(data);
     reset();
-    console.log(data);
-    onsubmit(data);
+    // console.log(data);
+    let body = data;
+    body.corporateCode = corporateCode;
+    onsubmit(body);
   };
 
   return (
@@ -73,21 +53,10 @@ export function FormJuristicShareholders({
         id="Juristics who shareholders of juristic's owner"
         className="space-y-10"
       >
-        {/* <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individuals Shareholders</h1>
-          <Table
-            columns={columns}
-            data={serializeData(shareholders)}
-            onEdit={editIndividualsShareholders}
-            onDelete={removeIndividualsShareholders}
-          />
-        </Card> */}
-
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">
             Juristics who shareholders of juristic's owner :
           </h1>
-          {/* <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> */}
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">

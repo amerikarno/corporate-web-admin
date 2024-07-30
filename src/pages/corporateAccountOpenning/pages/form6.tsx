@@ -21,7 +21,10 @@ export function Form6({ corporateCode }: TForm6Props) {
             clearSelectedRows
           />
         </Card>
-        <FormIndividualsShareholders onsubmit={handleSubmitShareholders} />
+        <FormIndividualsShareholders
+          onsubmit={handleSubmitShareholders}
+          corporateCode={corporateCode}
+        />
       </div>
     </>
   );
