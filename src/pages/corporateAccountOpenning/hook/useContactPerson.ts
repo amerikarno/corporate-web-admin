@@ -22,7 +22,7 @@ export function useContactPerson() {
 
         if (user && user.exp) {
           const dateTime = new Date(user.exp * 1000);
-          isExpired = dateTime.getTime() > new Date().getTime();
+          isExpired = dateTime.getTime() < new Date().getTime();
         } else {
           console.log("Invalid token: exp field is missing.");
         }
