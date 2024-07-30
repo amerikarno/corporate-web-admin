@@ -29,6 +29,29 @@ export function CorporateAddressForm({
     return true;
   };
   return (
+    <>
+    <div className="flex-col">
+        <Input
+          label="Email Address"
+          {...register(`${keyType}.emailAddress` as keyof TCorporateInfoSchema)}
+          name={`${keyType}.emailAddress`}
+          id="emailAddress"
+          disabled={isSubmitting}
+          type="email"
+        />
+      </div>
+
+      {/* Render telephone field */}
+      <div className="flex-col">
+        <Input
+          label="Telephone"
+          {...register(`${keyType}.telephone` as keyof TCorporateInfoSchema)}
+          name={`${keyType}.telephone`}
+          id="telephone"
+          disabled={isSubmitting}
+          type="tel"
+        />
+    </div>
     <div className="grid md:grid-cols-2 gap-4">
       {fields.map(([fieldName], index) => {
         return (
@@ -36,8 +59,8 @@ export function CorporateAddressForm({
             {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
               <Input
                 label={fieldName}
-                {...register(`${keyType}.${fieldName}` as any)}
-                name={`${keyType}.${fieldName}`}
+                {...register(`${keyType}.address[0].${fieldName}` as any)}
+                name={`${keyType}.address[0].${fieldName}`}
                 id={fieldName}
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
@@ -53,5 +76,6 @@ export function CorporateAddressForm({
         );
       })}
     </div>
+    </>
   );
 }

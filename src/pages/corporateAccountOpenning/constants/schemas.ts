@@ -5,6 +5,8 @@ export const subAddressSchema = z.object({
   addressNo: z.string().min(1, "addressNo cannot be empty"),
   mooNo: z.string().optional(),
   soi: z.string().optional(),
+  floor: z.string().optional(),
+  building: z.string().optional(),
   road: z.string().optional(),
   tambon: z.string().min(1, "subDistrict cannot be empty"),
   amphoe: z.string().min(1, "district cannot be empty"),
@@ -21,6 +23,8 @@ const fullNamesSchema = z.array(
   })
 );
 
+
+
 export const addressSchema = z.object({
   // AddressNo: z.string().min(1, "addressNo cannot be empty"),
   // Building: z.string().optional(),
@@ -36,12 +40,24 @@ export const addressSchema = z.object({
   EmailAddress: z.string().email(),
 });
 
+
 // export const financialInfoSchema = z.object({
 //   RegisteredCapital: z.string().optional(),
 //   RevenuePerYear: z.string().optional(),
 //   NetProFitLoss: z.string().optional(),
 //   ShareholderEquity: z.string().optional(),
 // });
+const registerBusinessAddressSchema = z.object({
+  address: z.array(subAddressSchema),
+  emailAddress: z.string().email().optional(),
+  telephone: z.string().optional(),
+});
+
+const placeIncorporateAddressSchema = z.object({
+  address: z.array(subAddressSchema),
+  emailAddress: z.string().email().optional(),
+  telephone: z.string().optional(),
+});
 
 export const corporateInfoSchema = z.object({
   name: z.string().min(1, "name cannot be empty"),
@@ -56,16 +72,12 @@ export const corporateInfoSchema = z.object({
   }),
   registered: z.string().optional(),
   primary: z.string().optional(),
-  registredBusinessAddress: subAddressSchema,
-  placeIncorporateAddress: subAddressSchema,
+  registredBusiness: registerBusinessAddressSchema,
+  placeofIncorporation: placeIncorporateAddressSchema,
   registeredCapital: z.coerce.number().optional(),
   revenuePerYear: z.coerce.number().optional(),
   netProFitLoss: z.coerce.number().optional(),
   shareholderEquity: z.coerce.number().optional(),
-  placeIncorporateEmail: z.string().email().optional(),
-  placeIncorporateTelephone: z.string().optional(),
-  registredBusinessEmail: z.string().email().optional(),
-  registredBusinessTelephone: z.string().optional(),
 });
 
 export const directorInfoSchema = z.object({

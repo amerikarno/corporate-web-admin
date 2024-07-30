@@ -22,6 +22,8 @@ export type TFullNameForCorporateInfo = [
 
 export type TSubAddress = {
   addressNo: string;
+  building?:string;
+  floor?:string;
   mooNo?: string;
   soi?: string;
   road?: string;
@@ -40,6 +42,17 @@ export type TFinancialInfo = {
   shareholderEquity?: number;
 };
 
+export type TRegisterBusinessAddress = {
+  address : TSubAddress[];
+  emailAddress?: string;
+  telephone?: string;
+}
+export type TPlaceIncorporateAddress = {
+  address : TSubAddress[];
+  emailAddress?: string;
+  telephone?: string;
+}
+
 export type TCorporateInfo = {
   corporateCode?: string;
   name: string;
@@ -52,13 +65,9 @@ export type TCorporateInfo = {
   registeredOther?: boolean;
   primary: string;
   primaryOther?: boolean;
-  registredBusinessAddress: TSubAddress;
-  placeIncorporateAddress: TSubAddress;
+  registredBusiness: TRegisterBusinessAddress;
+  placeofIncorporation: TPlaceIncorporateAddress;
   // financial?: TFinancialInfo;
-  placeIncorporateEmail?: string;
-  placeIncorporateTelephone?: string;
-  registredBusinessEmail?: string;
-  registredBusinessTelephone?: string;
   registeredCapital?: number;
   revenuePerYear?: number;
   netProFitLoss?: number;

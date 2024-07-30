@@ -1,4 +1,4 @@
-import { TInitailJuristicTypeAndIncome, TJuristicTypeAll } from "./types";
+import { TCorporateTypeAndIncome, TInitailJuristicTypeAndIncome, TJuristicTypeAll } from "./types";
 
 
 export const initCorporateInfo = {
@@ -9,34 +9,40 @@ export const initCorporateInfo = {
   registeredCountry: "",
   primaryCountryOfOperation: "",
   registeredAddress: {
-    addressNo: "",
-    building: "",
-    moo: "",
-    soi: "",
-    road: "",
-    subDistrict: "",
-    district: "",
-    province: "",
-    postalCode: "",
-    country: "",
-    phone: "",
-    email: "",
-    type: 1,
+        address : [{
+          addressNo: "",
+          building: "",
+          floor:"",
+          mooNo: "",
+          soi: "",
+          road: "",
+          tambon: "",
+          amphoe: "",
+          province: "",
+          postalCode: "",
+          country: ""
+      }],
+        emailAddress:"",
+        telephone:""
+      //type: 1,
   },
   incorporatedAddress: {
-    addressNo: "",
-    building: "",
-    moo: "",
-    soi: "",
-    road: "",
-    subDistrict: "",
-    district: "",
-    province: "",
-    postalCode: "",
-    country: "",
-    phone: "",
-    email: "",
-    type: 2,
+      address : [{
+        addressNo: "",
+        building: "",
+        floor:"",
+        mooNo: "",
+        soi: "",
+        road: "",
+        tambon: "",
+        amphoe: "",
+        province: "",
+        postalCode: "",
+        country: "",
+    }],
+      emailAddress:"",
+      telephone:""
+    //type: 2,
   },
   financial: {
     registeredCapital: "",
@@ -49,17 +55,15 @@ export const initCorporateInfo = {
 export const initAddress = {
   addressNo: "",
   building: "",
-  moo: "",
+  mooNo: "",
+  floor:"",
   soi: "",
   road: "",
-  subDistrict: "",
-  district: "",
+  tambon: "",
+  amphoe: "",
   province: "",
   postalCode: "",
   country: "",
-  phone: "",
-  email: "",
-  type: 0,
 };
 
 export const initialCorporateTypeAndIncome: TJuristicTypeAll = {

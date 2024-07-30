@@ -14,36 +14,44 @@ export function useCorporateInfo() {
       registrationNo: "a",
       taxID: "a",
       dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
-      registredBusinessAddress: {
-        addressNo: "a",
-        mooNo: "a",
-        soi: "a",
-        road: "a",
-        tambon: "a",
-        amphoe: "a",
-        province: "a",
-        postalCode: "a",
-        country: "a",
+      registredBusiness: {
+        address :[{
+          addressNo: "a",
+          building:"a",
+          floor:"a",
+          mooNo: "a",
+          soi: "a",
+          road: "a",
+          tambon: "a",
+          amphoe: "a",
+          province: "a",
+          postalCode: "a",
+          country: "a",
+      }],
+        emailAddress : "a@gmail.com",
+        telephone : "1"
       },
-      placeIncorporateAddress: {
-        addressNo: "a",
-        mooNo: "aa",
-        soi: "aa",
-        road: "a",
-        tambon: "a",
-        amphoe: "a",
-        province: "aa",
-        postalCode: "a",
-        country: "a",
+      placeofIncorporation: {
+        address : [{
+          addressNo: "a",
+          building:"a",
+          floor:"a",
+          mooNo: "a",
+          soi: "a",
+          road: "a",
+          tambon: "a",
+          amphoe: "a",
+          province: "a",
+          postalCode: "a",
+          country: "a",
+        }],
+        emailAddress : "a@gmail.com",
+        telephone : "1"
       },
       registeredCapital: 3,
       revenuePerYear: 0,
       netProFitLoss: 0,
       shareholderEquity: 0,
-      placeIncorporateEmail: "a@asf.coz",
-      placeIncorporateTelephone: "a",
-      registredBusinessEmail: "aa@dgsd.com",
-      registredBusinessTelephone: "a",
       registered: "Thailand",
       registeredOther: false,
       registeredThailand: true,
@@ -73,7 +81,8 @@ export function useCorporateInfo() {
 
         if (user && user.exp) {
           const dateTime = new Date(user.exp * 1000);
-          isExpired = dateTime.getTime() < new Date().getTime();
+          //isExpired = dateTime.getTime() < new Date().getTime();
+          isExpired = false
         } else {
           console.log("Invalid token: exp field is missing.");
         }

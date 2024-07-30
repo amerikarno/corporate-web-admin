@@ -61,6 +61,40 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
       primary: registeredCountryPrimaryCountryOperation.primary,
       primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
       primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
+      registredBusiness: {
+        address: [{
+          addressNo: data.registredBusiness.address[0].addressNo,
+          mooNo: data.registredBusiness.address[0].mooNo,
+          building: data.registredBusiness.address[0].building,
+          floor: data.registredBusiness.address[0].floor,
+          soi: data.registredBusiness.address[0].soi,
+          road: data.registredBusiness.address[0].road,
+          tambon: data.registredBusiness.address[0].tambon,
+          amphoe: data.registredBusiness.address[0].amphoe,
+          province: data.registredBusiness.address[0].province,
+          postalCode: data.registredBusiness.address[0].postalCode,
+          country: data.registredBusiness.address[0].country,
+        }],
+        emailAddress: data.registredBusiness.emailAddress,
+        telephone: data.registredBusiness.telephone,
+      },
+      placeofIncorporation: {
+        address: [{
+          addressNo: data.placeofIncorporation.address[0].addressNo,
+          mooNo: data.placeofIncorporation.address[0].mooNo,
+          building: data.placeofIncorporation.address[0].building,
+          floor: data.placeofIncorporation.address[0].floor,
+          soi: data.placeofIncorporation.address[0].soi,
+          road: data.placeofIncorporation.address[0].road,
+          tambon: data.placeofIncorporation.address[0].tambon,
+          amphoe: data.placeofIncorporation.address[0].amphoe,
+          province: data.placeofIncorporation.address[0].province,
+          postalCode: data.placeofIncorporation.address[0].postalCode,
+          country: data.placeofIncorporation.address[0].country,
+        }],
+        emailAddress: data.placeofIncorporation.emailAddress,
+        telephone: data.placeofIncorporation.telephone,
+      },
     };
 
     if (handleCheckboxError()) {
@@ -250,79 +284,26 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           </div>
 
           <div className="p-4 space-y-4">
-            <h1 className="font-bold pb-4">Place Of Incorporate :</h1>
-            <div className="flex flex-row space-x-4 pb-8">
-              <div className="w-1/2">
-                <Input
-                  {...register("placeIncorporateEmail")}
-                  label="E-mail Address"
-                  id="placeIncorporateEmail"
-                  disabled={isSubmitting}
-                />
-                {errors.placeIncorporateEmail && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.placeIncorporateEmail.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-1/2">
-                <Input
-                  {...register("placeIncorporateTelephone")}
-                  label="Telephone"
-                  id="placeIncorporateTelephone"
-                  disabled={isSubmitting}
-                />
-                {errors.placeIncorporateTelephone && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.placeIncorporateTelephone.message}
-                  </p>
-                )}
-              </div>
+            <h1 className="font-bold">Place Of Incorporate :</h1>
+            <div className="flex flex-row space-x-4 ">
             </div>
             <CorporateAddressForm
               isSubmitting={isSubmitting}
-              errors={errors.placeIncorporateAddress}
+              errors={errors.placeofIncorporation}
               register={register}
-              keyType="placeIncorporateAddress"
+              keyType="placeofIncorporation"
             />
 
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Registered/Business address :</h1>
-            <div className="flex flex-row space-x-4 pb-8">
-              <div className="w-1/2">
-                <Input
-                  {...register("registredBusinessEmail")}
-                  label="E-mail Address"
-                  id="registredBusinessEmail"
-                  disabled={isSubmitting}
-                />
-                {errors.registredBusinessEmail && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.registredBusinessEmail.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-1/2">
-                <Input
-                  {...register("registredBusinessTelephone")}
-                  label="Telephone"
-                  id="registredBusinessTelephone"
-                  disabled={isSubmitting}
-                />
-                {errors.registredBusinessTelephone && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.registredBusinessTelephone.message}
-                  </p>
-                )}
-              </div>
-            </div>
+
             <CorporateAddressForm
-              errors={errors.registredBusinessAddress}
+              errors={errors.registredBusiness}
               register={register}
               isSubmitting={isSubmitting}
-              keyType="registredBusinessAddress"
+              keyType="registredBusiness"
             />
 
           </div>
