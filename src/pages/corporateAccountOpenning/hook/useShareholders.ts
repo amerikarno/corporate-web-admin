@@ -24,10 +24,10 @@ export function useShareholders() {
     data: TIndividualsShareholders
   ) => {
     let body: TBodyFormIndividualsShareholders = {
-      fullNames: [data.fullNames],
+      fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
       passportID: data.passportID ?? "",
-      citizendID: data.citizendID ?? "",
+      citizendID: data.citizendId ?? "",
       expiryDate: formatDateToIsoString(new Date(data.expiredDate)),
       nationality: data.nationality,
       sharePercentage: parseFloat(data.sharePercentage),
