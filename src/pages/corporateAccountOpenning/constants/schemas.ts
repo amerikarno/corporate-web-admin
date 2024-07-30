@@ -23,8 +23,6 @@ const fullNamesSchema = z.array(
   })
 );
 
-
-
 export const addressSchema = z.object({
   // AddressNo: z.string().min(1, "addressNo cannot be empty"),
   // Building: z.string().optional(),
@@ -39,7 +37,6 @@ export const addressSchema = z.object({
   Telephone: z.string().min(1, "phone cannot be empty"),
   EmailAddress: z.string().email(),
 });
-
 
 // export const financialInfoSchema = z.object({
 //   RegisteredCapital: z.string().optional(),
@@ -93,7 +90,7 @@ export const directorInfoSchema = z.object({
   }),
   nationality: z.string().min(1, "nationality cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
-  addresses: z.array(subAddressSchema)
+  addresses: z.array(subAddressSchema),
 });
 
 export const registeredCountryPrimaryCountryOperationSchema = z.object({
@@ -140,21 +137,14 @@ export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiredDate: z
-    .string()
-    .min(1, { message: "expiration date cannot be empty" }),
+  expiryDate: z.string().transform((str) => new Date(str)),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
-  sharePercentage: z
-    .string()
-    .min(1, { message: "Shares cannot be empty" })
-    .refine(
-      (value) => {
-        return /^\d+$/.test(value);
-      },
-      {
-        message: "Shares must be number",
-      }
-    ),
+  sharePercentage: z.preprocess(
+    (a) => parseFloat(z.string().parse(a)),
+    z.number({
+      invalid_type_error: "Price must be Number",
+    })
+  ),
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -225,7 +215,6 @@ export const individualsDirectorSchema = z.object({
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: z.array(subAddressSchema),
-
 });
 
 export type TIndividualsDirectorSchema = z.infer<

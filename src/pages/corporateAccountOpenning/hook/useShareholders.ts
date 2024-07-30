@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "../libs/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import {
@@ -8,13 +8,12 @@ import {
 } from "../constants/types";
 
 export function useShareholders() {
-  const [shareholders, setShareholders] = useState<TIndividualsShareholders[]>(
-    []
-  );
+  const [shareholders, setShareholders] = useState<
+    TBodyFormIndividualsShareholders[]
+  >([]);
   const handleSubmitShareholders = async (data: TIndividualsShareholders) => {
     if (!isExpiredToken()) {
       await saveIndividualsShareholders(data);
-      setShareholders([...shareholders, data]);
     } else {
       console.log("session expired");
     }
@@ -23,14 +22,15 @@ export function useShareholders() {
   const saveIndividualsShareholders = async (
     data: TIndividualsShareholders
   ) => {
+    const dt = new Date(data.expiryDate);
     let body: TBodyFormIndividualsShareholders = {
-      fullNames: [data.fullNames],
+      fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
-      passportID: data.passportID ?? "",
-      citizendID: data.citizendID ?? "",
-      expiryDate: formatDateToIsoString(new Date(data.expiredDate)),
+      passportId: data.passportId ?? "",
+      citizenId: data.citizendId ?? "",
+      expiryDate: dt.toISOString(),
       nationality: data.nationality,
-      sharePercentage: parseFloat(data.sharePercentage),
+      sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,
     };
     console.log("body", body);
@@ -41,9 +41,9 @@ export function useShareholders() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
       if (res.status === 200) {
         console.log("request success", res.data);
+        setShareholders([...shareholders, body]);
       } else {
         console.log("save failed");
       }

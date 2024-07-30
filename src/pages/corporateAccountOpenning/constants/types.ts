@@ -22,8 +22,8 @@ export type TFullNameForCorporateInfo = [
 
 export type TSubAddress = {
   addressNo: string;
-  building?:string;
-  floor?:string;
+  building?: string;
+  floor?: string;
   mooNo?: string;
   soi?: string;
   road?: string;
@@ -43,15 +43,15 @@ export type TFinancialInfo = {
 };
 
 export type TRegisterBusinessAddress = {
-  address : TSubAddress[];
+  address: TSubAddress[];
   emailAddress?: string;
   telephone?: string;
-}
+};
 export type TPlaceIncorporateAddress = {
-  address : TSubAddress[];
+  address: TSubAddress[];
   emailAddress?: string;
   telephone?: string;
-}
+};
 
 export type TCorporateInfo = {
   corporateCode?: string;
@@ -98,15 +98,15 @@ export type TIndividualsShareholders = {
   corporateCode?: string;
   fullNames: TFullName[];
   citizendId?: string;
-  passportID?: string;
-  expiredDate: string;
+  passportId?: string;
+  expiryDate: Date;
   nationality: string;
-  sharePercentage: string;
+  sharePercentage: number;
   types?: number;
 };
 
 export type TBank = {
-  corporateCode?:string;
+  corporateCode?: string;
   accountType: string;
   bankName: string;
   accountNo: string;
@@ -115,7 +115,7 @@ export type TBank = {
 };
 
 export type TAuthorizePerson = {
-  corporateCode?:string;
+  corporateCode?: string;
   fullNames: TFullName[];
   citizendId?: string;
   passportID?: string;
@@ -126,7 +126,7 @@ export type TAuthorizePerson = {
   types?: number;
 };
 export type TContactPerson = {
-  corporateCode?:string;
+  corporateCode?: string;
   fullNames: TFullName[];
   position: string;
   division: string;
@@ -205,8 +205,8 @@ export type TMapPages = {
 export type TBodyFormIndividualsShareholders = {
   fullNames: TFullName[];
   corporateCode: string;
-  passportID?: string;
-  citizendID?: string;
+  passportId?: string;
+  citizenId?: string;
   expiryDate: string;
   nationality: string;
   sharePercentage: number;
@@ -224,3 +224,14 @@ export type Person = {
   types: number;
   addresses: TSubAddress[];
 };
+
+// export type TIndividualsShareholdersRequest = {
+//   fullNames: TFullName[];
+//   corporateCode: string;
+//   passportId?: string;
+//   citizenId?: string;
+//   expiryDate: Date;
+//   nationality: string;
+//   sharePercentage: number;
+//   types: number;
+// };

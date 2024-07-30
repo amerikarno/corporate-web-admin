@@ -14,7 +14,6 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import Dropbox from "@/components/Dropbox";
 import { Button } from "@/components/ui/button";
-// import { formatDateToIsoString } from "../libs/utils";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
@@ -34,14 +33,14 @@ export function FormIndividualsShareholders({
     setDropBoxHadChoosed(true);
   };
 
-  const validateData = (
+  const reformattedData = (
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
     let tmp = { ...data };
     if (tmp.citizendId) {
-      tmp = { ...tmp, passportID: "" };
+      tmp = { ...tmp, passportId: "" };
     }
-    if (tmp.passportID) {
+    if (tmp.passportId) {
       tmp = { ...tmp, citizendId: "" };
     }
     tmp.types = 301;
@@ -61,10 +60,10 @@ export function FormIndividualsShareholders({
   const onSubmit = async (data: TIndividualsShareholders) => {
     if (dropBoxHadChoosed) {
       setTriggerDropboxError(false);
-      const formData = validateData(data);
+      const formData = reformattedData(data);
       await sleep(500);
       reset();
-      console.log(formData)
+      // console.log(formData);
       onsubmit(formData);
     } else {
       setTriggerDropboxError(true);
@@ -142,6 +141,8 @@ export function FormIndividualsShareholders({
                   {...register("sharePercentage")}
                   label="Shares"
                   id="Shares"
+                  type="number"
+                  step="0.01"
                   disabled={isSubmitting}
                 />
                 {errors.sharePercentage && (
@@ -206,15 +207,15 @@ export function FormIndividualsShareholders({
               </div>
               <div className="w-1/3">
                 <Input
-                  {...register("expiredDate")}
+                  {...register("expiryDate")}
                   label="Date of Expired"
                   id="Date of Expired"
                   disabled={isSubmitting}
                   type="date"
                 />
-                {errors.expiredDate && (
+                {errors.expiryDate && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.expiredDate.message}
+                    {errors.expiryDate.message}
                   </p>
                 )}
               </div>
