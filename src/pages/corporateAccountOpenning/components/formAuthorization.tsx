@@ -17,7 +17,10 @@ type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
   corporateCode: string;
 };
-export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePersonFormProps) {
+export function FormAuthorizedPerson({
+  onsubmit,
+  corporateCode,
+}: TAuthorizePersonFormProps) {
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
@@ -52,11 +55,10 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
   });
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-    //const formData: TAuthorizePerson={ ...data,Types:"201"}
     if (curInput) {
       const formData = validateData(data);
       await sleep(500);
-      //reset();
+      reset();
       let body: TAuthorizePerson = {
         ...formData,
         types: 201,
@@ -154,58 +156,55 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
         <div className="flex flex-row space-x-4">
           <div className="w-1/3">
             <Dropbox onDropdownSelect={handleDropboxChoice} />
-
           </div>
           <div className="w-1/3">
             {dropDownChoosed ? (
               dropDownChoosed === "ID" ? (
                 <>
-                      <Input
-                        {...register("citizendId")}
-                        label="Please fill ID"
-                        id="idCard"
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                      />
-                      {initError && !curInput && (
-                        <p className="text-red-500 text-sm px-2">
-                          Please Insert ID
-                        </p>
-                      )}
-                    </>
+                  <Input
+                    {...register("citizendId")}
+                    label="Please fill ID"
+                    id="idCard"
+                    disabled={isSubmitting}
+                    onChange={handleChange}
+                  />
+                  {initError && !curInput && (
+                    <p className="text-red-500 text-sm px-2">
+                      Please Insert ID
+                    </p>
+                  )}
+                </>
               ) : (
                 <>
-                      <Input
-                        {...register("passportID")}
-                        label="Please fill Passport"
-                        id="passportID"
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                      />
-                      {initError && !curInput && (
-                        <p className="text-red-500 text-sm px-2">
-                          Please Insert Passport
-                        </p>
-                      )}
-                    </>
+                  <Input
+                    {...register("passportID")}
+                    label="Please fill Passport"
+                    id="passportID"
+                    disabled={isSubmitting}
+                    onChange={handleChange}
+                  />
+                  {initError && !curInput && (
+                    <p className="text-red-500 text-sm px-2">
+                      Please Insert Passport
+                    </p>
+                  )}
+                </>
               )
             ) : (
               <>
-                    <div className="relative w-full">
-                      <Input
-                        {...register("citizendId")}
-                        label="Please fill ID"
-                        id="idCard"
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    {initError && !curInput && (
-                      <p className="text-red-500 text-sm px-2">
-                        Please Insert ID
-                      </p>
-                    )}
-                  </>
+                <div className="relative w-full">
+                  <Input
+                    {...register("citizendId")}
+                    label="Please fill ID"
+                    id="idCard"
+                    disabled={isSubmitting}
+                    onChange={handleChange}
+                  />
+                </div>
+                {initError && !curInput && (
+                  <p className="text-red-500 text-sm px-2">Please Insert ID</p>
+                )}
+              </>
             )}
           </div>
           <div className="w-1/3">
@@ -233,10 +232,10 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
           errors={errors.addresses}
         />
         {errors.addresses?.[0] && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.addresses?.[0]?.message}
-              </p>
-            )}
+          <p className="text-red-500 text-sm px-2">
+            {errors.addresses?.[0]?.message}
+          </p>
+        )}
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}

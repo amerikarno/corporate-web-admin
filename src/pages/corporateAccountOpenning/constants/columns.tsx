@@ -8,7 +8,6 @@ import {
   TContactPerson,
   TCorporateInfo,
   TDirector,
-  TIndividualsShareholders,
   TJuristicsShareholders,
 } from "./types";
 

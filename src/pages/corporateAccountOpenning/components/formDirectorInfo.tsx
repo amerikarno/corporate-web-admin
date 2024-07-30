@@ -8,7 +8,7 @@ import {
   TIndividualsDirectorSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { Person, TDirector } from "../constants/types";
+import { TDirector } from "../constants/types";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
@@ -17,7 +17,6 @@ type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
   corporateCode: string;
 };
-
 
 export function FormIndividualsDirector({
   onsubmit,
@@ -60,7 +59,6 @@ export function FormIndividualsDirector({
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     //const formData: TDirector={ ...data,Types:"101"}
     if (curInput) {
-
       const formData = validateData(data);
       await sleep(500);
       reset();
@@ -73,7 +71,7 @@ export function FormIndividualsDirector({
         fullNames: data.fullNames,
         corporateCode: corporateCode,
       };
-      console.log(body)
+      console.log(body);
       onsubmit(body);
     } else {
       setInitError(true);
@@ -246,7 +244,6 @@ export function FormIndividualsDirector({
               errors={errors.addresses}
               register={register}
               keyType="addresses"
-
             />
             {errors.addresses?.[0] && (
               <p className="text-red-500 text-sm px-2">
