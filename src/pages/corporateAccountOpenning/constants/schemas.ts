@@ -69,7 +69,7 @@ export const corporateInfoSchema = z.object({
   }),
   registered: z.string().optional(),
   primary: z.string().optional(),
-  registredBusiness: registerBusinessAddressSchema,
+  registeredBusiness: registerBusinessAddressSchema,
   placeofIncorporation: placeIncorporateAddressSchema,
   registeredCapital: z.coerce.number().optional(),
   revenuePerYear: z.coerce.number().optional(),

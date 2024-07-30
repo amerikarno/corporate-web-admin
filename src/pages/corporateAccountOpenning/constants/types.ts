@@ -65,7 +65,7 @@ export type TCorporateInfo = {
   registeredOther?: boolean;
   primary: string;
   primaryOther?: boolean;
-  registredBusiness: TRegisterBusinessAddress;
+  registeredBusiness: TRegisterBusinessAddress;
   placeofIncorporation: TPlaceIncorporateAddress;
   // financial?: TFinancialInfo;
   registeredCapital?: number;

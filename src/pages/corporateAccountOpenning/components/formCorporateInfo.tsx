@@ -60,24 +60,24 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
       primary: registeredCountryPrimaryCountryOperation.primary,
       primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
       primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
-      registredBusiness: {
+      registeredBusiness: {
         address: [
           {
-            addressNo: data.registredBusiness.address[0].addressNo,
-            mooNo: data.registredBusiness.address[0].mooNo,
-            building: data.registredBusiness.address[0].building,
-            floor: data.registredBusiness.address[0].floor,
-            soi: data.registredBusiness.address[0].soi,
-            road: data.registredBusiness.address[0].road,
-            tambon: data.registredBusiness.address[0].tambon,
-            amphoe: data.registredBusiness.address[0].amphoe,
-            province: data.registredBusiness.address[0].province,
-            postalCode: data.registredBusiness.address[0].postalCode,
-            country: data.registredBusiness.address[0].country,
+            addressNo: data.registeredBusiness.address[0].addressNo,
+            mooNo: data.registeredBusiness.address[0].mooNo,
+            building: data.registeredBusiness.address[0].building,
+            floor: data.registeredBusiness.address[0].floor,
+            soi: data.registeredBusiness.address[0].soi,
+            road: data.registeredBusiness.address[0].road,
+            tambon: data.registeredBusiness.address[0].tambon,
+            amphoe: data.registeredBusiness.address[0].amphoe,
+            province: data.registeredBusiness.address[0].province,
+            postalCode: data.registeredBusiness.address[0].postalCode,
+            country: data.registeredBusiness.address[0].country,
           },
         ],
-        emailAddress: data.registredBusiness.emailAddress,
-        telephone: data.registredBusiness.telephone,
+        emailAddress: data.registeredBusiness.emailAddress,
+        telephone: data.registeredBusiness.telephone,
       },
       placeofIncorporation: {
         address: [
@@ -301,10 +301,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <h1 className="font-bold pb-4">Registered/Business address :</h1>
 
             <CorporateAddressForm
-              errors={errors.registredBusiness?.address?.[0]}
+              errors={errors.registeredBusiness?.address?.[0]}
               register={register}
               isSubmitting={isSubmitting}
-              keyType="registredBusiness"
+              keyType="registeredBusiness"
             />
           </div>
 

@@ -12,7 +12,7 @@ export function useCorporateInfo() {
       registrationNo: "a",
       taxID: "a",
       dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
-      registredBusiness: {
+      registeredBusiness: {
         address: [
           {
             addressNo: "a",
