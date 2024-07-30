@@ -230,17 +230,12 @@ export const individualsJuristicShareholdersSchema = z.object({
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),
-  sharePercentage: z
-    .string()
-    .min(1, { message: "Shares cannot be empty" })
-    .refine(
-      (value) => {
-        return /^\d+$/.test(value);
-      },
-      {
-        message: "Shares must be number",
-      }
-    ),
+  sharePercentage: z.preprocess(
+    (a) => parseFloat(z.string().parse(a)),
+    z.number({
+      invalid_type_error: "Price must be Number",
+    })
+  ),
 });
 
 export type TIndividualsJuristicShareholdersSchema = z.infer<

@@ -151,7 +151,7 @@ export type TJuristicsShareholders = {
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
-  sharePercentage: string;
+  sharePercentage: number;
 };
 
 export type TInitailJuristicTypeAndIncome = {

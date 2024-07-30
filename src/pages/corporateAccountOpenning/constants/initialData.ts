@@ -12,28 +12,11 @@ export const initCorporateInfo = {
   registeredCountry: "",
   primaryCountryOfOperation: "",
   registeredAddress: {
-        address : [{
-          addressNo: "",
-          building: "",
-          floor:"",
-          mooNo: "",
-          soi: "",
-          road: "",
-          tambon: "",
-          amphoe: "",
-          province: "",
-          postalCode: "",
-          country: ""
-      }],
-        emailAddress:"",
-        telephone:""
-      //type: 1,
-  },
-  incorporatedAddress: {
-      address : [{
+    address: [
+      {
         addressNo: "",
         building: "",
-        floor:"",
+        floor: "",
         mooNo: "",
         soi: "",
         road: "",
@@ -42,9 +25,30 @@ export const initCorporateInfo = {
         province: "",
         postalCode: "",
         country: "",
-    }],
-      emailAddress:"",
-      telephone:""
+      },
+    ],
+    emailAddress: "",
+    telephone: "",
+    //type: 1,
+  },
+  incorporatedAddress: {
+    address: [
+      {
+        addressNo: "",
+        building: "",
+        floor: "",
+        mooNo: "",
+        soi: "",
+        road: "",
+        tambon: "",
+        amphoe: "",
+        province: "",
+        postalCode: "",
+        country: "",
+      },
+    ],
+    emailAddress: "",
+    telephone: "",
     //type: 2,
   },
   financial: {
@@ -59,7 +63,7 @@ export const initAddress = {
   addressNo: "",
   building: "",
   mooNo: "",
-  floor:"",
+  floor: "",
   soi: "",
   road: "",
   tambon: "",
@@ -161,7 +165,7 @@ export const individualJuristicShareholders = {
   juristicName: "",
   registrationNo: "",
   registeredCountry: "",
-  sharePercentage: "",
+  sharePercentage: 0.0,
 };
 
 export const initailJuristicOther = {

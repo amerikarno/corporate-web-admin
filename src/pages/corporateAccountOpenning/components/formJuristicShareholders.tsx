@@ -105,6 +105,8 @@ export function FormJuristicShareholders({
                   {...register("sharePercentage")}
                   label="Shares"
                   id="Shares"
+                  type="number"
+                  step="0.01"
                   disabled={isSubmitting}
                 />
                 {errors.sharePercentage && (
