@@ -18,13 +18,16 @@ type TAuthorizePersonFormProps = {
   corporateCode: string;
 };
 export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePersonFormProps) {
-  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
-  const [triggerDropboxError, setTriggerDropboxError] =
-    useState<boolean>(false);
-  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const [initError, setInitError] = useState<boolean>(false);
+  const [curInput, setCurInput] = useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
   const handleDropboxChoice = (choice: string) => {
     setDropDownChoosed(choice);
-    setDropBoxHadChoosed(true);
+  };
+
+  const handleChange = (e: any) => {
+    setInitError(false);
+    setCurInput(e.target.value !== "");
   };
 
   const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
@@ -50,8 +53,7 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
     //const formData: TAuthorizePerson={ ...data,Types:"201"}
-    if (dropBoxHadChoosed) {
-      setTriggerDropboxError(false);
+    if (curInput) {
       const formData = validateData(data);
       await sleep(500);
       //reset();
@@ -65,7 +67,7 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
       console.log(body);
       onsubmit(body);
     } else {
-      setTriggerDropboxError(true);
+      setInitError(true);
     }
   };
 
@@ -152,54 +154,58 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
         <div className="flex flex-row space-x-4">
           <div className="w-1/3">
             <Dropbox onDropdownSelect={handleDropboxChoice} />
-            {triggerDropboxError && (
-              <p className="text-red-500 text-sm px-2">
-                Please Choose IDCard or Passport
-              </p>
-            )}
+
           </div>
           <div className="w-1/3">
             {dropDownChoosed ? (
-              dropDownChoosed === "IDCard" ? (
+              dropDownChoosed === "ID" ? (
                 <>
-                  <Input
-                    {...register("citizendId")}
-                    label="IDCard"
-                    id="idCard"
-                    disabled={isSubmitting}
-                  />
-                  {triggerDropboxError && (
-                    <p className="text-red-500 text-sm px-2">
-                      Please Insert IDcard
-                    </p>
-                  )}
-                </>
+                      <Input
+                        {...register("citizendId")}
+                        label="Please fill ID"
+                        id="idCard"
+                        disabled={isSubmitting}
+                        onChange={handleChange}
+                      />
+                      {initError && !curInput && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert ID
+                        </p>
+                      )}
+                    </>
               ) : (
                 <>
-                  <Input
-                    {...register("passportID")}
-                    label="Passport"
-                    id="passportID"
-                    disabled={isSubmitting}
-                  />
-                  {triggerDropboxError && (
-                    <p className="text-red-500 text-sm px-2">
-                      Please Insert Passport
-                    </p>
-                  )}
-                </>
+                      <Input
+                        {...register("passportID")}
+                        label="Please fill Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                        onChange={handleChange}
+                      />
+                      {initError && !curInput && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert Passport
+                        </p>
+                      )}
+                    </>
               )
             ) : (
               <>
-                <div className="relative w-full">
-                  <Input label="IDCard or Passport" id="passportID" />
-                </div>
-                {triggerDropboxError && (
-                  <p className="text-red-500 text-sm px-2">
-                    Please Insert IDCard or Passport
-                  </p>
-                )}
-              </>
+                    <div className="relative w-full">
+                      <Input
+                        {...register("citizendId")}
+                        label="Please fill ID"
+                        id="idCard"
+                        disabled={isSubmitting}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    {initError && !curInput && (
+                      <p className="text-red-500 text-sm px-2">
+                        Please Insert ID
+                      </p>
+                    )}
+                  </>
             )}
           </div>
           <div className="w-1/3">
