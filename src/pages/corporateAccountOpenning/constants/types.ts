@@ -197,7 +197,7 @@ export type TBodyFormIndividualsShareholders = {
   citizendID?: string;
   expiryDate: string;
   nationality: string;
-  sharePercentage: string;
+  sharePercentage: number;
   types?: number;
 };
 

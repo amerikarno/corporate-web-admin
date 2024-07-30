@@ -16,7 +16,7 @@ export const isExpiredToken = (): boolean => {
 
       if (user && user.exp) {
         const dateTime = new Date(user.exp * 1000);
-        isExpired = new Date().getTime() < dateTime.getTime();
+        isExpired = new Date().getTime() > dateTime.getTime();
       } else {
         console.log("Invalid token: exp field is missing.");
       }

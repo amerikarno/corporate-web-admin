@@ -49,9 +49,9 @@ export default function CorporateAccountOpenning() {
 
   const handlePages = (type: string) => {
     if (type == "next") {
-      navigate(`/corporate/create/${pageId + 1}`);
+      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
     } else {
-      navigate(`/corporate/create/${pageId - 1}`);
+      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }
   };
 

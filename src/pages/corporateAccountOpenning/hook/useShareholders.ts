@@ -12,7 +12,7 @@ export function useShareholders() {
     []
   );
   const handleSubmitShareholders = async (data: TIndividualsShareholders) => {
-    if (isExpiredToken()) {
+    if (!isExpiredToken()) {
       await saveIndividualsShareholders(data);
       setShareholders([...shareholders, data]);
     } else {
@@ -30,7 +30,7 @@ export function useShareholders() {
       citizendID: data.citizendID ?? "",
       expiryDate: formatDateToIsoString(new Date(data.expiredDate)),
       nationality: data.nationality,
-      sharePercentage: data.sharePercentage,
+      sharePercentage: parseFloat(data.sharePercentage),
       types: Number(data.types) ?? 301,
     };
     console.log("body", body);

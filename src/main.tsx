@@ -94,8 +94,8 @@ root.render(
                     // </ProtectedRoute>
                   }
                 />
-                <Route path="corporate" element={<Outlet />}>
-                  <Route path="create" element={<Outlet />}>
+                <Route path="create-job" element={<Outlet />}>
+                  <Route path="added-corporate-account" element={<Outlet />}>
                     <Route
                       index
                       element={
