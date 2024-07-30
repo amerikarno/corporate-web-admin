@@ -23,13 +23,16 @@ export function FormIndividualsDirector({
   onsubmit,
   corporateCode,
 }: TDirectorFormProps) {
-  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
-  const [triggerDropboxError, setTriggerDropboxError] =
-    useState<boolean>(false);
-  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const [initError, setInitError] = useState<boolean>(false);
+  const [curInput, setCurInput] = useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
   const handleDropboxChoice = (choice: string) => {
     setDropDownChoosed(choice);
-    setDropBoxHadChoosed(true);
+  };
+
+  const handleChange = (e: any) => {
+    setInitError(false);
+    setCurInput(e.target.value !== "");
   };
 
   const validateData = (data: TDirector): TDirector => {
@@ -56,8 +59,8 @@ export function FormIndividualsDirector({
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     //const formData: TDirector={ ...data,Types:"101"}
-    if (dropBoxHadChoosed) {
-      setTriggerDropboxError(false);
+    if (curInput) {
+
       const formData = validateData(data);
       await sleep(500);
       reset();
@@ -73,7 +76,7 @@ export function FormIndividualsDirector({
       console.log(body)
       onsubmit(body);
     } else {
-      setTriggerDropboxError(true);
+      setInitError(true);
     }
   };
 
@@ -168,25 +171,21 @@ export function FormIndividualsDirector({
             <div className="flex flex-row space-x-4">
               <div className="w-1/3">
                 <Dropbox onDropdownSelect={handleDropboxChoice} />
-                {triggerDropboxError && (
-                  <p className="text-red-500 text-sm px-2">
-                    Please Choose IDCard or Passport
-                  </p>
-                )}
               </div>
               <div className="w-1/3">
                 {dropDownChoosed ? (
-                  dropDownChoosed === "IDCard" ? (
+                  dropDownChoosed === "ID" ? (
                     <>
                       <Input
                         {...register("citizendId")}
-                        label="IDCard"
+                        label="Please fill ID"
                         id="idCard"
                         disabled={isSubmitting}
+                        onChange={handleChange}
                       />
-                      {triggerDropboxError && (
+                      {initError && !curInput && (
                         <p className="text-red-500 text-sm px-2">
-                          Please Insert IDcard
+                          Please Insert ID
                         </p>
                       )}
                     </>
@@ -194,11 +193,12 @@ export function FormIndividualsDirector({
                     <>
                       <Input
                         {...register("passportID")}
-                        label="Passport"
+                        label="Please fill Passport"
                         id="passportID"
                         disabled={isSubmitting}
+                        onChange={handleChange}
                       />
-                      {triggerDropboxError && (
+                      {initError && !curInput && (
                         <p className="text-red-500 text-sm px-2">
                           Please Insert Passport
                         </p>
@@ -208,11 +208,17 @@ export function FormIndividualsDirector({
                 ) : (
                   <>
                     <div className="relative w-full">
-                      <Input label="IDCard or Passport" id="passportID" />
+                      <Input
+                        {...register("citizendId")}
+                        label="Please fill ID"
+                        id="idCard"
+                        disabled={isSubmitting}
+                        onChange={handleChange}
+                      />
                     </div>
-                    {triggerDropboxError && (
+                    {initError && !curInput && (
                       <p className="text-red-500 text-sm px-2">
-                        Please Insert IDCard or Passport
+                        Please Insert ID
                       </p>
                     )}
                   </>

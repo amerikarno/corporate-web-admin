@@ -40,7 +40,7 @@ export function FormIndividualsShareholders({
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
     let tmp = { ...data };
-    if (tmp.passportID) {
+    if (tmp.passportId) {
       tmp = { ...tmp, citizendId: "" };
     }
     if (tmp.citizendId) {
@@ -64,8 +64,7 @@ export function FormIndividualsShareholders({
   });
 
   const onSubmit = async (data: TIndividualsShareholders) => {
-    if (dropBoxHadChoosed) {
-      setTriggerDropboxError(false);
+    if (curInput) {
       const formData = reformattedData(data);
       await sleep(500);
       reset();
