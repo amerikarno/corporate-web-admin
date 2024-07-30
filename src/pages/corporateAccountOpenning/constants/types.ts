@@ -97,12 +97,12 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 export type TIndividualsShareholders = {
   corporateCode?: string;
   fullNames: TFullName[];
-  citizendID?: string;
+  citizendId?: string;
   passportID?: string;
   expiredDate: string;
   nationality: string;
   sharePercentage: string;
-  types?: string;
+  types?: number;
 };
 
 export type TBank = {

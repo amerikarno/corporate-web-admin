@@ -210,7 +210,7 @@ export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
   },
   {
     name: "CitizenID",
-    selector: (row: TIndividualsShareholders) => row.citizendID || "",
+    selector: (row: TIndividualsShareholders) => row.citizendId || "",
   },
   {
     name: "PassportID",

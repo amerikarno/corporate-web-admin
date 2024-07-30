@@ -144,7 +144,6 @@ export const individualsShareholdersSchema = z.object({
     .string()
     .min(1, { message: "expiration date cannot be empty" }),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
-  Types: z.string().optional(),
   sharePercentage: z
     .string()
     .min(1, { message: "Shares cannot be empty" })

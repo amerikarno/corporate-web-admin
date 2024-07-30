@@ -3,6 +3,7 @@ import { useState } from "react";
 import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
+import { jwtDecode } from "jwt-decode";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
@@ -71,6 +72,7 @@ export function useCorporateInfo() {
 
   const isExpiredToken = (): boolean => {
     let isExpired = true;
+    const token = getCookies();
     if (token && token !== null) {
       try {
         const user = jwtDecode(token);

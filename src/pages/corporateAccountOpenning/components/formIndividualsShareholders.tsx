@@ -38,13 +38,13 @@ export function FormIndividualsShareholders({
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
     let tmp = { ...data };
-    if (tmp.citizendID) {
+    if (tmp.citizendId) {
       tmp = { ...tmp, passportID: "" };
     }
     if (tmp.passportID) {
-      tmp = { ...tmp, citizendID: "" };
+      tmp = { ...tmp, citizendId: "" };
     }
-    tmp.types = "301";
+    tmp.types = 301;
     tmp.corporateCode = corporateCode;
     return tmp;
   };
@@ -64,6 +64,7 @@ export function FormIndividualsShareholders({
       const formData = validateData(data);
       await sleep(500);
       reset();
+      console.log(formData)
       onsubmit(formData);
     } else {
       setTriggerDropboxError(true);
@@ -81,14 +82,14 @@ export function FormIndividualsShareholders({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.title")}
+                  {...register("fullNames.0.title")}
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.title && (
+                {errors.fullNames?.[0]?.title && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.title.message}
+                    {errors.fullNames?.[0]?.message}
                   </p>
                 )}
               </div>
@@ -97,27 +98,27 @@ export function FormIndividualsShareholders({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.firstName")}
+                  {...register("fullNames.0.firstName")}
                   label="First Name"
                   id="First Name"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.firstName && (
+                {errors.fullNames?.[0]?.firstName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.firstName.message}
+                    {errors.fullNames?.[0]?.firstName.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("fullNames.lastName")}
+                  {...register("fullNames.0.lastName")}
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
                 />
-                {errors.fullNames?.lastName && (
+                {errors.fullNames?.[0]?.lastName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.fullNames?.lastName.message}
+                    {errors.fullNames?.[0]?.lastName.message}
                   </p>
                 )}
               </div>

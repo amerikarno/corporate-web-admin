@@ -14,7 +14,7 @@ import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
 
 type TDirectorFormProps = {
-  onsubmit: (data: Person) => void;
+  onsubmit: (data: TDirector) => void;
   corporateCode: string;
 };
 
