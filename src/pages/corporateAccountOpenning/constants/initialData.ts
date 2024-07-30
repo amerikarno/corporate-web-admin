@@ -139,15 +139,17 @@ export const individualShareholder = {
 };
 
 export const individualContact = {
-  fullNames: {
-    title: "",
-    firstName: "",
-    lastName: "",
-  },
-  Position: "",
-  Division: "",
-  Telephone: "",
-  Email: "",
+  fullNames: [
+    {
+      title: "",
+      firstName: "",
+      lastName: "",
+    },
+  ],
+  position: "",
+  division: "",
+  telephone: "",
+  email: "",
 };
 
 // export const individualDirector = {

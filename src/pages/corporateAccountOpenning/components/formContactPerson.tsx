@@ -9,14 +9,13 @@ import {
   TIndividualsContactPersonSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { useFormIndividualsContactPerson } from "../hook/useFormContactPerson";
 //import { Table } from "./dataTable";
 import { TContactPerson } from "../constants/types";
 
 type TContactPersonArray = {
-  contacts:TContactPerson[];
-  corporateCode?:string;
-}
+  contacts: TContactPerson[];
+  corporateCode?: string;
+};
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
@@ -55,10 +54,10 @@ export function FormIndividualsContactPerson({
   //   ];
 
   const onSubmit = async (data: TContactPerson) => {
-    let formData:TContactPersonArray = {
-      contacts:[data],
-      corporateCode:corporateCode
-    }
+    let formData: TContactPersonArray = {
+      contacts: [data],
+      corporateCode: corporateCode,
+    };
     await sleep(500);
     reset();
     console.log(formData);

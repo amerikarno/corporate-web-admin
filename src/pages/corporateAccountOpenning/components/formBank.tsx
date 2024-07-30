@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { TBank } from "../constants/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { bankSchema, TBankSchema } from "../constants/schemas";
+import { bankSchema } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
@@ -9,14 +9,14 @@ import { Button } from "@/components/ui/button";
 
 type TBankFormProps = {
   onsubmit: (data: TBankArray) => void;
-  corporateCode:string;
+  corporateCode: string;
 };
 
 type TBankArray = {
-  bank:TBank[];
-  corporateCode?:string;
-}
-export function FormBank({ onsubmit,corporateCode }: TBankFormProps) {
+  bank: TBank[];
+  corporateCode?: string;
+};
+export function FormBank({ onsubmit, corporateCode }: TBankFormProps) {
   const {
     register,
     handleSubmit,
@@ -28,10 +28,9 @@ export function FormBank({ onsubmit,corporateCode }: TBankFormProps) {
 
   const onSubmit = async (data: TBank) => {
     let body: TBankArray = {
-      bank:[data],
-      corporateCode:corporateCode
-
-    }
+      bank: [data],
+      corporateCode: corporateCode,
+    };
     await sleep(500);
     console.log(body);
     reset();

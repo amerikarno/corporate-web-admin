@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
-import { copy } from "@/lib/utils";
 import axios from "@/api/axios";
 import { formatDateToIsoString } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
-
 
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
@@ -43,7 +41,7 @@ export function useListOfDirector() {
       });
       // console.log(res);
       if (res.status === 200) {
-        console.log("save successful")
+        console.log("save successful");
       }
     } catch (error) {
       console.log(error);
@@ -57,8 +55,6 @@ export function useListOfDirector() {
       console.log("session expired");
     }
   };
-
-
 
   return {
     directors,

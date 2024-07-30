@@ -1,9 +1,8 @@
 import axios from "@/api/axios";
 import { useState } from "react";
-import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
-import { jwtDecode } from "jwt-decode";
+import { isExpiredToken } from "../libs/utils";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
@@ -14,38 +13,42 @@ export function useCorporateInfo() {
       taxID: "a",
       dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
       registredBusiness: {
-        address :[{
-          addressNo: "a",
-          building:"a",
-          floor:"a",
-          mooNo: "a",
-          soi: "a",
-          road: "a",
-          tambon: "a",
-          amphoe: "a",
-          province: "a",
-          postalCode: "a",
-          country: "a",
-      }],
-        emailAddress : "a@gmail.com",
-        telephone : "1"
+        address: [
+          {
+            addressNo: "a",
+            building: "a",
+            floor: "a",
+            mooNo: "a",
+            soi: "a",
+            road: "a",
+            tambon: "a",
+            amphoe: "a",
+            province: "a",
+            postalCode: "a",
+            country: "a",
+          },
+        ],
+        emailAddress: "a@gmail.com",
+        telephone: "1",
       },
       placeofIncorporation: {
-        address : [{
-          addressNo: "a",
-          building:"a",
-          floor:"a",
-          mooNo: "a",
-          soi: "a",
-          road: "a",
-          tambon: "a",
-          amphoe: "a",
-          province: "a",
-          postalCode: "a",
-          country: "a",
-        }],
-        emailAddress : "a@gmail.com",
-        telephone : "1"
+        address: [
+          {
+            addressNo: "a",
+            building: "a",
+            floor: "a",
+            mooNo: "a",
+            soi: "a",
+            road: "a",
+            tambon: "a",
+            amphoe: "a",
+            province: "a",
+            postalCode: "a",
+            country: "a",
+          },
+        ],
+        emailAddress: "a@gmail.com",
+        telephone: "1",
       },
       registeredCapital: 3,
       revenuePerYear: 0,
@@ -70,32 +73,12 @@ export function useCorporateInfo() {
     }
   };
 
-  const isExpiredToken = (): boolean => {
-    let isExpired = true;
-    const token = getCookies();
-    if (token && token !== null) {
-      try {
-        const user = jwtDecode(token);
-
-        if (user && user.exp) {
-          const dateTime = new Date(user.exp * 1000);
-          isExpired = dateTime.getTime() < new Date().getTime();
-        } else {
-          console.log("Invalid token: exp field is missing.");
-        }
-      } catch (error) {
-        console.error("Failed to decode token:", error);
-      }
-    }
-    return isExpired;
-  };
-
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     let body = {
       ...data,
-      dateofincorporation: formatDateToIsoString(data.dateofincorporation),
+      dateofincorporation: data.dateofincorporation.toISOString(),
     };
-    // console.log("body", body);
+    console.log("body", body);
     try {
       const token = getCookies();
       const res = await axios.post("/api/v1/corporate/create", body, {
