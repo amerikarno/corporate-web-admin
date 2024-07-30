@@ -4,14 +4,14 @@ import { Card } from "@/components/ui/card";
 import { columnsCorporateInfo } from "../constants/columns";
 import { FormCorporateInfo } from "../components/formCorporateInfo";
 
-type TForm1Props = {
+type TPageCorporateInfoProps = {
   corporatesInfo: TCorporateInfo[];
   handleSubmitCorporateInfo: (data: TCorporateInfo) => Promise<void>;
 };
-export function Form1({
+export function PageCorporateInfo({
   corporatesInfo,
   handleSubmitCorporateInfo,
-}: TForm1Props) {
+}: TPageCorporateInfoProps) {
   return (
     <>
       <div className="p-4 space-y-8">

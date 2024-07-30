@@ -4,11 +4,13 @@ import DataTable from "react-data-table-component";
 import { FormAuthorizedPerson } from "../components/formAuthorization";
 import { columnsAuthorizePerson } from "../constants/columns";
 
-type TForm4Props = {
+type TPageAuthorizedPersonProps = {
   corporateCode: string;
 };
 
-export function Form4({ corporateCode }: TForm4Props) {
+export function PageAuthorizedPerson({
+  corporateCode,
+}: TPageAuthorizedPersonProps) {
   const { authorize, handleSubmitAuthorize } = useAuthorizePerson();
   return (
     <>

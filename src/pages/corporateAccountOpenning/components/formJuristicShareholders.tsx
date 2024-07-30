@@ -50,12 +50,12 @@ export function FormJuristicShareholders({
   return (
     <>
       <div
-        id="Juristics who shareholders of juristic's owner"
+        id="Juristics shareholders of juristic's owner"
         className="space-y-10"
       >
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">
-            Juristics who shareholders of juristic's owner :
+            Juristics shareholders of juristic's owner :
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">

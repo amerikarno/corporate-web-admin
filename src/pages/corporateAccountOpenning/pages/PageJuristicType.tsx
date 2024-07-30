@@ -2,11 +2,14 @@ import { Card } from "@/components/ui/card";
 import { TCorporateInfo } from "../constants/types";
 import { FormCorporateTypeAndIncome } from "../components/formCorporateInfo2";
 
-type TForm2Props = {
+type TPageJuristicTypeProps = {
   currentCorporatesInfo: TCorporateInfo;
   corporateCode?: string;
 };
-export function Form2({ currentCorporatesInfo, corporateCode }: TForm2Props) {
+export function PageJuristicType({
+  currentCorporatesInfo,
+  corporateCode,
+}: TPageJuristicTypeProps) {
   return (
     <>
       <div className="p-4 space-y-8">

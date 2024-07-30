@@ -4,18 +4,20 @@ import { FormIndividualsShareholders } from "../components/formIndividualsShareh
 import { columnsShareHolders } from "../constants/columns";
 import { useShareholders } from "../hook/useShareholders";
 
-type TForm6Props = {
+type TPageIndividualShareholderProps = {
   corporateCode: string;
 };
 
-export function Form6({ corporateCode }: TForm6Props) {
+export function PageIndividualShareholder({
+  corporateCode,
+}: TPageIndividualShareholderProps) {
   const { shareholders, handleSubmitShareholders } = useShareholders();
   return (
     <>
       <div className="p-4 space-y-8">
         <Card>
           <DataTable
-            title="Individuals who shareholders of juristic's owner"
+            title="Individuals shareholders of juristic's owner"
             columns={columnsShareHolders}
             data={shareholders}
             clearSelectedRows

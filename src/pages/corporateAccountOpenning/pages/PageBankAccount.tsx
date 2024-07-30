@@ -4,10 +4,10 @@ import { FormBank } from "../components/formBank";
 import { columnsBank } from "../constants/columns";
 import { useBank } from "../hook/useBank";
 
-type TForm8Props = {
+type TPageBankAccountProps = {
   corporateCode: string;
 };
-export function Form8({ corporateCode }: TForm8Props) {
+export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
   const { bank, handleSubmitBank } = useBank();
   return (
     <>
@@ -20,9 +20,7 @@ export function Form8({ corporateCode }: TForm8Props) {
             clearSelectedRows
           />
         </Card>
-        <FormBank onsubmit={handleSubmitBank}
-        corporateCode={corporateCode}
-        />
+        <FormBank onsubmit={handleSubmitBank} corporateCode={corporateCode} />
       </div>
     </>
   );

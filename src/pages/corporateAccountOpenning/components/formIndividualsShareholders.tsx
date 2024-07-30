@@ -40,14 +40,11 @@ export function FormIndividualsShareholders({
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
     let tmp = { ...data };
-    if (tmp.passportID) {
-      tmp = { ...tmp, citizendId: "" };
-    }
     if (tmp.citizendId) {
-      tmp = { ...tmp, passportId: "" };
+      tmp = { ...tmp, citizendId: "" };
     }
     if (tmp.passportId) {
-      tmp = { ...tmp, citizendId: "" };
+      tmp = { ...tmp, passportId: "" };
     }
     tmp.types = 301;
     tmp.corporateCode = corporateCode;

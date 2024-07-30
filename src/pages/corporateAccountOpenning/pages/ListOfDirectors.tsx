@@ -4,10 +4,10 @@ import DataTable from "react-data-table-component";
 import { FormIndividualsDirector } from "../components/formDirectorInfo";
 import { columnsListOfDirectors } from "../constants/columns";
 
-type TForm3Props = {
+type TListOfDirectorsProps = {
   corporateCode: string;
 };
-export function Form3({ corporateCode }: TForm3Props) {
+export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   const { directors, handleSubmitDirectors } = useListOfDirector();
   return (
     <>

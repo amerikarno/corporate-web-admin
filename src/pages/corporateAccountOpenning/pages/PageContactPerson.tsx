@@ -4,10 +4,10 @@ import { FormIndividualsContactPerson } from "../components/formContactPerson";
 import { columnsContactPerson } from "../constants/columns";
 import { useContactPerson } from "../hook/useContactPerson";
 
-type TForm5Props = {
+type TPageContactPersonProps = {
   corporateCode: string;
 };
-export function Form5({ corporateCode }: TForm5Props) {
+export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
   const { contact, handleSubmitContactPerson } = useContactPerson();
   return (
     <>
