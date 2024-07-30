@@ -60,7 +60,7 @@ export const corporateInfoSchema = z.object({
   name: z.string().min(1, "name cannot be empty"),
   registrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
   taxID: z.string().min(1, "taxId cannot be empty"),
-  dateofincorporation: z.string().transform((str) => {
+  dateofincorporation: z.string().min(1,"date cannot be empty").transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
       throw new Error("Invalid date");
@@ -81,7 +81,7 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().transform((str) => {
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
       throw new Error("Invalid date");
@@ -137,7 +137,7 @@ export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().transform((str) => new Date(str)),
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => new Date(str)),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   sharePercentage: z.preprocess(
     (a) => parseFloat(z.string().parse(a)),
@@ -176,7 +176,7 @@ export const authorizedPersonSchema = z.object({
   citizendId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportID: z.string().optional(),
-  expiryDate: z.string().transform((str) => {
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
       throw new Error("Invalid date");
@@ -205,7 +205,7 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().transform((str) => {
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
       throw new Error("Invalid date");
