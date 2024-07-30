@@ -46,13 +46,13 @@ export const addressSchema = z.object({
 // });
 const registerBusinessAddressSchema = z.object({
   address: z.array(subAddressSchema),
-  emailAddress: z.string().email().optional(),
+  emailAddress: z.string().email().min(1, "email cannot be empty"),
   telephone: z.string().optional(),
 });
 
 const placeIncorporateAddressSchema = z.object({
   address: z.array(subAddressSchema),
-  emailAddress: z.string().email().optional(),
+  emailAddress: z.string().email().min(1, "email cannot be empty"),
   telephone: z.string().optional(),
 });
 

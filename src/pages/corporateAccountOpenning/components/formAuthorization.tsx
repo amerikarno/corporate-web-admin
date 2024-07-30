@@ -230,7 +230,7 @@ export function FormAuthorizedPerson({ onsubmit,corporateCode }: TAuthorizePerso
           isSubmitting={isSubmitting}
           keyType="addresses"
           register={register}
-          errors={errors.addresses}
+          errors={errors.addresses?.[0]}
         />
         {errors.addresses?.[0] && (
               <p className="text-red-500 text-sm px-2">

@@ -243,10 +243,9 @@ export function FormIndividualsDirector({
             <h1 className="font-bold text-xl py-4">Director's Address</h1>
             <DirectorAddressForm
               isSubmitting={isSubmitting}
-              errors={errors.addresses}
+              errors={errors.addresses?.[0]}
               register={register}
               keyType="addresses"
-
             />
             {errors.addresses?.[0] && (
               <p className="text-red-500 text-sm px-2">
