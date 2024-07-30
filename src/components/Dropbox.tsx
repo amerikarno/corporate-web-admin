@@ -7,7 +7,7 @@ interface DropboxProps {
 const Dropbox: React.FC<DropboxProps> = ({ onDropdownSelect }) => {
   const [isDropDown, setIsDropDown] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] =
-    useState<string>("IDCard or Passport");
+    useState<string>("ID");
   const handleDropdownbtn = () => {
     setIsDropDown(!isDropDown);
   };
@@ -28,7 +28,7 @@ const Dropbox: React.FC<DropboxProps> = ({ onDropdownSelect }) => {
             text-center inline-flex items-center dark:bg-gray-600 dark:hover:gray-blue-700 dark:focus:ring-gray-800"
         type="button"
       >
-        {dropDownChoosed || "IDCard or Passport"}{" "}
+        {dropDownChoosed}{" "}
         <IoIosArrowDropdown className="text-2xl" />
       </button>
       <div
@@ -41,9 +41,9 @@ const Dropbox: React.FC<DropboxProps> = ({ onDropdownSelect }) => {
           className="border-black border-2 py-2 text-sm text-gray-700 dark:text-gray-200"
           aria-labelledby="dropdownDefaultButton"
         >
-          <li onClick={() => handleSelect("IDCard")}>
+          <li onClick={() => handleSelect("ID")}>
             <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-              CardID
+              ID
             </a>
           </li>
           <li onClick={() => handleSelect("Passport")}>

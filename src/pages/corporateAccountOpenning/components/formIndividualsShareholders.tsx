@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   // TBodyFormIndividualsShareholders,
   TIndividualsShareholders,
@@ -24,19 +24,25 @@ export function FormIndividualsShareholders({
   onsubmit,
   corporateCode,
 }: TShareHoldersFormProps) {
-  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
-  const [triggerDropboxError, setTriggerDropboxError] =
-    useState<boolean>(false);
-  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const [initError, setInitError] = useState<boolean>(false);
+  const [curInput, setCurInput] = useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
   const handleDropboxChoice = (choice: string) => {
     setDropDownChoosed(choice);
-    setDropBoxHadChoosed(true);
+  };
+
+  const handleChange = (e: any) => {
+    setInitError(false);
+    setCurInput(e.target.value !== "");
   };
 
   const reformattedData = (
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
     let tmp = { ...data };
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
     if (tmp.citizendId) {
       tmp = { ...tmp, passportId: "" };
     }
@@ -66,7 +72,7 @@ export function FormIndividualsShareholders({
       // console.log(formData);
       onsubmit(formData);
     } else {
-      setTriggerDropboxError(true);
+      setInitError(true);
     }
   };
 
@@ -75,7 +81,7 @@ export function FormIndividualsShareholders({
       <div id="Individuals Shareholders" className="space-y-10">
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">
-            Individuals who shareholders of juristic's owner
+            Individuals shareholders of juristic's owner
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
@@ -155,25 +161,21 @@ export function FormIndividualsShareholders({
             <div className="flex flex-row space-x-4">
               <div className="w-1/3">
                 <Dropbox onDropdownSelect={handleDropboxChoice} />
-                {triggerDropboxError && (
-                  <p className="text-red-500 text-sm px-2">
-                    Please Choose IDCard or Passport
-                  </p>
-                )}
               </div>
               <div className="w-1/3">
                 {dropDownChoosed ? (
-                  dropDownChoosed === "IDCard" ? (
+                  dropDownChoosed === "ID" ? (
                     <>
                       <Input
                         {...register("citizendId")}
-                        label="IDCard"
+                        label="Please fill ID"
                         id="idCard"
                         disabled={isSubmitting}
+                        onChange={handleChange}
                       />
-                      {triggerDropboxError && (
+                      {initError && !curInput && (
                         <p className="text-red-500 text-sm px-2">
-                          Please Insert IDcard
+                          Please Insert ID
                         </p>
                       )}
                     </>
@@ -181,11 +183,12 @@ export function FormIndividualsShareholders({
                     <>
                       <Input
                         {...register("passportID")}
-                        label="Passport"
+                        label="Please fill Passport"
                         id="passportID"
                         disabled={isSubmitting}
+                        onChange={handleChange}
                       />
-                      {triggerDropboxError && (
+                      {initError && !curInput && (
                         <p className="text-red-500 text-sm px-2">
                           Please Insert Passport
                         </p>
@@ -195,11 +198,17 @@ export function FormIndividualsShareholders({
                 ) : (
                   <>
                     <div className="relative w-full">
-                      <Input label="IDCard or Passport" id="passportID" />
+                      <Input
+                        {...register("citizendId")}
+                        label="Please fill ID"
+                        id="idCard"
+                        disabled={isSubmitting}
+                        onChange={handleChange}
+                      />
                     </div>
-                    {triggerDropboxError && (
+                    {initError && !curInput && (
                       <p className="text-red-500 text-sm px-2">
-                        Please Insert IDCard or Passport
+                        Please Insert ID
                       </p>
                     )}
                   </>

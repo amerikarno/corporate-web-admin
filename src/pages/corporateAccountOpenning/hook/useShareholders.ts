@@ -25,6 +25,7 @@ export function useShareholders() {
     const dt = new Date(data.expiryDate);
     let body: TBodyFormIndividualsShareholders = {
       fullNames: data.fullNames,
+      fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizendId ?? "",
