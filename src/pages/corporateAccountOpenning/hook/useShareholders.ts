@@ -33,7 +33,7 @@ export function useShareholders() {
       sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,
     };
-    console.log("body", body);
+    //console.log("body", body);
     try {
       const token = getCookies();
       const res = await axios.post("/api/v1/personals/create", body, {

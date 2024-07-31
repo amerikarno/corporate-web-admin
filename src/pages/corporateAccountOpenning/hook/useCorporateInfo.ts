@@ -63,7 +63,7 @@ export function useCorporateInfo() {
       corporateCode: "C20240725004",
     });
   //TODO: remove key and data after testing
-  const [corporateCode, setCorporateCode] = useState<string>("C20240731001");
+  const [corporateCode, setCorporateCode] = useState<string>("C20240731002");
 
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
