@@ -14,14 +14,7 @@ function login() {
             <h1 className="text-center font-bold text-3xl">
               FDA Corporate Admin
             </h1>
-            <div className="divide-y divide-solid divide-gray-400 space-y-10">
-              <h1 className="text-center font-bold text-3xl text-secondary">
-                FDA Corporate Admin
-              </h1>
-              <div className=" pt-10">
-                <LoginForm />
-              </div>
-            </div>
+            <LoginForm />
           </div>
         </section>
       </main>

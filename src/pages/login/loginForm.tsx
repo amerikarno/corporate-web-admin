@@ -3,7 +3,7 @@ import CryptoJs from "crypto-js";
 // import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken } from "@/features/authen/authenSlice";
+import { setToken } from "@/features/authen/authenSlice";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +13,7 @@ import { setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 
 const LoginForm = () => {
+  const token = useSelector((state: any) => state.authen.accessToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,11 +22,7 @@ const LoginForm = () => {
     password: z.string(),
   });
 
-  type AuthForm = {
-    email: string;
-    password: string;
-    exp: any;
-  };
+  type AuthForm = z.infer<typeof auth>;
 
   const {
     register,
@@ -52,7 +49,9 @@ const LoginForm = () => {
             hashedPassword: `${hashedPassword}`,
           },
           {
-            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
         )
         .then((res) => {
@@ -63,18 +62,12 @@ const LoginForm = () => {
         })
         .catch((err) => {
           setError("root", { message: err.message });
-        })
-        .finally(() => {
-          navigate("/welcome");
         });
-
-      // const cookie = Cookies.get("refreshToken");
-      // console.log("cookie", cookie);
+      console.log(token);
       if (token) {
-        const decoded = jwtDecode<jwtPayload>(token);
-        console.log("decoded", decoded);
+        const decoded = jwtDecode(token);
+        console.log(decoded);
       }
-      // navigate("/welcome");
     }
   };
 

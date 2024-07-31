@@ -1,12 +1,11 @@
-// import { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface AuthenState {
-  accessToken: string | null;
+  token: string | null;
 }
 
 const initialState: AuthenState = {
-  accessToken: null,
+  token: null,
 };
 
 export const authenSlice = createSlice({
@@ -20,6 +19,5 @@ export const authenSlice = createSlice({
   },
 });
 
-export const { setAccessToken } = authenSlice.actions;
-// export const selectToken = (state: RootState) => state.authen;
+export const { setToken } = authenSlice.actions;
 export default authenSlice.reducer;
