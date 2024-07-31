@@ -3,31 +3,14 @@ import { TDirector } from "../constants/types";
 import axios from "@/api/axios";
 import { formatDateToIsoString } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
-import { jwtDecode } from "jwt-decode";
+import { isExpiredToken } from "../libs/utils";
 
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
 
-  const token = getCookies();
-  const isExpiredToken = (): boolean => {
-    let isExpired = true;
-    if (token && token !== null) {
-      try {
-        const user = jwtDecode(token);
-
-        if (user && user.exp) {
-          const dateTime = new Date(user.exp * 1000);
-          isExpired = dateTime.getTime() > new Date().getTime();
-        } else {
-          console.log("Invalid token: exp field is missing.");
-        }
-      } catch (error) {
-        console.error("Failed to decode token:", error);
-      }
-    }
-    return isExpired;
-  };
+  
   const saveListOfDirector = async (data: TDirector) => {
+    const token = getCookies();
     let body = {
       ...data,
       expiryDate: formatDateToIsoString(data.expiryDate),
