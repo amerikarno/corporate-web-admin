@@ -3,14 +3,12 @@ import { TDirector } from "../constants/types";
 import axios from "@/api/axios";
 import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
-import { isExpiredToken } from "../libs/utils";
 
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
 
   
   const saveListOfDirector = async (data: TDirector) => {
-    const token = getCookies();
     let body = {
       ...data,
       expiryDate: formatDateToIsoString(data.expiryDate),
