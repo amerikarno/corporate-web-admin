@@ -33,7 +33,7 @@ export function PageJuristicType({
           </div>
           <div className="flex flex-row">
             <h1 className="w-1/4 font-bold">Tax ID</h1>
-            <h1 className="w-3/4">: {currentCorporatesInfo?.taxID ?? ""}</h1>
+            <h1 className="w-3/4">: {currentCorporatesInfo?.taxId ?? ""}</h1>
           </div>
           <div className="flex flex-row">
             <h1 className="w-1/4 font-bold">Date Of Incorporation</h1>

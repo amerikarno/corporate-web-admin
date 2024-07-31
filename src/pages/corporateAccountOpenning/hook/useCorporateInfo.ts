@@ -10,7 +10,7 @@ export function useCorporateInfo() {
     useState<TCorporateInfo>({
       name: "",
       registrationNo: "",
-      taxID: "",
+      taxId: "",
       dateofincorporation: new Date(""),
       registeredBusiness: {
         address: [
@@ -86,7 +86,7 @@ export function useCorporateInfo() {
       });
       // console.log(res);
       if (res.status === 200) {
-        console.log(res)
+        console.log(res);
         data.corporateCode = res.data.referenceID;
         setCorporatesInfo([...corporatesInfo, data]);
         setCurrentCorporatesInfo(data);

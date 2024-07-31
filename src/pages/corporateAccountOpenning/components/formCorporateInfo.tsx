@@ -180,12 +180,12 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <Input
               id={"Juristic Investor Tax ID"}
               label={"Tax ID"}
-              {...register("taxID")}
-              name="taxID"
+              {...register("taxId")}
+              name="taxId"
               disabled={isSubmitting}
             />
-            {errors.taxID && (
-              <p className="text-red-500">{errors.taxID.message}</p>
+            {errors.taxId && (
+              <p className="text-red-500">{errors.taxId.message}</p>
             )}
             {/* </SideLabelInput>
             <SideLabelInput title="Juristic Investor Email"> */}
@@ -289,6 +289,37 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           <div className="p-4 space-y-4">
             <h1 className="font-bold">Place Of Incorporate :</h1>
             <div className="flex flex-row space-x-4 "></div>
+            <div className="flex-col">
+              <Input
+                label="Email Address"
+                {...register("placeofIncorporation.emailAddress")}
+                name="placeofIncorporation.emailAddress"
+                id="emailAddress"
+                disabled={isSubmitting}
+                type="email"
+              />
+              {errors.placeofIncorporation?.emailAddress && (
+                <p className="text-red-500">
+                  {errors.placeofIncorporation.emailAddress.message}
+                </p>
+              )}
+            </div>
+
+            <div className="flex-col">
+              <Input
+                label="Telephone"
+                {...register("placeofIncorporation.telephone")}
+                name="placeofIncorporation.telephone"
+                id="telephone"
+                disabled={isSubmitting}
+                type="tel"
+              />
+              {errors.placeofIncorporation?.telephone && (
+                <p className="text-red-500">
+                  {errors.placeofIncorporation.telephone.message}
+                </p>
+              )}
+            </div>
             <CorporateAddressForm
               isSubmitting={isSubmitting}
               errors={errors.placeofIncorporation?.address?.[0]}
@@ -299,7 +330,37 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Registered/Business address :</h1>
+            <div className="flex-col">
+              <Input
+                label="Email Address"
+                {...register("registeredBusiness.emailAddress")}
+                name="registeredBusiness.emailAddress"
+                id="emailAddress"
+                disabled={isSubmitting}
+                type="email"
+              />
+              {errors.registeredBusiness?.emailAddress && (
+                <p className="text-red-500">
+                  {errors.registeredBusiness.emailAddress.message}
+                </p>
+              )}
+            </div>
 
+            <div className="flex-col">
+              <Input
+                label="Telephone"
+                {...register("registeredBusiness.telephone")}
+                name="registeredBusiness.telephone"
+                id="telephone"
+                disabled={isSubmitting}
+                type="tel"
+              />
+              {errors.registeredBusiness?.telephone && (
+                <p className="text-red-500">
+                  {errors.registeredBusiness.telephone.message}
+                </p>
+              )}
+            </div>
             <CorporateAddressForm
               errors={errors.registeredBusiness?.address?.[0]}
               register={register}

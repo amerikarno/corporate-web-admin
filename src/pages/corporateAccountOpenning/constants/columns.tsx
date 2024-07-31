@@ -22,7 +22,7 @@ export const columnsCorporateInfo = [
   },
   {
     name: "Tax ID",
-    selector: (row: TCorporateInfo) => row.taxID,
+    selector: (row: TCorporateInfo) => row.taxId,
   },
   {
     name: "Date of Incorporation",
@@ -76,11 +76,11 @@ export const columnsListOfDirectors: TableColumn<TDirector>[] = [
   },
   {
     name: "CitizenID",
-    selector: (row: TDirector) => row.citizendId || "",
+    selector: (row: TDirector) => row.citizenId || "",
   },
   {
     name: "PassportID",
-    selector: (row: TDirector) => row.passportID || "",
+    selector: (row: TDirector) => row.passportId || "",
   },
   {
     name: "Expired Date",

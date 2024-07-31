@@ -57,7 +57,7 @@ export type TCorporateInfo = {
   corporateCode?: string;
   name: string;
   registrationNo: string;
-  taxID: string;
+  taxId: string;
   dateofincorporation: Date;
   registeredThailand: boolean;
   primaryCountry: boolean;
@@ -137,8 +137,8 @@ export type TContactPerson = {
 export type TDirector = {
   corporateCode?: string;
   fullNames: TFullName[];
-  citizendId?: string;
-  passportID?: string;
+  citizenId?: string;
+  passportId?: string;
   expiryDate: Date;
   nationality: string;
   position: string;

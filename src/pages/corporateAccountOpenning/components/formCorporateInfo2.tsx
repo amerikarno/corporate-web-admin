@@ -50,6 +50,7 @@ export function FormCorporateTypeAndIncome({
     isDiabledJuristicType,
     isDisableSubSelected,
     validateForm,
+    saveJuristicType,
   } = useFormCorporateInfo2();
 
   const onSubmit = async (e: any) => {
@@ -61,33 +62,14 @@ export function FormCorporateTypeAndIncome({
         corporateCode: corporateCode,
       };
       console.log(mergeObj);
-      if (!isExpiredToken) {
-        await savejuristicType(mergeObj);
+      if (!isExpiredToken()) {
+        await saveJuristicType(mergeObj);
       }
     } else {
       console.log("submit failed");
     }
   };
 
-  const savejuristicType = async (data: any) => {
-    console.log("body", data);
-    try {
-      const token = getCookies();
-      const res = await axios.post("/api/v1/corporate/create-type", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // console.log(res);
-      if (res.status === 200) {
-        console.log("request success", res.data);
-      } else {
-        console.log("save failed");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <Card>
       <form onSubmit={(e) => onSubmit(e)} className="space-y-10">

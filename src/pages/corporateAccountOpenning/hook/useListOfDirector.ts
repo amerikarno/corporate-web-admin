@@ -7,13 +7,12 @@ import { getCookies } from "@/lib/Cookies";
 export function useListOfDirector() {
   const [directors, setDirectors] = useState<TDirector[]>([]);
 
-  
   const saveListOfDirector = async (data: TDirector) => {
     let body = {
       ...data,
-      expiryDate: formatDateToIsoString(data.expiryDate),
+      expiryDate: data.expiryDate.toISOString(),
     };
-    // console.log("body", body);
+    console.log("body", body);
     try {
       const token = getCookies();
       const res = await axios.post("/api/v1/personals/create", body, {
@@ -21,9 +20,13 @@ export function useListOfDirector() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
       if (res.status === 200) {
+        console.log(res);
         console.log("save successful");
+        setDirectors([...directors, data]);
+      } else {
+        console.log("save failed");
+        console.log(res);
       }
     } catch (error) {
       console.log(error);
@@ -31,7 +34,6 @@ export function useListOfDirector() {
   };
   const handleSubmitDirectors = async (data: TDirector) => {
     if (!isExpiredToken()) {
-      setDirectors([...directors, data]);
       await saveListOfDirector(data);
     } else {
       console.log("session expired");
