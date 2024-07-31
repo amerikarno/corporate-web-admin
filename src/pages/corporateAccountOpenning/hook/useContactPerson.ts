@@ -27,6 +27,8 @@ export function useContactPerson() {
       // console.log(res);
       if (res.status === 200) {
         console.log("save successful");
+      } else {
+        console.log("save failed");
       }
     } catch (error) {
       console.log(error);

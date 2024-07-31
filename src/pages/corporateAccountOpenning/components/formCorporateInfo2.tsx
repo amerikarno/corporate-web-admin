@@ -14,6 +14,9 @@ import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
+import { isExpiredToken } from "../libs/utils";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
@@ -49,7 +52,7 @@ export function FormCorporateTypeAndIncome({
     validateForm,
   } = useFormCorporateInfo2();
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     if (validateForm()) {
       let mergeObj = {
@@ -58,11 +61,33 @@ export function FormCorporateTypeAndIncome({
         corporateCode: corporateCode,
       };
       console.log(mergeObj);
+      if (!isExpiredToken) {
+        await savejuristicType(mergeObj);
+      }
     } else {
       console.log("submit failed");
     }
   };
 
+  const savejuristicType = async (data: any) => {
+    console.log("body", data);
+    try {
+      const token = getCookies();
+      const res = await axios.post("/api/v1/corporate/create-type", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log(res);
+      if (res.status === 200) {
+        console.log("request success", res.data);
+      } else {
+        console.log("save failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card>
       <form onSubmit={(e) => onSubmit(e)} className="space-y-10">
