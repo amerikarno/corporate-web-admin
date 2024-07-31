@@ -58,8 +58,8 @@ const placeIncorporateAddressSchema = z.object({
 
 export const corporateInfoSchema = z.object({
   name: z.string().min(1, "name cannot be empty"),
-  registrationNo: z.string().min(1, "commercialRegisteredNo cannot be empty"),
-  taxID: z.string().min(1, "taxId cannot be empty"),
+  registrationNo: z.string().min(1, "Registration number cannot be empty").regex(/^\d+$/, "Registration number must be a numbers"),
+  taxID: z.string().min(1, "taxId cannot be empty").regex(/^\d+$/, "taxId must be a numbers"),
   dateofincorporation: z.string().min(1,"date cannot be empty").transform((str) => {
     const date = new Date(str);
     if (isNaN(date.getTime())) {
@@ -224,9 +224,7 @@ export type TIndividualsDirectorSchema = z.infer<
 export const individualsJuristicShareholdersSchema = z.object({
   corporateCode: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
-  registrationNo: z
-    .string()
-    .min(1, { message: "Register Number cannot be empty" }),
+  registrationNo: z.string().min(1, "Registration number cannot be empty").regex(/^\d+$/, "Registration number must be a numbers"),
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),
