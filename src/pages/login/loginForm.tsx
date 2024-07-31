@@ -13,7 +13,6 @@ import { setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
