@@ -11,8 +11,8 @@ import { MoveRight } from "lucide-react";
 
 export default function Sidebar() {
   return (
-    <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice">
-      <Accordion type="single" collapsible className="p-2 ">
+    <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
+      <Accordion type="single" collapsible className="p-2">
         {urlConfig.map((item: TUrlConfig, index: number) => {
           return (
             <div key={index}>

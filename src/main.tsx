@@ -65,6 +65,7 @@ import { store } from "./app/store";
 // import CreateCorporate from "./pages/corporate/createCorporate";
 import BlankPage from "./pages/blankPages/blankPage";
 import CorporateAccountOpenning from "./pages/corporateAccountOpenning/CorporateAccountOpenning";
+import UploadFiles from "./pages/uploadFiles/uploadFiles";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const helmetContext = {};
@@ -115,6 +116,7 @@ root.render(
                   </Route>
                 </Route>
                 <Route path="blankPages" element={<BlankPage />} />
+                <Route path="upload" element={<UploadFiles />} />
               </Route>
             </Routes>
           </BrowserRouter>
