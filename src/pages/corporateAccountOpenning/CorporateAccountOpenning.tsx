@@ -17,15 +17,19 @@ type TPage = {
 
 export default function CorporateAccountOpenning() {
   const { page } = useParams<TPage>();
-  const pageId = page ? Number(page) : 1;
+  let pageId = page ? Number(page) : 1;
+
+
   const navigate = useNavigate();
   const {
     corporatesInfo,
     handleSubmitCorporateInfo,
     currentCorporatesInfo,
-    corporateCode,
   } = useCorporateInfo();
-
+  
+  const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  console.log(currentCorporatesInfo)
+  console.log(corporateCode)
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
@@ -48,17 +52,17 @@ export default function CorporateAccountOpenning() {
   };
 
   const handlePages = (type: string) => {
-    if (type == "next") {
-      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    } else {
-      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
-    }
+        if (type == "next") {
+        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+        } else {
+        navigate(`/create-job/added-corporate-account/${pageId - 1}`);
+        }
   };
 
   return (
     <div className="space-y-8 pb-8">
       {mappingPages[pageId]}
-      <CreateCorporateFooter handlePages={handlePages} pageId={pageId} />
+      <CreateCorporateFooter handlePages={handlePages} pageId={pageId} corporateCode={corporateCode} />
     </div>
   );
 }
