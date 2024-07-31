@@ -1,35 +1,65 @@
 export type TAddress = {
-  addressNo: string;
-  building?: string;
-  moo?: string;
-  soi?: string;
-  road?: string;
-  subDistrict: string;
-  district: string;
-  province: string;
-  postalCode: string;
-  phone: string;
-  email: string;
+  address: TSubAddress;
+  Telephone: string;
+  EmailAddress: string;
   type?: number;
+  //ขาด Country , Floor
+};
+
+export type TFullName = {
+  title: string;
+  firstName: string;
+  lastName: string;
+};
+
+export type TFullNameForCorporateInfo = [
+  {
+    title: string;
+    firstName: string;
+    lastName: string;
+  }
+];
+
+export type TSubAddress = {
+  AddressNo: string;
+  Building?: string;
+  MooNo?: string;
+  Soi?: string;
+  Road?: string;
+  Tambon: string;
+  Amphoe: string;
+  Province: string;
+  PostalCode: string;
+  Floor?: string;
+  Country: string;
+  //type?: number;
 };
 
 export type TFinancialInfo = {
-  registeredCapital?: string;
-  revenuePerYear?: string;
-  netProfit?: string;
-  shareholderEquity?: string;
+  RegisteredCapital?: number;
+  RevenuePerYear?: number;
+  NetProFitLoss?: number;
+  ShareholderEquity?: number;
 };
 
 export type TCorporateInfo = {
   name: string;
-  commercialRegisteredNo: string;
-  taxId: string;
-  dateIncorporation: string;
-  registeredCountry: string;
-  operateCountry: string;
-  registeredAddress: TAddress;
-  incorporatedAddress: TAddress;
+  registrationNo: string;
+  taxID: string;
+  dateofincorporation: Date;
+  registeredThailand: boolean;
+  primaryCountry: boolean;
+  registered: string;
+  registeredOther?: boolean;
+  primary: string;
+  primaryOther?: boolean;
+  registredBusinessAddress: TSubAddress;
+  placeIncorporateAddress: TSubAddress;
   financial?: TFinancialInfo;
+  placeIncorporateEmail?: string;
+  placeIncorporateTelephone?: string;
+  registredBusinessEmail?: string;
+  registredBusinessTelephone?: string;
 };
 
 export type TCorporateTypeAndIncome = {
@@ -40,15 +70,112 @@ export type TCorporateTypeAndIncome = {
   businessType: string;
   sourceOfIncome: string[];
   countrySourceOfIncome: string;
-  investmentObjective: string;
+  InvestmentObject: string;
+};
+
+export type TRegisteredCountryPrimaryCountryOperation = {
+  registered: string;
+  primary: string;
+  registeredThailand: boolean;
+  primaryCountry: boolean;
+  registeredOther?: boolean;
+  primaryOther?: boolean;
 };
 
 export type TIndividualsShareholders = {
-  title: string;
-  firstName: string;
-  lastName: string;
-  idCard: string;
+  fullNames: TFullName;
+  citizendId?: string;
+  passportID?: string;
   expiredDate: string;
   nationality: string;
-  shares: string;
+  sharePercentage: string;
+  Types?: string;
+};
+
+export type TBank = {
+  accountType: string;
+  bankName: string;
+  accountNo: string;
+  accountLocation: string;
+  swiftCode: string;
+};
+
+export type TAuthorizePerson = {
+  fullNames: TFullName;
+  citizendId?: string;
+  passportID?: string;
+  expiredDate: string;
+  nationality: string;
+  addresses: TSubAddress;
+  position: string;
+  Types?: string;
+};
+export type TContactPerson = {
+  fullNames: TFullName;
+  position: string;
+  division: string;
+  telephone: string;
+  email: string;
+};
+
+export type TDirector = {
+  fullNames: TFullName;
+  citizendId?: string;
+  passportID?: string;
+  expiredDate: string;
+  nationality: string;
+  position: string;
+  addresses: TSubAddress;
+  Types?: string;
+};
+
+export type TJuristicsShareholders = {
+  juristicName: string;
+  registrationNo: string;
+  registeredCountry: string;
+  sharePercentage: string;
+};
+
+export type TInitailJuristicTypeAndIncome = {
+  [key: string]: boolean;
+};
+export type TInitailJuristicOther = {
+  [key: string]: string;
+};
+
+export type TJuristicTypeObject = {
+  id: string;
+  name: string;
+  value: number;
+};
+
+export type TObjectJuristicType = {
+  id: string;
+  name: string;
+  value: number;
+};
+
+export type TJuristicType = {
+  main: TObjectJuristicType;
+  sub: TObjectJuristicType[];
+};
+
+export type TNumber = {
+  [key: string]: number;
+};
+export type TCorporateType = TNumber;
+export type TJuristicBusinessType = TNumber;
+export type TJuristicSourceOfIncome = TNumber;
+export type TJusristicInvestmentObjective = TNumber;
+export type TJuristicTypeAll = {
+  corporateCode: string;
+  corporateType: TCorporateType;
+  businessType: TJuristicBusinessType;
+  businessTypeOther: string;
+  sourceOfIncome: TJuristicSourceOfIncome;
+  sourceOfIncomeOther: string;
+  countrySourceOfIncomeThai: boolean;
+  countrySourceOfIncomeOther: string;
+  investmentObjective: TJusristicInvestmentObjective;
+  investmentObjectiveOther: string;
 };

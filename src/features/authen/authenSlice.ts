@@ -13,9 +13,9 @@ export const authenSlice = createSlice({
   name: "authen",
   initialState,
   reducers: {
-    setAccessToken: (state, action) => {
-      state.accessToken = action.payload;
-      console.log("state:",state.accessToken);
+    setToken: (state, action) => {
+      state.token = action.payload;
+      console.log(state.token);
     },
   },
 });

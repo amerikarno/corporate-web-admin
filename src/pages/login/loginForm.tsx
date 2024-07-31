@@ -1,25 +1,21 @@
 import { Input } from "@/components/ui/input";
 import CryptoJs from "crypto-js";
-import axios from "axios";
+// import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { setAccessToken } from "@/features/authen/authenSlice";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RootState } from "@/app/store";
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { setCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.authen.accessToken);
-  type jwtPayload = {
-    id: string;
-    email: string;
-    groups: number;
-    permission: number;
-  };
+  const navigate = useNavigate();
 
   const auth = z.object({
     email: z.string().email(),
@@ -50,7 +46,8 @@ const LoginForm = () => {
 
       axios
         .post(
-          "http://localhost:1323/api/v1/authen/login",
+          // "http://localhost:1323/admin/v2/login",
+          "/api/v1/authen/login",
           {
             hashedUsername: `${hashedUsername}`,
             hashedPassword: `${hashedPassword}`,
@@ -60,13 +57,15 @@ const LoginForm = () => {
           }
         )
         .then((res) => {
-          console.log("response", res);
-          sessionStorage.setItem("token", res.data.accessToken);
-          dispatch(setAccessToken(res.data.accessToken));
+          console.log(res);
+          dispatch(setToken(res.data.accessToken));
+          setCookies(res.data.accessToken);
+          navigate("/");
         })
         .catch((err) => {
           setError("root", { message: err.message });
-        }).finally(() => {
+        })
+        .finally(() => {
           navigate("/welcome");
         });
 
@@ -86,16 +85,27 @@ const LoginForm = () => {
         className="flex flex-col space-y-5"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Input {...register("email")} title="Email" name="email" />
+        <Input
+          {...register("email")}
+          title="Email"
+          name="email"
+          className="border-gray-900"
+        />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-        <Input {...register("password")} title="Password" name="password" />
+        <Input
+          {...register("password")}
+          title="Password"
+          name="password"
+          className="border-gray-900"
+        />
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
         <div className=" w-full pt-10">
-          <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
+          {/* <button className="bg-orange-400 rounded-lg py-2 ring-orange-600 w-full ring-1">
             Sign in
-          </button>
+          </button> */}
+          <Button className="w-full">Sign in</Button>
         </div>
         {errors.root && <p className="text-red-500">{errors.root.message}</p>}
       </form>

@@ -1,32 +1,41 @@
+import { FormAuthorizedPerson } from "./components/formAuthorization";
+import { FormBank } from "./components/formBank";
 import { FormCorporateInfo } from "./components/formCorporateInfo";
 import { FormCorporateTypeAndIncome } from "./components/formCorporateInfo2";
 import { FormIndividualsShareholders } from "./components/formIndividualsShareholders";
-import { TCorporateInfo, TCorporateTypeAndIncome } from "./constants/types";
+import { FormIndividualsContactPerson } from "./components/formContactPerson";
+import { FormIndividualsDirector } from "./components/formDirectorInfo";
+import { FormJuristicShareholders } from "./components/formJuristicShareholders";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getCookies } from "@/lib/Cookies";
+import { jwtDecode } from "jwt-decode";
 
 export default function CreateCorporate() {
-  const handleSubmitCorporateInfo = (data: TCorporateInfo) => {
-    console.log(data);
-    console.log("submit successful");
-  };
+  const token = useSelector((state: any) => state.authen.token);
+  console.log("token", token);
+  const cookie = token || getCookies();
+  const navigate = useNavigate();
+  let userData = null;
 
-  const handleSubmitCorporateInfo2 = (data: TCorporateTypeAndIncome) => {
-    console.log(data);
-    console.log("submit successful");
-  };
-
-  // const handleSubmitIndividualsShareholders = (
-  //   data: TCorporateTypeAndIncome
-  // ) => {
-  //   console.log(data);
-  //   console.log("submit successful");
-  // };
+  if (!cookie || cookie == null) {
+    navigate("/login");
+  } else {
+    userData = jwtDecode(cookie);
+    console.log("session", userData);
+  }
 
   return (
     <>
-      <div className="w-[1024px] mx-auto py-5 px-10">
-        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
-        <FormCorporateTypeAndIncome onsubmit={handleSubmitCorporateInfo2} />
-        <FormIndividualsShareholders />
+      <div className="max-w-[1024px] mx-auto py-5 px-10 space-y-6">
+        <FormCorporateInfo onsubmit={() => {}} />
+        <FormCorporateTypeAndIncome onsubmit={() => {}} />
+        <FormIndividualsContactPerson onsubmit={() => {}} />
+        <FormIndividualsDirector onsubmit={() => {}} />
+        <FormIndividualsShareholders onsubmit={() => {}} />
+        <FormJuristicShareholders onsubmit={() => {}} />
+        <FormAuthorizedPerson onsubmit={() => {}} />
+        <FormBank onsubmit={() => {}} />
       </div>
     </>
   );
