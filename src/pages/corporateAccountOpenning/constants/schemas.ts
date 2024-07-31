@@ -81,10 +81,16 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => {
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str, ctx) => {
     const date = new Date(str);
-    if (isNaN(date.getTime())) {
-      throw new Error("Invalid date");
+    if (!isNaN(date.getTime())) {
+      if (date < new Date()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "date cannot be past",
+          fatal: true,
+        });
+      }
     }
     return date;
   }),
@@ -137,7 +143,19 @@ export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => new Date(str)),
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str, ctx) => {
+    const date = new Date(str);
+    if (!isNaN(date.getTime())) {
+      if (date < new Date()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "date cannot be past",
+          fatal: true,
+        });
+      }
+    }
+    return date;
+  }),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   sharePercentage: z.preprocess(
     (a) => parseFloat(z.string().parse(a)),
@@ -176,10 +194,16 @@ export const authorizedPersonSchema = z.object({
   citizendId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => {
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str, ctx) => {
     const date = new Date(str);
-    if (isNaN(date.getTime())) {
-      throw new Error("Invalid date");
+    if (!isNaN(date.getTime())) {
+      if (date < new Date()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "date cannot be past",
+          fatal: true,
+        });
+      }
     }
     return date;
   }),
@@ -205,10 +229,16 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   citizendId: z.string().optional(),
   passportID: z.string().optional(),
-  expiryDate: z.string().min(1,"date cannot be empty").transform((str) => {
+  expiryDate: z.string().min(1,"date cannot be empty").transform((str, ctx) => {
     const date = new Date(str);
-    if (isNaN(date.getTime())) {
-      throw new Error("Invalid date");
+    if (!isNaN(date.getTime())) {
+      if (date < new Date()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "date cannot be past",
+          fatal: true,
+        });
+      }
     }
     return date;
   }),
