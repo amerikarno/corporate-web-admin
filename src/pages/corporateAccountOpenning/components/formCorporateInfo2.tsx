@@ -61,7 +61,7 @@ export function FormCorporateTypeAndIncome({
         corporateCode: corporateCode,
       };
       console.log(mergeObj);
-      if (!isExpiredToken) {
+      if (!isExpiredToken()) {
         await savejuristicType(mergeObj);
       }
     } else {
