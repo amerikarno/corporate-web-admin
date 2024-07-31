@@ -60,7 +60,7 @@ export function FormIndividualsContactPerson({
     };
     await sleep(500);
     reset();
-    console.log(formData);
+    // console.log(formData);
     onsubmit(formData);
   };
 

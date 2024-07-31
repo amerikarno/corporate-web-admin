@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
 import axios from "@/api/axios";
-import { formatDateToIsoString } from "../libs/utils";
+import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { isExpiredToken } from "../libs/utils";
 
@@ -17,6 +17,7 @@ export function useListOfDirector() {
     };
     // console.log("body", body);
     try {
+      const token = getCookies();
       const res = await axios.post("/api/v1/personals/create", body, {
         headers: {
           Authorization: `Bearer ${token}`,
