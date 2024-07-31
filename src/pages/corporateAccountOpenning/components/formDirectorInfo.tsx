@@ -12,6 +12,7 @@ import { TDirector } from "../constants/types";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useState } from "react";
 import Dropbox from "@/components/Dropbox";
+import { checkFormatIDCard } from "@/lib/utils";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
@@ -22,6 +23,8 @@ export function FormIndividualsDirector({
   onsubmit,
   corporateCode,
 }: TDirectorFormProps) {
+  const [triggeriderror,setTriggeriderror] = useState<string>("");
+  const [curInputText,setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
@@ -30,6 +33,7 @@ export function FormIndividualsDirector({
   };
 
   const handleChange = (e: any) => {
+    setCurInputText(e.target.value)
     setInitError(false);
     setCurInput(e.target.value !== "");
   };
@@ -56,10 +60,25 @@ export function FormIndividualsDirector({
     resolver: zodResolver(individualsDirectorSchema),
   });
 
+  const valideID = () =>{
+    if(dropDownChoosed === "ID"){
+      if(checkFormatIDCard(curInputText))
+        return true
+      setTriggeriderror("Invalid ID.")
+    }
+    if(dropDownChoosed === "Passport")
+        return true
+    return false
+  }
+
+
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     //const formData: TDirector={ ...data,Types:"101"}
-    if (curInput) {
+    if (curInput && valideID()) {
       const formData = validateData(data);
+      setCurInputText("")
+      setTriggeriderror("")
+      setCurInput(false)
       await sleep(500);
       reset();
       // console.log(formData);
@@ -186,6 +205,9 @@ export function FormIndividualsDirector({
                           Please Insert ID
                         </p>
                       )}
+                       <p className="text-red-500 text-sm px-2">
+                          {triggeriderror}
+                        </p>
                     </>
                   ) : (
                     <>
@@ -201,6 +223,9 @@ export function FormIndividualsDirector({
                           Please Insert Passport
                         </p>
                       )}
+                      <p className="text-red-500 text-sm px-2">
+                          {triggeriderror}
+                        </p>
                     </>
                   )
                 ) : (
@@ -219,6 +244,9 @@ export function FormIndividualsDirector({
                         Please Insert ID
                       </p>
                     )}
+                    <p className="text-red-500 text-sm px-2">
+                          {triggeriderror}
+                        </p>
                   </>
                 )}
               </div>

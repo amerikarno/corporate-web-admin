@@ -8,62 +8,60 @@ export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
   const [currentCorporatesInfo, setCurrentCorporatesInfo] =
     useState<TCorporateInfo>({
-      name: "a",
-      registrationNo: "a",
-      taxID: "a",
-      dateofincorporation: new Date("2024-07-04T00:00:00.000Z"),
+      name: "",
+      registrationNo: "",
+      taxID: "",
+      dateofincorporation: new Date(""),
       registeredBusiness: {
         address: [
           {
-            addressNo: "a",
-            building: "a",
-            floor: "a",
-            mooNo: "a",
-            soi: "a",
-            road: "a",
-            tambon: "a",
-            amphoe: "a",
-            province: "a",
-            postalCode: "a",
-            country: "a",
+            addressNo: "",
+            building: "",
+            floor: "",
+            mooNo: "",
+            soi: "",
+            road: "",
+            tambon: "",
+            amphoe: "",
+            province: "",
+            postalCode: "",
+            country: "",
           },
         ],
-        emailAddress: "a@gmail.com",
-        telephone: "1",
+        emailAddress: "",
+        telephone: "",
       },
       placeofIncorporation: {
         address: [
           {
-            addressNo: "a",
-            building: "a",
-            floor: "a",
-            mooNo: "a",
-            soi: "a",
-            road: "a",
-            tambon: "a",
-            amphoe: "a",
-            province: "a",
-            postalCode: "a",
-            country: "a",
+            addressNo: "",
+            building: "",
+            floor: "",
+            mooNo: "",
+            soi: "",
+            road: "",
+            tambon: "",
+            amphoe: "",
+            province: "",
+            postalCode: "",
+            country: "",
           },
         ],
-        emailAddress: "a@gmail.com",
-        telephone: "1",
+        emailAddress: "",
+        telephone: "",
       },
-      registeredCapital: 3,
+      registeredCapital: 0,
       revenuePerYear: 0,
       netProFitLoss: 0,
       shareholderEquity: 0,
-      registered: "Thailand",
+      registered: "",
       registeredOther: false,
       registeredThailand: true,
-      primary: "Thailand",
+      primary: "",
       primaryCountry: true,
       primaryOther: false,
-      corporateCode: "C20240725004",
+      corporateCode: "",
     });
-  //TODO: remove key and data after testing
-  const [corporateCode, setCorporateCode] = useState<string>("C20240730001");
 
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
@@ -88,9 +86,9 @@ export function useCorporateInfo() {
       });
       // console.log(res);
       if (res.status === 200) {
+        console.log(res)
         data.corporateCode = res.data.referenceID;
         setCorporatesInfo([...corporatesInfo, data]);
-        setCorporateCode(res.data.referenceID);
         setCurrentCorporatesInfo(data);
       }
     } catch (error) {
@@ -100,7 +98,6 @@ export function useCorporateInfo() {
 
   return {
     corporatesInfo,
-    corporateCode,
     currentCorporatesInfo,
     handleSubmitCorporateInfo,
   };
