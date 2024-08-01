@@ -5,16 +5,18 @@ import { Dropdown } from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
+import { TDropdownOption } from "./constant/type";
+import { items } from "./constant/variables";
 
 export default function UploadFiles() {
   const [file, setFile] = useState<File | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null);
-  const [fileType, setFileType] = useState<string | null>(null);
+  const [documentType, setDocumentType] = useState<TDropdownOption | null>(
+    null
+  );
 
-  const handleFileTypeChange = (
-    option: { key: string; value: string } | null
-  ) => {
-    option !== null ? setFileType(option.value) : setFileType(null);
+  const handleDocumnetTypeChange = (option: TDropdownOption | null) => {
+    option !== null ? setDocumentType(option) : setDocumentType(null);
     setFilePath(null);
     setFile(null);
   };
@@ -31,36 +33,51 @@ export default function UploadFiles() {
   };
 
   const handleUpload = async (file: File | null) => {
-    if (file !== null) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("date", new Date().toISOString());
-      fileType !== null ? formData.append("fileType", fileType) : null;
+    if (file && file !== null) {
+      const fileSizeInKB = file.size / 1024;
+      const fileSizeInMB = file.size / (1024 * 1024);
+      console.log("size in bytes", file.size);
+      console.log("size in KB", fileSizeInKB);
+      console.log("size in MB", fileSizeInMB);
 
-      console.log(new Date().toISOString(), fileType);
-      console.log(filePath, filePath?.endsWith(".pdf"));
+      if (fileSizeInMB < 2.0 && documentType !== null) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("name", file.name);
+        formData.append("fileType", file.type);
+        formData.append("doucumentType", documentType.value);
 
-      //   try {
-      //     const response = await axios.post("/upload", formData, {
-      //       headers: {
-      //         "Content-Type": "multipart/form-data",
-      //         Authorization: `Bearer ${getCookies()}`,
-      //       },
-      //     });
-      //     console.log("File uploaded successfully", response.data);
-      //   } catch (error) {
-      //     console.error("Error uploading file", error);
-      //   }
+        console.log(formData);
+        console.log(formData);
+        console.log(file);
+
+        for (var pair of formData.entries()) {
+          console.log(typeof pair[0], pair[0]);
+          console.log(typeof pair[1], JSON.stringify(pair[1]));
+        }
+
+        try {
+          const response = await axios.post("/api/v1/sftp/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          });
+          if (response.status === 200) {
+            console.log("File uploaded successfully", response.data);
+          } else {
+            console.log("Error uploading file", response.data);
+          }
+        } catch (error) {
+          console.error("Error uploading file", error);
+        }
+      } else {
+        alert("File size should be less than 2MB");
+      }
     } else {
-      console.log("No file selected");
+      alert("No file selected");
     }
   };
-
-  const items: { key: string; value: string }[] = [
-    { key: "PDF", value: "PDF" },
-    { key: "JPEG", value: "JPEG" },
-    { key: "PNG", value: "PNG" },
-  ];
 
   return (
     <div className="p-4">
@@ -68,48 +85,23 @@ export default function UploadFiles() {
         <CardHeader>Upload Files</CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-row space-x-6 items-center">
-            <h1>File Type</h1>
+            <h1>Document Type</h1>
             <div className="w-1/3 ">
-              <Dropdown items={items} onDropdownSelect={handleFileTypeChange} />
+              <Dropdown
+                items={items}
+                onDropdownSelect={handleDocumnetTypeChange}
+              />
             </div>
           </div>
-          {fileType && (
+          {documentType && (
             <div className="space-y-4">
               <Input type="file" onChange={handleInputChange} />
               <Button onClick={() => handleUpload(file)}>Upload</Button>
             </div>
-            // <div className="flex flex-row space-x-8">
-            //   <h1>Browse</h1>
-            //   <Input type="file" onChange={handleInputChange} />
-            // </div>
           )}
-          {/* {fileType && imageUrl && (
-            <div>
-              {fileType === "PDF" && imageUrl.endsWith(".pdf") && (
-                <div className="mt-4">
-                  <embed
-                    src={imageUrl}
-                    type="application/pdf"
-                    width="100%"
-                    height="600px"
-                  />
-                </div>
-              )}
-              {((fileType === "JPEG" && imageUrl.endsWith(".jpg")) ||
-                (fileType === "PNG" && imageUrl.endsWith(".png"))) && (
-                <div className="mt-4">
-                  <img
-                    src={imageUrl}
-                    alt="Selected file"
-                    className="max-w-full h-auto"
-                  />
-                </div>
-              )}
-            </div>
-          )} */}
         </CardContent>
       </Card>
-      {fileType && filePath && file && (
+      {documentType && filePath && file && (
         <>
           <div className="flex flex-row space-x-8">
             <p>lastModified</p>

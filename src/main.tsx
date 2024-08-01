@@ -113,10 +113,10 @@ root.render(
                         // </ProtectedRoute>
                       }
                     />
+                    <Route path="upload" element={<UploadFiles />} />
                   </Route>
                 </Route>
                 <Route path="blankPages" element={<BlankPage />} />
-                <Route path="upload" element={<UploadFiles />} />
               </Route>
             </Routes>
           </BrowserRouter>
