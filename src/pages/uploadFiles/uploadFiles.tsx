@@ -34,9 +34,9 @@ export default function UploadFiles() {
       if (fileSizeInMB < 2.0 && documentType !== null) {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("name", file.name);
-        formData.append("fileType", file.type);
-        formData.append("doucumentType", documentType.value);
+        formData.append("flieName", file.name);
+        formData.append("fileTypes", file.type);
+        formData.append("docTypes", documentType.value);
 
         try {
           const response = await axios.post("/api/v1/sftp/upload", formData, {
