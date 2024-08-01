@@ -17,7 +17,7 @@ export function PageIndividualShareholder({
       <div className="p-4 space-y-8">
         <Card>
           <DataTable
-            title="Individuals shareholders of juristic's owner"
+            title="List of Shareholders holding from 25% of shares"
             columns={columnsShareHolders}
             data={shareholders}
             clearSelectedRows

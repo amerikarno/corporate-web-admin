@@ -145,19 +145,6 @@ export function FormIndividualsContactPerson({
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("email")}
-                  label="Email"
-                  id="email"
-                  disabled={isSubmitting}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-1/2">
-                <Input
                   {...register("telephone")}
                   label="Telephone"
                   id="Telephone"
@@ -166,6 +153,19 @@ export function FormIndividualsContactPerson({
                 {errors.telephone && (
                   <p className="text-red-500 text-sm px-2">
                     {errors.telephone.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("email")}
+                  label="Email"
+                  id="email"
+                  disabled={isSubmitting}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.email.message}
                   </p>
                 )}
               </div>

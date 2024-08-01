@@ -15,12 +15,9 @@ export function PageCorporateInfo({
   return (
     <>
       <div className="p-4 space-y-8">
-        <Card>
-          <DataTable
-            title="Juristic Investor Information-For Account Opening"
-            columns={columnsCorporateInfo}
-            data={corporatesInfo}
-          />
+        <Card className="p-4">
+          <p className="text-xl font-bold">Instructions</p>
+          <div className="pt-4">In order to access the services offered by FINANSIA DIGITAL ASSET COMPANY LIMITED, you will need to complete and submit this account opening application form, due diligence questionnaire and declaration for accredited/institutional investors.</div>
         </Card>
         <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
       </div>
