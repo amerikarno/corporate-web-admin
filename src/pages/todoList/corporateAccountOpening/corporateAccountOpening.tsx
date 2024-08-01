@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import DataTable from "react-data-table-component";
 import { columnsCorporateInfo } from "./components/column";
-import { TCorporateAccountOpeningInfo } from "./constant/type";
 import { mockData } from "./constant/mock/mockData";
 
 export default function TodoCorporateAccountOpenning() {
@@ -28,9 +27,6 @@ export default function TodoCorporateAccountOpenning() {
   return (
     <div className="p-4 space-y-10">
       <Card>
-        {/* <CardHeader>
-          <CardTitle>Corporate Account Opening</CardTitle>
-        </CardHeader> */}
         <CardContent>
           <form
             className="grid grid-cols-2 gap-4 pt-4"
