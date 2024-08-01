@@ -84,7 +84,7 @@ export function FormAuthorizedPerson({
         fullNames: data.fullNames,
         corporateCode: corporateCode,
       };
-      console.log(body);
+      
       onsubmit(body);
     } else {
       setInitError(true);

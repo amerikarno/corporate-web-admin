@@ -131,7 +131,7 @@ export function FormIndividualsContactPerson({
               <div className="w-1/2">
                 <Input
                   {...register("division")}
-                  label="division"
+                  label="Division"
                   id="division"
                   disabled={isSubmitting}
                 />
@@ -146,7 +146,7 @@ export function FormIndividualsContactPerson({
               <div className="w-1/2">
                 <Input
                   {...register("email")}
-                  label="email"
+                  label="Email"
                   id="email"
                   disabled={isSubmitting}
                 />

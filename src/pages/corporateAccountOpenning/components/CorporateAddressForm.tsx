@@ -20,6 +20,19 @@ export function CorporateAddressForm({
   keyType,
 }: TSubAddressFormProps) {
   const fields = Object.entries(subAddressSchema.shape);
+  const newFields = [
+    "Address Number",
+    "Moo",
+    "Soi",
+    "Floor",
+    "Building",
+    "Road",
+    "Tambon",
+    "Amphoe",
+    "Province",
+    "PostalCode",
+    "Country"
+  ]
   // const optionalFields = ["Building", "MooNo", "Soi", "Road"];
   // const isOptional = (name: string) => {
   //   if (optionalFields.includes(name)) {
@@ -29,6 +42,31 @@ export function CorporateAddressForm({
   // };
   return (
     <>
+    <div className="grid md:grid-cols-2 gap-4">
+      {fields.map(([fieldName], index) => {
+        return (
+          <div key={index} className="flex-col">
+            {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
+              <Input
+                label={newFields[index]}
+                {...register(`${keyType}.address[0].${fieldName}` as any)}
+                name={`${keyType}.address[0].${fieldName}`}
+                id={fieldName}
+                //required={isOptional(fieldName)}
+                disabled={isSubmitting}
+                type={"text"}
+              />
+            {/* </SideLabelInput> */}
+            {errors && errors[fieldName as keyof TSubAddressSchema] && (
+              <p className="text-red-500">
+                {errors[fieldName as keyof TSubAddressSchema]?.message}
+              </p>
+            )}
+          </div>
+        );
+      })}
+    </div>
+
     <div className="flex-col">
         <Input
           label="Email Address"
@@ -50,30 +88,6 @@ export function CorporateAddressForm({
           disabled={isSubmitting}
           type="tel"
         />
-    </div>
-    <div className="grid md:grid-cols-2 gap-4">
-      {fields.map(([fieldName], index) => {
-        return (
-          <div key={index} className="flex-col">
-            {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
-              <Input
-                label={fieldName}
-                {...register(`${keyType}.address[0].${fieldName}` as any)}
-                name={`${keyType}.address[0].${fieldName}`}
-                id={fieldName}
-                //required={isOptional(fieldName)}
-                disabled={isSubmitting}
-                type={"text"}
-              />
-            {/* </SideLabelInput> */}
-            {errors && errors[fieldName as keyof TSubAddressSchema] && (
-              <p className="text-red-500">
-                {errors[fieldName as keyof TSubAddressSchema]?.message}
-              </p>
-            )}
-          </div>
-        );
-      })}
     </div>
     </>
   );

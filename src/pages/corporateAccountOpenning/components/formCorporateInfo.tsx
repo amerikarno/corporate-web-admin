@@ -287,7 +287,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           </div>
 
           <div className="p-4 space-y-4">
-            <h1 className="font-bold">Place Of Incorporate :</h1>
+            <h1 className="font-bold">Place Of Incorporate </h1>
             <div className="flex flex-row space-x-4 "></div>
             <CorporateAddressForm
               isSubmitting={isSubmitting}
@@ -298,7 +298,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           </div>
 
           <div className="p-4 space-y-4">
-            <h1 className="font-bold pb-4">Registered/Business address :</h1>
+            <h1 className="font-bold pb-4">Registered/Business address </h1>
 
             <CorporateAddressForm
               errors={errors.registeredBusiness?.address?.[0]}
@@ -309,7 +309,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
           </div>
 
           <div className="p-4 space-y-4">
-            <h1 className="col-span-4 font-bold">Financial Information :</h1>
+            <h1 className="col-span-4 font-bold">Financial Information </h1>
             {/* <SideLabelInput title="Registered Capital"> */}
             <Input
               id={"Registered Capital"}
@@ -320,6 +320,16 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             />
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
+            )}
+            <Input
+              id={"Revenue Per Year"}
+              label={"Revenue Per Year"}
+              {...register("revenuePerYear")}
+              name="financial.RevenuePerYear"
+              disabled={isSubmitting}
+            />
+            {errors.revenuePerYear && (
+              <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
             {/* </SideLabelInput>
             <SideLabelInput title="Net Profit (Loss)"> */}
@@ -335,21 +345,11 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             )}
             {/* </SideLabelInput>
             <SideLabelInput title="Revenue Per Year"> */}
-            <Input
-              id={"Revenue Per Year"}
-              label={"Revenue Per Year"}
-              {...register("revenuePerYear")}
-              name="financial.RevenuePerYear"
-              disabled={isSubmitting}
-            />
-            {errors.revenuePerYear && (
-              <p className="text-red-500">{errors.revenuePerYear.message}</p>
-            )}
             {/* </SideLabelInput>
             <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
               id={"Operating Expense Per Year"}
-              label={"Operating Expense Per Year"}
+              label={"Shareholder's equity"}
               {...register("shareholderEquity")}
               name="financial.ShareholderEquity"
               disabled={isSubmitting}

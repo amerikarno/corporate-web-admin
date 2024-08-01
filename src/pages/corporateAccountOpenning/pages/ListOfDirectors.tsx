@@ -20,7 +20,7 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
             clearSelectedRows
           />
         </Card>
-        Props
+
         <FormIndividualsDirector
           onsubmit={handleSubmitDirectors}
           corporateCode={corporateCode}
