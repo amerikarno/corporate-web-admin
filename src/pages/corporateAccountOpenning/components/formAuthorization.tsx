@@ -250,7 +250,7 @@ export function FormAuthorizedPerson({
           </div>
         </div>
         <h1 className="font-bold text-xl py-4">
-          Authorized Person's Address :
+          Authorized Person's Address 
         </h1>
         <AddressFormAuthorizedPerson
           isSubmitting={isSubmitting}

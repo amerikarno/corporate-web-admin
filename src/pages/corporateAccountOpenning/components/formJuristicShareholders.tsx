@@ -55,7 +55,7 @@ export function FormJuristicShareholders({
       >
         <Card className="p-4">
           <h1 className="font-bold text-xl py-4">
-            Juristics shareholders of juristic's owner :
+            Juristics shareholders of juristic's owner 
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
@@ -108,6 +108,7 @@ export function FormJuristicShareholders({
                   type="number"
                   step="0.01"
                   disabled={isSubmitting}
+                  //inputClassName="text-white focus:text-black"
                 />
                 {errors.sharePercentage && (
                   <p className="text-red-500 text-sm px-2">
