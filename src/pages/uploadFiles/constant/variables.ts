@@ -3,19 +3,26 @@ import { TDropdownOption } from "./type";
 export const items: TDropdownOption[] = [
   {
     id: 1,
-    value: "normal documents",
+    value: "Normal Documents (PDF)",
   },
   {
     id: 2,
-    value: "confidential documents",
+    value: "Confidential Documents (PDF)",
   },
   {
     id: 3,
-    value: "corporate documents",
+    value: "Corporate Documents (PDF)",
   },
-  { id: 4, value: "images" },
+  { id: 4, value: "Images (JPEG, JPG, PNG)" },
   {
     id: 5,
-    value: "others",
+    value: "Others",
   },
+];
+
+export const acceptedFileTypes = [
+  "application/pdf",
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
 ];
