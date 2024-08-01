@@ -10,6 +10,7 @@ import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
+import UploadFiles from "../uploadFiles/uploadFiles";
 
 type TPage = {
   page?: string;
@@ -19,14 +20,10 @@ export default function CorporateAccountOpenning() {
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
-
   const navigate = useNavigate();
-  const {
-    corporatesInfo,
-    handleSubmitCorporateInfo,
-    currentCorporatesInfo,
-  } = useCorporateInfo();
-  
+  const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
+    useCorporateInfo();
+
   const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
   const mappingPages: TMapPages = {
     1: (
@@ -47,20 +44,21 @@ export default function CorporateAccountOpenning() {
     6: <PageJuristicShareholder corporateCode={corporateCode} />,
     7: <PageAuthorizedPerson corporateCode={corporateCode} />,
     8: <PageBankAccount corporateCode={corporateCode} />,
+    9: <UploadFiles corporateCode={corporateCode} />,
   };
 
   const handlePages = (type: string) => {
-        if (type == "next") {
-        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-        } else {
-        navigate(`/create-job/added-corporate-account/${pageId - 1}`);
-        }
+    if (type == "next") {
+      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+    } else {
+      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
+    }
   };
 
   return (
     <div className="space-y-8 pb-8">
       {mappingPages[pageId]}
-      <CreateCorporateFooter handlePages={handlePages} pageId={pageId}/>
+      <CreateCorporateFooter handlePages={handlePages} pageId={pageId} />
     </div>
   );
 }

@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { useUploadFile } from "./hook/useUploadFile";
 import { items } from "./constant/variables";
 
-export default function UploadFiles() {
+type TUploadFilesProps = {
+  corporateCode: string;
+};
+export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
   const {
     file,
     documentType,
@@ -17,7 +20,7 @@ export default function UploadFiles() {
   return (
     <div className="p-4">
       <Card>
-        <CardHeader>Upload Files</CardHeader>
+        <CardHeader>Upload Documents</CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-row space-x-6 items-center">
             <h1>Document Type</h1>
@@ -36,6 +39,7 @@ export default function UploadFiles() {
           )}
         </CardContent>
       </Card>
+      <p>corporate code : {corporateCode}</p>
     </div>
   );
 }

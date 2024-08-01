@@ -114,7 +114,6 @@ root.render(
                         // </ProtectedRoute>
                       }
                     />
-                    <Route path="document-upload" element={<UploadFiles />} />
                   </Route>
                 </Route>
                 <Route path="todo-list" element={<Outlet />}>
