@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TAuthorizePerson } from "../constants/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +37,14 @@ export function FormAuthorizedPerson({
     setCurInput(e.target.value !== "");
   };
 
+  useEffect(()=>{
+    if (dropDownChoosed === "ID") {
+      resetField("passportId");
+    } else if (dropDownChoosed === "Passport") {
+      resetField("citizenId");
+    }
+},[dropDownChoosed])
+
   const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
     let tmp = { ...data };
     if (tmp.citizenId) {
@@ -53,6 +61,7 @@ export function FormAuthorizedPerson({
     register,
     handleSubmit,
     reset,
+    resetField,
     formState: { errors, isSubmitting },
   } = useForm<TAuthorizedPersonSchema>({
     resolver: zodResolver(authorizedPersonSchema),
