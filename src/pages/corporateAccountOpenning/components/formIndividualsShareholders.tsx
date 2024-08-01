@@ -14,6 +14,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import Dropbox from "@/components/Dropbox";
 import { Button } from "@/components/ui/button";
+import { checkFormatIDCard } from "@/lib/utils";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
@@ -24,6 +25,8 @@ export function FormIndividualsShareholders({
   onsubmit,
   corporateCode,
 }: TShareHoldersFormProps) {
+  const [triggeriderror,setTriggeriderror] = useState<string>(""); 
+  const [curInputText,setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
@@ -32,6 +35,7 @@ export function FormIndividualsShareholders({
   };
 
   const handleChange = (e: any) => {
+    setCurInputText(e.target.value)
     setInitError(false);
     setCurInput(e.target.value !== "");
   };
@@ -39,15 +43,17 @@ export function FormIndividualsShareholders({
   const reformattedData = (
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
+
     let tmp = { ...data };
     if (tmp.citizendId) {
-      tmp = { ...tmp, citizendId: "" };
+      tmp = { ...tmp, passportId: "" };
     }
     if (tmp.passportId) {
-      tmp = { ...tmp, passportId: "" };
+      tmp = { ...tmp, citizendId: "" };
     }
     tmp.types = 301;
     tmp.corporateCode = corporateCode;
+
     return tmp;
   };
 
@@ -60,12 +66,25 @@ export function FormIndividualsShareholders({
     resolver: zodResolver(individualsShareholdersSchema),
   });
 
+  const valideID = () =>{
+    if(dropDownChoosed === "ID"){
+      if(checkFormatIDCard(curInputText))
+        return true
+      setTriggeriderror("Invalid ID.")
+    }
+    if(dropDownChoosed === "Passport")
+        return true
+    return false
+  }
   const onSubmit = async (data: TIndividualsShareholders) => {
-    if (curInput) {
+    if (curInput && valideID()) {
       const formData = reformattedData(data);
+      setCurInputText("")
+      setTriggeriderror("")
+      setCurInput(false)
       await sleep(500);
       reset();
-      // console.log(formData);
+      console.log(formData);
       onsubmit(formData);
     } else {
       setInitError(true);
@@ -174,6 +193,9 @@ export function FormIndividualsShareholders({
                           Please Insert ID
                         </p>
                       )}
+                      <p className="text-red-500 text-sm px-2">
+                          {triggeriderror}
+                        </p>
                     </>
                   ) : (
                     <>
@@ -189,6 +211,9 @@ export function FormIndividualsShareholders({
                           Please Insert Passport
                         </p>
                       )}
+                        <p className="text-red-500 text-sm px-2">
+                          {triggeriderror}
+                        </p>
                     </>
                   )
                 ) : (
@@ -207,6 +232,9 @@ export function FormIndividualsShareholders({
                         Please Insert ID
                       </p>
                     )}
+                        <p className="text-red-500 text-sm px-2">
+                          {triggeriderror}
+                        </p>
                   </>
                 )}
               </div>

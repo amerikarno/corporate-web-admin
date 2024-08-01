@@ -23,6 +23,8 @@ import {
 } from "../constants/initialData";
 import { z, ZodIssue } from "zod";
 import { corporateTypeAndIncomeSchema } from "../constants/schemas";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 export function useFormCorporateInfo2() {
   const [corporateTypeAndIncome, setCorporateTypeAndIncome] =
@@ -353,6 +355,26 @@ export function useFormCorporateInfo2() {
     }
   };
 
+  const saveJuristicType = async (data: any) => {
+    console.log("body", data);
+    try {
+      const token = getCookies();
+      const res = await axios.post("/api/v1/corporate/create-type", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log(res);
+      if (res.status === 200) {
+        console.log("request success", res.data);
+      } else {
+        console.log("save failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     corporateTypeAndIncome,
     isBusinessTypeOthers,
@@ -376,5 +398,6 @@ export function useFormCorporateInfo2() {
     isDiabledJuristicType,
     isDisableSubSelected,
     validateForm,
+    saveJuristicType,
   };
 }

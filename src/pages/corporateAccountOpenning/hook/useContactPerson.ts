@@ -24,8 +24,8 @@ export function useContactPerson() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
       if (res.status === 200) {
+        console.log(res);
         console.log("save successful");
       } else {
         console.log("save failed");
