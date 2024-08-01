@@ -62,7 +62,7 @@ export default function CorporateAccountOpenning() {
   return (
     <div className="space-y-8 pb-8">
       {mappingPages[pageId]}
-      <CreateCorporateFooter handlePages={handlePages} pageId={pageId} corporateCode={corporateCode} />
+      <CreateCorporateFooter handlePages={handlePages} pageId={pageId}/>
     </div>
   );
 }

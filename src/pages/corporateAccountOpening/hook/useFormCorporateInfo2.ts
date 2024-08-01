@@ -25,6 +25,7 @@ import { z, ZodIssue } from "zod";
 import { corporateTypeAndIncomeSchema } from "../constants/schemas";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { useNavigate } from "react-router-dom";
 
 export function useFormCorporateInfo2() {
   const [corporateTypeAndIncome, setCorporateTypeAndIncome] =
@@ -354,7 +355,7 @@ export function useFormCorporateInfo2() {
       }
     }
   };
-
+  const navigate = useNavigate();
   const saveJuristicType = async (data: any) => {
     console.log("body", data);
     try {
@@ -367,11 +368,14 @@ export function useFormCorporateInfo2() {
       // console.log(res);
       if (res.status === 200) {
         console.log("request success", res.data);
+        navigate("/create-job/added-corporate-account/3")
       } else {
+        alert("Invalid Input.")
         console.log("save failed");
       }
     } catch (error) {
       console.log(error);
+      alert(error)
     }
   };
 

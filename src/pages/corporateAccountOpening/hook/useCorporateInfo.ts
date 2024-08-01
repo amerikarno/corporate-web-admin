@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
+import { useNavigate } from "react-router-dom";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
@@ -71,6 +72,7 @@ export function useCorporateInfo() {
     }
   };
 
+  const navigate = useNavigate();
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     let body = {
       ...data,
@@ -87,12 +89,16 @@ export function useCorporateInfo() {
       // console.log(res);
       if (res.status === 200) {
         console.log(res);
-        data.corporateCode = res.data.referenceID;
+        data.corporateCode = res.data.CorporateCode;
         setCorporatesInfo([...corporatesInfo, data]);
         setCurrentCorporatesInfo(data);
+        navigate("/create-job/added-corporate-account/2")
+      }else{
+        alert("Invalid Input.")
       }
     } catch (error) {
       console.log(error);
+      alert(error)
     }
   };
 
