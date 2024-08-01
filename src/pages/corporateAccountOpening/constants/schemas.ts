@@ -292,18 +292,7 @@ export type TIndividualsContactPersonSchema = z.infer<
 
 export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
-  citizenId: z
-    .string()
-    .superRefine((val, ctx) => {
-      if (!checkFormatIDCard(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "invalid citizenId",
-          fatal: true,
-        });
-      }
-    })
-    .optional(),
+  citizenId: z.string().optional(),
   passportId: z.string().optional(),
   expiryDate: z
     .string()

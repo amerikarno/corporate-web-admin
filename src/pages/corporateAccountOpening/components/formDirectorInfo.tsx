@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  directorInfoSchema,
   individualsDirectorSchema,
   TIndividualsDirectorSchema,
 } from "../constants/schemas";
@@ -57,7 +58,7 @@ export function FormIndividualsDirector({
     formState: { errors, isSubmitting },
     reset,
   } = useForm<TDirector>({
-    resolver: zodResolver(individualsDirectorSchema),
+    resolver: zodResolver(directorInfoSchema),
   });
 
   const valideID = () => {
@@ -185,7 +186,7 @@ export function FormIndividualsDirector({
                         <Input
                           {...register("passportId")}
                           label="Please fill Passport"
-                          id="passportID"
+                          id="passportId"
                           disabled={isSubmitting}
                           onChange={handleChange}
                         />
