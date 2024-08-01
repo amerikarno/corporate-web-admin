@@ -95,7 +95,6 @@ export const directorInfoSchema = z.object({
     return date;
   }),
   nationality: z.string().min(1, "nationality cannot be empty"),
-  position: z.string().min(1, "position cannot be empty"),
   addresses: z.array(subAddressSchema),
 });
 
@@ -208,7 +207,6 @@ export const authorizedPersonSchema = z.object({
     return date;
   }),
   addresses: z.array(subAddressSchema),
-  position: z.string().min(1, "position cannot be empty"),
 });
 
 export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
@@ -243,7 +241,6 @@ export const individualsDirectorSchema = z.object({
     return date;
   }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
-  position: z.string().min(1, { message: "Position cannot be empty" }),
   addresses: z.array(subAddressSchema),
 });
 

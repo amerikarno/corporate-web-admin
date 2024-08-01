@@ -91,10 +91,6 @@ export const columnsListOfDirectors: TableColumn<TDirector>[] = [
     name: "Nationality",
     selector: (row: TDirector) => row.nationality || "",
   },
-  {
-    name: "Position",
-    selector: (row: TDirector) => row.position || "",
-  },
   // {
   //   name: "Address",
   //   selector: (row: TDirector) => row.addresses || '',
@@ -137,10 +133,6 @@ export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
   {
     name: "Nationality",
     selector: (row: TAuthorizePerson) => row.nationality || "",
-  },
-  {
-    name: "Position",
-    selector: (row: TAuthorizePerson) => row.position || "",
   },
   // {
   //   name: "Address",

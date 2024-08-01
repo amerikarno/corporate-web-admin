@@ -157,100 +157,75 @@ export function FormIndividualsDirector({
                 )}
               </div>
             </div>
-            <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                <Input
-                  {...register("nationality")}
-                  label="Nationality"
-                  id="Nationality"
-                  disabled={isSubmitting}
-                />
-                {errors.nationality && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.nationality.message}
-                  </p>
-                )}
-              </div>
-              <div className="w-1/2">
-                <Input
-                  {...register("position")}
-                  label="Position"
-                  id="position"
-                  disabled={isSubmitting}
-                />
-                {errors.position && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.position.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-              <div className="w-1/3">
-                <Dropbox onDropdownSelect={handleDropboxChoice} />
-              </div>
-              <div className="w-1/3">
-                {dropDownChoosed ? (
-                  dropDownChoosed === "ID" ? (
+
+            <div className="flex flex-col space-y-4 md:space-x-4 md:space-y-0 md:flex-row items-center">
+              <div className="w-full md:w-1/2 flex flex-row items-center justify-between gap-4">
+                <div className="w-full md:w-1/2">
+                  <Dropbox onDropdownSelect={handleDropboxChoice} />
+                </div>
+                <div className="w-full md:w-1/2">
+                  {dropDownChoosed ? (
+                    dropDownChoosed === "ID" ? (
+                      <>
+                        <Input
+                          {...register("citizendId")}
+                          label="Please fill ID"
+                          id="idCard"
+                          disabled={isSubmitting}
+                          onChange={handleChange}
+                        />
+                        {initError && !curInput && (
+                          <p className="text-red-500 text-sm px-2">
+                            Please Insert ID
+                          </p>
+                        )}
+                        <p className="text-red-500 text-sm px-2">
+                            {triggeriderror}
+                          </p>
+                      </>
+                    ) : (
+                      <>
+                        <Input
+                          {...register("passportID")}
+                          label="Please fill Passport"
+                          id="passportID"
+                          disabled={isSubmitting}
+                          onChange={handleChange}
+                        />
+                        {initError && !curInput && (
+                          <p className="text-red-500 text-sm px-2">
+                            Please Insert Passport
+                          </p>
+                        )}
+                        <p className="text-red-500 text-sm px-2">
+                            {triggeriderror}
+                          </p>
+                      </>
+                    )
+                  ) : (
                     <>
-                      <Input
-                        {...register("citizendId")}
-                        label="Please fill ID"
-                        id="idCard"
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                      />
+                      <div className="relative w-full">
+                        <Input
+                          {...register("citizendId")}
+                          label="Please fill ID"
+                          id="idCard"
+                          disabled={isSubmitting}
+                          onChange={handleChange}
+                        />
+                      </div>
                       {initError && !curInput && (
                         <p className="text-red-500 text-sm px-2">
                           Please Insert ID
                         </p>
                       )}
-                       <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
-                    </>
-                  ) : (
-                    <>
-                      <Input
-                        {...register("passportID")}
-                        label="Please fill Passport"
-                        id="passportID"
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                      />
-                      {initError && !curInput && (
-                        <p className="text-red-500 text-sm px-2">
-                          Please Insert Passport
-                        </p>
-                      )}
                       <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                            {triggeriderror}
+                          </p>
                     </>
-                  )
-                ) : (
-                  <>
-                    <div className="relative w-full">
-                      <Input
-                        {...register("citizendId")}
-                        label="Please fill ID"
-                        id="idCard"
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    {initError && !curInput && (
-                      <p className="text-red-500 text-sm px-2">
-                        Please Insert ID
-                      </p>
-                    )}
-                    <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
-                  </>
-                )}
+                  )}
+                </div>
               </div>
-              <div className="w-1/3">
+              <div className="w-full md:w-1/2">
                 <Input
                   {...register("expiryDate")}
                   label="Date of Expired"
@@ -263,6 +238,25 @@ export function FormIndividualsDirector({
                     {errors.expiryDate.message}
                   </p>
                 )}
+              </div>
+            </div>
+
+            <div className="flex flex-row space-x-0 md:space-x-4">
+              <div className="w-full md:w-1/2">
+                <Input
+                  {...register("nationality")}
+                  label="Nationality"
+                  id="Nationality"
+                  disabled={isSubmitting}
+                />
+                {errors.nationality && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.nationality.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-0 md:w-1/2">
+              
               </div>
             </div>
 

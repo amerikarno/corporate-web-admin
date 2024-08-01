@@ -122,7 +122,6 @@ export type TAuthorizePerson = {
   expiryDate: Date;
   nationality: string;
   addresses: TSubAddress[];
-  position: string;
   types?: number;
 };
 export type TContactPerson = {
@@ -141,7 +140,6 @@ export type TDirector = {
   passportID?: string;
   expiryDate: Date;
   nationality: string;
-  position: string;
   addresses: TSubAddress[];
   types?: number;
 };
