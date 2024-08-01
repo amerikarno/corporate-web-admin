@@ -4,6 +4,7 @@ import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
 import { useNavigate } from "react-router-dom";
+import { sleep } from "@/lib/utils";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
@@ -92,6 +93,7 @@ export function useCorporateInfo() {
         data.corporateCode = res.data.CorporateCode;
         setCorporatesInfo([...corporatesInfo, data]);
         setCurrentCorporatesInfo(data);
+        await sleep(500);
         navigate("/create-job/added-corporate-account/2");
       } else {
         alert("Invalid Input.");
