@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   // TBodyFormIndividualsShareholders,
   TIndividualsShareholders,
@@ -34,6 +34,14 @@ export function FormIndividualsShareholders({
     setDropDownChoosed(choice);
   };
 
+  useEffect(()=>{
+      if (dropDownChoosed === "ID") {
+        resetField("passportId");
+      } else if (dropDownChoosed === "Passport") {
+        resetField("citizenId");
+      }
+  },[dropDownChoosed])
+
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
     setInitError(false);
@@ -61,10 +69,11 @@ export function FormIndividualsShareholders({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    resetField
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
   });
-
+  
   const valideID = () => {
     if (dropDownChoosed === "ID") {
       if (checkFormatIDCard(curInputText)) return true;

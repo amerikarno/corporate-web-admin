@@ -11,7 +11,7 @@ import {
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
 import { DirectorAddressForm } from "./directorAddressForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
 import { checkFormatIDCard } from "@/lib/utils";
 
@@ -32,6 +32,14 @@ export function FormIndividualsDirector({
   const handleDropboxChoice = (choice: string) => {
     setDropDownChoosed(choice);
   };
+
+  useEffect(()=>{
+    if (dropDownChoosed === "ID") {
+      resetField("passportId");
+    } else if (dropDownChoosed === "Passport") {
+      resetField("citizenId");
+    }
+},[dropDownChoosed])
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -57,6 +65,7 @@ export function FormIndividualsDirector({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    resetField
   } = useForm<TDirector>({
     resolver: zodResolver(directorInfoSchema),
   });
