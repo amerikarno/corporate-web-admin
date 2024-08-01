@@ -2,7 +2,7 @@ import React from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setAccessToken } from "@/features/authen/authenSlice";
+import { setToken } from "@/features/authen/authenSlice";
 import { useNavigate } from "react-router-dom";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -22,7 +22,7 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
         .then((res) => {
           console.log("response", res);
           sessionStorage.setItem("token", res.data.accessToken);
-          dispatch(setAccessToken(res.data.accessToken));
+          dispatch(setToken(res.data.accessToken));
         })
         .catch((err) => {
           console.log("root", { message: err.message });
