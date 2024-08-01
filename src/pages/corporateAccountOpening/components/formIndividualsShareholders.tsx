@@ -25,8 +25,8 @@ export function FormIndividualsShareholders({
   onsubmit,
   corporateCode,
 }: TShareHoldersFormProps) {
-  const [triggeriderror,setTriggeriderror] = useState<string>(""); 
-  const [curInputText,setCurInputText] = useState<string>("");
+  const [triggeriderror, setTriggeriderror] = useState<string>("");
+  const [curInputText, setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
@@ -35,7 +35,7 @@ export function FormIndividualsShareholders({
   };
 
   const handleChange = (e: any) => {
-    setCurInputText(e.target.value)
+    setCurInputText(e.target.value);
     setInitError(false);
     setCurInput(e.target.value !== "");
   };
@@ -43,13 +43,12 @@ export function FormIndividualsShareholders({
   const reformattedData = (
     data: TIndividualsShareholders
   ): TIndividualsShareholders => {
-
     let tmp = { ...data };
-    if (tmp.citizendId) {
+    if (tmp.citizenId) {
       tmp = { ...tmp, passportId: "" };
     }
     if (tmp.passportId) {
-      tmp = { ...tmp, citizendId: "" };
+      tmp = { ...tmp, citizenId: "" };
     }
     tmp.types = 301;
     tmp.corporateCode = corporateCode;
@@ -66,22 +65,20 @@ export function FormIndividualsShareholders({
     resolver: zodResolver(individualsShareholdersSchema),
   });
 
-  const valideID = () =>{
-    if(dropDownChoosed === "ID"){
-      if(checkFormatIDCard(curInputText))
-        return true
-      setTriggeriderror("Invalid ID.")
+  const valideID = () => {
+    if (dropDownChoosed === "ID") {
+      if (checkFormatIDCard(curInputText)) return true;
+      setTriggeriderror("Invalid ID.");
     }
-    if(dropDownChoosed === "Passport")
-        return true
-    return false
-  }
+    if (dropDownChoosed === "Passport") return true;
+    return false;
+  };
   const onSubmit = async (data: TIndividualsShareholders) => {
     if (curInput && valideID()) {
       const formData = reformattedData(data);
-      setCurInputText("")
-      setTriggeriderror("")
-      setCurInput(false)
+      setCurInputText("");
+      setTriggeriderror("");
+      setCurInput(false);
       await sleep(500);
       reset();
       console.log(formData);
@@ -182,7 +179,7 @@ export function FormIndividualsShareholders({
                   dropDownChoosed === "ID" ? (
                     <>
                       <Input
-                        {...register("citizendId")}
+                        {...register("citizenId")}
                         label="Please fill ID"
                         id="idCard"
                         disabled={isSubmitting}
@@ -194,13 +191,13 @@ export function FormIndividualsShareholders({
                         </p>
                       )}
                       <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                        {triggeriderror}
+                      </p>
                     </>
                   ) : (
                     <>
                       <Input
-                        {...register("passportID")}
+                        {...register("passportId")}
                         label="Please fill Passport"
                         id="passportID"
                         disabled={isSubmitting}
@@ -211,16 +208,16 @@ export function FormIndividualsShareholders({
                           Please Insert Passport
                         </p>
                       )}
-                        <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                      <p className="text-red-500 text-sm px-2">
+                        {triggeriderror}
+                      </p>
                     </>
                   )
                 ) : (
                   <>
                     <div className="relative w-full">
                       <Input
-                        {...register("citizendId")}
+                        {...register("citizenId")}
                         label="Please fill ID"
                         id="idCard"
                         disabled={isSubmitting}
@@ -232,9 +229,9 @@ export function FormIndividualsShareholders({
                         Please Insert ID
                       </p>
                     )}
-                        <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                    <p className="text-red-500 text-sm px-2">
+                      {triggeriderror}
+                    </p>
                   </>
                 )}
               </div>

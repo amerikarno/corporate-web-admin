@@ -155,7 +155,10 @@ export const urlConfig: TUrlConfig[] = [
     header: " TO DO List",
     icon: "icon",
     children: [
-      { label: "corporate account opening", href: "/blankPages" },
+      {
+        label: "corporate account opening",
+        href: "/todo-list/corporate-account-opening",
+      },
       { label: "individual account opening", href: "/blankPages" },
       { label: "whitelist(bank)", href: "/blankPages" },
       { label: "change info", href: "/blankPages" },

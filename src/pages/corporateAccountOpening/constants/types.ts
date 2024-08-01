@@ -97,7 +97,7 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 export type TIndividualsShareholders = {
   corporateCode?: string;
   fullNames: TFullName[];
-  citizendId?: string;
+  citizenId?: string;
   passportId?: string;
   expiryDate: Date;
   nationality: string;
@@ -117,7 +117,7 @@ export type TBank = {
 export type TAuthorizePerson = {
   corporateCode?: string;
   fullNames: TFullName[];
-  citizendId?: string;
+  citizenId?: string;
   passportID?: string;
   expiryDate: Date;
   nationality: string;
@@ -216,8 +216,8 @@ export type TBodyFormIndividualsShareholders = {
 export type Person = {
   fullNames: TFullName[];
   referenceID: string;
-  citizendId?: string;
-  passportID?: string;
+  citizenId?: string;
+  passportId?: string;
   expiryDate: string;
   nationality: string;
   position: string;

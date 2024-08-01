@@ -27,7 +27,7 @@ export function useShareholders() {
       fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
-      citizenId: data.citizendId ?? "",
+      citizenId: data.citizenId ?? "",
       expiryDate: dt.toISOString(),
       nationality: data.nationality,
       sharePercentage: data.sharePercentage,

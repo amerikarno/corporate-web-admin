@@ -64,8 +64,9 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 // import CreateCorporate from "./pages/corporate/createCorporate";
 import BlankPage from "./pages/blankPages/blankPage";
-import CorporateAccountOpenning from "./pages/corporateAccountOpenning/CorporateAccountOpenning";
+import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateAccountOpenning";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
+import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const helmetContext = {};
@@ -115,6 +116,13 @@ root.render(
                     />
                     <Route path="upload" element={<UploadFiles />} />
                   </Route>
+                </Route>
+                <Route path="todo-list" element={<Outlet />}>
+                  <Route index element={<TodoCorporateAccountOpenning />} />
+                  <Route
+                    path="corporate-account-opening"
+                    element={<TodoCorporateAccountOpenning />}
+                  />
                 </Route>
                 <Route path="blankPages" element={<BlankPage />} />
               </Route>

@@ -22,8 +22,8 @@ export function FormAuthorizedPerson({
   onsubmit,
   corporateCode,
 }: TAuthorizePersonFormProps) {
-  const [triggeriderror,setTriggeriderror] = useState<string>("");
-  const [curInputText,setCurInputText] = useState<string>("");
+  const [triggeriderror, setTriggeriderror] = useState<string>("");
+  const [curInputText, setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
@@ -32,18 +32,18 @@ export function FormAuthorizedPerson({
   };
 
   const handleChange = (e: any) => {
-    setCurInputText(e.target.value)
+    setCurInputText(e.target.value);
     setInitError(false);
     setCurInput(e.target.value !== "");
   };
 
   const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
     let tmp = { ...data };
-    if (tmp.citizendId) {
+    if (tmp.citizenId) {
       tmp = { ...tmp, passportID: "" };
     }
     if (tmp.passportID) {
-      tmp = { ...tmp, citizendId: "" };
+      tmp = { ...tmp, citizenId: "" };
     }
     //tmp = { ...tmp, types: "201" };
     return tmp;
@@ -58,23 +58,21 @@ export function FormAuthorizedPerson({
     resolver: zodResolver(authorizedPersonSchema),
   });
 
-  const valideID = () =>{
-    if(dropDownChoosed === "ID"){
-      if(checkFormatIDCard(curInputText))
-        return true
-      setTriggeriderror("Invalid ID.")
+  const valideID = () => {
+    if (dropDownChoosed === "ID") {
+      if (checkFormatIDCard(curInputText)) return true;
+      setTriggeriderror("Invalid ID.");
     }
-    if(dropDownChoosed === "Passport")
-        return true
-    return false
-  }
+    if (dropDownChoosed === "Passport") return true;
+    return false;
+  };
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
     if (curInput && valideID()) {
       const formData = validateData(data);
-      setCurInputText("")
-      setTriggeriderror("")
-      setCurInput(false)
+      setCurInputText("");
+      setTriggeriderror("");
+      setCurInput(false);
       await sleep(500);
       reset();
       let body: TAuthorizePerson = {
@@ -180,7 +178,7 @@ export function FormAuthorizedPerson({
               dropDownChoosed === "ID" ? (
                 <>
                   <Input
-                    {...register("citizendId")}
+                    {...register("citizenId")}
                     label="Please fill ID"
                     id="idCard"
                     disabled={isSubmitting}
@@ -191,14 +189,12 @@ export function FormAuthorizedPerson({
                       Please Insert ID
                     </p>
                   )}
-                  <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                  <p className="text-red-500 text-sm px-2">{triggeriderror}</p>
                 </>
               ) : (
                 <>
                   <Input
-                    {...register("passportID")}
+                    {...register("passportId")}
                     label="Please fill Passport"
                     id="passportID"
                     disabled={isSubmitting}
@@ -209,16 +205,14 @@ export function FormAuthorizedPerson({
                       Please Insert Passport
                     </p>
                   )}
-                  <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                  <p className="text-red-500 text-sm px-2">{triggeriderror}</p>
                 </>
               )
             ) : (
               <>
                 <div className="relative w-full">
                   <Input
-                    {...register("citizendId")}
+                    {...register("citizenId")}
                     label="Please fill ID"
                     id="idCard"
                     disabled={isSubmitting}
@@ -228,9 +222,7 @@ export function FormAuthorizedPerson({
                 {initError && !curInput && (
                   <p className="text-red-500 text-sm px-2">Please Insert ID</p>
                 )}
-                <p className="text-red-500 text-sm px-2">
-                          {triggeriderror}
-                        </p>
+                <p className="text-red-500 text-sm px-2">{triggeriderror}</p>
               </>
             )}
           </div>

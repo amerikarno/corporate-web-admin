@@ -125,8 +125,8 @@ export const corporateInfoSchema = z.object({
 
 export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
-  citizendId: z.string().optional(),
-  passportID: z.string().optional(),
+  citizenId: z.string().optional(),
+  passportId: z.string().optional(),
   expiryDate: z
     .string()
     .min(1, "date cannot be empty")
@@ -202,8 +202,8 @@ export type TCorporateTypeAndIncomeSchema = z.infer<
 
 export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
-  citizendId: z.string().optional(),
-  passportID: z.string().optional(),
+  citizenId: z.string().optional(),
+  passportId: z.string().optional(),
   expiryDate: z
     .string()
     .min(1, "date cannot be empty")
@@ -255,9 +255,9 @@ export type TBankSchema = z.infer<typeof bankSchema>;
 
 export const authorizedPersonSchema = z.object({
   fullNames: fullNamesSchema,
-  citizendId: z.string().optional(),
+  citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
-  passportID: z.string().optional(),
+  passportId: z.string().optional(),
   expiryDate: z
     .string()
     .min(1, "date cannot be empty")
