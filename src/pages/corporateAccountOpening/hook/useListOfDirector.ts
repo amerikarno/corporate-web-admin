@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
 import axios from "@/api/axios";
-import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
+import {isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 
 export function useListOfDirector() {

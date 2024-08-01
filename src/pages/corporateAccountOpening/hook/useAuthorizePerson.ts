@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { TAuthorizePerson } from "../constants/types";
 import axios from "@/api/axios";
-import { formatDateToIsoString, isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
-import { jwtDecode } from "jwt-decode";
 
 export function useAuthorizePerson() {
   const [authorize, setAuthorize] = useState<TAuthorizePerson[]>([]);
