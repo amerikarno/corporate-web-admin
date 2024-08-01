@@ -163,12 +163,14 @@ export const individualContact = {
 //   directoraddress:[],
 // }
 
-export const individualJuristicShareholders = {
-  juristicName: "",
-  registrationNo: "",
-  registeredCountry: "",
-  sharePercentage: 0.0,
-};
+// export const individualJuristicShareholders = {
+//   juristicName: "",
+//   registrationNo: "",
+//   registeredCountry: "",
+//   sharePercentage: 0.0,
+// };
+
+
 
 export const initailJuristicOther = {
   otherBusinessType: "",

@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { TJuristicsShareholders } from "../constants/types";
-import { useFormJuristicShareholders } from "../hook/useFormJuristicShareholders";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   individualsJuristicShareholdersSchema,
@@ -19,14 +18,7 @@ export function FormJuristicShareholders({
   onsubmit,
   corporateCode,
 }: TJuristicsShareholdersFormProps) {
-  const {
-    // juristics,
-    juristicShareholders,
-    // removeIndividualsShareholders,
-    // editIndividualsShareholders,
-    // handleSetNewShareholder,
-    // serializeData,
-  } = useFormJuristicShareholders();
+
 
   const {
     register,
@@ -35,7 +27,7 @@ export function FormJuristicShareholders({
     reset,
   } = useForm<TJuristicsShareholders>({
     resolver: zodResolver(individualsJuristicShareholdersSchema),
-    values: juristicShareholders,
+    //values: juristicShareholders,
   });
 
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
