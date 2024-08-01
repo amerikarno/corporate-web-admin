@@ -15,8 +15,6 @@ import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
-import { getCookies } from "@/lib/Cookies";
-import axios from "@/api/axios";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
