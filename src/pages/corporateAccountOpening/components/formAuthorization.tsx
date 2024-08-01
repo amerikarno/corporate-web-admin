@@ -150,7 +150,7 @@ export function FormAuthorizedPerson({
                 dropDownChoosed === "ID" ? (
                   <>
                     <Input
-                      {...register("citizendId")}
+                      {...register("citizenId")}
                       label="Please fill ID"
                       id="idCard"
                       disabled={isSubmitting}
@@ -168,7 +168,7 @@ export function FormAuthorizedPerson({
                 ) : (
                   <>
                     <Input
-                      {...register("passportID")}
+                      {...register("passportId")}
                       label="Please fill Passport"
                       id="passportID"
                       disabled={isSubmitting}
@@ -188,7 +188,7 @@ export function FormAuthorizedPerson({
                 <>
                   <div className="relative w-full">
                     <Input
-                      {...register("citizendId")}
+                      {...register("citizenId")}
                       label="Please fill ID"
                       id="idCard"
                       disabled={isSubmitting}
