@@ -24,7 +24,7 @@ export function useBank() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
+      console.log(res);
       if (res.status === 200) {
         console.log("save successful");
       }
