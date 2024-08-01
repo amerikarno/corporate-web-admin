@@ -23,7 +23,7 @@ export function useJuristicShareholders() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
+      console.log(res);
       if (res.status === 200) {
         console.log("request success", res.data);
         setJuristics([...juristics, data]);

@@ -20,6 +20,19 @@ export function CorporateAddressForm({
   keyType,
 }: TSubAddressFormProps) {
   const fields = Object.entries(subAddressSchema.shape);
+  const newFields = [
+    "Address Number",
+    "Moo",
+    "Soi",
+    "Floor",
+    "Building",
+    "Road",
+    "Tambon",
+    "Amphoe",
+    "Province",
+    "PostalCode",
+    "Country",
+  ];
   // const optionalFields = ["Building", "MooNo", "Soi", "Road"];
   // const isOptional = (name: string) => {
   //   if (optionalFields.includes(name)) {
@@ -35,7 +48,7 @@ export function CorporateAddressForm({
             <div key={index} className="flex-col">
               {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
               <Input
-                label={fieldName}
+                label={newFields[index]}
                 {...register(`${keyType}.address[0].${fieldName}` as any)}
                 name={`${keyType}.address[0].${fieldName}`}
                 id={fieldName}
@@ -52,6 +65,29 @@ export function CorporateAddressForm({
             </div>
           );
         })}
+      </div>
+
+      <div className="flex-col">
+        <Input
+          label="Email Address"
+          {...register(`${keyType}.emailAddress` as keyof TCorporateInfoSchema)}
+          name={`${keyType}.emailAddress`}
+          id="emailAddress"
+          disabled={isSubmitting}
+          type="email"
+        />
+      </div>
+
+      {/* Render telephone field */}
+      <div className="flex-col">
+        <Input
+          label="Telephone"
+          {...register(`${keyType}.telephone` as keyof TCorporateInfoSchema)}
+          name={`${keyType}.telephone`}
+          id="telephone"
+          disabled={isSubmitting}
+          type="tel"
+        />
       </div>
     </>
   );

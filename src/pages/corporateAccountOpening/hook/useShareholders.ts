@@ -42,7 +42,7 @@ export function useShareholders() {
         },
       });
       if (res.status === 200) {
-        console.log("request success", res.data);
+        console.log("request success", res);
         setShareholders([...shareholders, body]);
       } else {
         console.log("save failed");

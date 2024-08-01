@@ -30,9 +30,9 @@ export function useAuthorizePerson() {
   const saveAuthorizePerson = async (data: TAuthorizePerson) => {
     let body = {
       ...data,
-      expiryDate: formatDateToIsoString(data.expiryDate),
+      expiryDate:data.expiryDate.toISOString(),
     };
-    // console.log("body", body);
+    console.log(body);
     try {
       const token = getCookies();
       const res = await axios.post("/api/v1/personals/create", body, {
@@ -40,7 +40,7 @@ export function useAuthorizePerson() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
+      console.log(res);
       if (res.status === 200) {
         console.log("save successful");
       }

@@ -27,6 +27,19 @@ export function AddressFormAuthorizedPerson({
   //   }
   //   return true;
   // };
+  const newFields = [
+    "Address Number",
+    "Moo",
+    "Soi",
+    "Floor",
+    "Building",
+    "Road",
+    "Tambon",
+    "Amphoe",
+    "Province",
+    "PostalCode",
+    "Country"
+  ]
   return (
     <div className="grid md:grid-cols-2 gap-4">
       {fields.map(([fieldName], index) => {
@@ -34,7 +47,7 @@ export function AddressFormAuthorizedPerson({
           <div key={index} className="flex-col">
             {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
               <Input
-                label={fieldName}
+                label={newFields[index]}
                 {...register(`${keyType}.0.${fieldName}` as any)}
                 name={`${keyType}.0.${fieldName}`}
                 id={fieldName}
