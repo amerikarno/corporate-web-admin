@@ -1,0 +1,52 @@
+import { CheckBox } from "@/components/Checkbox";
+import { TSuitAns, TSuitTest } from "../constants/types";
+
+type TSuitQuestionCompProps = {
+  quiz: TSuitTest;
+  answer: TSuitAns[];
+  handleChoice: (i: number, quizId: string) => void;
+  errors: string[];
+};
+
+export function SuitQuestionComp({
+  quiz,
+  answer,
+  handleChoice,
+  errors,
+}: TSuitQuestionCompProps) {
+  const isChecked = (quizId: string, index: number) => {
+    const ans = answer?.find((list) => list.id === quizId);
+    if (ans) {
+      return ans.ans === index;
+    }
+    return false;
+  };
+
+  const error = (id: string) => {
+    return errors.includes(id);
+  };
+
+  return (
+    <div className="space-y-4">
+      <h1>
+        {quiz.questionNumber}. {quiz.question}
+      </h1>
+      <div className="grid grid-cols-2 gap-x-8 px-4">
+        {quiz.choices.map((choice, index) => (
+          <CheckBox
+            name={choice.id}
+            key={index}
+            type="radio"
+            id={choice.id}
+            label={`${index + 1}. ${choice.answer}`}
+            onChange={() => handleChoice(index, quiz.id)}
+            checked={isChecked(quiz.id, index)}
+          />
+        ))}
+        {error(quiz.id) && (
+          <p className="text-red-500">Please select your answer</p>
+        )}
+      </div>
+    </div>
+  );
+}

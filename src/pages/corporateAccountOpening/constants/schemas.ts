@@ -1,5 +1,4 @@
-// import { checkFormatIDCard } from "@/lib/utils";
-import { checkFormatIDCard, isNumber } from "@/lib/utils";
+import { isNumber } from "@/lib/utils";
 import { z } from "zod";
 
 export const subAddressSchema = z.object({

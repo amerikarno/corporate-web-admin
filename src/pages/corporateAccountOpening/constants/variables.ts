@@ -31,7 +31,6 @@ export const PrimaryCountryOfOperationChoices = [
   "Others Countries (Please Specify)",
 ];
 
-
 export const juristicTypeObject: TJuristicType[] = [
   {
     main: { id: "11", name: "Juristic (Thailand)", value: 0 },
@@ -179,3 +178,11 @@ export const investmentObjective = [
   "Cash Management For Investment",
   "Others (Please Specify)",
 ];
+
+export const mapScore = {
+  1: "Low",
+  2: "Moderate to Low",
+  3: "Moderate to High",
+  4: "High",
+  5: "Very High",
+};

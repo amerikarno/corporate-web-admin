@@ -10,7 +10,8 @@ import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
-import UploadFiles from "../uploadFiles/uploadFiles";
+import UploadFiles from "./pages/uploadFiles/uploadFiles";
+import { PageSuitTest } from "./pages/PageSuitTest";
 
 type TPage = {
   page?: string;
@@ -45,6 +46,7 @@ export default function CorporateAccountOpenning() {
     7: <PageAuthorizedPerson corporateCode={corporateCode} />,
     8: <PageBankAccount corporateCode={corporateCode} />,
     9: <UploadFiles corporateCode={corporateCode} />,
+    10: <PageSuitTest corporateCode={corporateCode} />,
   };
 
   const handlePages = (type: string) => {
@@ -58,7 +60,11 @@ export default function CorporateAccountOpenning() {
   return (
     <div className="space-y-8 pb-8">
       {mappingPages[pageId]}
-      <CreateCorporateFooter handlePages={handlePages} pageId={pageId} />
+      <CreateCorporateFooter
+        handlePages={handlePages}
+        pageId={pageId}
+        totalPages={Object.keys(mappingPages).length}
+      />
     </div>
   );
 }

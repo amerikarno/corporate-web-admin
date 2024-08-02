@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   directorInfoSchema,
-  individualsDirectorSchema,
   TIndividualsDirectorSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
@@ -33,13 +32,13 @@ export function FormIndividualsDirector({
     setDropDownChoosed(choice);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (dropDownChoosed === "ID") {
       resetField("passportId");
     } else if (dropDownChoosed === "Passport") {
       resetField("citizenId");
     }
-},[dropDownChoosed])
+  }, [dropDownChoosed]);
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -65,7 +64,7 @@ export function FormIndividualsDirector({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    resetField
+    resetField,
   } = useForm<TDirector>({
     resolver: zodResolver(directorInfoSchema),
   });

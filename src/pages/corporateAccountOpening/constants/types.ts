@@ -223,13 +223,35 @@ export type Person = {
   addresses: TSubAddress[];
 };
 
-// export type TIndividualsShareholdersRequest = {
-//   fullNames: TFullName[];
-//   corporateCode: string;
-//   passportId?: string;
-//   citizenId?: string;
-//   expiryDate: Date;
-//   nationality: string;
-//   sharePercentage: number;
-//   types: number;
-// };
+export type TSuitTest = {
+  id: string;
+  questionNumber: number;
+  question: string;
+  choices: TSuitChoice[];
+  types: string;
+};
+
+export type TSuitChoice = {
+  id: string;
+  questionId: string;
+  answer: string;
+  score: number;
+};
+export type TSuitAns = {
+  id: string;
+  ans: number;
+};
+
+export type TKnowledgeTest = {
+  id: string;
+  version: string;
+  items: TKnowladgeQuiz[];
+};
+
+export type TKnowladgeQuiz = {
+  id: number;
+  question: string;
+  choice_list: string[];
+  ans: number;
+  ans_detail: string;
+};

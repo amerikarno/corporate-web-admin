@@ -1,4 +1,4 @@
-import { TDropdownOption } from "./type";
+import { TDropdownOption, TRiskItem } from "./type";
 
 export const items: TDropdownOption[] = [
   {
@@ -25,4 +25,19 @@ export const acceptedFileTypes = [
   "image/png",
   "image/jpeg",
   "image/jpg",
+];
+
+export const riskItems: TRiskItem[] = [
+  {
+    id: 1,
+    value: "Low",
+  },
+  {
+    id: 2,
+    value: "Medium",
+  },
+  {
+    id: 3,
+    value: "High",
+  },
 ];

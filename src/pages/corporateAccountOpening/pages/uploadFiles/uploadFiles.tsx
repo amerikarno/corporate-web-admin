@@ -39,7 +39,7 @@ export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
           )}
         </CardContent>
       </Card>
-      <p>corporate code : {corporateCode}</p>
+      {/* <p>corporate code : {corporateCode}</p> */}
     </div>
   );
 }
