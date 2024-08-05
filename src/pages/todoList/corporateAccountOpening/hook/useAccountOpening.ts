@@ -26,7 +26,7 @@ export function useAccountOpening(reset: () => void) {
 
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/json/query", body, {
+      const res = await axios.post("/api/v1/corporate/query", body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,7 +38,6 @@ export function useAccountOpening(reset: () => void) {
     } catch (error) {
       console.log(error);
       alert("No data found.");
-      navigate("/create-job/added-corporate-account/edit");
       return null;
     }
   };

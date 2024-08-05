@@ -8,7 +8,7 @@ import { PageContactPerson } from "./pages/PageContactPerson";
 import { PageIndividualShareholder } from "./pages/PageIndividualShareholder";
 import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
@@ -20,6 +20,9 @@ type TPage = {
 };
 
 export function EditCorporateAccount() {
+  console.log("EditCorporateAccount");
+  const corporateData = useLocation().state;
+  console.log("corporateData", corporateData);
   const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
 
   const handleFormPassChange = (status: boolean) => {
