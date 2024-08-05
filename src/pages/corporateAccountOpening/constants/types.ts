@@ -82,7 +82,7 @@ export type TCorporateTypeAndIncome = {
   businessType: string;
   sourceOfIncome: string[];
   countrySourceOfIncome: string;
-  InvestmentObject: string;
+  investmentObjective: string;
 };
 
 export type TRegisteredCountryPrimaryCountryOperation = {

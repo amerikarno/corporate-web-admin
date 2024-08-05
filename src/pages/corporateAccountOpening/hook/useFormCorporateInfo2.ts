@@ -27,7 +27,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 
-export function useFormCorporateInfo2() {
+export function useFormCorporateInfo2(onFormPassChange: (status: boolean) => void) {
   const [corporateTypeAndIncome, setCorporateTypeAndIncome] =
     useState<TCorporateTypeAndIncome>(emptyCorporateTypeAndIncome);
   const [isBusinessTypeOthers, setIsBusinessTypeOthers] =
@@ -43,11 +43,11 @@ export function useFormCorporateInfo2() {
     useState<TInitailJuristicTypeAndIncome>(copy(initailJuristicTypeAndIncome));
   const [juristicAllOtherType, setJuristicAllOhterType] =
     useState<TInitailJuristicOther>(copy(initailJuristicOther));
-
+  const [isSecondFormPass,setIsSecondFormPass] = useState<boolean>(false)
   const handleErrors = (error: ZodIssue[] | null) => {
+    console.log(error)
     setErrors(error);
   };
-
   const getError = (
     keyName: string[],
     errors: ZodIssue[] | null
@@ -84,8 +84,8 @@ export function useFormCorporateInfo2() {
     }
   };
   const disableInvestmentObjective = (type: string): boolean => {
-    if (corporateTypeAndIncome.InvestmentObject !== "") {
-      if (type === corporateTypeAndIncome.InvestmentObject) {
+    if (corporateTypeAndIncome.investmentObjective !== "") {
+      if (type === corporateTypeAndIncome.investmentObjective) {
         return false;
       } else {
         return true;
@@ -220,10 +220,10 @@ export function useFormCorporateInfo2() {
       [updateInvestmentObjectiveKey]: checked,
     });
     if (checked) {
-      tmp.InvestmentObject = name;
+      tmp.investmentObjective = name;
       errors ? validateLocal(tmp) : null;
     } else {
-      tmp.InvestmentObject = "";
+      tmp.investmentObjective = "";
     }
     setCorporateTypeAndIncome(tmp);
     if (name == "Others (Please Specify)") {
@@ -285,7 +285,7 @@ export function useFormCorporateInfo2() {
   const handleInputOtherInvestmentObjective = (e: any) => {
     const { value } = e.target;
     let tmp = copy(corporateTypeAndIncome);
-    tmp.InvestmentObject = value;
+    tmp.investmentObjective = value;
     setCorporateTypeAndIncome(tmp);
     errors ? validateLocal(tmp) : null;
   };
@@ -369,13 +369,19 @@ export function useFormCorporateInfo2() {
       if (res.status === 200) {
         console.log("request success", res.data);
         navigate("/create-job/added-corporate-account/3")
+        setIsSecondFormPass(true)
+        onFormPassChange(true)
       } else {
         alert("Invalid Input.")
         console.log("save failed");
+        setIsSecondFormPass(false)
+        onFormPassChange(false)
       }
     } catch (error) {
       console.log(error);
       alert(error)
+      setIsSecondFormPass(false)
+      onFormPassChange(false)
     }
   };
 
@@ -388,6 +394,7 @@ export function useFormCorporateInfo2() {
     errors,
     juristicAllType,
     juristicAllOtherType,
+    isSecondFormPass,
     handleCheck,
     handleSubSelected,
     handeleBusinessType,

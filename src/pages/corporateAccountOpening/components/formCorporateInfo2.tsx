@@ -9,7 +9,7 @@ import {
   sourceOfIncome,
   juristicType,
 } from "../constants/variables";
-import { Button } from "@/components/ui/button";
+//import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,9 @@ import { isExpiredToken } from "../libs/utils";
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
   corporateCode?: string;
+};
+const handleFormPassChange = (status: boolean) => {
+  //console.log("Form submission status:", status);
 };
 
 export function FormCorporateTypeAndIncome({
@@ -49,7 +52,7 @@ export function FormCorporateTypeAndIncome({
     isDisableSubSelected,
     validateForm,
     saveJuristicType,
-  } = useFormCorporateInfo2();
+  } = useFormCorporateInfo2(handleFormPassChange);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -65,12 +68,12 @@ export function FormCorporateTypeAndIncome({
       }
     } else {
       console.log("submit failed");
-    }
+    }  
   };
 
   return (
     <Card>
-      <form onSubmit={(e) => onSubmit(e)} className="space-y-10">
+      <form onSubmit={(e) => onSubmit(e)} id="corporateInfo2" className="space-y-10">
         <div>
           <>
             <h1 className="font-bold p-4">Juristic Type</h1>
@@ -260,10 +263,9 @@ export function FormCorporateTypeAndIncome({
             </p>
           )}
         </div>
-
-        <div className="flex justify-end pb-4 pr-4">
+        {/* <div className="flex justify-end pb-4 pr-4">
           <Button type="submit">Submit</Button>
-        </div>
+        </div> */}
       </form>
     </Card>
   );

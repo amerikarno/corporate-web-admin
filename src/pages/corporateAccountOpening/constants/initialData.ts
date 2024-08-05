@@ -231,5 +231,5 @@ export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
   businessType: "",
   sourceOfIncome: [],
   countrySourceOfIncome: "",
-  InvestmentObject: "",
+  investmentObjective: "",
 };

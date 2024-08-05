@@ -145,6 +145,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     <>
       <Card>
         <form
+          id="corporateInfo"
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-row gap-y-8"
         >
@@ -358,11 +359,11 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
           </div>
-          <div className="flex justify-end pb-4 pr-4">
-            <Button type="submit" disabled={isSubmitting}>
+          {/* <div className="flex justify-end pb-4 pr-4">
+            <Button form="corporateInfo" type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
-          </div>
+          </div> */}
         </form>
       </Card>
     </>
