@@ -27,7 +27,7 @@ export default function CorporateAccountOpenning() {
     setIsSecondFormPass(status);
   };
   const {
-    saveJuristicType,
+    //saveJuristicType,
   } = useFormCorporateInfo2(handleFormPassChange);
 
   const { page } = useParams<TPage>();

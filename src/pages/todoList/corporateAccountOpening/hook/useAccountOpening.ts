@@ -5,7 +5,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 // import { TCorporateAccountOpening } from "../constant/type";
 
-export function useAccountOpening(reset: () => void) {
+export function useAccountOpening() {
   const [searchResult, setSearchResult] = useState<TCorporateData>();
 
   const handleSearch = async (data: TCorporateAccountOpening) => {
