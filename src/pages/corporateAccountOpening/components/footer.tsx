@@ -40,7 +40,7 @@ export function CreateCorporateFooter({
         ) : (
           <Button
             onClick={() => handlePages("next")}
-            disabled={pageId <= 2 || pageId >= 9}
+            disabled={pageId <= 2 || pageId >= 10}
           >
             Next Form
           </Button>
