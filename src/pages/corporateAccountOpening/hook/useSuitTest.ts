@@ -4,7 +4,6 @@ import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { mapScore } from "../constants/variables";
 import { AxiosError } from "axios";
-import { copy } from "@/lib/utils";
 
 export function UseSuitTest(corporateCode: string) {
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
@@ -24,7 +23,7 @@ export function UseSuitTest(corporateCode: string) {
         }
       }
       setErrors(err);
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -136,12 +135,12 @@ export function UseSuitTest(corporateCode: string) {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       if (res.status == 200) {
-        setQuizSuiteTest(res.data);
+        // setQuizSuiteTest(res.data);
 
         //TODO: for test
-        // let quizs = res.data;
-        // quizs[3].types = "2";
-        // setQuizSuiteTest(quizs);
+        let quizs = res.data;
+        quizs[3].types = "2";
+        setQuizSuiteTest(quizs);
       }
       setIsLoading(false);
     } catch (error) {

@@ -12,7 +12,7 @@ export function SuitTableResult({ totalScore }: TSuitTableResult) {
       </CardHeader>
       <CardContent className="space-y-10">
         <div>
-          <h1 className="text-blue-400">Part 1 : Assessment Scores</h1>
+          <h1 className="text-blue-400 pb-2">Part 1 : Assessment Scores</h1>
           <p>
             Answer 1 = 1 point Answer 2 = 2 point Answer 3 = 3 point Answer 4 =
             4 point
@@ -24,7 +24,7 @@ export function SuitTableResult({ totalScore }: TSuitTableResult) {
         </div>
 
         <div>
-          <h1 className="text-blue-400">Part 2 : Assessment Result</h1>
+          <h1 className="text-blue-400 pb-2">Part 2 : Assessment Result</h1>
           <table className="w-full">
             <thead>
               <tr>
@@ -64,6 +64,7 @@ export function SuitTableResult({ totalScore }: TSuitTableResult) {
         </div>
 
         <div>
+          <h1 className="text-blue-400 pb-2">Part 3: Basic Asset Allocation</h1>
           <div className="w-full text-center border-t border-l border-r border-gray-300 font-bold p-2">
             Asset Allocation
           </div>
