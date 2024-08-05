@@ -59,6 +59,7 @@ export function UseSuitTest(corporateCode: string) {
       const res = await axios.post("/api/v1/suitetest/result", ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
+      console.log(ans);
       if (res.status === 200) {
         console.log("request success", res.data);
       } else {
@@ -135,12 +136,12 @@ export function UseSuitTest(corporateCode: string) {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       if (res.status == 200) {
-        // setQuizSuiteTest(res.data);
+        setQuizSuiteTest(res.data);
 
         //TODO: for test
-        let quizs = res.data;
-        quizs[3].types = "2";
-        setQuizSuiteTest(quizs);
+        // let quizs = res.data;
+        // quizs[3].types = "2";
+        // setQuizSuiteTest(quizs);
       }
       setIsLoading(false);
     } catch (error) {
