@@ -228,35 +228,5 @@
             }
         ],
         "types": "1"
-    },
-    {
-        "questionNumber": 11,
-        "question": "Successful derivatives and structure notes investment has high return. On the other hand, investors can lose all of their investment and must increase more capital. Are you able to accept this?",
-        "choices": [
-            {
-                "answer": "No",
-                "score": 0
-            },
-            {
-                "answer": "Yes",
-                "score": 0
-            }
-        ],
-        "types": "1"
-    },
-    {
-        "questionNumber": 12,
-        "question": "In addition to investment risk, are you able to accept foreign exchange rate risk?",
-        "choices": [
-            {
-                "answer": "No",
-                "score": 0
-            },
-            {
-                "answer": "Yes",
-                "score": 0
-            }
-        ],
-        "types": "1"
     }
 ]

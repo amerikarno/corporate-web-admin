@@ -20,6 +20,7 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
     score,
     opitionalQuiz,
     handelOptionalQuiz,
+    isSubmit,
   } = UseSuitTest(corporateCode);
 
   if (isLoading) {
@@ -63,11 +64,13 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
                   errors={errors}
                 />
               ))}
-            <h1>
+            <h1 className="text-xl font-bold">
               Questions 11-12 are used as additional information for guidance
               (Scores will NOT be counted)
             </h1>
-            <h1>Apply only to investment in derivatives and structure note</h1>
+            <h1 className="font-bold">
+              Apply only to investment in derivatives and structure note
+            </h1>
             <div className="space-y-4">
               <h1>
                 11. Successful derivatives and structure notes investment has
@@ -79,36 +82,52 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
                 <CheckBox
                   id="11-1"
                   label="No"
-                  checked={opitionalQuiz[0] == false}
+                  name="no"
+                  checked={opitionalQuiz[0] == "no"}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
                 <CheckBox
                   id="11-2"
                   label="Yes"
-                  checked={opitionalQuiz[0] == true}
+                  name="yes"
+                  checked={opitionalQuiz[0] == "yes"}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
               </div>
             </div>
-            <h1> Apply only to offshore investment</h1>
+            <h1 className="font-bold"> Apply only to offshore investment</h1>
             <div className="space-y-4">
               <h1>
                 12. In addition to investment risk, are you able to accept
                 foreign exchange rate risk?
               </h1>
               <div className="grid grid-cols-2 gap-x-8 px-4">
-                <CheckBox id="11-1" label="No" />
-                <CheckBox id="11-2" label="Yes" />
+                <CheckBox
+                  id="12-1"
+                  label="No"
+                  name="no"
+                  checked={opitionalQuiz[1] == "no"}
+                  onChange={(e) => handelOptionalQuiz(1, e)}
+                />
+                <CheckBox
+                  id="12-2"
+                  label="Yes"
+                  name="yes"
+                  checked={opitionalQuiz[1] == "yes"}
+                  onChange={(e) => handelOptionalQuiz(1, e)}
+                />
               </div>
             </div>
             <div className="flex justify-end">
-              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={handleSubmit} disabled={isSubmit}>
+                {isSubmit ? "Submiting..." : "Submit"}
+              </Button>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <SuitTableResult totalScore={score} />
+      {isSubmit && <SuitTableResult totalScore={score} />}
     </div>
   );
 }

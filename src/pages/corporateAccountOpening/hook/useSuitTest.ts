@@ -12,11 +12,12 @@ export function UseSuitTest(corporateCode: string) {
   const [errors, setErrors] = useState<string[]>([]);
   const [score, setScore] = useState(0);
   const [typeTwoAns, setTypeTwoAns] = useState<number[]>([0, 0, 0, 0]);
-  const [opitionalQuiz, setOpitionalQuiz] = useState<boolean[]>([false, false]);
+  const [opitionalQuiz, setOpitionalQuiz] = useState<string[]>(["", ""]);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const validate = () => {
+    let err: string[] = [];
     if (quizSuiteTest) {
-      let err: string[] = [];
       for (let i = 0; i < quizSuiteTest.length; i++) {
         const element = quizSuiteTest[i];
         if (!answerSuiteTest?.some((ans) => ans.id === element.id)) {
@@ -26,6 +27,7 @@ export function UseSuitTest(corporateCode: string) {
       setErrors(err);
       // console.log(err);
     }
+    return err.length === 0;
   };
 
   const errorCheck = (id: string) => {
@@ -36,23 +38,25 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const handleSubmit = () => {
-    validate();
+    if (validate()) {
+      let score = 0;
+      answerSuiteTest.forEach((element) => {
+        score += element.ans;
+      });
 
-    let score = 0;
-    answerSuiteTest.forEach((element) => {
-      score += element.ans;
-    });
+      const grade = giveGrade(score);
+      const ans = {
+        corporateCode: corporateCode,
+        totalScore: score,
+        level: grade,
+        invsetorTypeRisk: mapScore[grade],
+      };
+      console.log(ans);
+      setScore(score);
+      setIsSubmit(true);
 
-    const grade = giveGrade(score);
-    const ans = {
-      corporateCode: corporateCode,
-      totalScore: score,
-      level: grade,
-      invsetorTypeRisk: mapScore[grade],
-    };
-    console.log(ans);
-    setScore(score);
-    saveSuitTest(ans);
+      saveSuitTest(ans);
+    }
   };
 
   const saveSuitTest = async (ans: any) => {
@@ -89,9 +93,10 @@ export function UseSuitTest(corporateCode: string) {
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { checked } = e.target;
+    const { name } = e.target;
     let tmp = [...opitionalQuiz];
-    tmp[index] = checked;
+    tmp[index] = name;
+    console.log(tmp, index);
     setOpitionalQuiz(tmp);
   };
 
@@ -101,6 +106,7 @@ export function UseSuitTest(corporateCode: string) {
     quizId: string,
     type?: string
   ) => {
+    isSubmit ? setIsSubmit(false) : null;
     const hasSelected = answerSuiteTest?.some((list) => list.id === quizId);
     if (hasSelected) {
       if (type === "2") {
@@ -148,11 +154,6 @@ export function UseSuitTest(corporateCode: string) {
       });
       if (res.status == 200) {
         setQuizSuiteTest(res.data);
-
-        //TODO: for test
-        // let quizs = res.data;
-        // quizs[3].types = "2";
-        // setQuizSuiteTest(quizs);
       }
       setIsLoading(false);
     } catch (error) {
@@ -178,5 +179,6 @@ export function UseSuitTest(corporateCode: string) {
     score,
     opitionalQuiz,
     handelOptionalQuiz,
+    isSubmit,
   };
 }
