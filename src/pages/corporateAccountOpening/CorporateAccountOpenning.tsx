@@ -56,7 +56,7 @@ export default function CorporateAccountOpenning() {
     6: <PageJuristicShareholder corporateCode={corporateCode} />,
     7: <PageAuthorizedPerson corporateCode={corporateCode} />,
     8: <PageBankAccount corporateCode={corporateCode} />,
-    9: <UploadFiles corporateCode={corporateCode} />,
+    //9: <UploadFiles corporateCode={corporateCode} />,
     10: <PageSuitTest corporateCode={corporateCode} />,
   };
 

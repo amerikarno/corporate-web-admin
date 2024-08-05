@@ -38,5 +38,6 @@ export function useJuristicShareholders() {
   return {
     juristics,
     handleSubmitJuristics,
+    setJuristics
   };
 }

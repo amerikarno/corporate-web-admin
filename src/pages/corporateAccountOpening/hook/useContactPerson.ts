@@ -50,5 +50,6 @@ export function useContactPerson() {
   return {
     contact,
     handleSubmitContactPerson,
+    setContactPerson
   };
 }

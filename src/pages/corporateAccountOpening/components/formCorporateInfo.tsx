@@ -105,6 +105,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
       reset();
       // console.log(formData);
       onsubmit(formData);
+      sleep(1500);
+      setShouldScrollUp(true);
     } else {
       setShouldScrollUp(true);
     }
