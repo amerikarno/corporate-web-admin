@@ -3,13 +3,12 @@ import { isExpiredToken } from "../libs/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import {
-  TBodyFormIndividualsShareholders,
   TIndividualsShareholders,
 } from "../constants/types";
 
 export function useShareholders() {
   const [shareholders, setShareholders] = useState<
-    TBodyFormIndividualsShareholders[]
+  TIndividualsShareholders[]
   >([]);
   const handleSubmitShareholders = async (data: TIndividualsShareholders) => {
     if (!isExpiredToken()) {
@@ -22,13 +21,13 @@ export function useShareholders() {
   const saveIndividualsShareholders = async (
     data: TIndividualsShareholders
   ) => {
-    const dt = new Date(data.expiryDate);
-    let body: TBodyFormIndividualsShareholders = {
+
+    let body = {
       fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
-      expiryDate: dt.toISOString(),
+      expiryDate: data.expiryDate.toISOString(),
       nationality: data.nationality,
       sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,
@@ -43,7 +42,7 @@ export function useShareholders() {
       });
       if (res.status === 200) {
         console.log("request success", res);
-        setShareholders([...shareholders, body]);
+        setShareholders([...shareholders, data]);
       } else {
         console.log("save failed");
       }

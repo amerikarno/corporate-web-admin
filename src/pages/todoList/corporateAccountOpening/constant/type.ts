@@ -1,9 +1,9 @@
 export type TCorporateAccountOpeningInfo = {
-  corporateCode: number;
-  corporateName: string;
-  taxId: number;
-  dateFrom: string;
-  dateTo: string;
+  corporateCode: string;
+  // corporateName: string;
+  // taxId: number;
+  dateFrom: Date;
+  dateTo: Date;
 };
 
 export type TCorporateInfo = {
@@ -30,6 +30,12 @@ export type TCorporateCountry = {
 };
 
 export type TCorporateAddress = {
+  address: TCorporateSubAddress[];
+  emailAddress:string;
+  telephone:string;
+}
+
+export type TCorporateSubAddress = {
   id: string;
   createBy: string;
   CreatedAt: string;
@@ -61,65 +67,66 @@ export type TCorporateFinancials = {
   shareholderEquity: number;
 };
 
+
+
 export type TCorporateTypes = {
-  id: string;
-  createBy: string;
+  // id: string;
+  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  istaxExempt: boolean;
-  isnonTaxExempt: boolean;
-  isoperatingInThailand: boolean;
-  isnonOperatingInThailand: boolean;
-  isother: boolean;
-  ispartnership: boolean;
-  isgovernmentStateEnterprise: boolean;
+  // corporateCode: number;
+  // istaxExempt: boolean;
+  // isnonTaxExempt: boolean;
+  // isoperatingInThailand: boolean;
+  // isnonOperatingInThailand: boolean;
+  // isother: boolean;
+  // ispartnership: boolean;
+  // isgovernmentStateEnterprise: boolean;
 };
 
 export type TBusinessTypes = {
-  id: string;
-  createBy: string;
+  // id: string;
+  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  isarmament: boolean;
-  isinsuranceAssurance: boolean;
-  iscasinoGambling: boolean;
-  isjewelryGoldTrading: boolean;
-  isfoundation: boolean;
-  ispropertyRealEstate: boolean;
-  ismoneyTransfer: boolean;
-  isemploymentAgency: boolean;
-  isentertainment: boolean;
-  istravel: boolean;
-  isfinancial: boolean;
-  iseducationCenter: boolean;
-  isforeignCurrencyExchange: boolean;
-  iscryptoRelated: boolean;
-  isotherBusiness: boolean;
-  otherBusinessType: string;
+  // corporateCode: number;
+  // ishotelRestaurant:boolean;
+  // otherBusinessType:string;
+  // isarmament: boolean;
+  // isinsuranceAssurance: boolean;
+  // iscasinoGambling: boolean;
+  // isjewelryGoldTrading: boolean;
+  // isfoundation: boolean;
+  // ispropertyRealEstate: boolean;
+  // ismoneyTransfer: boolean;
+  // isemploymentAgency: boolean;
+  // isentertainment: boolean;
+  // istravel: boolean;
+  // isfinancial: boolean;
+  // iseducationCenter: boolean;
+  // isforeignCurrencyExchange: boolean;
+  // iscryptoRelated: boolean;
+  // isotherBusiness: boolean;
+  // otherBusinessType: string;
 };
 
 export type TSourceOfIncomes = {
-  id: string;
-  createBy: string;
+  // id: string;
+  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  isrevenue: boolean;
-  otherIncome: string;
+  // corporateCode: number;
+  // isotherIncome:boolean;
+  // //isrevenue: boolean;
+  // otherIncome: string;
 };
 
 export type TCountrySourceIncomes = {
-  id: string;
-  createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  investmentObject: string;
-  iscashManagement: boolean;
+  corporateCountry : TCorporateCountry;
+  isliquidation: boolean;
   otherInvestment: string;
-  contact: TContact;
 };
 
 export type TContact = {
@@ -128,12 +135,24 @@ export type TContact = {
   CreatedAt: string;
   DeletedAt: string | null;
   corporateCode: number;
+  fullnames : TContactFullName[];
   telephone?: string;
-  email?: string;
+  email: string;
   types: number;
-  personalID?: string;
-  position?: string;
-  division?: string;
+  personalID: string;
+  position: string;
+  division: string;
+};
+
+export type TContactFullName = {
+  id: string;
+  createBy: string;
+  CreatedAt: string;
+  DeletedAt: string | null;
+  contactID: string;
+  firstName: string;
+  lastName: string;
+  types: number;
 };
 
 export type TFullName = {
@@ -241,11 +260,11 @@ export type TCorporateData = {
   CorporateTypes: TCorporateTypes;
   BusinessTypes: TBusinessTypes;
   SourceOfIncomes: TSourceOfIncomes;
-  CountrySourceIncomes: TCountrySourceIncomes;
-  Contact: TContact[];
-  Directors: TDirector[];
-  AuthorizedPersons: TAuthorizedPerson[];
-  IndividualShareholders: TIndividualShareholder[];
+  CountrySourceIncomes: TCountrySourceIncomes[] | null;
+  Contact: TContact[] | null;
+  Directors: TDirector[] | null;
+  AuthorizedPersons: TAuthorizedPerson[] | null;
+  IndividualShareholders: TIndividualShareholder[] | null;
   Juristics: TJuristic[];
   Banks: TBank[];
 };

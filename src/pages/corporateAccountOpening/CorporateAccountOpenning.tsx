@@ -12,12 +12,23 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
+import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
+import { useState } from "react";
 
 type TPage = {
   page?: string;
 };
 
 export default function CorporateAccountOpenning() {
+  const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+
+  const handleFormPassChange = (status: boolean) => {
+    setIsSecondFormPass(status);
+  };
+  const {
+    //saveJuristicType,
+  } = useFormCorporateInfo2(handleFormPassChange);
+
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
@@ -52,6 +63,15 @@ export default function CorporateAccountOpenning() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+    } else if (type == "submit") {
+      console.log(corporateCode);
+      if (corporateCode) {
+        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+      }
+    } else if (type == "submit2") {
+      if (isSecondFormPass) {
+        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+      }
     } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }

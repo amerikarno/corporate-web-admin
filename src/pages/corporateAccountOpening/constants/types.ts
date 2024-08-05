@@ -82,7 +82,7 @@ export type TCorporateTypeAndIncome = {
   businessType: string;
   sourceOfIncome: string[];
   countrySourceOfIncome: string;
-  InvestmentObject: string;
+  investmentObjective: string;
 };
 
 export type TRegisteredCountryPrimaryCountryOperation = {
@@ -200,28 +200,28 @@ export type TMapPages = {
   [key: number]: JSX.Element;
 };
 
-export type TBodyFormIndividualsShareholders = {
-  fullNames: TFullName[];
-  corporateCode: string;
-  passportId?: string;
-  citizenId?: string;
-  expiryDate: string;
-  nationality: string;
-  sharePercentage: number;
-  types?: number;
-};
+// export type TBodyFormIndividualsShareholders = {
+//   fullNames: TFullName[];
+//   corporateCode: string;
+//   passportId?: string;
+//   citizenId?: string;
+//   expiryDate: string;
+//   nationality: string;
+//   sharePercentage: number;
+//   types?: number;
+// };
 
-export type Person = {
-  fullNames: TFullName[];
-  referenceID: string;
-  citizenId?: string;
-  passportId?: string;
-  expiryDate: string;
-  nationality: string;
-  position: string;
-  types: number;
-  addresses: TSubAddress[];
-};
+// export type Person = {
+//   fullNames: TFullName[];
+//   referenceID: string;
+//   citizenId?: string;
+//   passportId?: string;
+//   expiryDate: string;
+//   nationality: string;
+//   position: string;
+//   types: number;
+//   addresses: TSubAddress[];
+// };
 
 export type TSuitTest = {
   id: string;

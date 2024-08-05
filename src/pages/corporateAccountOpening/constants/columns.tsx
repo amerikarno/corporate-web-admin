@@ -3,8 +3,9 @@ import { TableColumn } from "react-data-table-component";
 import {
   TAuthorizePerson,
   TBank,
-  TBodyFormIndividualsShareholders,
+  //TBodyFormIndividualsShareholders,
   // TBodyFormIndividualsShareholders,
+  TIndividualsShareholders,
   TContactPerson,
   TCorporateInfo,
   TDirector,
@@ -189,49 +190,49 @@ export const columnsContactPerson: TableColumn<TContactPerson>[] = [
   },
 ];
 
-export const columnsShareHolders: TableColumn<TBodyFormIndividualsShareholders>[] =
+export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] =
   [
     {
       name: "Title",
-      selector: (row: TBodyFormIndividualsShareholders) =>
+      selector: (row: TIndividualsShareholders) =>
         row.fullNames[0].title || "",
     },
     {
       name: "Firstname",
-      selector: (row: TBodyFormIndividualsShareholders) =>
+      selector: (row: TIndividualsShareholders) =>
         row.fullNames[0].firstName || "",
     },
     {
       name: "Lastname",
-      selector: (row: TBodyFormIndividualsShareholders) =>
+      selector: (row: TIndividualsShareholders) =>
         row.fullNames[0].lastName || "",
     },
     {
       name: "CitizenID",
-      selector: (row: TBodyFormIndividualsShareholders) => row.citizenId || "",
+      selector: (row: TIndividualsShareholders) => row.citizenId || "",
     },
     {
       name: "PassportID",
-      selector: (row: TBodyFormIndividualsShareholders) => row.passportId || "",
+      selector: (row: TIndividualsShareholders) => row.passportId || "",
     },
     {
       name: "Expired Date",
-      selector: (row: TBodyFormIndividualsShareholders) =>
-        row.expiryDate.split("T")[0] || "",
+      selector: (row: TIndividualsShareholders) =>
+        row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
     },
     {
       name: "Nationality",
-      selector: (row: TBodyFormIndividualsShareholders) =>
+      selector: (row: TIndividualsShareholders) =>
         row.nationality || "",
     },
     {
       name: "Share Percentage",
-      selector: (row: TBodyFormIndividualsShareholders) =>
+      selector: (row: TIndividualsShareholders) =>
         row.sharePercentage || "",
     },
     {
       name: "Actions",
-      cell: (row: TBodyFormIndividualsShareholders) => (
+      cell: (row: TIndividualsShareholders) => (
         <Button onClick={() => console.log(row)}>Action</Button>
       ),
       ignoreRowClick: true,

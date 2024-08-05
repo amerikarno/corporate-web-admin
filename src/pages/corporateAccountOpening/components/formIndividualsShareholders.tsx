@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  // TBodyFormIndividualsShareholders,
   TIndividualsShareholders,
 } from "../constants/types";
 import { useForm } from "react-hook-form";
