@@ -3,12 +3,14 @@ import { TSuitAns, TSuitTest } from "../constants/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { mapScore } from "../constants/variables";
+import { AxiosError } from "axios";
 
 export function UseSuitTest(corporateCode: string) {
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
   const [quizSuiteTest, setQuizSuiteTest] = useState<TSuitTest[]>();
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState<string[]>([]);
+  const [score, setScore] = useState(0);
 
   const validate = () => {
     if (quizSuiteTest) {
@@ -47,6 +49,7 @@ export function UseSuitTest(corporateCode: string) {
       invsetorTypeRisk: mapScore[grade],
     };
     console.log(ans);
+    setScore(score);
     saveSuitTest(ans);
   };
 
@@ -102,10 +105,16 @@ export function UseSuitTest(corporateCode: string) {
       const res = await axios.get("/api/v1/suitetest/getall", {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
-      setQuizSuiteTest(res.data);
+      if (res.status == 200) {
+        setQuizSuiteTest(res.data);
+      }
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      if (error instanceof AxiosError) {
+        alert(JSON.stringify(error.response?.data));
+      } else {
+        console.log(error);
+      }
     }
   };
 
@@ -120,5 +129,6 @@ export function UseSuitTest(corporateCode: string) {
     isLoading,
     handleSubmit,
     errors,
+    score,
   };
 }

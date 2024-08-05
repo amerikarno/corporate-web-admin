@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SuitQuestionComp } from "../components/suitQuestion";
 import { Button } from "@/components/ui/button";
 import { UseSuitTest } from "../hook/useSuitTest";
+import { SuitTableResult } from "../components/suitTableResult";
 
 type TPageSuitTestProps = {
   corporateCode: string;
@@ -15,6 +16,7 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
     answerSuiteTest,
     handleSubmit,
     errors,
+    score,
   } = UseSuitTest(corporateCode);
 
   if (isLoading) {
@@ -59,14 +61,13 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
                 />
               ))}
             <div className="flex justify-end">
-              {/* <Button onClick={() => console.log(answerSuiteTest)}>
-                Submit
-              </Button> */}
               <Button onClick={handleSubmit}>Submit</Button>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      <SuitTableResult totalScore={score} />
     </div>
   );
 }
