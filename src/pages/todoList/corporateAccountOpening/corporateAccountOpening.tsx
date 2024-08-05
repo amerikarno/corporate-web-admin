@@ -46,6 +46,7 @@ export default function TodoCorporateAccountOpenning() {
   }
 
   const onSubmit = async (data: TCorporateAccountOpening) => {
+    console.log(data);
     await handleSearch(data);
   };
 
@@ -55,7 +56,6 @@ export default function TodoCorporateAccountOpenning() {
     }
   }, [searchResult]);
 
-  console.log(corporateData)
   return (
     <div className="p-4 space-y-10">
       <Card>

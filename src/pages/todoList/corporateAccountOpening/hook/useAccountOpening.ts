@@ -31,9 +31,9 @@ export function useAccountOpening(reset: () => void) {
     return res.data
     }catch(error){
       console.log(error)
+      alert("No data found.")
       return null
     }
-    reset();
   };
 
   return {
