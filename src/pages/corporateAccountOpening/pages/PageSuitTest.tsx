@@ -29,22 +29,6 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
 
   return (
     <div className="p-4 space-y-10">
-      {/* <Card>
-        <CardHeader className="text-xl font-bold">Suitability Test</CardHeader>
-        <CardContent>
-          <SideLabelInput
-            title="Risk Level"
-            childrenClassName="w-3/4 items-start"
-            labelClassName="w-1/4"
-          >
-            <Dropdown
-              onDropdownSelect={(data) => console.log(data)}
-              items={riskItems}
-            />
-          </SideLabelInput>
-        </CardContent>
-      </Card> */}
-
       <Card>
         <CardHeader>
           <div className="flex flex-row space-x-6 items-end">
@@ -119,9 +103,7 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
               </div>
             </div>
             <div className="flex justify-end">
-              <Button onClick={handleSubmit} disabled={isSubmit}>
-                {isSubmit ? "Submiting..." : "Submit"}
-              </Button>
+              <Button onClick={handleSubmit}>Submit</Button>
             </div>
           </div>
         </CardContent>
