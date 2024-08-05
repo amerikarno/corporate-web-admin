@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const corporateAccountOpeningSchema = z.object({
-  corporateCode: z.coerce.number(),
-  corporateName: z.string(),
-  taxId: z.coerce.number(),
-  dateFrom: z.string(),
-  dateTo: z.string(),
+  corporateCode: z.string(),
+  // corporateName: z.string(),
+  // taxId: z.coerce.number(),
+  dateFrom: z.string().transform((str) => new Date(str)),
+  dateTo: z.string().transform((str) => new Date(str)),
 });
 
 export type TCorporateAccountOpening = z.infer<

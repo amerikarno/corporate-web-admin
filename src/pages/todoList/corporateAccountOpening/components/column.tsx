@@ -1,24 +1,20 @@
 import { TableColumn } from "react-data-table-component";
-import { TCorporateAccountOpeningInfo } from "../constant/type";
+import { TCorporateData } from "../constant/type";
 import { Pencil } from "lucide-react";
 
-export const columnsCorporateInfo: TableColumn<TCorporateAccountOpeningInfo>[] =
+export const columnsCorporateInfo: TableColumn<TCorporateData>[] =
   [
     {
-      name: "Jusristic ID",
-      selector: (row: TCorporateAccountOpeningInfo) => row.corporateCode || "",
+      name: "Juristic ID",
+      selector: (row: TCorporateData) => row.CorporateCode || "",
     },
     {
       name: "Juristic Name",
-      selector: (row: TCorporateAccountOpeningInfo) => row.corporateName || "",
-    },
-    {
-      name: "Tax ID",
-      selector: (row: TCorporateAccountOpeningInfo) => row.taxId || "",
+      selector: (row: TCorporateData) => row.Info?.name || "",
     },
     {
       name: "",
-      cell: (row: TCorporateAccountOpeningInfo) => (
+      cell: (row: TCorporateData) => (
         <Pencil
           className="h-4 hover:cursor-pointer"
           onClick={() => console.log(row)}

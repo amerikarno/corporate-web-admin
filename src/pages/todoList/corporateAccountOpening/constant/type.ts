@@ -1,9 +1,9 @@
 export type TCorporateAccountOpeningInfo = {
-  corporateCode: number;
-  corporateName: string;
-  taxId: number;
-  dateFrom: string;
-  dateTo: string;
+  corporateCode: string;
+  // corporateName: string;
+  // taxId: number;
+  dateFrom: Date;
+  dateTo: Date;
 };
 
 export type TCorporateInfo = {
@@ -24,7 +24,7 @@ export type TCorporateCountry = {
   CreatedAt: string;
   DeletedAt: string | null;
   corporateCode: number;
-  //isThailand?: boolean;
+  isThailand?: boolean;
   other: string;
   types: number;
 };
@@ -67,13 +67,15 @@ export type TCorporateFinancials = {
   shareholderEquity: number;
 };
 
+
+
 export type TCorporateTypes = {
-  id: string;
-  createBy: string;
+  // id: string;
+  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  istaxExempt: boolean;
+  // corporateCode: number;
+  // istaxExempt: boolean;
   // isnonTaxExempt: boolean;
   // isoperatingInThailand: boolean;
   // isnonOperatingInThailand: boolean;
@@ -83,13 +85,13 @@ export type TCorporateTypes = {
 };
 
 export type TBusinessTypes = {
-  id: string;
-  createBy: string;
+  // id: string;
+  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  ishotelRestaurant:boolean;
-  otherBusinessType:string;
+  // corporateCode: number;
+  // ishotelRestaurant:boolean;
+  // otherBusinessType:string;
   // isarmament: boolean;
   // isinsuranceAssurance: boolean;
   // iscasinoGambling: boolean;
@@ -109,14 +111,14 @@ export type TBusinessTypes = {
 };
 
 export type TSourceOfIncomes = {
-  id: string;
-  createBy: string;
+  // id: string;
+  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
-  isotherIncome:boolean;
-  //isrevenue: boolean;
-  otherIncome: string;
+  // corporateCode: number;
+  // isotherIncome:boolean;
+  // //isrevenue: boolean;
+  // otherIncome: string;
 };
 
 export type TCountrySourceIncomes = {
@@ -258,11 +260,11 @@ export type TCorporateData = {
   CorporateTypes: TCorporateTypes;
   BusinessTypes: TBusinessTypes;
   SourceOfIncomes: TSourceOfIncomes;
-  CountrySourceIncomes: TCountrySourceIncomes[];
-  Contact: TContact[];
-  Directors: TDirector[];
-  AuthorizedPersons: TAuthorizedPerson[];
-  IndividualShareholders: TIndividualShareholder[];
+  CountrySourceIncomes: TCountrySourceIncomes[] | null;
+  Contact: TContact[] | null;
+  Directors: TDirector[] | null;
+  AuthorizedPersons: TAuthorizedPerson[] | null;
+  IndividualShareholders: TIndividualShareholder[] | null;
   Juristics: TJuristic[];
   Banks: TBank[];
 };
