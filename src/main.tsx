@@ -65,7 +65,7 @@ import { store } from "./app/store";
 // import CreateCorporate from "./pages/corporate/createCorporate";
 import BlankPage from "./pages/blankPages/blankPage";
 import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateAccountOpenning";
-import UploadFiles from "./pages/uploadFiles/uploadFiles";
+//import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
 

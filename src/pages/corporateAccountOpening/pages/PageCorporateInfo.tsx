@@ -1,7 +1,7 @@
-import DataTable from "react-data-table-component";
+//import DataTable from "react-data-table-component";
 import { TCorporateInfo } from "../constants/types";
 import { Card } from "@/components/ui/card";
-import { columnsCorporateInfo } from "../constants/columns";
+//import { columnsCorporateInfo } from "../constants/columns";
 import { FormCorporateInfo } from "../components/formCorporateInfo";
 
 type TPageCorporateInfoProps = {
@@ -9,7 +9,7 @@ type TPageCorporateInfoProps = {
   handleSubmitCorporateInfo: (data: TCorporateInfo) => Promise<void>;
 };
 export function PageCorporateInfo({
-  corporatesInfo,
+  //corporatesInfo,
   handleSubmitCorporateInfo,
 }: TPageCorporateInfoProps) {
   return (

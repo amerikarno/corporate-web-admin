@@ -1,6 +1,7 @@
 // import { checkFormatIDCard } from "@/lib/utils";
-import { checkFormatIDCard, isNumber } from "@/lib/utils";
+//import { checkFormatIDCard, isNumber } from "@/lib/utils";
 import { z } from "zod";
+const isNumber = (value: string): boolean => !isNaN(Number(value));
 
 export const subAddressSchema = z.object({
   addressNo: z.string().min(1, "addressNo cannot be empty"),

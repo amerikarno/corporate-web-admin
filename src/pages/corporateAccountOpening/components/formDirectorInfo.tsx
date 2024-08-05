@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   directorInfoSchema,
-  individualsDirectorSchema,
+  //individualsDirectorSchema,
   TIndividualsDirectorSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
