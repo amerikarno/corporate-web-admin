@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { columnsCorporateInfo } from "./components/column";
-//import { mockData } from "./constant/mock/mockData";
+
 export default function TodoCorporateAccountOpenning() {
   const {
     register,
@@ -23,27 +23,27 @@ export default function TodoCorporateAccountOpenning() {
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
   });
-  
-  const { handleSearch,searchResult } = useAccountOpening(reset);
+
+  const { handleSearch, searchResult } = useAccountOpening(reset);
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
-  const [disableDate,setDisableDate] = useState<boolean>(false);
-  const [disableCode,setDisableCode] = useState<boolean>(false);
+  const [disableDate, setDisableDate] = useState<boolean>(false);
+  const [disableCode, setDisableCode] = useState<boolean>(false);
 
-  const handleDisableDate = (e : React.ChangeEvent<HTMLInputElement> ) =>{
-    if(e.target.value){
-      setDisableDate(true)
-    }else{
-      setDisableDate(false)
+  const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      setDisableDate(true);
+    } else {
+      setDisableDate(false);
     }
-  }
+  };
 
-  const handleDisableCode = (e : React.ChangeEvent<HTMLInputElement> ) =>{
-    if(e.target.value){
-      setDisableCode(true)
-    }else{
-      setDisableCode(false)
+  const handleDisableCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      setDisableCode(true);
+    } else {
+      setDisableCode(false);
     }
-  }
+  };
 
   const onSubmit = async (data: TCorporateAccountOpening) => {
     console.log(data);
@@ -52,7 +52,9 @@ export default function TodoCorporateAccountOpenning() {
 
   useEffect(() => {
     if (searchResult) {
-      setCorporateData(Array.isArray(searchResult) ? searchResult : [searchResult]);
+      setCorporateData(
+        Array.isArray(searchResult) ? searchResult : [searchResult]
+      );
     }
   }, [searchResult]);
 
@@ -65,21 +67,36 @@ export default function TodoCorporateAccountOpenning() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <SideLabelInput title="Juristic ID">
-              <Input type="number" {...register("corporateCode")} onChange={handleDisableDate} disabled={disableCode}/>
+              <Input
+                type="number"
+                {...register("corporateCode")}
+                onChange={handleDisableDate}
+                disabled={disableCode}
+              />
               {errors && (
                 <p className="text-red-500">{errors.corporateCode?.message}</p>
               )}
             </SideLabelInput>
             <div className="col-start-1">
               <SideLabelInput title="Date From">
-                <Input type="date" {...register("dateFrom")} onChange={handleDisableCode} disabled={disableDate}/>
+                <Input
+                  type="date"
+                  {...register("dateFrom")}
+                  onChange={handleDisableCode}
+                  disabled={disableDate}
+                />
                 {errors && (
                   <p className="text-red-500">{errors.dateFrom?.message}</p>
                 )}
               </SideLabelInput>
             </div>
             <SideLabelInput title="Date To">
-              <Input type="date" {...register("dateTo")}  onChange={handleDisableCode} disabled={disableDate}/>
+              <Input
+                type="date"
+                {...register("dateTo")}
+                onChange={handleDisableCode}
+                disabled={disableDate}
+              />
               {errors && (
                 <p className="text-red-500">{errors.dateTo?.message}</p>
               )}

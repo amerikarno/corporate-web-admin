@@ -31,9 +31,9 @@ export type TCorporateCountry = {
 
 export type TCorporateAddress = {
   address: TCorporateSubAddress[];
-  emailAddress:string;
-  telephone:string;
-}
+  emailAddress: string;
+  telephone: string;
+};
 
 export type TCorporateSubAddress = {
   id: string;
@@ -66,8 +66,6 @@ export type TCorporateFinancials = {
   netProfitLoss: number;
   shareholderEquity: number;
 };
-
-
 
 export type TCorporateTypes = {
   // id: string;
@@ -124,7 +122,7 @@ export type TSourceOfIncomes = {
 export type TCountrySourceIncomes = {
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCountry : TCorporateCountry;
+  corporateCountry: TCorporateCountry;
   isliquidation: boolean;
   otherInvestment: string;
 };
@@ -135,7 +133,7 @@ export type TContact = {
   CreatedAt: string;
   DeletedAt: string | null;
   corporateCode: number;
-  fullnames : TContactFullName[];
+  fullnames: TContactFullName[];
   telephone?: string;
   email: string;
   types: number;
@@ -267,4 +265,8 @@ export type TCorporateData = {
   IndividualShareholders: TIndividualShareholder[] | null;
   Juristics: TJuristic[];
   Banks: TBank[];
+};
+
+export type TMapPages = {
+  [key: number]: JSX.Element;
 };
