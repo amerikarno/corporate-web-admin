@@ -4,6 +4,7 @@ import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { mapScore } from "../constants/variables";
 import { AxiosError } from "axios";
+import { copy } from "@/lib/utils";
 
 export function UseSuitTest(corporateCode: string) {
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
@@ -11,6 +12,7 @@ export function UseSuitTest(corporateCode: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState<string[]>([]);
   const [score, setScore] = useState(0);
+  const [typeTwoAns, setTypeTwoAns] = useState<number[]>([0, 0, 0, 0]);
 
   const validate = () => {
     if (quizSuiteTest) {
@@ -38,7 +40,7 @@ export function UseSuitTest(corporateCode: string) {
 
     let score = 0;
     answerSuiteTest.forEach((element) => {
-      score += element.ans + 1;
+      score += element.ans;
     });
 
     const grade = giveGrade(score);
@@ -82,20 +84,48 @@ export function UseSuitTest(corporateCode: string) {
     }
   };
 
-  const handleAnswerSuiteTest = (index: number, quizId: string) => {
+  const handleChoice = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    quizId: string,
+    type?: string
+  ) => {
     const hasSelected = answerSuiteTest?.some((list) => list.id === quizId);
     if (hasSelected) {
-      let rm = answerSuiteTest?.filter((list) => list.id !== quizId);
-      rm.push({ id: quizId, ans: index });
-      setAnswerSuiteTest(rm);
+      if (type === "2") {
+        let tmp = typeTwoAns;
+        const checked = e.target.checked;
+        tmp[index] = checked ? index + 1 : 0;
+
+        let rm = answerSuiteTest?.filter((list) => list.id !== quizId);
+        rm.push({ id: quizId, ans: Math.max(...tmp) });
+        setAnswerSuiteTest(rm);
+
+        setTypeTwoAns(tmp);
+      } else {
+        let rm = answerSuiteTest?.filter((list) => list.id !== quizId);
+        rm.push({ id: quizId, ans: index + 1 });
+        setAnswerSuiteTest(rm);
+      }
     } else {
-      setAnswerSuiteTest([
-        ...answerSuiteTest,
-        {
-          id: quizId,
-          ans: index,
-        },
-      ]);
+      if (type === "2") {
+        let tmp = typeTwoAns;
+        const checked = e.target.checked;
+        tmp[index] = checked ? index + 1 : 0;
+        let rm = answerSuiteTest?.filter((list) => list.id !== quizId);
+        rm.push({ id: quizId, ans: Math.max(...tmp) });
+        setAnswerSuiteTest(rm);
+
+        setTypeTwoAns(tmp);
+      } else {
+        setAnswerSuiteTest([
+          ...answerSuiteTest,
+          {
+            id: quizId,
+            ans: index + 1,
+          },
+        ]);
+      }
     }
     errorCheck(quizId);
   };
@@ -107,6 +137,11 @@ export function UseSuitTest(corporateCode: string) {
       });
       if (res.status == 200) {
         setQuizSuiteTest(res.data);
+
+        //TODO: for test
+        // let quizs = res.data;
+        // quizs[3].types = "2";
+        // setQuizSuiteTest(quizs);
       }
       setIsLoading(false);
     } catch (error) {
@@ -125,7 +160,7 @@ export function UseSuitTest(corporateCode: string) {
   return {
     answerSuiteTest,
     quizSuiteTest,
-    handleAnswerSuiteTest,
+    handleChoice,
     isLoading,
     handleSubmit,
     errors,

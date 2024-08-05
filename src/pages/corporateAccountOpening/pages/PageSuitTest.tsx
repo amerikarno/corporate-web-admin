@@ -11,7 +11,7 @@ type TPageSuitTestProps = {
 export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
   const {
     quizSuiteTest,
-    handleAnswerSuiteTest,
+    handleChoice,
     isLoading,
     answerSuiteTest,
     handleSubmit,
@@ -55,7 +55,7 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
                 <SuitQuestionComp
                   key={index}
                   quiz={item}
-                  handleChoice={handleAnswerSuiteTest}
+                  handleChoice={handleChoice}
                   answer={answerSuiteTest}
                   errors={errors}
                 />

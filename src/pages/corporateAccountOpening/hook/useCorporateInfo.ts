@@ -90,7 +90,7 @@ export function useCorporateInfo() {
       // console.log(res);
       if (res.status === 200) {
         console.log(res);
-        data.corporateCode = res.data.CorporateCode;
+        data.corporateCode = res.data.corporateCode;
         setCorporatesInfo([...corporatesInfo, data]);
         setCurrentCorporatesInfo(data);
         await sleep(500);
