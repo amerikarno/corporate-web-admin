@@ -3,6 +3,7 @@ import { SuitQuestionComp } from "../components/suitQuestion";
 import { Button } from "@/components/ui/button";
 import { UseSuitTest } from "../hook/useSuitTest";
 import { SuitTableResult } from "../components/suitTableResult";
+import { CheckBox } from "@/components/Checkbox";
 
 type TPageSuitTestProps = {
   corporateCode: string;
@@ -17,6 +18,8 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
     handleSubmit,
     errors,
     score,
+    opitionalQuiz,
+    handelOptionalQuiz,
   } = UseSuitTest(corporateCode);
 
   if (isLoading) {
@@ -60,6 +63,44 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
                   errors={errors}
                 />
               ))}
+            <h1>
+              Questions 11-12 are used as additional information for guidance
+              (Scores will NOT be counted)
+            </h1>
+            <h1>Apply only to investment in derivatives and structure note</h1>
+            <div className="space-y-4">
+              <h1>
+                11. Successful derivatives and structure notes investment has
+                high return. On the other hand, investors can lose all of their
+                investment and must increase more capital. Are you able to
+                accept this?
+              </h1>
+              <div className="grid grid-cols-2 gap-x-8 px-4">
+                <CheckBox
+                  id="11-1"
+                  label="No"
+                  checked={opitionalQuiz[0] == false}
+                  onChange={(e) => handelOptionalQuiz(0, e)}
+                />
+                <CheckBox
+                  id="11-2"
+                  label="Yes"
+                  checked={opitionalQuiz[0] == true}
+                  onChange={(e) => handelOptionalQuiz(0, e)}
+                />
+              </div>
+            </div>
+            <h1> Apply only to offshore investment</h1>
+            <div className="space-y-4">
+              <h1>
+                12. In addition to investment risk, are you able to accept
+                foreign exchange rate risk?
+              </h1>
+              <div className="grid grid-cols-2 gap-x-8 px-4">
+                <CheckBox id="11-1" label="No" />
+                <CheckBox id="11-2" label="Yes" />
+              </div>
+            </div>
             <div className="flex justify-end">
               <Button onClick={handleSubmit}>Submit</Button>
             </div>

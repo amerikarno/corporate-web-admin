@@ -1,0 +1,262 @@
+[
+    {
+        "questionNumber": 1,
+        "question": "Your prior investment experience in securities. (Securities: Treasury bills, bond, Bill of Exchange, Stocks, Debenture,  Structure note, Mutual Fund Units)",
+        "choices": [
+            {
+                "answer": "Less than 1 year",
+                "score": 1
+            },
+            {
+                "answer": "1-5 years",
+                "score": 2
+            },
+            {
+                "answer": "6-10 years",
+                "score": 3
+            },
+            {
+                "answer": "More than 10 years",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 2,
+        "question": "What is the proportion of your expenses compare to your revenue?",
+        "choices": [
+            {
+                "answer": "More than75% of the revenue",
+                "score": 1
+            },
+            {
+                "answer": "Between 50% and 75% of the revenue",
+                "score": 2
+            },
+            {
+                "answer": "25% to less than 50% of the revenue",
+                "score": 3
+            },
+            {
+                "answer": "Less than 25% of the revenue",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 3,
+        "question": "What is your current financial status?",
+        "choices": [
+            {
+                "answer": "Less assets than liabilities",
+                "score": 1
+            },
+            {
+                "answer": "Assets equal liabilities",
+                "score": 2
+            },
+            {
+                "answer": "More assets than liabilities",
+                "score": 3
+            },
+            {
+                "answer": "Almost no liabilities or no liabilities",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 4,
+        "question": "Do you have any investment experience or knowledge in the following types of investment products? (You can choose more than 1 item)",
+        "choices": [
+            {
+                "answer": "Bank Deposits",
+                "score": 1
+            },
+            {
+                "answer": "Government Bond or Government Bond Funds",
+                "score": 2
+            },
+            {
+                "answer": "Debentures or Mutual Funds",
+                "score": 3
+            },
+            {
+                "answer": "Common Stocks or Mutual Funds or other high-risk assets",
+                "score": 4
+            }
+        ],
+        "types": "2"
+    },
+    {
+        "questionNumber": 5,
+        "question": "What is your investment period target?",
+        "choices": [
+            {
+                "answer": "Less than 1 year",
+                "score": 1
+            },
+            {
+                "answer": "1 to less than 3 years",
+                "score": 2
+            },
+            {
+                "answer": "3 to 5 years",
+                "score": 3
+            },
+            {
+                "answer": "More than 5 years",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 6,
+        "question": "What is your risk tolerance?",
+        "choices": [
+            {
+                "answer": "Focus on opportunity in preserving original investment safely and receiving small consistent return",
+                "score": 1
+            },
+            {
+                "answer": "Focus on opportunity in receiving consistent return but may take risk of losing some original investment ",
+                "score": 2
+            },
+            {
+                "answer": "Focus on opportunity in receiving higher return but may take risk of losing more original investment",
+                "score": 3
+            },
+            {
+                "answer": "Focus on the highest long-term return but may take risk of losing most of the original investment",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 7,
+        "question": "When considering sample picture below showing the potential returns of different investment portfolio, which investment portfolio are you most willing to invest in?",
+        "choices": [
+            {
+                "answer": "Investment portfolio 1 (has chance to receive 2.5% return without any loss)",
+                "score": 1
+            },
+            {
+                "answer": "Investment portfolio 2 (has chance to receive 7% highest return but may lose up to 1%)",
+                "score": 2
+            },
+            {
+                "answer": "Investment portfolio 3 (has chance to receive 15% highest return but may lose up to 5%)",
+                "score": 3
+            },
+            {
+                "answer": "Investment portfolio 4 (has chance to receive 25% highest return but may lose up to 15%)",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 8,
+        "question": "If you invest in assets that have chances to receive high return but also have chances to receive high loss, how would you feel?",
+        "choices": [
+            {
+                "answer": "Worried and afraid of loss",
+                "score": 1
+            },
+            {
+                "answer": "Uneasy but somehow understand",
+                "score": 2
+            },
+            {
+                "answer": "Understand and accept the fluctuations",
+                "score": 3
+            },
+            {
+                "answer": "Not concerned about the large potential loss and expect that the return may increase",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 9,
+        "question": "In which proportion will you be anxious or unacceptable when the value of your investment has decreased?",
+        "choices": [
+            {
+                "answer": "5% or less",
+                "score": 1
+            },
+            {
+                "answer": "More than 5%-10%",
+                "score": 2
+            },
+            {
+                "answer": "More than 10%-20%",
+                "score": 3
+            },
+            {
+                "answer": "More than 20%",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 10,
+        "question": "Last year, you invest 100,000 Baht. This year, the value of your investment decreased to 85,000 Baht. What will you do?",
+        "choices": [
+            {
+                "answer": "Panic and want to sell the remaining investment",
+                "score": 1
+            },
+            {
+                "answer": "Worried and will change some investment into less risky assets",
+                "score": 2
+            },
+            {
+                "answer": "Continue holding the investment and wait until the investment rebounds",
+                "score": 3
+            },
+            {
+                "answer": "Remain confident since it is long-term investment and will invest more to average cost",
+                "score": 4
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 11,
+        "question": "Successful derivatives and structure notes investment has high return. On the other hand, investors can lose all of their investment and must increase more capital. Are you able to accept this?",
+        "choices": [
+            {
+                "answer": "No",
+                "score": 0
+            },
+            {
+                "answer": "Yes",
+                "score": 0
+            }
+        ],
+        "types": "1"
+    },
+    {
+        "questionNumber": 12,
+        "question": "In addition to investment risk, are you able to accept foreign exchange rate risk?",
+        "choices": [
+            {
+                "answer": "No",
+                "score": 0
+            },
+            {
+                "answer": "Yes",
+                "score": 0
+            }
+        ],
+        "types": "1"
+    }
+]

@@ -12,6 +12,7 @@ export function UseSuitTest(corporateCode: string) {
   const [errors, setErrors] = useState<string[]>([]);
   const [score, setScore] = useState(0);
   const [typeTwoAns, setTypeTwoAns] = useState<number[]>([0, 0, 0, 0]);
+  const [opitionalQuiz, setOpitionalQuiz] = useState<boolean[]>([false, false]);
 
   const validate = () => {
     if (quizSuiteTest) {
@@ -82,6 +83,16 @@ export function UseSuitTest(corporateCode: string) {
     } else {
       return 5;
     }
+  };
+
+  const handelOptionalQuiz = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { checked } = e.target;
+    let tmp = [...opitionalQuiz];
+    tmp[index] = checked;
+    setOpitionalQuiz(tmp);
   };
 
   const handleChoice = (
@@ -165,5 +176,7 @@ export function UseSuitTest(corporateCode: string) {
     handleSubmit,
     errors,
     score,
+    opitionalQuiz,
+    handelOptionalQuiz,
   };
 }

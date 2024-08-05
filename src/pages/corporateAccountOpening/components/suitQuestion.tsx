@@ -36,25 +36,18 @@ export function SuitQuestionComp({
       <h1>
         {quiz.questionNumber}. {quiz.question}
       </h1>
-      {quiz.types === "2" ? (
-        <div className="grid grid-cols-2 gap-x-8 px-4">
-          {quiz.choices.map((choice, index) => (
+
+      <div className="grid grid-cols-2 gap-x-8 px-4">
+        {quiz.choices.map((choice, index) =>
+          quiz.types === "2" ? (
             <CheckBox
               name={choice.id}
               key={index}
               id={choice.id}
               label={`${index + 1}. ${choice.answer}`}
               onChange={(e) => handleChoice(e, index, quiz.id, quiz.types)}
-              // checked={isChecked(quiz.id, index)}
             />
-          ))}
-          {error(quiz.id) && (
-            <p className="text-red-500">Please select your answer</p>
-          )}
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 gap-x-8 px-4">
-          {quiz.choices.map((choice, index) => (
+          ) : (
             <CheckBox
               name={choice.id}
               key={index}
@@ -64,12 +57,12 @@ export function SuitQuestionComp({
               onChange={(e) => handleChoice(e, index, quiz.id, quiz.types)}
               checked={isChecked(quiz.id, index)}
             />
-          ))}
-          {error(quiz.id) && (
-            <p className="text-red-500">Please select your answer</p>
-          )}
-        </div>
-      )}
+          )
+        )}
+        {error(quiz.id) && (
+          <p className="text-red-500">Please select your answer</p>
+        )}
+      </div>
     </div>
   );
 }
