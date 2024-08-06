@@ -9,6 +9,7 @@ type TUploadFilesProps = {
   corporateCode: string;
 };
 export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
+  console.log(corporateCode);
   const {
     file,
     documentType,

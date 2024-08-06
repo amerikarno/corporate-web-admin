@@ -1,24 +1,12 @@
 version: 0.2
-
 phases:
-  install:
-    runtime-versions:
-      nodejs: latest
-    commands:
-      - npm install -g typescript
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
-      - npm install
+      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
   build:
     commands:
-      - echo Build started on `date`
-      - npm run build
-cache:
-  paths:
-    - 'node_modules/**/*'
-artifacts:
-  files:
-    - 'dist/**/*'
-    - appspec.yml
-    - 'deploy-scripts/**/*'
+      - docker build -t corporate-web-admin:latest .
+  post_build:
+    commands:
+      - docker tag corporate-web-admin:latest ${DOCKERHUB_USER}/corporate-web-admin:latest
+      - docker push ${DOCKERHUB_USER}/corporate-web-admin:latest
