@@ -81,23 +81,23 @@ export function useCorporateInfo() {
     };
     console.log("body", body);
     try {
-      const token = getCookies();
-      const res = await axios.post("/api/v1/corporate/create", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // console.log(res);
-      if (res.status === 200) {
-        console.log(res);
-        data.corporateCode = res.data.corporateCode;
-        setCorporatesInfo([...corporatesInfo, data]);
-        setCurrentCorporatesInfo(data);
-        await sleep(500);
-        navigate("/create-job/added-corporate-account/2");
-      } else {
-        alert("Invalid Input.");
-      }
+      // const token = getCookies();
+      // const res = await axios.post("/api/v1/corporate/create", body, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // // console.log(res);
+      // if (res.status === 200) {
+      //   console.log(res);
+      //   data.corporateCode = res.data.corporateCode;
+      //   setCorporatesInfo([...corporatesInfo, data]);
+      //   setCurrentCorporatesInfo(data);
+      //   await sleep(500);
+      //   navigate("/create-job/added-corporate-account/2");
+      // } else {
+      //   alert("Invalid Input.");
+      // }
     } catch (error) {
       console.log(error);
       alert(error);

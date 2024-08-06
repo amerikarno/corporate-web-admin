@@ -21,9 +21,13 @@ import { useState, useEffect } from "react";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
+  initData?: TCorporateInfoSchema;
 };
 
-export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
+export function FormCorporateInfo({
+  onsubmit,
+  initData,
+}: TCorporateInfoFormProps) {
   const {
     register,
     handleSubmit,
@@ -31,6 +35,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     reset,
   } = useForm<TCorporateInfoSchema>({
     resolver: zodResolver(corporateInfoSchema),
+    defaultValues: initData,
   });
 
   const [registeredCountryError, setRegisteredCountryError] =
@@ -153,7 +158,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <h1 className="col-span-4 font-bold pb-4">
               Juristic Investor Information-For Account Opening
             </h1>
-            {/* <SideLabelInput title="Juristic Investor Name"> */}
             <Input
               id={"Juristic Investor Name"}
               label={"Juristic Investor Name"}
@@ -164,8 +168,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Address"> */}
             <Input
               id={"Commercial Registration No."}
               label={"Commercial Registration No."}
@@ -176,8 +178,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             {errors.registrationNo && (
               <p className="text-red-500">{errors.registrationNo.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Tax ID"> */}
             <Input
               id={"Juristic Investor Tax ID"}
               label={"Tax ID"}
@@ -188,8 +188,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Email"> */}
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
@@ -202,7 +200,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 {errors.dateofincorporation.message}
               </p>
             )}
-            {/* </SideLabelInput> */}
           </div>
 
           <div className="p-4 space-y-4">
@@ -311,7 +308,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
-            {/* <SideLabelInput title="Registered Capital"> */}
             <Input
               id={"Registered Capital"}
               label={"Registered Capital"}
@@ -332,8 +328,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Net Profit (Loss)"> */}
             <Input
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
@@ -344,10 +338,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Revenue Per Year"> */}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
@@ -359,11 +349,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
           </div>
-          {/* <div className="flex justify-end pb-4 pr-4">
-            <Button form="corporateInfo" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
-          </div> */}
         </form>
       </Card>
     </>

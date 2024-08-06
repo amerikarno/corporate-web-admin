@@ -24,7 +24,7 @@ export default function TodoCorporateAccountOpenning() {
     resolver: zodResolver(corporateAccountOpeningSchema),
   });
 
-  const { handleSearch, searchResult } = useAccountOpening(reset);
+  const { handleSearch, searchResult } = useAccountOpening();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
@@ -48,6 +48,7 @@ export default function TodoCorporateAccountOpenning() {
   const onSubmit = async (data: TCorporateAccountOpening) => {
     console.log(data);
     await handleSearch(data);
+    reset();
   };
 
   useEffect(() => {

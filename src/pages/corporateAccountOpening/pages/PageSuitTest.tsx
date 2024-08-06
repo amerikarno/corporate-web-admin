@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SuitQuestionComp } from "../components/suitQuestion";
 import { Button } from "@/components/ui/button";
-import { UseSuitTest } from "../hook/useSuitTest";
+import { useSuitTest } from "../hook/useSuitTest";
 import { SuitTableResult } from "../components/suitTableResult";
 import { CheckBox } from "@/components/Checkbox";
 
@@ -21,7 +21,7 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
     opitionalQuiz,
     handelOptionalQuiz,
     isSubmit,
-  } = UseSuitTest(corporateCode);
+  } = useSuitTest(corporateCode);
 
   if (isLoading) {
     return <div>Loading...</div>;

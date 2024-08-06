@@ -14,23 +14,23 @@ import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
 import { useState } from "react";
+import { TCorporateData } from "../constant/type";
+import { mapDataToTCorporateInfo } from "./libs/utils";
 
 type TPage = {
   page?: string;
 };
 
 export function EditCorporateAccount() {
-  console.log("EditCorporateAccount");
-  const corporateData = useLocation().state;
+  const corporateData: TCorporateData = useLocation().state;
   console.log("corporateData", corporateData);
   const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  const initFormData = mapDataToTCorporateInfo(corporateData);
 
   const handleFormPassChange = (status: boolean) => {
     setIsSecondFormPass(status);
   };
-  const {
-    //saveJuristicType,
-  } = useFormCorporateInfo2(handleFormPassChange);
+  const {} = useFormCorporateInfo2(handleFormPassChange);
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
@@ -43,7 +43,8 @@ export function EditCorporateAccount() {
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
-        corporatesInfo={corporatesInfo}
+        // corporatesInfo={corporatesInfo}
+        corporatesInfo={initFormData}
         handleSubmitCorporateInfo={handleSubmitCorporateInfo}
       />
     ),

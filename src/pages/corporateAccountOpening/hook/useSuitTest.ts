@@ -5,7 +5,7 @@ import { getCookies } from "@/lib/Cookies";
 import { mapScore } from "../constants/variables";
 import { AxiosError } from "axios";
 
-export function UseSuitTest(corporateCode: string) {
+export function useSuitTest(corporateCode: string) {
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
   const [quizSuiteTest, setQuizSuiteTest] = useState<TSuitTest[]>();
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +61,7 @@ export function UseSuitTest(corporateCode: string) {
 
   const saveSuitTest = async (ans: any) => {
     try {
-      const res = await axios.post("/api/v1/suitetest/create/result", ans, {
+      const res = await axios.post("/api/v1/suitetest/result/save", ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       console.log(ans);

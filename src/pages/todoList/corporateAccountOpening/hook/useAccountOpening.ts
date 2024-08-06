@@ -6,9 +6,8 @@ import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 // import { TCorporateAccountOpening } from "../constant/type";
 
-export function useAccountOpening(reset: () => void) {
+export function useAccountOpening() {
   const [searchResult, setSearchResult] = useState<TCorporateData>();
-  const navigate = useNavigate();
 
   const handleSearch = async (data: TCorporateAccountOpening) => {
     const { dateFrom, dateTo } = data;
@@ -33,7 +32,6 @@ export function useAccountOpening(reset: () => void) {
       });
       setSearchResult(res.data);
       console.log(res);
-      reset();
       return res.data;
     } catch (error) {
       console.log(error);

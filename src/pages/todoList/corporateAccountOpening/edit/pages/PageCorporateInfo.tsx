@@ -1,13 +1,14 @@
 import { TCorporateInfo } from "../constants/types";
 import { Card } from "@/components/ui/card";
 import { FormCorporateInfo } from "../components/formCorporateInfo";
+import { TCorporateInfoSchema } from "../constants/schemas";
 
 type TPageCorporateInfoProps = {
-  corporatesInfo: TCorporateInfo[];
+  corporatesInfo?: TCorporateInfoSchema;
   handleSubmitCorporateInfo: (data: TCorporateInfo) => Promise<void>;
 };
 export function PageCorporateInfo({
-  // corporatesInfo,
+  corporatesInfo,
   handleSubmitCorporateInfo,
 }: TPageCorporateInfoProps) {
   return (
@@ -22,7 +23,10 @@ export function PageCorporateInfo({
             declaration for accredited/institutional investors.
           </div>
         </Card>
-        <FormCorporateInfo onsubmit={handleSubmitCorporateInfo} />
+        <FormCorporateInfo
+          onsubmit={handleSubmitCorporateInfo}
+          initData={corporatesInfo}
+        />
       </div>
     </>
   );
