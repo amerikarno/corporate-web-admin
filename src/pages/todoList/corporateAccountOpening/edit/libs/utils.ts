@@ -65,8 +65,8 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       name: data.Info.name,
       registrationNo: data.Info.registrationNo,
       taxId: data.Info.taxId,
-      // dateofincorporation: data.Info.dateOfIncorporation,
-      dateofincorporation: new Date(timeStamp),
+      dateofincorporation: data.Info.dateOfIncorporation,
+      // dateofincorporation: new Date(timeStamp),
       registered: resCorpRegisterCountry?.other || "",
       primary: resCorpPrimaryCountry?.other || "",
       registeredBusiness: {
@@ -113,7 +113,6 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       shareholderEquity: data.CorporateFinancials.shareholderEquity || 0,
     };
 
-    console.log("result", result);
     return result;
   } catch (error) {
     console.log("cast type error", error);

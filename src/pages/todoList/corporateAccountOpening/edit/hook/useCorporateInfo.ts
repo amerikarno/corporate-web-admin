@@ -1,10 +1,10 @@
-import axios from "@/api/axios";
 import { useState } from "react";
-import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
-import { useNavigate } from "react-router-dom";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 import { sleep } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
@@ -64,6 +64,7 @@ export function useCorporateInfo() {
       primaryOther: false,
       corporateCode: "",
     });
+  const navigate = useNavigate();
 
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
@@ -73,31 +74,31 @@ export function useCorporateInfo() {
     }
   };
 
-  const navigate = useNavigate();
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     let body = {
       ...data,
       dateofincorporation: data.dateofincorporation.toISOString(),
+      corporateCode: Number(data.corporateCode),
     };
     console.log("body", body);
     try {
-      // const token = getCookies();
-      // const res = await axios.post("/api/v1/corporate/create", body, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
-      // // console.log(res);
-      // if (res.status === 200) {
-      //   console.log(res);
-      //   data.corporateCode = res.data.corporateCode;
-      //   setCorporatesInfo([...corporatesInfo, data]);
-      //   setCurrentCorporatesInfo(data);
-      //   await sleep(500);
-      //   navigate("/create-job/added-corporate-account/2");
-      // } else {
-      //   alert("Invalid Input.");
-      // }
+      const token = getCookies();
+      const res = await axios.post("/api/v1/corporate/update/info", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log(res);
+      if (res.status === 200) {
+        console.log(res);
+        data.corporateCode = res.data.corporateCode;
+        setCorporatesInfo([...corporatesInfo, data]);
+        setCurrentCorporatesInfo(data);
+        await sleep(500);
+        navigate("/create-job/added-corporate-account/2");
+      } else {
+        alert(JSON.stringify(res.data));
+      }
     } catch (error) {
       console.log(error);
       alert(error);
@@ -108,5 +109,7 @@ export function useCorporateInfo() {
     corporatesInfo,
     currentCorporatesInfo,
     handleSubmitCorporateInfo,
+    setCurrentCorporatesInfo,
+    setCorporatesInfo,
   };
 }

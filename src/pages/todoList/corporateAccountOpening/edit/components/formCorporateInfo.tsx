@@ -41,10 +41,10 @@ export function FormCorporateInfo({
     defaultValues: initData,
   });
 
-  const [registeredCountryError, setRegisteredCountryError] =
-    useState<boolean>(false);
-  const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
-    useState<boolean>(false);
+  // const [registeredCountryError, setRegisteredCountryError] =
+  //   useState<boolean>(false);
+  // const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
+  //   useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
 
   // const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
@@ -66,8 +66,11 @@ export function FormCorporateInfo({
   }, [shouldScrollUp]);
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
+    const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
+      corporateCode: corporatesInfo?.CorporateCode.toString(),
+      dateofincorporation: new Date(dateData),
       registered: registeredCountryPrimaryCountryOperation.registered,
       registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
       registeredThailand:
@@ -115,39 +118,42 @@ export function FormCorporateInfo({
       },
     };
 
-    if (handleCheckboxError()) {
-      await sleep(500);
-      reset();
-      // console.log(formData);
-      onsubmit(formData);
-    } else {
-      setShouldScrollUp(true);
-    }
+    // if (handleCheckboxError()) {
+    //   await sleep(500);
+    //   reset();
+    //   // console.log(formData);
+    //   onsubmit(formData);
+    // } else {
+    //   setShouldScrollUp(true);
+    // }
+    await sleep(500);
+    reset();
+    onsubmit(formData);
   };
 
-  const handleCheckboxError = () => {
-    let isValid = true;
+  // const handleCheckboxError = () => {
+  //   let isValid = true;
 
-    if (!registeredCountryPrimaryCountryOperation.registered) {
-      setRegisteredCountryError(true);
-      isValid = false;
-    } else {
-      setRegisteredCountryError(false);
-    }
+  //   if (!registeredCountryPrimaryCountryOperation.registered) {
+  //     setRegisteredCountryError(true);
+  //     isValid = false;
+  //   } else {
+  //     setRegisteredCountryError(false);
+  //   }
 
-    if (!registeredCountryPrimaryCountryOperation.primary) {
-      setPrimaryCountryOfOperationError(true);
-      isValid = false;
-    } else {
-      setPrimaryCountryOfOperationError(false);
-    }
+  //   if (!registeredCountryPrimaryCountryOperation.primary) {
+  //     setPrimaryCountryOfOperationError(true);
+  //     isValid = false;
+  //   } else {
+  //     setPrimaryCountryOfOperationError(false);
+  //   }
 
-    return isValid;
-  };
+  //   return isValid;
+  // };
 
   const {
-    disablePrimaryCountryOfOperation,
-    disableRegisteredCountry,
+    // disablePrimaryCountryOfOperation,
+    // disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
     isPrimaryCountryOfOperationOthers,
@@ -226,18 +232,15 @@ export function FormCorporateInfo({
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
-                    if (
-                      registeredCountryPrimaryCountryOperation.registered == ""
-                    ) {
-                      setRegisteredCountryError(false);
-                    } else {
-                      setRegisteredCountryError(true);
-                    }
+                    // if (
+                    //   registeredCountryPrimaryCountryOperation.registered == ""
+                    // ) {
+                    //   setRegisteredCountryError(false);
+                    // } else {
+                    //   setRegisteredCountryError(true);
+                    // }
                   }}
                   name={registeredCountryChoices[0]}
-                  disabled={disableRegisteredCountry(
-                    registeredCountryChoices[0]
-                  )}
                 />
                 <CheckBox
                   id={`checkbox-${registeredCountryChoices[1]}`}
@@ -248,18 +251,15 @@ export function FormCorporateInfo({
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
-                    if (
-                      registeredCountryPrimaryCountryOperation.registered == ""
-                    ) {
-                      setRegisteredCountryError(false);
-                    } else {
-                      setRegisteredCountryError(true);
-                    }
+                    // if (
+                    //   registeredCountryPrimaryCountryOperation.registered == ""
+                    // ) {
+                    //   setRegisteredCountryError(false);
+                    // } else {
+                    //   setRegisteredCountryError(true);
+                    // }
                   }}
                   name={registeredCountryChoices[1]}
-                  disabled={disableRegisteredCountry(
-                    registeredCountryChoices[1]
-                  )}
                 />
               </div>
               {isRegisteredCountryOthers && (
@@ -271,17 +271,17 @@ export function FormCorporateInfo({
                   />
                 </div>
               )}
-              {registeredCountryError && (
+              {/* {registeredCountryError && (
                 <p className="text-red-500 px-4">
                   Register Country must be filled.
                 </p>
-              )}
+              )} */}
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Primary Country of Operation</h1>
                 <div></div>
-                {PrimaryCountryOfOperationChoices.map((item, i) => (
+                {/* {PrimaryCountryOfOperationChoices.map((item, i) => (
                   <CheckBox
                     id={`checkbox2-${i}`}
                     key={i}
@@ -299,7 +299,45 @@ export function FormCorporateInfo({
                     name={item}
                     disabled={disablePrimaryCountryOfOperation(item)}
                   />
-                ))}
+                ))} */}
+                <CheckBox
+                  id={`checkbox2-${PrimaryCountryOfOperationChoices[0]}`}
+                  key={PrimaryCountryOfOperationChoices[0]}
+                  label={PrimaryCountryOfOperationChoices[0]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.primaryCountry
+                  }
+                  onChange={(e) => {
+                    handlePrimaryCountryOfOperationOthers(e);
+                    // if (
+                    //   registeredCountryPrimaryCountryOperation.primary == ""
+                    // ) {
+                    //   setPrimaryCountryOfOperationError(false);
+                    // } else {
+                    //   setPrimaryCountryOfOperationError(true);
+                    // }
+                  }}
+                  name={PrimaryCountryOfOperationChoices[0]}
+                />
+                <CheckBox
+                  id={`checkbox2-${PrimaryCountryOfOperationChoices[1]}`}
+                  key={PrimaryCountryOfOperationChoices[1]}
+                  label={PrimaryCountryOfOperationChoices[1]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.primaryOther
+                  }
+                  onChange={(e) => {
+                    handlePrimaryCountryOfOperationOthers(e);
+                    // if (
+                    //   registeredCountryPrimaryCountryOperation.primary == ""
+                    // ) {
+                    //   setPrimaryCountryOfOperationError(false);
+                    // } else {
+                    //   setPrimaryCountryOfOperationError(true);
+                    // }
+                  }}
+                  name={PrimaryCountryOfOperationChoices[1]}
+                />
               </div>
               {isPrimaryCountryOfOperationOthers && (
                 <div className="flex justify-end px-4 py-2">
@@ -310,11 +348,11 @@ export function FormCorporateInfo({
                   />
                 </div>
               )}
-              {primaryCountryOfOperationError && (
+              {/* {primaryCountryOfOperationError && (
                 <p className="text-red-500 px-4">
                   Primary Country of Operation must be filled.
                 </p>
-              )}
+              )} */}
             </div>
           </div>
 

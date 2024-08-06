@@ -26,6 +26,7 @@ export function EditCorporateAccount() {
   console.log("corporateData", corporateData);
   const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
+  console.log("initFormData", initFormData);
 
   const handleFormPassChange = (status: boolean) => {
     setIsSecondFormPass(status);
