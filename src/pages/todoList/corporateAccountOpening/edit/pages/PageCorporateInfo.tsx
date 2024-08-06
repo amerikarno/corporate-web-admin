@@ -2,14 +2,17 @@ import { TCorporateInfo } from "../constants/types";
 import { Card } from "@/components/ui/card";
 import { FormCorporateInfo } from "../components/formCorporateInfo";
 import { TCorporateInfoSchema } from "../constants/schemas";
+import { TCorporateData } from "../../constant/type";
 
 type TPageCorporateInfoProps = {
-  corporatesInfo?: TCorporateInfoSchema;
+  initData?: TCorporateInfoSchema;
+  corporatesInfo?: TCorporateData;
   handleSubmitCorporateInfo: (data: TCorporateInfo) => Promise<void>;
 };
 export function PageCorporateInfo({
   corporatesInfo,
   handleSubmitCorporateInfo,
+  initData,
 }: TPageCorporateInfoProps) {
   return (
     <>
@@ -25,7 +28,8 @@ export function PageCorporateInfo({
         </Card>
         <FormCorporateInfo
           onsubmit={handleSubmitCorporateInfo}
-          initData={corporatesInfo}
+          initData={initData}
+          corporatesInfo={corporatesInfo}
         />
       </div>
     </>

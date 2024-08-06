@@ -33,7 +33,7 @@ export const isExpiredToken = (): boolean => {
   return isExpired;
 };
 
-const findAddress = (data: TCorporateData, type: number) => {
+export const findAddress = (data: TCorporateData, type: number) => {
   for (let i = 0; i < data.CorporateAddress.length; i++) {
     const element = data.CorporateAddress[i];
     if (element.address[0].types === type) {
@@ -44,10 +44,10 @@ const findAddress = (data: TCorporateData, type: number) => {
 export const mapDataToTCorporateInfo = (data: TCorporateData) => {
   try {
     let resRegisterCountry = findAddress(data, 702);
+    let resPlaceofIncorporation = findAddress(data, 701);
     let resCorpRegisterCountry = data.CorporateCountry.find(
       (item) => item.types === 601
     );
-    let resPlaceofIncorporation = findAddress(data, 701);
     let resCorpPrimaryCountry = data.CorporateCountry.find(
       (item) => item.types === 601
     );

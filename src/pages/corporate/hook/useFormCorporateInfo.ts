@@ -4,23 +4,47 @@ import { TRegisteredCountryPrimaryCountryOperation } from "../constants/types";
 import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants/initialData";
 import { z, ZodIssue } from "zod";
 import { registeredCountryPrimaryCountryOperationSchema } from "../constants/schemas";
+import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
 
-export function useFormCorporateInfo() {
+export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
+  let resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 601
+  );
+  let resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 602
+  );
+  const initCountryData = {
+    registered: resCorpRegisterCountry?.other || "",
+    primary: resCorpPrimaryCountry?.other || "",
+    registeredThailand: resCorpRegisterCountry?.isThailand || false,
+    primaryCountry: resCorpPrimaryCountry?.isThailand || false,
+    registeredOther: resCorpPrimaryCountry?.isThailand ? false : true,
+    primaryOther: resCorpPrimaryCountry?.isThailand ? false : true,
+  };
+  console.log(JSON.stringify(initCountryData, null, 2));
+
   const [
     registeredCountryPrimaryCountryOperation,
     setRegisteredCountryPrimaryCountryOperation,
   ] = useState<TRegisteredCountryPrimaryCountryOperation>(
-    emptyRegisteredCountryPrimaryCountryOperation
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
   );
   const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
-    useState<boolean>(false);
+    useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // useState<boolean>(false);
+
   useState<TRegisteredCountryPrimaryCountryOperation>(
-    emptyRegisteredCountryPrimaryCountryOperation
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
   );
   const [
     isPrimaryCountryOfOperationOthers,
     setIsPrimaryCountryOfOperationOthers,
-  ] = useState<boolean>(false);
+  ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // ] = useState<boolean>(false);
 
   const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
 
@@ -40,10 +64,13 @@ export function useFormCorporateInfo() {
       ) || null
     );
   };
+
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
+    console.log(name);
+
     if (checked) {
       tmp.registered = name;
       tmp.registeredThailand = true;
@@ -54,7 +81,9 @@ export function useFormCorporateInfo() {
       tmp.registeredThailand = false;
       tmp.registeredOther = true;
     }
+
     setRegisteredCountryPrimaryCountryOperation(tmp);
+
     if (name == "Others Countries (Please Specify)") {
       setIsRegisteredCountryOthers(checked);
     }
@@ -98,26 +127,38 @@ export function useFormCorporateInfo() {
     form1error ? validateLocal(tmp) : null;
   };
   const disableRegisteredCountry = (type: string): boolean => {
-    if (registeredCountryPrimaryCountryOperation.registered !== "") {
-      if (type === registeredCountryPrimaryCountryOperation.registered) {
-        return false;
-      } else {
-        return true;
-      }
+    // console.log(type);
+    if (type === "Thailand") {
+      return resCorpRegisterCountry?.isThailand ? false : true;
     } else {
-      return false;
+      return resCorpRegisterCountry?.isThailand ? true : false;
     }
+
+    // if (registeredCountryPrimaryCountryOperation.registered !== "") {
+    //   if (type === registeredCountryPrimaryCountryOperation.registered) {
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // } else {
+    //   return false;
+    // }
   };
   const disablePrimaryCountryOfOperation = (type: string): boolean => {
-    if (registeredCountryPrimaryCountryOperation.primary !== "") {
-      if (type === registeredCountryPrimaryCountryOperation.primary) {
-        return false;
-      } else {
-        return true;
-      }
+    if (type === "Thailand") {
+      return resCorpPrimaryCountry?.isThailand ? false : true;
     } else {
-      return false;
+      return resCorpPrimaryCountry?.isThailand ? true : false;
     }
+    // if (registeredCountryPrimaryCountryOperation.primary !== "") {
+    //   if (type === registeredCountryPrimaryCountryOperation.primary) {
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // } else {
+    //   return false;
+    // }
   };
 
   const validateForm = (): boolean => {

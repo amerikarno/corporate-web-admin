@@ -18,15 +18,18 @@ import {
   PrimaryCountryOfOperationChoices,
 } from "../constants/variables";
 import { useState, useEffect } from "react";
+import { TCorporateData } from "../../constant/type";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
   initData?: TCorporateInfoSchema;
+  corporatesInfo?: TCorporateData;
 };
 
 export function FormCorporateInfo({
   onsubmit,
   initData,
+  corporatesInfo,
 }: TCorporateInfoFormProps) {
   const {
     register,
@@ -43,6 +46,13 @@ export function FormCorporateInfo({
   const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
     useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
+
+  // const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+  //   (item) => item.types === 601
+  // );
+  // const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+  //   (item) => item.types === 602
+  // );
 
   useEffect(() => {
     if (shouldScrollUp) {
@@ -144,7 +154,7 @@ export function FormCorporateInfo({
     isRegisteredCountryOthers,
     registeredCountryPrimaryCountryOperation,
     handleInputOthers,
-  } = useFormCorporateInfo();
+  } = useFormCorporateInfo(corporatesInfo);
 
   return (
     <>
@@ -207,26 +217,50 @@ export function FormCorporateInfo({
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Registered Country</h1>
                 <div></div>
-                {registeredCountryChoices.map((item, i) => (
-                  <CheckBox
-                    id={`checkbox-${i}`}
-                    key={i}
-                    label={item}
-                    onChange={(e) => {
-                      handleRegisteredCountryOthers(e);
-                      if (
-                        registeredCountryPrimaryCountryOperation.registered ==
-                        ""
-                      ) {
-                        setRegisteredCountryError(false);
-                      } else {
-                        setRegisteredCountryError(true);
-                      }
-                    }}
-                    name={item}
-                    disabled={disableRegisteredCountry(item)}
-                  />
-                ))}
+                <CheckBox
+                  id={`checkbox-${registeredCountryChoices[0]}`}
+                  key={registeredCountryChoices[0]}
+                  label={registeredCountryChoices[0]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.registeredThailand
+                  }
+                  onChange={(e) => {
+                    handleRegisteredCountryOthers(e);
+                    if (
+                      registeredCountryPrimaryCountryOperation.registered == ""
+                    ) {
+                      setRegisteredCountryError(false);
+                    } else {
+                      setRegisteredCountryError(true);
+                    }
+                  }}
+                  name={registeredCountryChoices[0]}
+                  disabled={disableRegisteredCountry(
+                    registeredCountryChoices[0]
+                  )}
+                />
+                <CheckBox
+                  id={`checkbox-${registeredCountryChoices[1]}`}
+                  key={registeredCountryChoices[1]}
+                  label={registeredCountryChoices[1]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.registeredOther
+                  }
+                  onChange={(e) => {
+                    handleRegisteredCountryOthers(e);
+                    if (
+                      registeredCountryPrimaryCountryOperation.registered == ""
+                    ) {
+                      setRegisteredCountryError(false);
+                    } else {
+                      setRegisteredCountryError(true);
+                    }
+                  }}
+                  name={registeredCountryChoices[1]}
+                  disabled={disableRegisteredCountry(
+                    registeredCountryChoices[1]
+                  )}
+                />
               </div>
               {isRegisteredCountryOthers && (
                 <div className="flex justify-end px-4 py-2">

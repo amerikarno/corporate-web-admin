@@ -36,15 +36,15 @@ export function EditCorporateAccount() {
   let pageId = page ? Number(page) : 1;
 
   const navigate = useNavigate();
-  const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
+  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
   const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
-        // corporatesInfo={corporatesInfo}
-        corporatesInfo={initFormData}
+        corporatesInfo={corporateData}
+        initData={initFormData}
         handleSubmitCorporateInfo={handleSubmitCorporateInfo}
       />
     ),
