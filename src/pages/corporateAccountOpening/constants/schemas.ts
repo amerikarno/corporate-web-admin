@@ -5,9 +5,9 @@ const isNumber = (value: string): boolean => !isNaN(Number(value));
 export const subAddressSchema = z.object({
   addressNo: z.string().min(1, "addressNo cannot be empty"),
   mooNo: z.string().optional(),
-  soi: z.string().optional(),
-  floor: z.string().optional(),
   building: z.string().optional(),
+  floor: z.string().optional(),
+  soi: z.string().optional(),
   road: z.string().optional(),
   tambon: z.string().min(1, "subDistrict cannot be empty"),
   amphoe: z.string().min(1, "district cannot be empty"),
@@ -61,44 +61,43 @@ const registerBusinessAddressSchema = z.object({
   address: z.array(subAddressSchema),
   emailAddress: z.string().email().min(1, "email cannot be empty"),
   telephone: z
-    .string()
-    .min(1, "phone cannot be empty")
-    .superRefine((val, ctx) => {
-      if (!isNumber(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid phone number",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
+  .string()
+  .min(1, "phone cannot be empty")
+  .superRefine((val, ctx) => {
+    if (!isNumber(val) || val.length !== 10) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Phone Number must be 10 letters",
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  }),
 });
 
 const placeIncorporateAddressSchema = z.object({
   address: z.array(subAddressSchema),
   emailAddress: z.string().email().min(1, "email cannot be empty"),
   telephone: z
-    .string()
-    .min(1, "phone cannot be empty")
-    .superRefine((val, ctx) => {
-      if (!isNumber(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid phone number",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
+  .string()
+  .min(1, "phone cannot be empty")
+  .superRefine((val, ctx) => {
+    if (!isNumber(val) || val.length !== 10) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Phone Number must be 10 letters",
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  }),
 });
 
 export const corporateInfoSchema = z.object({
   name: z.string().min(1, "name cannot be empty"),
   registrationNo: z
     .string()
-    .min(1, "Registration number cannot be empty")
-    .regex(/^\d+$/, "Registration number must be a numbers"),
+    .min(1, "Registration number cannot be empty"),
   taxId: z
     .string()
     .min(1, "taxId cannot be empty")

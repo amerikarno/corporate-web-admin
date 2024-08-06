@@ -59,5 +59,6 @@ export function useAuthorizePerson() {
   return {
     authorize,
     handleSubmitAuthorize,
+    setAuthorize
   };
 }

@@ -54,5 +54,6 @@ export function useShareholders() {
   return {
     shareholders,
     handleSubmitShareholders,
+    setShareholders
   };
 }
