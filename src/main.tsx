@@ -67,6 +67,7 @@ import BlankPage from "./pages/blankPages/blankPage";
 import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateAccountOpenning";
 //import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
+import OrderTrade from "./pages/corporateAccountOpening/pages/orderTrade/orderTrade";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const helmetContext = {};
@@ -115,6 +116,12 @@ root.render(
                       }
                     />
                   </Route>
+                  <Route 
+                    path="order-trade"
+                    element={
+                      <OrderTrade/>
+                    } 
+                  />
                 </Route>
                 <Route path="todo-list" element={<Outlet />}>
                   <Route index element={<TodoCorporateAccountOpenning />} />

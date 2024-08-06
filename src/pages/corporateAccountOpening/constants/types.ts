@@ -131,6 +131,7 @@ export type TContactPerson = {
   division: string;
   telephone: string;
   email: string;
+  contactID?:string;
 };
 
 export type TDirector = {

@@ -21,7 +21,7 @@ export function useAccountOpening() {
 
     try{
       const token = getCookies();
-      const res = await axios.post("/api/v1/json/query",body,{
+      const res = await axios.post("/api/v1/corporate/query",body,{
       headers: {
         Authorization: `Bearer ${token}`,
       },
