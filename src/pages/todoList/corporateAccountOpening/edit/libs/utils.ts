@@ -1,10 +1,6 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
-import {
-  TCorporateAddress,
-  TCorporateData,
-  TCorporateInfo,
-} from "../../constant/type";
+import { TCorporateData } from "../../constant/type";
 import { TCorporateInfoSchema } from "../constants/schemas";
 
 export function formatDateToIsoString(date: Date): string {

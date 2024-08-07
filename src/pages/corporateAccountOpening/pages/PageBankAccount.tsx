@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { FormBank } from "../components/formBank";
-import { columnsBank } from "../constants/columns";
+// import { columnsBank } from "../constants/columns";
 import { useBank } from "../hook/useBank";
 import { useEffect, useState } from "react";
 import { TBank } from "../constants/types";
@@ -11,17 +11,17 @@ type TPageBankAccountProps = {
   corporateCode: string;
 };
 export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
-  const { bank, handleSubmitBank , setBank} = useBank();
+  const { bank, handleSubmitBank, setBank } = useBank();
   const [bankData, setBankData] = useState<TBank[]>([]);
-  useEffect(()=>{
-    setBankData(bank)
-  },[bank])
+  useEffect(() => {
+    setBankData(bank);
+  }, [bank]);
 
   const handleDelete = (index: number) => {
     const newData = [...bankData];
-    newData.splice(index, 1); 
-    setBankData(newData); 
-    setBank(newData); 
+    newData.splice(index, 1);
+    setBankData(newData);
+    setBank(newData);
   };
 
   const columnsBank: TableColumn<TBank>[] = [
@@ -50,13 +50,13 @@ export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
     //   selector: (row: TDirector) => row.addresses || '',
     // },
     {
-      cell: (row: TBank, index : number) => (
+      cell: (_: TBank, index: number) => (
         <Button onClick={() => handleDelete(index)}>Delete</Button>
       ),
       ignoreRowClick: true,
     },
   ];
-  
+
   return (
     <>
       <div className="p-4 space-y-8">

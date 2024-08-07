@@ -14,21 +14,23 @@ type TPageJuristicShareholderProps = {
 export function PageJuristicShareholder({
   corporateCode,
 }: TPageJuristicShareholderProps) {
-  const { juristics, handleSubmitJuristics , setJuristics } = useJuristicShareholders();
-  const [juristicsData, setJuristicsData] = useState<TJuristicsShareholders[]>([]);
-  useEffect(()=>{
-    setJuristicsData(juristics)
-  },[juristics])
+  const { juristics, handleSubmitJuristics, setJuristics } =
+    useJuristicShareholders();
+  const [juristicsData, setJuristicsData] = useState<TJuristicsShareholders[]>(
+    []
+  );
+  useEffect(() => {
+    setJuristicsData(juristics);
+  }, [juristics]);
 
   const handleDelete = (index: number) => {
     const newData = [...juristicsData];
-    newData.splice(index, 1); 
-    setJuristicsData(newData); 
-    setJuristics(newData); 
+    newData.splice(index, 1);
+    setJuristicsData(newData);
+    setJuristics(newData);
   };
 
-  const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] =
-  [
+  const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] = [
     {
       name: "Name",
       selector: (row: TJuristicsShareholders) => row.juristicName || "",
@@ -47,7 +49,7 @@ export function PageJuristicShareholder({
     },
     {
       name: "Actions",
-      cell: (row: TJuristicsShareholders, index : number) => (
+      cell: (_: TJuristicsShareholders, index: number) => (
         <Button onClick={() => handleDelete(index)}>Delete</Button>
       ),
       ignoreRowClick: true,

@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsShareholders } from "../components/formIndividualsShareholders";
-import { columnsShareHolders } from "../constants/columns";
+// import { columnsShareHolders } from "../constants/columns";
 import { useShareholders } from "../hook/useShareholders";
 import { TIndividualsShareholders } from "../constants/types";
 import { useEffect, useState } from "react";
@@ -14,25 +14,26 @@ type TPageIndividualShareholderProps = {
 export function PageIndividualShareholder({
   corporateCode,
 }: TPageIndividualShareholderProps) {
-  const { shareholders, handleSubmitShareholders,setShareholders } = useShareholders();
-  const [shareholdersData, setShareholdersData] = useState<TIndividualsShareholders[]>([]);
-  useEffect(()=>{
-    setShareholdersData(shareholders)
-  },[shareholders])
+  const { shareholders, handleSubmitShareholders, setShareholders } =
+    useShareholders();
+  const [shareholdersData, setShareholdersData] = useState<
+    TIndividualsShareholders[]
+  >([]);
+  useEffect(() => {
+    setShareholdersData(shareholders);
+  }, [shareholders]);
 
   const handleDelete = (index: number) => {
     const newData = [...shareholdersData];
-    newData.splice(index, 1); 
-    setShareholdersData(newData); 
-    setShareholders(newData); 
+    newData.splice(index, 1);
+    setShareholdersData(newData);
+    setShareholders(newData);
   };
 
-  const columnsShareHolders: TableColumn<TIndividualsShareholders>[] =
-  [
+  const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
     {
       name: "Title",
-      selector: (row: TIndividualsShareholders) =>
-        row.fullNames[0].title || "",
+      selector: (row: TIndividualsShareholders) => row.fullNames[0].title || "",
     },
     {
       name: "Firstname",
@@ -59,17 +60,15 @@ export function PageIndividualShareholder({
     },
     {
       name: "Nationality",
-      selector: (row: TIndividualsShareholders) =>
-        row.nationality || "",
+      selector: (row: TIndividualsShareholders) => row.nationality || "",
     },
     {
       name: "Share Percentage",
-      selector: (row: TIndividualsShareholders) =>
-        row.sharePercentage || "",
+      selector: (row: TIndividualsShareholders) => row.sharePercentage || "",
     },
     {
       name: "Actions",
-      cell: (row: TIndividualsShareholders , index : number) => (
+      cell: (_: TIndividualsShareholders, index: number) => (
         <Button onClick={() => handleDelete(index)}>Delete</Button>
       ),
       ignoreRowClick: true,

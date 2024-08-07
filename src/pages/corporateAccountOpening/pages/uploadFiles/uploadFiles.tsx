@@ -34,12 +34,13 @@ export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
           {documentType !== null && (
             <div className="space-y-4">
               <Input type="file" onChange={handleInputChange} />
-              <Button onClick={() => handleUpload(file)}>Upload</Button>
+              <Button onClick={() => handleUpload(file, corporateCode)}>
+                Upload
+              </Button>
             </div>
           )}
         </CardContent>
       </Card>
-      {/* <p>corporate code : {corporateCode}</p> */}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { TCorporateAccountOpening } from "../constant/schema";
 import { TCorporateData } from "../constant/type";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { TCorporateAccountOpening } from "../constant/type";
 
 export function useAccountOpening() {

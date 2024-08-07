@@ -21,7 +21,7 @@ type TCorporateTypeAndIncomeProps = {
   corporateCode?: string;
 };
 const handleFormPassChange = (status: boolean) => {
-  //console.log("Form submission status:", status);
+  console.log("Form submission status:", status);
 };
 
 export function FormCorporateTypeAndIncome({
@@ -68,12 +68,16 @@ export function FormCorporateTypeAndIncome({
       }
     } else {
       console.log("submit failed");
-    }  
+    }
   };
 
   return (
     <Card>
-      <form onSubmit={(e) => onSubmit(e)} id="corporateInfo2" className="space-y-10">
+      <form
+        onSubmit={(e) => onSubmit(e)}
+        id="corporateInfo2"
+        className="space-y-10"
+      >
         <div>
           <>
             <h1 className="font-bold p-4">Juristic Type</h1>
