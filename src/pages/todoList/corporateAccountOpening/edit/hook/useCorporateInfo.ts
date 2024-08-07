@@ -97,7 +97,7 @@ export function useCorporateInfo() {
         setCorporatesInfo([...corporatesInfo, data]);
         setCurrentCorporatesInfo(data);
         await sleep(500);
-        navigate("/create-job/added-corporate-account/2");
+        navigate("/todo-list/corporate-account-opening/edit/2");
       } else {
         alert(JSON.stringify(res.data));
       }
