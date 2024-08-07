@@ -12,7 +12,7 @@ import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
 import { CheckBox } from "@/components/Checkbox";
-import { useFormCorporateInfo } from "@/pages/corporate/hook/useFormCorporateInfo";
+// import { useFormCorporateInfo } from "@/pages/corporate/hook/useFormCorporateInfo";
 import {
   registeredCountryChoices,
   PrimaryCountryOfOperationChoices,
@@ -20,6 +20,7 @@ import {
 import { useState, useEffect } from "react";
 import { TCorporateData } from "../../constant/type";
 import { Button } from "@/components/ui/button";
+import { useFormCorporateInfo } from "../hook/useFormCorporateInfo";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;

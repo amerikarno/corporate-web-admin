@@ -2,7 +2,18 @@ import {
   TCorporateTypeAndIncome,
   TInitailJuristicTypeAndIncome,
   TJuristicTypeAll,
+  TRegisteredCountryPrimaryCountryOperation,
 } from "./types";
+
+export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation =
+  {
+    registered: "",
+    primary: "",
+    registeredThailand: false,
+    primaryCountry: false,
+    registeredOther: false,
+    primaryOther: false,
+  };
 
 export const initCorporateInfo = {
   name: "",
@@ -169,8 +180,6 @@ export const individualContact = {
 //   registeredCountry: "",
 //   sharePercentage: 0.0,
 // };
-
-
 
 export const initailJuristicOther = {
   otherBusinessType: "",
