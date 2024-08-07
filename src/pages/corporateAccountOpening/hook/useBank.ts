@@ -45,5 +45,6 @@ export function useBank() {
   return {
     bank,
     handleSubmitBank,
+    setBank
   };
 }

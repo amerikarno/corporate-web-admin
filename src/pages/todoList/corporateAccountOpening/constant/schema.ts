@@ -4,8 +4,14 @@ export const corporateAccountOpeningSchema = z.object({
   corporateCode: z.string(),
   // corporateName: z.string(),
   // taxId: z.coerce.number(),
-  dateFrom: z.string().transform((str) => new Date(str)),
-  dateTo: z.string().transform((str) => new Date(str)),
+  dateFrom: z
+    .string()
+    .transform((str) => new Date(str))
+    .optional(),
+  dateTo: z
+    .string()
+    .transform((str) => new Date(str))
+    .optional(),
 });
 
 export type TCorporateAccountOpening = z.infer<
@@ -61,8 +67,6 @@ export const corporateAddressSchema = z.object({
   telephone: z.string(),
 });
 
-
-
 export const corporateFinancialsSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -75,7 +79,6 @@ export const corporateFinancialsSchema = z.object({
   shareholderEquity: z.number(),
 });
 
-
 export const corporateTypesSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -84,7 +87,6 @@ export const corporateTypesSchema = z.object({
   corporateCode: z.number(),
   istaxExempt: z.boolean(),
 });
-
 
 export const businessTypesSchema = z.object({
   id: z.string(),
@@ -96,7 +98,6 @@ export const businessTypesSchema = z.object({
   otherBusinessType: z.string(),
 });
 
-
 export const sourceOfIncomesSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -107,15 +108,13 @@ export const sourceOfIncomesSchema = z.object({
   otherIncome: z.string(),
 });
 
-
 export const countrySourceIncomesSchema = z.object({
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCountry: corporateCountrySchema, 
+  corporateCountry: corporateCountrySchema,
   isliquidation: z.boolean(),
   otherInvestment: z.string(),
 });
-
 
 export const contactFullNameSchema = z.object({
   id: z.string(),
@@ -127,7 +126,6 @@ export const contactFullNameSchema = z.object({
   lastName: z.string(),
   types: z.number(),
 });
-
 
 export const contactSchema = z.object({
   id: z.string(),
@@ -144,7 +142,6 @@ export const contactSchema = z.object({
   division: z.string(),
 });
 
-
 export const fullNameSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -155,7 +152,6 @@ export const fullNameSchema = z.object({
   lastName: z.string(),
   types: z.number(),
 });
-
 
 export const addressSchema = z.object({
   id: z.string(),
@@ -172,7 +168,6 @@ export const addressSchema = z.object({
   types: z.number(),
 });
 
-
 export const directorSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -187,7 +182,6 @@ export const directorSchema = z.object({
   nationality: z.string(),
   types: z.number(),
 });
-
 
 export const authorizedPersonSchema = z.object({
   id: z.string(),
@@ -204,7 +198,6 @@ export const authorizedPersonSchema = z.object({
   types: z.number(),
 });
 
-
 export const individualShareholderSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -220,7 +213,6 @@ export const individualShareholderSchema = z.object({
   sharePercentage: z.number(),
 });
 
-
 export const juristicSchema = z.object({
   id: z.string(),
   createBy: z.string(),
@@ -232,7 +224,6 @@ export const juristicSchema = z.object({
   registeredCountry: z.string(),
   sharePercentage: z.number(),
 });
-
 
 export const bankSchema = z.object({
   id: z.string(),
@@ -264,5 +255,3 @@ export const corporateDataSchema = z.object({
   Juristics: z.array(juristicSchema),
   Banks: z.array(bankSchema),
 });
-
-

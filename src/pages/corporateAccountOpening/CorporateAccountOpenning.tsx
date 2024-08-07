@@ -10,10 +10,10 @@ import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
-import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
 import { useState } from "react";
+import UploadFiles from "./pages/uploadFiles/uploadFiles";
 
 type TPage = {
   page?: string;

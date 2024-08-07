@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Dropdown } from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import { useUploadFile } from "./hook/useUploadFile";
-import { items } from "./constant/variables";
+import { documentTypes } from "./constant/variables";
 
 type TUploadFilesProps = {
   corporateCode: string;
@@ -27,7 +27,7 @@ export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
             <h1>Document Type</h1>
             <div className="w-1/3 ">
               <Dropdown
-                items={items}
+                items={documentTypes}
                 onDropdownSelect={handleDocumnetTypeChange}
               />
             </div>
@@ -35,12 +35,13 @@ export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
           {documentType !== null && (
             <div className="space-y-4">
               <Input type="file" onChange={handleInputChange} />
-              <Button onClick={() => handleUpload(file)}>Upload</Button>
+              <Button onClick={() => handleUpload(file, corporateCode)}>
+                Upload
+              </Button>
             </div>
           )}
         </CardContent>
       </Card>
-      {/* <p>corporate code : {corporateCode}</p> */}
     </div>
   );
 }

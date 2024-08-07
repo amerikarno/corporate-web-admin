@@ -12,12 +12,13 @@ import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
 import { CheckBox } from "@/components/Checkbox";
-import { useFormCorporateInfo } from "@/pages/corporate/hook/useFormCorporateInfo";
+// import { useFormCorporateInfo } from "@/pages/corporate/hook/useFormCorporateInfo";
 import {
   registeredCountryChoices,
   PrimaryCountryOfOperationChoices,
 } from "../constants/variables";
 import { useState, useEffect } from "react";
+import { useFormCorporateInfo } from "../hook/useFormCorporateInfo";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -29,6 +30,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue,
   } = useForm<TCorporateInfoSchema>({
     resolver: zodResolver(corporateInfoSchema),
   });
@@ -105,6 +107,8 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
       reset();
       // console.log(formData);
       onsubmit(formData);
+      sleep(1500);
+      setShouldScrollUp(true);
     } else {
       setShouldScrollUp(true);
     }
@@ -160,6 +164,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {...register("name")}
               name="name"
               disabled={isSubmitting}
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`name`, value);
+              }}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
@@ -172,6 +180,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {...register("registrationNo")}
               name="registrationNo"
               disabled={isSubmitting}
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`registrationNo`, value);
+              }}
             />
             {errors.registrationNo && (
               <p className="text-red-500">{errors.registrationNo.message}</p>
@@ -184,6 +196,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {...register("taxId")}
               name="taxId"
               disabled={isSubmitting}
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`taxId`, value);
+              }}
             />
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
@@ -296,6 +312,42 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               register={register}
               keyType="placeofIncorporation"
             />
+            <div className="flex-col">
+              <Input
+                label="Email Address"
+                {...register(
+                  `placeofIncorporation.emailAddress` as keyof TCorporateInfoSchema
+                )}
+                name={`placeofIncorporation.emailAddress`}
+                id={`placeofIncorporation_emailAddress`}
+                disabled={isSubmitting}
+                type="email"
+              />
+            </div>
+            {errors && (
+              <p className="text-red-500">
+                {errors?.placeofIncorporation?.emailAddress?.message}
+              </p>
+            )}
+
+            {/* Render telephone field */}
+            <div className="flex-col">
+              <Input
+                label="Telephone"
+                {...register(
+                  `placeofIncorporation.telephone` as keyof TCorporateInfoSchema
+                )}
+                name={`placeofIncorporation.telephone`}
+                id={`placeofIncorporation_telephone`}
+                disabled={isSubmitting}
+                type="tel"
+              />
+            </div>
+            {errors && (
+              <p className="text-red-500">
+                {errors?.placeofIncorporation?.telephone?.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -307,6 +359,43 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               isSubmitting={isSubmitting}
               keyType="registeredBusiness"
             />
+
+            <div className="flex-col">
+              <Input
+                label="Email Address"
+                {...register(
+                  `registeredBusiness.emailAddress` as keyof TCorporateInfoSchema
+                )}
+                name={`registeredBusiness.emailAddress`}
+                id={`registeredBusiness_emailAddress`}
+                disabled={isSubmitting}
+                type="email"
+              />
+            </div>
+            {errors && (
+              <p className="text-red-500">
+                {errors?.registeredBusiness?.emailAddress?.message}
+              </p>
+            )}
+
+            {/* Render telephone field */}
+            <div className="flex-col">
+              <Input
+                label="Telephone"
+                {...register(
+                  `registeredBusiness.telephone` as keyof TCorporateInfoSchema
+                )}
+                name={`registeredBusiness.telephone`}
+                id={`registeredBusiness_telephone`}
+                disabled={isSubmitting}
+                type="tel"
+              />
+            </div>
+            {errors && (
+              <p className="text-red-500">
+                {errors?.registeredBusiness?.telephone?.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -318,6 +407,11 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               {...register("registeredCapital")}
               name="registeredCapital"
               disabled={isSubmitting}
+              inputMode="numeric"
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`registrationNo`, value);
+              }}
             />
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
@@ -326,8 +420,13 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
-              name="financial.RevenuePerYear"
+              name="revenuePerYear"
               disabled={isSubmitting}
+              inputMode="numeric"
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`registrationNo`, value);
+              }}
             />
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
@@ -338,8 +437,13 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
-              name="financial.NetProFitLoss"
+              name="netProFitLoss"
               disabled={isSubmitting}
+              inputMode="numeric"
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`registrationNo`, value);
+              }}
             />
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
@@ -352,8 +456,13 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
-              name="financial.ShareholderEquity"
+              name="shareholderEquity"
               disabled={isSubmitting}
+              inputMode="numeric"
+              onInput={(e) => {
+                const value = e.currentTarget.value;
+                setValue(`registrationNo`, value);
+              }}
             />
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>

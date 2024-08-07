@@ -1,23 +1,30 @@
 import { TDropdownOption, TRiskItem } from "./type";
 
-export const items: TDropdownOption[] = [
+export const documentTypes: TDropdownOption[] = [
   {
     id: 1,
-    value: "Normal Documents (PDF)",
+    // value: "Normal Documents (PDF)",
+    value: "id",
   },
   {
     id: 2,
-    value: "Confidential Documents (PDF)",
+    // value: "Confidential Documents (PDF)",
+    value: "bank",
   },
   {
     id: 3,
-    value: "Corporate Documents (PDF)",
+    value: "address",
+    // value: "Corporate Documents (PDF)",
   },
-  { id: 4, value: "Images (JPEG, JPG, PNG)" },
   {
-    id: 5,
-    value: "Others",
+    id: 4,
+    // value: "Images (JPEG, JPG, PNG)"
+    value: "passport",
   },
+  // {
+  //   id: 5,
+  //   value: "Others",
+  // },
 ];
 
 export const acceptedFileTypes = [
