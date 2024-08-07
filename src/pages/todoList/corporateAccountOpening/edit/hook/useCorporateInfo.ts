@@ -85,27 +85,27 @@ export function useCorporateInfo() {
       corporateCode: data.corporateCode,
     };
     console.log("body", body);
-    // try {
-    //   const token = getCookies();
-    //   const res = await axios.post("/api/v1/corporate/update/info", body, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    //   if (res.status === 200) {
-    //     console.log(res);
-    //     data.corporateCode = res.data.corporateCode;
-    //     setCorporatesInfo([...corporatesInfo, data]);
-    //     setCurrentCorporatesInfo(data);
-    //     await sleep(500);
-    //     navigate("/todo-list/corporate-account-opening/edit/2");
-    //   } else {
-    //     alert(JSON.stringify(res.data));
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   alert(error);
-    // }
+    try {
+      const token = getCookies();
+      const res = await axios.post("/api/v1/corporate/update/info", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        console.log(res);
+        data.corporateCode = res.data.corporateCode;
+        setCorporatesInfo([...corporatesInfo, data]);
+        setCurrentCorporatesInfo(data);
+        await sleep(500);
+        navigate("/todo-list/corporate-account-opening/edit/2");
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return {
