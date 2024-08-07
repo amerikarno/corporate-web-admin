@@ -36,34 +36,70 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
     dispatch(removeContactPerson(data.personalID));
   };
 
-const columnsContactPerson: TableColumn<TContactPersonTest>[] = [
+// const columnsContactPerson: TableColumn<TContactPersonTest>[] = [
+//   {
+//     name: "Title",
+//     selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.title || "",
+//   },
+//   {
+//     name: "Firstname",
+//     selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.firstName || "",
+//   },
+//   {
+//     name: "Lastname",
+//     selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.lastName || "",
+//   },
+//   {
+//     name: "CitizenID",
+//     selector: (row) => row.contacts?.[0]?.position || "",
+//   },
+//   {
+//     name: "PassportID",
+//     selector: (row) => row.contacts?.[0]?.division || "",
+//   },
+//   {
+//     name: "Email",
+//     selector: (row) => row.contacts?.[0]?.email || "",
+//   },
+//   {
+//     name: "Phone Number",
+//     selector: (row) => row.contacts?.[0]?.telephone || "",
+//   },
+//   {
+//     cell: (row : TContactPerson) => (
+//       <Button onClick={() => handleDelete(row)}>Delete</Button>
+//     ),
+//     ignoreRowClick: true,
+//   },
+// ];
+const columnsContactPerson: TableColumn<TContactPerson>[] = [
   {
     name: "Title",
-    selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.title || "",
+    selector: (row) => row.fullNames?.[0]?.title || "",
   },
   {
     name: "Firstname",
-    selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.firstName || "",
+    selector: (row) => row.fullNames?.[0]?.firstName || "",
   },
   {
     name: "Lastname",
-    selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.lastName || "",
+    selector: (row) => row.fullNames?.[0]?.lastName || "",
   },
   {
     name: "CitizenID",
-    selector: (row) => row.contacts?.[0]?.position || "",
+    selector: (row) => row.position || "",
   },
   {
     name: "PassportID",
-    selector: (row) => row.contacts?.[0]?.division || "",
+    selector: (row) => row.division || "",
   },
   {
     name: "Email",
-    selector: (row) => row.contacts?.[0]?.email || "",
+    selector: (row) => row.email || "",
   },
   {
     name: "Phone Number",
-    selector: (row) => row.contacts?.[0]?.telephone || "",
+    selector: (row) => row.telephone || "",
   },
   {
     cell: (row : TContactPerson) => (
