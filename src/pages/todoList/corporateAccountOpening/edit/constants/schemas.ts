@@ -104,13 +104,6 @@ export const corporateInfoSchema = z.object({
     .min(1, "taxId cannot be empty")
     .regex(/^\d+$/, "taxId must be a numbers"),
   dateofincorporation: z.string().min(1, "date cannot be empty"),
-  // .transform((str) => {
-  //   const date = new Date(str);
-  //   if (isNaN(date.getTime())) {
-  //     throw new Error("Invalid date");
-  //   }
-  //   return date;
-  // }),
   registered: z.string().optional(),
   primary: z.string().optional(),
   registeredBusiness: registerBusinessAddressSchema,

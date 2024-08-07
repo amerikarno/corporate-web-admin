@@ -21,7 +21,7 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     registeredOther: resCorpPrimaryCountry?.isThailand ? false : true,
     primaryOther: resCorpPrimaryCountry?.isThailand ? false : true,
   };
-  // console.log(JSON.stringify(initCountryData, null, 2));
+  console.log(JSON.stringify(initCountryData, null, 2));
 
   const [
     registeredCountryPrimaryCountryOperation,
@@ -121,40 +121,40 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     setRegisteredCountryPrimaryCountryOperation(tmp);
     validateLocal(tmp);
   };
-  const disableRegisteredCountry = (type: string): boolean => {
-    // console.log(type);
-    if (type === "Thailand") {
-      return resCorpRegisterCountry?.isThailand ? false : true;
-    } else {
-      return resCorpRegisterCountry?.isThailand ? true : false;
-    }
+  // const disableRegisteredCountry = (type: string): boolean => {
+  //   // console.log(type);
+  //   if (type === "Thailand") {
+  //     return resCorpRegisterCountry?.isThailand ? false : true;
+  //   } else {
+  //     return resCorpRegisterCountry?.isThailand ? true : false;
+  //   }
 
-    // if (registeredCountryPrimaryCountryOperation.registered !== "") {
-    //   if (type === registeredCountryPrimaryCountryOperation.registered) {
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // } else {
-    //   return false;
-    // }
-  };
-  const disablePrimaryCountryOfOperation = (type: string): boolean => {
-    if (type === "Thailand") {
-      return resCorpPrimaryCountry?.isThailand ? false : true;
-    } else {
-      return resCorpPrimaryCountry?.isThailand ? true : false;
-    }
-    // if (registeredCountryPrimaryCountryOperation.primary !== "") {
-    //   if (type === registeredCountryPrimaryCountryOperation.primary) {
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // } else {
-    //   return false;
-    // }
-  };
+  //   // if (registeredCountryPrimaryCountryOperation.registered !== "") {
+  //   //   if (type === registeredCountryPrimaryCountryOperation.registered) {
+  //   //     return false;
+  //   //   } else {
+  //   //     return true;
+  //   //   }
+  //   // } else {
+  //   //   return false;
+  //   // }
+  // };
+  // const disablePrimaryCountryOfOperation = (type: string): boolean => {
+  //   if (type === "Thailand") {
+  //     return resCorpPrimaryCountry?.isThailand ? false : true;
+  //   } else {
+  //     return resCorpPrimaryCountry?.isThailand ? true : false;
+  //   }
+  //   // if (registeredCountryPrimaryCountryOperation.primary !== "") {
+  //   //   if (type === registeredCountryPrimaryCountryOperation.primary) {
+  //   //     return false;
+  //   //   } else {
+  //   //     return true;
+  //   //   }
+  //   // } else {
+  //   //   return false;
+  //   // }
+  // };
 
   const validateForm = (): boolean => {
     try {
@@ -200,8 +200,8 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     }
   };
   return {
-    disablePrimaryCountryOfOperation,
-    disableRegisteredCountry,
+    // disablePrimaryCountryOfOperation,
+    // disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
     getError,

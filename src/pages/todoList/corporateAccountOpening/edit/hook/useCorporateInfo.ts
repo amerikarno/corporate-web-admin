@@ -78,7 +78,10 @@ export function useCorporateInfo() {
     let body = {
       ...data,
       dateofincorporation: data.dateofincorporation.toISOString(),
-      corporateCode: Number(data.corporateCode),
+      // corporateCode: Number(
+      //   data.corporateCode === "" ? "0" : data.corporateCode
+      // ),
+      corporateCode: data.corporateCode,
     };
     console.log("body", body);
     try {
@@ -88,7 +91,6 @@ export function useCorporateInfo() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(res);
       if (res.status === 200) {
         console.log(res);
         data.corporateCode = res.data.corporateCode;

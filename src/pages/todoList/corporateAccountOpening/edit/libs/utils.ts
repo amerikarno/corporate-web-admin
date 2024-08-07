@@ -49,13 +49,14 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
     );
 
     // const timeStamp = Date.parse(data.Info.dateOfIncorporation);
+    // let dt = new Date(timeStamp).toLocaleDateString("th-TH");
 
     let result: TCorporateInfoSchema = {
-      // let result = {
       name: data.Info.name,
       registrationNo: data.Info.registrationNo,
       taxId: data.Info.taxId,
       dateofincorporation: data.Info.dateOfIncorporation,
+      // dateofincorporation: dt,
       // dateofincorporation: new Date(timeStamp),
       registered: resCorpRegisterCountry?.other || "",
       primary: resCorpPrimaryCountry?.other || "",

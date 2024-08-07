@@ -66,17 +66,22 @@ export function EditCorporateAccount() {
   };
 
   const handlePages = (type: string) => {
+    // if (type == "next") {
+    //   navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+    // } else if (type == "submit") {
+    //   console.log(corporateCode);
+    //   if (corporateCode) {
+    //     navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+    //   }
+    // } else if (type == "submit2") {
+    //   if (isSecondFormPass) {
+    //     navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+    //   }
+    // } else {
+    //   navigate(`/create-job/added-corporate-account/${pageId - 1}`);
+    // }
     if (type == "next") {
       navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    } else if (type == "submit") {
-      console.log(corporateCode);
-      if (corporateCode) {
-        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-      }
-    } else if (type == "submit2") {
-      if (isSecondFormPass) {
-        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-      }
     } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }

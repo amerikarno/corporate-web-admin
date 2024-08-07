@@ -3,7 +3,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsContactPerson } from "../components/formContactPerson";
 //import { columnsContactPerson } from "../constants/columns";
 import { useContactPerson } from "../hook/useContactPerson";
-import { TContactPerson } from "../constants/types";
+// import { TContactPerson } from "../constants/types";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,89 +25,57 @@ type TContactPersonTest = {
     telephone: string;
     email: string;
   }[];
+  personalID?: string;
 };
 
 export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
   const dispatch = useDispatch();
-  const { handleSubmitContactPerson , setContactPerson } = useContactPerson();
-  const contactPersonData: TContactPerson[] = useSelector<RootState>((state) => state.contactPerson?.contactPersons || []) as TContactPerson[];
+  const { handleSubmitContactPerson } = useContactPerson();
+  const contactPersonData: TContactPersonTest[] = useSelector<RootState>(
+    (state) => state.contactPerson?.contactPersons || []
+  ) as TContactPersonTest[];
 
-  const handleDelete = (data: TContactPerson) => {
+  const handleDelete = (data: TContactPersonTest) => {
     dispatch(removeContactPerson(data.personalID));
   };
 
-// const columnsContactPerson: TableColumn<TContactPersonTest>[] = [
-//   {
-//     name: "Title",
-//     selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.title || "",
-//   },
-//   {
-//     name: "Firstname",
-//     selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.firstName || "",
-//   },
-//   {
-//     name: "Lastname",
-//     selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.lastName || "",
-//   },
-//   {
-//     name: "CitizenID",
-//     selector: (row) => row.contacts?.[0]?.position || "",
-//   },
-//   {
-//     name: "PassportID",
-//     selector: (row) => row.contacts?.[0]?.division || "",
-//   },
-//   {
-//     name: "Email",
-//     selector: (row) => row.contacts?.[0]?.email || "",
-//   },
-//   {
-//     name: "Phone Number",
-//     selector: (row) => row.contacts?.[0]?.telephone || "",
-//   },
-//   {
-//     cell: (row : TContactPerson) => (
-//       <Button onClick={() => handleDelete(row)}>Delete</Button>
-//     ),
-//     ignoreRowClick: true,
-//   },
-// ];
-const columnsContactPerson: TableColumn<TContactPerson>[] = [
-  {
-    name: "Title",
-    selector: (row) => row.fullNames?.[0]?.title || "",
-  },
-  {
-    name: "Firstname",
-    selector: (row) => row.fullNames?.[0]?.firstName || "",
-  },
-  {
-    name: "Lastname",
-    selector: (row) => row.fullNames?.[0]?.lastName || "",
-  },
-  {
-    name: "CitizenID",
-    selector: (row) => row.position || "",
-  },
-  {
-    name: "PassportID",
-    selector: (row) => row.division || "",
-  },
-  {
-    name: "Email",
-    selector: (row) => row.email || "",
-  },
-  {
-    name: "Phone Number",
-    selector: (row) => row.telephone || "",
-  },
-  {
-    cell: (row : TContactPerson) => (
-      <Button onClick={() => handleDelete(row)}>Delete</Button>
-    ),
-    ignoreRowClick: true,
-  },
-];
+  const columnsContactPerson: TableColumn<TContactPersonTest>[] = [
+    {
+      name: "Title",
+      selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.title || "",
+    },
+    {
+      name: "Firstname",
+      selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.firstName || "",
+    },
+    {
+      name: "Lastname",
+      selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.lastName || "",
+    },
+    {
+      name: "CitizenID",
+      selector: (row) => row.contacts?.[0]?.position || "",
+    },
+    {
+      name: "PassportID",
+      selector: (row) => row.contacts?.[0]?.division || "",
+    },
+    {
+      name: "Email",
+      selector: (row) => row.contacts?.[0]?.email || "",
+    },
+    {
+      name: "Phone Number",
+      selector: (row) => row.contacts?.[0]?.telephone || "",
+    },
+    {
+      cell: (row: TContactPersonTest) => (
+        <Button onClick={() => handleDelete(row)}>Delete</Button>
+      ),
+      ignoreRowClick: true,
+    },
+  ];
+
   return (
     <>
       <div className="p-4 space-y-8">
@@ -127,4 +95,3 @@ const columnsContactPerson: TableColumn<TContactPerson>[] = [
     </>
   );
 }
-

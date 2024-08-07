@@ -19,6 +19,7 @@ import {
 } from "../constants/variables";
 import { useState, useEffect } from "react";
 import { TCorporateData } from "../../constant/type";
+import { Button } from "@/components/ui/button";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -47,12 +48,24 @@ export function FormCorporateInfo({
   //   useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
 
-  // const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
-  //   (item) => item.types === 601
-  // );
-  // const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
-  //   (item) => item.types === 602
-  // );
+  const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 601
+  );
+  const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 602
+  );
+
+  const [hasDate, setHasDate] = useState<boolean>(
+    initData?.dateofincorporation ? true : false
+  );
+
+  const formatDate = (date?: string): string | undefined => {
+    if (date) {
+      const dt = Date.parse(date);
+      const dateInDate = new Date(dt);
+      return dateInDate.toLocaleDateString("th-TH");
+    }
+  };
 
   useEffect(() => {
     if (shouldScrollUp) {
@@ -156,8 +169,8 @@ export function FormCorporateInfo({
     // disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
-    isPrimaryCountryOfOperationOthers,
-    isRegisteredCountryOthers,
+    // isPrimaryCountryOfOperationOthers,
+    // isRegisteredCountryOthers,
     registeredCountryPrimaryCountryOperation,
     handleInputOthers,
   } = useFormCorporateInfo(corporatesInfo);
@@ -204,13 +217,27 @@ export function FormCorporateInfo({
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
             )}
-            <Input
-              id={"Date Of Incorporation"}
-              label={"Date of Incorporation"}
-              {...register("dateofincorporation")}
-              type="date"
-              disabled={isSubmitting}
-            />
+            {hasDate ? (
+              <div
+                id="Date Of Incorporation"
+                onClick={() => setHasDate(false)}
+                className="relative py-3 px-2 border border-gray-700 rounded-md text-sm text-gray-900"
+              >
+                <div className="absolute -top-2 left-2 bg-white px-1 text-xs text-gray-700">
+                  Date of Incorporation
+                </div>
+                {formatDate(initData?.dateofincorporation)}
+              </div>
+            ) : (
+              <Input
+                id={"Date Of Incorporation"}
+                label={"Date of Incorporation"}
+                {...register("dateofincorporation")}
+                name="dateofincorporation"
+                type="date"
+                disabled={isSubmitting}
+              />
+            )}
             {errors.dateofincorporation && (
               <p className="text-red-500">
                 {errors.dateofincorporation.message}
@@ -262,12 +289,13 @@ export function FormCorporateInfo({
                   name={registeredCountryChoices[1]}
                 />
               </div>
-              {isRegisteredCountryOthers && (
+              {registeredCountryPrimaryCountryOperation.registeredOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "registered")}
+                    defaultValue={resCorpRegisterCountry?.other}
                   />
                 </div>
               )}
@@ -339,12 +367,13 @@ export function FormCorporateInfo({
                   name={PrimaryCountryOfOperationChoices[1]}
                 />
               </div>
-              {isPrimaryCountryOfOperationOthers && (
+              {registeredCountryPrimaryCountryOperation.primaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "primary")}
+                    defaultValue={resCorpPrimaryCountry?.other}
                   />
                 </div>
               )}
@@ -381,6 +410,8 @@ export function FormCorporateInfo({
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
             <Input
+              type="number"
+              step="0.01"
               id={"Registered Capital"}
               label={"Registered Capital"}
               {...register("registeredCapital")}
@@ -391,35 +422,46 @@ export function FormCorporateInfo({
               <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
             <Input
+              type="number"
+              step="0.01"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
-              name="financial.RevenuePerYear"
+              name="revenuePerYear"
               disabled={isSubmitting}
             />
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
             <Input
+              type="number"
+              step="0.01"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
-              name="financial.NetProFitLoss"
+              name="netProFitLoss"
               disabled={isSubmitting}
             />
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
             <Input
+              type="number"
+              step="0.01"
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
-              name="financial.ShareholderEquity"
+              name="shareholderEquity"
               disabled={isSubmitting}
             />
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
+            <div className="flex justify-end">
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </div>
           </div>
         </form>
       </Card>
