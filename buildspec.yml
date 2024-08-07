@@ -1,4 +1,8 @@
 version: 0.2
+env:
+  secrets-manager:
+    DOCKERHUB_TOKEN: sit-cwa-sk:token
+    DOCKERHUB_USER: sit-cwa-sk:user
 phases:
   pre_build:
     commands:

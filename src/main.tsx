@@ -54,7 +54,7 @@
 // );
 
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";
@@ -68,7 +68,6 @@ import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateA
 //import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
 // import { ProtectedRoute } from "./components/ProtectedRoute";
-
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -91,9 +90,7 @@ root.render(
                 <Route
                   index
                   element={
-                    // <ProtectedRoute>
-                    <CorporateAccountOpenning />
-                    // </ProtectedRoute>
+                    <Navigate to="/create-job/added-corporate-account" replace />
                   }
                 />
                 <Route path="create-job" element={<Outlet />}>
