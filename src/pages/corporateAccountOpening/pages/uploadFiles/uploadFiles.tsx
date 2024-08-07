@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Dropdown } from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import { useUploadFile } from "./hook/useUploadFile";
-import { documentTypes } from "./constant/variables";
+import { documents } from "./constant/variables";
 
 type TUploadFilesProps = {
   corporateCode: string;
@@ -27,7 +27,7 @@ export default function UploadFiles({ corporateCode }: TUploadFilesProps) {
             <h1>Document Type</h1>
             <div className="w-1/3 ">
               <Dropdown
-                items={documentTypes}
+                items={documents}
                 onDropdownSelect={handleDocumnetTypeChange}
               />
             </div>

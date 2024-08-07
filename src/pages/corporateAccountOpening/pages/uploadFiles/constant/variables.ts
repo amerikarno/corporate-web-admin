@@ -1,6 +1,6 @@
 import { TDropdownOption, TRiskItem } from "./type";
 
-export const documentTypes: TDropdownOption[] = [
+export const documents: TDropdownOption[] = [
   {
     id: 1,
     // value: "Normal Documents (PDF)",
