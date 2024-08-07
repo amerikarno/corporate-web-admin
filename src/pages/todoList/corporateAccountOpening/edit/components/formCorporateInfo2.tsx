@@ -15,6 +15,7 @@ import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
+import { Button } from "@/components/ui/button";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
@@ -74,7 +75,7 @@ export function FormCorporateTypeAndIncome({
   return (
     <Card>
       <form
-        onSubmit={(e) => onSubmit(e)}
+        // onSubmit={(e) => onSubmit(e)}
         id="corporateInfo2"
         className="space-y-10"
       >
@@ -267,9 +268,9 @@ export function FormCorporateTypeAndIncome({
             </p>
           )}
         </div>
-        {/* <div className="flex justify-end pb-4 pr-4">
-          <Button type="submit">Submit</Button>
-        </div> */}
+        <div className="flex justify-end pb-4 pr-4">
+          <Button onClick={(e) => onSubmit(e)}>Submit</Button>
+        </div>
       </form>
     </Card>
   );

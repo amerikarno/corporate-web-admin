@@ -39,7 +39,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
     useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
-  
+
   useEffect(() => {
     if (shouldScrollUp) {
       window.scrollTo({
@@ -314,7 +314,9 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <div className="flex-col">
               <Input
                 label="Email Address"
-                {...register(`placeofIncorporation.emailAddress` as keyof TCorporateInfoSchema)}
+                {...register(
+                  `placeofIncorporation.emailAddress` as keyof TCorporateInfoSchema
+                )}
                 name={`placeofIncorporation.emailAddress`}
                 id={`placeofIncorporation_emailAddress`}
                 disabled={isSubmitting}
@@ -322,14 +324,18 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               />
             </div>
             {errors && (
-                  <p className="text-red-500">{errors?.placeofIncorporation?.emailAddress?.message}</p>
-              )}
+              <p className="text-red-500">
+                {errors?.placeofIncorporation?.emailAddress?.message}
+              </p>
+            )}
 
-          {/* Render telephone field */}
+            {/* Render telephone field */}
             <div className="flex-col">
               <Input
                 label="Telephone"
-                {...register(`placeofIncorporation.telephone` as keyof TCorporateInfoSchema)}
+                {...register(
+                  `placeofIncorporation.telephone` as keyof TCorporateInfoSchema
+                )}
                 name={`placeofIncorporation.telephone`}
                 id={`placeofIncorporation_telephone`}
                 disabled={isSubmitting}
@@ -337,8 +343,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               />
             </div>
             {errors && (
-                  <p className="text-red-500">{errors?.placeofIncorporation?.telephone?.message}</p>
-              )}
+              <p className="text-red-500">
+                {errors?.placeofIncorporation?.telephone?.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -354,7 +362,9 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <div className="flex-col">
               <Input
                 label="Email Address"
-                {...register(`registeredBusiness.emailAddress` as keyof TCorporateInfoSchema)}
+                {...register(
+                  `registeredBusiness.emailAddress` as keyof TCorporateInfoSchema
+                )}
                 name={`registeredBusiness.emailAddress`}
                 id={`registeredBusiness_emailAddress`}
                 disabled={isSubmitting}
@@ -362,14 +372,18 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               />
             </div>
             {errors && (
-                  <p className="text-red-500">{errors?.registeredBusiness?.emailAddress?.message}</p>
-              )}
+              <p className="text-red-500">
+                {errors?.registeredBusiness?.emailAddress?.message}
+              </p>
+            )}
 
-          {/* Render telephone field */}
+            {/* Render telephone field */}
             <div className="flex-col">
               <Input
                 label="Telephone"
-                {...register(`registeredBusiness.telephone` as keyof TCorporateInfoSchema)}
+                {...register(
+                  `registeredBusiness.telephone` as keyof TCorporateInfoSchema
+                )}
                 name={`registeredBusiness.telephone`}
                 id={`registeredBusiness_telephone`}
                 disabled={isSubmitting}
@@ -377,8 +391,10 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               />
             </div>
             {errors && (
-                  <p className="text-red-500">{errors?.registeredBusiness?.telephone?.message}</p>
-              )}
+              <p className="text-red-500">
+                {errors?.registeredBusiness?.telephone?.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -403,7 +419,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
-              name="financial.RevenuePerYear"
+              name="revenuePerYear"
               disabled={isSubmitting}
               inputMode="numeric"
               onInput={(e) => {
@@ -420,7 +436,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
-              name="financial.NetProFitLoss"
+              name="netProFitLoss"
               disabled={isSubmitting}
               inputMode="numeric"
               onInput={(e) => {
@@ -439,7 +455,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
-              name="financial.ShareholderEquity"
+              name="shareholderEquity"
               disabled={isSubmitting}
               inputMode="numeric"
               onInput={(e) => {

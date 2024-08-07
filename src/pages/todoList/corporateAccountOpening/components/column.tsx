@@ -20,7 +20,7 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
         <Pencil
           className="h-4 hover:cursor-pointer"
           onClick={() =>
-            navigate("/todo-list/corporate-account-opening/edit", {
+            navigate("/todo-list/corporate-account-opening/edit/1", {
               state: row,
             })
           }

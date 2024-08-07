@@ -4,47 +4,22 @@ import { TRegisteredCountryPrimaryCountryOperation } from "../constants/types";
 import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants/initialData";
 import { z, ZodIssue } from "zod";
 import { registeredCountryPrimaryCountryOperationSchema } from "../constants/schemas";
-import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
-
-export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
-  let resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
-    (item) => item.types === 601
-  );
-  let resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
-    (item) => item.types === 602
-  );
-  const initCountryData = {
-    registered: resCorpRegisterCountry?.other || "",
-    primary: resCorpPrimaryCountry?.other || "",
-    registeredThailand: resCorpRegisterCountry?.isThailand || false,
-    primaryCountry: resCorpPrimaryCountry?.isThailand || false,
-    registeredOther: resCorpPrimaryCountry?.isThailand ? false : true,
-    primaryOther: resCorpPrimaryCountry?.isThailand ? false : true,
-  };
-  console.log(JSON.stringify(initCountryData, null, 2));
-
+export function useFormCorporateInfo() {
   const [
     registeredCountryPrimaryCountryOperation,
     setRegisteredCountryPrimaryCountryOperation,
   ] = useState<TRegisteredCountryPrimaryCountryOperation>(
-    corporatesInfo
-      ? initCountryData
-      : emptyRegisteredCountryPrimaryCountryOperation
+    emptyRegisteredCountryPrimaryCountryOperation
   );
   const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
-    useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
-  // useState<boolean>(false);
-
+    useState<boolean>(false);
   useState<TRegisteredCountryPrimaryCountryOperation>(
-    corporatesInfo
-      ? initCountryData
-      : emptyRegisteredCountryPrimaryCountryOperation
+    emptyRegisteredCountryPrimaryCountryOperation
   );
   const [
     isPrimaryCountryOfOperationOthers,
     setIsPrimaryCountryOfOperationOthers,
-  ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
-  // ] = useState<boolean>(false);
+  ] = useState<boolean>(false);
 
   const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
 
@@ -64,25 +39,25 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
       ) || null
     );
   };
-
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
-
-    if (name === "Thailand") {
-      tmp.registered = checked ? name : "";
-      tmp.registeredThailand = checked;
+    // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
+    if (checked) {
+      tmp.registered = name;
+      tmp.registeredThailand = true;
       tmp.registeredOther = false;
+      form1error ? validateLocal(tmp) : null;
     } else {
       tmp.registered = "";
       tmp.registeredThailand = false;
-      tmp.registeredOther = checked;
+      tmp.registeredOther = true;
     }
-
     setRegisteredCountryPrimaryCountryOperation(tmp);
     if (name == "Others Countries (Please Specify)") {
       setIsRegisteredCountryOthers(checked);
     }
+    // errors ? validateLocal(tmp) : null;
   };
   const handleInputRegisteredCountryOthers = (e: any) => {
     const { value } = e.target;
@@ -91,27 +66,27 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     tmp.registeredThailand = false;
     tmp.registeredOther = true;
     setRegisteredCountryPrimaryCountryOperation(tmp);
-    // form1error ? validateLocal(tmp) : null;
-    validateLocal(tmp);
-    console.log(tmp);
+    form1error ? validateLocal(tmp) : null;
   };
   const handlePrimaryCountryOfOperationOthers = (e: any) => {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
-    if (name === "Thailand") {
-      tmp.primary = checked ? name : "";
-      tmp.primaryCountry = checked;
+    // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
+    if (checked) {
+      tmp.primary = name;
+      tmp.primaryCountry = true;
       tmp.primaryOther = false;
+      form1error ? validateLocal(tmp) : null;
     } else {
       tmp.primary = "";
       tmp.primaryCountry = false;
-      tmp.primaryOther = checked;
+      tmp.primaryOther = true;
     }
     setRegisteredCountryPrimaryCountryOperation(tmp);
     if (name == "Others Countries (Please Specify)") {
       setIsPrimaryCountryOfOperationOthers(checked);
     }
-    validateLocal(tmp);
+    // errors ? validateLocal(tmp) : null;
   };
   const handleInputPrimaryCountryOfOperationOthers = (e: any) => {
     const { value } = e.target;
@@ -119,42 +94,30 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     tmp.primary = value;
     tmp.primaryCountry = false;
     setRegisteredCountryPrimaryCountryOperation(tmp);
-    validateLocal(tmp);
+    form1error ? validateLocal(tmp) : null;
   };
-  // const disableRegisteredCountry = (type: string): boolean => {
-  //   // console.log(type);
-  //   if (type === "Thailand") {
-  //     return resCorpRegisterCountry?.isThailand ? false : true;
-  //   } else {
-  //     return resCorpRegisterCountry?.isThailand ? true : false;
-  //   }
-
-  //   // if (registeredCountryPrimaryCountryOperation.registered !== "") {
-  //   //   if (type === registeredCountryPrimaryCountryOperation.registered) {
-  //   //     return false;
-  //   //   } else {
-  //   //     return true;
-  //   //   }
-  //   // } else {
-  //   //   return false;
-  //   // }
-  // };
-  // const disablePrimaryCountryOfOperation = (type: string): boolean => {
-  //   if (type === "Thailand") {
-  //     return resCorpPrimaryCountry?.isThailand ? false : true;
-  //   } else {
-  //     return resCorpPrimaryCountry?.isThailand ? true : false;
-  //   }
-  //   // if (registeredCountryPrimaryCountryOperation.primary !== "") {
-  //   //   if (type === registeredCountryPrimaryCountryOperation.primary) {
-  //   //     return false;
-  //   //   } else {
-  //   //     return true;
-  //   //   }
-  //   // } else {
-  //   //   return false;
-  //   // }
-  // };
+  const disableRegisteredCountry = (type: string): boolean => {
+    if (registeredCountryPrimaryCountryOperation.registered !== "") {
+      if (type === registeredCountryPrimaryCountryOperation.registered) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+  const disablePrimaryCountryOfOperation = (type: string): boolean => {
+    if (registeredCountryPrimaryCountryOperation.primary !== "") {
+      if (type === registeredCountryPrimaryCountryOperation.primary) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
 
   const validateForm = (): boolean => {
     try {
@@ -200,8 +163,8 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     }
   };
   return {
-    // disablePrimaryCountryOfOperation,
-    // disableRegisteredCountry,
+    disablePrimaryCountryOfOperation,
+    disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
     getError,

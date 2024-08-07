@@ -12,8 +12,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
-import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
-import { useState } from "react";
+// import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
+// import { useState } from "react";
 import { TCorporateData } from "../constant/type";
 import { mapDataToTCorporateInfo } from "./libs/utils";
 
@@ -24,14 +24,15 @@ type TPage = {
 export function EditCorporateAccount() {
   const corporateData: TCorporateData = useLocation().state;
   console.log("corporateData", corporateData);
-  const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
   console.log("initFormData", initFormData);
 
-  const handleFormPassChange = (status: boolean) => {
-    setIsSecondFormPass(status);
-  };
-  const {} = useFormCorporateInfo2(handleFormPassChange);
+  // const handleFormPassChange = (status: boolean) => {
+  //   // setIsSecondFormPass(status);
+  //   console.log(status);
+  // };
+  // const {} = useFormCorporateInfo2(handleFormPassChange);
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
@@ -81,9 +82,9 @@ export function EditCorporateAccount() {
     //   navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     // }
     if (type == "next") {
-      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+      navigate(`/todo-list/corporate-account-opening/edit/${pageId + 1}`);
     } else {
-      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
+      navigate(`/todo-list/corporate-account-opening/edit/${pageId - 1}`);
     }
   };
 
