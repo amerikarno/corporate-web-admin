@@ -11,17 +11,18 @@ type TListOfDirectorsProps = {
   corporateCode: string;
 };
 export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
-  const { directors, handleSubmitDirectors,setDirectors } = useListOfDirector();
+  const { directors, handleSubmitDirectors, setDirectors } =
+    useListOfDirector();
   const [directorsData, setDirectorsData] = useState<TDirector[]>([]);
-  useEffect(()=>{
-    setDirectorsData(directors)
-  },[directors])
+  useEffect(() => {
+    setDirectorsData(directors);
+  }, [directors]);
 
   const handleDelete = (index: number) => {
     const newData = [...directorsData];
-    newData.splice(index, 1); 
-    setDirectorsData(newData); 
-    setDirectors(newData); 
+    newData.splice(index, 1);
+    setDirectorsData(newData);
+    setDirectors(newData);
   };
 
   const columnsListOfDirectors: TableColumn<TDirector>[] = [
@@ -59,7 +60,7 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
     //   selector: (row: TDirector) => row.addresses || '',
     // },
     {
-      cell: (row: TDirector , index : number) => (
+      cell: (_: TDirector, index: number) => (
         <Button onClick={() => handleDelete(index)}>Delete</Button>
       ),
       ignoreRowClick: true,

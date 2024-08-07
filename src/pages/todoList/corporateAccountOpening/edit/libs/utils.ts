@@ -51,14 +51,8 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
     let resCorpPrimaryCountry = data.CorporateCountry.find(
       (item) => item.types === 601
     );
-    // let resContactRegisterCountry = data.Contact?.find(
-    //   (item) => item.types === 702
-    // );
-    // let resContactPlaceofIncorporation = data.Contact?.find(
-    //   (item) => item.types === 701
-    // );
 
-    const timeStamp = Date.parse(data.Info.dateOfIncorporation);
+    // const timeStamp = Date.parse(data.Info.dateOfIncorporation);
 
     let result: TCorporateInfoSchema = {
       // let result = {

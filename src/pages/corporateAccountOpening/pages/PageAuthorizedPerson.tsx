@@ -14,19 +14,20 @@ type TPageAuthorizedPersonProps = {
 export function PageAuthorizedPerson({
   corporateCode,
 }: TPageAuthorizedPersonProps) {
-  const { authorize, handleSubmitAuthorize , setAuthorize } = useAuthorizePerson();
+  const { authorize, handleSubmitAuthorize, setAuthorize } =
+    useAuthorizePerson();
   const [authorizeData, setAuthorizeData] = useState<TAuthorizePerson[]>([]);
-  useEffect(()=>{
-    setAuthorizeData(authorize)
-  },[authorize])
+  useEffect(() => {
+    setAuthorizeData(authorize);
+  }, [authorize]);
 
   const handleDelete = (index: number) => {
     const newData = [...authorizeData];
-    newData.splice(index, 1); 
-    setAuthorizeData(newData); 
-    setAuthorize(newData); 
+    newData.splice(index, 1);
+    setAuthorizeData(newData);
+    setAuthorize(newData);
   };
-  
+
   const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
     {
       name: "Title",
@@ -63,13 +64,13 @@ export function PageAuthorizedPerson({
     // },
     {
       name: "Actions",
-      cell: (row: TAuthorizePerson, index : number) => (
+      cell: (_: TAuthorizePerson, index: number) => (
         <Button onClick={() => handleDelete(index)}>Delete</Button>
       ),
       ignoreRowClick: true,
     },
   ];
-  
+
   return (
     <>
       <div className="p-4 space-y-8">
