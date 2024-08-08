@@ -21,7 +21,7 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     registeredOther: resCorpPrimaryCountry?.isThailand ? false : true,
     primaryOther: resCorpPrimaryCountry?.isThailand ? false : true,
   };
-  console.log(JSON.stringify(initCountryData, null, 2));
+  // console.log(JSON.stringify(initCountryData, null, 2));
 
   const [
     registeredCountryPrimaryCountryOperation,

@@ -1,5 +1,11 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/login/login";
@@ -12,7 +18,6 @@ import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateA
 import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
 import { EditCorporateAccount } from "./pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import OrderTrade from "./pages/corporateAccountOpening/pages/orderTrade/orderTrade";
-// import { ProtectedRoute } from "./components/ProtectedRoute";
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -35,26 +40,18 @@ root.render(
                 <Route
                   index
                   element={
-                    <Navigate to="/create-job/added-corporate-account" replace />
+                    <Navigate
+                      to="/create-job/added-corporate-account"
+                      replace
+                    />
                   }
                 />
                 <Route path="create-job" element={<Outlet />}>
                   <Route path="added-corporate-account" element={<Outlet />}>
-                    <Route
-                      index
-                      element={
-                        // <ProtectedRoute>
-                        <CorporateAccountOpenning />
-                        // </ProtectedRoute>
-                      }
-                    />
+                    <Route index element={<CorporateAccountOpenning />} />
                     <Route
                       path=":page"
-                      element={
-                        // <ProtectedRoute>
-                        <CorporateAccountOpenning />
-                        // </ProtectedRoute>
-                      }
+                      element={<CorporateAccountOpenning />}
                     />
                   </Route>
                   <Route path="order-trade" element={<OrderTrade />} />
