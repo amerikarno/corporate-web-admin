@@ -16,7 +16,7 @@
 //   const decode = token && token !== null ? jwtDecode(token) : null;
 //   if (decode !== null) {
 //     const expire = decode.exp ? decode.exp : 0;
-//     if (expire < Date.now() / 1000) {
+//     if (expire !== 0 && expire < Date.now() / 1000) {
 //       console.log("expired");
 //       axios
 //         // .get("/api/v1/authen/refresh", {
@@ -30,8 +30,6 @@
 //             headers: {
 //               Authorization: `Bearer ${token}`,
 //               "Content-Type": "application/json",
-//               // Cookie:
-//               //   "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOnsiVVVJRCI6IjA3MWVjZjM3LTExZmItNDM1YS1iMzU5LTYyODM5MDg3OWQzYiIsIkNvdW50ZXIiOjB9LCJpZCI6IjIiLCJlbWFpbCI6Imhhc2hlZHVzZXJuYW1lIiwiZ3JvdXBzIjpbMF0sInBlcm1pc3Npb25zIjpbMF0sInJvbGVzIjpbMF0sInVzZXJJZCI6IiIsImxvZ2luU3RhdHVzIjoiIiwiRXJyb3IiOm51bGwsImV4cCI6MTcyNTYxMjc0MSwibmJmIjoxNzIzMDIwNzQ2LCJpYXQiOjE3MjMwMjA3NDF9.F9tA_b0rwtf87HMjL647l9zQ2omQA5cLLdoR28dyPLA",
 //             },
 //             withCredentials: true,
 //           }
@@ -65,7 +63,6 @@ import { setToken } from "@/features/authen/authenSlice";
 import { useNavigate } from "react-router-dom";
 import { getCookies, setCookies } from "@/lib/Cookies";
 import { LoaderCircle } from "lucide-react";
-import { sleep } from "@/lib/utils";
 
 interface DecodedToken {
   exp?: number;
@@ -112,7 +109,6 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
           }
         }
       }
-      await sleep(1000);
       setLoading(false);
     };
 
