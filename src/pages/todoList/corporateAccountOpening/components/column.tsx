@@ -21,21 +21,26 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
     cell: (row: TCorporateData) => {
       const navigate = useNavigate();
       const dispatch = useDispatch();
-      dispatch(setCorporateData(row));
-      const editCorporateData : TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
-      console.log(editCorporateData)
 
-      if (editCorporateData.Contact) {
-        dispatch(setContactPersons(editCorporateData.Contact))
-      }
+      const handleEditClick = () => {
+        dispatch(setCorporateData(row));
+        const editCorporateData: TCorporateData = useSelector<RootState>(
+          (state) => state.editCorporate
+        ) as TCorporateData;
+
+        if (editCorporateData.Contact) {
+          dispatch(setContactPersons(editCorporateData.Contact));
+        }
+
+        navigate("/todo-list/corporate-account-opening/edit/1", {
+          state: row,
+        });
+      };
+
       return (
         <Pencil
           className="h-4 hover:cursor-pointer"
-          onClick={() =>
-            navigate("/todo-list/corporate-account-opening/edit/1", {
-              state: row,
-            })
-          }
+          onClick={handleEditClick}
         />
       );
     },
