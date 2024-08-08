@@ -3,7 +3,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormBank } from "../components/formBank";
 // import { columnsBank } from "../constants/columns";
 import { useBank } from "../hook/useBank";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { TBank } from "../constants/types";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +29,7 @@ export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
     console.log(data)
     try{
       const token = getCookies();
-      const res = await axios.post("/api/v1/personals/delete",{BankId : data.BankId},{
+      const res = await axios.post("/api/v1/bank/delete",{BankId : data.BankId},{
         headers: {
           Authorization: `Bearer ${token}`,
         },

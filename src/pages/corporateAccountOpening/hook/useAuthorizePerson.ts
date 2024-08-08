@@ -4,8 +4,8 @@ import axios from "@/api/axios";
 import { isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import { addAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
-import { RootState } from "@/app/store";
-import { useDispatch, useSelector } from "react-redux";
+//import { RootState } from "@/app/store";
+import { useDispatch } from "react-redux";
 
 export function useAuthorizePerson() {
   const [authorize, setAuthorize] = useState<TAuthorizePerson[]>([]);

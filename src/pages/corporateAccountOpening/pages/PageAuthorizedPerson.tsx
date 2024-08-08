@@ -3,7 +3,7 @@ import { useAuthorizePerson } from "../hook/useAuthorizePerson";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { FormAuthorizedPerson } from "../components/formAuthorization";
 //import { columnsAuthorizePerson } from "../constants/columns";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { TAuthorizePerson } from "../constants/types";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";

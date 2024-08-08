@@ -3,9 +3,9 @@ import { TJuristicsShareholders } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+//import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { useDispatch } from "react-redux";
+//import { RootState } from "@/app/store";
 import { addJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
 
 export function useJuristicShareholders() {

@@ -4,7 +4,7 @@ import { FormJuristicShareholders } from "../components/formJuristicShareholders
 //import { columnsJuristicShareHolders } from "../constants/columns";
 import { useJuristicShareholders } from "../hook/useJuristicShareholders";
 import { TJuristicsShareholders } from "../constants/types";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { removeJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ export function PageJuristicShareholder({
     console.log(data)
       try{
         const token = getCookies();
-        const res = await axios.post("/api/v1/personals/delete",{personalID : data.juristicId},{
+        const res = await axios.post("/api/v1/juristic/delete",{juristicId : data.juristicId},{
           headers: {
             Authorization: `Bearer ${token}`,
           },
