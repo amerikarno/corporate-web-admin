@@ -13,9 +13,9 @@ import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { TCorporateData } from "../constant/type";
-import { mapDataToTCorporateInfo } from "./libs/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { mapDataToTCorporateInfo } from "./libs/utils";
 
 type TPage = {
   page?: string;

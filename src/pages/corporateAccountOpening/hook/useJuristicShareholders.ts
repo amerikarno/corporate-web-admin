@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TJuristicsShareholders } from "../constants/types";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 //import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
@@ -32,14 +32,16 @@ export function useJuristicShareholders() {
       });
 
       if (res.status === 200) {
-        console.log(res)
+        console.log(res);
         console.log("request success", res.data.juristicId);
-        dispatch(addJuristicShareholder({ ...data, juristicId: res.data.juristicId}));
+        dispatch(
+          addJuristicShareholder({ ...data, juristicId: res.data.juristicId })
+        );
         setJuristics([...juristics, data]);
       } else {
         console.log("save failed");
       }
-    } catch (error : any) {
+    } catch (error: any) {
       console.log(error);
       alert(error.response.data.message);
     }
@@ -48,6 +50,6 @@ export function useJuristicShareholders() {
   return {
     juristics,
     handleSubmitJuristics,
-    setJuristics
+    setJuristics,
   };
 }

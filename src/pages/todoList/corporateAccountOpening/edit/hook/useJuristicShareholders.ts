@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TJuristicsShareholders } from "../constants/types";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 

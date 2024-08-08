@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TBank } from "../constants/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 
 type TBankArray = {
   bank: TBank[];

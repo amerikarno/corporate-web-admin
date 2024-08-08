@@ -1,5 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { getCookies } from "./Cookies";
+import { jwtDecode } from "jwt-decode";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -68,3 +70,23 @@ export function checkFormatIDCard(id: string) {
   const idValid = isNumber(id) && lastDigitId == id.charAt(12);
   return idValid;
 }
+
+export const isExpiredToken = (): boolean => {
+  const token = getCookies();
+  let isExpired = true;
+  if (token && token !== null) {
+    try {
+      const user = jwtDecode(token);
+
+      if (user && user.exp) {
+        const dateTime = new Date(user.exp * 1000);
+        isExpired = new Date().getTime() > dateTime.getTime();
+      } else {
+        console.log("Invalid token: exp field is missing.");
+      }
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+    }
+  }
+  return isExpired;
+};
