@@ -8,14 +8,13 @@ import { PageContactPerson } from "./pages/PageContactPerson";
 import { PageIndividualShareholder } from "./pages/PageIndividualShareholder";
 import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { TCorporateData } from "../constant/type";
-import { mapDataToTCorporateInfo,mapDataToTContactPerson } from "./libs/utils";
-import { useDispatch, useSelector } from "react-redux";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { mapDataToTCorporateInfo } from "./libs/utils";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 
 type TPage = {
@@ -23,11 +22,13 @@ type TPage = {
 };
 
 export function EditCorporateAccount() {
-  const corporateData : TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const corporateData: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
   console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  const initContactPerson = mapDataToTContactPerson(corporateData);
+  // const initContactPerson = mapDataToTContactPerson(corporateData);
   console.log("initFormData", initFormData);
 
   // const handleFormPassChange = (status: boolean) => {

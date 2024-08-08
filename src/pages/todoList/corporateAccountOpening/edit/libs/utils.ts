@@ -1,7 +1,10 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 import { TCorporateData } from "../../constant/type";
-import { TContactPersonSchema, TCorporateInfoSchema } from "../constants/schemas";
+import {
+  TContactPersonSchema,
+  TCorporateInfoSchema,
+} from "../constants/schemas";
 
 export function formatDateToIsoString(date: Date): string {
   const isoString = date.toISOString();
@@ -111,16 +114,17 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
 };
 
 export const mapDataToTContactPerson = (data: TCorporateData) => {
-  try{
-    let result : TContactPersonSchema = {
+  try {
+    let result: TContactPersonSchema = {
       telephone: data?.Contact?.[0]?.telephone || "",
       firstName: data?.Contact?.[0]?.fullnames?.[0]?.firstName || "",
       lastName: data?.Contact?.[0]?.fullnames?.[0]?.lastName || "",
       position: data?.Contact?.[0]?.telephone || "",
       division: data?.Contact?.[0]?.telephone || "",
       email: data?.Contact?.[0]?.telephone || "",
-    }
-  }catch(error){
-    console.log(error)
+    };
+    return result;
+  } catch (error) {
+    console.log(error);
   }
-}
+};
