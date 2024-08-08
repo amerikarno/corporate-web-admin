@@ -3,10 +3,13 @@ import { TAuthorizePerson } from "../constants/types";
 import axios from "@/api/axios";
 import { isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
+import { addAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
+import { RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
 
 export function useAuthorizePerson() {
   const [authorize, setAuthorize] = useState<TAuthorizePerson[]>([]);
-
+  const dispatch = useDispatch();
   // const isExpiredToken = (): boolean => {
   //   let isExpired = true;
   //   if (token && token !== null) {
@@ -41,10 +44,13 @@ export function useAuthorizePerson() {
       });
       console.log(res);
       if (res.status === 200) {
+        console.log(res.data.personalId);
+        dispatch(addAuthorizedPerson({ ...body, personalID: res.data.personalId }));
         console.log("save successful");
       }
-    } catch (error) {
+    } catch (error : any) {
       console.log(error);
+      alert(error.response.data.message);
     }
   };
 

@@ -6,6 +6,11 @@ import { FormAuthorizedPerson } from "../components/formAuthorization";
 import { useEffect, useState } from "react";
 import { TAuthorizePerson } from "../constants/types";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { removeAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 type TPageAuthorizedPersonProps = {
   corporateCode: string;
@@ -14,19 +19,28 @@ type TPageAuthorizedPersonProps = {
 export function PageAuthorizedPerson({
   corporateCode,
 }: TPageAuthorizedPersonProps) {
-  const { authorize, handleSubmitAuthorize, setAuthorize } =
+  const { handleSubmitAuthorize} =
     useAuthorizePerson();
-  const [authorizeData, setAuthorizeData] = useState<TAuthorizePerson[]>([]);
-  useEffect(() => {
-    setAuthorizeData(authorize);
-  }, [authorize]);
-
-  const handleDelete = (index: number) => {
-    const newData = [...authorizeData];
-    newData.splice(index, 1);
-    setAuthorizeData(newData);
-    setAuthorize(newData);
-  };
+    const dispatch = useDispatch();
+    const authorizedPersonData: TAuthorizePerson[] = useSelector<RootState>((state) => state.authorizedPerson?.authorizedPersons || []) as TAuthorizePerson[];
+    console.log(authorizedPersonData)
+    const handleDelete = async (data: TAuthorizePerson) => {
+      console.log(data)
+      try{
+        const token = getCookies();
+        const res = await axios.post("/api/v1/personals/delete",{personalID : data.personalID},{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        if (res.status === 200){
+          console.log("delete successful")
+          dispatch(removeAuthorizedPerson(data.personalID));
+        }
+      }catch(error){
+        console.log("delete fail ,",error)
+      }
+    };;
 
   const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
     {
@@ -47,13 +61,13 @@ export function PageAuthorizedPerson({
     },
     {
       name: "PassportID",
-      selector: (row: TAuthorizePerson) => row.passportID || "",
+      selector: (row: TAuthorizePerson) => row.passportId || "",
     },
-    {
-      name: "Expired Date",
-      selector: (row: TAuthorizePerson) =>
-        row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
-    },
+    // {
+    //   name: "Expired Date",
+    //   selector: (row: TAuthorizePerson) =>
+    //     row.expiryDate ? row.expiryDate.toISOString() : "",
+    // },
     {
       name: "Nationality",
       selector: (row: TAuthorizePerson) => row.nationality || "",
@@ -63,9 +77,8 @@ export function PageAuthorizedPerson({
     //   selector: (row: TDirector) => row.addresses || '',
     // },
     {
-      name: "Actions",
-      cell: (_: TAuthorizePerson, index: number) => (
-        <Button onClick={() => handleDelete(index)}>Delete</Button>
+      cell: (row: TAuthorizePerson) => (
+        <Button onClick={() => handleDelete(row)}>Delete</Button>
       ),
       ignoreRowClick: true,
     },
@@ -78,7 +91,7 @@ export function PageAuthorizedPerson({
           <DataTable
             title="Authorized person of Juristic Investor for traction"
             columns={columnsAuthorizePerson}
-            data={authorizeData}
+            data={authorizedPersonData}
           />
         </Card>
         <FormAuthorizedPerson
@@ -89,3 +102,4 @@ export function PageAuthorizedPerson({
     </>
   );
 }
+

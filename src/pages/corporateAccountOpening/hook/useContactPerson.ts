@@ -17,7 +17,6 @@ type TContactPersonArray = {
 export function useContactPerson() {
   const dispatch = useDispatch();
   const [contact, setContactPerson] = useState<TContactPerson[]>([]);
-  const contactPersonData: TContactPerson[] = useSelector<RootState>((state) => state.contactPerson?.contactPersons || []) as TContactPerson[];
   const saveContactPerson = async (data: TContactPersonArray) => {
     let body = {
       ...data,
@@ -34,7 +33,6 @@ export function useContactPerson() {
         console.log(res);
         console.log("save successful");
         dispatch(addContactPerson({ ...body, personalID: res.data.personalID }));
-        console.log(contactPersonData)
       } else {
         console.log("save failed");
       }

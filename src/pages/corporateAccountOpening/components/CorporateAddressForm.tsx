@@ -23,7 +23,7 @@ export function CorporateAddressForm({
   const newFields = [
     "Address No",
     "Moo No",
-    "Building/Moban",
+    "Building/Mooban",
     "Floor",
     "Soi",
     "Road",
