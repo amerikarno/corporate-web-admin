@@ -6,6 +6,7 @@ import individualShareholderReducer from "../features/individualShareholder/indi
 import juristicShareholderReducer from "@/features/juristicShareholderSlice/juristicShareholderSlice";
 import authorizedPersonReducer from "@/features/authorizedPerson/authorizedPersonSlice";
 import bankReducer from "@/features/bankSlice/bankSlice";
+import editCorporateReducer from "@/features/editCorporateData/editCorporateData";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     juristicShareholder: juristicShareholderReducer,
     authorizedPerson : authorizedPersonReducer,
     bank : bankReducer,
+    editCorporate: editCorporateReducer,
   },
 });
 

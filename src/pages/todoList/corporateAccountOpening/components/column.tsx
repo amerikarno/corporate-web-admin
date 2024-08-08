@@ -2,6 +2,9 @@ import { TableColumn } from "react-data-table-component";
 import { TCorporateData } from "../constant/type";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
 
 export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
   {
@@ -16,6 +19,10 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
     name: "",
     cell: (row: TCorporateData) => {
       const navigate = useNavigate();
+      const dispatch = useDispatch();
+      dispatch(setCorporateData(row));
+      const editCorporateData : TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+      console.log(editCorporateData)
       return (
         <Pencil
           className="h-4 hover:cursor-pointer"
