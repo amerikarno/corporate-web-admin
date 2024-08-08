@@ -13,7 +13,7 @@ import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { TCorporateData } from "../constant/type";
-import { mapDataToTCorporateInfo,mapDataToTContactPerson } from "./libs/utils";
+import { mapDataToTCorporateInfo} from "./libs/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { RootState } from "@/app/store";
@@ -27,7 +27,6 @@ export function EditCorporateAccount() {
   console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  const initContactPerson = mapDataToTContactPerson(corporateData);
   console.log("initFormData", initFormData);
 
   // const handleFormPassChange = (status: boolean) => {

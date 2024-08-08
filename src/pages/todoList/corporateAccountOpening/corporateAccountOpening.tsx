@@ -48,7 +48,7 @@ export default function TodoCorporateAccountOpenning() {
   const onSubmit = async (data: TCorporateAccountOpening) => {
     console.log(data);
     await handleSearch(data);
-    reset();
+    //reset();
   };
 
   useEffect(() => {

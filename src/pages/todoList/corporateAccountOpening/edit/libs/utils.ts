@@ -110,17 +110,4 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
   }
 };
 
-export const mapDataToTContactPerson = (data: TCorporateData) => {
-  try{
-    let result : TContactPersonSchema = {
-      telephone: data?.Contact?.[0]?.telephone || "",
-      firstName: data?.Contact?.[0]?.fullnames?.[0]?.firstName || "",
-      lastName: data?.Contact?.[0]?.fullnames?.[0]?.lastName || "",
-      position: data?.Contact?.[0]?.telephone || "",
-      division: data?.Contact?.[0]?.telephone || "",
-      email: data?.Contact?.[0]?.telephone || "",
-    }
-  }catch(error){
-    console.log(error)
-  }
-}
+

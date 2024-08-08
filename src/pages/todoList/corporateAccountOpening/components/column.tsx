@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
+import { setContactPersons } from "@/features/contactPersonSlice";
 
 export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
   {
@@ -23,6 +24,10 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
       dispatch(setCorporateData(row));
       const editCorporateData : TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
       console.log(editCorporateData)
+
+      if (editCorporateData.Contact) {
+        dispatch(setContactPersons(editCorporateData.Contact))
+      }
       return (
         <Pencil
           className="h-4 hover:cursor-pointer"
