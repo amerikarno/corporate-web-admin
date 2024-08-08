@@ -44,6 +44,7 @@ export function useContactPerson() {
       await saveContactPerson(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

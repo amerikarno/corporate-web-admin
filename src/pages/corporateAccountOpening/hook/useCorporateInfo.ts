@@ -70,6 +70,7 @@ export function useCorporateInfo() {
       await saveCorporateInfo(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

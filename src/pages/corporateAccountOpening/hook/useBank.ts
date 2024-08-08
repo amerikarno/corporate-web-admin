@@ -43,6 +43,7 @@ export function useBank() {
       await saveBank(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

@@ -67,6 +67,9 @@ export function FormCorporateTypeAndIncome({
       console.log(mergeObj);
       if (!isExpiredToken()) {
         await saveJuristicType(mergeObj);
+      } else {
+        console.log("session expired");
+        alert("Session expired. Please login again");
       }
     } else {
       console.log("submit failed");

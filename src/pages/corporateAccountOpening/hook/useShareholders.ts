@@ -19,6 +19,7 @@ export function useShareholders() {
       await saveIndividualsShareholders(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

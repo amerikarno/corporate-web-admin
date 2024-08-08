@@ -11,6 +11,7 @@ export function useJuristicShareholders() {
       await saveJuristicShareholders(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 
