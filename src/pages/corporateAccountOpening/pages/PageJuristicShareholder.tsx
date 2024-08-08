@@ -6,6 +6,11 @@ import { useJuristicShareholders } from "../hook/useJuristicShareholders";
 import { TJuristicsShareholders } from "../constants/types";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { removeJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 type TPageJuristicShareholderProps = {
   corporateCode: string;
@@ -14,26 +19,35 @@ type TPageJuristicShareholderProps = {
 export function PageJuristicShareholder({
   corporateCode,
 }: TPageJuristicShareholderProps) {
-  const { juristics, handleSubmitJuristics, setJuristics } =
+  const {  handleSubmitJuristics } =
     useJuristicShareholders();
-  const [juristicsData, setJuristicsData] = useState<TJuristicsShareholders[]>(
-    []
-  );
-  useEffect(() => {
-    setJuristicsData(juristics);
-  }, [juristics]);
+  const juristicShareholderData: TJuristicsShareholders[] = useSelector<RootState>((state) => state.juristicShareholder?.juristicShareholders || []) as TJuristicsShareholders[];
+  console.log(juristicShareholderData);
+  const dispatch = useDispatch();
 
-  const handleDelete = (index: number) => {
-    const newData = [...juristicsData];
-    newData.splice(index, 1);
-    setJuristicsData(newData);
-    setJuristics(newData);
+
+  const handleDelete = async (data: TJuristicsShareholders) => {
+    console.log(data)
+      try{
+        const token = getCookies();
+        const res = await axios.post("/api/v1/personals/delete",{personalID : data.juristicId},{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        if (res.status === 200){
+          console.log("delete successful")
+          dispatch(removeJuristicShareholder(data.juristicId));
+        }
+      }catch(error){
+        console.log("delete fail ,",error)
+      }
   };
 
   const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] = [
     {
       name: "Name",
-      selector: (row: TJuristicsShareholders) => row.juristicName || "",
+      selector: (row) => row.juristicName || "",
     },
     {
       name: "RegistrationNo",
@@ -48,9 +62,8 @@ export function PageJuristicShareholder({
       selector: (row: TJuristicsShareholders) => row.sharePercentage || "",
     },
     {
-      name: "Actions",
-      cell: (_: TJuristicsShareholders, index: number) => (
-        <Button onClick={() => handleDelete(index)}>Delete</Button>
+      cell: (row: TJuristicsShareholders) => (
+        <Button onClick={() => handleDelete(row)}>Delete</Button>
       ),
       ignoreRowClick: true,
     },
@@ -62,7 +75,7 @@ export function PageJuristicShareholder({
           <DataTable
             title="Juristics shareholders of juristic's owner"
             columns={columnsJuristicShareHolders}
-            data={juristicsData}
+            data={juristicShareholderData}
             clearSelectedRows
           />
         </Card>

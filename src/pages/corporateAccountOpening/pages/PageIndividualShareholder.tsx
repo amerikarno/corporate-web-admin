@@ -6,70 +6,95 @@ import { useShareholders } from "../hook/useShareholders";
 import { TIndividualsShareholders } from "../constants/types";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { removeIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 type TPageIndividualShareholderProps = {
   corporateCode: string;
 };
 
+// type TIndividualShareholderWithID = {
+//   shareholders: {
+//     fcorporateCode?: string;
+//     fullNames: {
+//       title: string;
+//       firstName: string;
+//       lastName: string;
+//     }[];
+//     citizenId?: string;
+//     passportId?: string;
+//     expiryDate: Date;
+//     nationality: string;
+//     sharePercentage: number;
+//     types?: number;
+//     personalID?:string;
+//   }[];
+//   personalID?:string;
+// };
+
 export function PageIndividualShareholder({
   corporateCode,
 }: TPageIndividualShareholderProps) {
-  const { shareholders, handleSubmitShareholders, setShareholders } =
+  const {handleSubmitShareholders } =
     useShareholders();
-  const [shareholdersData, setShareholdersData] = useState<
-    TIndividualsShareholders[]
-  >([]);
-  useEffect(() => {
-    setShareholdersData(shareholders);
-  }, [shareholders]);
-
-  const handleDelete = (index: number) => {
-    const newData = [...shareholdersData];
-    newData.splice(index, 1);
-    setShareholdersData(newData);
-    setShareholders(newData);
-  };
+    const shareholderData: TIndividualsShareholders[] = useSelector<RootState>((state) => state.individualShareholder?.individualShareholders || []) as TIndividualsShareholders[];
+    console.log(shareholderData);
+    const dispatch = useDispatch();
+  
+    const handleDelete = async(data: TIndividualsShareholders) => {
+      console.log(data)
+      try{
+        const token = getCookies();
+        const res = await axios.post("/api/v1/personals/delete",{personalID : data.personalID},{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        if (res.status === 200){
+          console.log("delete successful")
+          dispatch(removeIndividualShareholder(data.personalID));
+        }
+      }catch(error){
+        console.log("delete fail ,",error)
+      }
+    };
+  
 
   const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
     {
       name: "Title",
-      selector: (row: TIndividualsShareholders) => row.fullNames[0].title || "",
+      selector: (row) => row.fullNames[0]?.title || "",
     },
     {
       name: "Firstname",
-      selector: (row: TIndividualsShareholders) =>
-        row.fullNames[0].firstName || "",
+      selector: (row) =>row.fullNames[0]?.firstName || "",
     },
     {
       name: "Lastname",
-      selector: (row: TIndividualsShareholders) =>
-        row.fullNames[0].lastName || "",
+      selector: (row) =>row.fullNames[0]?.lastName || "",
     },
     {
       name: "CitizenID",
-      selector: (row: TIndividualsShareholders) => row.citizenId || "",
+      selector: (row) => row.citizenId || "",
     },
     {
       name: "PassportID",
-      selector: (row: TIndividualsShareholders) => row.passportId || "",
-    },
-    {
-      name: "Expired Date",
-      selector: (row: TIndividualsShareholders) =>
-        row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
+      selector: (row) => row.passportId || "",
     },
     {
       name: "Nationality",
-      selector: (row: TIndividualsShareholders) => row.nationality || "",
+      selector: (row) => row.nationality || "",
     },
     {
       name: "Share Percentage",
-      selector: (row: TIndividualsShareholders) => row.sharePercentage || "",
+      selector: (row) => row.sharePercentage || "",
     },
     {
-      name: "Actions",
-      cell: (_: TIndividualsShareholders, index: number) => (
-        <Button onClick={() => handleDelete(index)}>Delete</Button>
+      cell: ( row: TIndividualsShareholders) => (
+        <Button onClick={() => handleDelete(row)}>Delete</Button>
       ),
       ignoreRowClick: true,
     },
@@ -81,7 +106,7 @@ export function PageIndividualShareholder({
           <DataTable
             title="List of Shareholders holding from 25% of shares"
             columns={columnsShareHolders}
-            data={shareholdersData}
+            data={shareholderData}
             clearSelectedRows
           />
         </Card>

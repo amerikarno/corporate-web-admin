@@ -3,9 +3,16 @@ import { TJuristicsShareholders } from "../constants/types";
 import { isExpiredToken } from "../libs/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { addJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
 
 export function useJuristicShareholders() {
   const [juristics, setJuristics] = useState<TJuristicsShareholders[]>([]);
+
+  const dispatch = useDispatch();
+
   const handleSubmitJuristics = async (data: TJuristicsShareholders) => {
     if (!isExpiredToken()) {
       await saveJuristicShareholders(data);
@@ -23,15 +30,18 @@ export function useJuristicShareholders() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
+
       if (res.status === 200) {
-        console.log("request success", res.data);
+        console.log(res)
+        console.log("request success", res.data.juristicId);
+        dispatch(addJuristicShareholder({ ...data, juristicId: res.data.juristicId}));
         setJuristics([...juristics, data]);
       } else {
         console.log("save failed");
       }
-    } catch (error) {
+    } catch (error : any) {
       console.log(error);
+      alert(error.response.data.message);
     }
   };
 

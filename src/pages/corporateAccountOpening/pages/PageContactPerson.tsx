@@ -8,12 +8,14 @@ import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { removeContactPerson } from "@/features/contactPersonSlice";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 type TPageContactPersonProps = {
   corporateCode: string;
 };
 
-type TContactPersonTest = {
+type TContactPersonWithID = {
   contacts: {
     fullNames: {
       title: string;
@@ -31,15 +33,33 @@ type TContactPersonTest = {
 export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
   const dispatch = useDispatch();
   const { handleSubmitContactPerson } = useContactPerson();
-  const contactPersonData: TContactPersonTest[] = useSelector<RootState>(
+  const contactPersonData: TContactPersonWithID[] = useSelector<RootState>(
     (state) => state.contactPerson?.contactPersons || []
-  ) as TContactPersonTest[];
-
-  const handleDelete = (data: TContactPersonTest) => {
-    dispatch(removeContactPerson(data.personalID));
+  ) as TContactPersonWithID[];
+  console.log(contactPersonData);
+  const handleDelete = async (data: TContactPersonWithID) => {
+    console.log(data);
+    try {
+      const token = getCookies();
+      const res = await axios.post(
+        "/api/v1/personals/delete",
+        { personalID: data.personalID },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        console.log("delete successful");
+        dispatch(removeContactPerson(data.personalID));
+      }
+    } catch (error) {
+      console.log("delete failed", error);
+    }
   };
 
-  const columnsContactPerson: TableColumn<TContactPersonTest>[] = [
+  const columnsContactPerson: TableColumn<TContactPersonWithID>[] = [
     {
       name: "Title",
       selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.title || "",
@@ -69,7 +89,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       selector: (row) => row.contacts?.[0]?.telephone || "",
     },
     {
-      cell: (row: TContactPersonTest) => (
+      cell: (row: TContactPersonWithID) => (
         <Button onClick={() => handleDelete(row)}>Delete</Button>
       ),
       ignoreRowClick: true,

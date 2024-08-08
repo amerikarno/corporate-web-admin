@@ -5,11 +5,14 @@ import { getCookies } from "@/lib/Cookies";
 import {
   TIndividualsShareholders,
 } from "../constants/types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
 
 export function useShareholders() {
-  const [shareholders, setShareholders] = useState<
-  TIndividualsShareholders[]
-  >([]);
+  const dispatch = useDispatch();
+  const individualShareholderData: TIndividualsShareholders[] = useSelector<RootState>((state) => state.contactPerson?.contactPersons || []) as TIndividualsShareholders[];
+
   const handleSubmitShareholders = async (data: TIndividualsShareholders) => {
     if (!isExpiredToken()) {
       await saveIndividualsShareholders(data);
@@ -42,18 +45,21 @@ export function useShareholders() {
       });
       if (res.status === 200) {
         console.log("request success", res);
-        setShareholders([...shareholders, data]);
+        console.log(res.data.personalId);
+        dispatch(addIndividualShareholder({ ...body, personalID: res.data.personalId }));
+        console.log(individualShareholderData)
       } else {
         console.log("save failed");
       }
-    } catch (error) {
+    } catch (error : any) {
       console.log(error);
+      alert(error.response.data.message);
     }
   };
 
   return {
-    shareholders,
+
     handleSubmitShareholders,
-    setShareholders
+
   };
 }
