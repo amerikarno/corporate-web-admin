@@ -3,7 +3,7 @@ import { useListOfDirector } from "../hook/useListOfDirector";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsDirector } from "../components/formDirectorInfo";
 //import { columnsListOfDirectors } from "../constants/columns";
-import { TDirector,TSubAddress } from "../constants/types";
+import { TDirector } from "../constants/types";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
@@ -111,7 +111,3 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
     </>
   );
 }
-function dispatch(arg0: { payload: any; type: "listOfDirector/removeDirector"; }) {
-  throw new Error("Function not implemented.");
-}
-

@@ -42,7 +42,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
     try {
       const token = getCookies();
       const res = await axios.post(
-        "/api/v1/personals/delete",
+        "/api/v1/corporate/delete/contact",
         { personalID: data.personalID },
         {
           headers: {

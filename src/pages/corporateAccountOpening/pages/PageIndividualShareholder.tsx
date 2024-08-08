@@ -4,7 +4,7 @@ import { FormIndividualsShareholders } from "../components/formIndividualsShareh
 // import { columnsShareHolders } from "../constants/columns";
 import { useShareholders } from "../hook/useShareholders";
 import { TIndividualsShareholders } from "../constants/types";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,7 +90,7 @@ export function PageIndividualShareholder({
     },
     {
       name: "Share Percentage",
-      selector: (row) => row.sharePercentage || "",
+      selector: (row) => row.sharePercentage.toString() || "",
     },
     {
       cell: ( row: TIndividualsShareholders) => (
