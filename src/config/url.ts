@@ -139,7 +139,7 @@ export const urlConfig: TUrlConfig[] = [
       },
       {
         label: "Orders/Trades",
-        href: "/blankPages",
+        href: "/create-job/order-trade",
       },
       {
         label: "whitelist(bank)",

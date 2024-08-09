@@ -1,7 +1,9 @@
 export type TOrderTrade = {
-    corporateCode: string;
-    buySell? : string;
-    symbol:string;
-    tradeValue:string;
-    tradeAmount:string;
+    corporateCode: number;
+    operations? : string;
+    cryptoAmount:number;
+    fiatAmount:number;
+    currency:string;
+    cryptoPrice:number;
+    pair:string;
 }

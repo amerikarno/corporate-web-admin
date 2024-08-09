@@ -18,6 +18,7 @@ import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateA
 import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
 import { EditCorporateAccount } from "./pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import OrderTrade from "./pages/corporateAccountOpening/pages/orderTrade/orderTrade";
+import TransactionList from "./pages/corporateAccountOpening/pages/transactionList/transactionList";
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -54,7 +55,10 @@ root.render(
                       element={<CorporateAccountOpenning />}
                     />
                   </Route>
-                  <Route path="order-trade" element={<OrderTrade />} />
+                  <Route path="order-trade" element={<Outlet />}>
+                    <Route index element={<OrderTrade />}/>
+                    <Route path="transaction-list" element={<TransactionList />}/>
+                  </Route>
                 </Route>
                 <Route path="todo-list" element={<Outlet />}>
                   <Route index element={<TodoCorporateAccountOpenning />} />
