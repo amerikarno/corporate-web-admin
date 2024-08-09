@@ -1,7 +1,10 @@
-export default function BlankPage() {
+type blankPageProps = {
+  name?: string;
+};
+export default function BlankPage({ name }: blankPageProps) {
   return (
     <div>
-      <h1>This page is developing...</h1>
+      <h1>{name}</h1>
     </div>
   );
 }

@@ -8,8 +8,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MoveRight } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 export default function Sidebar() {
+  const user = useSelector((state: RootState) => state.user.user);
+  console.log(user);
+
   return (
     <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
       <Accordion type="single" collapsible className="p-2">

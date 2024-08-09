@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authenReducer from "../features/authen/authenSlice";
-import contactPersonReducer from '../features/contactPersonSlice';
+import contactPersonReducer from "../features/contactPersonSlice";
 import listOfDirectorReducer from "../features/ListOfDirectorSlice/listOfDirectorSlice";
 import individualShareholderReducer from "../features/individualShareholder/individualShareholderSlice";
 import juristicShareholderReducer from "@/features/juristicShareholderSlice/juristicShareholderSlice";
 import authorizedPersonReducer from "@/features/authorizedPerson/authorizedPersonSlice";
 import bankReducer from "@/features/bankSlice/bankSlice";
 import editCorporateReducer from "@/features/editCorporateData/editCorporateData";
+import userReducer from "@/features/user/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,9 +16,10 @@ export const store = configureStore({
     listOfDirector: listOfDirectorReducer,
     individualShareholder: individualShareholderReducer,
     juristicShareholder: juristicShareholderReducer,
-    authorizedPerson : authorizedPersonReducer,
-    bank : bankReducer,
+    authorizedPerson: authorizedPersonReducer,
+    bank: bankReducer,
     editCorporate: editCorporateReducer,
+    user: userReducer,
   },
 });
 

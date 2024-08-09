@@ -14,12 +14,16 @@ import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
 import { useState } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 type TPage = {
   page?: string;
 };
 
 export default function CorporateAccountOpenning() {
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);
   const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
 
   const handleFormPassChange = (status: boolean) => {
