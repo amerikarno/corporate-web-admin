@@ -7,10 +7,12 @@ import { useContactPerson } from "../hook/useContactPerson";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { removeContactPerson } from "@/features/contactPersonSlice";
+import { removeContactPerson, setContactPersons } from "@/features/contactPersonSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { TCorporateData,TContact } from "../../constant/type";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { Contact } from "lucide-react";
 
 type TPageContactPersonProps = {
   corporateCode: string;
@@ -41,6 +43,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       if (res.status === 200) {
         console.log("delete successful");
         dispatch(removeContactPerson(data.personalID));
+        //dispatch(setCorporateData({...corporateData, Contact:contactPersonData}));
       }
     } catch (error) {
       console.log("delete failed", error);

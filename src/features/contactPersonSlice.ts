@@ -28,7 +28,10 @@ export const contactPersonSlice = createSlice({
       state.contactPersons = [];
     },
     setContactPersons: (state, action: PayloadAction<TContact[]>) => {
-      state.contactPersons = action.payload;
+      state.contactPersons = action.payload.map(contact => ({
+        ...contact,
+        corporateCode: String(contact.corporateCode),
+      })) as TContactPerson[];
     },
   },
 });
