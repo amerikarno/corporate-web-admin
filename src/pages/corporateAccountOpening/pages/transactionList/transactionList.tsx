@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 import {TTransaction} from "./constant/type";
 import { Button } from '@/components/ui/button';
+import { IoMdRefresh } from "react-icons/io";
 
 const TransactionList = () => {
     const [listOfTransaction, setFetchedListOfTransaction] = useState<TTransaction[]>([]);    
     const [checkboxStatus, setCheckboxStatus] = useState<{ [transactionId: string]: {checkerStatus: boolean | undefined} }>({});
-
+    const [triggerSubmit,setTriggerSubmit] = useState<boolean>(true);
     const handleCheckboxChange = (transactionId: string, type: 'approve' | 'decline', checked: boolean) => {
         setCheckboxStatus((prevStatus) => {
             const currentStatus = prevStatus[transactionId]?.checkerStatus;
@@ -62,7 +63,7 @@ const TransactionList = () => {
     const fetchListOfTransaction = async () => {
         try {
           const token = getCookies();
-          const res = await axios.post("/api/v1/transaction/order/get/all", {},{
+          const res = await axios.get("/api/v1/transaction/order/get/approve",{
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -90,7 +91,10 @@ const TransactionList = () => {
     
       useEffect(() => {
         fetchListOfTransaction();
-      }, []);
+        if (triggerSubmit){
+            setTriggerSubmit(false); 
+        }
+      }, [triggerSubmit]);
 
       console.log(listOfTransaction)
   
@@ -149,15 +153,17 @@ const TransactionList = () => {
       return (
     <div className="p-4 space-y-8">
     <Card>
-        <h1>List of transactions</h1>
       <DataTable
         title="List of Transactions"
         columns={columnsContactPerson}
         data={listOfTransaction}
         clearSelectedRows
       />
-      <div className="flex justify-end p-8">
-        <Button onClick={handleSubmit}>Submit</Button>
+      <div className="flex justify-end gap-4 p-8">
+        <Button onClick={()=>{
+            handleSubmit();
+            setTriggerSubmit(true);  
+        }}>Submit</Button>
       </div>
     </Card>
   </div>

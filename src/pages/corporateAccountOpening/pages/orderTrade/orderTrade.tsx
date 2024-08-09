@@ -103,12 +103,12 @@ export default function OrderTrade() {
   };
 
   return (
-    <div className="p-10 flex justify-center">
+    <div className="md:p-10 flex justify-center">
       <Card className="p-4 w-full">
-        <h1 className="font-bold text-xl py-4">Orders / Trades</h1>
+        <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-row space-x-4 justify-center">
-            <div className="w-1/2">
+            <div className="md:w-1/2 w-full">
               <Input
                 {...register("corporateCode")}
                 label="Corporate Code"
@@ -134,7 +134,7 @@ export default function OrderTrade() {
 
           </div>
           <div className="w-full flex justify-center">
-            <Card className="space-y-4 p-10 w-[60%]">
+            <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%]">
               <div className="flex flex-row justify-center ">
                 <div
                   className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-l transition-colors duration-300 ${buySell === "buy" ? "bg-slate-800" : "bg-slate-500"}`}
