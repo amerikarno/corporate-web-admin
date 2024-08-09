@@ -2,10 +2,34 @@ import { TableColumn } from "react-data-table-component";
 import { TCorporateData } from "../constant/type";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { setContactPersons } from "@/features/contactPersonSlice";
+
+const EditButtonCell = ({ row }: { row: TCorporateData }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const editCorporateData: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
+
+  const handleEditClick = () => {
+    dispatch(setCorporateData(row));
+
+    if (editCorporateData.Contact) {
+      dispatch(setContactPersons(editCorporateData.Contact));
+    }
+
+    navigate("/todo-list/corporate-account-opening/edit/1", {
+      state: row,
+    });
+  };
+
+  return (
+    <Pencil className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
+  );
+};
 
 export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
   {
@@ -18,32 +42,7 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
   },
   {
     name: "",
-    cell: (row: TCorporateData) => {
-      const navigate = useNavigate();
-      const dispatch = useDispatch();
-
-      const handleEditClick = () => {
-        dispatch(setCorporateData(row));
-        const editCorporateData: TCorporateData = useSelector<RootState>(
-          (state) => state.editCorporate
-        ) as TCorporateData;
-
-        if (editCorporateData.Contact) {
-          dispatch(setContactPersons(editCorporateData.Contact));
-        }
-
-        navigate("/todo-list/corporate-account-opening/edit/1", {
-          state: row,
-        });
-      };
-
-      return (
-        <Pencil
-          className="h-4 hover:cursor-pointer"
-          onClick={handleEditClick}
-        />
-      );
-    },
+    cell: (row: TCorporateData) => <EditButtonCell row={row} />,
     ignoreRowClick: true,
   },
 ];
