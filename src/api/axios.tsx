@@ -1,9 +1,10 @@
 import axios from "axios";
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
-let BASE_URL = process.env.BASE_URL
+import log from "@/log/log";
 
+let BASE_URL = process.env.BASE_URL
+log.info("BASE_URL",BASE_URL)
 if (BASE_URL) {
-  console.log("BASE_URL", BASE_URL);
+  
   BASE_URL = "http://localhost:1323";
 }
 
