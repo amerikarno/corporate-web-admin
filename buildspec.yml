@@ -23,3 +23,8 @@ phases:
     commands:
       - docker tag corporate-web-admin:latest ${ECR_IMAGE_URI}
       - docker push ${ECR_IMAGE_URI}
+      - printf '[{"name":"cwa-container","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json

@@ -6,17 +6,17 @@
 //   Route,
 //   Routes,
 // } from "react-router-dom";
-// import "./style.css";
+// import "@/style.css";
 // import { HelmetProvider } from "react-helmet-async";
-// import Login from "./pages/login/login";
+// import Login from "@/pages/login/login";
 // import React from "react";
-// import Layout from "./components/Layout";
+// import Layout from "@/components/Layout";
 // import { Provider } from "react-redux";
-// import { store } from "./app/store";
-// import Welcome from "./pages/Welcome";
-// import CreateCorporate from "./pages/corporate/createCorporate";
-// import ContactPerson from "./pages/contactperson/contactPerson";
-// import { FormTest } from "./pages/test";
+// import { store } from "@/app/store";
+// import Welcome from "@/pages/Welcome";
+// import CreateCorporate from "@/pages/corporate/createCorporate";
+// import ContactPerson from "@/pages/contactperson/contactPerson";
+// import { FormTest } from "@/pages/test";
 
 // const helmetContext = {};
 
@@ -55,19 +55,19 @@
 
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
-import "./style.css";
+import "@/style.css";
 import { HelmetProvider } from "react-helmet-async";
-import Login from "./pages/login/login";
-import Layout from "./components/Layout";
+import Login from "@/pages/login/login";
+import Layout from "@/components/Layout";
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
-// import CreateCorporate from "./pages/corporate/createCorporate";
-import BlankPage from "./pages/blankPages/blankPage";
-import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateAccountOpenning";
-//import UploadFiles from "./pages/uploadFiles/uploadFiles";
-import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
-// import { ProtectedRoute } from "./components/ProtectedRoute";
+import { store } from "@/app/store";
+// import CreateCorporate from "@/pages/corporate/createCorporate";
+import BlankPage from "@/pages/blankPages/blankPage";
+import CorporateAccountOpenning from "@/pages/corporateAccountOpening/CorporateAccountOpenning";
+//import UploadFiles from "@/pages/uploadFiles/uploadFiles";
+import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -98,9 +98,9 @@ root.render(
                     <Route
                       index
                       element={
-                        // <ProtectedRoute>
+                        <ProtectedRoute>
                         <CorporateAccountOpenning />
-                        // </ProtectedRoute>
+                        </ProtectedRoute>
                       }
                     />
                     <Route
