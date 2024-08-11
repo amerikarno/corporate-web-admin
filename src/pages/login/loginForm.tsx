@@ -35,23 +35,23 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<AuthForm> = (data) => {
     if (data.email && data.password) {
-      //const hashedUsername = CryptoJs.SHA256(data.email).toString();
-      //const hashedPassword = CryptoJs.SHA256(data.password).toString();
-      //console.log(hashedUsername);
-      //console.log(hashedPassword);
+      const hashedUsername = CryptoJs.SHA256(data.email).toString();
+      const hashedPassword = CryptoJs.SHA256(data.password).toString();
+      console.log(hashedUsername);
+      console.log(hashedPassword);
 
       axios
         .post(
           // "http://localhost:1323/admin/v1/login",
           "/api/v1/authen/login",
-          // {
-          //   hashedUsername: `${hashedUsername}`,
-          //   hashedPassword: `${hashedPassword}`,
-          // },
           {
-            hashedUsername:data.email,
-            hashedPassword:data.password,
+            hashedUsername: `${hashedUsername}`,
+            hashedPassword: `${hashedPassword}`,
           },
+          // {
+          //   hashedUsername:data.email,
+          //   hashedPassword:data.password,
+          // },
           {
             headers: {
               "Content-Type": "application/json",

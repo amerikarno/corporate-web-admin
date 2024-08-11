@@ -36,8 +36,8 @@ export default function CorporateAccountOpenning() {
   const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  //const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-   const corporateCode :string = "80000006";
+  const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  //const corporateCode :string = "80000006";
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo

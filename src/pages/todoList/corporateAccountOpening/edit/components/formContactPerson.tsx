@@ -11,7 +11,7 @@ import {
 import { sleep } from "@/lib/utils";
 //import { Table } from "./dataTable";
 import { TContactPerson } from "../constants/types";
-
+import { TContact } from "../../constant/type";
 type TContactPersonArray = {
   contacts: TContactPerson[];
   corporateCode?: string;
@@ -20,21 +20,16 @@ type TContactPersonArray = {
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
   corporateCode: string;
+  choosedEditData?: TContact | null;
 };
 
 export function FormIndividualsContactPerson({
   onsubmit,
   corporateCode,
+  choosedEditData
 }: TContactPersonFormProps) {
-  // const {
-  //   contacts,
-  //   individualsContact,
-  //   // removeIndividualsShareholders,
-  //   // editIndividualsShareholders,
-  //   // handleSetNewShareholder,
-  //   // serializeData,
-  // } = useFormIndividualsContactPerson();
 
+  console.log(choosedEditData)
   const {
     register,
     handleSubmit,
@@ -45,13 +40,6 @@ export function FormIndividualsContactPerson({
     //values: individualsContact,
   });
 
-  //   const columns = [
-  //     { header: "Name-Surname", accessor: "nameSurname" },
-  //     { header: "ID Card / Passport", accessor: "idCard" },
-  //     { header: "Expiration Date", accessor: "expiredDate" },
-  //     { header: "Nationality", accessor: "nationality" },
-  //     { header: "% Shares", accessor: "shares" },
-  //   ];
 
   const onSubmit = async (data: TContactPerson) => {
     let formData: TContactPersonArray = {

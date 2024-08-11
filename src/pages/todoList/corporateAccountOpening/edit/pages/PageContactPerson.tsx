@@ -13,6 +13,7 @@ import axios from "@/api/axios";
 import { TCorporateData,TContact } from "../../constant/type";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { Contact } from "lucide-react";
+import { useState } from "react";
 
 type TPageContactPersonProps = {
   corporateCode: string;
@@ -22,7 +23,7 @@ type TPageContactPersonProps = {
 export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
   const dispatch = useDispatch();
   const { handleSubmitContactPerson } = useContactPerson();
-
+  const [choosedEditData,setChoosedEditData] = useState<TContact>();
   const contactPersonData : TContact[] = useSelector<RootState>(
     (state) => state.contactPerson?.contactPersons) as TContact[];
 
@@ -49,6 +50,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       console.log("delete failed", error);
     }
   };
+
 
   const columnsContactPerson: TableColumn<TContact>[] = [
     {
@@ -85,6 +87,12 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       ),
       ignoreRowClick: true,
     },
+    {
+      cell: (row: TContact) => (
+        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+      ),
+      ignoreRowClick: true,
+    },
   ];
 
   return (
@@ -99,6 +107,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
           />
         </Card>
         <FormIndividualsContactPerson
+          choosedEditData={choosedEditData}
           onsubmit={handleSubmitContactPerson}
           corporateCode={corporateCode}
         />
