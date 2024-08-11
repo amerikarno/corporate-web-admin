@@ -21,7 +21,7 @@ export const contactPersonSlice = createSlice({
     },
     removeContactPerson: (state, action) => {
       state.contactPersons = state.contactPersons.filter(
-        (data) => data.personalID !== action.payload
+        (data) => data.personalId !== action.payload
       );
     },
     clearContactPersons: (state) => {
