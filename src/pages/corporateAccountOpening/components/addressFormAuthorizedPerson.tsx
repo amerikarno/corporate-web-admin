@@ -54,6 +54,7 @@ export function AddressFormAuthorizedPerson({
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
+                autoComplete="new-password"
               />
             {/* </SideLabelInput> */}
             {errors && errors[fieldName as keyof TSubAddressSchema] && (
