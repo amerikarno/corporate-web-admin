@@ -30,7 +30,9 @@ export default function Sidebar() {
                 </AccordionTrigger>
 
                 {item.children.map((child: TUrlConfigChild, index) => {
-                  return (
+                  return child?.pageId &&
+                    user?.groups &&
+                    user?.groups.includes(child?.pageId) ? (
                     <AccordionContent key={index} className="pl-6">
                       <Link
                         to={child.href}
@@ -40,7 +42,20 @@ export default function Sidebar() {
                         &nbsp;<p>{child.label}</p>
                       </Link>
                     </AccordionContent>
+                  ) : (
+                    <div></div>
                   );
+                  // return (
+                  //   <AccordionContent key={index} className="pl-6">
+                  //     <Link
+                  //       to={child.href}
+                  //       className="hover:underline text-[#b3b3b3] flex"
+                  //     >
+                  //       <MoveRight />
+                  //       &nbsp;<p>{child.label}</p>
+                  //     </Link>
+                  //   </AccordionContent>
+                  // );
                 })}
               </AccordionItem>
             </div>

@@ -9,27 +9,27 @@ export const urlConfig: TUrlConfig[] = [
       {
         label: "user management",
         href: "/system-management/user-management",
-        // pageId: 1001,
+        pageId: 1001,
       },
       {
         label: "role management",
         href: "/system-management/role-management",
-        // pageId: 1002,
+        pageId: 1002,
       },
       {
         label: "department management",
         href: "/system-management/department-management",
-        // pageId: 1003,
+        pageId: 1003,
       },
       {
         label: "permission management",
         href: "/system-management/permission-management",
-        // pageId: 1004,
+        pageId: 1004,
       },
       {
         label: "workflow",
         href: "/system-management/workflow",
-        // pageId: 1005,
+        pageId: 1005,
       },
       {
         label: "system configuration",
