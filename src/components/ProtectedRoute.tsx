@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 // import axios from "axios";
 import axios from "@/api/axios";
@@ -9,9 +9,16 @@ import { getCookies, setCookies } from "@/lib/Cookies";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   // const token = sessionStorage.getItem("token");
+  const [isError, setIsError] = React.useState(false);
   const token = getCookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      return navigate("/login");
+    }
+  }, [isError]);
 
   const decode = token && token !== null ? jwtDecode(token) : null;
   if (decode !== null) {
@@ -28,12 +35,17 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
           // sessionStorage.setItem("token", res.data.accessToken);
           // setCookies(res.data.accessToken);
           // dispatch(setToken(res.data.accessToken));
-          setCookies(res.data.token);
-          dispatch(setToken(res.data.token));
+          if (res.data.token) {
+            setCookies(res.data.token);
+            dispatch(setToken(res.data.token));
+          } else {
+            setIsError(true);
+          }
         })
         .catch((err) => {
           console.log("root", { message: err.message });
-          return navigate("/login");
+          // return navigate("/login");
+          setIsError(true);
         })
         .finally(() => {
           console.log("decode:", decode);
