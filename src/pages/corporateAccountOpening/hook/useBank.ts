@@ -3,6 +3,8 @@ import { TBank } from "../constants/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { isExpiredToken } from "../libs/utils";
+import { useDispatch } from "react-redux";
+import { addBank } from "@/features/bankSlice/bankSlice";
 
 type TBankArray = {
   bank: TBank[];
@@ -11,7 +13,7 @@ type TBankArray = {
 
 export function useBank() {
   const [bank, setBank] = useState<TBank[]>([]);
-
+  const dispatch = useDispatch();
   const saveBank = async (data: TBankArray) => {
     let body = {
       ...data,
@@ -26,6 +28,8 @@ export function useBank() {
       });
       console.log(res);
       if (res.status === 200) {
+        console.log(res.data.BankId);
+        dispatch(addBank({ ...body, BankId: res.data.BankId }));
         console.log("save successful");
       }
     } catch (error) {
@@ -45,5 +49,6 @@ export function useBank() {
   return {
     bank,
     handleSubmitBank,
+    setBank
   };
 }

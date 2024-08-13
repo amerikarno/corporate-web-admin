@@ -124,7 +124,7 @@ export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
   },
   {
     name: "PassportID",
-    selector: (row: TAuthorizePerson) => row.passportID || "",
+    selector: (row: TAuthorizePerson) => row.passportId || "",
   },
   {
     name: "Expired Date",

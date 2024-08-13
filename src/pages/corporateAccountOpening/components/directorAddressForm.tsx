@@ -28,18 +28,18 @@ export function DirectorAddressForm({
   //   return true;
   // };
   const newFields = [
-    "Address Number",
-    "Moo",
-    "Soi",
+    "Address No",
+    "Moo No",
+    "Building/Mooban",
     "Floor",
-    "Building",
+    "Soi",
     "Road",
-    "Tambon",
-    "Amphoe",
+    "Sub-district/Tambon",
+    "District/Amphur",
     "Province",
-    "PostalCode",
-    "Country"
-  ]
+    "Postal Code",
+    "Country",
+  ];
   return (
     <div className="grid md:grid-cols-2 gap-4">
       {fields.map(([fieldName], index) => {
@@ -54,6 +54,8 @@ export function DirectorAddressForm({
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
+                autoComplete="new-password"
+
               />
             {/* </SideLabelInput> */}
             {errors && errors[fieldName as keyof TSubAddressSchema] && (

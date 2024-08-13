@@ -48,9 +48,9 @@ export function FormAuthorizedPerson({
   const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
     let tmp = { ...data };
     if (tmp.citizenId) {
-      tmp = { ...tmp, passportID: "" };
+      tmp = { ...tmp, passportId: "" };
     }
-    if (tmp.passportID) {
+    if (tmp.passportId) {
       tmp = { ...tmp, citizenId: "" };
     }
     //tmp = { ...tmp, types: "201" };
