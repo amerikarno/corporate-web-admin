@@ -104,7 +104,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
 
     if (handleCheckboxError()) {
       await sleep(500);
-      reset();
       // console.log(formData);
       onsubmit(formData);
       sleep(1500);

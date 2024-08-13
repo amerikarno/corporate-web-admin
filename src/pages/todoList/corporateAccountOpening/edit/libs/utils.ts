@@ -1,7 +1,8 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
-import { TCorporateData } from "../../constant/type";
+import { TContact, TCorporateData } from "../../constant/type";
 import { TContactPersonSchema, TCorporateInfoSchema } from "../constants/schemas";
+import { TContactPerson } from "../constants/types";
 
 export function formatDateToIsoString(date: Date): string {
   const isoString = date.toISOString();
@@ -107,6 +108,35 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
     return result;
   } catch (error) {
     console.log("cast type error", error);
+  }
+};
+
+export const mapDataToTContactPerson = (data: TContact | null): TContactPerson | null => {
+  try {
+    if (data === null) {
+      return null; 
+    }
+
+    if (data.fullNames.length === 0) {
+      throw new Error("Full names array is empty");
+    }
+    const fullName = data.fullNames[0];
+    const result: TContactPerson = {
+      fullNames : [{  title: fullName.title ?? '',
+                      firstName: fullName.firstName ?? '',
+                      lastName: fullName.lastName ?? '',}],
+      position: data.position ?? '',
+      division: data.division ?? '',
+      telephone: data.telephone ?? '',
+      email: data.email ?? '',
+      personalId : data.id ?? '',
+    };
+    
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null; 
   }
 };
 

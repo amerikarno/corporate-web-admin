@@ -7,13 +7,13 @@ import { useContactPerson } from "../hook/useContactPerson";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { removeContactPerson, setContactPersons } from "@/features/contactPersonSlice";
+import { addContactPerson, removeContactPerson, setContactPersons } from "@/features/contactPersonSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { TCorporateData,TContact } from "../../constant/type";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { Contact } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type TPageContactPersonProps = {
   corporateCode: string;
@@ -21,7 +21,39 @@ type TPageContactPersonProps = {
 
 
 export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
+  console.log(corporateCode);
   const dispatch = useDispatch();
+  const token = getCookies();
+
+  useEffect(() => {
+  axios.post("/api/v1/corporate/query", { corporateCode }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then((res) => {
+    console.log("API Response:", res.data);
+
+    if (res.status === 200) {
+      const contacts = res.data[0].Contact;
+      const updatedContacts:TContact[] = contacts.map((contact : any) => {
+        return {
+          ...contact,
+          personalId: contact.personalID,
+        };
+      });
+      dispatch(setContactPersons(updatedContacts));
+      console.log("Contact data fetched successfully.", contacts);
+    } else {
+      console.log("Failed to fetch contact data or data is not an array.");
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching contact data:", error);
+  });
+}, [corporateCode, dispatch, token]);
+    
+  
   const { handleSubmitContactPerson } = useContactPerson();
   const [choosedEditData,setChoosedEditData] = useState<TContact>();
   const contactPersonData : TContact[] = useSelector<RootState>(
@@ -34,7 +66,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       const token = getCookies();
       const res = await axios.post(
         "/api/v1/corporate/delete/contact",
-        { personalID: data.personalID },
+        { personalId: data.personalId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,14 +75,13 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       );
       if (res.status === 200) {
         console.log("delete successful");
-        dispatch(removeContactPerson(data.personalID));
+        dispatch(removeContactPerson(data.personalId));
         //dispatch(setCorporateData({...corporateData, Contact:contactPersonData}));
       }
     } catch (error) {
       console.log("delete failed", error);
     }
   };
-
 
   const columnsContactPerson: TableColumn<TContact>[] = [
     {
@@ -93,6 +124,13 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       ),
       ignoreRowClick: true,
     },
+    {
+      cell: (row: TContact) => (
+        <Button onClick={() =>console.log(row)}>See Data Row</Button>
+      ),
+      ignoreRowClick: true,
+    },
+    
   ];
 
   return (
@@ -107,6 +145,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
           />
         </Card>
         <FormIndividualsContactPerson
+
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitContactPerson}
           corporateCode={corporateCode}

@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 
 type TPage = {
@@ -25,8 +25,10 @@ export default function CorporateAccountOpenning() {
   const handleFormPassChange = (status: boolean) => {
     setIsSecondFormPass(status);
   };
+
+
   const {
-    //saveJuristicType,
+
   } = useFormCorporateInfo2(handleFormPassChange);
 
   const { page } = useParams<TPage>();
@@ -36,8 +38,16 @@ export default function CorporateAccountOpenning() {
   const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  //const corporateCode :string = "80000006";
+
+  let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  //const corporateCode :string = "80000007";
+
+  useEffect(() => {
+    if (pageId === 1) {
+      corporateCode = "";
+    }
+  }, [currentCorporatesInfo?.corporateCode, pageId]);
+  
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo

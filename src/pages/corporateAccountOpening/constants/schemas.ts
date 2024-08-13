@@ -324,8 +324,7 @@ export const individualsJuristicShareholdersSchema = z.object({
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
   registrationNo: z
     .string()
-    .min(1, "Registration number cannot be empty")
-    .regex(/^\d+$/, "Registration number must be a numbers"),
+    .min(1, "Registration number cannot be empty"),
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),

@@ -137,7 +137,7 @@ export type TContact = {
   telephone?: string;
   email: string;
   types: number;
-  personalID: string;
+  personalId: string;
   position: string;
   division: string;
 };

@@ -13,7 +13,7 @@ export function CreateCorporateFooter({
   return (
     <div className="flex flex-row">
       <div className="flex justify-start px-4">
-        <Button onClick={() => handlePages("prev")} disabled={pageId <= 3}>
+        <Button onClick={() => handlePages("prev")} disabled={pageId <= 1}>
           Prevoius Form
         </Button>
       </div>
