@@ -10,7 +10,7 @@ phases:
     commands:
       #DockerHub login
       # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
-
+      # 549007798570.dkr.ecr.eu-north-1.amazonaws.com/corporate-web-admin
       # ECR login
       - ECR_MAIN_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
       - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_MAIN_URI}
