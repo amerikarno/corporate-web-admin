@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
-import axios from "@/api/axios";
+import api from "@/api/axios";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -40,7 +40,7 @@ const LoginForm = () => {
       console.log(hashedUsername);
       console.log(hashedPassword);
 
-      axios
+      api
         .post(
           // "http://localhost:1323/admin/v1/login",
           "/api/v1/authen/login",
