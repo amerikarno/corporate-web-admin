@@ -20,7 +20,7 @@ export const individualShareholderSlice = createSlice({
     },
     removeIndividualShareholder: (state, action) => {
       state.individualShareholders = state.individualShareholders.filter(
-        (data) => data.personalID !== action.payload
+        (data) => data.personalId !== action.payload
       );
     },
     clearIndividualShareholder: (state) => {

@@ -20,7 +20,7 @@ export const authorizedPersonSlice = createSlice({
     },
     removeAuthorizedPerson: (state, action) => {
       state.authorizedPersons = state.authorizedPersons.filter(
-        (data) => data.personalID !== action.payload
+        (data) => data.personalId !== action.payload
       );
     },
     clearAuthorizedPerson: (state) => {

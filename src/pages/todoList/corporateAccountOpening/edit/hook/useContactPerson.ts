@@ -30,13 +30,13 @@ export function useContactPerson() {
       //     console.log("Delete for update failed");
       //   }
       // }
-      
+      console.log(data)
       const res = await axios.post("/api/v1/corporate/create-contact", data, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.status === 200) {
-        console.log("Save successful");
+        console.log("Save successful ",res);
         dispatch(addContactPerson({ ...data, personalId: res.data.personalId }));
       } else {
         console.log("Save failed");

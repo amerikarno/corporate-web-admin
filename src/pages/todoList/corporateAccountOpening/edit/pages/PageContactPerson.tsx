@@ -3,7 +3,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsContactPerson } from "../components/formContactPerson";
 //import { columnsContactPerson } from "../constants/columns";
 import { useContactPerson } from "../hook/useContactPerson";
-// import { TContactPerson } from "../constants/types";
+import { TContactPerson } from "../constants/types";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,45 +21,54 @@ type TPageContactPersonProps = {
 
 
 export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
-  console.log(corporateCode);
-  const dispatch = useDispatch();
-  const token = getCookies();
-
-  useEffect(() => {
-  axios.post("/api/v1/corporate/query", { corporateCode }, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  .then((res) => {
-    console.log("API Response:", res.data);
-
-    if (res.status === 200) {
-      const contacts = res.data[0].Contact;
-      const updatedContacts:TContact[] = contacts.map((contact : any) => {
-        return {
-          ...contact,
-          personalId: contact.personalID,
-        };
-      });
-      dispatch(setContactPersons(updatedContacts));
-      console.log("Contact data fetched successfully.", contacts);
-    } else {
-      console.log("Failed to fetch contact data or data is not an array.");
-    }
-  })
-  .catch((error) => {
-    console.error("Error fetching contact data:", error);
-  });
-}, [corporateCode, dispatch, token]);
-    
-  
-  const { handleSubmitContactPerson } = useContactPerson();
-  const [choosedEditData,setChoosedEditData] = useState<TContact>();
+    const dispatch = useDispatch();
   const contactPersonData : TContact[] = useSelector<RootState>(
     (state) => state.contactPerson?.contactPersons) as TContact[];
+  const clearChoosedEditData = () => {
+    setChoosedEditData(undefined);
+  };
+
+
+  const token = getCookies();
+  const { handleSubmitContactPerson } = useContactPerson();
+  const [choosedEditData,setChoosedEditData] = useState<TContact>();
+
+
+
+
+  useEffect(() => {
+    axios.post("/api/v1/corporate/query", { corporateCode }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      console.log("API Response:", res.data);
+
+      if (res.status === 200) {
+        const contacts = res.data[0].Contact;
+        const updatedContacts:TContact[] = contacts.map((contact : any) => {
+          return {
+            ...contact,
+            personalId: contact.personalID,
+          };
+        });
+        dispatch(setContactPersons(updatedContacts));
+        console.log("Contact data fetched successfully.", contacts);
+      } else {
+        console.log("Failed to fetch contact data or data is not an array.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching contact data:", error);
+    });
+}, [corporateCode, dispatch, token]);
+    
 
   console.log(contactPersonData);
+  
+  
+  
   const handleDelete = async (data: TContact) => {
     console.log(data);
     try {
@@ -83,6 +92,8 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
     }
   };
 
+
+  
   const columnsContactPerson: TableColumn<TContact>[] = [
     {
       name: "Title",
@@ -114,7 +125,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
     },
     {
       cell: (row: TContact) => (
-        <Button onClick={() => handleDelete(row)}>Delete</Button>
+        <Button onClick={() => {handleDelete(row)}}>Delete</Button>
       ),
       ignoreRowClick: true,
     },
@@ -124,15 +135,15 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       ),
       ignoreRowClick: true,
     },
-    {
-      cell: (row: TContact) => (
-        <Button onClick={() =>console.log(row)}>See Data Row</Button>
-      ),
-      ignoreRowClick: true,
-    },
+    // {
+    //   cell: (row: TContact) => (
+    //     <Button onClick={() =>console.log(row)}>See Data Row</Button>
+    //   ),
+    //   ignoreRowClick: true,
+    // },
     
   ];
-
+  
   return (
     <>
       <div className="p-4 space-y-8">
@@ -145,7 +156,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
           />
         </Card>
         <FormIndividualsContactPerson
-
+          clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitContactPerson}
           corporateCode={corporateCode}

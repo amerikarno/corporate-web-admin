@@ -23,15 +23,15 @@ type TContactPersonArray = {
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
   corporateCode: string;
-  choosedEditData?: TContact | null;
-
+  choosedEditData?: TContactPerson | null;
+  clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsContactPerson({
   onsubmit,
   corporateCode,
   choosedEditData,
-
+  clearChoosedEditData
 }: TContactPersonFormProps) {
 
   console.log(choosedEditData)
@@ -46,8 +46,7 @@ export function FormIndividualsContactPerson({
   });
 
   useEffect(() => {
-    if (choosedEditData) {
-      const contactPersonData = mapDataToTContactPerson(choosedEditData) || {
+      const contactPersonData = mapDataToTContactPerson(choosedEditData || null) || {
         fullNames: [{ title: '', firstName: '', lastName: '' }],
         position: '',
         division: '',
@@ -55,8 +54,7 @@ export function FormIndividualsContactPerson({
         email: '',
         personalId:''
       };
-      reset(contactPersonData);
-    }
+    reset(contactPersonData);
   }, [choosedEditData, reset]);
 
 
@@ -70,7 +68,7 @@ export function FormIndividualsContactPerson({
     await sleep(500);
     reset();
     console.log(formData);
-
+    clearChoosedEditData();
     onsubmit(formData);
   };
 

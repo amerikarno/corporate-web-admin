@@ -143,6 +143,7 @@ export type TDirector = {
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
+  personalID?:string;
 };
 
 export type TJuristicsShareholders = {
