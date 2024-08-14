@@ -75,6 +75,10 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+
     const checkToken = async () => {
       if (token && token !== null) {
         const decode: DecodedToken = jwtDecode(token);
