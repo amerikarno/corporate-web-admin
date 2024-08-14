@@ -74,50 +74,50 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const checkToken = async () => {
+    if (token && token !== null) {
+      const decode: DecodedToken = jwtDecode(token);
+      const expire = decode.exp ? decode.exp : 0;
+
+      if (expire < Date.now() / 1000) {
+        console.log("expired");
+
+        try {
+          const res = await axios.post(
+            "/api/v1/authen/refresh",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              withCredentials: true,
+            }
+          );
+
+          console.log("response refresh", res);
+          setCookies(res.data.accessToken);
+          dispatch(setToken(res.data.accessToken));
+        } catch (err) {
+          if (err instanceof Error) {
+            console.log("root", { message: err.message });
+          } else {
+            console.log("root", { message: err });
+          }
+          navigate("/login");
+        }
+      }
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
     }
 
-    const checkToken = async () => {
-      if (token && token !== null) {
-        const decode: DecodedToken = jwtDecode(token);
-        const expire = decode.exp ? decode.exp : 0;
-
-        if (expire < Date.now() / 1000) {
-          console.log("expired");
-
-          try {
-            const res = await axios.post(
-              "/api/v1/authen/refresh",
-              {},
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-                },
-                withCredentials: true,
-              }
-            );
-
-            console.log("response refresh", res);
-            setCookies(res.data.accessToken);
-            dispatch(setToken(res.data.accessToken));
-          } catch (err) {
-            if (err instanceof Error) {
-              console.log("root", { message: err.message });
-            } else {
-              console.log("root", { message: err });
-            }
-            navigate("/login");
-          }
-        }
-      }
-      setLoading(false);
-    };
-
     checkToken();
-  }, [token, dispatch, navigate]);
+  }, [token]);
 
   if (loading) {
     return (

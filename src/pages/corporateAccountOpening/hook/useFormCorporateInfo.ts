@@ -44,7 +44,7 @@ export function useFormCorporateInfo() {
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
     if (checked) {
-      tmp.registered = name;
+      tmp.registered = "";
       tmp.registeredThailand = true;
       tmp.registeredOther = false;
       form1error ? validateLocal(tmp) : null;
@@ -73,7 +73,7 @@ export function useFormCorporateInfo() {
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
     if (checked) {
-      tmp.primary = name;
+      tmp.primary = "";
       tmp.primaryCountry = true;
       tmp.primaryOther = false;
       form1error ? validateLocal(tmp) : null;

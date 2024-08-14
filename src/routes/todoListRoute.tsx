@@ -1,5 +1,5 @@
 import BlankPage from "@/pages/blankPages/blankPage";
-import TransactionList from "@/pages/corporateAccountOpening/pages/transactionList/transactionList";
+import TransactionList from "@/pages/todoList/transactionList/transactionList";
 import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
 import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import { Route, Outlet } from "react-router-dom";

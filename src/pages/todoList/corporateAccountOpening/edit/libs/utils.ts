@@ -1,10 +1,7 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 import { TCorporateData } from "../../constant/type";
-import {
-  TContactPersonSchema,
-  TCorporateInfoSchema,
-} from "../constants/schemas";
+import { TCorporateInfoSchema } from "../constants/schemas";
 
 export function formatDateToIsoString(date: Date): string {
   const isoString = date.toISOString();

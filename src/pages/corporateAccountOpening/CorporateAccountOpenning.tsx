@@ -30,14 +30,12 @@ export default function CorporateAccountOpenning() {
 
   const user = useSelector((state: RootState) => state.user);
   console.log(user);
-  const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
 
-  const handleFormPassChange = (status: boolean) => {
-    setIsSecondFormPass(status);
-  };
-  const {
-    //saveJuristicType,
-  } = useFormCorporateInfo2(handleFormPassChange);
+  // const handleFormPassChange = (status: boolean) => {
+  //   setIsSecondFormPass(status);
+  // };
+  const { isSecondFormPass } = useFormCorporateInfo2();
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;

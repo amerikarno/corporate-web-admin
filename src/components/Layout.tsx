@@ -10,7 +10,6 @@ const Layout = () => {
       <ProtectedRoute>
         <Header />
         <Sidebar />
-        {/* <main className="App"> */}
         <main className="mt-[60px] sm:ml-[270px]">
           <Outlet />
         </main>

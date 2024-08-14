@@ -1,6 +1,6 @@
 import { TUrlConfig, TUrlConfigChild } from "@/config/types";
 import { urlConfig } from "@/config/url";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -11,14 +11,12 @@ import { MoveRight } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { isAllowedPage, isAllowedPageByRange } from "@/lib/utils";
-import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import { TUser, setUser } from "@/features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
 
 export default function Sidebar() {
   const user = useSelector((state: RootState) => state.user.user);
-  console.log(user);
 
   if (user === null || user === undefined) {
     const token = getCookies();
@@ -27,7 +25,8 @@ export default function Sidebar() {
       const user: TUser = jwtDecode(token);
       dispatch(setUser(user));
     } else {
-      return <UnAuthorize />;
+      const navigate = useNavigate();
+      navigate("/login");
     }
   }
 

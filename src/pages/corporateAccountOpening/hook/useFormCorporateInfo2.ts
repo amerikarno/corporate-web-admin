@@ -27,7 +27,8 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 
-export function useFormCorporateInfo2(onFormPassChange: (status: boolean) => void) {
+export function useFormCorporateInfo2() {
+  // onFormPassChange: (status: boolean) => void
   const [corporateTypeAndIncome, setCorporateTypeAndIncome] =
     useState<TCorporateTypeAndIncome>(emptyCorporateTypeAndIncome);
   const [isBusinessTypeOthers, setIsBusinessTypeOthers] =
@@ -43,9 +44,10 @@ export function useFormCorporateInfo2(onFormPassChange: (status: boolean) => voi
     useState<TInitailJuristicTypeAndIncome>(copy(initailJuristicTypeAndIncome));
   const [juristicAllOtherType, setJuristicAllOhterType] =
     useState<TInitailJuristicOther>(copy(initailJuristicOther));
-  const [isSecondFormPass,setIsSecondFormPass] = useState<boolean>(false)
+  const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+
   const handleErrors = (error: ZodIssue[] | null) => {
-    console.log(error)
+    console.log(error);
     setErrors(error);
   };
   const getError = (
@@ -368,21 +370,28 @@ export function useFormCorporateInfo2(onFormPassChange: (status: boolean) => voi
       // console.log(res);
       if (res.status === 200) {
         console.log("request success", res.data);
-        navigate("/create-job/added-corporate-account/3")
-        setIsSecondFormPass(true)
-        onFormPassChange(true)
+        navigate("/create-job/added-corporate-account/3");
+        setIsSecondFormPass(true);
+        // onFormPassChange(true);
+        handleFormPassChange(true);
       } else {
-        alert("Invalid Input.")
+        alert("Invalid Input.");
         console.log("save failed");
-        setIsSecondFormPass(false)
-        onFormPassChange(false)
+        setIsSecondFormPass(false);
+        // onFormPassChange(false);
+        handleFormPassChange(false);
       }
     } catch (error) {
       console.log(error);
-      alert(error)
-      setIsSecondFormPass(false)
-      onFormPassChange(false)
+      alert(error);
+      setIsSecondFormPass(false);
+      // onFormPassChange(false);
+      handleFormPassChange(false);
     }
+  };
+
+  const handleFormPassChange = (status: boolean) => {
+    setIsSecondFormPass(status);
   };
 
   return {
@@ -402,6 +411,7 @@ export function useFormCorporateInfo2(onFormPassChange: (status: boolean) => voi
     handeleInvestmentObjective,
     handeleSourceOfIncome,
     handleInputOthers,
+    handleFormPassChange,
     getError,
     disableBusinessType,
     disableCountrySourceOfIncome,

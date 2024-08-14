@@ -17,9 +17,33 @@ import Logo from "@/assets/logo.svg";
 import { urlConfig } from "@/config/url";
 import { TUrlConfig, TUrlConfigChild } from "@/config/types";
 import { Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
+import { RootState } from "@/app/store";
+import { TUser, setUser } from "@/features/user/userSlice";
+import { getCookies, removeCookies } from "@/lib/Cookies";
+import { jwtDecode } from "jwt-decode";
+import { useSelector, useDispatch } from "react-redux";
 export default function Header() {
+  const user = useSelector((state: RootState) => state.user.user);
+  const navigate = useNavigate();
+
+  if (user === null || user === undefined) {
+    const token = getCookies();
+    if (token) {
+      const dispatch = useDispatch();
+      const user: TUser = jwtDecode(token);
+      dispatch(setUser(user));
+    } else {
+      navigate("/login");
+    }
+  }
+
+  const handleLogout = () => {
+    removeCookies();
+    navigate("/login");
+  };
+
   return (
     <nav className="w-full bg-slate-900 fixed top-0 h-16 flex justify-between items-center z-50">
       <div className="flex w-[270px] justify-start pl-4 sm:pl-0 sm:justify-center items-center">
@@ -92,14 +116,8 @@ export default function Header() {
               <p>role</p>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[100px]">
-            <DropdownMenuItem onClick={() => console.log("Profile")}>
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Another actions")}>
-              Another Action
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Logout")}>
+          <DropdownMenuContent className="">
+            <DropdownMenuItem onClick={() => handleLogout()}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

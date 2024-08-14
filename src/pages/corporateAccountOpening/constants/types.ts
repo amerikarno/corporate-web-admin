@@ -59,12 +59,12 @@ export type TCorporateInfo = {
   registrationNo: string;
   taxId: string;
   dateofincorporation: Date;
-  registeredThailand: boolean;
-  primaryCountry: boolean;
+  isRegisteredThailand: boolean;
+  isRegisteredOther?: boolean;
   registered: string;
-  registeredOther?: boolean;
   primary: string;
-  primaryOther?: boolean;
+  isPrimaryCountry: boolean;
+  isPrimaryOther?: boolean;
   registeredBusiness: TRegisterBusinessAddress;
   placeofIncorporation: TPlaceIncorporateAddress;
   // financial?: TFinancialInfo;
@@ -103,7 +103,7 @@ export type TIndividualsShareholders = {
   nationality: string;
   sharePercentage: number;
   types?: number;
-  personalID?:string;
+  personalID?: string;
 };
 
 export type TBank = {
@@ -113,7 +113,7 @@ export type TBank = {
   accountNo: string;
   accountLocation: string;
   swiftCode: string;
-  BankId:string;
+  BankId: string;
 };
 
 export type TAuthorizePerson = {
@@ -125,7 +125,7 @@ export type TAuthorizePerson = {
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
-  personalID?:string;
+  personalID?: string;
 };
 export type TContactPerson = {
   corporateCode?: string;
@@ -134,7 +134,7 @@ export type TContactPerson = {
   division: string;
   telephone: string;
   email: string;
-  personalId?:string;
+  personalId?: string;
 };
 
 export type TDirector = {
@@ -146,7 +146,7 @@ export type TDirector = {
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
-  personalID?:string;
+  personalID?: string;
 };
 
 export type TJuristicsShareholders = {
@@ -155,7 +155,7 @@ export type TJuristicsShareholders = {
   registrationNo: string;
   registeredCountry: string;
   sharePercentage: number;
-  juristicId?:string;
+  juristicId?: string;
 };
 
 export type TInitailJuristicTypeAndIncome = {
