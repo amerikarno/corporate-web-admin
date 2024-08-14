@@ -1,4 +1,5 @@
 import BlankPage from "@/pages/blankPages/blankPage";
+import TransactionList from "@/pages/corporateAccountOpening/pages/transactionList/transactionList";
 import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
 import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import { Route, Outlet } from "react-router-dom";
@@ -44,6 +45,7 @@ export const todoListRoutes = () => {
         path="fx-rate-approve"
         element={<BlankPage name="FX Rate Approve" />}
       />
+      <Route path="transactions-list" element={<TransactionList />} />
     </Route>
   );
 };

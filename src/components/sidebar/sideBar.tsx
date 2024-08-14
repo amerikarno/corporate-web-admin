@@ -8,13 +8,28 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MoveRight } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { isAllowedPage, isAllowedPageByRange } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import { getCookies } from "@/lib/Cookies";
+import { TUser, setUser } from "@/features/user/userSlice";
+import { jwtDecode } from "jwt-decode";
 
 export default function Sidebar() {
   const user = useSelector((state: RootState) => state.user.user);
   console.log(user);
+
+  if (user === null || user === undefined) {
+    const token = getCookies();
+    if (token) {
+      const dispatch = useDispatch();
+      const user: TUser = jwtDecode(token);
+      dispatch(setUser(user));
+    } else {
+      return <UnAuthorize />;
+    }
+  }
 
   return (
     <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">

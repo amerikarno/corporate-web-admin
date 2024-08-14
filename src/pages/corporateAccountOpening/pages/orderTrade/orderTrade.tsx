@@ -44,10 +44,10 @@ export default function OrderTrade() {
         }));
         setFetchedCorporateCodes(corporateCodes);
       } else {
-        console.error("Failed to fetch corporate codes");
+        console.log("Failed to fetch corporate codes");
       }
     } catch (error) {
-      console.error("Error fetching corporate codes:", error);
+      console.log("Error fetching corporate codes:", error);
     }
   };
 

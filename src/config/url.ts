@@ -245,6 +245,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/fx-rate-approve",
         pageId: 3013,
       },
+      {
+        label: "Transactions List",
+        href: "/todo-list/transactions-list",
+        pageId: 3014,
+      },
     ],
   },
   {
