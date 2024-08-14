@@ -43,12 +43,16 @@ const LoginForm = () => {
 
       axios
         .post(
-          // "http://localhost:1323/admin/v2/login",
+          // "http://localhost:1323/admin/v1/login",
           "/api/v1/authen/login",
           {
             hashedUsername: `${hashedUsername}`,
             hashedPassword: `${hashedPassword}`,
           },
+          // {
+          //   hashedUsername:data.email,
+          //   hashedPassword:data.password,
+          // },
           {
             headers: {
               "Content-Type": "application/json",

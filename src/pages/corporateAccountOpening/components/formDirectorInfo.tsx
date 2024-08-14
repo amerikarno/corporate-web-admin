@@ -39,6 +39,7 @@ export function FormIndividualsDirector({
       resetField("citizenId");
     }
   }, [dropDownChoosed]);
+  
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);

@@ -133,7 +133,7 @@ export type TContact = {
   CreatedAt: string;
   DeletedAt: string | null;
   corporateCode: number;
-  fullnames: TContactFullName[];
+  fullNames: TContactFullName[];
   telephone?: string;
   email: string;
   types: number;
@@ -148,6 +148,7 @@ export type TContactFullName = {
   CreatedAt: string;
   DeletedAt: string | null;
   contactID: string;
+  title : string;
   firstName: string;
   lastName: string;
   types: number;

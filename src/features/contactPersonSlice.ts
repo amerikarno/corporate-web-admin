@@ -1,6 +1,7 @@
 // contactPersonSlice.ts
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TContactPerson } from "@/pages/corporateAccountOpening/constants/types";
+import { TContact } from "@/pages/todoList/corporateAccountOpening/constant/type";
 
 interface ContactPersonState {
   contactPersons: TContactPerson[];
@@ -20,14 +21,20 @@ export const contactPersonSlice = createSlice({
     },
     removeContactPerson: (state, action) => {
       state.contactPersons = state.contactPersons.filter(
-        (data) => data.personalID !== action.payload
+        (data) => data.personalId !== action.payload
       );
     },
     clearContactPersons: (state) => {
       state.contactPersons = [];
     },
+    setContactPersons: (state, action: PayloadAction<TContact[]>) => {
+      state.contactPersons = action.payload.map(contact => ({
+        ...contact,
+        corporateCode: String(contact.corporateCode),
+      })) as TContactPerson[];
+    },
   },
 });
 
-export const { addContactPerson, removeContactPerson, clearContactPersons } = contactPersonSlice.actions;
+export const { addContactPerson, removeContactPerson, clearContactPersons , setContactPersons } = contactPersonSlice.actions;
 export default contactPersonSlice.reducer;

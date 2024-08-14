@@ -5,24 +5,50 @@ import { TOrderTrade } from "./constant/type";
 import { orderTradeSchema } from "./constant/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-const mockedCorporateCodes = [
-  { name: "60000001" },
-  { name: "60000002" },
-  { name: "60000003" },
-  { name: "70000001" },
-  { name: "70000002" },
-  { name: "70000003" },
-  { name: "80000001" },
-  { name: "81000002" },
-  { name: "80100003" },
-  { name: "80010003" },
-  // Add more mocked corporate codes as needed
+import { useEffect, useState } from "react";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
+import { Select } from "@radix-ui/react-select";
+
+const tradingPair = [
+  { name: "THB/USTD" },
+  { name: "THB/USDC" },
 ];
 export default function OrderTrade() {
-  const [buySell, setBuySell] = useState<string>("Buy");
+  const [buySell, setBuySell] = useState<string>("buy");
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
+  const [selectedTradingPair, setSelectedTradingPair] =
+    useState<string>("");
+  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<{ corporateCode: number }[]>([]);
+  
+
+  const fetchCorporateCodes = async () => {
+    try {
+      const token = getCookies();
+
+      const res = await axios.post("/api/v1/corporate/query/all", {},{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        const corporateCodes = res.data.map((item: any) => ({
+          corporateCode: item.CorporateCode,
+        }));
+        setFetchedCorporateCodes(corporateCodes);
+      } else {
+        console.error("Failed to fetch corporate codes");
+      }
+    } catch (error) {
+      console.error("Error fetching corporate codes:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCorporateCodes();
+  }, []);
+
   const handleBuySell = (value: string) => {
     setBuySell(value);
   };
@@ -30,6 +56,7 @@ export default function OrderTrade() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
     // reset,
   } = useForm<TOrderTrade>({
     resolver: zodResolver(orderTradeSchema),
@@ -42,38 +69,46 @@ export default function OrderTrade() {
     setSelectedCorporateCode(event.target.value);
   };
 
+  const handleTradingPairChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedTradingPair(event.target.value);
+  };
+
+
+
   const onSubmit = async (data: TOrderTrade) => {
     let body: TOrderTrade = {
       ...data,
-      buySell: buySell,
+      operations: buySell,
     };
-    // try {
-    //   const response = await fetch("/api/order-trade", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
-
-    //   if (response.ok) {
-    //     console.log("Form submitted successfully");
-    //   } else {
-    //     console.error("Failed to submit form");
-    //   }
-    // } catch (error) {
-    //   console.error("Error submitting form:", error);
-    // }
-    console.log(body);
+    console.log(body)
+    try {
+      const token = getCookies();
+      const res = await axios.post("/api/v1/transaction/order/create", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        reset();
+        console.log(res);
+        console.log("save successful");
+      } else {
+        console.log("save failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="p-10 flex justify-center">
+    <div className="md:p-10 flex justify-center">
       <Card className="p-4 w-full">
-        <h1 className="font-bold text-xl py-4">Orders / Trades</h1>
+        <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-row space-x-4">
-            <div className="w-1/2">
+          <div className="flex flex-row space-x-4 justify-center">
+            <div className="md:w-1/2 w-full">
               <Input
                 {...register("corporateCode")}
                 label="Corporate Code"
@@ -90,62 +125,105 @@ export default function OrderTrade() {
               )}
               <datalist id="corporateCodes">
                 {mockedCorporateCodes.map((code, index) => (
-                  <option key={index} value={code.name}>
-                    {code.name}
+                  <option key={index} value={code.corporateCode}>
+                    {code.corporateCode}
                   </option>
                 ))}
               </datalist>
             </div>
-            <div className="w-1/2">
-              <Input
-                {...register("symbol")}
-                label="Target Name"
-                id="symbol"
-                disabled={isSubmitting}
-              />
-              {errors.symbol && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.symbol.message}
-                </p>
-              )}
-            </div>
+
           </div>
           <div className="w-full flex justify-center">
-            <Card className="space-y-4 p-10 w-[60%]">
+            <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%]">
               <div className="flex flex-row justify-center ">
-                <button
-                  className={`w-1/4 text-white px-4 py-2 rounded-l transition-colors duration-300 ${
-                    buySell === "Buy" ? "bg-slate-800" : "bg-slate-500"
-                  }`}
-                  onClick={() => handleBuySell("Buy")}
+                <div
+                  className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-l transition-colors duration-300 ${buySell === "buy" ? "bg-slate-800" : "bg-slate-500"}`}
+                  onClick={() => handleBuySell("buy")}
                 >
                   Buy
-                </button>
-                <button
-                  className={`w-1/4 text-white px-4 py-2 rounded-r transition-colors duration-300 ${
-                    buySell === "Sell" ? "bg-slate-800" : "bg-slate-500"
-                  }`}
-                  onClick={() => handleBuySell("Sell")}
+                </div>
+                <div
+                  className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-r transition-colors duration-300 ${buySell === "sell" ? "bg-slate-800" : "bg-slate-500"}`}
+                  onClick={() => handleBuySell("sell")}
                 >
                   Sell
-                </button>
-              </div>
-              <div className="flex flex-col space-y-4 items-center">
-                <div className="w-1/2">
-                  <Input
-                    {...register("tradeAmount")}
-                    label="Trade Amount"
-                    id="tradeAmount"
-                    disabled={isSubmitting}
-                  />
                 </div>
-                <div className="w-1/2">
+              </div>
+
+              <div className="flex pt-4 gap-4 items-center justify-center">
+                <div className="w-1/2 border-y-4">
+                    <label htmlFor="pair" className="block text-sm font-medium text-gray-700">
+                    </label>
+                    <select
+                      id="pair"
+                      {...register("pair")}
+                      value={selectedTradingPair}
+                      onChange={handleTradingPairChange}
+                      disabled={isSubmitting}
+                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    >
+                      <option value="" disabled>trading pairs</option>
+                      {tradingPair.map((pair, index) => (
+                        <option key={index} value={pair.name}>
+                          {pair.name}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.pair && (
+                      <p className="text-red-500 text-sm px-2">
+                        {errors.pair.message}
+                      </p>
+                    )}
+                  </div>
+              </div>
+              <div className="flex pt-4 gap-4 items-center ">
+                <div className="w-1/2 space-y-4">
                   <Input
-                    {...register("tradeValue")}
-                    label="Trade Value"
-                    id="tradeValue"
+                    {...register("cryptoAmount")}
+                    label="Crypto Amount"
+                    id="cryptoAmount"
                     disabled={isSubmitting}
                   />
+                {errors.cryptoAmount && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.cryptoAmount.message}
+                </p>
+                )}
+                  <Input
+                    {...register("fiatAmount")}
+                    label="Fiat Amount"
+                    id="fiatAmount"
+                    disabled={isSubmitting}
+                  />
+                {errors.fiatAmount && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.fiatAmount.message}
+                </p>
+                )}
+                </div>
+                <div className="w-1/2 space-y-4">
+                  <Input
+                      {...register("cryptoPrice")}
+                      label="Crypto Price"
+                      id="cryptoPrice"
+                      disabled={isSubmitting}
+                    />
+                    {errors.cryptoPrice && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.cryptoPrice.message}
+                </p>
+                )}
+                  <Input
+                    {...register("currency")}
+                    label="Currency"
+                    id="currency"
+                    disabled={isSubmitting}
+                  />
+                  {errors.currency && (
+                <p className="text-red-500 text-sm px-2">
+                  {errors.currency.message}
+                </p>
+                )}
                 </div>
               </div>
             </Card>

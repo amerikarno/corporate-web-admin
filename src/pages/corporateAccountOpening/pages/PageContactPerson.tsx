@@ -27,7 +27,7 @@ type TContactPersonWithID = {
     telephone: string;
     email: string;
   }[];
-  personalID?: string;
+  personalId?: string;
 };
 
 export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
@@ -43,7 +43,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       const token = getCookies();
       const res = await axios.post(
         "/api/v1/corporate/delete/contact",
-        { personalID: data.personalID },
+        { personalId: data.personalId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       );
       if (res.status === 200) {
         console.log("delete successful");
-        dispatch(removeContactPerson(data.personalID));
+        dispatch(removeContactPerson(data.personalId));
       }
     } catch (error) {
       console.log("delete failed", error);

@@ -32,7 +32,7 @@ export function useContactPerson() {
         console.log(res);
         console.log("save successful");
         dispatch(
-          addContactPerson({ ...body, personalID: res.data.personalID })
+          addContactPerson({ ...body, personalId: res.data.personalId })
         );
       } else {
         console.log("save failed");
