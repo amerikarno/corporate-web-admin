@@ -14,7 +14,6 @@ export const authenSlice = createSlice({
   reducers: {
     setToken: (state, action) => {
       state.token = action.payload;
-      console.log(state.token);
     },
   },
 });

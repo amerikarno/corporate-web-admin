@@ -101,3 +101,25 @@ export const isAllowedPage = (pageId: number): boolean => {
     return false;
   }
 };
+
+export const isAllowedPageByRange = (pageId: number[]): boolean => {
+  const user = useSelector((state: RootState) => state.user.user);
+  // console.log(user?.groups);
+
+  const range = pageId[1] - pageId[0];
+  const listPages = Array(range)
+    .fill(0)
+    .map((_, i) => pageId[0] + i);
+  // console.log(listPages);
+
+  if (user && user.groups) {
+    const hasAlowedPage = listPages.some((value) =>
+      user.groups!.includes(value)
+    );
+
+    // console.log("hasCommonValue", hasAlowedPage);
+    return hasAlowedPage;
+  } else {
+    return false;
+  }
+};

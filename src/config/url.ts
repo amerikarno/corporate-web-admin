@@ -4,7 +4,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "System Management",
     icon: "icon",
-    pages: [1000, 1999],
+    pages: [1000, 1100],
     children: [
       {
         label: "user management",
@@ -61,7 +61,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "Create Job",
     icon: "icon",
-    pages: [2000, 2999],
+    pages: [2000, 2100],
     children: [
       {
         label: "added corporate account",
@@ -178,7 +178,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "TO DO List",
     icon: "icon",
-    pages: [3000, 3999],
+    pages: [3000, 3100],
     children: [
       {
         label: "corporate account opening",
@@ -250,7 +250,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "Enquiry",
     icon: "icon",
-    pages: [4000, 4999],
+    pages: [4000, 4100],
     children: [
       {
         label: "deposit/withdraw list",
@@ -287,7 +287,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "Reports",
     icon: "icon",
-    pages: [5000, 5999],
+    pages: [5000, 5100],
     children: [
       {
         label: "Customer Proxy Wallet (Deposit)",
@@ -479,7 +479,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "3rd party",
     icon: "icon",
-    pages: [6000, 6999],
+    pages: [6000, 6100],
     children: [
       {
         label: "BANK",
@@ -526,7 +526,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "Customer",
     icon: "icon",
-    pages: [7000, 7999],
+    pages: [7000, 7100],
     children: [
       {
         label: "Login",

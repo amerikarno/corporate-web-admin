@@ -10,7 +10,7 @@ import {
 import { MoveRight } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { isAllowedPage } from "@/lib/utils";
+import { isAllowedPage, isAllowedPageByRange } from "@/lib/utils";
 
 export default function Sidebar() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -26,39 +26,41 @@ export default function Sidebar() {
                 className="px-2 border-none "
                 value={`item-${index}`}
               >
-                <AccordionTrigger className="font-bold hover:no-underline text-[#b3b3b3]">
-                  {item.header}
-                </AccordionTrigger>
+                {isAllowedPageByRange(item.pages) && (
+                  <AccordionTrigger className="font-bold hover:no-underline text-[#b3b3b3]">
+                    {item.header}
+                  </AccordionTrigger>
+                )}
 
                 {item.children.map((child: TUrlConfigChild, index) => {
-                  // return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
-                  //   <AccordionContent key={index} className="pl-6">
-                  //     <Link
-                  //       to={child.href}
-                  //       className="hover:underline text-[#b3b3b3] flex"
-                  //     >
-                  //       <MoveRight />
-                  //       &nbsp;<p>{child.label}</p>
-                  //     </Link>
-                  //   </AccordionContent>
-                  // ) : (
-                  //   <div key={index}></div>
-                  // );
-                  return (
+                  return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
                     <AccordionContent key={index} className="pl-6">
                       <Link
-                        to={
-                          isAllowedPage(child.pageId)
-                            ? child.href
-                            : "/unAuthorize"
-                        }
+                        to={child.href}
                         className="hover:underline text-[#b3b3b3] flex"
                       >
                         <MoveRight />
                         &nbsp;<p>{child.label}</p>
                       </Link>
                     </AccordionContent>
+                  ) : (
+                    <div key={index}></div>
                   );
+                  // return (
+                  //   <AccordionContent key={index} className="pl-6">
+                  //     <Link
+                  //       to={
+                  //         isAllowedPage(child.pageId)
+                  //           ? child.href
+                  //           : "/unAuthorize"
+                  //       }
+                  //       className="hover:underline text-[#b3b3b3] flex"
+                  //     >
+                  //       <MoveRight />
+                  //       &nbsp;<p>{child.label}</p>
+                  //     </Link>
+                  //   </AccordionContent>
+                  // );
                 })}
               </AccordionItem>
             </div>
