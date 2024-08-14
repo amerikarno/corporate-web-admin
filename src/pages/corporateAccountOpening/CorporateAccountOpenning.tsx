@@ -83,7 +83,9 @@ export default function CorporateAccountOpenning() {
       if (isSecondFormPass) {
         navigate(`/create-job/added-corporate-account/${pageId + 1}`);
       }
-    } else {
+    } else if (type == "done"){
+      navigate(`/create-job/added-corporate-account/1`) 
+    }else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }
   };

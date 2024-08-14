@@ -8,10 +8,10 @@ import { TDirector as TDirectorEdit } from "../../constant/type"
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { removeDirector } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import { removeDirector, setDirectorEdit } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type TListOfDirectorsProps = {
   corporateCode: string;
@@ -21,15 +21,48 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   const dispatch = useDispatch();
   const { handleSubmitDirectors } =
     useListOfDirector();
-  const ListOfDirectorData : TDirector[] = useSelector<RootState>(
+
+  const token = getCookies();
+  const listOfDirectorData : TDirector[] = useSelector<RootState>(
       (state) => state.listOfDirector?.listOfDirectors) as TDirector[];
   const [choosedEditData,setChoosedEditData] = useState<TDirector>();
   const clearChoosedEditData = () => {
         setChoosedEditData(undefined);
       };
-    const listOfDirectorData: TDirector[] = useSelector<RootState>((state) => state.listOfDirector?.listOfDirectors || []) as TDirector[];
-    console.log(listOfDirectorData)
+  console.log(listOfDirectorData)
     
+
+    useEffect(() => {
+      axios.post("/api/v1/corporate/query", { corporateCode }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log("API Response:", res.data);
+  
+        if (res.status === 200) {
+          const listofdirectors = res.data[0].Directors;
+          const updateDirector:TDirectorEdit[] = listofdirectors.map((director : any) => {
+            return {
+              ...director,
+              personalId: director.personalId,
+              fullNames: director.fullNames,
+            };
+          });
+
+          dispatch(setDirectorEdit(updateDirector));
+          console.log("director data fetched successfully.", listofdirectors);
+        } else {
+          console.log("Failed to fetch director data or data is not an array.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching director data:", error);
+      });
+  }, [corporateCode, dispatch, token]);
+
+
     const handleDelete = async (data: TDirector) => {
       console.log(data)
       try{
@@ -100,3 +133,5 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
     </>
   );
 }
+
+

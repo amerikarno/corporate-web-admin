@@ -37,6 +37,13 @@ export function CreateCorporateFooter({
           >
             Submit
           </Button>
+        ) : pageId === 10 ? (
+          <Button
+            onClick={() => handlePages("done")}
+            type="submit"
+          >
+            Done
+          </Button>
         ) : (
           <Button
             onClick={() => handlePages("next")}

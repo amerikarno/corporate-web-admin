@@ -18,18 +18,18 @@ export function useContactPerson() {
     const token = getCookies();
     
     try {
-      // if (data.personalId) {
-      //   const deleteRes = await axios.post("/api/v1/corporate/delete/contact", { personalId: data.personalId }, {
-      //     headers: { Authorization: `Bearer ${token}` },
-      //   });
+      if (data.personalId) {
+        const deleteRes = await axios.post("/api/v1/corporate/delete/contact", { personalId: data.personalId }, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         
-      //   if (deleteRes.status === 200) {
-      //     console.log("Delete for update successful");
-      //     dispatch(removeContactPerson(data.personalId));
-      //   } else {
-      //     console.log("Delete for update failed");
-      //   }
-      // }
+        if (deleteRes.status === 200) {
+          console.log("Delete for update successful");
+          dispatch(removeContactPerson(data.personalId));
+        } else {
+          console.log("Delete for update failed");
+        }
+      }
       console.log(data)
       const res = await axios.post("/api/v1/corporate/create-contact", data, {
         headers: { Authorization: `Bearer ${token}` },

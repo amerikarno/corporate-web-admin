@@ -17,15 +17,18 @@ export function useAccountOpening() {
   const handleSearch = async (data: TCorporateAccountOpening) => {
     const { dateFrom, dateTo } = data;
 
+    const today = new Date();
     // Set invalid dates to null
     const body: TBody = {
       ...data,
       dateFrom:
         dateFrom instanceof Date && !isNaN(dateFrom.getTime())
           ? dateFrom
-          : null,
+          : today,
       dateTo:
-        dateTo instanceof Date && !isNaN(dateTo.getTime()) ? dateTo : null,
+        dateTo instanceof Date && !isNaN(dateTo.getTime()) 
+        ? dateTo 
+        : today,
     };
 
     if (
@@ -53,6 +56,7 @@ export function useAccountOpening() {
       }
     } else {
       try {
+        console.log(body)
         const res = await axios.post("/api/v1/corporate/query", body, {
           headers: {
             Authorization: `Bearer ${getCookies()}`,

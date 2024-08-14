@@ -27,7 +27,7 @@ export function useListOfDirector() {
       if (res.status === 200) {
         console.log(res);
         console.log("save successful");
-        dispatch(addDirector({ ...body, personalID: res.data.personalId }));
+        dispatch(addDirector({ ...body, personalId: res.data.personalId }));
         console.log(listOfDirectorData)
         setDirectors([...directors, data]);
       } else {

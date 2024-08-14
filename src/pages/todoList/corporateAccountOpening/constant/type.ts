@@ -160,6 +160,7 @@ export type TFullName = {
   CreatedAt: string;
   DeletedAt: string | null;
   ReferenceID: string;
+  title:string;
   firstName: string;
   lastName: string;
   types: number;
@@ -187,10 +188,11 @@ export type TDirector = {
   DeletedAt: string | null;
   personalId: string;
   corporateCode: number;
-  fullnames: TFullName[];
+  fullNames: TFullName[];
   addresses: TAddress[];
+  citizenId:string;
   passportId: string;
-  expiryDate: string;
+  expiryDate: Date;
   nationality: string;
   types: number;
 };

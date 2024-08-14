@@ -46,7 +46,7 @@ export function useShareholders() {
       if (res.status === 200) {
         console.log("request success", res);
         console.log(res.data.personalId);
-        dispatch(addIndividualShareholder({ ...body, personalID: res.data.personalId }));
+        dispatch(addIndividualShareholder({ ...body, personalId: res.data.personalId }));
         console.log(individualShareholderData)
       } else {
         console.log("save failed");

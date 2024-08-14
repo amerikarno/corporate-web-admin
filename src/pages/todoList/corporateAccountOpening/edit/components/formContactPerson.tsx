@@ -23,7 +23,7 @@ type TContactPersonArray = {
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
   corporateCode: string;
-  choosedEditData?: TContactPerson | null;
+  choosedEditData?: TContact | null;
   clearChoosedEditData: () => void;
 };
 
