@@ -2,6 +2,8 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { getCookies } from "./Cookies";
 import { jwtDecode } from "jwt-decode";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -89,4 +91,13 @@ export const isExpiredToken = (): boolean => {
     }
   }
   return isExpired;
+};
+
+export const isAllowedPage = (pageId: number): boolean => {
+  const user = useSelector((state: RootState) => state.user.user);
+  if (user && user.groups) {
+    return user.groups.includes(pageId);
+  } else {
+    return false;
+  }
 };

@@ -13,8 +13,14 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { columnsCorporateInfo } from "./components/column";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 export default function TodoCorporateAccountOpenning() {
+  if (!isAllowedPage(3001)) {
+    return <UnAuthorize />;
+  }
+
   const {
     register,
     handleSubmit,

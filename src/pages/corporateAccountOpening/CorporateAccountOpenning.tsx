@@ -16,12 +16,18 @@ import { useState } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "../unAuthorizePage/unAuthorize";
 
 type TPage = {
   page?: string;
 };
 
 export default function CorporateAccountOpenning() {
+  if (!isAllowedPage(2001)) {
+    return <UnAuthorize />;
+  }
+
   const user = useSelector((state: RootState) => state.user);
   console.log(user);
   const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
