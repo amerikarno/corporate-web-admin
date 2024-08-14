@@ -30,6 +30,7 @@ export default function TodoCorporateAccountOpenning() {
     resolver: zodResolver(corporateAccountOpeningSchema),
   });
 
+  console.log("reset:", reset);
   const { handleSearch, searchResult } = useAccountOpening();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);

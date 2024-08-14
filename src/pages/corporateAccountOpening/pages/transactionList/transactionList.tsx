@@ -61,22 +61,22 @@ const TransactionList = () => {
 
     console.log(dataToSend);
 
-    // axios
-    //   .post("/api/v1/transaction/order/update", dataToSend, {
-    //     headers: {
-    //       Authorization: `Bearer ${getCookies()}`,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       console.log("Data submitted successfully ", response);
-    //     } else {
-    //       console.error("Failed to submit data");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error submitting data:", error);
-    //   });
+    axios
+      .post("/api/v1/transaction/order/update", dataToSend, {
+        headers: {
+          Authorization: `Bearer ${getCookies()}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Data submitted successfully ", response);
+        } else {
+          console.error("Failed to submit data");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting data:", error);
+      });
   };
 
   const fetchListOfTransaction = async () => {
