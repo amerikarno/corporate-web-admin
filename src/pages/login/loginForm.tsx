@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import CryptoJs from "crypto-js";
-import axios from "axios";
+// import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "@/features/authen/authenSlice";
@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -41,30 +42,31 @@ const LoginForm = () => {
 
       axios
         .post(
-          "http://localhost:1323/admin/v2/login",
+          // "http://localhost:1323/admin/v1/login",
+          "/api/v1/authen/login",
           {
             hashedUsername: `${hashedUsername}`,
             hashedPassword: `${hashedPassword}`,
           },
+          // {
+          //   hashedUsername:data.email,
+          //   hashedPassword:data.password,
+          // },
           {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         )
         .then((res) => {
           console.log(res);
-          dispatch(setToken(res.data.token));
-          setCookies(res.data.token);
-          navigate("/corporate/create");
+          dispatch(setToken(res.data.accessToken));
+          setCookies(res.data.accessToken);
+          navigate("/");
         })
         .catch((err) => {
           setError("root", { message: err.message });
-          const tk =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFyYWN0ZXIwMSIsIm5hbWUiOiJMdW5hIEZyZXlhIiwiaWF0IjoxNjk2OTA1MDI1fQ.82YKRXah5sINkAYFEBQB1Py9ttrUB7uC7DtVoXbfkik";
-          setCookies(tk);
-          dispatch(setToken(tk));
-          navigate("/corporate/create");
         });
       console.log(token);
       if (token) {

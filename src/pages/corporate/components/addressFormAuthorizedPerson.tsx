@@ -1,14 +1,15 @@
-import { SideLabelInput } from "@/components/SideLabelInput";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { addressSchema, TAddressSchema } from "../constants/schemas";
-import { mappingAddress } from "../constants/const_variables";
+import {
+  subAddressSchema,
+  TSubAddressSchema,
+  TAuthorizedPersonSchema,
+} from "../constants/schemas";
 import { Input } from "@/components/Input";
-import { TAuthorizePerson } from "../constants/types";
 
-export type TAddressFormProps = {
+export type TSubAddressFormProps = {
   isSubmitting: boolean;
-  errors?: FieldErrors<TAddressSchema>;
-  register: UseFormRegister<TAuthorizePerson>;
+  errors?: FieldErrors<TSubAddressSchema>;
+  register: UseFormRegister<TAuthorizedPersonSchema>;
   keyType: string;
 };
 
@@ -17,17 +18,17 @@ export function AddressFormAuthorizedPerson({
   errors,
   register,
   keyType,
-}: TAddressFormProps) {
-  const fields = Object.entries(addressSchema.shape);
-  const optionalFields = ["building", "moo", "soi", "road"];
-  const isOptional = (name: string) => {
-    if (optionalFields.includes(name)) {
-      return false;
-    }
-    return true;
-  };
+}: TSubAddressFormProps) {
+  const fields = Object.entries(subAddressSchema.shape);
+  // const optionalFields = ["Building", "MooNo", "Soi", "Road"];
+  // const isOptional = (name: string) => {
+  //   if (optionalFields.includes(name)) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid md:grid-cols-2 gap-4">
       {fields.map(([fieldName], index) => {
         return (
           <div key={index} className="flex-col">
@@ -39,12 +40,12 @@ export function AddressFormAuthorizedPerson({
               id={fieldName}
               //required={isOptional(fieldName)}
               disabled={isSubmitting}
-              type={fieldName == "email" ? "email" : "text"}
+              type={"text"}
             />
             {/* </SideLabelInput> */}
-            {errors && errors[fieldName as keyof TAddressSchema] && (
+            {errors && errors[fieldName as keyof TSubAddressSchema] && (
               <p className="text-red-500">
-                {errors[fieldName as keyof TAddressSchema]?.message}
+                {errors[fieldName as keyof TSubAddressSchema]?.message}
               </p>
             )}
           </div>

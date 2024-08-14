@@ -7,7 +7,11 @@ import { useForm } from "react-hook-form";
 import { bankSchema, TBankSchema } from "../constants/schemas";
 import { Button } from "@/components/ui/button";
 
-export function FormBank() {
+type TBankTBankFormProps = {
+  onsubmit: (data: TBank) => void;
+};
+
+export function FormBank({onsubmit}:TBankTBankFormProps) {
   const {
     register,
     handleSubmit,
@@ -21,11 +25,12 @@ export function FormBank() {
     await sleep(500);
     console.log(data);
     reset();
+    onsubmit(data)
   };
 
   return (
     <Card className="p-4 space-y-4">
-      <h1 className="col-span-4 font-bold pb-4 text-xl">Bank Informations :</h1>
+      <h1 className="col-span-4 font-bold pb-4 text-xl">Bank Accounts Intended to Deposit and Withdraw Fiat Fund</h1>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">

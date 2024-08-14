@@ -131,11 +131,13 @@ export const investmentObjective = [
   "Others (Please Specify)",
 ];
 
+export const registeredCountryKey = ["isThailand", "isOtherThailand"];
 export const registeredCountryChoices = [
   "Thailand",
   "Others Countries (Please Specify)",
 ];
 
+export const PrimaryCountryOfOperationKey = ["isThailand", "isOtherThailand"];
 export const PrimaryCountryOfOperationChoices = [
   "Thailand",
   "Others Countries (Please Specify)",

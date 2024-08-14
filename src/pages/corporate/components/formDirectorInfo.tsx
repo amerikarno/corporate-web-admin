@@ -10,25 +10,45 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
-import { Table } from "./dataTable";
-import { AddressForm } from "./directorAddressForm";
-import { useState,useEffect } from "react";
+import { DirectorAddressForm } from "./directorAddressForm";
+import { useState } from "react";
+import Dropbox from "@/components/Dropbox";
 
+type TDirectorFormProps = {
+  onsubmit: (data: TDirector) => void;
+};
 
-export function FormIndividualsDirector() {
-//   const {
-//     directors,
-//     individualsDirector,
-//     // removeIndividualsShareholders,
-//     // editIndividualsShareholders,
-//     // handleSetNewShareholder,
-//     // serializeData,
-//   } = useFormIndividualsDirector();
-  const [idCardError,setIdCardError] = useState<boolean>(true);
-  const [passportError,setPassportError] = useState<boolean>(true);
-  const [idcardInput,setIdCardInput] = useState<string>("");
-  const [passportInput,setPassportInput] = useState<string>("");
+export function FormIndividualsDirector({ onsubmit }: TDirectorFormProps) {
+  // const {
+  //   directors,
+  //   individualsDirector,
+  //   // removeIndividualsShareholders,
+  //   // editIndividualsShareholders,
+  //   // handleSetNewShareholder,
+  //   // serializeData,
+  // } = useFormIndividualsDirector();
 
+  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
+  const [triggerDropboxError, setTriggerDropboxError] =
+    useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice: string) => {
+    setDropDownChoosed(choice);
+    setDropBoxHadChoosed(true);
+  };
+
+  const validateData = (data: TDirector): TDirector => {
+    let tmp = { ...data };
+
+    if (tmp.citizendId) {
+      tmp = { ...tmp, passportID: "" };
+    }
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
+    tmp = { ...tmp, Types: "101" };
+    return tmp;
+  };
 
   const {
     register,
@@ -40,42 +60,17 @@ export function FormIndividualsDirector() {
     //values: individualsDirector,
   });
 
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.directoridcard || data.directorpassport) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
-    } else {
-      setIdCardError(true);    
-      setPassportError(true);  
-    }
-    return isValid;
-  };
-  const handleDeleteError = () =>{
-    if (idcardInput || passportInput ){
-      setIdCardError(false);    
-      setPassportError(false);
-    }else{
-      setIdCardError(!idCardError);    
-      setPassportError(!passportError);
-    }
-  }
-
-  useEffect(() => {  
-
-      handleDeleteError()
-  }, [idcardInput,passportInput]);
-
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
-    
-    if(validateIDcardPassport(data)){
+    //const formData: TDirector={ ...data,Types:"101"}
+    if (dropBoxHadChoosed) {
+      setTriggerDropboxError(false);
+      const formData = validateData(data);
       await sleep(500);
       reset();
-      console.log(data)
-    }else{
-
+      console.log(formData);
+      onsubmit(formData);
+    } else {
+      setTriggerDropboxError(true);
     }
   };
 
@@ -93,126 +88,162 @@ export function FormIndividualsDirector() {
         </Card> */}
 
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Director Infomation :</h1>
+          <h1 className="font-bold text-xl py-4">List of Director</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
-                    <Input
-                    {...register("directortitle")}
-                    label="Title"
-                    id="Title"
-                    disabled={isSubmitting}
+                <Input
+                  {...register("fullNames.title")}
+                  label="Title"
+                  id="Title"
+                  disabled={isSubmitting}
                 />
-                {errors.directortitle && (
-                    <p className="text-red-500 text-sm px-2">
-                    {errors.directortitle.message}
-                    </p>
+                {errors.fullNames?.title && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.fullNames?.title.message}
+                  </p>
                 )}
               </div>
-              <div className="w-1/2">
-                
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
-                    <Input
-                        {...register("directorname")}
-                        label="Name"
-                        id="Name"
-                        disabled={isSubmitting}
-                    />
-                    {errors.directorname && (
-                        <p className="text-red-500 text-sm px-2">
-                        {errors.directorname.message}
-                        </p>
-                    )}
-                </div>
-                <div className="w-1/2">
-                    <Input
-                        {...register("directorsurname")}
-                        label="Surname"
-                        id="Surname"
-                        disabled={isSubmitting}
-                    />
-                    {errors.directorsurname && (
-                        <p className="text-red-500 text-sm px-2">
-                        {errors.directorsurname.message}
-                        </p>
-                    )}
-                </div>
+              <div className="w-1/2"></div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("directoridcard")}
-                  label="ID Number"
-                  id="ID Number"
-                  disabled={isSubmitting}
-                  onChange={(e)=>setIdCardInput(e.target.value)}
-                />
-                {idCardError &&  (
-                <p className="text-red-500 px-4">
-                  IDCard must be fill
-                </p>
-              )}
-              </div>
-              <div className="w-1/2">
-                <Input
-                    {...register("directorpassport")}
-                    label="Passport"
-                    id="Passport"
-                    disabled={isSubmitting}
-                    onChange={(e)=>setPassportInput(e.target.value)}
-                    />
-                    {passportError &&  (
-                <p className="text-red-500 px-4">
-                  Passport must be filled
-                </p>
-              )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-              <div className="w-1/2">
-                <Input
-                  {...register("directornationality")}
-                  label="Nationality"
-                  id="Nationality"
+                  {...register("fullNames.firstName")}
+                  label="Name"
+                  id="Name"
                   disabled={isSubmitting}
                 />
-                {errors.directornationality && (
+                {errors.fullNames?.firstName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.directornationality.message}
+                    {errors.fullNames?.firstName.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                    {...register("directorexpireddate")}
-                    label="Date of Expired"
-                    id="Date of Expired"
-                    type="date"
-                    disabled={isSubmitting}
-                    />
-                    {errors.directorexpireddate && (
-                    <p className="text-red-500 text-sm px-2">
-                        {errors.directorexpireddate.message}
-                    </p>
+                  {...register("fullNames.lastName")}
+                  label="Surname"
+                  id="Surname"
+                  disabled={isSubmitting}
+                />
+                {errors.fullNames?.lastName && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.fullNames?.lastName.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2">
+                <Input
+                  {...register("nationality")}
+                  label="Nationality"
+                  id="Nationality"
+                  disabled={isSubmitting}
+                />
+                {errors.nationality && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.nationality.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("position")}
+                  label="Position"
+                  id="position"
+                  disabled={isSubmitting}
+                />
+                {errors.position && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.position.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/3">
+                <Dropbox onDropdownSelect={handleDropboxChoice} />
+                {triggerDropboxError && (
+                  <p className="text-red-500 text-sm px-2">
+                    Please Choose IDCard or Passport
+                  </p>
+                )}
+              </div>
+              <div className="w-1/3">
+                {dropDownChoosed ? (
+                  dropDownChoosed === "IDCard" ? (
+                    <>
+                      <Input
+                        {...register("citizendId")}
+                        label="IDCard"
+                        id="idCard"
+                        disabled={isSubmitting}
+                      />
+                      {triggerDropboxError && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert IDcard
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Input
+                        {...register("passportID")}
+                        label="Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                      />
+                      {triggerDropboxError && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert Passport
+                        </p>
+                      )}
+                    </>
+                  )
+                ) : (
+                  <>
+                    <div className="relative w-full">
+                      <Input label="IDCard or Passport" id="passportID" />
+                    </div>
+                    {triggerDropboxError && (
+                      <p className="text-red-500 text-sm px-2">
+                        Please Insert IDCard or Passport
+                      </p>
                     )}
+                  </>
+                )}
+              </div>
+              <div className="w-1/3">
+                <Input
+                  {...register("expiredDate")}
+                  label="Date of Expired"
+                  id="Date of Expired"
+                  disabled={isSubmitting}
+                  type="date"
+                />
+                {errors.expiredDate && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.expiredDate.message}
+                  </p>
+                )}
               </div>
             </div>
 
             <h1 className="font-bold text-xl py-4">Director's Address</h1>
-            <AddressForm
+            <DirectorAddressForm
               isSubmitting={isSubmitting}
-              errors={errors.directoraddress}
+              errors={errors.addresses}
               register={register}
-              keyType="directoraddress"
+              keyType="addresses"
             />
-            {errors.directoraddress && (
+            {errors.addresses && (
               <p className="text-red-500 text-sm px-2">
-                {errors.directoraddress.message}
+                {errors.addresses.message}
               </p>
             )}
+
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}

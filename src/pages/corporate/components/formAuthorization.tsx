@@ -10,15 +10,33 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TAuthorizePerson } from "../constants/types";
 import { AddressFormAuthorizedPerson } from "./addressFormAuthorizedPerson";
-import { useState,useEffect } from "react";
+import { useState } from "react";
+import Dropbox from "@/components/Dropbox";
 
-export function FormAuthorizedPerson() {
+type TAuthorizePersonFormProps = {
+  onsubmit: (data: TAuthorizePerson) => void;
+};
+export function FormAuthorizedPerson({ onsubmit }: TAuthorizePersonFormProps) {
+  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
+  const [triggerDropboxError, setTriggerDropboxError] =
+    useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice: string) => {
+    setDropDownChoosed(choice);
+    setDropBoxHadChoosed(true);
+  };
 
-  const [idCardError,setIdCardError] = useState<boolean>(true);
-  const [passportError,setPassportError] = useState<boolean>(true);
-  const [idcardInput,setIdCardInput] = useState<string>("");
-  const [passportInput,setPassportInput] = useState<string>("");
-
+  const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
+    let tmp = { ...data };
+    if (tmp.citizendId) {
+      tmp = { ...tmp, passportID: "" };
+    }
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
+    tmp = { ...tmp, Types: "201" };
+    return tmp;
+  };
 
   const {
     register,
@@ -30,129 +48,70 @@ export function FormAuthorizedPerson() {
   });
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-
-    if(validateIDcardPassport(data)){
+    //const formData: TAuthorizePerson={ ...data,Types:"201"}
+    if (dropBoxHadChoosed) {
+      setTriggerDropboxError(false);
+      const formData = validateData(data);
       await sleep(500);
       reset();
-      console.log(data)
-    }else{
-
-    }
-  };
-
-
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.idCard || data.passPort) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
+      console.log(formData);
+      onsubmit(formData);
     } else {
-      setIdCardError(true);    
-      setPassportError(true);  
+      setTriggerDropboxError(true);
     }
-    return isValid;
   };
-
-
-  const handleDeleteError = () =>{
-
-    if (idcardInput || passportInput ){
-      setIdCardError(false);    
-      setPassportError(false);
-    }else{
-      setIdCardError(!idCardError);    
-      setPassportError(!passportError);
-    }
-  }
-  useEffect(() => {  
-
-      handleDeleteError()
-  }, [idcardInput,passportInput]);
-
 
   return (
     <Card className="p-4">
-      <h1 className="font-bold text-xl py-4">Authorized Person :</h1>
+      <h1 className="font-bold text-xl py-4">
+        Authorized person of Juristic Investor for traction
+      </h1>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
-              {...register("title")}
+              {...register("fullNames.title")}
               label="Title"
               id="Title"
               disabled={isSubmitting}
-              
             />
-            {errors.title && (
-              <p className="text-red-500 text-sm px-2">{errors.title.message}</p>
+            {errors.fullNames?.title && (
+              <p className="text-red-500 text-sm px-2">
+                {errors.fullNames?.title.message}
+              </p>
             )}
           </div>
-          <div className="w-1/2">
-          </div>
+          <div className="w-1/2"></div>
         </div>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
-              {...register("firstName")}
+              {...register("fullNames.firstName")}
               label="First Name"
               id="First Name"
               disabled={isSubmitting}
-              
             />
-            {errors.firstName && (
+            {errors.fullNames?.firstName && (
               <p className="text-red-500 text-sm px-2">
-                {errors.firstName.message}
+                {errors.fullNames?.firstName.message}
               </p>
             )}
           </div>
           <div className="w-1/2">
             <Input
-              {...register("lastName")}
+              {...register("fullNames.lastName")}
               label="Surname"
               id="Surname"
               disabled={isSubmitting}
-              
             />
-            {errors.lastName && (
+            {errors.fullNames?.lastName && (
               <p className="text-red-500 text-sm px-2">
-                {errors.lastName.message}
+                {errors.fullNames?.lastName.message}
               </p>
             )}
           </div>
         </div>
-        <div className="flex flex-row space-x-4">
-          <div className="w-1/2">
-            <Input
-              {...register("idCard")}
-              label="ID Card"
-              id="ID Card"
-              disabled={isSubmitting}
-              onChange={(e)=>setIdCardInput(e.target.value)}
-            />
-            {idCardError &&  (
-                <p className="text-red-500 px-4">
-                  IDCard must be filled
-                </p>
-              )}
-          </div>
 
-          <div className="w-1/2">
-                <Input
-                    {...register("passPort")}
-                    label="Passport"
-                    id="Passport"
-                    disabled={isSubmitting}
-                    onChange={(e)=>setPassportInput(e.target.value)}
-                    />
-                    {passportError &&  (
-                <p className="text-red-500 px-4">
-                  Passport must be filled
-                </p>
-              )}
-          </div>
-        </div>
         <div className="flex flex-row space-x-4">
           <div className="w-1/2">
             <Input
@@ -160,7 +119,6 @@ export function FormAuthorizedPerson() {
               label="Nationality"
               id="Nationality"
               disabled={isSubmitting}
-              
             />
             {errors.nationality && (
               <p className="text-red-500 text-sm px-2">
@@ -170,12 +128,79 @@ export function FormAuthorizedPerson() {
           </div>
           <div className="w-1/2">
             <Input
-              {...register("expiredDate")}
-              label="Expiration Date"
-              id="Expiration Date"
-              type="date"
+              {...register("position")}
+              label="Position"
+              id="position"
               disabled={isSubmitting}
-              
+            />
+            {errors.position && (
+              <p className="text-red-500 text-sm px-2">
+                {errors.position.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-row space-x-4">
+          <div className="w-1/3">
+            <Dropbox onDropdownSelect={handleDropboxChoice} />
+            {triggerDropboxError && (
+              <p className="text-red-500 text-sm px-2">
+                Please Choose IDCard or Passport
+              </p>
+            )}
+          </div>
+          <div className="w-1/3">
+            {dropDownChoosed ? (
+              dropDownChoosed === "IDCard" ? (
+                <>
+                  <Input
+                    {...register("citizendId")}
+                    label="IDCard"
+                    id="idCard"
+                    disabled={isSubmitting}
+                  />
+                  {triggerDropboxError && (
+                    <p className="text-red-500 text-sm px-2">
+                      Please Insert IDcard
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Input
+                    {...register("passportID")}
+                    label="Passport"
+                    id="passportID"
+                    disabled={isSubmitting}
+                  />
+                  {triggerDropboxError && (
+                    <p className="text-red-500 text-sm px-2">
+                      Please Insert Passport
+                    </p>
+                  )}
+                </>
+              )
+            ) : (
+              <>
+                <div className="relative w-full">
+                  <Input label="IDCard or Passport" id="passportID" />
+                </div>
+                {triggerDropboxError && (
+                  <p className="text-red-500 text-sm px-2">
+                    Please Insert IDCard or Passport
+                  </p>
+                )}
+              </>
+            )}
+          </div>
+          <div className="w-1/3">
+            <Input
+              {...register("expiredDate")}
+              label="Date of Expired"
+              id="Date of Expired"
+              disabled={isSubmitting}
+              type="date"
             />
             {errors.expiredDate && (
               <p className="text-red-500 text-sm px-2">
@@ -189,9 +214,9 @@ export function FormAuthorizedPerson() {
         </h1>
         <AddressFormAuthorizedPerson
           isSubmitting={isSubmitting}
-          keyType="address"
+          keyType="addresses"
           register={register}
-          errors={errors.address}
+          errors={errors.addresses}
         />
         <div className="flex justify-end">
           <Button type="submit" disabled={isSubmitting}>

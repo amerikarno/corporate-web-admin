@@ -9,33 +9,34 @@ import { FormJuristicShareholders } from "./components/formJuristicShareholders"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getCookies } from "@/lib/Cookies";
+import { jwtDecode } from "jwt-decode";
 
 export default function CreateCorporate() {
   const navigate = useNavigate();
   const token = useSelector((state: any) => state.authen.token);
   console.log("token", token);
   const cookie = token || getCookies();
-  console.log("session", cookie);
+  // const navigate = useNavigate();
+  let userData = null;
 
-  if (!cookie) {
+  if (!cookie || cookie == null) {
     navigate("/login");
+  } else {
+    userData = jwtDecode(cookie);
+    console.log("session", userData);
   }
 
   return (
     <>
       <div className="max-w-[1024px] mx-auto py-5 px-10 space-y-6">
-        <FormCorporateInfo />
-        {/* dropdown + freetext ** incorrect field name */}
-        <FormCorporateTypeAndIncome />
-        <FormIndividualsContactPerson />
-        <FormIndividualsDirector />
-        {/* dropdown passport / citizen id */}
-        <FormIndividualsShareholders />
-        <FormJuristicShareholders />
-        <FormAuthorizedPerson />
-        <FormBank />
-        {/* self declare / crs / fatca */}
-        {/* group risks */}
+        <FormCorporateInfo onsubmit={() => {}} />
+        <FormCorporateTypeAndIncome onsubmit={() => {}} />
+        <FormIndividualsContactPerson onsubmit={() => {}} />
+        <FormIndividualsDirector onsubmit={() => {}} />
+        <FormIndividualsShareholders onsubmit={() => {}} />
+        <FormJuristicShareholders onsubmit={() => {}} />
+        <FormAuthorizedPerson onsubmit={() => {}} />
+        <FormBank onsubmit={() => {}} />
       </div>
     </>
   );

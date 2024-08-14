@@ -8,7 +8,7 @@ import {
   // SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Accordion,
   AccordionContent,
@@ -93,8 +93,8 @@ export default function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center space-x-2 w-56">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
+              {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
+              <AvatarFallback>PIC</AvatarFallback>
             </Avatar>
             <div className="text-left w-full text-white">
               <p>name</p>

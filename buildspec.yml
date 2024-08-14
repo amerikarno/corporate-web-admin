@@ -1,24 +1,30 @@
 version: 0.2
-
+env:
+  variables:
+    ECR_REPO_NAME: corporate-web-admin
+  parameter-store:
+    DOCKERHUB_TOKEN: /sit-cwa-ps/token
+    DOCKERHUB_USER: /sit-cwa-ps/user
 phases:
-  install:
-    runtime-versions:
-      nodejs: latest
-    commands:
-      - npm install -g typescript
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
-      - npm install
+      #DockerHub login
+      # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin
+      # 549007798570.dkr.ecr.eu-north-1.amazonaws.com/corporate-web-admin
+      # ECR login
+      - ECR_MAIN_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_MAIN_URI}
+
+      - ECR_IMAGE_URI="${ECR_MAIN_URI}/${ECR_REPO_NAME}:latest"
   build:
     commands:
-      - echo Build started on `date`
-      - npm run build
-cache:
-  paths:
-    - 'node_modules/**/*'
+      - docker build -t corporate-web-admin:latest .
+  post_build:
+    commands:
+      - docker tag corporate-web-admin:latest ${ECR_IMAGE_URI}
+      - docker push ${ECR_IMAGE_URI}
+      - printf '[{"name":"cwa-container","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
+
 artifacts:
   files:
-    - 'dist/**/*'
-    - appspec.yml
-    - 'deploy-scripts/**/*'
+    - imagedefinitions.json

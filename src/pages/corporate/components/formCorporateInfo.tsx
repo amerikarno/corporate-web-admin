@@ -8,7 +8,8 @@ import { TCorporateInfo } from "../constants/types";
 import { sleep } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { AddressForm } from "./addressForm";
+// import { AddressForm } from "./addressForm";
+import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
 import { CheckBox } from "@/components/Checkbox";
@@ -19,11 +20,11 @@ import {
 } from "../constants/const_variables";
 import { useState, useEffect } from "react";
 
-// type TCorporateInfoFormProps = {
-//   onsubmit: (data: TCorporateInfo) => void;
-// };
+type TCorporateInfoFormProps = {
+  onsubmit: (data: TCorporateInfo) => void;
+};
 
-export function FormCorporateInfo() {
+export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const {
     register,
     handleSubmit,
@@ -53,16 +54,20 @@ export function FormCorporateInfo() {
   const onSubmit = async (data: TCorporateInfoSchema) => {
     const formData: TCorporateInfo = {
       ...data,
-      registeredCountry:
-        registeredCountryPrimaryCountryOperation.registeredCountry,
-      primaryCountryOfOperation:
-        registeredCountryPrimaryCountryOperation.primaryCountryOfOperation,
+      registered: registeredCountryPrimaryCountryOperation.registered,
+      registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
+      registeredThailand:
+        registeredCountryPrimaryCountryOperation.registeredThailand,
+      primary: registeredCountryPrimaryCountryOperation.primary,
+      primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
+      primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
     };
 
     if (handleCheckboxError()) {
       await sleep(500);
       reset();
       console.log(formData);
+      onsubmit(formData);
     } else {
       setShouldScrollUp(true);
     }
@@ -71,14 +76,14 @@ export function FormCorporateInfo() {
   const handleCheckboxError = () => {
     let isValid = true;
 
-    if (!registeredCountryPrimaryCountryOperation.registeredCountry) {
+    if (!registeredCountryPrimaryCountryOperation.registered) {
       setRegisteredCountryError(true);
       isValid = false;
     } else {
       setRegisteredCountryError(false);
     }
 
-    if (!registeredCountryPrimaryCountryOperation.primaryCountryOfOperation) {
+    if (!registeredCountryPrimaryCountryOperation.primary) {
       setPrimaryCountryOfOperationError(true);
       isValid = false;
     } else {
@@ -108,74 +113,67 @@ export function FormCorporateInfo() {
         >
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold pb-4">
-              Juristic Investor Informations :
+              Juristic Investor Information-For Account Opening
             </h1>
-            {/* <SideLabelInput title="Juristic Investor Name"> */}
             <Input
               id={"Juristic Investor Name"}
               label={"Juristic Investor Name"}
               {...register("name")}
-              name="name"
+              name="Name"
               disabled={isSubmitting}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Address"> */}
             <Input
-              id={"Commercial Registration No.*"}
-              label={"Commercial Registration No.*"}
-              {...register("commercialRegisteredNo")}
-              name="commercialRegisteredNo"
+              id={"Commercial Registration No."}
+              label={"Commercial Registration No."}
+              {...register("registrationNo")}
+              name="RegistrationNo"
               disabled={isSubmitting}
             />
-            {errors.commercialRegisteredNo && (
-              <p className="text-red-500">
-                {errors.commercialRegisteredNo.message}
-              </p>
+            {errors.registrationNo && (
+              <p className="text-red-500">{errors.registrationNo.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Tax ID"> */}
             <Input
               id={"Juristic Investor Tax ID"}
-              label={"Juristic Investor Tax ID"}
-              {...register("taxId")}
-              name="taxId"
+              label={"Tax ID"}
+              {...register("taxID")}
+              name="TaxID"
               disabled={isSubmitting}
             />
-            {errors.taxId && (
-              <p className="text-red-500">{errors.taxId.message}</p>
+            {errors.taxID && (
+              <p className="text-red-500">{errors.taxID.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Email"> */}
             <Input
-              id={"Date of Incorporation"}
+              id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
-              {...register("dateIncorporation")}
-              name="dateIncorporation"
-              disabled={isSubmitting}
+              {...register("dateofincorporation")}
               type="date"
+              disabled={isSubmitting}
+              // type="date"
             />
-            {errors.dateIncorporation && (
-              <p className="text-red-500">{errors.dateIncorporation.message}</p>
+            {errors.dateofincorporation && (
+              <p className="text-red-500">
+                {errors.dateofincorporation.message}
+              </p>
             )}
-            {/* </SideLabelInput> */}
           </div>
 
           <div className="p-4 space-y-4">
             <div className="p-4 border-t">
               <div className="grid grid-cols-2 ">
-                <h1 className="font-bold text-xl">Registered Country:</h1>
-                <br />
+                <h1 className="font-bold pb-4">Registered Country</h1>
+                <div></div>
                 {registeredCountryChoices.map((item, i) => (
                   <CheckBox
+                    id={`checkbox-${i}`}
                     key={i}
                     label={item}
                     onChange={(e) => {
                       handleRegisteredCountryOthers(e);
                       if (
-                        registeredCountryPrimaryCountryOperation.registeredCountry ==
+                        registeredCountryPrimaryCountryOperation.registered ==
                         ""
                       ) {
                         setRegisteredCountryError(false);
@@ -193,7 +191,7 @@ export function FormCorporateInfo() {
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
-                    onChange={(e) => handleInputOthers(e, "registeredCountry")}
+                    onChange={(e) => handleInputOthers(e, "Registered")}
                   />
                 </div>
               )}
@@ -205,19 +203,17 @@ export function FormCorporateInfo() {
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
-                <h1 className="font-bold text-xl">
-                  Primary Country of Operation:
-                </h1>
-                <br />
+                <h1 className="font-bold pb-4">Primary Country of Operation</h1>
+                <div></div>
                 {PrimaryCountryOfOperationChoices.map((item, i) => (
                   <CheckBox
+                    id={`checkbox2-${i}`}
                     key={i}
                     label={item}
                     onChange={(e) => {
                       handlePrimaryCountryOfOperationOthers(e);
                       if (
-                        registeredCountryPrimaryCountryOperation.primaryCountryOfOperation ==
-                        ""
+                        registeredCountryPrimaryCountryOperation.primary == ""
                       ) {
                         setPrimaryCountryOfOperationError(false);
                       } else {
@@ -234,9 +230,7 @@ export function FormCorporateInfo() {
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
-                    onChange={(e) =>
-                      handleInputOthers(e, "primaryCountryOfOperation")
-                    }
+                    onChange={(e) => handleInputOthers(e, "Primary")}
                   />
                 </div>
               )}
@@ -246,80 +240,174 @@ export function FormCorporateInfo() {
                 </p>
               )}
             </div>
-            <h1 className="font-bold pb-4">Registered / Business Address :</h1>
-
-            <AddressForm
-              isSubmitting={isSubmitting}
-              errors={errors.registeredAddress}
-              register={register}
-              keyType="registeredAddress"
-            />
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="font-bold pb-4">Place Of Incorporate :</h1>
-            <AddressForm
-              errors={errors.incorporatedAddress}
+            <div className="flex flex-row space-x-4 pb-8">
+              <div className="w-1/2">
+                <Input
+                  {...register("placeIncorporateEmail")}
+                  label="E-mail Address"
+                  id="placeIncorporateEmail"
+                  disabled={isSubmitting}
+                />
+                {errors.placeIncorporateEmail && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.placeIncorporateEmail.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("placeIncorporateTelephone")}
+                  label="Telephone"
+                  id="placeIncorporateTelephone"
+                  disabled={isSubmitting}
+                />
+                {errors.placeIncorporateTelephone && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.placeIncorporateTelephone.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <CorporateAddressForm
+              isSubmitting={isSubmitting}
+              errors={errors.registredBusinessAddress}
+              register={register}
+              keyType="PlaceIncorporateAddress"
+            />
+            <Input
+              {...register("placeIncorporateEmail")}
+              label="E-mail Address"
+              id="placeIncorporateEmail"
+              disabled={isSubmitting}
+            />
+            {errors.placeIncorporateEmail && (
+              <p className="text-red-500">
+                {errors.placeIncorporateEmail.message}
+              </p>
+            )}
+            <Input
+              {...register("placeIncorporateTelephone")}
+              label="Telephone"
+              id="placeIncorporateTelephone"
+              disabled={isSubmitting}
+            />
+            {errors.placeIncorporateTelephone && (
+              <p className="text-red-500">
+                {errors.placeIncorporateTelephone.message}
+              </p>
+            )}
+          </div>
+
+          <div className="p-4 space-y-4">
+            <h1 className="font-bold pb-4">Registered/Business address :</h1>
+            <div className="flex flex-row space-x-4 pb-8">
+              <div className="w-1/2">
+                <Input
+                  {...register("registredBusinessEmail")}
+                  label="E-mail Address"
+                  id="RegistredBusinessEmail"
+                  disabled={isSubmitting}
+                />
+                {errors.registredBusinessEmail && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.registredBusinessEmail.message}
+                  </p>
+                )}
+              </div>
+              <div className="w-1/2">
+                <Input
+                  {...register("registredBusinessTelephone")}
+                  label="Telephone"
+                  id="RegistredBusinessTelephone"
+                  disabled={isSubmitting}
+                />
+                {errors.registredBusinessTelephone && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.registredBusinessTelephone.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <CorporateAddressForm
+              errors={errors.registredBusinessAddress}
               register={register}
               isSubmitting={isSubmitting}
-              keyType="incorporatedAddress"
+              keyType="RegistredBusinessAddress"
             />
+            <Input
+              {...register("registredBusinessEmail")}
+              label="E-mail Address"
+              id="RegistredBusinessEmail"
+              disabled={isSubmitting}
+            />
+            {errors.registredBusinessAddress && (
+              <p className="text-red-500">
+                {errors.registredBusinessAddress.message}
+              </p>
+            )}
+            <Input
+              {...register("registredBusinessTelephone")}
+              label="Telephone"
+              id="RegistredBusinessTelephone"
+              disabled={isSubmitting}
+            />
+            {errors.registredBusinessTelephone && (
+              <p className="text-red-500">
+                {errors.registredBusinessTelephone.message}
+              </p>
+            )}
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information :</h1>
-            {/* <SideLabelInput title="Registered Capital"> */}
             <Input
               type="number"
               id={"Registered Capital"}
               label={"Registered Capital"}
-              {...register("financial.registeredCapital")}
-              name="financial.registeredCapital"
+              {...register("registeredCapital")}
+              name="RegisteredCapital"
               disabled={isSubmitting}
             />
-            {errors.financial && (
-              <p className="text-red-500">{errors.financial.message}</p>
+            {errors.registeredCapital && (
+              <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Net Profit (Loss)"> */}
             <Input
               type="number"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
-              {...register("financial.netProfit")}
-              name="financial.netProfit"
+              {...register("netProFitLoss")}
+              name="financial.NetProFitLoss"
               disabled={isSubmitting}
             />
-            {errors.financial && (
-              <p className="text-red-500">{errors.financial.message}</p>
+            {errors.netProFitLoss && (
+              <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Revenue Per Year"> */}
             <Input
             type="number"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
-              {...register("financial.revenuePerYear")}
-              name="financial.revenuePerYear"
+              {...register("revenuePerYear")}
+              name="financial.RevenuePerYear"
               disabled={isSubmitting}
             />
-            {errors.financial && (
-              <p className="text-red-500">{errors.financial.message}</p>
+            {errors.revenuePerYear && (
+              <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
             type="number"
               id={"Operating Expense Per Year"}
               label={"Operating Expense Per Year"}
-              {...register("financial.shareholderEquity")}
-              name="financial.shareholderEquity"
+              {...register("shareholderEquity")}
+              name="financial.ShareholderEquity"
               disabled={isSubmitting}
             />
-            {errors.financial && (
-              <p className="text-red-500">{errors.financial.message}</p>
+            {errors.shareholderEquity && (
+              <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
-            {/* </SideLabelInput> */}
           </div>
           <div className="flex justify-end pb-4 pr-4">
             <Button type="submit" disabled={isSubmitting}>

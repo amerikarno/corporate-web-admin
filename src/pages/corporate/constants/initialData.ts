@@ -1,37 +1,41 @@
 import {
+  TContactPerson,
   TCorporateTypeAndIncome,
   TInitailJuristicTypeAndIncome,
   TRegisteredCountryPrimaryCountryOperation,
 } from "./types";
 
 export const initCorporateInfo = {
-  name: "",
-  commercialRegisteredNo: "",
-  taxId: "",
-  dateIncorporation: "",
+  Name: "",
+  RegistrationNo: "",
+  TaxID: "",
+  dateofincorporation: "",
   corporateCountry: [],
   address: [],
 };
 
 export const initAddress = {
-  addressNo: "",
-  building: "",
-  moo: "",
-  soi: "",
-  road: "",
-  subDistrict: "",
-  district: "",
-  province: "",
-  postalCode: "",
-  country: "",
-  phone: "",
+  AddressNo: "",
+  Building: "",
+  MooNo: "",
+  Soi: "",
+  Road: "",
+  Tambon: "",
+  Amphoe: "",
+  Province: "",
+  PostalCode: "",
+  Country: "",
   type: 0,
 };
 
 export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation =
   {
-    registeredCountry: "",
-    primaryCountryOfOperation: "",
+    registered: "",
+    primary: "",
+    registeredThailand: false,
+    primaryCountry: false,
+    registeredOther: false,
+    primaryOther: false,
   };
 
 export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
@@ -39,28 +43,34 @@ export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {
   businessType: "",
   sourceOfIncome: [],
   countrySourceOfIncome: "",
-  investmentObjective: "",
+  InvestmentObject: "",
 };
 
 export const individualShareholder = {
-  title: "",
-  firstName: "",
-  lastName: "",
+  fullNames: [
+    {
+      title: "",
+      firstName: "",
+      lastName: "",
+    },
+  ],
   idCard: "",
-  passPort: "",
+  passportID: "",
   expiredDate: "",
   nationality: "",
-  shares: "",
+  sharePercentage: "",
 };
 
-export const individualContact = {
-  contacttitle: "",
-  contactname: "",
-  contactsurname: "",
-  contactposition: "",
-  contactdivision: "",
-  contactphone: "",
-  contactemail: "",
+export const individualContact: TContactPerson = {
+  fullNames: {
+    title: "",
+    firstName: "",
+    lastName: "",
+  },
+  position: "",
+  division: "",
+  telephone: "",
+  email: "",
 };
 
 // export const individualDirector = {
@@ -76,16 +86,16 @@ export const individualContact = {
 
 export const individualJuristicShareholders = {
   juristicName: "",
-  juristicRegisNo: "",
-  juristicRegisCountry: "",
-  juristicShares: "",
+  registrationNo: "",
+  registeredCountry: "",
+  sharePercentage: "",
 };
 
 export const initailJuristicOther = {
-  otherBusinessType: "",
-  otherIncome: "",
-  otherCountry: "",
-  otherInvestMent: "",
+  OtherBusinessType: "",
+  OtherIncome: "",
+  OtherCountry: "",
+  OtherInvestMent: "",
 };
 
 export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
@@ -98,9 +108,9 @@ export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
   isOther: false,
   isPartnership: false,
   isGovernmentStateEnterprise: false,
-  isTaxExemptCompany: false,
-  isAntiqueTrading: false,
-  isHotelRestaurant: false,
+  TaxExemptCompany: false,
+  AntiqueTrading: false,
+  HotelRestaurant: false,
   isArmament: false,
   isInsuranceAssurance: false,
   isCasinoGambling: false,
@@ -117,12 +127,12 @@ export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
   isCryptoRelated: false,
   isOtherBusiness: false,
   // OtherBusinessType: "",
-  isRevenue: false,
+  Revenue: false,
   isStock: false,
   isDonation: false,
   isLoan: false,
   isRevenueSelling: false,
-  isOtherIncome: false,
+  isOtherIncome: false, //ไม่เจอ key นี้ใน postman
   // OtherIncome: "",
   isThailand: false,
   isOtherThailand: false,

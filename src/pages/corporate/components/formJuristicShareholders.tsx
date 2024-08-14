@@ -11,11 +11,14 @@ import {
 import { sleep } from "@/lib/utils";
 import { useFormJuristicShareholders } from "../hook/useFormJuristicShareholders";
 import { TJuristicsShareholders } from "../constants/types";
-import { Table } from "./dataTable";
-
-export function FormJuristicShareholders() {
+type TJuristicsShareholdersFormProps = {
+  onsubmit: (data: TJuristicsShareholders) => void;
+};
+export function FormJuristicShareholders({
+  onsubmit,
+}: TJuristicsShareholdersFormProps) {
   const {
-    juristics,
+    // juristics,
     juristicShareholders,
     // removeIndividualsShareholders,
     // editIndividualsShareholders,
@@ -46,6 +49,7 @@ export function FormJuristicShareholders() {
     //handleSetNewShareholder(data);
     reset();
     console.log(data);
+    onsubmit(data);
   };
 
   return (
@@ -86,46 +90,45 @@ export function FormJuristicShareholders() {
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("juristicRegisNo")}
+                  {...register("registrationNo")}
                   label="Commercial Registration No."
                   id="Commercial Registration No."
                   disabled={isSubmitting}
                 />
-                {errors.juristicRegisNo && (
+                {errors.registrationNo && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.juristicRegisNo.message}
+                    {errors.registrationNo.message}
                   </p>
                 )}
               </div>
-            </div>
-            <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("juristicRegisCountry")}
+                  {...register("registeredCountry")}
                   label="Registration Country"
                   id="Registration Country"
                   disabled={isSubmitting}
                 />
-                {errors.juristicRegisCountry && (
+                {errors.registeredCountry && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.juristicRegisCountry.message}
+                    {errors.registeredCountry.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("juristicShares")}
+                  {...register("sharePercentage")}
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
                 />
-                {errors.juristicShares && (
+                {errors.sharePercentage && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.juristicShares.message}
+                    {errors.sharePercentage.message}
                   </p>
                 )}
               </div>
             </div>
+
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}

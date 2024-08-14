@@ -1,6 +1,5 @@
 import { Input } from "@/components/Input";
 import { Card } from "@/components/ui/card";
-import { CircleX, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,26 +8,45 @@ import {
   TIndividualsShareholdersSchema,
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
-import { useFormIndividualsShareholder } from "../hook/useFormIndividualsShareholder";
 import { TIndividualsShareholders } from "../constants/types";
-import { Table } from "./dataTable";
-import { useState,useEffect } from "react";
+import { useState } from "react";
+import Dropbox from "@/components/Dropbox";
+type TShareHoldersFormProps = {
+  onsubmit: (data: TIndividualsShareholders) => void;
+};
+export function FormIndividualsShareholders({
+  onsubmit,
+}: TShareHoldersFormProps) {
+  const [dropBoxHadChoosed, setDropBoxHadChoosed] = useState<boolean>(false);
+  const [triggerDropboxError, setTriggerDropboxError] =
+    useState<boolean>(false);
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>("");
+  const handleDropboxChoice = (choice: string) => {
+    setDropDownChoosed(choice);
+    setDropBoxHadChoosed(true);
+  };
+  // const {
+  //   shareholders,
+  //   individualsShareholder,
+  //   removeIndividualsShareholders,
+  //   editIndividualsShareholders,
+  //   handleSetNewShareholder,
+  //   serializeData,
+  // } = useFormIndividualsShareholder();
 
-export function FormIndividualsShareholders() {
-
-  const [idCardError,setIdCardError] = useState<boolean>(true);
-  const [passportError,setPassportError] = useState<boolean>(true);
-  const [idcardInput,setIdCardInput] = useState<string>("");
-  const [passportInput,setPassportInput] = useState<string>("");
-
-  const {
-    shareholders,
-    individualsShareholder,
-    removeIndividualsShareholders,
-    editIndividualsShareholders,
-    handleSetNewShareholder,
-    serializeData,
-  } = useFormIndividualsShareholder();
+  const validateData = (
+    data: TIndividualsShareholders
+  ): TIndividualsShareholders => {
+    let tmp = { ...data };
+    if (tmp.citizendId) {
+      tmp = { ...tmp, passportID: "" };
+    }
+    if (tmp.passportID) {
+      tmp = { ...tmp, citizendId: "" };
+    }
+    tmp = { ...tmp, Types: "301" };
+    return tmp;
+  };
 
   const {
     register,
@@ -37,49 +55,22 @@ export function FormIndividualsShareholders() {
     reset,
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
-    values: individualsShareholder,
+    //values: individualsShareholder,
   });
 
-
   const onSubmit = async (data: TIndividualsShareholdersSchema) => {
-    if(validateIDcardPassport(data)){
+    //const formData: TIndividualsShareholders={ ...data,Types:"301"}
+    if (dropBoxHadChoosed) {
+      setTriggerDropboxError(false);
+      const formData = validateData(data);
       await sleep(500);
       reset();
-      console.log(data)
-    }else{
-
-    }
-  };
-
-  const validateIDcardPassport = (data : any) => {
-    let isValid = false;
-  
-    if (data.idCard || data.passPort) {
-      setIdCardError(false);   
-      setPassportError(false); 
-      isValid = true;          
+      console.log(formData);
+      onsubmit(data);
     } else {
-      setIdCardError(true);    
-      setPassportError(true);  
+      setTriggerDropboxError(true);
     }
-    return isValid;
   };
-
-
-  const handleDeleteError = () =>{
-
-    if (idcardInput || passportInput ){
-      setIdCardError(false);    
-      setPassportError(false);
-    }else{
-      setIdCardError(!idCardError);    
-      setPassportError(!passportError);
-    }
-  }
-  useEffect(() => {  
-
-      handleDeleteError()
-  }, [idcardInput,passportInput]);
 
   return (
     <>
@@ -95,138 +86,150 @@ export function FormIndividualsShareholders() {
         </Card> */}
 
         <Card className="p-4">
-          <h1 className="font-bold text-xl py-4">Individual Shareholder :</h1>
+          <h1 className="font-bold text-xl py-4">
+            Individuals who shareholders of juristic's owner
+          </h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
+              <div className="w-1/2">
                 <Input
-                  {...register("title")}
+                  {...register("fullNames.title")}
                   label="Title"
                   id="Title"
                   disabled={isSubmitting}
-                  
                 />
-                {errors.title && (
+                {errors.fullNames?.title && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.title.message}
+                    {errors.fullNames?.title.message}
                   </p>
                 )}
               </div>
-              <div className="w-1/2">
-              </div>
+              <div className="w-1/2"></div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
                 <Input
-                  {...register("firstName")}
+                  {...register("fullNames.firstName")}
                   label="First Name"
                   id="First Name"
                   disabled={isSubmitting}
-                  
                 />
-                {errors.firstName && (
+                {errors.fullNames?.firstName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.firstName.message}
+                    {errors.fullNames?.firstName.message}
                   </p>
                 )}
               </div>
               <div className="w-1/2">
                 <Input
-                  {...register("lastName")}
+                  {...register("fullNames.lastName")}
                   label="Surname"
                   id="Surname"
                   disabled={isSubmitting}
-                  
                 />
-                {errors.lastName && (
+                {errors.fullNames?.lastName && (
                   <p className="text-red-500 text-sm px-2">
-                    {errors.lastName.message}
+                    {errors.fullNames?.lastName.message}
                   </p>
                 )}
               </div>
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
-                  <Input
-                  {...register("idCard")}
-                  label="ID Card"
-                  id="ID Card"
+                <Input
+                  {...register("nationality")}
+                  label="Nationality"
+                  id="Nationality"
                   disabled={isSubmitting}
-                  onChange={(e)=>setIdCardInput(e.target.value)}
                 />
-                {idCardError &&  (
-                    <p className="text-red-500 px-4">
-                      IDCard must be filled
-                    </p>
-                  )}
+                {errors.nationality && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.nationality.message}
+                  </p>
+                )}
               </div>
-
               <div className="w-1/2">
-                  <Input
-                        {...register("passPort")}
-                        label="Passport"
-                        id="Passport"
-                        disabled={isSubmitting}
-                        onChange={(e)=>setPassportInput(e.target.value)}
-                        />
-                        {passportError &&  (
-                    <p className="text-red-500 px-4">
-                      Passport must be filled
-                    </p>
-                  )}
-              </div>
-            </div>
-            <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
-                  <Input
-                    {...register("nationality")}
-                    label="Nationality"
-                    id="Nationality"
-                    disabled={isSubmitting}
-                    
-                  />
-                  {errors.nationality && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.nationality.message}
-                    </p>
-                  )}
-                </div>
-                <div className="w-1/2">
-                  <Input
-                      {...register("expiredDate")}
-                      label="Expiration Date"
-                      id="Expiration Date"
-                      type="date"
-                      disabled={isSubmitting}
-                      
-                    />
-                    {errors.expiredDate && (
-                      <p className="text-red-500 text-sm px-2">
-                        {errors.expiredDate.message}
-                      </p>
-                    )}
-                </div>
-              </div>
-              <div className="flex flex-row space-x-4">
-                <div className="w-1/2">
-                  <Input
-                  {...register("shares")}
+                <Input
+                  {...register("sharePercentage")}
                   label="Shares"
                   id="Shares"
                   disabled={isSubmitting}
-                  
-                  />
-                  {errors.shares && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.shares.message}
-                    </p>
-                  )}
-                </div>
-                <div className="w-1/2">
-
-                </div>
+                />
+                {errors.sharePercentage && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.sharePercentage.message}
+                  </p>
+                )}
               </div>
-
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/3">
+                <Dropbox onDropdownSelect={handleDropboxChoice} />
+                {triggerDropboxError && (
+                  <p className="text-red-500 text-sm px-2">
+                    Please Choose IDCard or Passport
+                  </p>
+                )}
+              </div>
+              <div className="w-1/3">
+                {dropDownChoosed ? (
+                  dropDownChoosed === "IDCard" ? (
+                    <>
+                      <Input
+                        {...register("citizendId")}
+                        label="IDCard"
+                        id="idCard"
+                        disabled={isSubmitting}
+                      />
+                      {triggerDropboxError && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert IDcard
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Input
+                        {...register("passportID")}
+                        label="Passport"
+                        id="passportID"
+                        disabled={isSubmitting}
+                      />
+                      {triggerDropboxError && (
+                        <p className="text-red-500 text-sm px-2">
+                          Please Insert Passport
+                        </p>
+                      )}
+                    </>
+                  )
+                ) : (
+                  <>
+                    <div className="relative w-full">
+                      <Input label="IDCard or Passport" id="passportID" />
+                    </div>
+                    {triggerDropboxError && (
+                      <p className="text-red-500 text-sm px-2">
+                        Please Insert IDCard or Passport
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="w-1/3">
+                <Input
+                  {...register("expiredDate")}
+                  label="Date of Expired"
+                  id="Date of Expired"
+                  disabled={isSubmitting}
+                  type="date"
+                />
+                {errors.expiredDate && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.expiredDate.message}
+                  </p>
+                )}
+              </div>
+            </div>
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Saving..." : "Save"}
