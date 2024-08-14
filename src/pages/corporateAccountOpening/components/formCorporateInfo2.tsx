@@ -14,7 +14,7 @@ import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
@@ -67,6 +67,9 @@ export function FormCorporateTypeAndIncome({
       console.log(mergeObj);
       if (!isExpiredToken()) {
         await saveJuristicType(mergeObj);
+      } else {
+        console.log("session expired");
+        alert("Session expired. Please login again");
       }
     } else {
       console.log("submit failed");

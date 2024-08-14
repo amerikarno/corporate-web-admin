@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { TTransaction } from "./constant/type";
 import { Button } from "@/components/ui/button";
-// import { IoMdRefresh } from "react-icons/io";
 
 const TransactionList = () => {
   const [listOfTransaction, setFetchedListOfTransaction] = useState<

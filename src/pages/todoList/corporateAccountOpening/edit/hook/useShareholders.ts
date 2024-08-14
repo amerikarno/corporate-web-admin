@@ -1,27 +1,25 @@
 import { useState } from "react";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import {
-  TIndividualsShareholders,
-} from "../constants/types";
+import { TIndividualsShareholders } from "../constants/types";
 
 export function useShareholders() {
-  const [shareholders, setShareholders] = useState<
-  TIndividualsShareholders[]
-  >([]);
+  const [shareholders, setShareholders] = useState<TIndividualsShareholders[]>(
+    []
+  );
   const handleSubmitShareholders = async (data: TIndividualsShareholders) => {
     if (!isExpiredToken()) {
       await saveIndividualsShareholders(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 
   const saveIndividualsShareholders = async (
     data: TIndividualsShareholders
   ) => {
-
     let body = {
       fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",

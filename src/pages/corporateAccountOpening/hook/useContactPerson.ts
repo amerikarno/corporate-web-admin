@@ -2,12 +2,11 @@ import { useState } from "react";
 import { TContactPerson } from "../constants/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { addContactPerson } from "@/features/contactPersonSlice";
 import { useDispatch } from "react-redux";
 //import { useSelector } from "react-redux";
 //import { RootState } from "@/app/store";
-
 
 type TContactPersonArray = {
   contacts: TContactPerson[];
@@ -32,7 +31,9 @@ export function useContactPerson() {
       if (res.status === 200) {
         console.log(res);
         console.log("save successful");
-        dispatch(addContactPerson({ ...body, personalId: res.data.personalId }));
+        dispatch(
+          addContactPerson({ ...body, personalId: res.data.personalId })
+        );
       } else {
         console.log("save failed");
       }
@@ -50,13 +51,13 @@ export function useContactPerson() {
       await saveContactPerson(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 
   return {
     contact,
     handleSubmitContactPerson,
-    setContactPerson
+    setContactPerson,
   };
 }
-

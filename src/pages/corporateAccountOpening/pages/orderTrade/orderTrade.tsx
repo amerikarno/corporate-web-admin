@@ -8,40 +8,46 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-// import { Select } from "@radix-ui/react-select";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
-const tradingPair = [
-  { name: "THB/USTD" },
-  { name: "THB/USDC" },
-];
+const tradingPair = [{ name: "THB/USTD" }, { name: "THB/USDC" }];
 export default function OrderTrade() {
+  if (!isAllowedPage(2020)) {
+    return <UnAuthorize />;
+  }
+
   const [buySell, setBuySell] = useState<string>("buy");
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
-  const [selectedTradingPair, setSelectedTradingPair] =
-    useState<string>("");
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<{ corporateCode: number }[]>([]);
-  
+  const [selectedTradingPair, setSelectedTradingPair] = useState<string>("");
+  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
+    { corporateCode: number }[]
+  >([]);
 
   const fetchCorporateCodes = async () => {
     try {
       const token = getCookies();
 
-      const res = await axios.post("/api/v1/corporate/query/all", {},{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        "/api/v1/corporate/query/all",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res.status === 200) {
         const corporateCodes = res.data.map((item: any) => ({
           corporateCode: item.CorporateCode,
         }));
         setFetchedCorporateCodes(corporateCodes);
       } else {
-        console.error("Failed to fetch corporate codes");
+        console.log("Failed to fetch corporate codes");
       }
     } catch (error) {
-      console.error("Error fetching corporate codes:", error);
+      console.log("Error fetching corporate codes:", error);
     }
   };
 
@@ -75,14 +81,12 @@ export default function OrderTrade() {
     setSelectedTradingPair(event.target.value);
   };
 
-
-
   const onSubmit = async (data: TOrderTrade) => {
     let body: TOrderTrade = {
       ...data,
       operations: buySell,
     };
-    console.log(body)
+    console.log(body);
     try {
       const token = getCookies();
       const res = await axios.post("/api/v1/transaction/order/create", body, {
@@ -131,19 +135,22 @@ export default function OrderTrade() {
                 ))}
               </datalist>
             </div>
-
           </div>
           <div className="w-full flex justify-center">
             <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%]">
               <div className="flex flex-row justify-center ">
                 <div
-                  className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-l transition-colors duration-300 ${buySell === "buy" ? "bg-slate-800" : "bg-slate-500"}`}
+                  className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-l transition-colors duration-300 ${
+                    buySell === "buy" ? "bg-slate-800" : "bg-slate-500"
+                  }`}
                   onClick={() => handleBuySell("buy")}
                 >
                   Buy
                 </div>
                 <div
-                  className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-r transition-colors duration-300 ${buySell === "sell" ? "bg-slate-800" : "bg-slate-500"}`}
+                  className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-r transition-colors duration-300 ${
+                    buySell === "sell" ? "bg-slate-800" : "bg-slate-500"
+                  }`}
                   onClick={() => handleBuySell("sell")}
                 >
                   Sell
@@ -152,29 +159,33 @@ export default function OrderTrade() {
 
               <div className="flex pt-4 gap-4 items-center justify-center">
                 <div className="w-1/2 border-y-4">
-                    <label htmlFor="pair" className="block text-sm font-medium text-gray-700">
-                    </label>
-                    <select
-                      id="pair"
-                      {...register("pair")}
-                      value={selectedTradingPair}
-                      onChange={handleTradingPairChange}
-                      disabled={isSubmitting}
-                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                    >
-                      <option value="" disabled>trading pairs</option>
-                      {tradingPair.map((pair, index) => (
-                        <option key={index} value={pair.name}>
-                          {pair.name}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.pair && (
-                      <p className="text-red-500 text-sm px-2">
-                        {errors.pair.message}
-                      </p>
-                    )}
-                  </div>
+                  <label
+                    htmlFor="pair"
+                    className="block text-sm font-medium text-gray-700"
+                  ></label>
+                  <select
+                    id="pair"
+                    {...register("pair")}
+                    value={selectedTradingPair}
+                    onChange={handleTradingPairChange}
+                    disabled={isSubmitting}
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                  >
+                    <option value="" disabled>
+                      trading pairs
+                    </option>
+                    {tradingPair.map((pair, index) => (
+                      <option key={index} value={pair.name}>
+                        {pair.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.pair && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.pair.message}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="flex pt-4 gap-4 items-center ">
                 <div className="w-1/2 space-y-4">
@@ -184,35 +195,35 @@ export default function OrderTrade() {
                     id="cryptoAmount"
                     disabled={isSubmitting}
                   />
-                {errors.cryptoAmount && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.cryptoAmount.message}
-                </p>
-                )}
+                  {errors.cryptoAmount && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.cryptoAmount.message}
+                    </p>
+                  )}
                   <Input
                     {...register("fiatAmount")}
                     label="Fiat Amount"
                     id="fiatAmount"
                     disabled={isSubmitting}
                   />
-                {errors.fiatAmount && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.fiatAmount.message}
-                </p>
-                )}
+                  {errors.fiatAmount && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.fiatAmount.message}
+                    </p>
+                  )}
                 </div>
                 <div className="w-1/2 space-y-4">
                   <Input
-                      {...register("cryptoPrice")}
-                      label="Crypto Price"
-                      id="cryptoPrice"
-                      disabled={isSubmitting}
-                    />
-                    {errors.cryptoPrice && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.cryptoPrice.message}
-                </p>
-                )}
+                    {...register("cryptoPrice")}
+                    label="Crypto Price"
+                    id="cryptoPrice"
+                    disabled={isSubmitting}
+                  />
+                  {errors.cryptoPrice && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.cryptoPrice.message}
+                    </p>
+                  )}
                   <Input
                     {...register("currency")}
                     label="Currency"
@@ -220,10 +231,10 @@ export default function OrderTrade() {
                     disabled={isSubmitting}
                   />
                   {errors.currency && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.currency.message}
-                </p>
-                )}
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.currency.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </Card>

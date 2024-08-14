@@ -1,13 +1,4 @@
-import {
-  Sheet,
-  // SheetClose,
-  SheetContent,
-  // SheetDescription,
-  // SheetFooter,
-  // SheetHeader,
-  // SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Accordion,
