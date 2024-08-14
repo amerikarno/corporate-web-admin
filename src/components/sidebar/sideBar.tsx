@@ -10,6 +10,7 @@ import {
 import { MoveRight } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { isAllowedPage } from "@/lib/utils";
 
 export default function Sidebar() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -30,9 +31,7 @@ export default function Sidebar() {
                 </AccordionTrigger>
 
                 {item.children.map((child: TUrlConfigChild, index) => {
-                  // return child?.pageId &&
-                  //   user?.groups &&
-                  //   user?.groups.includes(child?.pageId) ? (
+                  // return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
                   //   <AccordionContent key={index} className="pl-6">
                   //     <Link
                   //       to={child.href}
@@ -48,7 +47,11 @@ export default function Sidebar() {
                   return (
                     <AccordionContent key={index} className="pl-6">
                       <Link
-                        to={child.href}
+                        to={
+                          isAllowedPage(child.pageId)
+                            ? child.href
+                            : "/unAuthorize"
+                        }
                         className="hover:underline text-[#b3b3b3] flex"
                       >
                         <MoveRight />

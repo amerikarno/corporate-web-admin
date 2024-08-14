@@ -8,5 +8,5 @@ export type TUrlConfig = {
 export type TUrlConfigChild = {
   label: string;
   href: string;
-  pageId?: number;
+  pageId: number;
 };
