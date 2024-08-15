@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { useState } from "react";
 interface DropboxProps {
   onDropdownSelect: (option: string) => void;
+  dropDownChoosedback?: string;
 }
-const Dropbox: React.FC<DropboxProps> = ({ onDropdownSelect }) => {
+const Dropbox: React.FC<DropboxProps> = ({ onDropdownSelect,dropDownChoosedback }) => {
   const [isDropDown, setIsDropDown] = useState<boolean>(false);
-  const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
+  const [dropDownChoosed, setDropDownChoosed] = useState<string>(dropDownChoosedback || 'ID');
   const handleDropdownbtn = () => {
     setIsDropDown(!isDropDown);
+    
   };
+
+  useEffect(()=>{
+    setDropDownChoosed(dropDownChoosedback || "ID");
+  },[dropDownChoosedback])
+
   const handleSelect = (choice: string) => {
     setDropDownChoosed(choice);
     setIsDropDown(false);

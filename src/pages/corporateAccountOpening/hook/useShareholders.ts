@@ -48,7 +48,7 @@ export function useShareholders() {
         console.log("request success", res);
         console.log(res.data.personalId);
         dispatch(
-          addIndividualShareholder({ ...body, personalID: res.data.personalId })
+          addIndividualShareholder({ ...body, personalId: res.data.personalId })
         );
         console.log(individualShareholderData);
       } else {

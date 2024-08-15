@@ -15,34 +15,40 @@ export function PageJuristicType({
       <div className="p-4 space-y-8">
         <Card className=" p-4 space-y-6">
           <h1 className="text-xl font-bold">Juristic Infomations</h1>
-          <div className="flex flex-row">
-            <h1 className="w-1/4 font-bold">Juristic ID</h1>
-            <h1 className="w-3/4">
-              : {currentCorporatesInfo?.corporateCode ?? ""}
-            </h1>
-          </div>
-          <div className="flex flex-row">
-            <h1 className="w-1/4 font-bold">Juristic Name</h1>
-            <h1 className="w-3/4">: {currentCorporatesInfo?.name ?? ""}</h1>
-          </div>
-          <div className="flex flex-row">
-            <h1 className="w-1/4 font-bold">Commercial Number</h1>
-            <h1 className="w-3/4">
-              : {currentCorporatesInfo?.registrationNo ?? ""}
-            </h1>
-          </div>
-          <div className="flex flex-row">
-            <h1 className="w-1/4 font-bold">Tax ID</h1>
-            <h1 className="w-3/4">: {currentCorporatesInfo?.taxId ?? ""}</h1>
-          </div>
-          <div className="flex flex-row">
-            <h1 className="w-1/4 font-bold">Date Of Incorporation</h1>
-            <h1 className="w-3/4">
-              :{" "}
-              {currentCorporatesInfo?.dateofincorporation.toLocaleDateString(
-                "th-TH"
-              ) ?? ""}
-            </h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">
+                  : {currentCorporatesInfo?.corporateCode ?? ""}
+                </h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {currentCorporatesInfo?.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">
+                  : {currentCorporatesInfo?.registrationNo ?? ""}
+                </h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {currentCorporatesInfo?.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">
+                  :{" "}
+                  {currentCorporatesInfo?.dateofincorporation.toLocaleDateString(
+                    "th-TH"
+                  ) ?? ""}
+                </h1>
+              </div>
+            </div>
           </div>
         </Card>
         <FormCorporateTypeAndIncome

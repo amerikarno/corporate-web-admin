@@ -48,14 +48,14 @@ export function PageIndividualShareholder({
       console.log(data)
       try{
         const token = getCookies();
-        const res = await axios.post("/api/v1/personals/delete",{personalID : data.personalID},{
+        const res = await axios.post("/api/v1/personals/delete",{personalId : data.personalId},{
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         if (res.status === 200){
           console.log("delete successful")
-          dispatch(removeIndividualShareholder(data.personalID));
+          dispatch(removeIndividualShareholder(data.personalId));
         }
       }catch(error){
         console.log("delete fail ,",error)

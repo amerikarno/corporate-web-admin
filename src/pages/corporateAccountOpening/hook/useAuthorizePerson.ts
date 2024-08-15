@@ -28,7 +28,7 @@ export function useAuthorizePerson() {
       if (res.status === 200) {
         console.log(res.data.personalId);
         dispatch(
-          addAuthorizedPerson({ ...body, personalID: res.data.personalId })
+          addAuthorizedPerson({ ...body, personalId: res.data.personalId })
         );
         console.log("save successful");
       }

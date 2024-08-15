@@ -1,46 +1,65 @@
-import { useState } from "react";
 import { TContactPerson } from "../constants/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import { isExpiredToken } from "@/lib/utils";
+import { isExpiredToken } from "../libs/utils";
+import {
+  addContactPerson,
+  updateContactPerson,
+} from "@/features/contactPersonSlice";
+import { useDispatch } from "react-redux";
 
 type TContactPersonArray = {
   contacts: TContactPerson[];
   corporateCode?: string;
+  personalId?: string;
 };
 
 export function useContactPerson() {
-  const [contact, setContactPerson] = useState<TContactPerson[]>([]);
+  const dispatch = useDispatch();
 
   const saveContactPerson = async (data: TContactPersonArray) => {
-    let body = {
-      ...data,
-    };
-    console.log("body", body);
+    const token = getCookies();
+
     try {
-      const token = getCookies();
-      const res = await axios.post("/api/v1/corporate/create-contact", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        console.log(res);
-        console.log("save successful");
+      console.log("sending data to update : ", data);
+      if (data.contacts[0].personalId) {
+        //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
+        const res = await axios.post("/api/v1/corporate/update/contact", data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 200) {
+          console.log("Edit successful");
+          dispatch(updateContactPerson(data.contacts[0]));
+        } else {
+          console.log("Edit failed");
+        }
       } else {
-        console.log("save failed");
+        //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
+        const res = await axios.post("/api/v1/corporate/create-contact", data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 200) {
+          console.log("Save successful ", res);
+
+          dispatch(
+            addContactPerson({
+              ...data.contacts[0],
+              personalId: res.data.personalId,
+            })
+          );
+        } else {
+          console.log("Save failed");
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error:", error);
     }
   };
 
   const handleSubmitContactPerson = async (data: TContactPersonArray) => {
     if (!isExpiredToken()) {
-      setContactPerson((prevContactPerson) => [
-        ...prevContactPerson,
-        ...data.contacts,
-      ]);
       await saveContactPerson(data);
     } else {
       console.log("session expired");
@@ -49,7 +68,6 @@ export function useContactPerson() {
   };
 
   return {
-    contact,
     handleSubmitContactPerson,
   };
 }

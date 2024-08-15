@@ -103,7 +103,7 @@ export type TIndividualsShareholders = {
   nationality: string;
   sharePercentage: number;
   types?: number;
-  personalID?: string;
+  personalId?: string;
 };
 
 export type TBank = {
@@ -125,7 +125,7 @@ export type TAuthorizePerson = {
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
-  personalID?: string;
+  personalId?: string;
 };
 export type TContactPerson = {
   corporateCode?: string;
@@ -146,7 +146,7 @@ export type TDirector = {
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
-  personalID?: string;
+  personalId?: string;
 };
 
 export type TJuristicsShareholders = {

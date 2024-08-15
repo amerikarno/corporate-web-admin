@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
@@ -44,8 +44,15 @@ export default function CorporateAccountOpenning() {
   const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  //const corporateCode :string = "80000006";
+  //let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  let corporateCode: string = "80000007";
+
+  useEffect(() => {
+    if (pageId === 1) {
+      corporateCode = "";
+    }
+  }, [currentCorporatesInfo?.corporateCode, pageId]);
+
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
@@ -81,6 +88,8 @@ export default function CorporateAccountOpenning() {
       if (isSecondFormPass) {
         navigate(`/create-job/added-corporate-account/${pageId + 1}`);
       }
+    } else if (type == "done") {
+      navigate(`/create-job/added-corporate-account/1`);
     } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }

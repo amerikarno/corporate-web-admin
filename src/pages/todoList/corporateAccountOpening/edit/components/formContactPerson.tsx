@@ -12,24 +12,30 @@ import { sleep } from "@/lib/utils";
 //import { Table } from "./dataTable";
 import { TContactPerson } from "../constants/types";
 import { TContact } from "../../constant/type";
+import { mapDataToTContactPerson } from "../libs/utils";
+import { useEffect } from "react";
 type TContactPersonArray = {
   contacts: TContactPerson[];
   corporateCode?: string;
+  personalId?: string;
 };
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
   corporateCode: string;
   choosedEditData?: TContact | null;
+  clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsContactPerson({
   onsubmit,
   corporateCode,
-  choosedEditData
+  choosedEditData,
+  clearChoosedEditData
 }: TContactPersonFormProps) {
 
   console.log(choosedEditData)
+  
   const {
     register,
     handleSubmit,
@@ -37,18 +43,31 @@ export function FormIndividualsContactPerson({
     reset,
   } = useForm<TIndividualsContactPersonSchema>({
     resolver: zodResolver(individualsContactPersonSchema),
-    //values: individualsContact,
   });
+
+  useEffect(() => {
+      const contactPersonData = mapDataToTContactPerson(choosedEditData || null) || {
+        fullNames: [{ title: '', firstName: '', lastName: '' }],
+        position: '',
+        division: '',
+        telephone: '',
+        email: '',
+        personalId:''
+      };
+    reset(contactPersonData);
+  }, [choosedEditData, reset]);
 
 
   const onSubmit = async (data: TContactPerson) => {
+    console.log(data)
     let formData: TContactPersonArray = {
-      contacts: [data],
+      contacts: [{...data,personalId:choosedEditData?.personalId}],
       corporateCode: corporateCode,
     };
     await sleep(500);
     reset();
-    // console.log(formData);
+    console.log(formData);
+    clearChoosedEditData();
     onsubmit(formData);
   };
 

@@ -13,7 +13,7 @@ export function CreateCorporateFooter({
   return (
     <div className="flex flex-row">
       <div className="flex justify-start px-4">
-        <Button onClick={() => handlePages("prev")} disabled={pageId <= 3}>
+        <Button onClick={() => handlePages("prev")} disabled={pageId <= 1}>
           Prevoius Form
         </Button>
       </div>
@@ -36,6 +36,13 @@ export function CreateCorporateFooter({
             form="corporateInfo2"
           >
             Submit
+          </Button>
+        ) : pageId === 10 ? (
+          <Button
+            onClick={() => handlePages("done")}
+            type="submit"
+          >
+            Done
           </Button>
         ) : (
           <Button

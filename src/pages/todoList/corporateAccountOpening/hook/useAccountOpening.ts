@@ -18,6 +18,7 @@ export function useAccountOpening() {
   const handleSearch = async (data: TCorporateAccountOpening) => {
     const { dateFrom, dateTo } = data;
 
+    const today = new Date();
     // Set invalid dates to null
     const body: TBody = {
       ...data,
@@ -55,6 +56,7 @@ export function useAccountOpening() {
       }
     } else {
       try {
+        console.log(body);
         const res = await axios.post("/api/v1/corporate/query", body, {
           headers: {
             Authorization: `Bearer ${getCookies()}`,

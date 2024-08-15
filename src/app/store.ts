@@ -21,6 +21,7 @@ export const store = configureStore({
     editCorporate: editCorporateReducer,
     user: userReducer,
   },
+  
 });
 
 export type RootState = ReturnType<typeof store.getState>;
