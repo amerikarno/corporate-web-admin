@@ -9,14 +9,19 @@ import { sleep } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 type TJuristicsShareholdersFormProps = {
   onsubmit: (data: TJuristicsShareholders) => void;
   corporateCode: string;
+  choosedEditData?: TJuristicsShareholders | null;
+  clearChoosedEditData: () => void;
 };
 export function FormJuristicShareholders({
   onsubmit,
   corporateCode,
+  choosedEditData,
+  clearChoosedEditData,
 }: TJuristicsShareholdersFormProps) {
 
 
@@ -32,12 +37,25 @@ export function FormJuristicShareholders({
 
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
     await sleep(500);
-    reset();
-    // console.log(data);
-    let body = data;
-    body.corporateCode = corporateCode;
+    const body = {
+      ...data,
+      corporateCode: corporateCode,
+      juristicId: choosedEditData?.juristicId,
+    };
+    reset(); 
+    clearChoosedEditData();
     onsubmit(body);
   };
+
+  useEffect(() => {
+    const juristicData = choosedEditData || {
+      juristicName:"",
+      registrationNo:"",
+      registeredCountry:"",
+      sharePercentage:0,
+    }
+    reset(juristicData);
+  }, [choosedEditData, reset]);
 
   return (
     <>

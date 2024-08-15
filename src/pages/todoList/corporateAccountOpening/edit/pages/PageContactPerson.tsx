@@ -62,7 +62,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
     .catch((error) => {
       console.error("Error fetching contact data:", error);
     });
-}, [corporateCode, dispatch, token]);
+}, [ dispatch]);
     
 
   console.log(contactPersonData);

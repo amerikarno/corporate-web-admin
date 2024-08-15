@@ -19,6 +19,7 @@ export const store = configureStore({
     bank : bankReducer,
     editCorporate: editCorporateReducer,
   },
+  
 });
 
 export type RootState = ReturnType<typeof store.getState>;

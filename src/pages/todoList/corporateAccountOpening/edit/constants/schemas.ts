@@ -97,8 +97,7 @@ export const corporateInfoSchema = z.object({
   name: z.string().min(1, "name cannot be empty"),
   registrationNo: z
     .string()
-    .min(1, "Registration number cannot be empty")
-    .regex(/^\d+$/, "Registration number must be a numbers"),
+    .min(1, "Registration number cannot be empty"),
   taxId: z
     .string()
     .min(1, "taxId cannot be empty")
@@ -247,10 +246,12 @@ export const bankSchema = z.object({
 export type TBankSchema = z.infer<typeof bankSchema>;
 
 export const authorizedPersonSchema = z.object({
+  corporateCode: z.string().optional(),
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportId: z.string().optional(),
+  personalId: z.string().optional(),
   expiryDate: z
     .string()
     .min(1, "date cannot be empty")

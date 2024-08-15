@@ -26,8 +26,23 @@ export const juristicShareholderSlice = createSlice({
     clearJuristicShareholder: (state) => {
       state.juristicShareholders = [];
     },
+    setJuristicShareholder: (state, action) => {
+      state.juristicShareholders = action.payload;
+    },
+    updateJuristicShareholder: (state, action) => {
+      const index = state.juristicShareholders.findIndex(
+        (data) => data.juristicId === action.payload.juristicId
+      );
+
+      if (index !== -1) {
+        state.juristicShareholders[index] = {
+          ...state.juristicShareholders[index],
+          ...action.payload,
+        };
+      }
+    },
   },
 });
 
-export const { addJuristicShareholder, removeJuristicShareholder, clearJuristicShareholder } = juristicShareholderSlice.actions;
+export const { addJuristicShareholder, updateJuristicShareholder , removeJuristicShareholder, setJuristicShareholder,clearJuristicShareholder } = juristicShareholderSlice.actions;
 export default juristicShareholderSlice.reducer;

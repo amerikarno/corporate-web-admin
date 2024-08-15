@@ -15,8 +15,9 @@ export const DirectorSlice = createSlice({
   initialState,
   reducers: {
     addDirector: (state, action) => {
-        console.log('action.payload:', action.payload);
-        return { ...state, listOfDirectors: [...state.listOfDirectors, action.payload] };
+      const { expiryDate } = action.payload;
+      const expiryDateStr = expiryDate.toISOString();
+      return { ...state, listOfDirectors: [...state.listOfDirectors, { ...action.payload, expiryDate: expiryDateStr }] };
     },
     removeDirector: (state, action) => {
       state.listOfDirectors = state.listOfDirectors.filter(
@@ -32,9 +33,18 @@ export const DirectorSlice = createSlice({
         ...director,
         corporateCode: String(director.corporateCode),
       })) as TDirector[];
-    }
+    },
+    updateDirector: (state, action: PayloadAction<TDirector>) => {
+      const index = state.listOfDirectors.findIndex(
+        (director) => director.personalId === action.payload.personalId
+      );
+      if (index !== -1) {
+        state.listOfDirectors[index] = action.payload;
+      }
+    },
   },
+  
 });
 
-export const { addDirector, removeDirector, clearDirector , setDirectorEdit } = DirectorSlice.actions;
+export const { addDirector, updateDirector,removeDirector, clearDirector , setDirectorEdit } = DirectorSlice.actions;
 export default DirectorSlice.reducer;

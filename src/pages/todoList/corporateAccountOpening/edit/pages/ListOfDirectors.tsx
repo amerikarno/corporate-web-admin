@@ -23,9 +23,9 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
     useListOfDirector();
 
   const token = getCookies();
-  const listOfDirectorData : TDirector[] = useSelector<RootState>(
-      (state) => state.listOfDirector?.listOfDirectors) as TDirector[];
-  const [choosedEditData,setChoosedEditData] = useState<TDirector>();
+  const listOfDirectorData : TDirectorEdit[] = useSelector<RootState>(
+      (state) => state.listOfDirector?.listOfDirectors) as TDirectorEdit[];
+  const [choosedEditData,setChoosedEditData] = useState<TDirectorEdit>();
   const clearChoosedEditData = () => {
         setChoosedEditData(undefined);
       };
@@ -47,7 +47,6 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
             return {
               ...director,
               personalId: director.personalId,
-              fullNames: director.fullNames,
             };
           });
 
@@ -63,25 +62,25 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   }, [corporateCode, dispatch, token]);
 
 
-    const handleDelete = async (data: TDirector) => {
+    const handleDelete = async (data: TDirectorEdit) => {
       console.log(data)
       try{
         const token = getCookies();
-        const res = await axios.post("/api/v1/personals/delete",{personalID : data.personalID},{
+        const res = await axios.post("/api/v1/personals/delete",{personalId : data.personalId},{
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         if (res.status === 200){
           console.log("delete successful")
-          dispatch(removeDirector(data.personalID));
+          dispatch(removeDirector(data.personalId));
         }
       }catch(error){
         console.log("delete fail ,",error)
       }
     };
 
-    const columnsListOfDirectors: TableColumn<TDirector>[] = [
+    const columnsListOfDirectors: TableColumn<TDirectorEdit>[] = [
       {
         name: "Title",
         selector: (row) => row.fullNames[0]?.title || "",
@@ -107,7 +106,13 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
         selector: (row) => row.nationality || "",
       },
       {
-        cell: (row: TDirector) => (
+        cell: (row: TDirectorEdit) => (
+          <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+        ),
+        ignoreRowClick: true,
+      },
+      {
+        cell: (row: TDirectorEdit) => (
           <Button onClick={() => handleDelete(row)}>Delete</Button>
         ),
         ignoreRowClick: true,
@@ -126,6 +131,8 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
         </Card>
 
         <FormIndividualsDirector
+          clearChoosedEditData={clearChoosedEditData}
+          choosedEditData={choosedEditData}
           onsubmit={handleSubmitDirectors}
           corporateCode={corporateCode}
         />

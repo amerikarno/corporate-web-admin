@@ -1,5 +1,5 @@
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TAuthorizePerson } from "@/pages/corporateAccountOpening/constants/types";
 
 interface AuthorizedPersonState {
@@ -26,8 +26,23 @@ export const authorizedPersonSlice = createSlice({
     clearAuthorizedPerson: (state) => {
       state.authorizedPersons = [];
     },
+    updateAuthorizedPerson: (state, action) => {
+      const index = state.authorizedPersons.findIndex(
+        (data) => data.personalId === action.payload.personalId
+      );
+
+      if (index !== -1) {
+        state.authorizedPersons[index] = {
+          ...state.authorizedPersons[index],
+          ...action.payload,
+        };
+      }
+    },
+    setAuthorizedPersons: (state, action: PayloadAction<TAuthorizePerson[]>) => {
+      state.authorizedPersons = action.payload;
+    },
   },
 });
 
-export const { addAuthorizedPerson, removeAuthorizedPerson, clearAuthorizedPerson } = authorizedPersonSlice.actions;
+export const { addAuthorizedPerson, updateAuthorizedPerson ,setAuthorizedPersons ,removeAuthorizedPerson, clearAuthorizedPerson } = authorizedPersonSlice.actions;
 export default authorizedPersonSlice.reducer;

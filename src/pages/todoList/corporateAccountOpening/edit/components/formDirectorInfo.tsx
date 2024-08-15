@@ -9,37 +9,47 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
+import { TDirector as TDirectorEdit } from "../../constant/type";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
 import { checkFormatIDCard } from "@/lib/utils";
+import { mapDataToTDirector } from "../libs/utils";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
   corporateCode: string;
+  personalId?: string;
+  choosedEditData?: TDirectorEdit | null;
+  clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsDirector({
   onsubmit,
   corporateCode,
+  choosedEditData,
+  clearChoosedEditData,
 }: TDirectorFormProps) {
   const [triggeriderror, setTriggeriderror] = useState<string>("");
   const [curInputText, setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
+  const [hasDate, setHasDate] = useState<boolean>(
+    choosedEditData?.expiryDate ? true : false
+  );
   const handleDropboxChoice = (choice: string) => {
+    setValue('passportId', '');
+    setValue('citizenId', '');
+
+    console.log(choice);
+    setCurInputText("");
+    resetField("passportId");
+    resetField("citizenId");
     setDropDownChoosed(choice);
   };
 
-  useEffect(() => {
-    if (dropDownChoosed === "ID") {
-      resetField("passportId");
-    } else if (dropDownChoosed === "Passport") {
-      resetField("citizenId");
-    }
-  }, [dropDownChoosed]);
-
+  
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
     setInitError(false);
@@ -65,9 +75,55 @@ export function FormIndividualsDirector({
     formState: { errors, isSubmitting },
     reset,
     resetField,
+    setValue,
   } = useForm<TDirector>({
     resolver: zodResolver(directorInfoSchema),
   });
+  useEffect(() => {
+    if (choosedEditData?.citizenId) {
+      setDropDownChoosed("ID");
+      console.log(choosedEditData.citizenId)
+      setValue('citizenId', choosedEditData.citizenId);
+    } else if (choosedEditData?.passportId) {
+      setDropDownChoosed("Passport");
+      console.log(choosedEditData.passportId)
+      setValue('passportId', choosedEditData.passportId);
+    }
+  }, [choosedEditData]);
+
+
+  useEffect(() => {
+    const directorData = mapDataToTDirector(choosedEditData || null) || {
+      fullNames: [{ title: '', firstName: '', lastName: '' }],
+      citizenId: "",
+      passportId: "",
+      expiryDate: new Date(), 
+      nationality: "",
+      addresses:[
+        { addressNo:"",
+          building:"",
+          floor:"", 
+          mooNo:"", 
+          soi:"", 
+          road:"", 
+          tambon:"",
+          amphoe:"", 
+          province:"", 
+          postalCode:"", 
+          country:"",
+        } 
+      ],
+    };
+    reset(directorData);
+    setHasDate(true)
+    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "" )
+    setCurInput(choosedEditData?.citizenId !== "" || choosedEditData?.passportId !== "");
+    if (choosedEditData) {
+      const chosenValue = choosedEditData.citizenId ? "ID" : "Passport";
+      setDropDownChoosed(chosenValue);
+    }
+  }, [choosedEditData, reset]);
+
 
   const valideID = () => {
     if (dropDownChoosed === "ID") {
@@ -95,8 +151,11 @@ export function FormIndividualsDirector({
         addresses: data.addresses,
         fullNames: data.fullNames,
         corporateCode: corporateCode,
+        personalId: choosedEditData?.personalId,
       };
+
       console.log(body);
+      clearChoosedEditData();
       onsubmit(body);
     } else {
       setInitError(true);
@@ -167,7 +226,7 @@ export function FormIndividualsDirector({
             <div className="flex flex-col space-y-4 md:space-x-4 md:space-y-0 md:flex-row items-center">
               <div className="w-full md:w-1/2 flex flex-row items-center justify-between gap-4">
                 <div className="w-full md:w-1/2">
-                  <Dropbox onDropdownSelect={handleDropboxChoice} />
+                <Dropbox onDropdownSelect={handleDropboxChoice} dropDownChoosedback={dropDownChoosed}/>
                 </div>
                 <div className="w-full md:w-1/2">
                   {dropDownChoosed ? (
@@ -231,7 +290,20 @@ export function FormIndividualsDirector({
                   )}
                 </div>
               </div>
-              <div className="w-full md:w-1/2">
+              {hasDate ? (<div className="w-full md:w-1/2">
+                <Input
+                  {...register("expiryDate")}
+                  id="Date of Expired"
+                  onClick={()=>setHasDate(false)}
+                />
+                {errors.expiryDate && (
+                  <p className="text-red-500 text-sm px-2">
+                    {errors.expiryDate.message}
+                  </p>
+                )}
+              </div>
+              ) : (
+                <div className="w-full md:w-1/2">
                 <Input
                   {...register("expiryDate")}
                   label="Date of Expired"
@@ -244,7 +316,7 @@ export function FormIndividualsDirector({
                     {errors.expiryDate.message}
                   </p>
                 )}
-              </div>
+              </div>)}
             </div>
 
             <div className="flex flex-row space-x-0 md:space-x-4">

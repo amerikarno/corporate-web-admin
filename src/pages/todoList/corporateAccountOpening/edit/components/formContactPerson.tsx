@@ -61,9 +61,8 @@ export function FormIndividualsContactPerson({
   const onSubmit = async (data: TContactPerson) => {
     console.log(data)
     let formData: TContactPersonArray = {
-      contacts: [data],
+      contacts: [{...data,personalId:choosedEditData?.personalId}],
       corporateCode: corporateCode,
-      personalId: choosedEditData?.personalId,
     };
     await sleep(500);
     reset();

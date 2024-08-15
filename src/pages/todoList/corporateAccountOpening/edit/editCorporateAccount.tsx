@@ -43,7 +43,7 @@ export function EditCorporateAccount() {
     useCorporateInfo();
 
   //const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  const corporateCode :string = "80000007";
+  const corporateCode :string = "80000010";
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo

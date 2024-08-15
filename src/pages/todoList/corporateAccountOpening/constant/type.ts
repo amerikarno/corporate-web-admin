@@ -198,15 +198,18 @@ export type TDirector = {
 };
 
 export type TAuthorizedPerson = {
+  toISOString(): unknown;
+  split(arg0: string): unknown;
   id: string;
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
   personalId: string;
   corporateCode: number;
-  fullnames: TFullName[];
+  fullNames: TFullName[];
   addresses: TAddress[];
-  passportId: string;
+  passportId?: string;
+  citizenId?:string;
   expiryDate: string;
   nationality: string;
   types: number;
@@ -219,9 +222,10 @@ export type TIndividualShareholder = {
   DeletedAt: string | null;
   personalId: string;
   corporateCode: number;
-  fullnames: TFullName[];
-  passportId: string;
-  expiryDate: string;
+  fullNames: TFullName[];
+  citizenId?: string;
+  passportId?: string;
+  expiryDate: string | null;
   nationality: string;
   types: number;
   sharePercentage: number;
@@ -250,6 +254,7 @@ export type TBank = {
   accountNo: string;
   accountLocation: string;
   swiftCode: string;
+  BankId:string;
 };
 
 export type TCorporateData = {
