@@ -192,7 +192,7 @@ export type TDirector = {
   addresses: TAddress[];
   citizenId:string;
   passportId: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   types: number;
 };

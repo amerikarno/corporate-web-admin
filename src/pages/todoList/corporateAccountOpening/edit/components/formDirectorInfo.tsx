@@ -20,7 +20,7 @@ type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
   corporateCode: string;
   personalId?: string;
-  choosedEditData?: TDirectorEdit | null;
+  choosedEditData?: TDirector | null;
   clearChoosedEditData: () => void;
 };
 
@@ -93,7 +93,7 @@ export function FormIndividualsDirector({
 
 
   useEffect(() => {
-    const directorData = mapDataToTDirector(choosedEditData || null) || {
+    const directorData = choosedEditData || {
       fullNames: [{ title: '', firstName: '', lastName: '' }],
       citizenId: "",
       passportId: "",

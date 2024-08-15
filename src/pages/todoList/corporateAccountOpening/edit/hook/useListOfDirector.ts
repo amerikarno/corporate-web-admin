@@ -40,7 +40,7 @@ export function useListOfDirector() {
         if (res.status === 200) {
           console.log("Save successful ",res);
 
-          dispatch(addDirector({ ...data, personalId: res.data.personalId }));
+          dispatch(addDirector({ ...data, personalId: res.data.personalId, expiryDate: data.expiryDate }));
         } else {
           console.log("Save failed");
         }

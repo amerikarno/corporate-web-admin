@@ -15,10 +15,9 @@ export const DirectorSlice = createSlice({
   initialState,
   reducers: {
     addDirector: (state, action) => {
-      const { expiryDate } = action.payload;
-      const expiryDateStr = expiryDate.toISOString();
-      return { ...state, listOfDirectors: [...state.listOfDirectors, { ...action.payload, expiryDate: expiryDateStr }] };
-    },
+      console.log('action.payload:', action.payload);
+      return { ...state, listOfDirectors: [...state.listOfDirectors, action.payload] };
+  },
     removeDirector: (state, action) => {
       state.listOfDirectors = state.listOfDirectors.filter(
         (data) => data.personalId !== action.payload
@@ -28,11 +27,8 @@ export const DirectorSlice = createSlice({
       state.listOfDirectors = [];
     },
     
-    setDirectorEdit: (state, action: PayloadAction<TDirectorEdit[]>) => {
-      state.listOfDirectors = action.payload.map(director => ({
-        ...director,
-        corporateCode: String(director.corporateCode),
-      })) as TDirector[];
+    setDirectorEdit: (state, action: PayloadAction<TDirector[]>) => {
+      state.listOfDirectors = action.payload;
     },
     updateDirector: (state, action: PayloadAction<TDirector>) => {
       const index = state.listOfDirectors.findIndex(
