@@ -142,7 +142,7 @@ export type TDirector = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;

@@ -148,7 +148,7 @@ export type TContactFullName = {
   CreatedAt: string;
   DeletedAt: string | null;
   contactID: string;
-  title : string;
+  title: string;
   firstName: string;
   lastName: string;
   types: number;
@@ -160,7 +160,7 @@ export type TFullName = {
   CreatedAt: string;
   DeletedAt: string | null;
   ReferenceID: string;
-  title:string;
+  title: string;
   firstName: string;
   lastName: string;
   types: number;
@@ -190,9 +190,9 @@ export type TDirector = {
   corporateCode: number;
   fullNames: TFullName[];
   addresses: TAddress[];
-  citizenId:string;
+  citizenId: string;
   passportId: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   types: number;
 };
@@ -209,7 +209,7 @@ export type TAuthorizedPerson = {
   fullNames: TFullName[];
   addresses: TAddress[];
   passportId?: string;
-  citizenId?:string;
+  citizenId?: string;
   expiryDate: string;
   nationality: string;
   types: number;
@@ -254,7 +254,7 @@ export type TBank = {
   accountNo: string;
   accountLocation: string;
   swiftCode: string;
-  BankId:string;
+  BankId: string;
 };
 
 export type TCorporateData = {

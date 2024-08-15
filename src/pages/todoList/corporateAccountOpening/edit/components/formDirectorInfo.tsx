@@ -39,8 +39,8 @@ export function FormIndividualsDirector({
     choosedEditData?.expiryDate ? true : false
   );
   const handleDropboxChoice = (choice: string) => {
-    setValue('passportId', '');
-    setValue('citizenId', '');
+    setValue("passportId", "");
+    setValue("citizenId", "");
 
     console.log(choice);
     setCurInputText("");
@@ -49,7 +49,6 @@ export function FormIndividualsDirector({
     setDropDownChoosed(choice);
   };
 
-  
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
     setInitError(false);
@@ -82,48 +81,51 @@ export function FormIndividualsDirector({
   useEffect(() => {
     if (choosedEditData?.citizenId) {
       setDropDownChoosed("ID");
-      console.log(choosedEditData.citizenId)
-      setValue('citizenId', choosedEditData.citizenId);
+      console.log(choosedEditData.citizenId);
+      setValue("citizenId", choosedEditData.citizenId);
     } else if (choosedEditData?.passportId) {
       setDropDownChoosed("Passport");
-      console.log(choosedEditData.passportId)
-      setValue('passportId', choosedEditData.passportId);
+      console.log(choosedEditData.passportId);
+      setValue("passportId", choosedEditData.passportId);
     }
   }, [choosedEditData]);
 
-
   useEffect(() => {
     const directorData = mapDataToTDirector(choosedEditData || null) || {
-      fullNames: [{ title: '', firstName: '', lastName: '' }],
+      fullNames: [{ title: "", firstName: "", lastName: "" }],
       citizenId: "",
       passportId: "",
-      expiryDate: new Date(), 
+      expiryDate: "",
       nationality: "",
-      addresses:[
-        { addressNo:"",
-          building:"",
-          floor:"", 
-          mooNo:"", 
-          soi:"", 
-          road:"", 
-          tambon:"",
-          amphoe:"", 
-          province:"", 
-          postalCode:"", 
-          country:"",
-        } 
+      addresses: [
+        {
+          addressNo: "",
+          building: "",
+          floor: "",
+          mooNo: "",
+          soi: "",
+          road: "",
+          tambon: "",
+          amphoe: "",
+          province: "",
+          postalCode: "",
+          country: "",
+        },
       ],
     };
     reset(directorData);
-    setHasDate(true)
-    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "" )
-    setCurInput(choosedEditData?.citizenId !== "" || choosedEditData?.passportId !== "");
+    setHasDate(true);
+    setCurInputText(
+      choosedEditData?.citizenId || choosedEditData?.passportId || ""
+    );
+    setCurInput(
+      choosedEditData?.citizenId !== "" || choosedEditData?.passportId !== ""
+    );
     if (choosedEditData) {
       const chosenValue = choosedEditData.citizenId ? "ID" : "Passport";
       setDropDownChoosed(chosenValue);
     }
   }, [choosedEditData, reset]);
-
 
   const valideID = () => {
     if (dropDownChoosed === "ID") {
@@ -226,7 +228,10 @@ export function FormIndividualsDirector({
             <div className="flex flex-col space-y-4 md:space-x-4 md:space-y-0 md:flex-row items-center">
               <div className="w-full md:w-1/2 flex flex-row items-center justify-between gap-4">
                 <div className="w-full md:w-1/2">
-                <Dropbox onDropdownSelect={handleDropboxChoice} dropDownChoosedback={dropDownChoosed}/>
+                  <Dropbox
+                    onDropdownSelect={handleDropboxChoice}
+                    dropDownChoosedback={dropDownChoosed}
+                  />
                 </div>
                 <div className="w-full md:w-1/2">
                   {dropDownChoosed ? (
@@ -290,33 +295,35 @@ export function FormIndividualsDirector({
                   )}
                 </div>
               </div>
-              {hasDate ? (<div className="w-full md:w-1/2">
-                <Input
-                  {...register("expiryDate")}
-                  id="Date of Expired"
-                  onClick={()=>setHasDate(false)}
-                />
-                {errors.expiryDate && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.expiryDate.message}
-                  </p>
-                )}
-              </div>
+              {hasDate ? (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    id="Date of Expired"
+                    onClick={() => setHasDate(false)}
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
               ) : (
                 <div className="w-full md:w-1/2">
-                <Input
-                  {...register("expiryDate")}
-                  label="Date of Expired"
-                  id="Date of Expired"
-                  disabled={isSubmitting}
-                  type="date"
-                />
-                {errors.expiryDate && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.expiryDate.message}
-                  </p>
-                )}
-              </div>)}
+                  <Input
+                    {...register("expiryDate")}
+                    label="Date of Expired"
+                    id="Date of Expired"
+                    disabled={isSubmitting}
+                    type="date"
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-row space-x-0 md:space-x-4">
