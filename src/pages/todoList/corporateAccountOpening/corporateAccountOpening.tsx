@@ -101,7 +101,9 @@ export default function TodoCorporateAccountOpenning() {
                   disabled={disableDate}
                 />
                 {errors && (
-                  <p className="text-red-500">{errors.dateFrom?.message}</p>
+                  <p className="w-full text-red-500 py-1">
+                    {errors.dateFrom?.message}
+                  </p>
                 )}
               </SideLabelInput>
             </div>
@@ -113,7 +115,9 @@ export default function TodoCorporateAccountOpenning() {
                 disabled={disableDate}
               />
               {errors && (
-                <p className="text-red-500">{errors.dateTo?.message}</p>
+                <p className="w-full py-1 text-red-500">
+                  {errors.dateTo?.message}
+                </p>
               )}
             </SideLabelInput>
             <div className="col-start-2 flex justify-end">

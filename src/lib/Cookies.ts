@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 const TOKEN_KEY = "token";
 
 export const setCookies = (token: string) => {
-  Cookies.set(TOKEN_KEY, token, { expires: 1 });
+  Cookies.set(TOKEN_KEY, token, { expires: 1, secure: true });
 };
 
 export const getCookies = (): string | undefined => {
