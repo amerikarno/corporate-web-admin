@@ -246,8 +246,8 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3013,
       },
       {
-        label: "Transactions List",
-        href: "/todo-list/transactions-list",
+        label: "orders/trades",
+        href: "/todo-list/orders-trades",
         pageId: 3014,
       },
     ],

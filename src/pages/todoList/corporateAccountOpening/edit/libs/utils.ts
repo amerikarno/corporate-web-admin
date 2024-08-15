@@ -55,7 +55,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       name: data.Info.name,
       registrationNo: data.Info.registrationNo,
       taxId: data.Info.taxId,
-      dateofincorporation: data.Info.dateOfIncorporation,
+      dateofincorporation: data.Info.dateOfIncorporation.split("T")[0],
       // dateofincorporation: dt,
       // dateofincorporation: new Date(timeStamp),
       registered: resCorpRegisterCountry?.other || "",

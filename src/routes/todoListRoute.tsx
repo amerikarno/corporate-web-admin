@@ -45,7 +45,7 @@ export const todoListRoutes = () => {
         path="fx-rate-approve"
         element={<BlankPage name="FX Rate Approve" />}
       />
-      <Route path="transactions-list" element={<TransactionList />} />
+      <Route path="orders-trades" element={<TransactionList />} />
     </Route>
   );
 };

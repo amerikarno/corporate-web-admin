@@ -4,14 +4,16 @@ export const corporateAccountOpeningSchema = z.object({
   corporateCode: z.string(),
   // corporateName: z.string(),
   // taxId: z.coerce.number(),
-  dateFrom: z
-    .string()
-    .transform((str) => new Date(str))
-    .optional(),
-  dateTo: z
-    .string()
-    .transform((str) => new Date(str))
-    .optional(),
+  // dateFrom: z
+  //   .string()
+  //   .transform((str) => new Date(str))
+  //   .optional(),
+  // dateTo: z
+  //   .string()
+  //   .transform((str) => new Date(str))
+  //   .optional(),
+  dateFrom: z.string().optional(),
+  dateTo: z.string().optional(),
 });
 
 export type TCorporateAccountOpening = z.infer<

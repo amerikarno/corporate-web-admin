@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { columnsCorporateInfo } from "./components/column";
-import { isAllowedPage } from "@/lib/utils";
+import { dateToyyyyMMdd, isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 export default function TodoCorporateAccountOpenning() {
@@ -21,16 +21,23 @@ export default function TodoCorporateAccountOpenning() {
     return <UnAuthorize />;
   }
 
+  const prev7Days = new Date();
+  prev7Days.setDate(prev7Days.getDate() - 7);
+
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors, isSubmitting },
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
+    defaultValues: {
+      dateFrom: dateToyyyyMMdd(prev7Days),
+      dateTo: dateToyyyyMMdd(new Date()),
+    },
   });
 
-  console.log("reset:", reset);
+  // console.log("reset:", reset);
   const { handleSearch, searchResult } = useAccountOpening();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);

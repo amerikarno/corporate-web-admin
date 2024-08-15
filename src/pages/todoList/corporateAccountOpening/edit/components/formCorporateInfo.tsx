@@ -56,17 +56,17 @@ export function FormCorporateInfo({
     (item) => item.types === 602
   );
 
-  const [hasDate, setHasDate] = useState<boolean>(
-    initData?.dateofincorporation ? true : false
-  );
+  // const [hasDate, setHasDate] = useState<boolean>(
+  //   initData?.dateofincorporation ? true : false
+  // );
 
-  const formatDate = (date?: string): string | undefined => {
-    if (date) {
-      const dt = Date.parse(date);
-      const dateInDate = new Date(dt);
-      return dateInDate.toLocaleDateString("th-TH");
-    }
-  };
+  // const formatDate = (date?: string): string | undefined => {
+  //   if (date) {
+  //     const dt = Date.parse(date);
+  //     const dateInDate = new Date(dt);
+  //     return dateInDate.toLocaleDateString("th-TH");
+  //   }
+  // };
 
   useEffect(() => {
     if (shouldScrollUp) {
@@ -218,7 +218,7 @@ export function FormCorporateInfo({
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
             )}
-            {hasDate ? (
+            {/* {hasDate ? (
               <div
                 id="Date Of Incorporation"
                 onClick={() => setHasDate(false)}
@@ -238,7 +238,15 @@ export function FormCorporateInfo({
                 type="date"
                 disabled={isSubmitting}
               />
-            )}
+            )} */}
+            <Input
+              id={"Date Of Incorporation"}
+              label={"Date of Incorporation"}
+              {...register("dateofincorporation")}
+              name="dateofincorporation"
+              type="date"
+              disabled={isSubmitting}
+            />
             {errors.dateofincorporation && (
               <p className="text-red-500">
                 {errors.dateofincorporation.message}
