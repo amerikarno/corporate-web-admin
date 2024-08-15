@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TJuristicsShareholders } from "../constants/types";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 //import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
@@ -18,6 +18,7 @@ export function useJuristicShareholders() {
       await saveJuristicShareholders(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

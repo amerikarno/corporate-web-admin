@@ -8,22 +8,29 @@ import { PageContactPerson } from "./pages/PageContactPerson";
 import { PageIndividualShareholder } from "./pages/PageIndividualShareholder";
 import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { TCorporateData } from "../constant/type";
-import { mapDataToTCorporateInfo} from "./libs/utils";
-import { useDispatch, useSelector } from "react-redux";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { mapDataToTCorporateInfo } from "./libs/utils";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 type TPage = {
   page?: string;
 };
 
 export function EditCorporateAccount() {
-  const corporateData : TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  if (!isAllowedPage(3001)) {
+    return <UnAuthorize />;
+  }
+
+  const corporateData: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
   console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
@@ -42,8 +49,8 @@ export function EditCorporateAccount() {
   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  //const corporateCode: string = currentCorporatesInfo?.corporateCo9de ?? "";
-  const corporateCode:string = corporateData?.CorporateCode.toString() ?? "";
+  const corporateCode: string = corporateData?.CorporateCo9de.toString() ?? "";
+  // const corporateCode:string = corporateData?.CorporateCode.toString() ?? "";
   console.log(corporateCode)
   //const corporateCode :string = "80000010";
   const mappingPages: TMapPages = {

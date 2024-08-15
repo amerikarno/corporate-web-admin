@@ -2,7 +2,7 @@ import axios from "@/api/axios";
 import { useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { sleep } from "@/lib/utils";
 
@@ -70,6 +70,7 @@ export function useCorporateInfo() {
       await saveCorporateInfo(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

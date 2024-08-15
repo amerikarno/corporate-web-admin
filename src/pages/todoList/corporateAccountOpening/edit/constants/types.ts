@@ -103,7 +103,7 @@ export type TIndividualsShareholders = {
   nationality: string;
   sharePercentage: number;
   types?: number;
-  personalId?:string;
+  personalId?: string;
 };
 
 export type TBank = {
@@ -123,7 +123,7 @@ export type TAuthorizePerson = {
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
-  personalId?:string;
+  personalId?: string;
 };
 export type TContactPerson = {
   corporateCode?: string;
@@ -132,7 +132,7 @@ export type TContactPerson = {
   division: string;
   telephone: string;
   email: string;
-  personalId?:string;
+  personalId?: string;
 };
 
 export type TDirector = {
@@ -140,11 +140,11 @@ export type TDirector = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
-  personalId?:string;
+  personalId?: string;
 };
 
 export type TJuristicsShareholders = {
@@ -153,7 +153,7 @@ export type TJuristicsShareholders = {
   registrationNo: string;
   registeredCountry: string;
   sharePercentage: number;
-  juristicId?:string;
+  juristicId?: string;
 };
 
 export type TInitailJuristicTypeAndIncome = {

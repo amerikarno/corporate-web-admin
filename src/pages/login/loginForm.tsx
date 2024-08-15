@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { setUser, TUser } from "@/features/user/userSlice";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -56,12 +57,15 @@ const LoginForm = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         )
         .then((res) => {
           console.log(res);
           dispatch(setToken(res.data.accessToken));
           setCookies(res.data.accessToken);
+          const user: TUser = jwtDecode(res.data.accessToken);
+          dispatch(setUser(user));
           navigate("/");
         })
         .catch((err) => {

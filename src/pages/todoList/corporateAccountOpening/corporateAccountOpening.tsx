@@ -13,17 +13,31 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { columnsCorporateInfo } from "./components/column";
+import { dateToyyyyMMdd, isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 export default function TodoCorporateAccountOpenning() {
+  if (!isAllowedPage(3001)) {
+    return <UnAuthorize />;
+  }
+
+  const prev7Days = new Date();
+  prev7Days.setDate(prev7Days.getDate() - 7);
+
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors, isSubmitting },
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
+    defaultValues: {
+      dateFrom: dateToyyyyMMdd(prev7Days),
+      dateTo: dateToyyyyMMdd(new Date()),
+    },
   });
 
+  // console.log("reset:", reset);
   const { handleSearch, searchResult } = useAccountOpening();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
@@ -87,7 +101,9 @@ export default function TodoCorporateAccountOpenning() {
                   disabled={disableDate}
                 />
                 {errors && (
-                  <p className="text-red-500">{errors.dateFrom?.message}</p>
+                  <p className="w-full text-red-500 py-1">
+                    {errors.dateFrom?.message}
+                  </p>
                 )}
               </SideLabelInput>
             </div>
@@ -99,7 +115,9 @@ export default function TodoCorporateAccountOpenning() {
                 disabled={disableDate}
               />
               {errors && (
-                <p className="text-red-500">{errors.dateTo?.message}</p>
+                <p className="w-full py-1 text-red-500">
+                  {errors.dateTo?.message}
+                </p>
               )}
             </SideLabelInput>
             <div className="col-start-2 flex justify-end">

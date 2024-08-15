@@ -14,22 +14,28 @@ import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
 import { useEffect, useState } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "../unAuthorizePage/unAuthorize";
 
 type TPage = {
   page?: string;
 };
 
 export default function CorporateAccountOpenning() {
-  const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  if (!isAllowedPage(2001)) {
+    return <UnAuthorize />;
+  }
 
-  const handleFormPassChange = (status: boolean) => {
-    setIsSecondFormPass(status);
-  };
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);
+  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
 
-
-  const {
-
-  } = useFormCorporateInfo2(handleFormPassChange);
+  // const handleFormPassChange = (status: boolean) => {
+  //   setIsSecondFormPass(status);
+  // };
+  const { isSecondFormPass } = useFormCorporateInfo2();
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
@@ -38,16 +44,15 @@ export default function CorporateAccountOpenning() {
   const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-
   //let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  let corporateCode :string = "80000007";
+  let corporateCode: string = "80000007";
 
   useEffect(() => {
     if (pageId === 1) {
       corporateCode = "";
     }
   }, [currentCorporatesInfo?.corporateCode, pageId]);
-  
+
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
@@ -83,9 +88,9 @@ export default function CorporateAccountOpenning() {
       if (isSecondFormPass) {
         navigate(`/create-job/added-corporate-account/${pageId + 1}`);
       }
-    } else if (type == "done"){
-      navigate(`/create-job/added-corporate-account/1`) 
-    }else {
+    } else if (type == "done") {
+      navigate(`/create-job/added-corporate-account/1`);
+    } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }
   };

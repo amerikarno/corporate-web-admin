@@ -9688,20 +9688,20 @@ var require_react_dom_development = __commonJS({
             if (didWarnAboutUnsafeLifecycles.has(fiber.type)) {
               return;
             }
-            if (typeof instance.componentWillMount === "function" && // Don't warn about react-lifecycles-compat polyfilled components.
-            instance.componentWillMount.__suppressDeprecationWarning !== true) {
+            if (typeof instance.UNSAFE_componentWillMount === "function" && // Don't warn about react-lifecycles-compat polyfilled components.
+            instance.UNSAFE_componentWillMount.__suppressDeprecationWarning !== true) {
               pendingComponentWillMountWarnings.push(fiber);
             }
             if (fiber.mode & StrictLegacyMode && typeof instance.UNSAFE_componentWillMount === "function") {
               pendingUNSAFE_ComponentWillMountWarnings.push(fiber);
             }
-            if (typeof instance.componentWillReceiveProps === "function" && instance.componentWillReceiveProps.__suppressDeprecationWarning !== true) {
+            if (typeof instance.UNSAFE_componentWillReceiveProps === "function" && instance.UNSAFE_componentWillReceiveProps.__suppressDeprecationWarning !== true) {
               pendingComponentWillReceivePropsWarnings.push(fiber);
             }
             if (fiber.mode & StrictLegacyMode && typeof instance.UNSAFE_componentWillReceiveProps === "function") {
               pendingUNSAFE_ComponentWillReceivePropsWarnings.push(fiber);
             }
-            if (typeof instance.componentWillUpdate === "function" && instance.componentWillUpdate.__suppressDeprecationWarning !== true) {
+            if (typeof instance.UNSAFE_componentWillUpdate === "function" && instance.UNSAFE_componentWillUpdate.__suppressDeprecationWarning !== true) {
               pendingComponentWillUpdateWarnings.push(fiber);
             }
             if (fiber.mode & StrictLegacyMode && typeof instance.UNSAFE_componentWillUpdate === "function") {
@@ -13701,17 +13701,17 @@ var require_react_dom_development = __commonJS({
               var foundWillMountName = null;
               var foundWillReceivePropsName = null;
               var foundWillUpdateName = null;
-              if (typeof instance.componentWillMount === "function" && instance.componentWillMount.__suppressDeprecationWarning !== true) {
+              if (typeof instance.UNSAFE_componentWillMount === "function" && instance.UNSAFE_componentWillMount.__suppressDeprecationWarning !== true) {
                 foundWillMountName = "componentWillMount";
               } else if (typeof instance.UNSAFE_componentWillMount === "function") {
                 foundWillMountName = "UNSAFE_componentWillMount";
               }
-              if (typeof instance.componentWillReceiveProps === "function" && instance.componentWillReceiveProps.__suppressDeprecationWarning !== true) {
+              if (typeof instance.UNSAFE_componentWillReceiveProps === "function" && instance.UNSAFE_componentWillReceiveProps.__suppressDeprecationWarning !== true) {
                 foundWillReceivePropsName = "componentWillReceiveProps";
               } else if (typeof instance.UNSAFE_componentWillReceiveProps === "function") {
                 foundWillReceivePropsName = "UNSAFE_componentWillReceiveProps";
               }
-              if (typeof instance.componentWillUpdate === "function" && instance.componentWillUpdate.__suppressDeprecationWarning !== true) {
+              if (typeof instance.UNSAFE_componentWillUpdate === "function" && instance.UNSAFE_componentWillUpdate.__suppressDeprecationWarning !== true) {
                 foundWillUpdateName = "componentWillUpdate";
               } else if (typeof instance.UNSAFE_componentWillUpdate === "function") {
                 foundWillUpdateName = "UNSAFE_componentWillUpdate";
@@ -13733,8 +13733,8 @@ var require_react_dom_development = __commonJS({
         }
         function callComponentWillMount(workInProgress2, instance) {
           var oldState = instance.state;
-          if (typeof instance.componentWillMount === "function") {
-            instance.componentWillMount();
+          if (typeof instance.UNSAFE_componentWillMount === "function") {
+            instance.UNSAFE_componentWillMount();
           }
           if (typeof instance.UNSAFE_componentWillMount === "function") {
             instance.UNSAFE_componentWillMount();
@@ -13748,8 +13748,8 @@ var require_react_dom_development = __commonJS({
         }
         function callComponentWillReceiveProps(workInProgress2, instance, newProps, nextContext) {
           var oldState = instance.state;
-          if (typeof instance.componentWillReceiveProps === "function") {
-            instance.componentWillReceiveProps(newProps, nextContext);
+          if (typeof instance.UNSAFE_componentWillReceiveProps === "function") {
+            instance.UNSAFE_componentWillReceiveProps(newProps, nextContext);
           }
           if (typeof instance.UNSAFE_componentWillReceiveProps === "function") {
             instance.UNSAFE_componentWillReceiveProps(newProps, nextContext);
@@ -13802,7 +13802,7 @@ var require_react_dom_development = __commonJS({
             applyDerivedStateFromProps(workInProgress2, ctor, getDerivedStateFromProps, newProps);
             instance.state = workInProgress2.memoizedState;
           }
-          if (typeof ctor.getDerivedStateFromProps !== "function" && typeof instance.getSnapshotBeforeUpdate !== "function" && (typeof instance.UNSAFE_componentWillMount === "function" || typeof instance.componentWillMount === "function")) {
+          if (typeof ctor.getDerivedStateFromProps !== "function" && typeof instance.getSnapshotBeforeUpdate !== "function" && (typeof instance.UNSAFE_componentWillMount === "function" || typeof instance.UNSAFE_componentWillMount === "function")) {
             callComponentWillMount(workInProgress2, instance);
             processUpdateQueue(workInProgress2, newProps, instance, renderLanes2);
             instance.state = workInProgress2.memoizedState;
@@ -13833,7 +13833,7 @@ var require_react_dom_development = __commonJS({
           }
           var getDerivedStateFromProps = ctor.getDerivedStateFromProps;
           var hasNewLifecycles = typeof getDerivedStateFromProps === "function" || typeof instance.getSnapshotBeforeUpdate === "function";
-          if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillReceiveProps === "function" || typeof instance.componentWillReceiveProps === "function")) {
+          if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillReceiveProps === "function" || typeof instance.UNSAFE_componentWillReceiveProps === "function")) {
             if (oldProps !== newProps || oldContext !== nextContext) {
               callComponentWillReceiveProps(workInProgress2, instance, newProps, nextContext);
             }
@@ -13862,9 +13862,9 @@ var require_react_dom_development = __commonJS({
           }
           var shouldUpdate = checkHasForceUpdateAfterProcessing() || checkShouldComponentUpdate(workInProgress2, ctor, oldProps, newProps, oldState, newState, nextContext);
           if (shouldUpdate) {
-            if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillMount === "function" || typeof instance.componentWillMount === "function")) {
-              if (typeof instance.componentWillMount === "function") {
-                instance.componentWillMount();
+            if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillMount === "function" || typeof instance.UNSAFE_componentWillMount === "function")) {
+              if (typeof instance.UNSAFE_componentWillMount === "function") {
+                instance.UNSAFE_componentWillMount();
               }
               if (typeof instance.UNSAFE_componentWillMount === "function") {
                 instance.UNSAFE_componentWillMount();
@@ -13917,7 +13917,7 @@ var require_react_dom_development = __commonJS({
           }
           var getDerivedStateFromProps = ctor.getDerivedStateFromProps;
           var hasNewLifecycles = typeof getDerivedStateFromProps === "function" || typeof instance.getSnapshotBeforeUpdate === "function";
-          if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillReceiveProps === "function" || typeof instance.componentWillReceiveProps === "function")) {
+          if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillReceiveProps === "function" || typeof instance.UNSAFE_componentWillReceiveProps === "function")) {
             if (unresolvedOldProps !== unresolvedNewProps || oldContext !== nextContext) {
               callComponentWillReceiveProps(workInProgress2, instance, newProps, nextContext);
             }
@@ -13950,9 +13950,9 @@ var require_react_dom_development = __commonJS({
           // components so it's not that common.
           enableLazyContextPropagation;
           if (shouldUpdate) {
-            if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillUpdate === "function" || typeof instance.componentWillUpdate === "function")) {
-              if (typeof instance.componentWillUpdate === "function") {
-                instance.componentWillUpdate(newProps, newState, nextContext);
+            if (!hasNewLifecycles && (typeof instance.UNSAFE_componentWillUpdate === "function" || typeof instance.UNSAFE_componentWillUpdate === "function")) {
+              if (typeof instance.UNSAFE_componentWillUpdate === "function") {
+                instance.UNSAFE_componentWillUpdate(newProps, newState, nextContext);
               }
               if (typeof instance.UNSAFE_componentWillUpdate === "function") {
                 instance.UNSAFE_componentWillUpdate(newProps, newState, nextContext);

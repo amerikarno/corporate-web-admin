@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TAuthorizePerson } from "../constants/types";
 import axios from "@/api/axios";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import { addAuthorizedPerson, updateAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
 //import { RootState } from "@/app/store";
@@ -32,7 +32,7 @@ export function useAuthorizePerson() {
   const saveAuthorizePerson = async (data: TAuthorizePerson) => {
     let body = {
       ...data,
-      expiryDate:data.expiryDate.toISOString(),
+      expiryDate: data.expiryDate.toISOString(),
     };
     console.log(body);
     try {
@@ -78,6 +78,7 @@ export function useAuthorizePerson() {
       await saveAuthorizePerson(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
   return {

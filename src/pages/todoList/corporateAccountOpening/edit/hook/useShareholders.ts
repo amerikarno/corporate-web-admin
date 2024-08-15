@@ -2,12 +2,13 @@
 import { isExpiredToken } from "../libs/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import {
-  TIndividualsShareholders,
-} from "../constants/types";
+import { TIndividualsShareholders } from "../constants/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { addIndividualShareholder, updateIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import {
+  addIndividualShareholder,
+  updateIndividualShareholder,
+} from "@/features/individualShareholder/individualShareholderSlice";
 
 export function useShareholders() {
   const token = getCookies();
@@ -18,14 +19,14 @@ export function useShareholders() {
       await saveIndividualsShareholders(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 
   const saveIndividualsShareholders = async (
     data: TIndividualsShareholders
   ) => {
-
-    let body: TIndividualsShareholders  = {
+    let body: TIndividualsShareholders = {
       fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
@@ -38,40 +39,45 @@ export function useShareholders() {
     };
     //console.log("body", body);
     try {
-      console.log("sending data to update : ", body)
-      if (data.personalId) { //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
-        const res = await axios.post("/api/v1/personals/update",  body , {
+      console.log("sending data to update : ", body);
+      if (data.personalId) {
+        //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
+        const res = await axios.post("/api/v1/personals/update", body, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        
+
         if (res.status === 200) {
           console.log("Edit successful");
           dispatch(updateIndividualShareholder(body)); //expiryใน body  เป็น date
         } else {
           console.log("Edit failed");
         }
-      }else{ //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
+      } else {
+        //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
 
         const res = await axios.post("/api/v1/personals/create", body, {
           headers: { Authorization: `Bearer ${token}` },
         });
-  
-        if (res.status === 200) {
-          console.log("Save successful ",res);
 
-          dispatch(addIndividualShareholder({ ...body, personalId: res.data.personalId }));
+        if (res.status === 200) {
+          console.log("Save successful ", res);
+
+          dispatch(
+            addIndividualShareholder({
+              ...body,
+              personalId: res.data.personalId,
+            })
+          );
         } else {
           console.log("Save failed");
         }
       }
-      }catch (error) {
-        console.log("Error:", error);
-      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   return {
-
     handleSubmitShareholders,
-
   };
 }

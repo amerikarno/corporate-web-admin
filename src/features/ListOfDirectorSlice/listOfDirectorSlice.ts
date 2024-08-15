@@ -1,13 +1,12 @@
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TDirector } from "@/pages/corporateAccountOpening/constants/types";
 import { TDirector as TDirectorEdit } from "@/pages/todoList/corporateAccountOpening/constant/type";
 interface ListOfDirectorState {
-    listOfDirectors: TDirector[];
+  listOfDirectors: TDirector[];
 }
 
 const initialState: ListOfDirectorState = {
-    listOfDirectors: [],
+  listOfDirectors: [],
 };
 
 export const DirectorSlice = createSlice({
@@ -15,9 +14,17 @@ export const DirectorSlice = createSlice({
   initialState,
   reducers: {
     addDirector: (state, action) => {
-      console.log('action.payload:', action.payload);
-      return { ...state, listOfDirectors: [...state.listOfDirectors, action.payload] };
-  },
+      // const { expiryDate } = action.payload;
+      // const expiryDateStr = expiryDate.toISOString();
+      return {
+        ...state,
+        listOfDirectors: [
+          ...state.listOfDirectors,
+          { ...action.payload },
+          // { ...action.payload, expiryDate: expiryDateStr },
+        ],
+      };
+    },
     removeDirector: (state, action) => {
       state.listOfDirectors = state.listOfDirectors.filter(
         (data) => data.personalId !== action.payload
@@ -39,8 +46,13 @@ export const DirectorSlice = createSlice({
       }
     },
   },
-  
 });
 
-export const { addDirector, updateDirector,removeDirector, clearDirector , setDirectorEdit } = DirectorSlice.actions;
+export const {
+  addDirector,
+  updateDirector,
+  removeDirector,
+  clearDirector,
+  setDirectorEdit,
+} = DirectorSlice.actions;
 export default DirectorSlice.reducer;

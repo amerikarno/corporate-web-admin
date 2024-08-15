@@ -49,7 +49,7 @@ export function useSuitTest(corporateCode: string) {
         corporateCode: corporateCode,
         totalScore: score,
         level: grade,
-        invsetorTypeRisk: mapScore[grade],
+        investorTypeRisk: mapScore[grade],
       };
       console.log(ans);
       setScore(score);

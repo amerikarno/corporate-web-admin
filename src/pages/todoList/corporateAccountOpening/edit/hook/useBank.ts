@@ -9,11 +9,10 @@ import { addBank, updateBank } from "@/features/bankSlice/bankSlice";
 type TBankArray = {
   bank: TBank[];
   CorporateCode?: string;
-  BankId?:string;
+  BankId?: string;
 };
 
 export function useBank() {
-
   const dispatch = useDispatch();
   const saveBank = async (data: TBankArray) => {
     let body = {
@@ -23,20 +22,20 @@ export function useBank() {
     try {
       const token = getCookies();
 
-      if(data.BankId){
-        const res = await axios.post("/api/v1/bank/update",data,{
+      if (data.BankId) {
+        const res = await axios.post("/api/v1/bank/update", data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         if (res.status === 200) {
-          console.log(res)
+          console.log(res);
           console.log("update success");
-          dispatch(updateBank({ ...data, BankId: res.data.BankId}));
+          dispatch(updateBank({ ...data, BankId: res.data.BankId }));
         } else {
           console.log("update failed");
         }
-      }else{
+      } else {
         const res = await axios.post("/api/v1/bank/create", body, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,6 +58,7 @@ export function useBank() {
       await saveBank(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 

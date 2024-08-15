@@ -4,6 +4,10 @@ import { getCookies } from "./Cookies";
 import { jwtDecode } from "jwt-decode";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { getCookies } from "./Cookies";
+import { jwtDecode } from "jwt-decode";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -93,36 +97,36 @@ export const isExpiredToken = (): boolean => {
   return isExpired;
 };
 
-// export const isAllowedPage = (pageId: number): boolean => {
-//   const user = useSelector((state: RootState) => state.user.user);
-//   if (user && user.groups) {
-//     return user.groups.includes(pageId);
-//   } else {
-//     return false;
-//   }
-// };
+export const isAllowedPage = (pageId: number): boolean => {
+  const user = useSelector((state: RootState) => state.user.user);
+  if (user && user.groups) {
+    return user.groups.includes(pageId);
+  } else {
+    return false;
+  }
+};
 
-// export const isAllowedPageByRange = (pageId: number[]): boolean => {
-//   const user = useSelector((state: RootState) => state.user.user);
-//   // console.log(user?.groups);
+export const isAllowedPageByRange = (pageId: number[]): boolean => {
+  const user = useSelector((state: RootState) => state.user.user);
+  // console.log(user?.groups);
 
-//   const range = pageId[1] - pageId[0];
-//   const listPages = Array(range)
-//     .fill(0)
-//     .map((_, i) => pageId[0] + i);
-//   // console.log(listPages);
+  const range = pageId[1] - pageId[0];
+  const listPages = Array(range)
+    .fill(0)
+    .map((_, i) => pageId[0] + i);
+  // console.log(listPages);
 
-//   if (user && user.groups) {
-//     const hasAlowedPage = listPages.some((value) =>
-//       user.groups!.includes(value)
-//     );
+  if (user && user.groups) {
+    const hasAlowedPage = listPages.some((value) =>
+      user.groups!.includes(value)
+    );
 
-//     // console.log("hasCommonValue", hasAlowedPage);
-//     return hasAlowedPage;
-//   } else {
-//     return false;
-//   }
-// };
+    // console.log("hasCommonValue", hasAlowedPage);
+    return hasAlowedPage;
+  } else {
+    return false;
+  }
+};
 
 export const dateToyyyyMMdd = (date: Date): string => {
   const year = date.getFullYear();
@@ -136,4 +140,3 @@ export const yyyyMMddToDate = (dateString: string): Date => {
   const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
 };
- 

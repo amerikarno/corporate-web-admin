@@ -56,12 +56,13 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     const formData: TCorporateInfo = {
       ...data,
       registered: registeredCountryPrimaryCountryOperation.registered,
-      registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
-      registeredThailand:
+      isRegisteredOther:
+        registeredCountryPrimaryCountryOperation.registeredOther,
+      isRegisteredThailand:
         registeredCountryPrimaryCountryOperation.registeredThailand,
       primary: registeredCountryPrimaryCountryOperation.primary,
-      primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
-      primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
+      isPrimaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
+      isPrimaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
       registeredBusiness: {
         address: [
           {
@@ -116,19 +117,41 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   const handleCheckboxError = () => {
     let isValid = true;
 
-    if (!registeredCountryPrimaryCountryOperation.registered) {
-      setRegisteredCountryError(true);
-      isValid = false;
-    } else {
+    if (registeredCountryPrimaryCountryOperation.registeredThailand) {
       setRegisteredCountryError(false);
+    } else {
+      if (!registeredCountryPrimaryCountryOperation.registered) {
+        setRegisteredCountryError(true);
+        isValid = false;
+      } else {
+        setRegisteredCountryError(false);
+      }
     }
 
-    if (!registeredCountryPrimaryCountryOperation.primary) {
-      setPrimaryCountryOfOperationError(true);
-      isValid = false;
-    } else {
+    // if (!registeredCountryPrimaryCountryOperation.registered) {
+    //   setRegisteredCountryError(true);
+    //   isValid = false;
+    // } else {
+    //   setRegisteredCountryError(false);
+    // }
+
+    if (registeredCountryPrimaryCountryOperation.primaryCountry) {
       setPrimaryCountryOfOperationError(false);
+    } else {
+      if (!registeredCountryPrimaryCountryOperation.primary) {
+        setPrimaryCountryOfOperationError(true);
+        isValid = false;
+      } else {
+        setPrimaryCountryOfOperationError(false);
+      }
     }
+
+    // if (!registeredCountryPrimaryCountryOperation.primary) {
+    //   setPrimaryCountryOfOperationError(true);
+    //   isValid = false;
+    // } else {
+    //   setPrimaryCountryOfOperationError(false);
+    // }
 
     return isValid;
   };

@@ -3,6 +3,7 @@ import { TCorporateAccountOpening } from "../constant/schema";
 import { TCorporateData } from "../constant/type";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { yyyyMMddToDate } from "@/lib/utils";
 // import { useNavigate } from "react-router-dom";
 // import { TCorporateAccountOpening } from "../constant/type";
 
@@ -22,15 +23,14 @@ export function useAccountOpening() {
     const body: TBody = {
       ...data,
       dateFrom:
-        dateFrom instanceof Date && !isNaN(dateFrom.getTime())
-          ? dateFrom
-          : today,
+        // dateFrom instanceof Date && !isNaN(dateFrom.getTime())
+        dateFrom ? yyyyMMddToDate(dateFrom) : null,
       dateTo:
-        dateTo instanceof Date && !isNaN(dateTo.getTime()) 
-        ? dateTo 
-        : today,
+        // dateTo instanceof Date && !isNaN(dateTo.getTime())
+        dateTo ? yyyyMMddToDate(dateTo) : null,
     };
 
+    console.log(body);
     if (
       body.corporateCode === "" &&
       body.dateFrom === null &&
@@ -56,7 +56,7 @@ export function useAccountOpening() {
       }
     } else {
       try {
-        console.log(body)
+        console.log(body);
         const res = await axios.post("/api/v1/corporate/query", body, {
           headers: {
             Authorization: `Bearer ${getCookies()}`,
