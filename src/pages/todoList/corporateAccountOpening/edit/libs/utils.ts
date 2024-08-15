@@ -179,7 +179,6 @@ export const mapDataToTDirector = (
       citizenId: data.citizenId ?? "",
       passportId: data.passportId ?? "",
       expiryDate: new Date(data.expiryDate || ""),
-      expiryDate: dateFormatted ?? "",
       nationality: data.nationality ?? "",
       addresses:
         data.addresses.length > 0
