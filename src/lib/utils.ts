@@ -4,10 +4,6 @@ import { getCookies } from "./Cookies";
 import { jwtDecode } from "jwt-decode";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { getCookies } from "./Cookies";
-import { jwtDecode } from "jwt-decode";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -136,7 +132,15 @@ export const dateToyyyyMMdd = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-export const yyyyMMddToDate = (dateString: string): Date => {
+export const yyyyMMddToDate = (
+  dateString: string,
+  timeShift?: boolean
+): Date => {
   const [year, month, day] = dateString.split("-").map(Number);
-  return new Date(year, month - 1, day);
+  const date = new Date(year, month - 1, day);
+  if (timeShift) {
+    date.setHours(date.getHours() + 23);
+    date.setMinutes(date.getMinutes() + 59);
+  }
+  return date;
 };

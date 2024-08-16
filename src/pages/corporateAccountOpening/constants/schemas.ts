@@ -61,57 +61,53 @@ const registerBusinessAddressSchema = z.object({
   address: z.array(subAddressSchema),
   emailAddress: z.string().email().min(1, "email cannot be empty"),
   telephone: z
-  .string()
-  .min(1, "phone cannot be empty")
-  .superRefine((val, ctx) => {
-    if (!isNumber(val) || val.length !== 10) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Phone Number must be 10 letters",
-        fatal: true,
-      });
-      return z.NEVER;
-    }
-  }),
+    .string()
+    .min(1, "phone cannot be empty")
+    .superRefine((val, ctx) => {
+      if (!isNumber(val) || val.length !== 10) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Phone Number must be 10 letters",
+          fatal: true,
+        });
+        return z.NEVER;
+      }
+    }),
 });
 
 const placeIncorporateAddressSchema = z.object({
   address: z.array(subAddressSchema),
   emailAddress: z.string().email().min(1, "email cannot be empty"),
   telephone: z
-  .string()
-  .min(1, "phone cannot be empty")
-  .superRefine((val, ctx) => {
-    if (!isNumber(val) || val.length !== 10) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Phone Number must be 10 letters",
-        fatal: true,
-      });
-      return z.NEVER;
-    }
-  }),
+    .string()
+    .min(1, "phone cannot be empty")
+    .superRefine((val, ctx) => {
+      if (!isNumber(val) || val.length !== 10) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Phone Number must be 10 letters",
+          fatal: true,
+        });
+        return z.NEVER;
+      }
+    }),
 });
 
 export const corporateInfoSchema = z.object({
   name: z.string().min(1, "name cannot be empty"),
-  registrationNo: z
-    .string()
-    .min(1, "Registration number cannot be empty"),
+  registrationNo: z.string().min(1, "Registration number cannot be empty"),
   taxId: z
     .string()
     .min(1, "taxId cannot be empty")
     .regex(/^\d+$/, "taxId must be a numbers"),
-  dateofincorporation: z
-    .string()
-    .min(1, "date cannot be empty")
-    .transform((str) => {
-      const date = new Date(str);
-      if (isNaN(date.getTime())) {
-        throw new Error("Invalid date");
-      }
-      return date;
-    }),
+  dateofincorporation: z.string().min(1, "date cannot be empty"),
+  // .transform((str) => {
+  //   const date = new Date(str);
+  //   if (isNaN(date.getTime())) {
+  //     throw new Error("Invalid date");
+  //   }
+  //   return date;
+  // }),
   registered: z.string().optional(),
   primary: z.string().optional(),
   registeredBusiness: registerBusinessAddressSchema,
@@ -126,22 +122,20 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, "date cannot be empty")
-    .transform((str, ctx) => {
-      const date = new Date(str);
-      if (!isNaN(date.getTime())) {
-        if (date < new Date()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "date cannot be past",
-            fatal: true,
-          });
-        }
-      }
-      return date;
-    }),
+  expiryDate: z.string().min(1, "date cannot be empty"),
+  // .transform((str, ctx) => {
+  //   const date = new Date(str);
+  //   if (!isNaN(date.getTime())) {
+  //     if (date < new Date()) {
+  //       ctx.addIssue({
+  //         code: z.ZodIssueCode.custom,
+  //         message: "date cannot be past",
+  //         fatal: true,
+  //       });
+  //     }
+  //   }
+  //   return date;
+  // }),
   nationality: z.string().min(1, "nationality cannot be empty"),
   addresses: z.array(subAddressSchema),
 });
@@ -204,22 +198,20 @@ export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, "date cannot be empty")
-    .transform((str, ctx) => {
-      const date = new Date(str);
-      if (!isNaN(date.getTime())) {
-        if (date < new Date()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "date cannot be past",
-            fatal: true,
-          });
-        }
-      }
-      return date;
-    }),
+  expiryDate: z.string().min(1, "date cannot be empty"),
+  // .transform((str, ctx) => {
+  //   const date = new Date(str);
+  //   if (!isNaN(date.getTime())) {
+  //     if (date < new Date()) {
+  //       ctx.addIssue({
+  //         code: z.ZodIssueCode.custom,
+  //         message: "date cannot be past",
+  //         fatal: true,
+  //       });
+  //     }
+  //   }
+  //   return date;
+  // }),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   sharePercentage: z.preprocess(
     (a) => parseFloat(z.string().parse(a)),
@@ -258,22 +250,20 @@ export const authorizedPersonSchema = z.object({
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportId: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, "date cannot be empty")
-    .transform((str, ctx) => {
-      const date = new Date(str);
-      if (!isNaN(date.getTime())) {
-        if (date < new Date()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "date cannot be past",
-            fatal: true,
-          });
-        }
-      }
-      return date;
-    }),
+  expiryDate: z.string().min(1, "date cannot be empty"),
+  // .transform((str, ctx) => {
+  //   const date = new Date(str);
+  //   if (!isNaN(date.getTime())) {
+  //     if (date < new Date()) {
+  //       ctx.addIssue({
+  //         code: z.ZodIssueCode.custom,
+  //         message: "date cannot be past",
+  //         fatal: true,
+  //       });
+  //     }
+  //   }
+  //   return date;
+  // }),
   addresses: z.array(subAddressSchema),
 });
 
@@ -295,22 +285,20 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, "date cannot be empty")
-    .transform((str, ctx) => {
-      const date = new Date(str);
-      if (!isNaN(date.getTime())) {
-        if (date < new Date()) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "date cannot be past",
-            fatal: true,
-          });
-        }
-      }
-      return date;
-    }),
+  expiryDate: z.string().min(1, "date cannot be empty"),
+  // .transform((str, ctx) => {
+  //   const date = new Date(str);
+  //   if (!isNaN(date.getTime())) {
+  //     if (date < new Date()) {
+  //       ctx.addIssue({
+  //         code: z.ZodIssueCode.custom,
+  //         message: "date cannot be past",
+  //         fatal: true,
+  //       });
+  //     }
+  //   }
+  //   return date;
+  // }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   addresses: z.array(subAddressSchema),
 });
@@ -322,9 +310,7 @@ export type TIndividualsDirectorSchema = z.infer<
 export const individualsJuristicShareholdersSchema = z.object({
   corporateCode: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
-  registrationNo: z
-    .string()
-    .min(1, "Registration number cannot be empty"),
+  registrationNo: z.string().min(1, "Registration number cannot be empty"),
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),

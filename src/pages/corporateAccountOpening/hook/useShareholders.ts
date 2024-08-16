@@ -1,5 +1,5 @@
 //import { useState } from "react";
-import { isExpiredToken } from "@/lib/utils";
+import { isExpiredToken, yyyyMMddToDate } from "@/lib/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { TIndividualsShareholders } from "../constants/types";
@@ -31,12 +31,12 @@ export function useShareholders() {
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
-      expiryDate: data.expiryDate.toISOString(),
+      expiryDate: yyyyMMddToDate(data.expiryDate).toISOString(),
       nationality: data.nationality,
       sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,
     };
-    //console.log("body", body);
+    console.log("body", body);
     try {
       const token = getCookies();
       const res = await axios.post("/api/v1/personals/create", body, {
@@ -56,7 +56,7 @@ export function useShareholders() {
       }
     } catch (error: any) {
       console.log(error);
-      alert(error.response.data.message);
+      alert(error);
     }
   };
 

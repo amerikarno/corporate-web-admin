@@ -18,7 +18,6 @@ export function useAccountOpening() {
   const handleSearch = async (data: TCorporateAccountOpening) => {
     const { dateFrom, dateTo } = data;
 
-    const today = new Date();
     // Set invalid dates to null
     const body: TBody = {
       ...data,
@@ -27,7 +26,7 @@ export function useAccountOpening() {
         dateFrom ? yyyyMMddToDate(dateFrom) : null,
       dateTo:
         // dateTo instanceof Date && !isNaN(dateTo.getTime())
-        dateTo ? yyyyMMddToDate(dateTo) : null,
+        dateTo ? yyyyMMddToDate(dateTo, true) : null,
     };
 
     console.log(body);

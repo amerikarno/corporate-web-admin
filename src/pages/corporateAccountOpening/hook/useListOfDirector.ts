@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
 import axios from "@/api/axios";
-import { isExpiredToken } from "@/lib/utils";
+import { isExpiredToken, yyyyMMddToDate } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
@@ -16,7 +16,7 @@ export function useListOfDirector() {
   const saveListOfDirector = async (data: TDirector) => {
     let body = {
       ...data,
-      expiryDate: data.expiryDate.toISOString(),
+      expiryDate: yyyyMMddToDate(data.expiryDate).toISOString(),
     };
     console.log("body", body);
     try {

@@ -29,7 +29,7 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
+    // reset,
     setValue,
   } = useForm<TCorporateInfoSchema>({
     resolver: zodResolver(corporateInfoSchema),

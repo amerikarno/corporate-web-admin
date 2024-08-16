@@ -42,10 +42,7 @@ export function PageJuristicType({
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
                 <h1 className="">
-                  :{" "}
-                  {currentCorporatesInfo?.dateofincorporation.toLocaleDateString(
-                    "th-TH"
-                  ) ?? ""}
+                  : {currentCorporatesInfo?.dateofincorporation}
                 </h1>
               </div>
             </div>

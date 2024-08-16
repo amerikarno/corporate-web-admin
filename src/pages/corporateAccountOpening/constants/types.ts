@@ -58,7 +58,8 @@ export type TCorporateInfo = {
   name: string;
   registrationNo: string;
   taxId: string;
-  dateofincorporation: Date;
+  dateofincorporation: string;
+  // dateofincorporation: Date;
   isRegisteredThailand: boolean;
   isRegisteredOther?: boolean;
   registered: string;
@@ -99,7 +100,7 @@ export type TIndividualsShareholders = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   sharePercentage: number;
   types?: number;
@@ -121,7 +122,7 @@ export type TAuthorizePerson = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;

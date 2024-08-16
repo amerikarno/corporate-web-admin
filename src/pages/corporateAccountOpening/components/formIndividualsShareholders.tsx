@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  TIndividualsShareholders,
-} from "../constants/types";
+import { TIndividualsShareholders } from "../constants/types";
 import { useForm } from "react-hook-form";
 import {
   individualsShareholdersSchema,
@@ -33,13 +31,13 @@ export function FormIndividualsShareholders({
     setDropDownChoosed(choice);
   };
 
-  useEffect(()=>{
-      if (dropDownChoosed === "ID") {
-        resetField("passportId");
-      } else if (dropDownChoosed === "Passport") {
-        resetField("citizenId");
-      }
-  },[dropDownChoosed])
+  useEffect(() => {
+    if (dropDownChoosed === "ID") {
+      resetField("passportId");
+    } else if (dropDownChoosed === "Passport") {
+      resetField("citizenId");
+    }
+  }, [dropDownChoosed]);
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -68,11 +66,11 @@ export function FormIndividualsShareholders({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    resetField
+    resetField,
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
   });
-  
+
   const valideID = () => {
     if (dropDownChoosed === "ID") {
       if (checkFormatIDCard(curInputText)) return true;
@@ -250,6 +248,7 @@ export function FormIndividualsShareholders({
                   id="Date of Expired"
                   disabled={isSubmitting}
                   type="date"
+                  min={new Date().toISOString().split("T")[0]}
                 />
                 {errors.expiryDate && (
                   <p className="text-red-500 text-sm px-2">

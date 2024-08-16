@@ -2,7 +2,7 @@ import axios from "@/api/axios";
 import { useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import { TCorporateInfo } from "../constants/types";
-import { isExpiredToken } from "@/lib/utils";
+import { isExpiredToken, yyyyMMddToDate } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { sleep } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ export function useCorporateInfo() {
       name: "",
       registrationNo: "",
       taxId: "",
-      dateofincorporation: new Date(""),
+      dateofincorporation: "",
       registeredBusiness: {
         address: [
           {
@@ -57,11 +57,10 @@ export function useCorporateInfo() {
       netProFitLoss: 0,
       shareholderEquity: 0,
       registered: "",
-      registeredOther: false,
-      registeredThailand: true,
+      isRegisteredThailand: true,
       primary: "",
-      primaryCountry: true,
-      primaryOther: false,
+      isPrimaryCountry: true,
+      isPrimaryOther: false,
       corporateCode: "",
     });
 
@@ -78,7 +77,9 @@ export function useCorporateInfo() {
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     let body = {
       ...data,
-      dateofincorporation: data.dateofincorporation.toISOString(),
+      dateofincorporation: yyyyMMddToDate(
+        data.dateofincorporation
+      ).toISOString(),
     };
     console.log("body", body);
     try {

@@ -16,52 +16,37 @@ type TPageIndividualShareholderProps = {
   corporateCode: string;
 };
 
-// type TIndividualShareholderWithID = {
-//   shareholders: {
-//     fcorporateCode?: string;
-//     fullNames: {
-//       title: string;
-//       firstName: string;
-//       lastName: string;
-//     }[];
-//     citizenId?: string;
-//     passportId?: string;
-//     expiryDate: Date;
-//     nationality: string;
-//     sharePercentage: number;
-//     types?: number;
-//     personalID?:string;
-//   }[];
-//   personalID?:string;
-// };
-
 export function PageIndividualShareholder({
   corporateCode,
 }: TPageIndividualShareholderProps) {
-  const {handleSubmitShareholders } =
-    useShareholders();
-    const shareholderData: TIndividualsShareholders[] = useSelector<RootState>((state) => state.individualShareholder?.individualShareholders || []) as TIndividualsShareholders[];
-    console.log(shareholderData);
-    const dispatch = useDispatch();
-  
-    const handleDelete = async(data: TIndividualsShareholders) => {
-      console.log(data)
-      try{
-        const token = getCookies();
-        const res = await axios.post("/api/v1/personals/delete",{personalId : data.personalId},{
+  const { handleSubmitShareholders } = useShareholders();
+  const shareholderData: TIndividualsShareholders[] = useSelector<RootState>(
+    (state) => state.individualShareholder?.individualShareholders || []
+  ) as TIndividualsShareholders[];
+  console.log(JSON.stringify(shareholderData, null, 2));
+  const dispatch = useDispatch();
+
+  const handleDelete = async (data: TIndividualsShareholders) => {
+    console.log(data);
+    try {
+      const token = getCookies();
+      const res = await axios.post(
+        "/api/v1/personals/delete",
+        { personalId: data.personalId },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        if (res.status === 200){
-          console.log("delete successful")
-          dispatch(removeIndividualShareholder(data.personalId));
         }
-      }catch(error){
-        console.log("delete fail ,",error)
+      );
+      if (res.status === 200) {
+        console.log("delete successful");
+        dispatch(removeIndividualShareholder(data.personalId));
       }
-    };
-  
+    } catch (error) {
+      console.log("delete fail ,", error);
+    }
+  };
 
   const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
     {
@@ -70,11 +55,11 @@ export function PageIndividualShareholder({
     },
     {
       name: "Firstname",
-      selector: (row) =>row.fullNames[0]?.firstName || "",
+      selector: (row) => row.fullNames[0]?.firstName || "",
     },
     {
       name: "Lastname",
-      selector: (row) =>row.fullNames[0]?.lastName || "",
+      selector: (row) => row.fullNames[0]?.lastName || "",
     },
     {
       name: "CitizenID",
@@ -93,7 +78,7 @@ export function PageIndividualShareholder({
       selector: (row) => row.sharePercentage.toString() || "",
     },
     {
-      cell: ( row: TIndividualsShareholders) => (
+      cell: (row: TIndividualsShareholders) => (
         <Button onClick={() => handleDelete(row)}>Delete</Button>
       ),
       ignoreRowClick: true,
