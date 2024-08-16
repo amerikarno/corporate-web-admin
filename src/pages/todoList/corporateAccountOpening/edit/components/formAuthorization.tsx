@@ -31,6 +31,9 @@ export function FormAuthorizedPerson({
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
+  const [hasDate, setHasDate] = useState<boolean>(
+    choosedEditData?.expiryDate ? true : false
+  );
 
 
   const handleChange = (e: any) => {
@@ -127,7 +130,7 @@ export function FormAuthorizedPerson({
       }],
       passportId:'',
       citizenId: '',
-      expiryDate: new Date(),
+      expiryDate: "mm/dd/yyyy",
       nationality:'',
       addresses: [
         { addressNo: "",
@@ -151,6 +154,7 @@ export function FormAuthorizedPerson({
       const chosenValue = choosedEditData.citizenId ? "ID" : "Passport";
       setDropDownChoosed(chosenValue);
     }
+    setHasDate(true);
   }, [choosedEditData, reset]);
 
   return (
@@ -269,20 +273,35 @@ export function FormAuthorizedPerson({
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/2">
-            <Input
-              {...register("expiryDate")}
-              label="Date of Expired"
-              id="Date of Expired"
-              disabled={isSubmitting}
-              type="date"
-            />
-            {errors.expiryDate && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.expiryDate.message}
-              </p>
-            )}
-          </div>
+          {hasDate ? (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    id="Date of Expired"
+                    onClick={() => setHasDate(false)}
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    label="Date of Expired"
+                    id="Date of Expired"
+                    disabled={isSubmitting}
+                    type="date"
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              )}
         </div>
 
         <div className="flex flex-row space-x-0 md:space-x-4">

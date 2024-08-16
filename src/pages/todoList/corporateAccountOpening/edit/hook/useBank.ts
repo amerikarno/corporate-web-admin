@@ -31,7 +31,7 @@ export function useBank() {
         if (res.status === 200) {
           console.log(res);
           console.log("update success");
-          dispatch(updateBank({ ...data, BankId: res.data.BankId }));
+          dispatch(updateBank(data));
         } else {
           console.log("update failed");
         }
@@ -43,6 +43,7 @@ export function useBank() {
         });
         console.log(res);
         if (res.status === 200) {
+          console.log(body.BankId);
           console.log(res.data.BankId);
           dispatch(addBank({ ...body, BankId: res.data.BankId }));
           console.log("save successful");

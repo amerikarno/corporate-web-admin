@@ -48,7 +48,7 @@ export function PageJuristicShareholder({
   
         if (res.status === 200) {
           console.log(res)
-          const juristicShareholder = res.data[0].Juristics;
+          const juristicShareholder = res.data[0].Juristics || [];;
           const updateJuristic: TJuristicsShareholders[] = juristicShareholder.map((juristic: TJuristicEdit) => ({
             ...juristic,
             juristicId: juristic.id,

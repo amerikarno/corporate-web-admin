@@ -16,8 +16,7 @@ export const individualShareholderSlice = createSlice({
   reducers: {
     addIndividualShareholder: (state, action) => {
       console.log('action.payload:', action.payload);
-      const expiryDate = action.payload.expiryDate.toISOString(); 
-      return { ...state, individualShareholders: [...state.individualShareholders, { ...action.payload, expiryDate }] };
+      return { ...state, individualShareholders: [...state.individualShareholders] };
     },
     removeIndividualShareholder: (state, action) => {
       state.individualShareholders = state.individualShareholders.filter(

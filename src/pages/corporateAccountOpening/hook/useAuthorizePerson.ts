@@ -14,7 +14,6 @@ export function useAuthorizePerson() {
   const saveAuthorizePerson = async (data: TAuthorizePerson) => {
     let body = {
       ...data,
-      expiryDate: data.expiryDate.toISOString(),
     };
     console.log(body);
     try {

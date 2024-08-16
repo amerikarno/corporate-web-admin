@@ -51,7 +51,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
         console.log("API Response:", res.data);
 
         if (res.status === 200) {
-          const contacts = res.data[0]?.Contact;
+          const contacts = res.data[0]?.Contact || [];
           const updatedContacts: TContact[] = contacts.map((contact: any) => {
             return {
               ...contact,

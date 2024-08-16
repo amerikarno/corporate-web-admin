@@ -44,7 +44,7 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   
         if (res.status === 200) {
           console.log(res)
-          const listofdirectors = res.data[0].Juristics;
+          const listofdirectors = res.data[0].Juristics || [];;
           const updateDirector: TDirector[] = listofdirectors.map((listofdirector: TDirectorEdit) => ({
             ...listofdirector,
             listofdirector: listofdirector.personalId,

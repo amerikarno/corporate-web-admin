@@ -31,7 +31,7 @@ export function useShareholders() {
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
-      expiryDate: data.expiryDate.toISOString(),
+      expiryDate: data.expiryDate ?? "",
       nationality: data.nationality,
       sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,

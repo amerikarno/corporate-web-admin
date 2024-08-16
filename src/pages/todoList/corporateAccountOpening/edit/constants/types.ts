@@ -99,7 +99,7 @@ export type TIndividualsShareholders = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   sharePercentage: number;
   types?: number;
@@ -119,7 +119,7 @@ export type TAuthorizePerson = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;

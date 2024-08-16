@@ -40,7 +40,8 @@ export const bankSlice = createSlice({
           ...action.payload,
         };
       } else {
-        console.log('Bank not found. This might lead to a new entry if handled differently.');
+        console.log('Bank not found. Adding new bank...');
+        state.banks.push(action.payload);
       }
     },
   },
