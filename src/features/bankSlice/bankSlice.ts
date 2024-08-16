@@ -27,17 +27,21 @@ export const bankSlice = createSlice({
     },
     setBank: (state, action) => {
       state.banks = action.payload;
-    },
-    updateBank: (state, action) => {
+    },updateBank: (state, action) => {
+      console.log('Updating bank with BankId:', action.payload.BankId);
       const index = state.banks.findIndex(
         (data) => data.BankId === action.payload.BankId
       );
-
+    
       if (index !== -1) {
+        console.log('Bank found. Updating...');
         state.banks[index] = {
           ...state.banks[index],
           ...action.payload,
         };
+      } else {
+        console.log('Bank not found. Adding new bank...');
+        state.banks.push(action.payload);
       }
     },
   },

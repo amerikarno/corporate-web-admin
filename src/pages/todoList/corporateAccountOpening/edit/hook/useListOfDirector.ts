@@ -44,6 +44,8 @@ export function useListOfDirector() {
         );
 
         if (res.status === 200) {
+          console.log(body.personalId);
+          console.log(res.data.personalId);
           console.log("Edit successful");
           dispatch(updateDirector(data));
         } else {
@@ -62,9 +64,7 @@ export function useListOfDirector() {
           dispatch(
             addDirector({
               ...data,
-              personalId: res.data.personalId,
-              expiryDate: data.expiryDate,
-              // expiryDate: new Date(data.expiryDate),
+              personalId: res.data.personalId, expiryDate: data.expiryDate,
             })
           );
         } else {

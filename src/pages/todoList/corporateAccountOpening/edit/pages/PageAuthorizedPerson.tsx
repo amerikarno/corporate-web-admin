@@ -43,7 +43,7 @@ export function PageAuthorizedPerson({
 
       if (res.status === 200) {
         console.log(res)
-        const authorizedPerson = res.data[0]?.AuthorizedPersons;
+        const authorizedPerson = res.data[0]?.AuthorizedPersons || [];;
         console.log(authorizedPerson)
         const updateAuthorized: TAuthorizePerson[] = authorizedPerson.map((authorized: TAuthorizedPersonEdit) => ({
           ...authorized,

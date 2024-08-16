@@ -20,7 +20,7 @@ type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
   corporateCode: string;
   personalId?: string;
-  choosedEditData?: TDirectorEdit | null;
+  choosedEditData?: TDirector | null;
   clearChoosedEditData: () => void;
 };
 
@@ -91,11 +91,15 @@ export function FormIndividualsDirector({
   }, [choosedEditData]);
 
   useEffect(() => {
-    const directorData = mapDataToTDirector(choosedEditData || null) || {
+    //const dateFormatted = choosedEditData?.expiryDate.split('T')[0]; 
+    // console.log(dateFormatted)
+    // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
+    // const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
+    const directorData = choosedEditData || {
       fullNames: [{ title: "", firstName: "", lastName: "" }],
       citizenId: "",
       passportId: "",
-      expiryDate: "",
+      expiryDate: "mm/dd/yyyy",
       nationality: "",
       addresses: [
         {

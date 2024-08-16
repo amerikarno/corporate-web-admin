@@ -121,6 +121,7 @@ export default function OrderTrade() {
                 value={selectedCorporateCode}
                 onChange={handleCorporateCodeChange}
                 list="corporateCodes"
+                autoComplete="off"
               />
               {errors.corporateCode && !selectedCorporateCode && (
                 <p className="text-red-500 text-sm px-2">

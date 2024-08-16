@@ -36,34 +36,29 @@ export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
     };
 
     useEffect(() => {
-
-      axios.post("/api/v1/corporate/query", { corporateCode }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log("API Response:", res.data);
-  
-        if (res.status === 200) {
-          console.log(res)
-          const banks = res.data[0].Banks;
-          const updateBanks: TBankWithID[] = banks.map((bank: TBankEdit) => ({
-            ...bank,
-          }))
-          .map(mapDataToTBank)
-          .filter((item:any) => item !== null) as TBankWithID[];
-          
-          dispatch(setBank(updateBanks));
-          console.log("bank data fetched successfully.", updateBanks);
-        } else {
-          console.log("Failed to fetch bank data or data is not an array.");
+      const fetchBankData = async () => {
+        try {
+          const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (res.status === 200) {
+            const banks = res.data[0].Banks.map((bank : any) => ({
+              ...bank,
+              BankId: bank.id,
+            })).map(mapDataToTBank).filter((item : any) => item !== null);
+    
+            dispatch(setBank(banks));
+          }
+        } catch (error) {
+          console.error("Error fetching bank data:", error);
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching bank data:", error);
-      });
-    }, [corporateCode, dispatch, token , choosedEditData]);
+      };
+    
+      fetchBankData();
+    }, [corporateCode, dispatch, token]);
+    
 
     
   console.log(bankData)

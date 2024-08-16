@@ -12,6 +12,7 @@ import { removeDirector, setDirectorEdit } from "@/features/ListOfDirectorSlice/
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
+import { mapDataToTDirector } from "../libs/utils";
 
 type TListOfDirectorsProps = {
   corporateCode: string;
@@ -23,9 +24,9 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
     useListOfDirector();
 
   const token = getCookies();
-  const listOfDirectorData : TDirectorEdit[] = useSelector<RootState>(
-      (state) => state.listOfDirector?.listOfDirectors) as TDirectorEdit[];
-  const [choosedEditData,setChoosedEditData] = useState<TDirectorEdit>();
+  const listOfDirectorData : TDirector[] = useSelector<RootState>(
+      (state) => state.listOfDirector?.listOfDirectors) as TDirector[];
+  const [choosedEditData,setChoosedEditData] = useState<TDirector>();
   const clearChoosedEditData = () => {
         setChoosedEditData(undefined);
       };
@@ -42,18 +43,19 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
         console.log("API Response:", res.data);
   
         if (res.status === 200) {
-          const listofdirectors = res.data[0].Directors;
-          const updateDirector:TDirectorEdit[] = listofdirectors.map((director : any) => {
-            return {
-              ...director,
-              personalId: director.personalId,
-            };
-          });
-
+          console.log(res)
+          const listofdirectors = res.data[0].Juristics || [];;
+          const updateDirector: TDirector[] = listofdirectors.map((listofdirector: TDirectorEdit) => ({
+            ...listofdirector,
+            listofdirector: listofdirector.personalId,
+          }))
+          .map(mapDataToTDirector)
+          .filter((item:any) => item !== null) as TDirector[];
+          
           dispatch(setDirectorEdit(updateDirector));
-          console.log("director data fetched successfully.", listofdirectors);
+          console.log("director data fetched successfully.", updateDirector);
         } else {
-          console.log("Failed to fetch director data or data is not an array.");
+          console.log("Failed to fetch jurisdirectortic data or data is not an array.");
         }
       })
       .catch((error) => {
@@ -62,7 +64,7 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   }, [corporateCode, dispatch, token]);
 
 
-    const handleDelete = async (data: TDirectorEdit) => {
+    const handleDelete = async (data: TDirector) => {
       console.log(data)
       try{
         const token = getCookies();
@@ -80,7 +82,7 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
       }
     };
 
-    const columnsListOfDirectors: TableColumn<TDirectorEdit>[] = [
+    const columnsListOfDirectors: TableColumn<TDirector>[] = [
       {
         name: "Title",
         selector: (row) => row.fullNames[0]?.title || "",
@@ -106,13 +108,13 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
         selector: (row) => row.nationality || "",
       },
       {
-        cell: (row: TDirectorEdit) => (
+        cell: (row: TDirector) => (
           <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
         ),
         ignoreRowClick: true,
       },
       {
-        cell: (row: TDirectorEdit) => (
+        cell: (row: TDirector) => (
           <Button onClick={() => handleDelete(row)}>Delete</Button>
         ),
         ignoreRowClick: true,

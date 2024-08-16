@@ -26,23 +26,24 @@ export function useShareholders() {
   const saveIndividualsShareholders = async (
     data: TIndividualsShareholders
   ) => {
-    let body: TIndividualsShareholders = {
+    let body = {
       fullNames: data.fullNames,
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
-      expiryDate: data.expiryDate,
+      expiryDate: data.expiryDate ?? "",
       nationality: data.nationality,
       sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,
       personalId: data.personalId,
     };
+    let dataWithStringDate = {...body, expiryDate: new Date(data.expiryDate)}
     //console.log("body", body);
     try {
       console.log("sending data to update : ", body);
       if (data.personalId) {
         //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
-        const res = await axios.post("/api/v1/personals/update", body, {
+        const res = await axios.post("/api/v1/personals/update", dataWithStringDate, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -55,7 +56,7 @@ export function useShareholders() {
       } else {
         //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
 
-        const res = await axios.post("/api/v1/personals/create", body, {
+        const res = await axios.post("/api/v1/personals/create", dataWithStringDate, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

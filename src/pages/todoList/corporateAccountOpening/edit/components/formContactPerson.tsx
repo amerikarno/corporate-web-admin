@@ -54,6 +54,7 @@ export function FormIndividualsContactPerson({
         email: '',
         personalId:''
       };
+    console.log(contactPersonData)
     reset(contactPersonData);
   }, [choosedEditData, reset]);
 

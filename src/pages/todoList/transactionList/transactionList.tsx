@@ -13,7 +13,6 @@ const TransactionList = () => {
   const [checkboxStatus, setCheckboxStatus] = useState<{
     [transactionId: string]: { checkerStatus: boolean | undefined };
   }>({});
-  const [triggerSubmit, setTriggerSubmit] = useState<boolean>(true);
   const handleCheckboxChange = (
     transactionId: string,
     type: "approve" | "decline",
@@ -46,7 +45,7 @@ const TransactionList = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const dataToSend = listOfTransaction
       .map((transaction) => ({
         transactionId: transaction.id,
@@ -58,26 +57,40 @@ const TransactionList = () => {
             : undefined,
       }))
       .filter((data) => data.checkerStatus !== undefined);
-
+  
     console.log(dataToSend);
-
-    axios
-      .post("/api/v1/transaction/order/update", dataToSend, {
+  
+    try {
+      const response = await axios.post("/api/v1/transaction/order/update", dataToSend, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("Data submitted successfully ", response);
-        } else {
-          console.error("Failed to submit data");
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting data:", error);
       });
+  
+      if (response.status === 200) {
+        console.log("Data submitted successfully ", response);
+  
+        const updatedListOfTransaction = listOfTransaction.filter(
+          (transaction) =>
+            !dataToSend.some((data) => data.transactionId === transaction.id)
+        );
+        setFetchedListOfTransaction(updatedListOfTransaction);
+  
+        setCheckboxStatus((prevStatus) => {
+          const updatedStatus = { ...prevStatus };
+          dataToSend.forEach((data) => {
+            delete updatedStatus[data.transactionId];
+          });
+          return updatedStatus;
+        });
+      } else {
+        console.error("Failed to submit data");
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
   };
+  
 
   const fetchListOfTransaction = async () => {
     try {
@@ -112,10 +125,7 @@ const TransactionList = () => {
 
   useEffect(() => {
     fetchListOfTransaction();
-    if (triggerSubmit) {
-      setTriggerSubmit(false);
-    }
-  }, [triggerSubmit]);
+  }, []);
 
   console.log(listOfTransaction);
 
@@ -189,7 +199,6 @@ const TransactionList = () => {
           <Button
             onClick={() => {
               handleSubmit();
-              setTriggerSubmit(true);
             }}
           >
             Submit

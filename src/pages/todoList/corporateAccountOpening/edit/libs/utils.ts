@@ -163,22 +163,27 @@ export const mapDataToTDirector = (
       return null;
     }
 
-    const fullName = data.fullNames[0];
+    const dateFormatted = data?.expiryDate?.split('T')[0]; // "2024-08-29"
+    // console.log(dateFormatted)
+    // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
+    // const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
     const result: TDirector = {
       fullNames: [
         {
-          title: fullName.title ?? "",
-          firstName: fullName.firstName ?? "",
-          lastName: fullName.lastName ?? "",
+          title: data?.fullNames[0].title ?? "",
+          firstName: data?.fullNames[0].firstName ?? "",
+          lastName: data?.fullNames[0].lastName ?? "",
         },
       ],
-      citizenId: data.citizenId ?? "",
-      passportId: data.passportId ?? "",
-      expiryDate: new Date(data.expiryDate || ""),
-      nationality: data.nationality ?? "",
+      citizenId: data?.citizenId ?? "",
+      passportId: data?.passportId ?? "",
+      expiryDate: dateFormatted ?? "",
+      nationality: data?.nationality ?? "",
+      types: data?.types ?? "",
+      personalId : data?.personalId ?? "",
       addresses:
-        data.addresses.length > 0
-          ? data.addresses
+        data?.addresses?.length > 0
+          ? data?.addresses
           : [
               {
                 addressNo: "",
@@ -210,6 +215,7 @@ export const mapDataToTIndividualShareholder = (
     if (data === null) {
       return null;
     }
+    const dateFormatted = data.expiryDate?.split('T')[0];
     const fullName = data.fullNames[0];
     const result: TIndividualsShareholders = {
       corporateCode: String(data.corporateCode ?? ""),
@@ -222,7 +228,7 @@ export const mapDataToTIndividualShareholder = (
       ],
       citizenId: data.citizenId ?? "",
       passportId: data.passportId ?? "",
-      expiryDate: new Date(data.expiryDate || ""),
+      expiryDate: dateFormatted || "",
       nationality: data.nationality ?? "",
       sharePercentage: data.sharePercentage ?? 0,
       personalId: data.personalId ?? null,
@@ -248,7 +254,7 @@ export const mapDataToTJuristicShareholder = (
       corporateCode: String(data.corporateCode ?? ""),
       juristicName: data.juristicName ?? "",
       registrationNo: data.registrationNo ?? "",
-      registeredCountry: data.registeredCountry,
+      registeredCountry: data.registeredCountry ?? "",
       sharePercentage: data.sharePercentage ?? 0,
       juristicId: data.id ?? "",
     };
@@ -267,33 +273,30 @@ export const mapDataToTAuthoirzedPerson = (
     if (data === null) {
       return null;
     }
-    if (!data.expiryDate) {
-      return null;
-    }
-    const dateFormatted = data.expiryDate.split("T")[0]; // "2024-08-29"
-    const dateParts = dateFormatted.split("-"); // ["2024", "08", "29"]
-    const date = new Date(
-      Number(dateParts[0]),
-      Number(dateParts[1]) - 1,
-      Number(dateParts[2])
-    );
+    const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
+    // const dateParts = dateFormatted.split("-"); // ["2024", "08", "29"]
+    // const date = new Date(
+    //   Number(dateParts[0]),
+    //   Number(dateParts[1]) - 1,
+    //   Number(dateParts[2])
+    // );
     const result: TAuthorizedPersonSchema = {
       corporateCode: String(data.corporateCode ?? ""),
       fullNames: [
         {
-          title: data.fullNames[0].title ?? "",
-          firstName: data.fullNames[0].firstName ?? "",
-          lastName: data.fullNames[0].lastName ?? "",
+          title: data?.fullNames[0].title ?? "",
+          firstName: data?.fullNames[0].firstName ?? "",
+          lastName: data?.fullNames[0].lastName ?? "",
         },
       ],
-      passportId: data.passportId ?? "",
-      citizenId: data.citizenId ?? "",
+      passportId: data?.passportId ?? "",
+      citizenId: data?.citizenId ?? "",
       expiryDate: dateFormatted ?? "",
-      nationality: data.nationality ?? "",
-      personalId: data.personalId ?? "",
+      nationality: data?.nationality ?? "",
+      personalId: data?.personalId ?? "",
       addresses:
-        data.addresses.length > 0
-          ? data.addresses
+        data?.addresses?.length > 0
+          ? data?.addresses
           : [
               {
                 addressNo: "",

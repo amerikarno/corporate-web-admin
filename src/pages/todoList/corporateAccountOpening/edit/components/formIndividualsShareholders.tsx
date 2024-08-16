@@ -87,7 +87,7 @@ export function FormIndividualsShareholders({
       shares: 0,
       citizenId: "",
       passportId: "",
-      expiryDate: new Date(),
+      expiryDate: "mm/dd/yyyy",
     };
     reset(individualShareholderData);
     setHasDate(true);

@@ -123,19 +123,6 @@ export const directorInfoSchema = z.object({
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
   expiryDate: z.string().min(1, "date cannot be empty"),
-  // .transform((str, ctx) => {
-  //   const date = new Date(str);
-  //   if (!isNaN(date.getTime())) {
-  //     if (date < new Date()) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: "date cannot be past",
-  //         fatal: true,
-  //       });
-  //     }
-  //   }
-  //   return date;
-  // }),
   nationality: z.string().min(1, "nationality cannot be empty"),
   addresses: z.array(subAddressSchema),
 });
@@ -199,19 +186,6 @@ export const individualsShareholdersSchema = z.object({
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
   expiryDate: z.string().min(1, "date cannot be empty"),
-  // .transform((str, ctx) => {
-  //   const date = new Date(str);
-  //   if (!isNaN(date.getTime())) {
-  //     if (date < new Date()) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: "date cannot be past",
-  //         fatal: true,
-  //       });
-  //     }
-  //   }
-  //   return date;
-  // }),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   sharePercentage: z.preprocess(
     (a) => parseFloat(z.string().parse(a)),
@@ -251,19 +225,6 @@ export const authorizedPersonSchema = z.object({
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportId: z.string().optional(),
   expiryDate: z.string().min(1, "date cannot be empty"),
-  // .transform((str, ctx) => {
-  //   const date = new Date(str);
-  //   if (!isNaN(date.getTime())) {
-  //     if (date < new Date()) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: "date cannot be past",
-  //         fatal: true,
-  //       });
-  //     }
-  //   }
-  //   return date;
-  // }),
   addresses: z.array(subAddressSchema),
 });
 
@@ -286,19 +247,6 @@ export const individualsDirectorSchema = z.object({
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
   expiryDate: z.string().min(1, "date cannot be empty"),
-  // .transform((str, ctx) => {
-  //   const date = new Date(str);
-  //   if (!isNaN(date.getTime())) {
-  //     if (date < new Date()) {
-  //       ctx.addIssue({
-  //         code: z.ZodIssueCode.custom,
-  //         message: "date cannot be past",
-  //         fatal: true,
-  //       });
-  //     }
-  //   }
-  //   return date;
-  // }),
   nationality: z.string().min(1, { message: "Natioonality cannot be empty" }),
   addresses: z.array(subAddressSchema),
 });
