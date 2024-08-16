@@ -239,6 +239,7 @@ export function FormIndividualsDirector({
                   id="Date of Expired"
                   disabled={isSubmitting}
                   type="date"
+                  min={new Date().toISOString().split("T")[0]}
                 />
                 {errors.expiryDate && (
                   <p className="text-red-500 text-sm px-2">

@@ -49,19 +49,19 @@ const TransactionList = () => {
     const dataToSend = listOfTransaction
       .map((transaction) => ({
         transactionId: transaction.id,
-        checkerStatus:
+        ReviewStatus:
           checkboxStatus[transaction.id]?.checkerStatus === true
             ? true
             : checkboxStatus[transaction.id]?.checkerStatus === false
             ? false
             : undefined,
       }))
-      .filter((data) => data.checkerStatus !== undefined);
+      .filter((data) => data.ReviewStatus !== undefined);
   
     console.log(dataToSend);
   
     try {
-      const response = await axios.post("/api/v1/transaction/order/update", dataToSend, {
+      const response = await axios.post("/api/v1/transaction/order/review", dataToSend, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
@@ -95,12 +95,14 @@ const TransactionList = () => {
   const fetchListOfTransaction = async () => {
     try {
       const token = getCookies();
-      const res = await axios.get("/api/v1/transaction/order/get/approve", {
+      const res = await axios.get("/api/v1/transaction/order/get", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (res.status === 200) {
+        console.log(res)
+        console.log(res.data)
         const transactions: TTransaction[] = res.data.map((item: any) => {
           console.log(item);
           return {
@@ -116,10 +118,10 @@ const TransactionList = () => {
         });
         setFetchedListOfTransaction(transactions);
       } else {
-        console.error("Failed to fetch corporate codes");
+        console.error("Failed to fetch order list codes");
       }
     } catch (error) {
-      console.error("Error fetching corporate codes:", error);
+      console.error("Error fetching order list:", error);
     }
   };
 
@@ -157,6 +159,10 @@ const TransactionList = () => {
     {
       name: "Trading Pairs",
       selector: (row: TTransaction) => row.pair || "",
+    },
+    {
+      name: "Currency",
+      selector: (row: TTransaction) => row.currency || "",
     },
     {
       name: "Approve",

@@ -1,6 +1,7 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import CorporateAccountOpenning from "@/pages/corporateAccountOpening/CorporateAccountOpenning";
 import OrderTrade from "@/pages/corporateAccountOpening/pages/orderTrade/orderTrade";
+import OrderTradeEdit from "@/pages/corporateAccountOpening/pages/orderTrade/orderTradeEdit";
 import { Outlet, Route } from "react-router-dom";
 
 export const createJobRoutes = () => {
@@ -69,6 +70,7 @@ export const createJobRoutes = () => {
         element={<BlankPage name="Airdrop Setting" />}
       />
       <Route path="orders-trades" element={<OrderTrade />} />
+      <Route path="orders-trades-edit" element={<OrderTradeEdit />} />
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}

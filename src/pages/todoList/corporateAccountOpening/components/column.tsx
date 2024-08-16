@@ -3,23 +3,15 @@ import { TCorporateData } from "../constant/type";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { setContactPersons } from "@/features/contactPersonSlice";
 
 const EditButtonCell = ({ row }: { row: TCorporateData }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const editCorporateData: TCorporateData = useSelector<RootState>(
-    (state) => state.editCorporate
-  ) as TCorporateData;
 
   const handleEditClick = () => {
+    console.log(row)
     dispatch(setCorporateData(row));
-
-    if (editCorporateData.Contact) {
-      dispatch(setContactPersons(editCorporateData.Contact));
-    }
 
     navigate("/todo-list/corporate-account-opening/edit/1", {
       state: row,

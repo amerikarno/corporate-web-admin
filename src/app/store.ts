@@ -8,6 +8,7 @@ import authorizedPersonReducer from "@/features/authorizedPerson/authorizedPerso
 import bankReducer from "@/features/bankSlice/bankSlice";
 import editCorporateReducer from "@/features/editCorporateData/editCorporateData";
 import userReducer from "@/features/user/userSlice";
+import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,8 +21,8 @@ export const store = configureStore({
     bank: bankReducer,
     editCorporate: editCorporateReducer,
     user: userReducer,
+    orderTrade: orderTradeReducer
   },
-  
 });
 
 export type RootState = ReturnType<typeof store.getState>;

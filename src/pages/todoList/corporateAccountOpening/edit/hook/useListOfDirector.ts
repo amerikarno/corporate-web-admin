@@ -60,11 +60,14 @@ export function useListOfDirector() {
         if (res.status === 200) {
           console.log("Save successful ", res);
           console.log("personalId", res.data.personalId);
-          console.log(data);
+          console.log({...data,
+                      personalId: res.data.personalId
+          });
           dispatch(
             addDirector({
               ...data,
-              personalId: res.data.personalId, expiryDate: data.expiryDate,
+              personalId: res.data.personalId,
+              expiryDate: data.expiryDate,
             })
           );
         } else {

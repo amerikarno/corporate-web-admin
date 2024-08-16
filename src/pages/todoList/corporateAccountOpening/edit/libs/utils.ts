@@ -162,7 +162,7 @@ export const mapDataToTDirector = (
     if (data === null) {
       return null;
     }
-
+    console.log(data)
     const dateFormatted = data?.expiryDate?.split('T')[0]; // "2024-08-29"
     // console.log(dateFormatted)
     // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
@@ -170,9 +170,9 @@ export const mapDataToTDirector = (
     const result: TDirector = {
       fullNames: [
         {
-          title: data?.fullNames[0].title ?? "",
-          firstName: data?.fullNames[0].firstName ?? "",
-          lastName: data?.fullNames[0].lastName ?? "",
+          title: data?.fullNames?.[0]?.title ?? "",
+          firstName: data?.fullNames?.[0]?.firstName ?? "",
+          lastName: data?.fullNames?.[0]?.lastName ?? "",
         },
       ],
       citizenId: data?.citizenId ?? "",

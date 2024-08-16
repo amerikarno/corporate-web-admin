@@ -58,7 +58,7 @@ export type TCorporateInfo = {
   name: string;
   registrationNo: string;
   taxId: string;
-  dateofincorporation: Date;
+  dateofincorporation: string;
   registeredThailand: boolean;
   primaryCountry: boolean;
   registered: string;

@@ -14,10 +14,16 @@ import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
 import { useEffect, useState } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "../unAuthorizePage/unAuthorize";
+import { clearContactPersons } from "@/features/contactPersonSlice";
+import { clearDirector } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import { clearIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { clearJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
+import { clearAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
+import { clearBank } from "@/features/bankSlice/bankSlice";
 
 type TPage = {
   page?: string;
@@ -39,14 +45,18 @@ export default function CorporateAccountOpenning() {
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
   const todo = "need to use real corporateCode";
-  // let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  let corporateCode: string = "80000004";
+  //clear redux store state//
+  
+  ///////////////////////////
+
+  let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  //let corporateCode: string = "80000004";
 
   useEffect(() => {
     if (pageId === 1) {
@@ -81,8 +91,15 @@ export default function CorporateAccountOpenning() {
     if (type == "next") {
       navigate(`/create-job/added-corporate-account/${pageId + 1}`);
     } else if (type == "submit") {
+      dispatch(clearContactPersons());
+      dispatch(clearDirector());
+      dispatch(clearIndividualShareholder());
+      dispatch(clearJuristicShareholder());
+      dispatch(clearAuthorizedPerson());
+      dispatch(clearBank());
       console.log(corporateCode);
       if (corporateCode) {
+
         navigate(`/create-job/added-corporate-account/${pageId + 1}`);
       }
     } else if (type == "submit2") {

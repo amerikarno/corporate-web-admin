@@ -44,7 +44,7 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   
         if (res.status === 200) {
           console.log(res)
-          const listofdirectors = res.data[0].Juristics || [];;
+          const listofdirectors = res.data[0].Directors || [];;
           const updateDirector: TDirector[] = listofdirectors.map((listofdirector: TDirectorEdit) => ({
             ...listofdirector,
             listofdirector: listofdirector.personalId,
@@ -109,7 +109,8 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
       },
       {
         cell: (row: TDirector) => (
-          <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+          <Button onClick={() => {setChoosedEditData(row) 
+            console.log(row)}}>Edit</Button>
         ),
         ignoreRowClick: true,
       },

@@ -6,4 +6,5 @@ export type TOrderTrade = {
     currency:string;
     cryptoPrice:number;
     pair:string;
+    id?:string;
 }
