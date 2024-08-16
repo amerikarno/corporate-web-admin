@@ -13,7 +13,7 @@ export function useCorporateInfo() {
       name: "",
       registrationNo: "",
       taxId: "",
-      dateofincorporation: new Date(""),
+      dateofincorporation: "",
       registeredBusiness: {
         address: [
           {
@@ -79,7 +79,7 @@ export function useCorporateInfo() {
     console.log(data);
     let body = {
       ...data,
-      dateofincorporation: data.dateofincorporation.toISOString(),
+      dateofincorporation: new Date(data.dateofincorporation),
       // corporateCode: Number(
       //   data.corporateCode === "" ? "0" : data.corporateCode
       // ),

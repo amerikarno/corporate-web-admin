@@ -40,7 +40,8 @@ export function useShareholders() {
     let dataWithStringDate = {...body, expiryDate: new Date(data.expiryDate)}
     //console.log("body", body);
     try {
-      console.log("sending data to update : ", body);
+      console.log("sending data to dispatch : ", body);
+      console.log("sending data to database : ", dataWithStringDate);
       if (data.personalId) {
         //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
         const res = await axios.post("/api/v1/personals/update", dataWithStringDate, {

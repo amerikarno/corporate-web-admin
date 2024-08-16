@@ -70,6 +70,7 @@ export default function TodoCorporateAccountOpenning() {
         }
       );
       if (res.status === 200) {
+        console.log(res)
         const corporateCodes = res.data.map((item: any) => ({
           corporateCode: item.CorporateCode,
         }));

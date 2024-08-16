@@ -175,9 +175,9 @@ export const mapDataToTDirector = (
     const result: TDirector = {
       fullNames: [
         {
-          title: data?.fullNames[0].title ?? "",
-          firstName: data?.fullNames[0].firstName ?? "",
-          lastName: data?.fullNames[0].lastName ?? "",
+          title: data?.fullNames?.[0]?.title ?? "",
+          firstName: data?.fullNames?.[0]?.firstName ?? "",
+          lastName: data?.fullNames?.[0]?.lastName ?? "",
         },
       ],
       citizenId: data?.citizenId ?? "",
