@@ -8,6 +8,8 @@ import {
   juristicThai,
   sourceOfIncome,
   juristicType,
+  mapKey,
+  TMapKeyLabel,
 } from "../constants/variables";
 //import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
@@ -15,16 +17,20 @@ import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 import { isExpiredToken } from "@/lib/utils";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { getCheckedLabel } from "../libs/utils";
+import { Button } from "@/components/ui/button";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
   corporateCode?: string;
 };
-const handleFormPassChange = (status: boolean) => {
-  if (status) {
-    console.log("Form submission status:", status);
-  }
-};
+// const handleFormPassChange = (status: boolean) => {
+//   if (status) {
+//     console.log("Form submission status:", status);
+//   }
+// };
 
 export function FormCorporateTypeAndIncome({
   // corporateInfo,
@@ -56,13 +62,32 @@ export function FormCorporateTypeAndIncome({
     saveJuristicType,
   } = useFormCorporateInfo2();
 
+  const corpData = useSelector((state: RootState) => state.editCorporate);
+  const {
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh,
+  } = getCheckedLabel(corpData) || {};
+  console.log(
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh
+  );
+
   const onSubmit = async (e: any) => {
     e.preventDefault();
+
     if (validateForm()) {
       let mergeObj = {
         ...juristicAllType,
         ...juristicAllOtherType,
-        corporateCode: corporateCode,
+        corporateCode: corporateCode || corpData?.CorporateCode,
       };
       console.log(mergeObj);
       if (!isExpiredToken()) {
@@ -272,9 +297,9 @@ export function FormCorporateTypeAndIncome({
             </p>
           )}
         </div>
-        {/* <div className="flex justify-end pb-4 pr-4">
+        <div className="flex justify-end pb-4 pr-4">
           <Button type="submit">Submit</Button>
-        </div> */}
+        </div>
       </form>
     </Card>
   );

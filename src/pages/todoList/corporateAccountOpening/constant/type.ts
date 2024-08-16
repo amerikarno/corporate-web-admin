@@ -68,55 +68,61 @@ export type TCorporateFinancials = {
 };
 
 export type TCorporateTypes = {
-  // id: string;
-  // createBy: string;
+  id: string;
+  createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  // corporateCode: number;
-  // istaxExempt: boolean;
-  // isnonTaxExempt: boolean;
-  // isoperatingInThailand: boolean;
-  // isnonOperatingInThailand: boolean;
-  // isother: boolean;
-  // ispartnership: boolean;
-  // isgovernmentStateEnterprise: boolean;
+  corporateCode: number;
+  isJuristicThailand: boolean;
+  isTaxExempt: boolean;
+  isNonTaxExempt: boolean;
+  isJuristicForeign: boolean;
+  isOperatingInThailand: boolean;
+  isNonOperatingInThailand: boolean;
+  isOther: boolean;
+  isPartnership: boolean;
+  isGovernmentStateEnterprise: boolean;
+  isCoOperative: boolean;
+  isTaxExemptCompany: boolean;
 };
 
 export type TBusinessTypes = {
-  // id: string;
-  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  // corporateCode: number;
-  // ishotelRestaurant:boolean;
-  // otherBusinessType:string;
-  // isarmament: boolean;
-  // isinsuranceAssurance: boolean;
-  // iscasinoGambling: boolean;
-  // isjewelryGoldTrading: boolean;
-  // isfoundation: boolean;
-  // ispropertyRealEstate: boolean;
-  // ismoneyTransfer: boolean;
-  // isemploymentAgency: boolean;
-  // isentertainment: boolean;
-  // istravel: boolean;
-  // isfinancial: boolean;
-  // iseducationCenter: boolean;
-  // isforeignCurrencyExchange: boolean;
-  // iscryptoRelated: boolean;
-  // isotherBusiness: boolean;
-  // otherBusinessType: string;
+  id: string;
+  corporateCode: number;
+  isAntiqueTrading: boolean;
+  isHotelRestaurant: boolean;
+  isArmament: boolean;
+  isInsuranceAssurance: boolean;
+  isCasinoGambling: boolean;
+  isJewelryGoldTrading: boolean;
+  isFoundation: boolean;
+  isPropertyRealEstate: boolean;
+  isMoneyTransfer: boolean;
+  isEmploymentAgency: boolean;
+  isEntertainment: boolean;
+  isTravel: boolean;
+  isFinancial: boolean;
+  isEducationCenter: boolean;
+  isForeignCurrencyExchange: boolean;
+  isCryptoRelated: boolean;
+  isOtherBusiness: boolean;
+  otherBusinessType: string;
 };
 
 export type TSourceOfIncomes = {
-  // id: string;
-  // createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  // corporateCode: number;
-  // isotherIncome:boolean;
-  // //isrevenue: boolean;
-  // otherIncome: string;
+  id: string;
+  corporateCode: number;
+  isDonation: boolean;
+  isLoan: boolean;
+  isOtherIncome: boolean;
+  isRevenue: boolean;
+  isRevenueSelling: boolean;
+  isStock: boolean;
+  otherIncome: string;
 };
 
 export type TCountrySourceIncomes = {
@@ -125,6 +131,12 @@ export type TCountrySourceIncomes = {
   corporateCountry: TCorporateCountry;
   isliquidation: boolean;
   otherInvestment: string;
+  investmentObject: string;
+  isCashManagement: boolean;
+  isInvestment: boolean;
+  isLiquidation: boolean;
+  isOtherInvestment: boolean;
+  otherCountry: string;
 };
 
 export type TContact = {

@@ -45,8 +45,8 @@ export default function CorporateAccountOpenning() {
     useCorporateInfo();
 
   const todo = "need to use real corporateCode";
-  // let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  let corporateCode: string = "80000004";
+  let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  // let corporateCode: string = "80000004";
 
   useEffect(() => {
     if (pageId === 1) {

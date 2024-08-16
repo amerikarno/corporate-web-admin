@@ -45,6 +45,7 @@ export function useFormCorporateInfo2() {
   const [juristicAllOtherType, setJuristicAllOhterType] =
     useState<TInitailJuristicOther>(copy(initailJuristicOther));
   const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleErrors = (error: ZodIssue[] | null) => {
     console.log(error);
@@ -357,7 +358,7 @@ export function useFormCorporateInfo2() {
       }
     }
   };
-  const navigate = useNavigate();
+
   const saveJuristicType = async (data: any) => {
     console.log("body", data);
     try {
