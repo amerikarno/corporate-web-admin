@@ -54,7 +54,7 @@ export function FormCorporateTypeAndIncome({
     isDisableSubSelected,
     validateForm,
     saveJuristicType,
-  } = useFormCorporateInfo2(handleFormPassChange);
+  } = useFormCorporateInfo2();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
