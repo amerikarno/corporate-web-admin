@@ -30,19 +30,24 @@ export function useJuristicShareholders() {
       console.log(data);
       const token = getCookies();
       if (data.juristicId) {
-        // const res = await axios.post("/api/v1/juristic/update",data,{
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // });
-        // if (res.status === 200) {
-        //   console.log(res)
-        //   console.log("update success", res.data.juristicId);
-        //   dispatch(updateJuristicShareholder({ ...data, juristicId: res.data.juristicId}));
-        //   setJuristics([...juristics, data]);
-        // } else {
-        //   console.log("update failed");
-        // }
+        const res = await axios.post("/api/v1/juristic/update", data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          console.log(res);
+          console.log("update success", res.data.juristicId);
+          dispatch(
+            updateJuristicShareholder({
+              ...data,
+              juristicId: res.data.juristicId,
+            })
+          );
+          setJuristics([...juristics, data]);
+        } else {
+          console.log("update failed");
+        }
       } else {
         const res = await axios.post("/api/v1/juristic/create", data, {
           headers: {
