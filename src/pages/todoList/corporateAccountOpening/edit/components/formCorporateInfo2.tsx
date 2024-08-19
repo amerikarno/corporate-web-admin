@@ -8,10 +8,10 @@ import {
   juristicThai,
   sourceOfIncome,
   juristicType,
-  mapKey,
+  mapKeys,
   TMapKeyLabel,
+  mapKeyLabel,
 } from "../constants/variables";
-//import { Button } from "@/components/ui/button";
 import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
@@ -21,286 +21,418 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { getCheckedLabel } from "../libs/utils";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { CorporateResponse } from "../../constant/type";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
   corporateCode?: string;
 };
-// const handleFormPassChange = (status: boolean) => {
-//   if (status) {
-//     console.log("Form submission status:", status);
-//   }
-// };
 
 export function FormCorporateTypeAndIncome({
-  // corporateInfo,
   corporateCode,
 }: TCorporateTypeAndIncomeProps) {
   const {
-    // corporateTypeAndIncome,
-    isBusinessTypeOthers,
-    isSourceOfIncomeOthers,
-    isCountrySourceOfIncomeOthers,
-    isInvestmentObjectiveOthers,
-    errors,
-    juristicAllType,
-    juristicAllOtherType,
-    handleCheck,
-    handleSubSelected,
-    handeleBusinessType,
-    handeleCountrySourceOfIncome,
-    handeleInvestmentObjective,
-    handeleSourceOfIncome,
-    handleInputOthers,
-    getError,
-    disableBusinessType,
-    disableCountrySourceOfIncome,
-    disableInvestmentObjective,
-    isDiabledJuristicType,
-    isDisableSubSelected,
-    validateForm,
+    // isBusinessTypeOthers,
+    // isSourceOfIncomeOthers,
+    // isCountrySourceOfIncomeOthers,
+    // isInvestmentObjectiveOthers,
+    // errors,
+    // juristicAllType,
+    // juristicAllOtherType,
+    // handleCheck,
+    // handleSubSelected,
+    // handeleBusinessType,
+    // handeleCountrySourceOfIncome,
+    // handeleInvestmentObjective,
+    // handeleSourceOfIncome,
+    // handleInputOthers,
+    // getError,
+    // disableBusinessType,
+    // disableCountrySourceOfIncome,
+    // disableInvestmentObjective,
+    // isDiabledJuristicType,
+    // isDisableSubSelected,
+    // validateForm,
     saveJuristicType,
+    // isCheckedByKeyValue,
+    resFrom2,
+    handleCheckedBox,
+    handleInputOthersOption,
   } = useFormCorporateInfo2();
 
-  const corpData = useSelector((state: RootState) => state.editCorporate);
-  const {
-    jrType,
-    buType,
-    srcOfIncome,
-    countrySrcOfIncome,
-    invType,
-    countrySrcOfIncomeTh,
-  } = getCheckedLabel(corpData) || {};
-  console.log(
-    jrType,
-    buType,
-    srcOfIncome,
-    countrySrcOfIncome,
-    invType,
-    countrySrcOfIncomeTh
-  );
+  // console.log(JSON.stringify(resFrom2, null, 2));
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
-
-    if (validateForm()) {
-      let mergeObj = {
-        ...juristicAllType,
-        ...juristicAllOtherType,
-        corporateCode: corporateCode || corpData?.CorporateCode,
-      };
-      console.log(mergeObj);
-      if (!isExpiredToken()) {
-        await saveJuristicType(mergeObj);
-      } else {
-        console.log("session expired");
-        alert("Session expired. Please login again");
-      }
-    } else {
-      console.log("submit failed");
-    }
+    console.log(resFrom2);
+    await saveJuristicType(resFrom2);
   };
 
   return (
-    <Card>
-      <form
-        onSubmit={(e) => onSubmit(e)}
-        id="corporateInfo2"
-        className="space-y-10"
-      >
-        <div>
-          <>
-            <h1 className="font-bold p-4">Juristic Type</h1>
-            {juristicType.map((type, i) => (
-              <div
-                key={i}
-                className="px-4 flex flex-row border-t border-gray-100"
-              >
-                <div className="w-1/4">
-                  <CheckBox
-                    id={`juristic type ${type}=${i}`}
-                    label={type}
-                    onChange={(e) => handleCheck(e, i)}
-                    name={type}
-                    disabled={isDiabledJuristicType(type)}
-                  />
-                </div>
-                <div className="w-3/4">
-                  {i == 0 &&
-                    juristicThai.map((item, j) => (
-                      <CheckBox
-                        id={`${i}_${j}`}
-                        key={`${i}_${j}`}
-                        label={item}
-                        onChange={(e) => handleSubSelected(e, j)}
-                        name={`${type}_${item}`}
-                        disabled={isDisableSubSelected(type)}
-                      />
-                    ))}
-                  {i == 1 &&
-                    juristicForeign.map((item, j) => (
-                      <CheckBox
-                        id={`${i}_${j}`}
-                        key={`${i}_${j}`}
-                        label={item}
-                        onChange={(e) => handleSubSelected(e, j)}
-                        name={`${type}_${item}`}
-                        disabled={isDisableSubSelected(type)}
-                      />
-                    ))}
-                  {i == 2 &&
-                    juristicOthers.map((item, j) => (
-                      <CheckBox
-                        id={`${i}_${j}`}
-                        key={`${i}_${j}`}
-                        label={item}
-                        onChange={(e) => handleSubSelected(e, j)}
-                        name={`${type}_${item}`}
-                        disabled={isDisableSubSelected(type)}
-                      />
-                    ))}
-                </div>
-              </div>
-            ))}
-            {errors && getError(["juristicType"], errors) && (
-              <p className="text-red-500 p-4">
-                {getError(["juristicType"], errors)?.message}
-              </p>
-            )}
-          </>
-        </div>
-
-        <div>
-          <h1 className="font-bold p-4 border-t">Business Type</h1>
-          <div className="px-4 border-t">
-            <div className="grid grid-cols-2 ">
-              {businessType.map((item, i) => (
-                <CheckBox
-                  id={`business-type-${i}`}
-                  key={i}
-                  label={item}
-                  onChange={(e) => handeleBusinessType(e, i)}
-                  name={item}
-                  disabled={disableBusinessType(item)}
-                />
-              ))}
-            </div>
-            {isBusinessTypeOthers && (
-              <div className="flex justify-start px-4 py-2">
-                <Input
-                  className="w-1/2"
-                  placeholder="Please Specify"
-                  onChange={(e) => handleInputOthers(e, "businessType")}
-                />
-              </div>
-            )}
-          </div>
-          {errors && getError(["businessType"], errors) && (
-            <p className="text-red-500 p-4">
-              {getError(["businessType"], errors)?.message}
-            </p>
-          )}
-        </div>
-
-        <div>
-          <h1 className="font-bold p-4 border-t">Source Of Income</h1>
-          <div className="p-4 border-t">
-            <div className="grid grid-cols-2 ">
-              {sourceOfIncome.map((item, i) => (
-                <CheckBox
-                  id={`sourceofincome-${i}`}
-                  key={i}
-                  label={item}
-                  onChange={(e) => handeleSourceOfIncome(e, i)}
-                  name={item}
-                />
-              ))}
-            </div>
-            {isSourceOfIncomeOthers && (
-              <div className="flex justify-end px-4 py-2">
-                <Input
-                  className="w-1/2"
-                  placeholder="Please Specify"
-                  onBlur={(e) => handleInputOthers(e, "sourceOfIncome")}
-                />
-              </div>
-            )}
-            {errors && getError(["sourceOfIncome"], errors) && (
-              <p className="text-red-500 p-4">
-                {getError(["sourceOfIncome"], errors)?.message}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <h1 className="font-bold p-4 border-t">
-            Country's Source Of Income / Investment Fund
-          </h1>
-          <div className="p-4 border-t">
-            <div className="grid grid-cols-2 ">
-              {countrySourceOfIncome.map((item, i) => (
-                <CheckBox
-                  id={`countrysourceofincome-${i}`}
-                  key={i}
-                  label={item}
-                  onChange={(e) => handeleCountrySourceOfIncome(e, i)}
-                  name={item}
-                  disabled={disableCountrySourceOfIncome(item)}
-                />
-              ))}
-            </div>
-            {isCountrySourceOfIncomeOthers && (
-              <div className="flex justify-end px-4 py-2">
-                <Input
-                  className="w-1/2"
-                  placeholder="Please Specify"
-                  onChange={(e) =>
-                    handleInputOthers(e, "countrySourceOfIncome")
-                  }
-                />
-              </div>
-            )}
-            {errors && getError(["countrySourceOfIncome"], errors) && (
-              <p className="text-red-500 px-4">
-                {getError(["countrySourceOfIncome"], errors)?.message}
-              </p>
-            )}
-          </div>
-          <div className="p-4 border-t">
-            <h1 className="">Investment Objective</h1>
-          </div>
-          <div className="pt-4 px-4 border-t">
-            {investmentObjective.map((item, i) => (
+    <>
+      <Card>
+        <div className="p-4 space-y-8">
+          <div className="flex flex-row">
+            <div className="w-1/3">
               <CheckBox
-                id={`investmentobjective-${i}`}
-                key={i}
-                label={item}
-                onChange={(e) => handeleInvestmentObjective(e, i)}
-                name={item}
-                disabled={disableInvestmentObjective(item)}
-              />
-            ))}
-          </div>
-          {isInvestmentObjectiveOthers && (
-            <div className="flex justify-start px-4 py-2">
-              <Input
-                className="w-1/2"
-                placeholder="Please Specify"
-                onChange={(e) => handleInputOthers(e, "investmentObjective")}
+                id="0"
+                label={mapKeyLabel[0].label}
+                name="juristicInfo"
+                checked={resFrom2?.isJuristicThailand}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[0].key)}
               />
             </div>
-          )}
-          {errors && getError(["investmentObjective"], errors) && (
-            <p className="text-red-500 p-4">
-              {getError(["investmentObjective"], errors)?.message}
-            </p>
+            <div className="w-2/3">
+              <CheckBox
+                id="1"
+                label={mapKeyLabel[1].label}
+                name="juristicInfo"
+                checked={resFrom2?.isTaxExempt}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[1].key)}
+              />
+              <CheckBox
+                id="2"
+                label={mapKeyLabel[2].label}
+                name="juristicInfo"
+                checked={resFrom2?.isNonTaxExempt}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[2].key)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row">
+            <div className="w-1/3">
+              <CheckBox
+                id="3"
+                label={mapKeyLabel[3].label}
+                name="juristicInfo"
+                checked={resFrom2?.isJuristicForeign}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[3].key)}
+              />
+            </div>
+            <div className="w-2/3">
+              <CheckBox
+                id="4"
+                label={mapKeyLabel[4].label}
+                name="juristicInfo"
+                checked={resFrom2?.isOperatingInThailand}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[4].key)}
+              />
+              <CheckBox
+                id="5"
+                label={mapKeyLabel[5].label}
+                name="juristicInfo"
+                checked={resFrom2?.isNonOperatingInThailand}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[5].key)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row">
+            <div className="w-1/3">
+              <CheckBox
+                id="6"
+                label={mapKeyLabel[6].label}
+                name="juristicInfo"
+                checked={resFrom2?.isOther}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[6].key)}
+              />
+            </div>
+            <div className="w-2/3">
+              <CheckBox
+                id="7"
+                label={mapKeyLabel[7].label}
+                name="juristicInfo"
+                checked={resFrom2?.isPartnership}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[7].key)}
+              />
+              <CheckBox
+                id="8"
+                label={mapKeyLabel[8].label}
+                name="juristicInfo"
+                checked={resFrom2?.isGovernmentStateEnterprise}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[8].key)}
+              />
+              <CheckBox
+                id="9"
+                label={mapKeyLabel[9].label}
+                name="juristicInfo"
+                checked={resFrom2?.isCoOperative}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[9].key)}
+              />
+              <CheckBox
+                id="10"
+                label={mapKeyLabel[10].label}
+                name="juristicInfo"
+                checked={resFrom2?.isTaxExemptCompany}
+                onChange={(e) => handleCheckedBox(e, mapKeyLabel[10].key)}
+              />
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <h1 className="font-bold p-2">Business Type</h1>
+        <div className="grid grid-cols-2 items-start gap-4 p-4">
+          <CheckBox
+            id="11"
+            label={mapKeyLabel[11].label}
+            name="businessType"
+            checked={resFrom2?.isAntiqueTrading}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[11].key)}
+          />
+          <CheckBox
+            id="12"
+            label={mapKeyLabel[12].label}
+            name="businessType"
+            checked={resFrom2?.isHotelRestaurant}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[12].key)}
+          />
+          <CheckBox
+            id="13"
+            label={mapKeyLabel[13].label}
+            name="businessType"
+            checked={resFrom2?.isArmament}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[13].key)}
+          />
+          <CheckBox
+            id="14"
+            label={mapKeyLabel[14].label}
+            name="businessType"
+            checked={resFrom2?.isInsuranceAssurance}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[14].key)}
+          />
+          <CheckBox
+            id="15"
+            label={mapKeyLabel[15].label}
+            name="businessType"
+            checked={resFrom2?.isCasinoGambling}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[15].key)}
+          />
+          <CheckBox
+            id="16"
+            label={mapKeyLabel[16].label}
+            name="businessType"
+            checked={resFrom2?.isJewelryGoldTrading}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[16].key)}
+          />
+          <CheckBox
+            id="17"
+            label={mapKeyLabel[17].label}
+            name="businessType"
+            checked={resFrom2?.isFoundation}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[17].key)}
+          />
+          <CheckBox
+            id="18"
+            label={mapKeyLabel[18].label}
+            name="businessType"
+            checked={resFrom2?.isPropertyRealEstate}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[18].key)}
+          />
+          <CheckBox
+            id="19"
+            label={mapKeyLabel[19].label}
+            name="businessType"
+            checked={resFrom2?.isMoneyTransfer}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[19].key)}
+          />
+          <CheckBox
+            id="20"
+            label={mapKeyLabel[20].label}
+            name="businessType"
+            checked={resFrom2?.isEmploymentAgency}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[20].key)}
+          />
+          <CheckBox
+            id="21"
+            label={mapKeyLabel[21].label}
+            name="businessType"
+            checked={resFrom2?.isEntertainment}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[21].key)}
+          />
+          <CheckBox
+            id="22"
+            label={mapKeyLabel[22].label}
+            name="businessType"
+            checked={resFrom2?.isTravel}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[22].key)}
+          />
+          <CheckBox
+            id="23"
+            label={mapKeyLabel[23].label}
+            name="businessType"
+            checked={resFrom2?.isFinancial}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[23].key)}
+          />
+          <CheckBox
+            id="24"
+            label={mapKeyLabel[24].label}
+            name="businessType"
+            checked={resFrom2?.isEducationCenter}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[24].key)}
+          />
+          <CheckBox
+            id="25"
+            label={mapKeyLabel[25].label}
+            name="businessType"
+            checked={resFrom2?.isForeignCurrencyExchange}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[25].key)}
+          />
+          <CheckBox
+            id="26"
+            label={mapKeyLabel[26].label}
+            name="businessType"
+            checked={resFrom2?.isCryptoRelated}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[26].key)}
+          />
+          <CheckBox
+            id="27"
+            label={mapKeyLabel[27].label}
+            name="businessType"
+            checked={resFrom2?.isOtherBusiness}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[27].key)}
+          />
+          {resFrom2?.isOtherBusiness && (
+            <Input
+              className="col-start-1"
+              name="businessTypeOther"
+              placeholder="Others Please Specific"
+              onChange={handleInputOthersOption}
+            />
           )}
         </div>
-        <div className="flex justify-end pb-4 pr-4">
-          <Button type="submit">Submit</Button>
+      </Card>
+
+      <Card>
+        <h1 className="font-bold p-2">Source Of Income</h1>
+        <div className="grid grid-cols-2 items-start gap-4 p-4">
+          <CheckBox
+            id="28"
+            label={mapKeyLabel[28].label}
+            name="sourceOfIncome"
+            checked={resFrom2?.isRevenue}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[28].key)}
+          />
+          <CheckBox
+            id="29"
+            label={mapKeyLabel[29].label}
+            name="sourceOfIncome"
+            checked={resFrom2?.isStock}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[29].key)}
+          />
+          <CheckBox
+            id="30"
+            label={mapKeyLabel[30].label}
+            name="sourceOfIncome"
+            checked={resFrom2?.isDonation}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[30].key)}
+          />
+          <CheckBox
+            id="31"
+            label={mapKeyLabel[31].label}
+            name="sourceOfIncome"
+            checked={resFrom2?.isLoan}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[31].key)}
+          />
+          <CheckBox
+            id="32"
+            label={mapKeyLabel[32].label}
+            name="sourceOfIncome"
+            checked={resFrom2?.isRevenueSelling}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[32].key)}
+          />
+          <CheckBox
+            id="33"
+            label={mapKeyLabel[33].label}
+            name="sourceOfIncome"
+            checked={resFrom2?.isOtherIncome}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[33].key)}
+          />
+          {resFrom2?.isOtherIncome && (
+            <Input
+              className="col-start-2"
+              name="sourceOfIncomeOther"
+              placeholder="Others Please Specific"
+              onChange={handleInputOthersOption}
+            />
+          )}
         </div>
-      </form>
-    </Card>
+      </Card>
+
+      <Card>
+        <h1 className="font-bold p-2">Country Source Of Income</h1>
+        <div className="grid grid-cols-2 items-start gap-4 p-4">
+          <CheckBox
+            id="34"
+            label={mapKeyLabel[34].label}
+            name="countrySourceOfIncome"
+            checked={resFrom2?.corporateCountry?.isThailand ? true : false}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[34].key)}
+          />
+          <CheckBox
+            id="35"
+            label={mapKeyLabel[35].label}
+            name="countrySourceOfIncome"
+            checked={resFrom2?.corporateCountry?.isThailand ? false : true}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[35].key)}
+          />
+          {!resFrom2?.corporateCountry?.isThailand && (
+            <Input
+              className="col-start-2"
+              name="countrySourceOfIncomeOther"
+              placeholder="Others Please Specific"
+              onChange={handleInputOthersOption}
+            />
+          )}
+        </div>
+
+        <h1 className="font-bold p-2">Investment Objective</h1>
+        <div className="p-4 space-y-2">
+          <CheckBox
+            id="36"
+            label={mapKeyLabel[36].label}
+            name="investmentObjective"
+            checked={resFrom2?.isLiquidation}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[36].key)}
+          />
+          <CheckBox
+            id="37"
+            label={mapKeyLabel[37].label}
+            name="investmentObjective"
+            checked={resFrom2?.isInvestment}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[37].key)}
+          />
+          <CheckBox
+            id="38"
+            label={mapKeyLabel[38].label}
+            name="investmentObjective"
+            checked={resFrom2?.isCashManagement}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[38].key)}
+          />
+          <CheckBox
+            id="39"
+            label={mapKeyLabel[39].label}
+            name="investmentObjective"
+            checked={resFrom2?.isOtherInvestment}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[39].key)}
+          />
+          {resFrom2?.isOtherInvestment && (
+            <Input
+              className="w-1/2"
+              name="investmentObjectiveOther"
+              placeholder="Others Please Specific"
+              onChange={handleInputOthersOption}
+            />
+          )}
+        </div>
+
+        <div className="p-4 flex justify-end">
+          <Button onClick={(e) => onSubmit(e)}>Submit</Button>
+        </div>
+      </Card>
+    </>
   );
 }

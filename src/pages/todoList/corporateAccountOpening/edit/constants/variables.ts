@@ -67,7 +67,7 @@ export const PrimaryCountryOfOperationChoices = [
 // ];
 
 export const juristicTypeKey = [
-  "isJuristicThailLand",
+  "isJuristicThailand",
   "isJuristicForeign",
   "isOther",
 ];
@@ -171,7 +171,7 @@ export const investmentObjectiveKey = [
   "isLiquidation",
   "isInvestment",
   "isCashManagement",
-  "isOtherInvestMent",
+  "isOtherInvestment",
 ];
 
 export const investmentObjective = [
@@ -197,7 +197,7 @@ export const mapScore = {
 //     key: "isCashManagement",
 //     value: false,
 //   },
-//   { label: "Others (Please Specify)", key: "isOtherInvestMent", value: false },
+//   { label: "Others (Please Specify)", key: "isOtherInvestment", value: false },
 // ];
 
 type obj = {
@@ -206,10 +206,28 @@ type obj = {
 };
 
 export const mapKeyLabel: obj[] = [
-  // Juristic and Business Types
   { label: "Juristic (Thailand)", key: "isJuristicThailand" },
+  { label: "Tax Exempt On Dividend And Capital Gain", key: "isTaxExempt" },
+  { label: "Non-Tax Exempt", key: "isNonTaxExempt" },
+
   { label: "Juristic (Foreign)", key: "isJuristicForeign" },
+  { label: "Operating In Thailand", key: "isOperatingInThailand" },
+  { label: "Non Operating In Thailand", key: "isNonOperatingInThailand" },
+
   { label: "Others", key: "isOther" },
+  { label: "Partnership (Thailand)", key: "isPartnership" },
+  {
+    label: "Government Organization / State Enterprise",
+    key: "isGovernmentStateEnterprise",
+  },
+  {
+    label:
+      "Co-operative / Foundation / Association / Club / Temple / Mosque / Shrine",
+    key: "isCoOperative",
+  },
+  { label: "Tax Exempt Company", key: "isTaxExemptCompany" },
+
+  // business type
   { label: "Antique Trading", key: "isAntiqueTrading" },
   { label: "Hotel / Resturant", key: "isHotelRestaurant" },
   { label: "Armamnet", key: "isArmament" },
@@ -235,7 +253,7 @@ export const mapKeyLabel: obj[] = [
   },
   { label: "Others (Please Specify)", key: "isOtherBusiness" },
 
-  // Source of Income
+  //source of income
   { label: "Revenue From Business", key: "isRevenue" },
   { label: "Stock", key: "isStock" },
   { label: "Donation", key: "isDonation" },
@@ -243,20 +261,20 @@ export const mapKeyLabel: obj[] = [
   { label: "Revenue From Selling Property", key: "isRevenueSelling" },
   { label: "Others (Please Specify)", key: "isOtherIncome" },
 
-  // Country Source of Income
+  // country
   { label: "Thailand", key: "isThailand" },
   { label: "Others Countries (Please Specify)", key: "isOtherThailand" },
 
-  // Investment Objectives
+  // investment objective
   { label: "Liquidity Management", key: "isLiquidation" },
-  { label: "Invsetment", key: "isInvestment" },
+  { label: "Investment", key: "isInvestment" },
   { label: "Cash Management For Investment", key: "isCashManagement" },
-  { label: "Others (Please Specify)", key: "isOtherInvestMent" },
+  { label: "Others (Please Specify)", key: "isOtherInvestment" },
 ];
 export type TMapKeyLabel = {
   [key: string]: string;
 };
-export const mapKey: TMapKeyLabel = {
+export const mapKeys: TMapKeyLabel = {
   isJuristicThailand: "Juristic (Thailand)",
   isJuristicForeign: "Juristic (Foreign)",
   isOther: "Others",
@@ -290,13 +308,5 @@ export const mapKey: TMapKeyLabel = {
   isLiquidation: "Liquidity Management",
   isInvestment: "Invsetment",
   isCashManagement: "Cash Management For Investment",
-  isOtherInvestMent: "Others (Please Specify)",
+  isOtherInvestment: "Others (Please Specify)",
 };
-
-// export const mapKey: { [key: string]: string } = mapKeyLabel.reduce(
-//   (acc, obj) => {
-//     acc[obj.key] = obj.label;
-//     return acc;
-//   },
-//   {} as { [key: string]: string }
-// );

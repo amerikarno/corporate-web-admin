@@ -95,11 +95,11 @@ export const initailJuristicOther = {
   OtherBusinessType: "",
   OtherIncome: "",
   OtherCountry: "",
-  OtherInvestMent: "",
+  OtherInvestment: "",
 };
 
 export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
-  isJuristicThailLand: false,
+  isJuristicThailand: false,
   isTaxExempt: false,
   isNonTaxExempt: false,
   isJuristicForeign: false,
@@ -141,6 +141,6 @@ export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
   isLiquidation: false,
   isInvestment: false,
   isCashManagement: false,
-  isOtherInvestMent: false,
-  // OtherInvestMent: "",
+  isOtherInvestment: false,
+  // OtherInvestment: "",
 };

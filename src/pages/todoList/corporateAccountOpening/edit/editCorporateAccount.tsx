@@ -31,10 +31,10 @@ export function EditCorporateAccount() {
   const corporateData: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
-  console.log("corporateData", corporateData);
+  // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  console.log("initFormData", initFormData);
+  // console.log("initFormData", initFormData);
 
   // const handleFormPassChange = (status: boolean) => {
   //   // setIsSecondFormPass(status);
@@ -50,7 +50,7 @@ export function EditCorporateAccount() {
     useCorporateInfo();
 
   const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
-  console.log(corporateCode)
+  // console.log(corporateCode)
 
   const mappingPages: TMapPages = {
     1: (

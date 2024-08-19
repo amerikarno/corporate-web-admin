@@ -1,6 +1,11 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
-import { TContact, TCorporateData, TJuristic } from "../../constant/type";
+import {
+  CorporateResponse,
+  TContact,
+  TCorporateData,
+  TJuristic,
+} from "../../constant/type";
 import {
   TAuthorizedPersonSchema,
   TContactPersonSchema,
@@ -20,7 +25,7 @@ import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants/types";
 import { RootState } from "@/app/store";
 import { useSelector } from "react-redux";
-import { mapKey, TMapKeyLabel } from "../constants/variables";
+import { mapKeys, TMapKeyLabel } from "../constants/variables";
 import { copy } from "@/lib/utils";
 import { initailJuristicTypeAndIncome } from "../constants/initialData";
 export function formatDateToIsoString(date: Date): string {
@@ -359,136 +364,17 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
 };
 
 export const getCheckedLabel = (corpData: TCorporateData) => {
-  // const corpType = corpData?.CorporateTypes;
-  // const bsType = corpData?.BusinessTypes;
-  // const srcIncome = corpData?.SourceOfIncomes;
-  // const countrySrcIncome =
-  //   corpData?.CountrySourceIncomes && corpData.CountrySourceIncomes[0];
-  // const invObj = corpData?.CountrySourceIncomes;
-  // const countrySrcOfIncomeThailand = countrySrcIncome?.corporateCountry;
-
-  // const keysToRemove = [
-  //   "id",
-  //   "createBy",
-  //   "CreatedAt",
-  //   "DeletedAt",
-  //   "corporateCode",
-  //   "corporateCountry",
-  //   "types",
-  // ];
-
-  // var jrType;
-  // var buType;
-  // var srcOfIncome;
-  // var countrySrcOfIncome;
-  // var invType;
-  // var countrySrcOfIncomeTh;
-
-  // if (corpType && corpType !== null) {
-  //   const filteredKeysCorpType = Object.keys(corpType).filter(
-  //     (key) => !keysToRemove.includes(key)
-  //   );
-  //   console.log(filteredKeysCorpType);
-  //   jrType = mapKey[filteredKeysCorpType[0] as keyof TMapKeyLabel];
-  //   console.log(jrType);
-  // }
-
-  // if (bsType && bsType !== null) {
-  //   const filteredKeysBSType = Object.keys(bsType).filter(
-  //     (key) => !keysToRemove.includes(key)
-  //   );
-  //   console.log(filteredKeysBSType);
-  //   buType = mapKey[filteredKeysBSType[0] as keyof TMapKeyLabel];
-  //   console.log(buType);
-  // }
-
-  // if (srcIncome && srcIncome !== null) {
-  //   const filteredKeysSrcIncome = Object.keys(srcIncome).filter(
-  //     (key) => !keysToRemove.includes(key)
-  //   );
-  //   console.log(filteredKeysSrcIncome);
-  //   srcOfIncome = mapKey[filteredKeysSrcIncome[0] as keyof TMapKeyLabel];
-  //   console.log(srcOfIncome);
-  // }
-
-  // if (countrySrcIncome && countrySrcIncome !== null) {
-  //   const filteredKeysCountrySrcIncome = Object.keys(countrySrcIncome!).filter(
-  //     (key) => !keysToRemove.includes(key)
-  //   );
-  //   console.log(filteredKeysCountrySrcIncome);
-  //   countrySrcOfIncome =
-  //     mapKey[filteredKeysCountrySrcIncome[0] as keyof TMapKeyLabel];
-  //   console.log(countrySrcOfIncome);
-  // }
-
-  // if (invObj && invObj !== null) {
-  //   const filteredKeysInvObj = Object.keys(invObj).filter(
-  //     (key) => !keysToRemove.includes(key)
-  //   );
-  //   console.log(filteredKeysInvObj);
-  //   invType = mapKey[filteredKeysInvObj[0] as keyof TMapKeyLabel];
-  //   console.log(invType);
-  // }
-
-  // if (countrySrcOfIncomeThailand && countrySrcOfIncomeThailand !== null) {
-  //   const filteredKeysCountrySrcOfIncomeThailand = Object.keys(
-  //     countrySrcOfIncomeThailand
-  //   ).filter((key) => !keysToRemove.includes(key));
-  //   console.log(filteredKeysCountrySrcOfIncomeThailand);
-  //   countrySrcOfIncomeTh =
-  //     mapKey[filteredKeysCountrySrcOfIncomeThailand[0] as keyof TMapKeyLabel];
-  //   console.log(countrySrcOfIncomeThailand);
-  // }
-
   const jrType = corpData?.CorporateTypes;
   const buType = corpData?.BusinessTypes;
   const srcOfIncome = corpData?.SourceOfIncomes;
   const countrySrcOfIncome =
     corpData?.CountrySourceIncomes && corpData.CountrySourceIncomes[0];
-  const invType = corpData?.CountrySourceIncomes;
+  const invType = corpData?.CountrySourceIncomes
+    ? corpData.CountrySourceIncomes[0]
+    : null;
   const countrySrcOfIncomeTh = countrySrcOfIncome?.corporateCountry;
 
-  let tmp = {
-    isJuristicThailand: jrType.isJuristicThailand,
-    isTaxExempt: jrType.isTaxExempt,
-    isNonTaxExempt: jrType.isNonTaxExempt,
-    isJuristicForeign: jrType.isJuristicForeign,
-    isOperatingInThailand: jrType.isOperatingInThailand,
-    isNonOperatingInThailand: jrType.isNonOperatingInThailand,
-    isOther: jrType.isOther,
-    isPartnership: jrType.isPartnership,
-    isGovernmentStateEnterprise: jrType.isGovernmentStateEnterprise,
-    isTaxExemptCompany: jrType.isTaxExemptCompany,
-    isAntiqueTrading: false,
-    isHotelRestaurant: false,
-    isArmament: false,
-    isInsuranceAssurance: false,
-    isCasinoGambling: false,
-    isJewelryGoldTrading: false,
-    isFoundation: false,
-    isPropertyRealEstate: false,
-    isMoneyTransfer: false,
-    isEmploymentAgency: false,
-    isEntertainment: false,
-    isTravel: false,
-    isFinancial: false,
-    isEducationCenter: false,
-    isForeignCurrencyExchange: false,
-    isCryptoRelated: false,
-    isOtherBusiness: false,
-    isRevenue: false,
-    isStock: false,
-    isDonation: false,
-    isLoan: false,
-    isRevenueSelling: false,
-    isOtherIncome: false,
-    isThailand: false,
-    isOtherThailand: false,
-    isLiquidation: false,
-    isInvestment: false,
-    isCashManagement: false,
-    isOtherInvestMent: false,
-  };
+  console.log(JSON.stringify(corpData, null, 2));
 
   return {
     jrType,
@@ -498,4 +384,29 @@ export const getCheckedLabel = (corpData: TCorporateData) => {
     invType,
     countrySrcOfIncomeTh,
   };
+};
+
+export const getFrom2Response = () => {
+  const corpData = useSelector((state: RootState) => state.editCorporate);
+  const {
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh,
+  } = getCheckedLabel(corpData) || {};
+
+  let res: CorporateResponse = {
+    ...jrType,
+    ...buType,
+    ...srcOfIncome,
+    ...countrySrcOfIncome,
+    ...invType,
+    ...countrySrcOfIncomeTh,
+  };
+
+  console.log(JSON.stringify(res, null, 2));
+
+  return res;
 };
