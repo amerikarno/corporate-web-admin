@@ -389,12 +389,7 @@ export function useFormCorporateInfo2() {
     setResForm2({ ...form2Data });
   };
 
-  useEffect(() => {
-    const data = getFrom2Response();
-    console.log("dispatched", data);
-    setResForm2(data);
-    // navigate("/todo-list/corporate-account-opening/edit/3");
-  }, [dispatch]);
+
 
   return {
     // corporateTypeAndIncome,
