@@ -9,6 +9,7 @@ import bankReducer from "@/features/bankSlice/bankSlice";
 import editCorporateReducer from "@/features/editCorporateData/editCorporateData";
 import userReducer from "@/features/user/userSlice";
 import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
+import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
     bank: bankReducer,
     editCorporate: editCorporateReducer,
     user: userReducer,
-    orderTrade: orderTradeReducer
+    orderTrade: orderTradeReducer,
+    juristicType: juristicTypeReducer,
   },
 });
 

@@ -17,10 +17,10 @@ export function PageJuristicType({
   const corporateData: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
-  console.log("corporateData", corporateData);
+  // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  console.log(currentCorporatesInfo)
+  // console.log(currentCorporatesInfo)
   return (
     <>
       <div className="p-4 space-y-8">
@@ -30,9 +30,7 @@ export function PageJuristicType({
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">
-                  : {corporateData?.CorporateCode ?? ""}
-                </h1>
+                <h1 className="">: {corporateData?.CorporateCode ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -40,9 +38,7 @@ export function PageJuristicType({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Commercial Number</h1>
-                <h1 className="">
-                  : {initFormData?.registrationNo ?? ""}
-                </h1>
+                <h1 className="">: {initFormData?.registrationNo ?? ""}</h1>
               </div>
             </div>
             <div className="w-1/2 space-y-4">
@@ -52,10 +48,7 @@ export function PageJuristicType({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">
-                  :{" "}
-                  {initFormData?.dateofincorporation}
-                </h1>
+                <h1 className="">: {initFormData?.dateofincorporation}</h1>
               </div>
             </div>
           </div>

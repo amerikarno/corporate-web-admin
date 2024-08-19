@@ -71,6 +71,10 @@ export function FormCorporateTypeAndIncome({
     await saveJuristicType(resFrom2);
   };
 
+  if (resFrom2 === null) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Card>
@@ -301,6 +305,7 @@ export function FormCorporateTypeAndIncome({
               name="businessTypeOther"
               placeholder="Others Please Specific"
               onChange={handleInputOthersOption}
+              value={resFrom2.otherBusinessType}
             />
           )}
         </div>
@@ -357,6 +362,7 @@ export function FormCorporateTypeAndIncome({
               name="sourceOfIncomeOther"
               placeholder="Others Please Specific"
               onChange={handleInputOthersOption}
+              value={resFrom2.otherIncome}
             />
           )}
         </div>
@@ -385,6 +391,7 @@ export function FormCorporateTypeAndIncome({
               name="countrySourceOfIncomeOther"
               placeholder="Others Please Specific"
               onChange={handleInputOthersOption}
+              value={resFrom2?.corporateCountry?.other}
             />
           )}
         </div>
@@ -425,6 +432,7 @@ export function FormCorporateTypeAndIncome({
               name="investmentObjectiveOther"
               placeholder="Others Please Specific"
               onChange={handleInputOthersOption}
+              value={resFrom2?.otherInvestment}
             />
           )}
         </div>
