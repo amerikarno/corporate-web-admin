@@ -1,6 +1,7 @@
 import { CorporateResponse } from "@/pages/todoList/corporateAccountOpening/constant/type";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialData: CorporateResponse = {
+const initialState: CorporateResponse | null = {
   CreatedAt: "",
   DeletedAt: null,
   corporateCode: 0,
@@ -41,10 +42,23 @@ const initialData: CorporateResponse = {
   isOtherIncome: false,
   otherIncome: "",
   isThailand: false,
-  otherCountry: "",
+  other: "",
   isLiquidation: false,
   isInvestment: false,
   isCashManagement: false,
   isOtherInvestment: false,
   otherInvestment: "",
 };
+
+const juristicTypeSlice = createSlice({
+  name: "juristicType",
+  initialState,
+  reducers: {
+    setJuristicType: (state, action: PayloadAction<CorporateResponse>) => {
+      state = action.payload;
+      return state;
+    },
+  },
+});
+export const { setJuristicType } = juristicTypeSlice.actions;
+export default juristicTypeSlice.reducer;

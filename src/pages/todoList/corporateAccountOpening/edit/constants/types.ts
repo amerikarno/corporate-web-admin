@@ -307,3 +307,9 @@ export type CorporateTypeBody = {
   otherInvestment?: string;
   corporateCode?: string;
 };
+
+export type TErrors = {
+  id: number;
+  msg: string;
+  paths: string[];
+};

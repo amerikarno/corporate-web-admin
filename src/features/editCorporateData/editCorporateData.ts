@@ -92,7 +92,7 @@ const initialState: TCorporateData = {
 };
 
 const editCorporateSlice = createSlice({
-  name: "editCorporate",
+  name: "juristicType",
   initialState,
   reducers: {
     setCorporateData(state, action: PayloadAction<TCorporateData>) {

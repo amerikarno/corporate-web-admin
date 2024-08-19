@@ -353,6 +353,6 @@ export type CorporateCountryResponse = {
   DeletedAt?: null | string;
   corporateCode?: number;
   isThailand?: boolean;
-  otherCountry?: string;
+  other?: string;
   types?: number;
 };
