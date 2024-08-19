@@ -2,7 +2,7 @@ import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 import { TCorporateData } from "../../constant/type";
 import {
-  TContactPersonSchema,
+  // TContactPersonSchema,
   TCorporateInfoSchema,
 } from "../constants/schemas";
 

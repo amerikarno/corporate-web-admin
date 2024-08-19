@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import LoginForm from "./loginForm";
+import AzureForm from "./azureForm";
 
 function login() {
   return (
@@ -14,6 +15,7 @@ function login() {
             <h1 className="text-center font-bold text-3xl">
               FDA Corporate Admin
             </h1>
+            <AzureForm />
             <LoginForm />
           </div>
         </section>
