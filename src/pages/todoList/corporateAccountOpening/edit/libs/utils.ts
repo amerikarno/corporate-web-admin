@@ -1,6 +1,11 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
-import { TContact, TCorporateData, TJuristic } from "../../constant/type";
+import {
+  CorporateResponse,
+  TContact,
+  TCorporateData,
+  TJuristic,
+} from "../../constant/type";
 import {
   TAuthorizedPersonSchema,
   TContactPersonSchema,
@@ -18,6 +23,11 @@ import { TIndividualShareholder as TIndividualShareholderEdit } from "../../cons
 import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type";
 import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants/types";
+import { RootState } from "@/app/store";
+import { useSelector } from "react-redux";
+import { mapKeys, TMapKeyLabel } from "../constants/variables";
+import { copy } from "@/lib/utils";
+import { initailJuristicTypeAndIncome } from "../constants/initialData";
 export function formatDateToIsoString(date: Date): string {
   const isoString = date.toISOString();
   const formattedDate = isoString.replace(/\.\d{3}Z$/, "+00:00");
@@ -162,8 +172,8 @@ export const mapDataToTDirector = (
     if (data === null) {
       return null;
     }
-    console.log(data)
-    const dateFormatted = data?.expiryDate?.split('T')[0]; // "2024-08-29"
+
+    const dateFormatted = data?.expiryDate?.split("T")[0]; // "2024-08-29"
     // console.log(dateFormatted)
     // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
     // const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
@@ -180,7 +190,7 @@ export const mapDataToTDirector = (
       expiryDate: dateFormatted ?? "",
       nationality: data?.nationality ?? "",
       types: data?.types ?? "",
-      personalId : data?.personalId ?? "",
+      personalId: data?.personalId ?? "",
       addresses:
         data?.addresses?.length > 0
           ? data?.addresses
@@ -215,7 +225,7 @@ export const mapDataToTIndividualShareholder = (
     if (data === null) {
       return null;
     }
-    const dateFormatted = data.expiryDate?.split('T')[0];
+    const dateFormatted = data.expiryDate?.split("T")[0];
     const fullName = data.fullNames[0];
     const result: TIndividualsShareholders = {
       corporateCode: String(data.corporateCode ?? ""),
@@ -351,4 +361,52 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
     console.error("Cast type error", error);
     return null;
   }
+};
+
+export const getCheckedLabel = (corpData: TCorporateData) => {
+  const jrType = corpData?.CorporateTypes;
+  const buType = corpData?.BusinessTypes;
+  const srcOfIncome = corpData?.SourceOfIncomes;
+  const countrySrcOfIncome =
+    corpData?.CountrySourceIncomes && corpData.CountrySourceIncomes[0];
+  const invType = corpData?.CountrySourceIncomes
+    ? corpData.CountrySourceIncomes[0]
+    : null;
+  const countrySrcOfIncomeTh = countrySrcOfIncome?.corporateCountry;
+
+  console.log(JSON.stringify(corpData, null, 2));
+
+  return {
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh,
+  };
+};
+
+export const getFrom2Response = () => {
+  const corpData = useSelector((state: RootState) => state.editCorporate);
+  const {
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh,
+  } = getCheckedLabel(corpData) || {};
+
+  let res: CorporateResponse = {
+    ...jrType,
+    ...buType,
+    ...srcOfIncome,
+    ...countrySrcOfIncome,
+    ...invType,
+    ...countrySrcOfIncomeTh,
+  };
+
+  console.log(JSON.stringify(res, null, 2));
+
+  return res;
 };

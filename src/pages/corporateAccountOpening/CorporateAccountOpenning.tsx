@@ -52,7 +52,7 @@ export default function CorporateAccountOpenning() {
 
   const todo = "need to use real corporateCode";
   //clear redux store state//
-  
+
   ///////////////////////////
 
   let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
@@ -99,7 +99,6 @@ export default function CorporateAccountOpenning() {
       dispatch(clearBank());
       console.log(corporateCode);
       if (corporateCode) {
-
         navigate(`/create-job/added-corporate-account/${pageId + 1}`);
       }
     } else if (type == "submit2") {

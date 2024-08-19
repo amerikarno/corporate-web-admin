@@ -18,7 +18,7 @@ export const mappingAddress: TMappingAddress = {
 };
 
 export const juristicTypeKey = [
-  "isJuristicThailLand",
+  "isJuristicThailand",
   "isJuristicForeign",
   "isOther",
 ];
@@ -122,7 +122,7 @@ export const investmentObjectiveKey = [
   "isLiquidation",
   "isInvestment",
   "isCashManagement",
-  "isOtherInvestMent",
+  "isOtherInvestment",
 ];
 export const investmentObjective = [
   "Liquidity Management",
