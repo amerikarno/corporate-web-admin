@@ -22,7 +22,7 @@ export default function OrderTradeEdit() {
     return <UnAuthorize />;
   }
 
-  const dispatch = useDispatch(); // Move useDispatch here
+  const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("buy");
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
@@ -297,8 +297,8 @@ export default function OrderTradeEdit() {
                     disabled={isSubmitting}
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                   >
-                    <option value="" disabled>
-                      trading pairs
+                    <option value="THB/USTD" disabled>
+                      THB/USTD
                     </option>
                     {tradingPair.map((pair, index) => (
                       <option key={index} value={pair.name}>

@@ -93,7 +93,10 @@ export function EditCorporateAccount() {
     // }
     if (type == "next") {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId + 1}`);
-    } else {
+    }else if(type == "done"){
+      navigate(`/todo-list/corporate-account-opening`);
+    } 
+    else {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId - 1}`);
     }
   };

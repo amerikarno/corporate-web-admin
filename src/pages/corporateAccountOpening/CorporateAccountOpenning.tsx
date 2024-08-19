@@ -107,6 +107,7 @@ export default function CorporateAccountOpenning() {
       }
     } else if (type == "done") {
       navigate(`/create-job/added-corporate-account/1`);
+      window.location.reload();
     } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }
