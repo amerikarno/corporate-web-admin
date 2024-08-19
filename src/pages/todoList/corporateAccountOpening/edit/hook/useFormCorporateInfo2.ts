@@ -181,7 +181,7 @@ export function useFormCorporateInfo2() {
           handleFormPassChange(true);
           // dispatch(setJuristicType(data));
           setStoreData(data);
-          // navigate("/todo-list/corporate-account-opening/edit/3");
+          navigate("/todo-list/corporate-account-opening/edit/3");
         } else {
           alert("Invalid Input.");
           console.log("save failed");
@@ -389,12 +389,11 @@ export function useFormCorporateInfo2() {
     setResForm2({ ...form2Data });
   };
 
-  useEffect(() => {
-    const data = getFrom2Response();
-    console.log("dispatched", data);
-    setResForm2(data);
-    // navigate("/todo-list/corporate-account-opening/edit/3");
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const data = getFrom2Response();
+  //   console.log("dispatched", data);
+  //   setResForm2(data);
+  // }, [dispatch]);
 
   return {
     // corporateTypeAndIncome,
