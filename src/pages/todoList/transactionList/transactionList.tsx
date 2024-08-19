@@ -101,7 +101,6 @@ const TransactionList = () => {
         },
       });
       if (res.status === 200) {
-        console.log(res)
         console.log(res.data)
         const transactions: TTransaction[] = res.data.map((item: any) => {
           console.log(item);
@@ -178,7 +177,7 @@ const TransactionList = () => {
       ignoreRowClick: true,
     },
     {
-      name: "Decline",
+      name: "Reject",
       cell: (row: TTransaction) => (
         <input
           type="checkbox"
