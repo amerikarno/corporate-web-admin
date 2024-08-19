@@ -3,8 +3,7 @@ import { isExpiredToken } from "../libs/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { TIndividualsShareholders } from "../constants/types";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { useDispatch } from "react-redux";
 import {
   addIndividualShareholder,
   updateIndividualShareholder,
@@ -37,16 +36,20 @@ export function useShareholders() {
       types: Number(data.types) ?? 301,
       personalId: data.personalId,
     };
-    let dataWithStringDate = {...body, expiryDate: new Date(data.expiryDate)}
+    let dataWithStringDate = { ...body, expiryDate: new Date(data.expiryDate) };
     //console.log("body", body);
     try {
       console.log("sending data to dispatch : ", body);
       console.log("sending data to database : ", dataWithStringDate);
       if (data.personalId) {
         //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
-        const res = await axios.post("/api/v1/personals/update", dataWithStringDate, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.post(
+          "/api/v1/personals/update",
+          dataWithStringDate,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         if (res.status === 200) {
           console.log("Edit successful");
@@ -57,9 +60,13 @@ export function useShareholders() {
       } else {
         //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
 
-        const res = await axios.post("/api/v1/personals/create", dataWithStringDate, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.post(
+          "/api/v1/personals/create",
+          dataWithStringDate,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         if (res.status === 200) {
           console.log("Save successful ", res);

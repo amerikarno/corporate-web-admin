@@ -85,8 +85,7 @@ export const columnsListOfDirectors: TableColumn<TDirector>[] = [
   },
   {
     name: "Expired Date",
-    selector: (row: TDirector) =>
-      row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
+    selector: (row: TDirector) => row.expiryDate || "",
   },
   {
     name: "Nationality",
@@ -124,12 +123,11 @@ export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
   },
   {
     name: "PassportID",
-    selector: (row: TAuthorizePerson) => row.passportID || "",
+    selector: (row: TAuthorizePerson) => row.passportId || "",
   },
   {
     name: "Expired Date",
-    selector: (row: TAuthorizePerson) =>
-      row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
+    selector: (row: TAuthorizePerson) => row.expiryDate || "",
   },
   {
     name: "Nationality",
@@ -190,54 +188,49 @@ export const columnsContactPerson: TableColumn<TContactPerson>[] = [
   },
 ];
 
-export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] =
-  [
-    {
-      name: "Title",
-      selector: (row: TIndividualsShareholders) =>
-        row.fullNames[0].title || "",
-    },
-    {
-      name: "Firstname",
-      selector: (row: TIndividualsShareholders) =>
-        row.fullNames[0].firstName || "",
-    },
-    {
-      name: "Lastname",
-      selector: (row: TIndividualsShareholders) =>
-        row.fullNames[0].lastName || "",
-    },
-    {
-      name: "CitizenID",
-      selector: (row: TIndividualsShareholders) => row.citizenId || "",
-    },
-    {
-      name: "PassportID",
-      selector: (row: TIndividualsShareholders) => row.passportId || "",
-    },
-    {
-      name: "Expired Date",
-      selector: (row: TIndividualsShareholders) =>
-        row.expiryDate ? row.expiryDate.toLocaleDateString() : "",
-    },
-    {
-      name: "Nationality",
-      selector: (row: TIndividualsShareholders) =>
-        row.nationality || "",
-    },
-    {
-      name: "Share Percentage",
-      selector: (row: TIndividualsShareholders) =>
-        row.sharePercentage || "",
-    },
-    {
-      name: "Actions",
-      cell: (row: TIndividualsShareholders) => (
-        <Button onClick={() => console.log(row)}>Action</Button>
-      ),
-      ignoreRowClick: true,
-    },
-  ];
+export const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
+  {
+    name: "Title",
+    selector: (row: TIndividualsShareholders) => row.fullNames[0].title || "",
+  },
+  {
+    name: "Firstname",
+    selector: (row: TIndividualsShareholders) =>
+      row.fullNames[0].firstName || "",
+  },
+  {
+    name: "Lastname",
+    selector: (row: TIndividualsShareholders) =>
+      row.fullNames[0].lastName || "",
+  },
+  {
+    name: "CitizenID",
+    selector: (row: TIndividualsShareholders) => row.citizenId || "",
+  },
+  {
+    name: "PassportID",
+    selector: (row: TIndividualsShareholders) => row.passportId || "",
+  },
+  {
+    name: "Expired Date",
+    selector: (row: TIndividualsShareholders) => row.expiryDate || "",
+  },
+  {
+    name: "Nationality",
+    selector: (row: TIndividualsShareholders) => row.nationality || "",
+  },
+  {
+    name: "Share Percentage",
+    selector: (row: TIndividualsShareholders) => row.sharePercentage || "",
+  },
+  {
+    name: "Actions",
+    cell: (row: TIndividualsShareholders) => (
+      <Button onClick={() => console.log(row)}>Action</Button>
+    ),
+    ignoreRowClick: true,
+  },
+];
 
 export const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] =
   [

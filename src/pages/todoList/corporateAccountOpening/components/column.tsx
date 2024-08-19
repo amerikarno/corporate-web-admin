@@ -2,7 +2,7 @@ import { TableColumn } from "react-data-table-component";
 import { TCorporateData } from "../constant/type";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 const EditButtonCell = ({ row }: { row: TCorporateData }) => {
@@ -10,7 +10,7 @@ const EditButtonCell = ({ row }: { row: TCorporateData }) => {
   const dispatch = useDispatch();
 
   const handleEditClick = () => {
-    console.log(row)
+    console.log(row);
     dispatch(setCorporateData(row));
 
     navigate("/todo-list/corporate-account-opening/edit/1", {

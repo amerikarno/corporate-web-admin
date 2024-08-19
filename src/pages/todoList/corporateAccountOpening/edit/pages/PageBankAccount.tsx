@@ -12,7 +12,6 @@ import { removeBank, setBank } from "@/features/bankSlice/bankSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-import { TBank as TBankEdit } from "../../constant/type";
 import { mapDataToTBank } from "../libs/utils";
 
 type TPageBankAccountProps = {
@@ -20,65 +19,75 @@ type TPageBankAccountProps = {
 };
 
 type TBankWithID = {
-  CorporateCode?:string;
-  bank : TBank[];
+  CorporateCode?: string;
+  bank: TBank[];
   BankId?: string;
-}
+};
 export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
-  const {  handleSubmitBank } = useBank();
-  const bankData: TBankWithID[] = useSelector<RootState>((state) => state.bank?.banks || []) as TBankWithID[];
+  const { handleSubmitBank } = useBank();
+  const bankData: TBankWithID[] = useSelector<RootState>(
+    (state) => state.bank?.banks || []
+  ) as TBankWithID[];
   const dispatch = useDispatch();
 
   const token = getCookies();
-  const [choosedEditData,setChoosedEditData] = useState<TBankWithID>();
+  const [choosedEditData, setChoosedEditData] = useState<TBankWithID>();
   const clearChoosedEditData = () => {
-      setChoosedEditData(undefined);
-    };
+    setChoosedEditData(undefined);
+  };
 
-    useEffect(() => {
-      const fetchBankData = async () => {
-        try {
-          const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
+  useEffect(() => {
+    const fetchBankData = async () => {
+      try {
+        const res = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode },
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          });
-          if (res.status === 200) {
-            const banks = res.data[0].Banks.map((bank : any) => ({
-              ...bank,
-              BankId: bank.id,
-            })).map(mapDataToTBank).filter((item : any) => item !== null);
-    
-            dispatch(setBank(banks));
           }
-        } catch (error) {
-          console.error("Error fetching bank data:", error);
-        }
-      };
-    
-      fetchBankData();
-    }, [corporateCode, dispatch, token]);
-    
+        );
+        if (res.status === 200) {
+          const banks = res.data[0].Banks.map((bank: any) => ({
+            ...bank,
+            BankId: bank.id,
+          }))
+            .map(mapDataToTBank)
+            .filter((item: any) => item !== null);
 
-    
-  console.log(bankData)
+          dispatch(setBank(banks));
+        }
+      } catch (error) {
+        console.error("Error fetching bank data:", error);
+      }
+    };
+
+    fetchBankData();
+  }, [corporateCode, dispatch, token]);
+
+  console.log(bankData);
   const handleDelete = async (data: TBankWithID) => {
-    console.log(data)
-    try{
+    console.log(data);
+    try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/bank/delete",{BankId : data.BankId},{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      if (res.status === 200){
-        console.log("delete successful")
+      const res = await axios.post(
+        "/api/v1/bank/delete",
+        { BankId: data.BankId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        console.log("delete successful");
         dispatch(removeBank(data.BankId));
       }
-    }catch(error){
-      console.log("delete fail ,",error)
+    } catch (error) {
+      console.log("delete fail ,", error);
     }
-  };;
+  };
 
   const columnsBank: TableColumn<TBankWithID>[] = [
     {
@@ -113,9 +122,14 @@ export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
     },
     {
       cell: (row: TBankWithID) => (
-        <Button onClick={() => {setChoosedEditData(row)
-          console.log(row)
-        }}>Edit</Button>
+        <Button
+          onClick={() => {
+            setChoosedEditData(row);
+            console.log(row);
+          }}
+        >
+          Edit
+        </Button>
       ),
       ignoreRowClick: true,
     },
@@ -132,11 +146,12 @@ export function PageBankAccount({ corporateCode }: TPageBankAccountProps) {
             clearSelectedRows
           />
         </Card>
-        <FormBank 
-        onsubmit={handleSubmitBank} 
-        corporateCode={corporateCode}
-        clearChoosedEditData={clearChoosedEditData}
-        choosedEditData={choosedEditData} />
+        <FormBank
+          onsubmit={handleSubmitBank}
+          corporateCode={corporateCode}
+          clearChoosedEditData={clearChoosedEditData}
+          choosedEditData={choosedEditData}
+        />
       </div>
     </>
   );

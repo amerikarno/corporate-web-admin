@@ -10,13 +10,19 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import DataTable, { TableColumn } from "react-data-table-component";
+import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 const tradingPair = [{ name: "THB/USTD" }, { name: "THB/USDC" }];
-export default function OrderTrade() {
+
+export default function OrderTradeEdit() {
   if (!isAllowedPage(2020)) {
     return <UnAuthorize />;
   }
 
+  const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("buy");
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
@@ -24,6 +30,14 @@ export default function OrderTrade() {
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
     { corporateCode: number }[]
   >([]);
+  const [choosedEditData, setChoosedEditData] = useState<TOrderTrade>();
+  const clearChoosedEditData = () => {
+    setChoosedEditData(undefined);
+  };
+
+  const orderTradeData: TOrderTrade[] = useSelector<RootState>(
+    (state) => state.orderTrade?.orderTrades || []
+  ) as TOrderTrade[];
 
   const fetchCorporateCodes = async () => {
     try {
@@ -51,23 +65,102 @@ export default function OrderTrade() {
     }
   };
 
+  const fetchOrderList = async () => {
+    try {
+      const token = getCookies();
+      const res = await axios.get("/api/v1/transaction/order/get", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        console.log(res.data);
+        const orderTrades = res.data || [];
+
+        dispatch(setOrderTrades(orderTrades));
+        console.log("OrderTrade data fetched successfully.", orderTrades);
+      } else {
+        console.log("Failed to fetch orderTrade");
+      }
+    } catch (error) {
+      console.log("Fetching order list of this role error!", error);
+    }
+  };
+
+  const columnsOrderTrade: TableColumn<TOrderTrade>[] = [
+    {
+      name: "Corporate Code",
+      selector: (row: TOrderTrade) => row.corporateCode || "",
+    },
+    {
+      name: "Buy/Sell",
+      selector: (row: TOrderTrade) => row.operations || "",
+    },
+    {
+      name: "pair",
+      selector: (row: TOrderTrade) => row.pair || "",
+    },
+    {
+      name: "Crypto Amount",
+      selector: (row: TOrderTrade) => row.cryptoAmount || "",
+    },
+    {
+      name: "Crypto Price",
+      selector: (row: TOrderTrade) => row.cryptoPrice || "",
+    },
+    {
+      name: "Fiat Amount",
+      selector: (row: TOrderTrade) => row.fiatAmount || "",
+    },
+    {
+      name: "Currency",
+      selector: (row: TOrderTrade) => row.currency || "",
+    },
+    {
+      cell: (row: TOrderTrade) => (
+        <Button
+          onClick={() => {
+            setChoosedEditData(row);
+          }}
+        >
+          Edit
+        </Button>
+      ),
+      ignoreRowClick: true,
+    },
+  ];
+
   useEffect(() => {
-    fetchCorporateCodes();
-  }, []);
+    const orderListDatatoInputField = choosedEditData || {
+      corporateCode: 0,
+      cryptoAmount: 0,
+      cryptoPrice: 0,
+      currency: "",
+      fiatAmount: 0,
+    };
+    reset(orderListDatatoInputField);
+    setBuySell(choosedEditData?.operations || "buy");
+    console.log("use effect", orderListDatatoInputField);
+  }, [choosedEditData]);
 
   const handleBuySell = (value: string) => {
     setBuySell(value);
   };
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    // reset,
   } = useForm<TOrderTrade>({
     resolver: zodResolver(orderTradeSchema),
-    //values: individualsShareholder,
   });
+
+  useEffect(() => {
+    console.log("do");
+    fetchOrderList();
+    fetchCorporateCodes();
+  }, [reset]);
 
   const handleCorporateCodeChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -85,21 +178,41 @@ export default function OrderTrade() {
     let body: TOrderTrade = {
       ...data,
       operations: buySell,
+      id: choosedEditData?.id,
     };
-    console.log(body);
+
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/transaction/order/create", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        reset();
-        console.log(res);
-        console.log("save successful");
+      if (body.id) {
+        const res = await axios.post("/api/v1/transaction/order/edit", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          reset();
+          clearChoosedEditData();
+          setSelectedCorporateCode("");
+          console.log("edit successful");
+          fetchOrderList();
+        } else {
+          console.log("edit failed");
+        }
       } else {
-        console.log("save failed");
+        const res = await axios.post("/api/v1/transaction/order/create", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          reset();
+          clearChoosedEditData();
+          setSelectedCorporateCode("");
+          console.log("save successful");
+          fetchOrderList();
+        } else {
+          console.log("save failed");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -107,7 +220,15 @@ export default function OrderTrade() {
   };
 
   return (
-    <div className="md:p-10 flex justify-center">
+    <div className="md:p-10 flex flex-col justify-center space-y-4">
+      <Card className="p-4 w-full">
+        <DataTable
+          title="Rejected Orders / Trades Lists"
+          columns={columnsOrderTrade}
+          data={orderTradeData}
+          clearSelectedRows
+        />
+      </Card>
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -172,8 +293,8 @@ export default function OrderTrade() {
                     disabled={isSubmitting}
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                   >
-                    <option value="" disabled>
-                      trading pairs
+                    <option value="THB/USTD" disabled>
+                      THB/USTD
                     </option>
                     {tradingPair.map((pair, index) => (
                       <option key={index} value={pair.name}>

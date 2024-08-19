@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
@@ -49,11 +49,6 @@ export default function CorporateAccountOpenning() {
   const navigate = useNavigate();
   const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
-
-  const todo = "need to use real corporateCode";
-  //clear redux store state//
-
-  ///////////////////////////
 
   let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
   //let corporateCode: string = "80000004";
@@ -107,6 +102,7 @@ export default function CorporateAccountOpenning() {
       }
     } else if (type == "done") {
       navigate(`/create-job/added-corporate-account/1`);
+      window.location.reload();
     } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }

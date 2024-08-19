@@ -1,37 +1,18 @@
 import { Card } from "@/components/ui/card";
-import {
-  businessType,
-  countrySourceOfIncome,
-  investmentObjective,
-  juristicForeign,
-  juristicOthers,
-  juristicThai,
-  sourceOfIncome,
-  juristicType,
-  mapKeys,
-  TMapKeyLabel,
-  mapKeyLabel,
-} from "../constants/variables";
+import { mapKeyLabel } from "../constants/variables";
 import { CheckBox } from "@/components/Checkbox";
 import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
-import { isExpiredToken } from "@/lib/utils";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { getCheckedLabel } from "../libs/utils";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
-import { CorporateResponse } from "../../constant/type";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
   corporateCode?: string;
 };
 
-export function FormCorporateTypeAndIncome({
-  corporateCode,
-}: TCorporateTypeAndIncomeProps) {
+export function FormCorporateTypeAndIncome({}: // corporateCode,
+TCorporateTypeAndIncomeProps) {
   const {
     // isBusinessTypeOthers,
     // isSourceOfIncomeOthers,

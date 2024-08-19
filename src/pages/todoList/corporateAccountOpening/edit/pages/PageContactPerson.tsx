@@ -3,20 +3,16 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsContactPerson } from "../components/formContactPerson";
 //import { columnsContactPerson } from "../constants/columns";
 import { useContactPerson } from "../hook/useContactPerson";
-import { TContactPerson } from "../constants/types";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addContactPerson,
   removeContactPerson,
   setContactPersons,
 } from "@/features/contactPersonSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { TCorporateData, TContact } from "../../constant/type";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { Contact } from "lucide-react";
+import { TContact } from "../../constant/type";
 import { useEffect, useState } from "react";
 
 type TPageContactPersonProps = {

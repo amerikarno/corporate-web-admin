@@ -193,9 +193,7 @@ export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty"),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   // sharePercentage: z.preprocess(
   //   (a) => parseFloat(z.string().parse(a)),
@@ -237,9 +235,7 @@ export const authorizedPersonSchema = z.object({
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportId: z.string().optional(),
   personalId: z.string().optional(),
-  expiryDate: z
-    .string()
-    .min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty"),
   addresses: z.array(subAddressSchema),
 });
 

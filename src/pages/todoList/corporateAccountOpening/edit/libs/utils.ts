@@ -23,8 +23,7 @@ import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type"
 import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants/types";
 import { RootState } from "@/app/store";
-import { useDispatch, useSelector } from "react-redux";
-import { setJuristicType } from "@/features/juristicType/juristicTypeSlice";
+import { useSelector } from "react-redux";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();

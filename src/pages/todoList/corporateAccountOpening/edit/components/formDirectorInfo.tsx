@@ -9,12 +9,10 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
-import { TDirector as TDirectorEdit } from "../../constant/type";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
 import { checkFormatIDCard } from "@/lib/utils";
-import { mapDataToTDirector } from "../libs/utils";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
@@ -91,7 +89,7 @@ export function FormIndividualsDirector({
   }, [choosedEditData]);
 
   useEffect(() => {
-    //const dateFormatted = choosedEditData?.expiryDate.split('T')[0]; 
+    //const dateFormatted = choosedEditData?.expiryDate.split('T')[0];
     // console.log(dateFormatted)
     // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
     // const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));

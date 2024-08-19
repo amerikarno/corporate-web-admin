@@ -1,50 +1,21 @@
 import { copy } from "@/lib/utils";
-import {
-  businessTypeKey,
-  countrySourceOfIncomeKey,
-  investmentObjectiveKey,
-  juristicForeignKey,
-  juristicOthersKey,
-  juristicThaiKey,
-  juristicTypeKey,
-  sourceOfIncomeKey,
-  juristicType,
-  mapKeys,
-} from "../constants/variables";
-import { useEffect, useState } from "react";
-import {
-  CorporateTypeBody,
-  TCorporateTypeAndIncome,
-  TErrors,
-  TInitailJuristicOther,
-  TInitailJuristicTypeAndIncome,
-} from "../constants/types";
-import {
-  emptyCorporateTypeAndIncome,
-  initailJuristicOther,
-  initailJuristicTypeAndIncome,
-} from "../constants/initialData";
-import { z, ZodIssue } from "zod";
-import { corporateTypeAndIncomeSchema } from "../constants/schemas";
+import { useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 import { CorporateResponse } from "../../constant/type";
-import { getCheckedLabel, getFrom2Response } from "../libs/utils";
+import { getFrom2Response } from "../libs/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { setJuristicType } from "@/features/juristicType/juristicTypeSlice";
-import { FastForward } from "lucide-react";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 export function useFormCorporateInfo2() {
   const navigate = useNavigate();
-  const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const [resFrom2, setResForm2] = useState<CorporateResponse>(
     getFrom2Response()
   );
   const corp = useSelector((state: RootState) => state.editCorporate);
-  const juristicType = useSelector((state: RootState) => state.juristicType);
   const dispatch = useDispatch();
 
   const setStoreData = (data: CorporateResponse) => {
@@ -176,33 +147,33 @@ export function useFormCorporateInfo2() {
         // console.log(res);
         if (res.status === 200) {
           console.log("request success", res.data);
-          setIsSecondFormPass(true);
+          // setIsSecondFormPass(true);
           // onFormPassChange(true);
-          handleFormPassChange(true);
+          // handleFormPassChange(true);
           // dispatch(setJuristicType(data));
           setStoreData(data);
           navigate("/todo-list/corporate-account-opening/edit/3");
         } else {
           alert("Invalid Input.");
           console.log("save failed");
-          setIsSecondFormPass(false);
+          // setIsSecondFormPass(false);
           // onFormPassChange(false);
-          handleFormPassChange(false);
+          // handleFormPassChange(false);
         }
       } catch (error) {
         console.log(error);
         alert(error);
-        setIsSecondFormPass(false);
+        // setIsSecondFormPass(false);
         // onFormPassChange(false);
-        handleFormPassChange(false);
+        // handleFormPassChange(false);
       }
       // dispatch(setJuristicType(data));
     }
   };
 
-  const handleFormPassChange = (status: boolean) => {
-    setIsSecondFormPass(status);
-  };
+  // const handleFormPassChange = (status: boolean) => {
+  //   setIsSecondFormPass(status);
+  // };
 
   const handleCheckedBox = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -388,12 +359,6 @@ export function useFormCorporateInfo2() {
     }
     setResForm2({ ...form2Data });
   };
-
-  // useEffect(() => {
-  //   const data = getFrom2Response();
-  //   console.log("dispatched", data);
-  //   setResForm2(data);
-  // }, [dispatch]);
 
   return {
     // corporateTypeAndIncome,
