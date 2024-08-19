@@ -50,6 +50,7 @@ export function EditCorporateAccount() {
     useCorporateInfo();
 
   const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
+  //const corporateCode: string = "80000008";
   console.log(corporateCode)
 
   const mappingPages: TMapPages = {

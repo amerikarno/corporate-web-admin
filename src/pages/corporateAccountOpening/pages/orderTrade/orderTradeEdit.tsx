@@ -11,7 +11,7 @@ import axios from "@/api/axios";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
+import { addOrderTrade, setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 
@@ -78,6 +78,7 @@ export default function OrderTradeEdit() {
       if (res.status === 200) {
         console.log(res.data);
         const orderTrades = res.data || [];
+        
         dispatch(setOrderTrades(orderTrades));
         console.log("OrderTrade data fetched successfully.", orderTrades);
       } else {
@@ -131,10 +132,6 @@ export default function OrderTradeEdit() {
     },
   ];
 
-  useEffect(() => {
-    fetchOrderList();
-    fetchCorporateCodes();
-  }, []);
 
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
@@ -162,6 +159,12 @@ export default function OrderTradeEdit() {
     resolver: zodResolver(orderTradeSchema),
   });
 
+  useEffect(() => {
+    console.log("do")
+    fetchOrderList();
+    fetchCorporateCodes();
+  }, [reset]);
+
   const handleCorporateCodeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -178,46 +181,47 @@ export default function OrderTradeEdit() {
     let body: TOrderTrade = {
       ...data,
       operations: buySell,
-      id:choosedEditData?.id
+      id: choosedEditData?.id,
     };
-    console.log(body);
+    
     try {
       const token = getCookies();
-      
-      if(body.id){
+      if (body.id) {
         const res = await axios.post("/api/v1/transaction/order/edit", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         if (res.status === 200) {
-            reset();
-            clearChoosedEditData();
-            console.log(res);
-            console.log("edit successful");
+          reset();
+          clearChoosedEditData();
+          setSelectedCorporateCode("")
+          console.log("edit successful");
+          fetchOrderList(); 
         } else {
-            console.log("edit failed");
+          console.log("edit failed");
         }
-      }else{
+      } else {
         const res = await axios.post("/api/v1/transaction/order/create", body, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            });
-            if (res.status === 200) {
-                reset();
-                clearChoosedEditData();
-                console.log(res);
-                console.log("save successful");
-            } else {
-                console.log("save failed");
-            }
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          reset();
+          clearChoosedEditData();
+          setSelectedCorporateCode("");
+          console.log("save successful");
+          fetchOrderList();
+        } else {
+          console.log("save failed");
+        }
       }
-      
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   return (
     <div className="md:p-10 flex flex-col justify-center space-y-4">
