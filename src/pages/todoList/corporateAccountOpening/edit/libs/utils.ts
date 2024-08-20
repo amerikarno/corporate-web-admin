@@ -217,14 +217,13 @@ export const mapDataToTIndividualShareholder = (
       return null;
     }
     const dateFormatted = data.expiryDate?.split("T")[0];
-    const fullName = data.fullNames[0];
     const result: TIndividualsShareholders = {
       corporateCode: String(data.corporateCode ?? ""),
       fullNames: [
         {
-          title: fullName.title ?? "",
-          firstName: fullName.firstName ?? "",
-          lastName: fullName.lastName ?? "",
+          title: data.fullNames[0].title ?? "",
+          firstName: data.fullNames[0].firstName ?? "",
+          lastName: data.fullNames[0].lastName ?? "",
         },
       ],
       citizenId: data.citizenId ?? "",

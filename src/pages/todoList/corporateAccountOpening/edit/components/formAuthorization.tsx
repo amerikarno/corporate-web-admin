@@ -67,9 +67,6 @@ export function FormAuthorizedPerson({
   });
 
   const handleDropboxChoice = (choice: string) => {
-    setValue('passportId', '');
-    setValue('citizenId', '');
-
     console.log(choice);
     setCurInputText("");
     resetField("passportId");
@@ -80,14 +77,17 @@ export function FormAuthorizedPerson({
   useEffect(() => {
     if (choosedEditData?.citizenId) {
       setDropDownChoosed("ID");
-      console.log(choosedEditData.citizenId)
-      setValue('citizenId', choosedEditData.citizenId);
+      setValue("citizenId", choosedEditData.citizenId);
     } else if (choosedEditData?.passportId) {
       setDropDownChoosed("Passport");
-      console.log(choosedEditData.passportId)
-      setValue('passportId', choosedEditData.passportId);
+      setValue("passportId", choosedEditData.passportId);
+    } else {
+      setDropDownChoosed("ID");
     }
-  }, [choosedEditData]);
+    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
+    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
+  }, [choosedEditData, setValue]);
+
   const valideID = () => {
     if (dropDownChoosed === "ID") {
       if (checkFormatIDCard(curInputText)) return true;
@@ -112,6 +112,8 @@ export function FormAuthorizedPerson({
         fullNames: data.fullNames,
         corporateCode: corporateCode,
         personalId: choosedEditData?.personalId,
+        citizenId: dropDownChoosed === "ID" ? curInputText : "",
+        passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
       console.log(body);
       clearChoosedEditData();
@@ -148,12 +150,6 @@ export function FormAuthorizedPerson({
       ],
     }
     reset(authorizedPersonData);
-    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "" )
-    setCurInput(choosedEditData?.citizenId !== "" || choosedEditData?.passportId !== "");
-    if (choosedEditData) {
-      const chosenValue = choosedEditData.citizenId ? "ID" : "Passport";
-      setDropDownChoosed(chosenValue);
-    }
     setHasDate(true);
   }, [choosedEditData, reset]);
 
