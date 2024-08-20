@@ -20,11 +20,11 @@ type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
   corporateCode?: string;
 };
-const handleFormPassChange = (status: boolean) => {
-  if (status) {
-    console.log("Form submission status:", status);
-  }
-};
+// const handleFormPassChange = (status: boolean) => {
+//   if (status) {
+//     console.log("Form submission status:", status);
+//   }
+// };
 
 export function FormCorporateTypeAndIncome({
   // corporateInfo,

@@ -9,12 +9,10 @@ import {
 } from "../constants/schemas";
 import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
-import { TDirector as TDirectorEdit } from "../../constant/type";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
 import { checkFormatIDCard } from "@/lib/utils";
-import { mapDataToTDirector } from "../libs/utils";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;

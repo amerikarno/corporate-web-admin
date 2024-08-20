@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TDirector } from "@/pages/corporateAccountOpening/constants/types";
-import { TDirector as TDirectorEdit } from "@/pages/todoList/corporateAccountOpening/constant/type";
 
 interface ListOfDirectorState {
   listOfDirectors: TDirector[];
@@ -34,7 +33,7 @@ export const DirectorSlice = createSlice({
     clearDirector: (state) => {
       state.listOfDirectors = [];
     },
-    
+
     setDirectorEdit: (state, action: PayloadAction<TDirector[]>) => {
       state.listOfDirectors = action.payload;
     },

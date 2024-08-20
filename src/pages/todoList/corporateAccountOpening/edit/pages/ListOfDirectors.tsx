@@ -4,11 +4,14 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsDirector } from "../components/formDirectorInfo";
 //import { columnsListOfDirectors } from "../constants/columns";
 import { TDirector } from "../constants/types";
-import { TDirector as TDirectorEdit } from "../../constant/type"
+import { TDirector as TDirectorEdit } from "../../constant/type";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { removeDirector, setDirectorEdit } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import {
+  removeDirector,
+  setDirectorEdit,
+} from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
@@ -20,42 +23,49 @@ type TListOfDirectorsProps = {
 
 export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
   const dispatch = useDispatch();
-  const { handleSubmitDirectors } =
-    useListOfDirector();
+  const { handleSubmitDirectors } = useListOfDirector();
 
   const token = getCookies();
-  const listOfDirectorData : TDirector[] = useSelector<RootState>(
-      (state) => state.listOfDirector?.listOfDirectors) as TDirector[];
-  const [choosedEditData,setChoosedEditData] = useState<TDirector>();
+  const listOfDirectorData: TDirector[] = useSelector<RootState>(
+    (state) => state.listOfDirector?.listOfDirectors
+  ) as TDirector[];
+  const [choosedEditData, setChoosedEditData] = useState<TDirector>();
   const clearChoosedEditData = () => {
-        setChoosedEditData(undefined);
-      };
-  console.log(listOfDirectorData)
-    
+    setChoosedEditData(undefined);
+  };
+  console.log(listOfDirectorData);
 
-    useEffect(() => {
-      axios.post("/api/v1/corporate/query", { corporateCode }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+  useEffect(() => {
+    axios
+      .post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log("API Response:", res.data);
-  
+
         if (res.status === 200) {
-          console.log(res)
-          const listofdirectors = res.data[0].Directors || [];;
-          const updateDirector: TDirector[] = listofdirectors.map((listofdirector: TDirectorEdit) => ({
-            ...listofdirector,
-            listofdirector: listofdirector.personalId,
-          }))
-          .map(mapDataToTDirector)
-          .filter((item:any) => item !== null) as TDirector[];
-          
+          console.log(res);
+          const listofdirectors = res.data[0].Directors || [];
+          const updateDirector: TDirector[] = listofdirectors
+            .map((listofdirector: TDirectorEdit) => ({
+              ...listofdirector,
+              listofdirector: listofdirector.personalId,
+            }))
+            .map(mapDataToTDirector)
+            .filter((item: any) => item !== null) as TDirector[];
+
           dispatch(setDirectorEdit(updateDirector));
           console.log("director data fetched successfully.", updateDirector);
         } else {
-          console.log("Failed to fetch jurisdirectortic data or data is not an array.");
+          console.log(
+            "Failed to fetch jurisdirectortic data or data is not an array."
+          );
         }
       })
       .catch((error) => {
@@ -63,64 +73,73 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
       });
   }, [corporateCode, dispatch, token]);
 
-
-    const handleDelete = async (data: TDirector) => {
-      console.log(data)
-      try{
-        const token = getCookies();
-        const res = await axios.post("/api/v1/personals/delete",{personalId : data.personalId},{
+  const handleDelete = async (data: TDirector) => {
+    console.log(data);
+    try {
+      const token = getCookies();
+      const res = await axios.post(
+        "/api/v1/personals/delete",
+        { personalId: data.personalId },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        if (res.status === 200){
-          console.log("delete successful")
-          dispatch(removeDirector(data.personalId));
         }
-      }catch(error){
-        console.log("delete fail ,",error)
+      );
+      if (res.status === 200) {
+        console.log("delete successful");
+        dispatch(removeDirector(data.personalId));
       }
-    };
+    } catch (error) {
+      console.log("delete fail ,", error);
+    }
+  };
 
-    const columnsListOfDirectors: TableColumn<TDirector>[] = [
-      {
-        name: "Title",
-        selector: (row) => row.fullNames[0]?.title || "",
-      },
-      {
-        name: "Firstname",
-        selector: (row) => row.fullNames[0]?.firstName || "",
-      },
-      {
-        name: "Lastname",
-        selector: (row) => row.fullNames[0]?.lastName || "",
-      },
-      {
-        name: "CitizenID",
-        selector: (row) => row.citizenId || "",
-      },
-      {
-        name: "PassportID",
-        selector: (row) => row.passportId || "",
-      },
-      {
-        name: "Nationality",
-        selector: (row) => row.nationality || "",
-      },
-      {
-        cell: (row: TDirector) => (
-          <Button onClick={() => {setChoosedEditData(row) 
-            console.log(row)}}>Edit</Button>
-        ),
-        ignoreRowClick: true,
-      },
-      {
-        cell: (row: TDirector) => (
-          <Button onClick={() => handleDelete(row)}>Delete</Button>
-        ),
-        ignoreRowClick: true,
-      },
-    ];
+  const columnsListOfDirectors: TableColumn<TDirector>[] = [
+    {
+      name: "Title",
+      selector: (row) => row.fullNames[0]?.title || "",
+    },
+    {
+      name: "Firstname",
+      selector: (row) => row.fullNames[0]?.firstName || "",
+    },
+    {
+      name: "Lastname",
+      selector: (row) => row.fullNames[0]?.lastName || "",
+    },
+    {
+      name: "CitizenID",
+      selector: (row) => row.citizenId || "",
+    },
+    {
+      name: "PassportID",
+      selector: (row) => row.passportId || "",
+    },
+    {
+      name: "Nationality",
+      selector: (row) => row.nationality || "",
+    },
+    {
+      cell: (row: TDirector) => (
+        <Button onClick={() => handleDelete(row)}>Delete</Button>
+      ),
+      ignoreRowClick: true,
+    },
+    {
+      cell: (row: TDirector) => (
+        <Button
+          onClick={() => {
+            setChoosedEditData(row);
+            console.log(row);
+          }}
+        >
+          Edit
+        </Button>
+      ),
+      ignoreRowClick: true,
+    },
+  ];
   return (
     <>
       <div className="p-4 space-y-8">
@@ -143,5 +162,3 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
     </>
   );
 }
-
-

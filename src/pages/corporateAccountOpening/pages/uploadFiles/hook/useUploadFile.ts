@@ -3,6 +3,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useState } from "react";
 import { TDropdownOption } from "../constant/type";
 import { acceptedFileTypes } from "../constant/variables";
+import { AxiosError } from "axios";
 
 export function useUploadFile() {
   const [file, setFile] = useState<File | null>(null);
@@ -34,7 +35,8 @@ export function useUploadFile() {
           // formData.append("fileTypes", file.type);
           formData.append("docType", documentType.value);
           formData.append("corporateCode", corporateCode);
-
+          console.log(documentType.value);
+          console.log(corporateCode);
           try {
             const response = await axios.post(
               "/api/v1/corporate/document/upload",
@@ -53,8 +55,25 @@ export function useUploadFile() {
             } else {
               console.log("Error uploading file", response.data);
             }
-          } catch (error) {
-            console.error("Error uploading file", error);
+          } catch (error: AxiosError | any) {
+            // console.error("Catch Error uploading file", error);
+            if (error.response) {
+              // Server responded with a status other than 2xx
+              console.error("Error response:", error.response);
+              alert(
+                `Error: ${error.response.status} - ${
+                  error.response.data.message || "File upload failed"
+                }`
+              );
+            } else if (error.request) {
+              // Request was made but no response received
+              console.error("Error request:", error.request);
+              alert("No response from server. Please try again later.");
+            } else {
+              // Something else caused the error
+              console.error("Error message:", error.message);
+              alert("An unexpected error occurred. Please try again.");
+            }
           }
         } else {
           alert("File size should be less than 2MB");

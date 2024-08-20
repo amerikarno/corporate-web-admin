@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { TBank } from "../constants/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";

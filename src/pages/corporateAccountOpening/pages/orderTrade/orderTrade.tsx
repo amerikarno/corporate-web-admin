@@ -11,7 +11,7 @@ import axios from "@/api/axios";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { addOrderTrade, setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
+import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 
@@ -30,16 +30,14 @@ export default function OrderTradeEdit() {
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
     { corporateCode: number }[]
   >([]);
-  const [choosedEditData, setChoosedEditData] =
-    useState<TOrderTrade>();
+  const [choosedEditData, setChoosedEditData] = useState<TOrderTrade>();
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
-  
-  const orderTradeData: TOrderTrade[] =
-    useSelector<RootState>(
-      (state) => state.orderTrade?.orderTrades || []
-    ) as TOrderTrade[];
+
+  const orderTradeData: TOrderTrade[] = useSelector<RootState>(
+    (state) => state.orderTrade?.orderTrades || []
+  ) as TOrderTrade[];
 
   const fetchCorporateCodes = async () => {
     try {
@@ -78,7 +76,7 @@ export default function OrderTradeEdit() {
       if (res.status === 200) {
         console.log(res.data);
         const orderTrades = res.data || [];
-        
+
         dispatch(setOrderTrades(orderTrades));
         console.log("OrderTrade data fetched successfully.", orderTrades);
       } else {
@@ -132,14 +130,13 @@ export default function OrderTradeEdit() {
     },
   ];
 
-
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
-    corporateCode: 0,  
-    cryptoAmount: 0,
-    cryptoPrice: 0,
-    currency: "",
-    fiatAmount:0,
+      corporateCode: 0,
+      cryptoAmount: 0,
+      cryptoPrice: 0,
+      currency: "",
+      fiatAmount: 0,
     };
     reset(orderListDatatoInputField);
     setBuySell(choosedEditData?.operations || "buy");
@@ -160,7 +157,7 @@ export default function OrderTradeEdit() {
   });
 
   useEffect(() => {
-    console.log("do")
+    console.log("do");
     fetchOrderList();
     fetchCorporateCodes();
   }, [reset]);
@@ -183,7 +180,7 @@ export default function OrderTradeEdit() {
       operations: buySell,
       id: choosedEditData?.id,
     };
-    
+
     try {
       const token = getCookies();
       if (body.id) {
@@ -195,9 +192,9 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode("")
+          setSelectedCorporateCode("");
           console.log("edit successful");
-          fetchOrderList(); 
+          fetchOrderList();
         } else {
           console.log("edit failed");
         }
@@ -221,17 +218,16 @@ export default function OrderTradeEdit() {
       console.log(error);
     }
   };
-  
 
   return (
     <div className="md:p-10 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
         <DataTable
-              title="Rejected Orders / Trades Lists"
-              columns={columnsOrderTrade}
-              data={orderTradeData}
-              clearSelectedRows
-            />
+          title="Rejected Orders / Trades Lists"
+          columns={columnsOrderTrade}
+          data={orderTradeData}
+          clearSelectedRows
+        />
       </Card>
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>

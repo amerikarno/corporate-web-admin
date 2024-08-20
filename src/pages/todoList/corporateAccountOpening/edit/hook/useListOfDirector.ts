@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { TDirector } from "../constants/types";
-import { TDirector as TDirectorEdit } from "../../constant/type";
 import axios from "@/api/axios";
 import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { useDispatch } from "react-redux";
 import {
   addDirector,
   updateDirector,
@@ -60,9 +58,7 @@ export function useListOfDirector() {
         if (res.status === 200) {
           console.log("Save successful ", res);
           console.log("personalId", res.data.personalId);
-          console.log({...data,
-                      personalId: res.data.personalId
-          });
+          console.log({ ...data, personalId: res.data.personalId });
           dispatch(
             addDirector({
               ...data,

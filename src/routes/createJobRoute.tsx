@@ -1,6 +1,7 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import CorporateAccountOpenning from "@/pages/corporateAccountOpening/CorporateAccountOpenning";
 import OrderTrade from "@/pages/corporateAccountOpening/pages/orderTrade/orderTrade";
+import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
 import { Outlet, Route } from "react-router-dom";
 
 export const createJobRoutes = () => {
@@ -11,10 +12,10 @@ export const createJobRoutes = () => {
         <Route index element={<CorporateAccountOpenning />} />
         <Route path=":page" element={<CorporateAccountOpenning />} />
       </Route>
-      <Route
-        path="added-individual-account"
-        element={<BlankPage name="Added Individual Account" />}
-      />
+      <Route path="added-individual-account" element={<Outlet />}>
+        <Route index element={<AddIndividualAccount />} />
+        <Route path=":page" element={<AddIndividualAccount />} />
+      </Route>
       <Route path="special-edd" element={<BlankPage name="Special EDD" />} />
       <Route
         path="adjust-cash-balance"

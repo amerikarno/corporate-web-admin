@@ -84,7 +84,7 @@ export function FormCorporateInfo({
     const formData: TCorporateInfo = {
       ...data,
       corporateCode: corporatesInfo?.CorporateCode.toString(),
-      dateofincorporation: new Date(dateData),
+      dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
       registeredThailand:
