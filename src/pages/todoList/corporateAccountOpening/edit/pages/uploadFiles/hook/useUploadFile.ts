@@ -30,18 +30,22 @@ export function useUploadFile() {
         if (fileSizeInMB < 2.0 && documentType !== null) {
           const formData = new FormData();
           formData.append("file", file);
-          formData.append("flieName", file.name);
-          formData.append("fileTypes", file.type);
-          formData.append("docTypes", documentType.value);
+          // formData.append("flieName", file.name);
+          // formData.append("fileTypes", file.type);
+          formData.append("docType", documentType.value);
           formData.append("corporateCode", corporateCode);
 
           try {
-            const response = await axios.post("/api/v1/sftp/upload", formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${getCookies()}`,
-              },
-            });
+            const response = await axios.post(
+              "/api/v1/corporate/document/upload",
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Bearer ${getCookies()}`,
+                },
+              }
+            );
             if (response.status === 200) {
               console.log("File uploaded successfully", response.data);
               setFile(null);
