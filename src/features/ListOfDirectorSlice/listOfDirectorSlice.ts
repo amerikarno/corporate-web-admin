@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TDirector } from "@/pages/corporateAccountOpening/constants/types";
+import { TDirector } from "@/pages/createJob/addedCorporateAccount/constants/types";
 
 interface ListOfDirectorState {
   listOfDirectors: TDirector[];

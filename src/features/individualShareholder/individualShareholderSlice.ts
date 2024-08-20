@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TIndividualsShareholders } from "@/pages/corporateAccountOpening/constants/types";
+import { TIndividualsShareholders } from "@/pages/createJob/addedCorporateAccount/constants/types";
 import { TIndividualShareholder as TIndividualShareholderEdit } from "@/pages/todoList/corporateAccountOpening/constant/type";
 interface IndividualShareholderState {
   individualShareholders: TIndividualsShareholders[];

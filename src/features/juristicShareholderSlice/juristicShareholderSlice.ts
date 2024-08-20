@@ -1,13 +1,12 @@
-
 import { createSlice } from "@reduxjs/toolkit";
-import { TJuristicsShareholders } from "@/pages/corporateAccountOpening/constants/types";
+import { TJuristicsShareholders } from "@/pages/createJob/addedCorporateAccount/constants/types";
 
 interface JuristicShareholderState {
   juristicShareholders: TJuristicsShareholders[];
 }
 
 const initialState: JuristicShareholderState = {
-    juristicShareholders: [],
+  juristicShareholders: [],
 };
 
 export const juristicShareholderSlice = createSlice({
@@ -15,8 +14,11 @@ export const juristicShareholderSlice = createSlice({
   initialState,
   reducers: {
     addJuristicShareholder: (state, action) => {
-        console.log('action.payload:', action.payload);
-        return { ...state, juristicShareholders: [...state.juristicShareholders, action.payload] };
+      console.log("action.payload:", action.payload);
+      return {
+        ...state,
+        juristicShareholders: [...state.juristicShareholders, action.payload],
+      };
     },
     removeJuristicShareholder: (state, action) => {
       state.juristicShareholders = state.juristicShareholders.filter(
@@ -44,5 +46,11 @@ export const juristicShareholderSlice = createSlice({
   },
 });
 
-export const { addJuristicShareholder, updateJuristicShareholder , removeJuristicShareholder, setJuristicShareholder,clearJuristicShareholder } = juristicShareholderSlice.actions;
+export const {
+  addJuristicShareholder,
+  updateJuristicShareholder,
+  removeJuristicShareholder,
+  setJuristicShareholder,
+  clearJuristicShareholder,
+} = juristicShareholderSlice.actions;
 export default juristicShareholderSlice.reducer;

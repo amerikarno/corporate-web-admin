@@ -43,10 +43,6 @@ export function FormCorporateInfo({
     defaultValues: initData,
   });
 
-  // const [registeredCountryError, setRegisteredCountryError] =
-  //   useState<boolean>(false);
-  // const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
-  //   useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
 
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
@@ -55,18 +51,6 @@ export function FormCorporateInfo({
   const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 602
   );
-
-  // const [hasDate, setHasDate] = useState<boolean>(
-  //   initData?.dateofincorporation ? true : false
-  // );
-
-  // const formatDate = (date?: string): string | undefined => {
-  //   if (date) {
-  //     const dt = Date.parse(date);
-  //     const dateInDate = new Date(dt);
-  //     return dateInDate.toLocaleDateString("th-TH");
-  //   }
-  // };
 
   useEffect(() => {
     if (shouldScrollUp) {
@@ -131,47 +115,14 @@ export function FormCorporateInfo({
         telephone: data.placeofIncorporation.telephone,
       },
     };
-
-    // if (handleCheckboxError()) {
-    //   await sleep(500);
-    //   reset();
-    //   // console.log(formData);
-    //   onsubmit(formData);
-    // } else {
-    //   setShouldScrollUp(true);
-    // }
     await sleep(500);
     reset();
     onsubmit(formData);
   };
 
-  // const handleCheckboxError = () => {
-  //   let isValid = true;
-
-  //   if (!registeredCountryPrimaryCountryOperation.registered) {
-  //     setRegisteredCountryError(true);
-  //     isValid = false;
-  //   } else {
-  //     setRegisteredCountryError(false);
-  //   }
-
-  //   if (!registeredCountryPrimaryCountryOperation.primary) {
-  //     setPrimaryCountryOfOperationError(true);
-  //     isValid = false;
-  //   } else {
-  //     setPrimaryCountryOfOperationError(false);
-  //   }
-
-  //   return isValid;
-  // };
-
   const {
-    // disablePrimaryCountryOfOperation,
-    // disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
-    // isPrimaryCountryOfOperationOthers,
-    // isRegisteredCountryOthers,
     registeredCountryPrimaryCountryOperation,
     handleInputOthers,
   } = useFormCorporateInfo(corporatesInfo);
@@ -218,27 +169,6 @@ export function FormCorporateInfo({
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
             )}
-            {/* {hasDate ? (
-              <div
-                id="Date Of Incorporation"
-                onClick={() => setHasDate(false)}
-                className="relative py-3 px-2 border border-gray-700 rounded-md text-sm text-gray-900"
-              >
-                <div className="absolute -top-2 left-2 bg-white px-1 text-xs text-gray-700">
-                  Date of Incorporation
-                </div>
-                {formatDate(initData?.dateofincorporation)}
-              </div>
-            ) : (
-              <Input
-                id={"Date Of Incorporation"}
-                label={"Date of Incorporation"}
-                {...register("dateofincorporation")}
-                name="dateofincorporation"
-                type="date"
-                disabled={isSubmitting}
-              />
-            )} */}
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
@@ -268,13 +198,6 @@ export function FormCorporateInfo({
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
-                    // if (
-                    //   registeredCountryPrimaryCountryOperation.registered == ""
-                    // ) {
-                    //   setRegisteredCountryError(false);
-                    // } else {
-                    //   setRegisteredCountryError(true);
-                    // }
                   }}
                   name={registeredCountryChoices[0]}
                 />

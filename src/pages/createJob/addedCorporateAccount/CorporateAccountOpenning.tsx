@@ -17,7 +17,7 @@ import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { isAllowedPage } from "@/lib/utils";
-import UnAuthorize from "../unAuthorizePage/unAuthorize";
+import UnAuthorize from "../../unAuthorizePage/unAuthorize";
 import { clearContactPersons } from "@/features/contactPersonSlice";
 import { clearDirector } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 import { clearIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
