@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import * as pages from "@/const/pages";
+import * as pages from "@/constant/pages";
 
 const Welcome = () => {
   type FullName = {
