@@ -7,7 +7,7 @@ import Layout from "@/components/Layout";
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateAccountOpenning";
+import CorporateAccountOpenning from "./pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import { customerRoutes } from "./routes/customerRoutes";
 import { thirdPartyRoutes } from "./routes/thirdPartyRoute";
 import { reportsRoutes } from "./routes/reportRoute";

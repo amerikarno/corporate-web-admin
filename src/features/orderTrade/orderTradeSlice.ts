@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TOrderTrade } from "@/pages/corporateAccountOpening/pages/orderTrade/constant/type";
+import { TOrderTrade } from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/constant/type";
 
 interface OrderTradeState {
   orderTrades: TOrderTrade[];
@@ -14,12 +14,12 @@ export const orderTradeSlice = createSlice({
   initialState,
   reducers: {
     addOrderTrade: (state, action) => {
-      console.log('action.payload:', action.payload);
+      console.log("action.payload:", action.payload);
       return { ...state, orderTrades: [...state.orderTrades, action.payload] };
     },
     removeOrderTrade: (state, action) => {
       state.orderTrades = state.orderTrades.filter(
-        (data:any) => data.id !== action.payload
+        (data: any) => data.id !== action.payload
       );
     },
     clearOrderTrades: (state) => {
@@ -30,7 +30,7 @@ export const orderTradeSlice = createSlice({
     },
     updateOrderTrade: (state, action) => {
       const index = state.orderTrades.findIndex(
-        (data:any) => data.id === action.payload.id
+        (data: any) => data.id === action.payload.id
       );
 
       if (index !== -1) {
@@ -43,5 +43,11 @@ export const orderTradeSlice = createSlice({
   },
 });
 
-export const { addOrderTrade, updateOrderTrade, removeOrderTrade, setOrderTrades, clearOrderTrades } = orderTradeSlice.actions;
+export const {
+  addOrderTrade,
+  updateOrderTrade,
+  removeOrderTrade,
+  setOrderTrades,
+  clearOrderTrades,
+} = orderTradeSlice.actions;
 export default orderTradeSlice.reducer;

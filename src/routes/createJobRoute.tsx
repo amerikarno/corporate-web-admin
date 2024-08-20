@@ -1,6 +1,6 @@
 import BlankPage from "@/pages/blankPages/blankPage";
-import CorporateAccountOpenning from "@/pages/corporateAccountOpening/CorporateAccountOpenning";
-import OrderTrade from "@/pages/corporateAccountOpening/pages/orderTrade/orderTrade";
+import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
+import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
 import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
 import { Outlet, Route } from "react-router-dom";
 

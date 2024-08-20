@@ -74,7 +74,6 @@ export function FormIndividualsDirector({
     resolver: zodResolver(directorInfoSchema),
   });
 
-
   useEffect(() => {
     if (choosedEditData?.citizenId) {
       setDropDownChoosed("ID");
@@ -85,7 +84,9 @@ export function FormIndividualsDirector({
     } else {
       setDropDownChoosed("ID");
     }
-    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
+    setCurInputText(
+      choosedEditData?.citizenId || choosedEditData?.passportId || ""
+    );
     setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
   }, [choosedEditData, setValue]);
 

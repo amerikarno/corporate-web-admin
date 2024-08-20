@@ -75,25 +75,22 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   const checkToken = async () => {
+    console.log("check token");
     if (token && token !== null) {
       const decode: DecodedToken = jwtDecode(token);
       const expire = decode.exp ? decode.exp : 0;
 
       if (expire < Date.now() / 1000) {
-        console.log("expired");
+        console.log("token expired");
 
         try {
-          const res = await axios.post(
-            "/api/v1/authen/refresh",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-              },
-              withCredentials: true,
-            }
-          );
+          const res = await axios.get("/api/v1/authen/refresh", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          });
 
           console.log("response refresh", res);
           setCookies(res.data.accessToken);
@@ -117,7 +114,7 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }
 
     checkToken();
-  }, [token]);
+  }, [token, dispatch, navigate]);
 
   if (loading) {
     return (

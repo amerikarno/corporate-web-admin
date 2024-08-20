@@ -15,10 +15,10 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
   );
   const initCountryData = {
     registered: resCorpRegisterCountry?.other || "",
-    primary: resCorpPrimaryCountry?.other || "",
     registeredThailand: resCorpRegisterCountry?.isThailand || false,
+    registeredOther: resCorpRegisterCountry?.isThailand ? false : true,
+    primary: resCorpPrimaryCountry?.other || "",
     primaryCountry: resCorpPrimaryCountry?.isThailand || false,
-    registeredOther: resCorpPrimaryCountry?.isThailand ? false : true,
     primaryOther: resCorpPrimaryCountry?.isThailand ? false : true,
   };
   // console.log(JSON.stringify(initCountryData, null, 2));

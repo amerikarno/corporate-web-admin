@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TBank } from "@/pages/corporateAccountOpening/constants/types";
+import { TBank } from "@/pages/createJob/addedCorporateAccount/constants/types";
 
 interface BankState {
   banks: TBank[];
@@ -14,7 +14,7 @@ export const bankSlice = createSlice({
   initialState,
   reducers: {
     addBank: (state, action) => {
-      console.log('action.payload:', action.payload);
+      console.log("action.payload:", action.payload);
       return { ...state, banks: [...state.banks, action.payload] };
     },
     removeBank: (state, action) => {
@@ -27,25 +27,27 @@ export const bankSlice = createSlice({
     },
     setBank: (state, action) => {
       state.banks = action.payload;
-    },updateBank: (state, action) => {
-      console.log('Updating bank with BankId:', action.payload.BankId);
+    },
+    updateBank: (state, action) => {
+      console.log("Updating bank with BankId:", action.payload.BankId);
       const index = state.banks.findIndex(
         (data) => data.BankId === action.payload.BankId
       );
-    
+
       if (index !== -1) {
-        console.log('Bank found. Updating...');
+        console.log("Bank found. Updating...");
         state.banks[index] = {
           ...state.banks[index],
           ...action.payload,
         };
       } else {
-        console.log('Bank not found. Adding new bank...');
+        console.log("Bank not found. Adding new bank...");
         state.banks.push(action.payload);
       }
     },
   },
 });
 
-export const { addBank, removeBank, clearBank, setBank, updateBank } = bankSlice.actions;
+export const { addBank, removeBank, clearBank, setBank, updateBank } =
+  bankSlice.actions;
 export default bankSlice.reducer;
