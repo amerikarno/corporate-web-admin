@@ -41,6 +41,7 @@ export function PageIndividualShareholder({
         console.log("API Response:", res.data);
         if (res.status === 200) {
           const individualshareholder = res.data[0]?.IndividualShareholders || [];
+          console.log(individualshareholder)
           if (individualshareholder && individualshareholder.length > 0) {
             // const updateIndividual:TIndividualShareholderEdit[] = individualshareholder.map((indivudual: any) => ({
             //   ...indivudual,

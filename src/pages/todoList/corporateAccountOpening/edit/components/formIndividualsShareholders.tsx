@@ -34,16 +34,12 @@ export function FormIndividualsShareholders({
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
   const handleDropboxChoice = (choice: string) => {
+    console.log(choice);
+    setCurInputText("");
+    resetField("passportId");
+    resetField("citizenId");
     setDropDownChoosed(choice);
   };
-
-  useEffect(() => {
-    if (dropDownChoosed === "ID") {
-      resetField("passportId");
-    } else if (dropDownChoosed === "Passport") {
-      resetField("citizenId");
-    }
-  }, [dropDownChoosed]);
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -64,6 +60,9 @@ export function FormIndividualsShareholders({
     tmp.types = 301;
     tmp.corporateCode = corporateCode;
     tmp.personalId = choosedEditData?.personalId || "";
+    tmp.citizenId = dropDownChoosed === "ID" ? curInputText : "",
+    tmp.passportId = dropDownChoosed === "Passport" ? curInputText : ""
+
     return tmp;
   };
 
@@ -73,10 +72,25 @@ export function FormIndividualsShareholders({
     formState: { errors, isSubmitting },
     reset,
     resetField,
-    // setValue
+    setValue
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
   });
+
+  
+  useEffect(() => {
+    if (choosedEditData?.citizenId) {
+      setDropDownChoosed("ID");
+      setValue("citizenId", choosedEditData.citizenId);
+    } else if (choosedEditData?.passportId) {
+      setDropDownChoosed("Passport");
+      setValue("passportId", choosedEditData.passportId);
+    } else {
+      setDropDownChoosed("ID");
+    }
+    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
+    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
+  }, [choosedEditData, setValue]);
 
   useEffect(() => {
     const individualShareholderData = mapDataToTIndividualShareholder(
@@ -91,16 +105,6 @@ export function FormIndividualsShareholders({
     };
     reset(individualShareholderData);
     setHasDate(true);
-    setCurInputText(
-      choosedEditData?.citizenId || choosedEditData?.passportId || ""
-    );
-    setCurInput(
-      choosedEditData?.citizenId !== "" || choosedEditData?.passportId !== ""
-    );
-    if (choosedEditData) {
-      const chosenValue = choosedEditData.citizenId ? "ID" : "Passport";
-      setDropDownChoosed(chosenValue);
-    }
   }, [choosedEditData, reset]);
 
   const [hasDate, setHasDate] = useState<boolean>(

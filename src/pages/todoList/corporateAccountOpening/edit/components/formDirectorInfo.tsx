@@ -39,9 +39,6 @@ export function FormIndividualsDirector({
     choosedEditData?.expiryDate ? true : false
   );
   const handleDropboxChoice = (choice: string) => {
-    setValue("passportId", "");
-    setValue("citizenId", "");
-
     console.log(choice);
     setCurInputText("");
     resetField("passportId");
@@ -78,23 +75,24 @@ export function FormIndividualsDirector({
   } = useForm<TDirector>({
     resolver: zodResolver(directorInfoSchema),
   });
+
+
   useEffect(() => {
     if (choosedEditData?.citizenId) {
       setDropDownChoosed("ID");
-      console.log(choosedEditData.citizenId);
       setValue("citizenId", choosedEditData.citizenId);
     } else if (choosedEditData?.passportId) {
       setDropDownChoosed("Passport");
-      console.log(choosedEditData.passportId);
       setValue("passportId", choosedEditData.passportId);
+    } else {
+      setDropDownChoosed("ID");
     }
-  }, [choosedEditData]);
+    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
+    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
+  }, [choosedEditData, setValue]);
 
   useEffect(() => {
-    //const dateFormatted = choosedEditData?.expiryDate.split('T')[0]; 
-    // console.log(dateFormatted)
-    // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
-    // const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
+
     const directorData = choosedEditData || {
       fullNames: [{ title: "", firstName: "", lastName: "" }],
       citizenId: "",
@@ -119,16 +117,6 @@ export function FormIndividualsDirector({
     };
     reset(directorData);
     setHasDate(true);
-    setCurInputText(
-      choosedEditData?.citizenId || choosedEditData?.passportId || ""
-    );
-    setCurInput(
-      choosedEditData?.citizenId !== "" || choosedEditData?.passportId !== ""
-    );
-    if (choosedEditData) {
-      const chosenValue = choosedEditData.citizenId ? "ID" : "Passport";
-      setDropDownChoosed(chosenValue);
-    }
   }, [choosedEditData, reset]);
 
   const valideID = () => {
@@ -141,7 +129,8 @@ export function FormIndividualsDirector({
   };
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
-    //const formData: TDirector={ ...data,Types:"101"}
+    // console.log(curInputText);
+    // console.log(dropDownChoosed);
     if (curInput && valideID()) {
       const formData = validateData(data);
       setCurInputText("");
@@ -158,6 +147,8 @@ export function FormIndividualsDirector({
         fullNames: data.fullNames,
         corporateCode: corporateCode,
         personalId: choosedEditData?.personalId,
+        citizenId: dropDownChoosed === "ID" ? curInputText : "",
+        passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
 
       console.log(body);
