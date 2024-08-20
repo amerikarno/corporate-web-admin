@@ -42,7 +42,7 @@ export default function AddIndividualAccount() {
                       <option value="นาง">นาง</option>
                       <option value="นางสาว">นางสาว</option>
                     </select>
-                </div>
+                  </div>
                 <div className="w-1/2">
                 </div>
               </div>
@@ -122,12 +122,12 @@ export default function AddIndividualAccount() {
             
             <div className="flex space-x-4">
               <div className="w-1/2">
-                <Input type="text" {...register("citizenId")} label="หมายเลขบัตรประชาชน" />
+                <Input type="text" {...register("citizenId")} label="หมายเลขบัตรประชาชน" id="citizenId"/>
                 {errors.citizenId && <span>{errors.citizenId.message}</span>}
               </div>
 
               <div className="w-1/2">
-                <Input type="text" {...register("lasorCode")} label="เลขหลังบัตรประชาชน (Laser Code)" />
+                <Input type="text" {...register("lasorCode")} label="เลขหลังบัตรประชาชน (Laser Code)" id="lasorCode"/>
                 {errors.lasorCode && <span>{errors.lasorCode.message}</span>}
               </div>
             </div>
