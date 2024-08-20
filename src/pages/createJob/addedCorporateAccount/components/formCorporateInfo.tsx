@@ -104,10 +104,9 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     };
 
     if (handleCheckboxError()) {
-      await sleep(500);
       // console.log(formData);
       onsubmit(formData);
-      sleep(1500);
+      await sleep(1000);
       setShouldScrollUp(true);
     } else {
       setShouldScrollUp(true);
