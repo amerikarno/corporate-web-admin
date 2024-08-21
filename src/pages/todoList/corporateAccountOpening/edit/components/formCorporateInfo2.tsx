@@ -5,7 +5,6 @@ import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 import { Button } from "@/components/ui/button";
-import { Radio } from "@/components/Radio";
 import { RadioCheckBox } from "@/components/ui/Radio";
 
 type TCorporateTypeAndIncomeProps = {
@@ -83,7 +82,6 @@ TCorporateTypeAndIncomeProps) {
               <RadioCheckBox
                 id="2"
                 label={mapKeyLabel[2].label}
-                className=""
                 name="juristicInfo"
                 checked={resFrom2?.isNonTaxExempt}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[2].key)}
@@ -127,29 +125,29 @@ TCorporateTypeAndIncomeProps) {
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[6].key)}
               />
             </div>
-            <div className="w-2/3">
-              <CheckBox
+            <div className="w-2/3 flex flex-col space-y-2">
+              <RadioCheckBox
                 id="7"
                 label={mapKeyLabel[7].label}
                 name="juristicInfo"
                 checked={resFrom2?.isPartnership}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[7].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="8"
                 label={mapKeyLabel[8].label}
                 name="juristicInfo"
                 checked={resFrom2?.isGovernmentStateEnterprise}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[8].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="9"
                 label={mapKeyLabel[9].label}
                 name="juristicInfo"
                 checked={resFrom2?.isCoOperative}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[9].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="10"
                 label={mapKeyLabel[10].label}
                 name="juristicInfo"

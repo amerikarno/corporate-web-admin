@@ -104,11 +104,11 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       selector: (row: TContact) => row.fullNames?.[0]?.lastName || "",
     },
     {
-      name: "CitizenID",
+      name: "Position",
       selector: (row: TContact) => row.position || "",
     },
     {
-      name: "PassportID",
+      name: "Division",
       selector: (row: TContact) => row.division || "",
     },
     {
