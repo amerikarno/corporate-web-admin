@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TCorporateInfo } from "../constants/types";
-import { isExpiredToken } from "../libs/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { sleep } from "@/lib/utils";
@@ -13,7 +13,7 @@ export function useCorporateInfo() {
       name: "",
       registrationNo: "",
       taxId: "",
-      dateofincorporation: new Date(""),
+      dateofincorporation: "",
       registeredBusiness: {
         address: [
           {
@@ -71,6 +71,7 @@ export function useCorporateInfo() {
       await saveCorporateInfo(data);
     } else {
       console.log("session expired");
+      alert("Session expired. Please login again");
     }
   };
 
@@ -78,7 +79,7 @@ export function useCorporateInfo() {
     console.log(data);
     let body = {
       ...data,
-      dateofincorporation: data.dateofincorporation.toISOString(),
+      dateofincorporation: new Date(data.dateofincorporation),
       // corporateCode: Number(
       //   data.corporateCode === "" ? "0" : data.corporateCode
       // ),
@@ -94,7 +95,7 @@ export function useCorporateInfo() {
       });
       if (res.status === 200) {
         console.log(res);
-        data.corporateCode = res.data.corporateCode;
+        data.corporateCode = res.data.CorporateCode;
         setCorporatesInfo([...corporatesInfo, data]);
         setCurrentCorporatesInfo(data);
         await sleep(500);

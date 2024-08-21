@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  TIndividualsShareholders,
-} from "../constants/types";
+import { TIndividualsShareholders } from "../constants/types";
 import { useForm } from "react-hook-form";
 import {
   individualsShareholdersSchema,
@@ -14,15 +12,21 @@ import { Input } from "@/components/Input";
 import Dropbox from "@/components/Dropbox";
 import { Button } from "@/components/ui/button";
 import { checkFormatIDCard } from "@/lib/utils";
+import { TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
+import { mapDataToTIndividualShareholder } from "../libs/utils";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
   corporateCode: string;
+  choosedEditData?: TIndividualShareholderEdit | null;
+  clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsShareholders({
   onsubmit,
   corporateCode,
+  choosedEditData,
+  clearChoosedEditData,
 }: TShareHoldersFormProps) {
   const [triggeriderror, setTriggeriderror] = useState<string>("");
   const [curInputText, setCurInputText] = useState<string>("");
@@ -30,16 +34,12 @@ export function FormIndividualsShareholders({
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
   const handleDropboxChoice = (choice: string) => {
+    console.log(choice);
+    setCurInputText("");
+    resetField("passportId");
+    resetField("citizenId");
     setDropDownChoosed(choice);
   };
-
-  useEffect(()=>{
-      if (dropDownChoosed === "ID") {
-        resetField("passportId");
-      } else if (dropDownChoosed === "Passport") {
-        resetField("citizenId");
-      }
-  },[dropDownChoosed])
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -59,6 +59,9 @@ export function FormIndividualsShareholders({
     }
     tmp.types = 301;
     tmp.corporateCode = corporateCode;
+    tmp.personalId = choosedEditData?.personalId || "";
+    tmp.citizenId = dropDownChoosed === "ID" ? curInputText : "",
+    tmp.passportId = dropDownChoosed === "Passport" ? curInputText : ""
 
     return tmp;
   };
@@ -68,11 +71,45 @@ export function FormIndividualsShareholders({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    resetField
+    resetField,
+    setValue
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
   });
+
   
+  useEffect(() => {
+    if (choosedEditData?.citizenId) {
+      setDropDownChoosed("ID");
+      setValue("citizenId", choosedEditData.citizenId);
+    } else if (choosedEditData?.passportId) {
+      setDropDownChoosed("Passport");
+      setValue("passportId", choosedEditData.passportId);
+    } else {
+      setDropDownChoosed("ID");
+    }
+    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
+    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
+  }, [choosedEditData, setValue]);
+
+  useEffect(() => {
+    const individualShareholderData = mapDataToTIndividualShareholder(
+      choosedEditData || null
+    ) || {
+      fullNames: [{ title: "", firstName: "", lastName: "" }],
+      nationality: "",
+      shares: 0,
+      citizenId: "",
+      passportId: "",
+      expiryDate: "mm/dd/yyyy",
+    };
+    reset(individualShareholderData);
+    setHasDate(true);
+  }, [choosedEditData, reset]);
+
+  const [hasDate, setHasDate] = useState<boolean>(
+    choosedEditData?.expiryDate ? true : false
+  );
   const valideID = () => {
     if (dropDownChoosed === "ID") {
       if (checkFormatIDCard(curInputText)) return true;
@@ -81,7 +118,10 @@ export function FormIndividualsShareholders({
     if (dropDownChoosed === "Passport") return true;
     return false;
   };
+
   const onSubmit = async (data: TIndividualsShareholders) => {
+    console.log(curInput);
+    console.log(valideID());
     if (curInput && valideID()) {
       const formData = reformattedData(data);
       setCurInputText("");
@@ -90,6 +130,7 @@ export function FormIndividualsShareholders({
       await sleep(500);
       reset();
       console.log(formData);
+      clearChoosedEditData();
       onsubmit(formData);
     } else {
       setInitError(true);
@@ -180,8 +221,12 @@ export function FormIndividualsShareholders({
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/3">
-                <Dropbox onDropdownSelect={handleDropboxChoice} />
+                <Dropbox
+                  onDropdownSelect={handleDropboxChoice}
+                  dropDownChoosedback={dropDownChoosed}
+                />
               </div>
+
               <div className="w-1/3">
                 {dropDownChoosed ? (
                   dropDownChoosed === "ID" ? (
@@ -243,20 +288,35 @@ export function FormIndividualsShareholders({
                   </>
                 )}
               </div>
-              <div className="w-1/3">
-                <Input
-                  {...register("expiryDate")}
-                  label="Date of Expired"
-                  id="Date of Expired"
-                  disabled={isSubmitting}
-                  type="date"
-                />
-                {errors.expiryDate && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.expiryDate.message}
-                  </p>
-                )}
-              </div>
+              {hasDate ? (
+                <div className="w-1/3">
+                  <Input
+                    {...register("expiryDate")}
+                    id="Date of Expired"
+                    onClick={() => setHasDate(false)}
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="w-1/3">
+                  <Input
+                    {...register("expiryDate")}
+                    label="Date of Expired"
+                    id="Date of Expired"
+                    disabled={isSubmitting}
+                    type="date"
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>

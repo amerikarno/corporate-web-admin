@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
 import api from "@/api/axios";
+import { setUser, TUser } from "@/features/user/userSlice";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -37,6 +38,8 @@ const LoginForm = () => {
     if (data.email && data.password) {
       const hashedUsername = CryptoJs.SHA256(data.email).toString();
       const hashedPassword = CryptoJs.SHA256(data.password).toString();
+      // const hashedUsername = "c9a7055009a52c43e656cf1ad258589c957696714be89968f65274dcb0d60e41";
+      // const hashedPassword = "741f67765bef6f01f37bf5cb1724509a83409324efa6ad2586d27f4e3edea296";
       console.log(hashedUsername);
       console.log(hashedPassword);
 
@@ -63,6 +66,8 @@ const LoginForm = () => {
           console.log(res);
           dispatch(setToken(res.data.accessToken));
           setCookies(res.data.accessToken);
+          const user: TUser = jwtDecode(res.data.accessToken);
+          dispatch(setUser(user));
           navigate("/");
         })
         .catch((err) => {

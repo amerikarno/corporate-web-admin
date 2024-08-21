@@ -6,17 +6,28 @@ import { sleep } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+
+type TBankWithID = {
+  CorporateCode?:string;
+  bank : TBank[];
+  BankId?: string;
+}
 
 type TBankFormProps = {
   onsubmit: (data: TBankArray) => void;
   corporateCode: string;
+  choosedEditData?: TBankWithID | null;
+  clearChoosedEditData: () => void;
 };
 
 type TBankArray = {
   bank: TBank[];
-  corporateCode?: string;
+  CorporateCode?: string;
+  BankId?:string;
 };
-export function FormBank({ onsubmit, corporateCode }: TBankFormProps) {
+export function FormBank({ onsubmit, corporateCode ,  choosedEditData,
+  clearChoosedEditData,}: TBankFormProps) {
   const {
     register,
     handleSubmit,
@@ -29,13 +40,26 @@ export function FormBank({ onsubmit, corporateCode }: TBankFormProps) {
   const onSubmit = async (data: TBank) => {
     let body: TBankArray = {
       bank: [data],
-      corporateCode: corporateCode,
+      CorporateCode: corporateCode,
+      BankId: choosedEditData?.BankId,
     };
     await sleep(500);
     console.log(body);
     reset();
+    clearChoosedEditData();
     onsubmit(body);
   };
+
+  useEffect(() => {
+    const bankData = choosedEditData?.bank[0] || {
+        accountType: '',
+        bankName: '',
+        accountNo: '',
+        accountLocation: '',
+        swiftCode: '',
+    }
+    reset(bankData);
+  }, [choosedEditData, reset]);
 
   return (
     <Card className="p-4 space-y-4">

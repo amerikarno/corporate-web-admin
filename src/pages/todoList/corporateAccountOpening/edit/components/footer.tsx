@@ -21,9 +21,15 @@ export function CreateCorporateFooter({
         <p className="text-center">{`${pageId} / ${totalPages}`}</p>
       </div>
       <div className="flex justify-end px-4">
-        <Button onClick={() => handlePages("next")} disabled={pageId >= 10}>
+        {pageId === 10 ? (
+        <Button onClick={() => handlePages("done")}>
+          Done
+        </Button>
+        ):(
+          <Button onClick={() => handlePages("next")} disabled={pageId >= 10}>
           Next Form
         </Button>
+        )}
         {/* {pageId === 1 ? (
           <Button
             type="submit"

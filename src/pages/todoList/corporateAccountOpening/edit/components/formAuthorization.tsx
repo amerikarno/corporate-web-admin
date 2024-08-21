@@ -17,19 +17,24 @@ import { checkFormatIDCard } from "@/lib/utils";
 type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
   corporateCode: string;
+  choosedEditData?: TAuthorizePerson | null;
+  clearChoosedEditData: () => void;
 };
 export function FormAuthorizedPerson({
   onsubmit,
   corporateCode,
+  choosedEditData,
+  clearChoosedEditData,
 }: TAuthorizePersonFormProps) {
   const [triggeriderror, setTriggeriderror] = useState<string>("");
   const [curInputText, setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
-  const handleDropboxChoice = (choice: string) => {
-    setDropDownChoosed(choice);
-  };
+  const [hasDate, setHasDate] = useState<boolean>(
+    choosedEditData?.expiryDate ? true : false
+  );
+
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -37,20 +42,13 @@ export function FormAuthorizedPerson({
     setCurInput(e.target.value !== "");
   };
 
-  useEffect(()=>{
-    if (dropDownChoosed === "ID") {
-      resetField("passportId");
-    } else if (dropDownChoosed === "Passport") {
-      resetField("citizenId");
-    }
-},[dropDownChoosed])
 
   const validateData = (data: TAuthorizePerson): TAuthorizePerson => {
     let tmp = { ...data };
     if (tmp.citizenId) {
-      tmp = { ...tmp, passportID: "" };
+      tmp = { ...tmp, passportId: "" };
     }
-    if (tmp.passportID) {
+    if (tmp.passportId) {
       tmp = { ...tmp, citizenId: "" };
     }
     //tmp = { ...tmp, types: "201" };
@@ -62,10 +60,33 @@ export function FormAuthorizedPerson({
     handleSubmit,
     reset,
     resetField,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<TAuthorizedPersonSchema>({
     resolver: zodResolver(authorizedPersonSchema),
   });
+
+  const handleDropboxChoice = (choice: string) => {
+    console.log(choice);
+    setCurInputText("");
+    resetField("passportId");
+    resetField("citizenId");
+    setDropDownChoosed(choice);
+  };
+
+  useEffect(() => {
+    if (choosedEditData?.citizenId) {
+      setDropDownChoosed("ID");
+      setValue("citizenId", choosedEditData.citizenId);
+    } else if (choosedEditData?.passportId) {
+      setDropDownChoosed("Passport");
+      setValue("passportId", choosedEditData.passportId);
+    } else {
+      setDropDownChoosed("ID");
+    }
+    setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
+    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
+  }, [choosedEditData, setValue]);
 
   const valideID = () => {
     if (dropDownChoosed === "ID") {
@@ -90,13 +111,47 @@ export function FormAuthorizedPerson({
         addresses: data.addresses,
         fullNames: data.fullNames,
         corporateCode: corporateCode,
+        personalId: choosedEditData?.personalId,
+        citizenId: dropDownChoosed === "ID" ? curInputText : "",
+        passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
-
+      console.log(body);
+      clearChoosedEditData();
       onsubmit(body);
     } else {
       setInitError(true);
     }
   };
+
+  useEffect(() => {
+    const authorizedPersonData = choosedEditData || {
+      fullNames:[{
+        title: '',
+        firstName: '',
+        lastName: '',
+      }],
+      passportId:'',
+      citizenId: '',
+      expiryDate: "mm/dd/yyyy",
+      nationality:'',
+      addresses: [
+        { addressNo: "",
+          building: "",
+          floor: "", 
+          mooNo: "", 
+          soi: "", 
+          road: "", 
+          tambon: "",
+          amphoe: "", 
+          province: "", 
+          postalCode: "", 
+          country: "",
+        }
+      ],
+    }
+    reset(authorizedPersonData);
+    setHasDate(true);
+  }, [choosedEditData, reset]);
 
   return (
     <Card className="p-4">
@@ -152,7 +207,7 @@ export function FormAuthorizedPerson({
         <div className="flex flex-col space-y-4 md:space-x-4 md:space-y-0 md:flex-row items-center">
           <div className="w-full md:w-1/2 flex flex-row items-center justify-between gap-4">
             <div className="w-full md:w-1/2">
-              <Dropbox onDropdownSelect={handleDropboxChoice} />
+              <Dropbox onDropdownSelect={handleDropboxChoice} dropDownChoosedback={dropDownChoosed}/>
             </div>
             <div className="w-full md:w-1/2">
               {dropDownChoosed ? (
@@ -214,20 +269,35 @@ export function FormAuthorizedPerson({
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/2">
-            <Input
-              {...register("expiryDate")}
-              label="Date of Expired"
-              id="Date of Expired"
-              disabled={isSubmitting}
-              type="date"
-            />
-            {errors.expiryDate && (
-              <p className="text-red-500 text-sm px-2">
-                {errors.expiryDate.message}
-              </p>
-            )}
-          </div>
+          {hasDate ? (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    id="Date of Expired"
+                    onClick={() => setHasDate(false)}
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    label="Date of Expired"
+                    id="Date of Expired"
+                    disabled={isSubmitting}
+                    type="date"
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              )}
         </div>
 
         <div className="flex flex-row space-x-0 md:space-x-4">

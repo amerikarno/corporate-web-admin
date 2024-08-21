@@ -5,11 +5,11 @@ import axios from "axios";
 const BASE_URL = window.origin;
 // const BASE_URL = "http://localhost:1323";
 
-console.log("base url:", BASE_URL)
+console.log("base url:", BASE_URL);
 
 export default axios.create({
   baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" },
+  // headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 

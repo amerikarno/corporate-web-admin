@@ -1,11 +1,5 @@
 import { createRoot } from "react-dom/client";
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./style.css";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "@/pages/login/login";
@@ -13,12 +7,15 @@ import Layout from "@/components/Layout";
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import BlankPage from "./pages/blankPages/blankPage";
-import CorporateAccountOpenning from "./pages/corporateAccountOpening/CorporateAccountOpenning";
-import TodoCorporateAccountOpenning from "./pages/todoList/corporateAccountOpening/corporateAccountOpening";
-import { EditCorporateAccount } from "./pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
-import OrderTrade from "./pages/corporateAccountOpening/pages/orderTrade/orderTrade";
-import TransactionList from "./pages/corporateAccountOpening/pages/transactionList/transactionList";
+import CorporateAccountOpenning from "./pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
+import { customerRoutes } from "./routes/customerRoutes";
+import { thirdPartyRoutes } from "./routes/thirdPartyRoute";
+import { reportsRoutes } from "./routes/reportRoute";
+import { systemManagementRoutes } from "./routes/systemManagementRoute";
+import { createJobRoutes } from "./routes/createJobRoute";
+import { todoListRoutes } from "./routes/todoListRoute";
+import { enquireRoutes } from "./routes/enquiryRoute";
+import UnAuthorize from "./pages/unAuthorizePage/unAuthorize";
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -38,39 +35,15 @@ root.render(
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Layout />}>
-                <Route
-                  index
-                  element={
-                    <Navigate
-                      to="/create-job/added-corporate-account"
-                      replace
-                    />
-                  }
-                />
-                <Route path="create-job" element={<Outlet />}>
-                  <Route path="added-corporate-account" element={<Outlet />}>
-                    <Route index element={<CorporateAccountOpenning />} />
-                    <Route
-                      path=":page"
-                      element={<CorporateAccountOpenning />}
-                    />
-                  </Route>
-                  <Route path="order-trade" element={<Outlet />}>
-                    <Route index element={<OrderTrade />}/>
-                    <Route path="transaction-list" element={<TransactionList />}/>
-                  </Route>
-                </Route>
-                <Route path="todo-list" element={<Outlet />}>
-                  <Route index element={<TodoCorporateAccountOpenning />} />
-                  <Route path="corporate-account-opening" element={<Outlet />}>
-                    <Route index element={<TodoCorporateAccountOpenning />} />
-                    <Route path="edit" element={<Outlet />}>
-                      <Route index element={<EditCorporateAccount />} />
-                      <Route path=":page" element={<EditCorporateAccount />} />
-                    </Route>
-                  </Route>
-                </Route>
-                <Route path="blankPages" element={<BlankPage />} />
+                <Route path="unauthorize" element={<UnAuthorize />} />
+                <Route index element={<CorporateAccountOpenning />} />
+                {systemManagementRoutes()}
+                {createJobRoutes()}
+                {todoListRoutes()}
+                {enquireRoutes()}
+                {reportsRoutes()}
+                {thirdPartyRoutes()}
+                {customerRoutes()}
               </Route>
             </Routes>
           </BrowserRouter>

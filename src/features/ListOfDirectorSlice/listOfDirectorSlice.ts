@@ -1,13 +1,12 @@
-
-import { createSlice } from "@reduxjs/toolkit";
-import { TDirector } from "@/pages/corporateAccountOpening/constants/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TDirector } from "@/pages/createJob/addedCorporateAccount/constants/types";
 
 interface ListOfDirectorState {
-    listOfDirectors: TDirector[];
+  listOfDirectors: TDirector[];
 }
 
 const initialState: ListOfDirectorState = {
-    listOfDirectors: [],
+  listOfDirectors: [],
 };
 
 export const DirectorSlice = createSlice({
@@ -15,19 +14,45 @@ export const DirectorSlice = createSlice({
   initialState,
   reducers: {
     addDirector: (state, action) => {
-        console.log('action.payload:', action.payload);
-        return { ...state, listOfDirectors: [...state.listOfDirectors, action.payload] };
+      // const { expiryDate } = action.payload;
+      // const expiryDateStr = expiryDate.toISOString();
+      return {
+        ...state,
+        listOfDirectors: [
+          ...state.listOfDirectors,
+          { ...action.payload },
+          // { ...action.payload, expiryDate: expiryDateStr },
+        ],
+      };
     },
     removeDirector: (state, action) => {
       state.listOfDirectors = state.listOfDirectors.filter(
-        (data) => data.personalID !== action.payload
+        (data) => data.personalId !== action.payload
       );
     },
     clearDirector: (state) => {
       state.listOfDirectors = [];
     },
+
+    setDirectorEdit: (state, action: PayloadAction<TDirector[]>) => {
+      state.listOfDirectors = action.payload;
+    },
+    updateDirector: (state, action: PayloadAction<TDirector>) => {
+      const index = state.listOfDirectors.findIndex(
+        (director) => director.personalId === action.payload.personalId
+      );
+      if (index !== -1) {
+        state.listOfDirectors[index] = action.payload;
+      }
+    },
   },
 });
 
-export const { addDirector, removeDirector, clearDirector } = DirectorSlice.actions;
+export const {
+  addDirector,
+  updateDirector,
+  removeDirector,
+  clearDirector,
+  setDirectorEdit,
+} = DirectorSlice.actions;
 export default DirectorSlice.reducer;

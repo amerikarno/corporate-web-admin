@@ -13,23 +13,28 @@ import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { TCorporateData } from "../constant/type";
-import { mapDataToTCorporateInfo } from "./libs/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { mapDataToTCorporateInfo } from "./libs/utils";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 type TPage = {
   page?: string;
 };
 
 export function EditCorporateAccount() {
+  if (!isAllowedPage(3001)) {
+    return <UnAuthorize />;
+  }
+
   const corporateData: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
-  console.log("corporateData", corporateData);
+  // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  // const initContactPerson = mapDataToTContactPerson(corporateData);
-  console.log("initFormData", initFormData);
+  // console.log("initFormData", initFormData);
 
   // const handleFormPassChange = (status: boolean) => {
   //   // setIsSecondFormPass(status);
@@ -44,7 +49,9 @@ export function EditCorporateAccount() {
   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  const corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
+  const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
+  // console.log(corporateCode)
+
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
@@ -70,22 +77,10 @@ export function EditCorporateAccount() {
   };
 
   const handlePages = (type: string) => {
-    // if (type == "next") {
-    //   navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    // } else if (type == "submit") {
-    //   console.log(corporateCode);
-    //   if (corporateCode) {
-    //     navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    //   }
-    // } else if (type == "submit2") {
-    //   if (isSecondFormPass) {
-    //     navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    //   }
-    // } else {
-    //   navigate(`/create-job/added-corporate-account/${pageId - 1}`);
-    // }
     if (type == "next") {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId + 1}`);
+    } else if (type == "done") {
+      navigate(`/todo-list/corporate-account-opening`);
     } else {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId - 1}`);
     }

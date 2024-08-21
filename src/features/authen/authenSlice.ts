@@ -1,3 +1,4 @@
+import { getCookies } from "@/lib/Cookies";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface AuthenState {
@@ -5,7 +6,7 @@ export interface AuthenState {
 }
 
 const initialState: AuthenState = {
-  token: null,
+  token: getCookies() || null,
 };
 
 export const authenSlice = createSlice({
@@ -14,7 +15,6 @@ export const authenSlice = createSlice({
   reducers: {
     setToken: (state, action) => {
       state.token = action.payload;
-      console.log(state.token);
     },
   },
 });

@@ -58,7 +58,7 @@ export type TCorporateInfo = {
   name: string;
   registrationNo: string;
   taxId: string;
-  dateofincorporation: Date;
+  dateofincorporation: string;
   registeredThailand: boolean;
   primaryCountry: boolean;
   registered: string;
@@ -99,14 +99,14 @@ export type TIndividualsShareholders = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   sharePercentage: number;
   types?: number;
+  personalId?: string;
 };
 
 export type TBank = {
-  corporateCode?: string;
   accountType: string;
   bankName: string;
   accountNo: string;
@@ -118,11 +118,12 @@ export type TAuthorizePerson = {
   corporateCode?: string;
   fullNames: TFullName[];
   citizenId?: string;
-  passportID?: string;
-  expiryDate: Date;
+  passportId?: string;
+  expiryDate: string;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
+  personalId?: string;
 };
 export type TContactPerson = {
   corporateCode?: string;
@@ -131,6 +132,7 @@ export type TContactPerson = {
   division: string;
   telephone: string;
   email: string;
+  personalId?: string;
 };
 
 export type TDirector = {
@@ -138,10 +140,11 @@ export type TDirector = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: Date;
+  expiryDate: string;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
+  personalId?: string;
 };
 
 export type TJuristicsShareholders = {
@@ -150,6 +153,7 @@ export type TJuristicsShareholders = {
   registrationNo: string;
   registeredCountry: string;
   sharePercentage: number;
+  juristicId?: string;
 };
 
 export type TInitailJuristicTypeAndIncome = {
@@ -254,4 +258,58 @@ export type TKnowladgeQuiz = {
   choice_list: string[];
   ans: number;
   ans_detail: string;
+};
+
+export type CorporateTypeBody = {
+  isJuristicThailand?: boolean;
+  isTaxExempt?: boolean;
+  isNonTaxExempt?: boolean;
+  isJuristicForeign?: boolean;
+  isOperatingInThailand?: boolean;
+  isNonOperatingInThailand?: boolean;
+  isOther?: boolean;
+  isPartnership?: boolean;
+  isGovernmentStateEnterprise?: boolean;
+  isTaxExemptCompany?: boolean;
+  isAntiqueTrading?: boolean;
+  isHotelRestaurant?: boolean;
+  isArmament?: boolean;
+  isInsuranceAssurance?: boolean;
+  isCasinoGambling?: boolean;
+  isJewelryGoldTrading?: boolean;
+  isFoundation?: boolean;
+  isPropertyRealEstate?: boolean;
+  isMoneyTransfer?: boolean;
+  isEmploymentAgency?: boolean;
+  isEntertainment?: boolean;
+  isTravel?: boolean;
+  isFinancial?: boolean;
+  isEducationCenter?: boolean;
+  isForeignCurrencyExchange?: boolean;
+  isCryptoRelated?: boolean;
+  isOtherBusiness?: boolean;
+  isRevenue?: boolean;
+  isStock?: boolean;
+  isDonation?: boolean;
+  isLoan?: boolean;
+  isRevenueSelling?: boolean;
+  isOtherIncome?: boolean;
+  isThailand?: boolean;
+  isOtherThailand?: boolean;
+  isLiquidation?: boolean;
+  isInvestment?: boolean;
+  isCashManagement?: boolean;
+  isOtherInvestment?: boolean;
+  isCoOperative?: boolean;
+  otherBusinessType?: string;
+  otherIncome?: string;
+  otherCountry?: string;
+  otherInvestment?: string;
+  corporateCode?: string;
+};
+
+export type TErrors = {
+  id: number;
+  msg: string;
+  paths: string[];
 };

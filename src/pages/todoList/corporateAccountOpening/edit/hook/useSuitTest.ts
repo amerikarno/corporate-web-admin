@@ -60,8 +60,9 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const saveSuitTest = async (ans: any) => {
+    console.log(ans)
     try {
-      const res = await axios.post("/api/v1/suitetest/create/result", ans, {
+      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       console.log(ans);

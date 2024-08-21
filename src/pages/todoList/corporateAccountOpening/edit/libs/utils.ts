@@ -1,16 +1,29 @@
 import { getCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
-import { TCorporateData } from "../../constant/type";
 import {
-  TContactPersonSchema,
+  CorporateResponse,
+  TContact,
+  TCorporateData,
+  TJuristic,
+} from "../../constant/type";
+import {
+  TAuthorizedPersonSchema,
   TCorporateInfoSchema,
 } from "../constants/schemas";
-
-export function formatDateToIsoString(date: Date): string {
-  const isoString = date.toISOString();
-  const formattedDate = isoString.replace(/\.\d{3}Z$/, "+00:00");
-  return formattedDate;
-}
+import {
+  TAuthorizePerson,
+  TContactPerson,
+  TDirector,
+  TIndividualsShareholders,
+  TJuristicsShareholders,
+} from "../constants/types";
+import { TDirector as TDirectorEdit } from "../../constant/type";
+import { TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
+import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type";
+import { TBank as TBankEdit } from "../../constant/type";
+import { TBank } from "../constants/types";
+import { RootState } from "@/app/store";
+import { useSelector } from "react-redux";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -58,7 +71,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       name: data.Info.name,
       registrationNo: data.Info.registrationNo,
       taxId: data.Info.taxId,
-      dateofincorporation: data.Info.dateOfIncorporation,
+      dateofincorporation: data.Info.dateOfIncorporation.split("T")[0],
       // dateofincorporation: dt,
       // dateofincorporation: new Date(timeStamp),
       registered: resCorpRegisterCountry?.other || "",
@@ -113,18 +126,281 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
   }
 };
 
-export const mapDataToTContactPerson = (data: TCorporateData) => {
+export const mapDataToTContactPerson = (
+  data: TContact | null
+): TContactPerson | null => {
   try {
-    let result: TContactPersonSchema = {
-      telephone: data?.Contact?.[0]?.telephone || "",
-      firstName: data?.Contact?.[0]?.fullNames?.[0]?.firstName || "",
-      lastName: data?.Contact?.[0]?.fullNames?.[0]?.lastName || "",
-      position: data?.Contact?.[0]?.telephone || "",
-      division: data?.Contact?.[0]?.telephone || "",
-      email: data?.Contact?.[0]?.telephone || "",
+    if (data === null) {
+      return null;
+    }
+    const fullName = data.fullNames[0];
+    const result: TContactPerson = {
+      fullNames: [
+        {
+          title: fullName.title ?? "",
+          firstName: fullName.firstName ?? "",
+          lastName: fullName.lastName ?? "",
+        },
+      ],
+      position: data.position ?? "",
+      division: data.division ?? "",
+      telephone: data.telephone ?? "",
+      email: data.email ?? "",
+      personalId: data.id ?? "",
     };
+
     return result;
   } catch (error) {
-    console.log(error);
+    console.error("Cast type error", error);
+    return null;
   }
+};
+
+export const mapDataToTDirector = (
+  data: TDirectorEdit | null
+): TDirector | null => {
+  try {
+    if (data === null) {
+      return null;
+    }
+
+    const dateFormatted = data?.expiryDate?.split("T")[0]; // "2024-08-29"
+    // console.log(dateFormatted)
+    // const dateParts = dateFormatted.split('-'); // ["2024", "08", "29"]
+    // const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
+    const result: TDirector = {
+      fullNames: [
+        {
+          title: data?.fullNames?.[0]?.title ?? "",
+          firstName: data?.fullNames?.[0]?.firstName ?? "",
+          lastName: data?.fullNames?.[0]?.lastName ?? "",
+        },
+      ],
+      citizenId: data?.citizenId ?? "",
+      passportId: data?.passportId ?? "",
+      expiryDate: dateFormatted ?? "",
+      nationality: data?.nationality ?? "",
+      types: data?.types ?? "",
+      personalId: data?.personalId ?? "",
+      addresses:
+        data?.addresses?.length > 0
+          ? data?.addresses
+          : [
+              {
+                addressNo: "",
+                building: "",
+                floor: "",
+                mooNo: "",
+                soi: "",
+                road: "",
+                tambon: "",
+                amphoe: "",
+                province: "",
+                postalCode: "",
+                country: "",
+              },
+            ],
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null;
+  }
+};
+
+export const mapDataToTIndividualShareholder = (
+  data: TIndividualShareholderEdit | null
+): TIndividualsShareholders | null => {
+  try {
+    if (data === null) {
+      return null;
+    }
+    const dateFormatted = data.expiryDate?.split("T")[0];
+    const result: TIndividualsShareholders = {
+      corporateCode: String(data.corporateCode ?? ""),
+      fullNames: [
+        {
+          title: data.fullNames[0].title ?? "",
+          firstName: data.fullNames[0].firstName ?? "",
+          lastName: data.fullNames[0].lastName ?? "",
+        },
+      ],
+      citizenId: data.citizenId ?? "",
+      passportId: data.passportId ?? "",
+      expiryDate: dateFormatted || "",
+      nationality: data.nationality ?? "",
+      sharePercentage: data.sharePercentage ?? 0,
+      personalId: data.personalId ?? null,
+      types: data.types ?? undefined,
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null;
+  }
+};
+
+export const mapDataToTJuristicShareholder = (
+  data: TJuristic | null
+): TJuristicsShareholders | null => {
+  try {
+    if (data === null) {
+      return null;
+    }
+
+    const result: TJuristicsShareholders = {
+      corporateCode: String(data.corporateCode ?? ""),
+      juristicName: data.juristicName ?? "",
+      registrationNo: data.registrationNo ?? "",
+      registeredCountry: data.registeredCountry ?? "",
+      sharePercentage: data.sharePercentage ?? 0,
+      juristicId: data.id ?? "",
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null;
+  }
+};
+
+export const mapDataToTAuthoirzedPerson = (
+  data: TAuthorizedPersonEdit | null
+): TAuthorizePerson | null => {
+  try {
+    if (data === null) {
+      return null;
+    }
+    const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
+    // const dateParts = dateFormatted.split("-"); // ["2024", "08", "29"]
+    // const date = new Date(
+    //   Number(dateParts[0]),
+    //   Number(dateParts[1]) - 1,
+    //   Number(dateParts[2])
+    // );
+    const result: TAuthorizedPersonSchema = {
+      corporateCode: String(data.corporateCode ?? ""),
+      fullNames: [
+        {
+          title: data?.fullNames[0].title ?? "",
+          firstName: data?.fullNames[0].firstName ?? "",
+          lastName: data?.fullNames[0].lastName ?? "",
+        },
+      ],
+      passportId: data?.passportId ?? "",
+      citizenId: data?.citizenId ?? "",
+      expiryDate: dateFormatted ?? "",
+      nationality: data?.nationality ?? "",
+      personalId: data?.personalId ?? "",
+      addresses:
+        data?.addresses?.length > 0
+          ? data?.addresses
+          : [
+              {
+                addressNo: "",
+                building: "",
+                floor: "",
+                mooNo: "",
+                soi: "",
+                road: "",
+                tambon: "",
+                amphoe: "",
+                province: "",
+                postalCode: "",
+                country: "",
+              },
+            ],
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null;
+  }
+};
+
+type TBankWithID = {
+  CorporateCode?: string;
+  bank: TBank[];
+  BankId?: string;
+};
+export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
+  try {
+    if (data === null) {
+      return null;
+    }
+
+    const result: TBankWithID = {
+      CorporateCode: String(data.corporateCode ?? ""),
+      BankId: data.id ?? "",
+      bank: [
+        {
+          accountType: data.accountType ?? "",
+          bankName: data.bankName ?? "",
+          accountNo: data.accountNo ?? "",
+          accountLocation: data.accountLocation ?? "",
+          swiftCode: data.swiftCode ?? "",
+        },
+      ],
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null;
+  }
+};
+
+export const getCheckedLabel = (corpData: TCorporateData) => {
+  const jrType = corpData?.CorporateTypes;
+  const buType = corpData?.BusinessTypes;
+  const srcOfIncome = corpData?.SourceOfIncomes;
+  const countrySrcOfIncome =
+    corpData?.CountrySourceIncomes && corpData.CountrySourceIncomes[0];
+  const invType = corpData?.CountrySourceIncomes
+    ? corpData.CountrySourceIncomes[0]
+    : null;
+  const countrySrcOfIncomeTh = countrySrcOfIncome?.corporateCountry;
+
+  // console.log(JSON.stringify(corpData, null, 2));
+
+  return {
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh,
+  };
+};
+
+export const getFrom2Response = () => {
+  const corpData = useSelector((state: RootState) => state.editCorporate);
+  // const juristicType = useSelector((state: RootState) => state.juristicType);
+  // console.log(JSON.stringify(juristicType, null, 2));
+  // if (juristicType.corporateCode === 0) {
+  const {
+    jrType,
+    buType,
+    srcOfIncome,
+    countrySrcOfIncome,
+    invType,
+    countrySrcOfIncomeTh,
+  } = getCheckedLabel(corpData) || {};
+
+  let res: CorporateResponse = {
+    ...jrType,
+    ...buType,
+    ...srcOfIncome,
+    ...countrySrcOfIncome,
+    ...invType,
+    ...countrySrcOfIncomeTh,
+  };
+  // console.log(JSON.stringify(res, null, 2));
+  return res;
+  // } else {
+  //   return juristicType;
+  // }
 };

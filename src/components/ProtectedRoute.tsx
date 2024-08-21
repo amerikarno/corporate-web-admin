@@ -74,43 +74,44 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkToken = async () => {
-      if (token && token !== null) {
-        const decode: DecodedToken = jwtDecode(token);
-        const expire = decode.exp ? decode.exp : 0;
+  const checkToken = async () => {
+    console.log("check token");
+    if (token && token !== null) {
+      const decode: DecodedToken = jwtDecode(token);
+      const expire = decode.exp ? decode.exp : 0;
 
-        if (expire < Date.now() / 1000) {
-          console.log("expired");
+      if (expire < Date.now() / 1000) {
+        console.log("token expired");
 
-          try {
-            const res = await axios.post(
-              "/api/v1/authen/refresh",
-              {},
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-                },
-                withCredentials: true,
-              }
-            );
+        try {
+          const res = await axios.get("/api/v1/authen/refresh", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          });
 
-            console.log("response refresh", res);
-            setCookies(res.data.accessToken);
-            dispatch(setToken(res.data.accessToken));
-          } catch (err) {
-            if (err instanceof Error) {
-              console.log("root", { message: err.message });
-            } else {
-              console.log("root", { message: err });
-            }
-            navigate("/login");
+          console.log("response refresh", res);
+          setCookies(res.data.accessToken);
+          dispatch(setToken(res.data.accessToken));
+        } catch (err) {
+          if (err instanceof Error) {
+            console.log("root", { message: err.message });
+          } else {
+            console.log("root", { message: err });
           }
+          navigate("/login");
         }
       }
-      setLoading(false);
-    };
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
 
     checkToken();
   }, [token, dispatch, navigate]);
