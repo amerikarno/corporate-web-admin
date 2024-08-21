@@ -36,7 +36,7 @@ export function useUploadFile() {
           formData.append("corporateCode", corporateCode);
 
           try {
-            const response = await axios.post("/api/v1/sftp/upload", formData, {
+            const response = await axios.post("/api/v1/corporate/document/upload", formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${getCookies()}`,
