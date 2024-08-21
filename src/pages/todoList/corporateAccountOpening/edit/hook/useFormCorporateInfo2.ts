@@ -311,10 +311,10 @@ export function useFormCorporateInfo2() {
         let invObj = copy(resFrom2);
         console.log(key, name, checked);
         if (invObj && invObj !== null) {
-          invObj.isLiquidation = false;
-          invObj.isInvestment = false;
-          invObj.isCashManagement = false;
-          invObj.isOtherInvestment = false;
+          // invObj.isLiquidation = false;
+          // invObj.isInvestment = false;
+          // invObj.isCashManagement = false;
+          // invObj.isOtherInvestment = false;
           (invObj[key as keyof typeof invObj] as boolean) = checked;
         }
         setResForm2({ ...invObj });

@@ -65,6 +65,7 @@ export default function AddIndividualAccount() {
                       <option value="">คำนำหน้าชื่อ (ภาษาอังกฤษ)</option>
                       <option value="Mr.">Mr.</option>
                       <option value="Mrs.">Mrs.</option>
+                      <option value="Mrs.">Miss.</option>
                     </select>
                   {errors.engTitle && <span>{errors.engTitle.message}</span>}
                 </div>
@@ -110,9 +111,9 @@ export default function AddIndividualAccount() {
                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700">
                       <option value="">สถานะ</option>
-                      <option value="โสด">โสด</option>
-                      <option value="สมรส">สมรส</option>
-                      <option value="อย่า">อย่า</option>
+                      <option value="โสด">Single</option>
+                      <option value="สมรส">Married</option>
+                      <option value="อย่า">Divorce</option>
                 </select>
                 {errors.mariageStatus && (
                   <span>{errors.mariageStatus.message}</span>

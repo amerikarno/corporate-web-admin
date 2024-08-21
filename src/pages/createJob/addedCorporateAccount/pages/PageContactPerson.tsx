@@ -73,11 +73,11 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.lastName || "",
     },
     {
-      name: "CitizenID",
+      name: "Position",
       selector: (row) => row.contacts?.[0]?.position || "",
     },
     {
-      name: "PassportID",
+      name: "Division",
       selector: (row) => row.contacts?.[0]?.division || "",
     },
     {
