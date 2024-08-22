@@ -10,7 +10,8 @@ const BlinkDetection: React.FC = () => {
   const [rightImg, setRightImg] = useState<boolean>(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [circleColor, setCircleColor] = useState<string>("green");
+  const canvasRef2 = useRef<HTMLCanvasElement>(null);
+  const [circleColor, setCircleColor] = useState<string>("black");
 
   useEffect(() => {
     const loadModels = async () => {
@@ -102,7 +103,7 @@ const BlinkDetection: React.FC = () => {
           //   ]);
           //   console.log("result", result);
           //   drawFaceLandmark(result);
-          drawStaticEllipse("green", result);
+          drawStaticEllipse(result);
         }
       }
 
@@ -228,13 +229,18 @@ const BlinkDetection: React.FC = () => {
       detection: faceapi.FaceDetection;
     }>
   ) => {
-    const ctx = canvasRef.current?.getContext("2d");
+    const ctx = canvasRef2.current?.getContext("2d");
     if (ctx && videoRef.current) {
       // Clear the previous drawings
-      ctx.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
+      ctx.clearRect(
+        0,
+        0,
+        canvasRef2.current!.width,
+        canvasRef2.current!.height
+      );
 
       // Resize canvas to match video dimensions
-      faceapi.matchDimensions(canvasRef.current!, {
+      faceapi.matchDimensions(canvasRef2.current!, {
         width: videoRef.current.videoWidth,
         height: videoRef.current.videoHeight,
       });
@@ -244,19 +250,28 @@ const BlinkDetection: React.FC = () => {
         height: videoRef.current.videoHeight,
       });
 
+      const box = resizedResults.detection.box;
+      console.log("Face Bounding Box:", box);
+
       // facelandmarks
-      faceapi.draw.drawFaceLandmarks(canvasRef.current!, resizedResults);
+      faceapi.draw.drawFaceLandmarks(canvasRef2.current!, resizedResults);
       // face box
-      faceapi.draw.drawDetections(canvasRef.current!, resizedResults);
+      faceapi.draw.drawDetections(canvasRef2.current!, resizedResults);
     }
   };
 
   const drawStaticEllipse = (
-    color: string,
+    // color: string,
     detections: faceapi.WithFaceLandmarks<{
       detection: faceapi.FaceDetection;
     }>
   ) => {
+    // Resize canvas to match video dimensions
+    faceapi.matchDimensions(canvasRef.current!, {
+      width: videoRef.current!.videoWidth,
+      height: videoRef.current!.videoHeight,
+    });
+
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
 
@@ -278,24 +293,29 @@ const BlinkDetection: React.FC = () => {
     const faceCenterY = box.y + box.height / 2;
 
     // console.log("face", box.x, box.width, box.y, box.height);
-    console.log("centerX", centerX, "centerY", centerY);
+    // console.log("centerX", centerX, "centerY", centerY);
     // console.log("ellipse", ellipseWidth, ellipseHeight);
     // console.log("canvas", canvas!.width, canvas!.height);
-    console.log("faceCenter", faceCenterX, faceCenterY);
+    // console.log("faceCenter", faceCenterX, faceCenterY);
+
+    let color = "green";
+
     if (
-      Math.abs(faceCenterX - centerX) < 5 &&
-      Math.abs(faceCenterY - centerY) < 5
+      Math.abs(faceCenterX - centerX) < 10 &&
+      Math.abs(faceCenterY - 30 - centerY) < 10
     ) {
-      console.log("face is in center");
+      //   console.log("face is in center");
+      color = "green";
     } else {
-      console.log("face is not in center");
+      //   console.log("face is not in center");
+      color = "black";
     }
 
-    const isInEllipse =
-      Math.pow(faceCenterX - centerX, 2) / Math.pow(ellipseWidth, 2) +
-        Math.pow(faceCenterY - centerY, 2) / Math.pow(ellipseHeight, 2) <=
-      1;
-    console.log("is in ellipse", isInEllipse);
+    // const isInEllipse =
+    //   Math.pow(faceCenterX - centerX, 2) / Math.pow(ellipseWidth, 2) +
+    //     Math.pow(faceCenterY - centerY, 2) / Math.pow(ellipseHeight, 2) <=
+    //   1;
+    // console.log("is in ellipse", isInEllipse);
 
     // Set composite mode to 'destination-out' to cut out the ellipse area
     ctx!.globalCompositeOperation = "destination-out";
@@ -324,7 +344,7 @@ const BlinkDetection: React.FC = () => {
       0,
       2 * Math.PI
     );
-    ctx!.lineWidth = 1;
+    ctx!.lineWidth = 3;
     ctx!.strokeStyle = color;
     ctx!.stroke();
   };
@@ -345,6 +365,16 @@ const BlinkDetection: React.FC = () => {
 
         <canvas
           ref={canvasRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "720px",
+            height: "560px",
+          }}
+        />
+        <canvas
+          ref={canvasRef2}
           style={{
             position: "absolute",
             top: 0,
