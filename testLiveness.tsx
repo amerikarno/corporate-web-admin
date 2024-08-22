@@ -1,15 +1,16 @@
-// npm install face-api.js
-
 import React, { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 import * as faceapi from "face-api.js";
 
-const BlinkDetection: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+const LivenessDetection: React.FC = () => {
+  const webcamRef = useRef<Webcam>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [modelsLoaded, setModelsLoaded] = useState(false);
+  const [isFaceInFrame, setIsFaceInFrame] = useState(true);
 
   useEffect(() => {
     const loadModels = async () => {
-      const MODEL_URL = "/models"; // เปลี่ยนเป็นที่เก็บโมเดลของคุณ
+      const MODEL_URL = process.env.PUBLIC_URL + "/models";
       await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
       await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
       await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
@@ -20,102 +21,136 @@ const BlinkDetection: React.FC = () => {
     loadModels();
   }, []);
 
-  useEffect(() => {
-    if (modelsLoaded) {
-      startVideo();
+  const detectLiveness = async () => {
+    if (webcamRef.current && modelsLoaded) {
+      const video = webcamRef.current.video!;
+      const detections = await faceapi.detectAllFaces(
+        video,
+        new faceapi.TinyFaceDetectorOptions()
+      );
+
+      const canvas = canvasRef.current;
+      const width = canvas!.width;
+      const height = canvas!.height;
+
+      // กำหนดค่าตำแหน่งและขนาดของวงรี
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const ellipseWidth = width * 0.4;
+      const ellipseHeight = height * 0.6;
+
+      if (detections.length > 0) {
+        const box = detections[0].box;
+        const faceCenterX = box.x + box.width / 2;
+        const faceCenterY = box.y + box.height / 2;
+
+        // ตรวจสอบว่าศูนย์กลางของใบหน้าอยู่ในวงรีหรือไม่
+        const isInEllipse =
+          Math.pow(faceCenterX - centerX, 2) / Math.pow(ellipseWidth, 2) +
+            Math.pow(faceCenterY - centerY, 2) / Math.pow(ellipseHeight, 2) <=
+          1;
+
+        setIsFaceInFrame(isInEllipse);
+      } else {
+        setIsFaceInFrame(false);
+      }
     }
+  };
+
+  const drawStaticEllipseWithMask = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+
+    if (!ctx) return;
+
+    const width = canvas!.width;
+    const height = canvas!.height;
+
+    // เคลียร์ Canvas ก่อนวาดใหม่
+    ctx.clearRect(0, 0, width, height);
+
+    // วาดพื้นหลังสีทึบ
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, 0, width, height);
+
+    // กำหนดค่าตำแหน่งและขนาดของวงรี
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const ellipseWidth = width * 0.4;
+    const ellipseHeight = height * 0.6;
+
+    // วาดวงรีโปร่งใสโดยการตัดออกจากพื้นหลัง
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.ellipse(
+      centerX,
+      centerY,
+      ellipseWidth,
+      ellipseHeight,
+      0,
+      0,
+      2 * Math.PI
+    );
+    ctx.fill();
+
+    // เปลี่ยนโหมดการวาดกลับเป็นปกติ
+    ctx.globalCompositeOperation = "source-over";
+
+    // วาดเส้นกรอบวงรี เปลี่ยนสีตามสถานะของใบหน้า
+    ctx.beginPath();
+    ctx.ellipse(
+      centerX,
+      centerY,
+      ellipseWidth,
+      ellipseHeight,
+      0,
+      0,
+      2 * Math.PI
+    );
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = isFaceInFrame ? "green" : "black";
+    ctx.stroke();
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      detectLiveness();
+      drawStaticEllipseWithMask();
+    }, 100);
+    return () => clearInterval(interval);
   }, [modelsLoaded]);
 
-  const startVideo = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {},
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (error) {
-      console.error("Error accessing webcam: ", error);
-    }
-  };
-
-  const handleVideoPlay = () => {
-    const detectBlink = async () => {
-      if (videoRef.current) {
-        const options = new faceapi.TinyFaceDetectorOptions();
-        const result = await faceapi
-          .detectSingleFace(videoRef.current, options)
-          .withFaceLandmarks();
-
-        if (result) {
-          const leftEye = result.landmarks.getLeftEye();
-          const rightEye = result.landmarks.getRightEye();
-
-          const leftEAR = calculateEAR(leftEye);
-          const rightEAR = calculateEAR(rightEye);
-
-          const EAR = (leftEAR + rightEAR) / 2.0;
-
-          // Threshold สำหรับการตรวจจับการกระพริบตา
-          if (EAR < 0.2) {
-            console.log("Blink detected!");
-          }
-        }
-      }
-
-      requestAnimationFrame(detectBlink);
-    };
-
-    detectBlink();
-  };
-
-  const calculateEAR = (eye: faceapi.Point[]) => {
-    const p2_p6 = Math.sqrt(
-      Math.pow(eye[1].x - eye[5].x, 2) + Math.pow(eye[1].y - eye[5].y, 2)
-    );
-    const p3_p5 = Math.sqrt(
-      Math.pow(eye[2].x - eye[4].x, 2) + Math.pow(eye[2].y - eye[4].y, 2)
-    );
-    const p1_p4 = Math.sqrt(
-      Math.pow(eye[0].x - eye[3].x, 2) + Math.pow(eye[0].y - eye[3].y, 2)
-    );
-    const EAR = (p2_p6 + p3_p5) / (2.0 * p1_p4);
-    return EAR;
-  };
-
   return (
-    <div>
-      <video
-        ref={videoRef}
-        onPlay={handleVideoPlay}
-        style={{ display: modelsLoaded ? "block" : "none" }}
-        width="720"
-        height="560"
-        autoPlay
-        muted
+    <div style={{ position: "relative", width: "640px", height: "480px" }}>
+      <Webcam
+        ref={webcamRef}
+        audio={false}
+        screenshotFormat="image/jpeg"
+        videoConstraints={{
+          width: 640,
+          height: 480,
+          facingMode: "user",
+        }}
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+        }}
       />
-      {!modelsLoaded && <p>Loading models...</p>}
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      />
     </div>
   );
 };
 
-export default BlinkDetection;
-
-/*
-อธิบายโค้ด
-โหลดโมเดล: ใน loadModels เราโหลดโมเดลต่างๆ ที่จำเป็นสำหรับการตรวจจับใบหน้าและลักษณะใบหน้า (facial landmarks) โดยใช้ face-api.js
-
-เริ่มต้นวิดีโอ: เมื่อโมเดลโหลดเสร็จแล้ว เราเริ่มต้นกล้องโดยใช้ getUserMedia และแสดงผลวิดีโอในองค์ประกอบ <video>
-
-ตรวจจับการกระพริบตา: เมื่อวิดีโอเริ่มทำงาน ฟังก์ชัน handleVideoPlay จะถูกเรียกใช้เพื่อเริ่มตรวจจับใบหน้าและคำนวณค่า EAR (Eye Aspect Ratio) จากตำแหน่งของดวงตาที่ตรวจพบ ถ้าค่า EAR ต่ำกว่า 0.2 ก็ถือว่าเกิดการกระพริบตา
-
-การคำนวณ EAR: ฟังก์ชัน calculateEAR ใช้ตำแหน่งของดวงตาที่ได้จาก facial landmarks เพื่อตรวจสอบว่าตาเปิดหรือปิด โดยคำนวณความแตกต่างระหว่างจุดบนตา
-
-การตั้งค่าโมเดล
-ไฟล์โมเดลที่ใช้ใน face-api.js สามารถดาวน์โหลดได้จาก GitHub repository ของ face-api.js และควรเก็บไว้ในไดเรกทอรี /public/models ในโปรเจกต์ React ของคุณ เพื่อให้เข้าถึงได้ผ่าน /models URL
-
-สรุป
-ด้วยการใช้ face-api.js ใน React TypeScript คุณสามารถตรวจจับการกระพริบตาได้บน Frontend โดยไม่จำเป็นต้องเรียกใช้ API จาก Backend โค้ดนี้แสดงถึงการใช้งานง่ายๆ ของ WebRTC และ face-api.js เพื่อสร้างโซลูชันการตรวจสอบ "liveness" ที่สามารถทำงานได้แบบเรียลไทม์
-
-หากคุณต้องการความช่วยเหลือเพิ่มเติมหรือพบปัญหาในการใช้งาน โปรดแจ้งให้ทราบครับ!
-*/
+export default LivenessDetection;
