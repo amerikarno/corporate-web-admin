@@ -71,32 +71,32 @@ const BlinkDetection: React.FC = () => {
           .withFaceLandmarks();
 
         if (result) {
-          //   const leftEye = result.landmarks.getLeftEye();
-          //   const rightEye = result.landmarks.getRightEye();
-          //   const leftEAR = calculateEAR(leftEye);
-          //   const rightEAR = calculateEAR(rightEye);
-          //   if (rightEAR > 0.7 && !rightImg) {
-          //     console.log("Turned left");
-          //     await captureImage("left");
-          //   }
-          //   if (leftEAR > 0.7 && !leftImg) {
-          //     console.log("Turned right");
-          //     await captureImage("right");
-          //   }
-          //   const mouth = result.landmarks.getMouth();
-          //   const mouthDist = mouthDistance([
-          //     mouth[13],
-          //     mouth[14],
-          //     mouth[15],
-          //     mouth[17],
-          //     mouth[18],
-          //     mouth[19],
-          //   ]);
-          //   if (mouthDist > 40) {
-          //     console.log("Mouth opened");
-          //   } else {
-          //     console.log("Mouth closed");
-          //   }
+          const leftEye = result.landmarks.getLeftEye();
+          const rightEye = result.landmarks.getRightEye();
+          const leftEAR = calculateEAR(leftEye);
+          const rightEAR = calculateEAR(rightEye);
+          if (rightEAR > 0.65 && !rightImg) {
+            console.log("Turned left");
+            //   await captureImage("left");
+          }
+          if (leftEAR > 0.65 && !leftImg) {
+            console.log("Turned right");
+            //   await captureImage("right");
+          }
+          const mouth = result.landmarks.getMouth();
+          const mouthDist = mouthDistance([
+            mouth[13],
+            mouth[14],
+            mouth[15],
+            mouth[17],
+            mouth[18],
+            mouth[19],
+          ]);
+          if (mouthDist > 35) {
+            console.log("Mouth opened");
+          } else {
+            console.log("Mouth closed");
+          }
           //   closeUp([
           //     result.landmarks.positions[0],
           //     result.landmarks.positions[16],
