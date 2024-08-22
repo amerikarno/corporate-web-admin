@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TAuthorizePerson } from "@/pages/createJob/addedCorporateAccount/constants/types";
+import { TAuthorizePerson } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 
 interface AuthorizedPersonState {
   authorizedPersons: TAuthorizePerson[];

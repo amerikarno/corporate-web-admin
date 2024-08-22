@@ -66,14 +66,14 @@ export function EditCorporateAccount() {
         corporateCode={corporateCode}
       />
     ),
-    3: <PageContactPerson corporateCode={corporateCode} />,
-    4: <ListOfDirectors corporateCode={corporateCode} />,
-    5: <PageIndividualShareholder corporateCode={corporateCode} />,
-    6: <PageJuristicShareholder corporateCode={corporateCode} />,
-    7: <PageAuthorizedPerson corporateCode={corporateCode} />,
-    8: <PageBankAccount corporateCode={corporateCode} />,
-    9: <UploadFiles corporateCode={corporateCode} />,
-    10: <PageSuitTest corporateCode={corporateCode} />,
+    3: <PageContactPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    4: <ListOfDirectors corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    5: <PageIndividualShareholder corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    6: <PageJuristicShareholder corporateCode={corporateCode} corporatesInfo={corporateData} />,
+    7: <PageAuthorizedPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    8: <PageBankAccount corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    9: <UploadFiles corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    10: <PageSuitTest corporateCode={corporateCode} corporatesInfo={corporateData}/>,
   };
 
   const handlePages = (type: string) => {

@@ -3,30 +3,83 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsShareholders } from "../components/formIndividualsShareholders";
 // import { columnsShareHolders } from "../constants/columns";
 import { useShareholders } from "../hook/useShareholders";
-import { TIndividualsShareholders } from "../constants/types";
 //import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
-import { removeIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import {
+  removeIndividualShareholder,
+  setIndividualShareholder,
+} from "@/features/individualShareholder/individualShareholderSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { useEffect, useState } from "react";
+import { TCorporateData, TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
 
 type TPageIndividualShareholderProps = {
   corporateCode: string;
+  corporatesInfo?: TCorporateData;
 };
 
 export function PageIndividualShareholder({
   corporateCode,
+  corporatesInfo
 }: TPageIndividualShareholderProps) {
-  const { handleSubmitShareholders } = useShareholders();
-  const shareholderData: TIndividualsShareholders[] = useSelector<RootState>(
-    (state) => state.individualShareholder?.individualShareholders || []
-  ) as TIndividualsShareholders[];
-  console.log(JSON.stringify(shareholderData, null, 2));
   const dispatch = useDispatch();
+  const token = getCookies();
+  const shareholderData: TIndividualShareholderEdit[] = useSelector<RootState>(
+    (state) => state.individualShareholder?.individualShareholders || []
+  ) as TIndividualShareholderEdit[];
+  const [choosedEditData, setChoosedEditData] =
+    useState<TIndividualShareholderEdit>();
 
-  const handleDelete = async (data: TIndividualsShareholders) => {
+  const clearChoosedEditData = () => {
+    setChoosedEditData(undefined);
+  };
+
+  useEffect(() => {
+    axios
+      .post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("API Response:", res.data);
+        if (res.status === 200) {
+          const individualshareholder =
+            res.data[0]?.IndividualShareholders || [];
+          if (individualshareholder && individualshareholder.length > 0) {
+            // const updateIndividual:TIndividualShareholderEdit[] = individualshareholder.map((indivudual: any) => ({
+            //   ...indivudual,
+            // }));
+            dispatch(setIndividualShareholder(individualshareholder));
+            console.log(
+              "indivudual data fetched successfully.",
+              individualshareholder
+            );
+          } else {
+            console.log("No individual shareholder data found.");
+          }
+        } else {
+          console.log(
+            "Failed to fetch indivudual data or data is not an array."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching indivudual data:", error);
+      });
+  }, [dispatch]);
+
+  const { handleSubmitShareholders } = useShareholders();
+  console.log(shareholderData);
+
+  const handleDelete = async (data: TIndividualShareholderEdit) => {
     console.log(data);
     try {
       const token = getCookies();
@@ -48,18 +101,18 @@ export function PageIndividualShareholder({
     }
   };
 
-  const columnsShareHolders: TableColumn<TIndividualsShareholders>[] = [
+  const columnsShareHolders: TableColumn<TIndividualShareholderEdit>[] = [
     {
       name: "Title",
-      selector: (row) => row.fullNames[0]?.title || "",
+      selector: (row) => row.fullNames?.[0]?.title || "",
     },
     {
       name: "Firstname",
-      selector: (row) => row.fullNames[0]?.firstName || "",
+      selector: (row) => row.fullNames?.[0]?.firstName || "",
     },
     {
       name: "Lastname",
-      selector: (row) => row.fullNames[0]?.lastName || "",
+      selector: (row) => row.fullNames?.[0]?.lastName || "",
     },
     {
       name: "CitizenID",
@@ -75,11 +128,17 @@ export function PageIndividualShareholder({
     },
     {
       name: "Share Percentage",
-      selector: (row) => row.sharePercentage.toString() || "",
+      selector: (row) => row.sharePercentage?.toString() || "",
     },
     {
-      cell: (row: TIndividualsShareholders) => (
+      cell: (row: TIndividualShareholderEdit) => (
         <Button onClick={() => handleDelete(row)}>Delete</Button>
+      ),
+      ignoreRowClick: true,
+    },
+    {
+      cell: (row: TIndividualShareholderEdit) => (
+        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
       ),
       ignoreRowClick: true,
     },
@@ -87,6 +146,35 @@ export function PageIndividualShareholder({
   return (
     <>
       <div className="p-4 space-y-8">
+        <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+              </div>
+            </div>
+          </div>
+        </Card>
         <Card>
           <DataTable
             title="List of Shareholders holding from 25% of shares"
@@ -96,6 +184,8 @@ export function PageIndividualShareholder({
           />
         </Card>
         <FormIndividualsShareholders
+          clearChoosedEditData={clearChoosedEditData}
+          choosedEditData={choosedEditData}
           onsubmit={handleSubmitShareholders}
           corporateCode={corporateCode}
         />

@@ -1,5 +1,5 @@
 import { CheckBox } from "@/components/Checkbox";
-import { TSuitAns, TSuitTest } from "../constants/types";
+import { TSuitAns, TSuitTest } from "../constants2/types";
 
 type TSuitQuestionCompProps = {
   quiz: TSuitTest;

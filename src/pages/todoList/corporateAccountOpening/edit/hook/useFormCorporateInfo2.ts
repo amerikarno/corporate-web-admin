@@ -290,11 +290,12 @@ export function useFormCorporateInfo2() {
 
       case "countrySourceOfIncome":
         let countrySrcIncome = copy(resFrom2);
-        console.log(countrySrcIncome);
+        //console.log(countrySrcIncome);
         console.log(key, name, checked);
         if (countrySrcIncome && countrySrcIncome.corporateCountry) {
           if (key === "isThailand") {
-            countrySrcIncome.corporateCountry.isThailand = checked;
+            countrySrcIncome.corporateCountry.isThailand = checked
+            
             setResForm2({ ...countrySrcIncome });
           } else {
             countrySrcIncome.corporateCountry.isThailand = checked

@@ -1,49 +1,86 @@
 import { useState } from "react";
-import { TDirector } from "../constants/types";
+import { TDirector } from "../constants2/types";
 import axios from "@/api/axios";
-import { isExpiredToken, yyyyMMddToDate } from "@/lib/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { addDirector } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import { useDispatch } from "react-redux";
+import {
+  addDirector,
+  updateDirector,
+} from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 
 export function useListOfDirector() {
   const dispatch = useDispatch();
   const [directors, setDirectors] = useState<TDirector[]>([]);
-  const listOfDirectorData: TDirector[] = useSelector<RootState>(
-    (state) => state.listOfDirector?.listOfDirectors || []
-  ) as TDirector[];
+
   const saveListOfDirector = async (data: TDirector) => {
+    console.log("data", data);
     let body = {
       ...data,
-      expiryDate: yyyyMMddToDate(data.expiryDate).toISOString(),
+      expiryDate: new Date(data.expiryDate),
     };
     console.log("body", body);
+    const token = getCookies();
     try {
-      const token = getCookies();
-      const res = await axios.post("/api/v1/personals/create", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      console.log("sending data to update : ", {
+        ...data,
+        personalId: data.personalId,
+        corporateCode: data.corporateCode,
       });
-      if (res.status === 200) {
-        console.log(res);
-        console.log("save successful");
-        dispatch(addDirector({ ...body, personalId: res.data.personalId }));
-        console.log(listOfDirectorData);
-        setDirectors([...directors, data]);
+      if (data.personalId) {
+        //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
+        const res = await axios.post(
+          "/api/v1/personals/update",
+          {
+            ...body,
+            personalId: data.personalId,
+            corporateCode: data.corporateCode,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        if (res.status === 200) {
+          console.log(body.personalId);
+          console.log(res.data.personalId);
+          console.log("Edit successful");
+          dispatch(updateDirector(data));
+        } else {
+          console.log("Edit failed");
+        }
       } else {
-        console.log("save failed");
-        console.log(res);
+        //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
+        const res = await axios.post("/api/v1/personals/create", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 200) {
+          console.log("Save successful ", res);
+          console.log("personalId", res.data.personalId);
+          console.log({ ...data, personalId: res.data.personalId });
+          dispatch(
+            addDirector({
+              ...data,
+              personalId: res.data.personalId,
+              expiryDate: data.expiryDate,
+            })
+          );
+        } else {
+          console.log("Save failed");
+        }
       }
-    } catch (error: any) {
-      console.log(error);
-      alert(error.response.data.message);
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
   const handleSubmitDirectors = async (data: TDirector) => {
     if (!isExpiredToken()) {
-      await saveListOfDirector(data);
+      const payload: TDirector = {
+        ...data,
+        // expiryDate: new Date(data.expiryDate),
+      };
+      await saveListOfDirector(payload);
     } else {
       console.log("session expired");
       alert("Session expired. Please login again");

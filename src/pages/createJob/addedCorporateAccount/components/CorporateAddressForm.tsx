@@ -3,7 +3,7 @@ import {
   subAddressSchema,
   TSubAddressSchema,
   TCorporateInfoSchema,
-} from "../constants/schemas";
+} from "../constants2/schemas";
 import { Input } from "@/components/Input";
 
 export type TSubAddressFormProps = {
@@ -21,16 +21,16 @@ export function CorporateAddressForm({
 }: TSubAddressFormProps) {
   const fields = Object.entries(subAddressSchema.shape);
   const newFields = [
-    "Address No",
-    "Moo No",
-    "Building/Mooban",
-    "Floor",
+    "Address Number",
+    "Moo",
     "Soi",
+    "Floor",
+    "Building",
     "Road",
-    "Sub-district/Tambon",
-    "District/Amphur",
+    "Tambon",
+    "Amphoe",
     "Province",
-    "Postal Code",
+    "PostalCode",
     "Country",
   ];
   // const optionalFields = ["Building", "MooNo", "Soi", "Road"];
@@ -51,11 +51,10 @@ export function CorporateAddressForm({
                 label={newFields[index]}
                 {...register(`${keyType}.address[0].${fieldName}` as any)}
                 name={`${keyType}.address[0].${fieldName}`}
-                id={keyType+fieldName}
+                id={`id-${keyType}.address[0].${fieldName}`}
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
-                
               />
               {/* </SideLabelInput> */}
               {errors && errors[fieldName as keyof TSubAddressSchema] && (
@@ -68,7 +67,28 @@ export function CorporateAddressForm({
         })}
       </div>
 
+      <div className="flex-col">
+        <Input
+          label="Email Address"
+          {...register(`${keyType}.emailAddress` as keyof TCorporateInfoSchema)}
+          name={`${keyType}.emailAddress`}
+          id={`id-${keyType}.emailAddress`}
+          disabled={isSubmitting}
+          type="email"
+        />
+      </div>
 
+      {/* Render telephone field */}
+      <div className="flex-col">
+        <Input
+          label="Telephone"
+          {...register(`${keyType}.telephone` as keyof TCorporateInfoSchema)}
+          name={`${keyType}.telephone`}
+          id={`id-${keyType}.telephone`}
+          disabled={isSubmitting}
+          type="tel"
+        />
+      </div>
     </>
   );
 }

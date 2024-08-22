@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TBank } from "@/pages/createJob/addedCorporateAccount/constants/types";
+import { TBank } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 
 interface BankState {
   banks: TBank[];

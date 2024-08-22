@@ -7,34 +7,35 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   individualsContactPersonSchema,
   TIndividualsContactPersonSchema,
-} from "../constants/schemas";
+} from "../constants2/schemas";
 import { sleep } from "@/lib/utils";
 //import { Table } from "./dataTable";
-import { TContactPerson } from "../constants/types";
-
+import { TContactPerson } from "../constants2/types";
+import { TContact } from "../../constant/type";
+import { mapDataToTContactPerson } from "../libs/utils";
+import { useEffect } from "react";
 type TContactPersonArray = {
   contacts: TContactPerson[];
   corporateCode?: string;
+  personalId?: string;
 };
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
   corporateCode: string;
+  choosedEditData?: TContact | null;
+  clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsContactPerson({
   onsubmit,
   corporateCode,
+  choosedEditData,
+  clearChoosedEditData
 }: TContactPersonFormProps) {
-  // const {
-  //   contacts,
-  //   individualsContact,
-  //   // removeIndividualsShareholders,
-  //   // editIndividualsShareholders,
-  //   // handleSetNewShareholder,
-  //   // serializeData,
-  // } = useFormIndividualsContactPerson();
 
+  console.log(choosedEditData)
+  
   const {
     register,
     handleSubmit,
@@ -42,25 +43,32 @@ export function FormIndividualsContactPerson({
     reset,
   } = useForm<TIndividualsContactPersonSchema>({
     resolver: zodResolver(individualsContactPersonSchema),
-    //values: individualsContact,
   });
 
-  //   const columns = [
-  //     { header: "Name-Surname", accessor: "nameSurname" },
-  //     { header: "ID Card / Passport", accessor: "idCard" },
-  //     { header: "Expiration Date", accessor: "expiredDate" },
-  //     { header: "Nationality", accessor: "nationality" },
-  //     { header: "% Shares", accessor: "shares" },
-  //   ];
+  useEffect(() => {
+      const contactPersonData = mapDataToTContactPerson(choosedEditData || null) || {
+        fullNames: [{ title: '', firstName: '', lastName: '' }],
+        position: '',
+        division: '',
+        telephone: '',
+        email: '',
+        personalId:''
+      };
+    console.log(contactPersonData)
+    reset(contactPersonData);
+  }, [choosedEditData, reset]);
+
 
   const onSubmit = async (data: TContactPerson) => {
+    console.log(data)
     let formData: TContactPersonArray = {
-      contacts: [data],
+      contacts: [{...data,personalId:choosedEditData?.personalId}],
       corporateCode: corporateCode,
     };
     await sleep(500);
     reset();
-    // console.log(formData);
+    console.log(formData);
+    clearChoosedEditData();
     onsubmit(formData);
   };
 

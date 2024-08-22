@@ -3,7 +3,7 @@ import {
   subAddressSchema,
   TSubAddressSchema,
   TDirectorInfoSchema,
-} from "../constants/schemas";
+} from "../constants2/schemas";
 import { Input } from "@/components/Input";
 
 export type TSubAddressFormProps = {
@@ -28,18 +28,18 @@ export function DirectorAddressForm({
   //   return true;
   // };
   const newFields = [
-    "Address No",
-    "Moo No",
-    "Building/Mooban",
-    "Floor",
+    "Address Number",
+    "Moo",
     "Soi",
+    "Floor",
+    "Building",
     "Road",
-    "Sub-district/Tambon",
-    "District/Amphur",
+    "Tambon",
+    "Amphoe",
     "Province",
-    "Postal Code",
-    "Country",
-  ];
+    "PostalCode",
+    "Country"
+  ]
   return (
     <div className="grid md:grid-cols-2 gap-4">
       {fields.map(([fieldName], index) => {
@@ -54,8 +54,6 @@ export function DirectorAddressForm({
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
-                autoComplete="new-password"
-
               />
             {/* </SideLabelInput> */}
             {errors && errors[fieldName as keyof TSubAddressSchema] && (

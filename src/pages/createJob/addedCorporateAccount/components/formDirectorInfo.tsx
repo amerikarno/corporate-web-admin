@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   directorInfoSchema,
   TIndividualsDirectorSchema,
-} from "../constants/schemas";
+} from "../constants2/schemas";
 import { sleep } from "@/lib/utils";
-import { TDirector } from "../constants/types";
+import { TDirector } from "../constants2/types";
 import { DirectorAddressForm } from "./directorAddressForm";
 import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
@@ -17,29 +17,32 @@ import { checkFormatIDCard } from "@/lib/utils";
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
   corporateCode: string;
+  personalId?: string;
+  choosedEditData?: TDirector | null;
+  clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsDirector({
   onsubmit,
   corporateCode,
+  choosedEditData,
+  clearChoosedEditData,
 }: TDirectorFormProps) {
   const [triggeriderror, setTriggeriderror] = useState<string>("");
   const [curInputText, setCurInputText] = useState<string>("");
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
+  const [hasDate, setHasDate] = useState<boolean>(
+    choosedEditData?.expiryDate ? true : false
+  );
   const handleDropboxChoice = (choice: string) => {
+    console.log(choice);
+    setCurInputText("");
+    resetField("passportId");
+    resetField("citizenId");
     setDropDownChoosed(choice);
   };
-
-  useEffect(() => {
-    if (dropDownChoosed === "ID") {
-      resetField("passportId");
-    } else if (dropDownChoosed === "Passport") {
-      resetField("citizenId");
-    }
-  }, [dropDownChoosed]);
-  
 
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
@@ -66,9 +69,54 @@ export function FormIndividualsDirector({
     formState: { errors, isSubmitting },
     reset,
     resetField,
+    setValue,
   } = useForm<TDirector>({
     resolver: zodResolver(directorInfoSchema),
   });
+
+  useEffect(() => {
+    if (choosedEditData?.citizenId) {
+      setDropDownChoosed("ID");
+      setValue("citizenId", choosedEditData.citizenId);
+    } else if (choosedEditData?.passportId) {
+      setDropDownChoosed("Passport");
+      setValue("passportId", choosedEditData.passportId);
+    } else {
+      setDropDownChoosed("ID");
+    }
+    setCurInputText(
+      choosedEditData?.citizenId || choosedEditData?.passportId || ""
+    );
+    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
+  }, [choosedEditData, setValue]);
+
+  useEffect(() => {
+
+    const directorData = choosedEditData || {
+      fullNames: [{ title: "", firstName: "", lastName: "" }],
+      citizenId: "",
+      passportId: "",
+      expiryDate: "mm/dd/yyyy",
+      nationality: "",
+      addresses: [
+        {
+          addressNo: "",
+          building: "",
+          floor: "",
+          mooNo: "",
+          soi: "",
+          road: "",
+          tambon: "",
+          amphoe: "",
+          province: "",
+          postalCode: "",
+          country: "",
+        },
+      ],
+    };
+    reset(directorData);
+    setHasDate(true);
+  }, [choosedEditData, reset]);
 
   const valideID = () => {
     if (dropDownChoosed === "ID") {
@@ -80,7 +128,8 @@ export function FormIndividualsDirector({
   };
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
-    //const formData: TDirector={ ...data,Types:"101"}
+    // console.log(curInputText);
+    // console.log(dropDownChoosed);
     if (curInput && valideID()) {
       const formData = validateData(data);
       setCurInputText("");
@@ -96,8 +145,13 @@ export function FormIndividualsDirector({
         addresses: data.addresses,
         fullNames: data.fullNames,
         corporateCode: corporateCode,
+        personalId: choosedEditData?.personalId,
+        citizenId: dropDownChoosed === "ID" ? curInputText : "",
+        passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
+
       console.log(body);
+      clearChoosedEditData();
       onsubmit(body);
     } else {
       setInitError(true);
@@ -168,7 +222,10 @@ export function FormIndividualsDirector({
             <div className="flex flex-col space-y-4 md:space-x-4 md:space-y-0 md:flex-row items-center">
               <div className="w-full md:w-1/2 flex flex-row items-center justify-between gap-4">
                 <div className="w-full md:w-1/2">
-                  <Dropbox onDropdownSelect={handleDropboxChoice} />
+                  <Dropbox
+                    onDropdownSelect={handleDropboxChoice}
+                    dropDownChoosedback={dropDownChoosed}
+                  />
                 </div>
                 <div className="w-full md:w-1/2">
                   {dropDownChoosed ? (
@@ -232,21 +289,35 @@ export function FormIndividualsDirector({
                   )}
                 </div>
               </div>
-              <div className="w-full md:w-1/2">
-                <Input
-                  {...register("expiryDate")}
-                  label="Date of Expired"
-                  id="Date of Expired"
-                  disabled={isSubmitting}
-                  type="date"
-                  min={new Date().toISOString().split("T")[0]}
-                />
-                {errors.expiryDate && (
-                  <p className="text-red-500 text-sm px-2">
-                    {errors.expiryDate.message}
-                  </p>
-                )}
-              </div>
+              {hasDate ? (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    id="Date of Expired"
+                    onClick={() => setHasDate(false)}
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full md:w-1/2">
+                  <Input
+                    {...register("expiryDate")}
+                    label="Date of Expired"
+                    id="Date of Expired"
+                    disabled={isSubmitting}
+                    type="date"
+                  />
+                  {errors.expiryDate && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.expiryDate.message}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-row space-x-0 md:space-x-4">

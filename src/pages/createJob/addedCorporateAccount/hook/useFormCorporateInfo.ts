@@ -1,25 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { copy } from "@/lib/utils";
-import { TRegisteredCountryPrimaryCountryOperation } from "../constants/types";
-import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants/initialData";
+import { TRegisteredCountryPrimaryCountryOperation } from "../constants2/types";
+import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants2/initialData";
 import { z, ZodIssue } from "zod";
-import { registeredCountryPrimaryCountryOperationSchema } from "../constants/schemas";
-export function useFormCorporateInfo() {
+import { registeredCountryPrimaryCountryOperationSchema } from "../constants2/schemas";
+import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
+
+export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
+  let resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 601
+  );
+  let resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 602
+  );
+  
+  const initCountryData = {
+    registered: resCorpRegisterCountry?.other || "",
+    registeredThailand: resCorpRegisterCountry ? resCorpRegisterCountry.isThailand : false,
+    registeredOther: resCorpRegisterCountry
+      ? !resCorpRegisterCountry.isThailand
+      : false, 
+    primary: resCorpPrimaryCountry?.other || "",
+    primaryCountry: resCorpPrimaryCountry ? resCorpPrimaryCountry.isThailand : false,
+    primaryOther: resCorpPrimaryCountry
+      ? !resCorpPrimaryCountry.isThailand
+      : false,
+  };
+
   const [
     registeredCountryPrimaryCountryOperation,
     setRegisteredCountryPrimaryCountryOperation,
   ] = useState<TRegisteredCountryPrimaryCountryOperation>(
-    emptyRegisteredCountryPrimaryCountryOperation
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
   );
+
   const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
-    useState<boolean>(false);
+    useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // useState<boolean>(false);
+
   useState<TRegisteredCountryPrimaryCountryOperation>(
-    emptyRegisteredCountryPrimaryCountryOperation
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
   );
   const [
     isPrimaryCountryOfOperationOthers,
     setIsPrimaryCountryOfOperationOthers,
-  ] = useState<boolean>(false);
+  ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // ] = useState<boolean>(false);
 
   const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
 
@@ -39,25 +69,25 @@ export function useFormCorporateInfo() {
       ) || null
     );
   };
+
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
-    // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
-    if (checked) {
-      tmp.registered = "";
-      tmp.registeredThailand = true;
+
+    if (name === "Thailand") {
+      tmp.registered = checked ? name : "";
+      tmp.registeredThailand = checked;
       tmp.registeredOther = false;
-      form1error ? validateLocal(tmp) : null;
-    } else {
+    } else if (name === "Others Countries (Please Specify)") {
       tmp.registered = "";
       tmp.registeredThailand = false;
-      tmp.registeredOther = true;
+      tmp.registeredOther = checked;
     }
+
     setRegisteredCountryPrimaryCountryOperation(tmp);
     if (name == "Others Countries (Please Specify)") {
       setIsRegisteredCountryOthers(checked);
     }
-    // errors ? validateLocal(tmp) : null;
   };
   const handleInputRegisteredCountryOthers = (e: any) => {
     const { value } = e.target;
@@ -66,27 +96,27 @@ export function useFormCorporateInfo() {
     tmp.registeredThailand = false;
     tmp.registeredOther = true;
     setRegisteredCountryPrimaryCountryOperation(tmp);
-    form1error ? validateLocal(tmp) : null;
+    // form1error ? validateLocal(tmp) : null;
+    validateLocal(tmp);
+    console.log(tmp);
   };
   const handlePrimaryCountryOfOperationOthers = (e: any) => {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
-    // tmp.registeredCountryPrimaryCountryOperation = checked ? name : "";
-    if (checked) {
-      tmp.primary = "";
-      tmp.primaryCountry = true;
+    if (name === "Thailand") {
+      tmp.primary = checked ? name : "";
+      tmp.primaryCountry = checked;
       tmp.primaryOther = false;
-      form1error ? validateLocal(tmp) : null;
     } else {
       tmp.primary = "";
       tmp.primaryCountry = false;
-      tmp.primaryOther = true;
+      tmp.primaryOther = checked;
     }
     setRegisteredCountryPrimaryCountryOperation(tmp);
     if (name == "Others Countries (Please Specify)") {
       setIsPrimaryCountryOfOperationOthers(checked);
     }
-    // errors ? validateLocal(tmp) : null;
+    validateLocal(tmp);
   };
   const handleInputPrimaryCountryOfOperationOthers = (e: any) => {
     const { value } = e.target;
@@ -94,29 +124,7 @@ export function useFormCorporateInfo() {
     tmp.primary = value;
     tmp.primaryCountry = false;
     setRegisteredCountryPrimaryCountryOperation(tmp);
-    form1error ? validateLocal(tmp) : null;
-  };
-  const disableRegisteredCountry = (type: string): boolean => {
-    if (registeredCountryPrimaryCountryOperation.registered !== "") {
-      if (type === registeredCountryPrimaryCountryOperation.registered) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
-  };
-  const disablePrimaryCountryOfOperation = (type: string): boolean => {
-    if (registeredCountryPrimaryCountryOperation.primary !== "") {
-      if (type === registeredCountryPrimaryCountryOperation.primary) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
+    validateLocal(tmp);
   };
 
   const validateForm = (): boolean => {
@@ -163,8 +171,8 @@ export function useFormCorporateInfo() {
     }
   };
   return {
-    disablePrimaryCountryOfOperation,
-    disableRegisteredCountry,
+    // disablePrimaryCountryOfOperation,
+    // disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
     getError,

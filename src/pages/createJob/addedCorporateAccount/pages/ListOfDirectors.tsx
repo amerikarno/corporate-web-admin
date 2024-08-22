@@ -3,25 +3,76 @@ import { useListOfDirector } from "../hook/useListOfDirector";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsDirector } from "../components/formDirectorInfo";
 //import { columnsListOfDirectors } from "../constants/columns";
-import { TDirector } from "../constants/types";
+import { TDirector } from "../constants2/types";
+import { TCorporateData, TDirector as TDirectorEdit } from "../../constant/type";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { removeDirector } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import {
+  removeDirector,
+  setDirectorEdit,
+} from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { useEffect, useState } from "react";
+import { mapDataToTDirector } from "../libs/utils";
 
 type TListOfDirectorsProps = {
   corporateCode: string;
+  corporatesInfo?: TCorporateData;
 };
 
-export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
+export function ListOfDirectors({ corporateCode,corporatesInfo }: TListOfDirectorsProps) {
   const dispatch = useDispatch();
   const { handleSubmitDirectors } = useListOfDirector();
+
+  const token = getCookies();
   const listOfDirectorData: TDirector[] = useSelector<RootState>(
-    (state) => state.listOfDirector?.listOfDirectors || []
+    (state) => state.listOfDirector?.listOfDirectors
   ) as TDirector[];
-  // console.log(JSON.stringify(listOfDirectorData, null, 2));
+  const [choosedEditData, setChoosedEditData] = useState<TDirector>();
+  const clearChoosedEditData = () => {
+    setChoosedEditData(undefined);
+  };
+  console.log(listOfDirectorData);
+
+  useEffect(() => {
+    axios
+      .post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("API Response:", res.data);
+
+        if (res.status === 200) {
+          console.log(res);
+          const listofdirectors = res.data[0].Directors || [];
+          const updateDirector: TDirector[] = listofdirectors
+            .map((listofdirector: TDirectorEdit) => ({
+              ...listofdirector,
+              listofdirector: listofdirector.personalId,
+            }))
+            .map(mapDataToTDirector)
+            .filter((item: any) => item !== null) as TDirector[];
+
+          dispatch(setDirectorEdit(updateDirector));
+          console.log("director data fetched successfully.", updateDirector);
+        } else {
+          console.log(
+            "Failed to fetch jurisdirectortic data or data is not an array."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching director data:", error);
+      });
+  }, [corporateCode, dispatch, token]);
 
   const handleDelete = async (data: TDirector) => {
     console.log(data);
@@ -76,10 +127,52 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
       ),
       ignoreRowClick: true,
     },
+    {
+      cell: (row: TDirector) => (
+        <Button
+          onClick={() => {
+            setChoosedEditData(row);
+            console.log(row);
+          }}
+        >
+          Edit
+        </Button>
+      ),
+      ignoreRowClick: true,
+    },
   ];
   return (
     <>
       <div className="p-4 space-y-8">
+        <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+              </div>
+            </div>
+          </div>
+        </Card>
         <Card>
           <DataTable
             title="List of Directors"
@@ -90,6 +183,8 @@ export function ListOfDirectors({ corporateCode }: TListOfDirectorsProps) {
         </Card>
 
         <FormIndividualsDirector
+          clearChoosedEditData={clearChoosedEditData}
+          choosedEditData={choosedEditData}
           onsubmit={handleSubmitDirectors}
           corporateCode={corporateCode}
         />

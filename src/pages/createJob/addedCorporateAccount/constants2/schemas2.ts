@@ -83,10 +83,10 @@ export const corporateInfoSchema = z.object({
   primary: z.string().optional(),
   registeredBusiness: registerBusinessAddressSchema,
   placeofIncorporation: placeIncorporateAddressSchema,
-  registeredCapital: z.string().optional(),
-  revenuePerYear: z.string().optional(),
-  netProFitLoss: z.string().optional(),
-  shareholderEquity: z.string().optional(),
+  registeredCapital: z.coerce.number().optional(),
+  revenuePerYear: z.coerce.number().optional(),
+  netProFitLoss: z.coerce.number().optional(),
+  shareholderEquity: z.coerce.number().optional(),
 });
 
 export const directorInfoSchema = z.object({

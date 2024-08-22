@@ -67,6 +67,10 @@ export function FormCorporateInfo({
     const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
+      registeredCapital: Number(data.registeredCapital?.replace(/,/g, '')),
+      revenuePerYear: Number(data.revenuePerYear?.replace(/,/g, '')),
+      netProFitLoss: Number(data.netProFitLoss?.replace(/,/g, '')),
+      shareholderEquity: Number(data.shareholderEquity?.replace(/,/g, '')),
       corporateCode: corporatesInfo?.CorporateCode.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
@@ -342,7 +346,6 @@ export function FormCorporateInfo({
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
             <Input
-              type="number"
               step="0.01"
               id={"Registered Capital"}
               label={"Registered Capital"}
@@ -354,7 +357,6 @@ export function FormCorporateInfo({
               <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
             <Input
-              type="number"
               step="0.01"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
@@ -366,7 +368,6 @@ export function FormCorporateInfo({
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
             <Input
-              type="number"
               step="0.01"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
@@ -378,7 +379,6 @@ export function FormCorporateInfo({
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
             <Input
-              type="number"
               step="0.01"
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
