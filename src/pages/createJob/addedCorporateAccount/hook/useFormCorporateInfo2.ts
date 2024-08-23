@@ -155,6 +155,7 @@ export function useFormCorporateInfo2() {
 
   const saveJuristicType = async (data: CorporateResponse | null) => {
     console.log(data?.corporateCountry?.isThailand)
+    console.log(data?.corporateCountry?.other)
     if (data !== null) {
       let body = {
         ...data,
@@ -164,10 +165,11 @@ export function useFormCorporateInfo2() {
         corporateCountry: undefined,
         deleteBy: undefined,
         corporateCode: corp.CorporateCode?.toString(),
-        isThailand: data.corporateCountry?.isThailand ? true : false,
-        otherCountry: data.corporateCountry?.other,
+        isThailand: data.corporateCountry?.isThailand  ? (data.corporateCountry?.isThailand ? true : false) : false,
+        otherCountry: data.corporateCountry?.isThailand ? "" : data.corporateCountry?.other,
       };
-      console.log("body", body);
+      console.log(body.isThailand)
+      console.log(body.otherCountry)
       try {
         const token = getCookies();
         const res = await axios.post("/api/v1/corporate/update/type", body, {
@@ -410,7 +412,7 @@ export function useFormCorporateInfo2() {
 
       case "sourceOfIncomeOther":
         if (form2Data && form2Data !== null) {
-          form2Data.otherCountry = value;
+          form2Data.otherIncome = value;
         }
         break;
 

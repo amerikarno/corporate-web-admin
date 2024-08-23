@@ -74,10 +74,10 @@ export function FormCorporateInfo({
     const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
-      registeredCapital: Number(data.registeredCapital?.replace(/,/g, '')),
-      revenuePerYear: Number(data.revenuePerYear?.replace(/,/g, '')),
-      netProFitLoss: Number(data.netProFitLoss?.replace(/,/g, '')),
-      shareholderEquity: Number(data.shareholderEquity?.replace(/,/g, '')),
+      registeredCapital: Math.floor(Number(data.registeredCapital?.replace(/,/g, ''))),
+      revenuePerYear: Math.floor(Number(data.revenuePerYear?.replace(/,/g, ''))),
+      netProFitLoss: Math.floor(Number(data.netProFitLoss?.replace(/,/g, ''))),
+      shareholderEquity: Math.floor(Number(data.shareholderEquity?.replace(/,/g, ''))),
       corporateCode: corporatesInfo?.CorporateCode.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
