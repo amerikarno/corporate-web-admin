@@ -66,6 +66,7 @@ TCorporateTypeAndIncomeProps) {
       console.log("do create")
       await createJuristicType(resFrom2,corporateData);
     }
+
   };
 
   if (resFrom2 === null) {

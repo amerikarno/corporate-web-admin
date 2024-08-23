@@ -24,6 +24,7 @@ import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants/types";
 import { RootState } from "@/app/store";
 import { useSelector } from "react-redux";
+import { CorporateTypeBody } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -404,3 +405,62 @@ export const getFrom2Response = () => {
   //   return juristicType;
   // }
 };
+
+export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | any =>{
+  try {
+    if (data === null) {
+      return null;
+    }
+
+    const result: CorporateTypeBody = {
+      isJuristicThailand: data.isJuristicThailand,
+      isTaxExempt:data.isTaxExempt,
+      isNonTaxExempt:data.isNonTaxExempt,
+      isJuristicForeign:data.isJuristicForeign,
+      isOperatingInThailand:data.isOperatingInThailand,
+      isNonOperatingInThailand:data.isNonOperatingInThailand,
+      isOther:data.isOther,
+      isPartnership:data.isPartnership,
+      isGovernmentStateEnterprise: data.isGovernmentStateEnterprise,
+      isTaxExemptCompany: data.isTaxExemptCompany,
+      isAntiqueTrading: data.isAntiqueTrading,
+      isHotelRestaurant: data.isHotelRestaurant,
+      isArmament: data.isArmament,
+      isInsuranceAssurance: data.isInsuranceAssurance,
+      isCasinoGambling: data.isCasinoGambling,
+      isJewelryGoldTrading: data.isJewelryGoldTrading,
+      isFoundation: data.isFoundation,
+      isPropertyRealEstate: data.isPropertyRealEstate,
+      isMoneyTransfer: data.isMoneyTransfer,
+      isEmploymentAgency: data.isEmploymentAgency,
+      isEntertainment: data.isEntertainment,
+      isTravel: data.isTravel,
+      isFinancial: data.isFinancial,
+      isEducationCenter: data.isEducationCenter,
+      isForeignCurrencyExchange: data.isForeignCurrencyExchange,
+      isCryptoRelated: data.isCryptoRelated,
+      isOtherBusiness: data.isOtherBusiness,
+      isRevenue: data.isRevenue,
+      isStock: data.isStock,
+      isDonation: data.isDonation,
+      isLoan: data.isLoan,
+      isRevenueSelling: data.isRevenueSelling,
+      isOtherIncome: data.isOtherIncome,
+      isThailand: data.corporateCountry?.isThailand,
+      isLiquidation: data.isLiquidation,
+      isInvestment: data.isInvestment,
+      isCashManagement: data.isCashManagement,
+      isOtherInvestment: data.isOtherInvestment,
+      isCoOperative: data.isCoOperative,
+      otherBusinessType: data.otherBusinessType,
+      otherIncome: data.otherIncome,
+      otherCountry: data.corporateCountry?.other,
+      otherInvestment: data.otherInvestment,
+      corporateCode: data.corporateCode?.toString(),
+    }
+    return result
+  }catch(error){
+    return null
+  }
+  
+}

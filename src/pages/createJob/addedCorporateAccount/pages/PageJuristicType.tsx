@@ -20,7 +20,7 @@ export function PageJuristicType({
   // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  // console.log(currentCorporatesInfo)
+
   return (
     <>
       <div className="p-4 space-y-8">

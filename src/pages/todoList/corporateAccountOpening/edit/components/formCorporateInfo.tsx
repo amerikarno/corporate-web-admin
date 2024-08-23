@@ -53,6 +53,13 @@ export function FormCorporateInfo({
   );
 
   useEffect(() => {
+    console.log(initData)
+    if (initData) {
+      reset(initData);
+    }
+  }, [initData]);
+
+  useEffect(() => {
     if (shouldScrollUp) {
       window.scrollTo({
         top: 0,

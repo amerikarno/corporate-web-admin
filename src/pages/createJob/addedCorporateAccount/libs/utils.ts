@@ -562,7 +562,7 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
       isLoan: data.isLoan,
       isRevenueSelling: data.isRevenueSelling,
       isOtherIncome: data.isOtherIncome,
-      isThailand: data.isThailand,
+      isThailand: data.corporateCountry?.isThailand,
       isLiquidation: data.isLiquidation,
       isInvestment: data.isInvestment,
       isCashManagement: data.isCashManagement,
@@ -570,7 +570,7 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
       isCoOperative: data.isCoOperative,
       otherBusinessType: data.otherBusinessType,
       otherIncome: data.otherIncome,
-      otherCountry: data.otherCountry,
+      otherCountry: data.corporateCountry?.other,
       otherInvestment: data.otherInvestment,
       corporateCode: data.corporateCode?.toString(),
     }

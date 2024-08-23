@@ -51,7 +51,14 @@ export function FormCorporateInfo({
   const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 602
   );
-  
+
+  useEffect(() => {
+    console.log(initData)
+    if (initData) {
+      reset(initData);
+    }
+  }, [initData]);
+
   useEffect(() => {
     if (shouldScrollUp) {
       window.scrollTo({
