@@ -69,7 +69,7 @@ export default function CorporateAccountOpenning() {
     };
 
     fetchCorporateData();
-  }, [corporateCode, pageId]);
+  }, [corporateCode, pageId , dispatch]);
 
   console.log(corporateData);
   const navigate = useNavigate();
