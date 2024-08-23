@@ -18,6 +18,9 @@ import { RootState } from "@/app/store";
 import { mapDataToTCorporateInfo } from "./libs/utils";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import { useEffect, useRef, useState } from "react";
+import RealTimeCounter from "@/pages/createJob/addedCorporateAccount/libs/countDownTimer";
+import CountdownTimer from "@/pages/createJob/addedCorporateAccount/libs/countDownTimer";
 
 type TPage = {
   page?: string;
@@ -34,17 +37,14 @@ export function EditCorporateAccount() {
   // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  // console.log("initFormData", initFormData);
-
-  // const handleFormPassChange = (status: boolean) => {
-  //   // setIsSecondFormPass(status);
-  //   console.log(status);
-  // };
-  // const {} = useFormCorporateInfo2(handleFormPassChange);
+ 
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
+
+
+  
   const navigate = useNavigate();
   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
@@ -88,6 +88,7 @@ export function EditCorporateAccount() {
 
   return (
     <div className="space-y-8 pb-8">
+      <CountdownTimer corporateCode={corporateCode} initialTime={300} />
       {mappingPages[pageId]}
       <CreateCorporateFooter
         handlePages={handlePages}

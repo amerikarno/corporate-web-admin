@@ -6,7 +6,8 @@ import Login from "@/pages/login/login";
 import Layout from "@/components/Layout";
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
+import { store,persistor  } from "./app/store";
+import { PersistGate } from 'redux-persist/integration/react';
 import CorporateAccountOpenning from "./pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import { customerRoutes } from "./routes/customerRoutes";
 import { thirdPartyRoutes } from "./routes/thirdPartyRoute";
@@ -30,24 +31,26 @@ root.render(
   <>
     <React.StrictMode>
       <Provider store={store}>
-        <HelmetProvider context={helmetContext}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Layout />}>
-                <Route path="unauthorize" element={<UnAuthorize />} />
-                <Route index element={<CorporateAccountOpenning />} />
-                {systemManagementRoutes()}
-                {createJobRoutes()}
-                {todoListRoutes()}
-                {enquireRoutes()}
-                {reportsRoutes()}
-                {thirdPartyRoutes()}
-                {customerRoutes()}
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </HelmetProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <HelmetProvider context={helmetContext}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Layout />}>
+                  <Route path="unauthorize" element={<UnAuthorize />} />
+                  <Route index element={<CorporateAccountOpenning />} />
+                  {systemManagementRoutes()}
+                  {createJobRoutes()}
+                  {todoListRoutes()}
+                  {enquireRoutes()}
+                  {reportsRoutes()}
+                  {thirdPartyRoutes()}
+                  {customerRoutes()}
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </HelmetProvider>
+        </PersistGate>
       </Provider>
     </React.StrictMode>
   </>
