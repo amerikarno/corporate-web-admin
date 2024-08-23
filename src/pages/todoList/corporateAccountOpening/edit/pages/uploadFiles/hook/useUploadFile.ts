@@ -48,6 +48,16 @@ export function useUploadFile() {
                 },
               }
             );
+            const response = await axios.post(
+              "/api/v1/corporate/document/upload",
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Bearer ${getCookies()}`,
+                },
+              }
+            );
             if (response.status === 200) {
               console.log("File uploaded successfully", response.data);
               setFile(null);

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TBank } from "@/pages/createJob/addedCorporateAccount/constants/types";
+import { TBank } from "@/pages/createJob/constant/type";
 
 interface BankState {
   banks: TBank[];
@@ -19,7 +19,7 @@ export const bankSlice = createSlice({
     },
     removeBank: (state, action) => {
       state.banks = state.banks.filter(
-        (data) => data.BankId !== action.payload
+        (data :any) => data.BankId !== action.payload
       );
     },
     clearBank: (state) => {
@@ -31,7 +31,7 @@ export const bankSlice = createSlice({
     updateBank: (state, action) => {
       console.log("Updating bank with BankId:", action.payload.BankId);
       const index = state.banks.findIndex(
-        (data) => data.BankId === action.payload.BankId
+        (data :any) => data.BankId === action.payload.BankId
       );
 
       if (index !== -1) {

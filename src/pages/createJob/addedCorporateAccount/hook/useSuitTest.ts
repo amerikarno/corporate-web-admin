@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { TSuitAns, TSuitTest } from "../constants/types";
+import { TSuitAns, TSuitTest } from "../constants2/types";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import { mapScore } from "../constants/variables";
+import { mapScore } from "../constants2/variables";
 import { AxiosError } from "axios";
 
-export function useSuitTest(corporateCode: string) {
+export function UseSuitTest(corporateCode: string) {
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
   const [quizSuiteTest, setQuizSuiteTest] = useState<TSuitTest[]>();
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +49,7 @@ export function useSuitTest(corporateCode: string) {
         corporateCode: corporateCode,
         totalScore: score,
         level: grade,
-        investorTypeRisk: mapScore[grade],
+        invsetorTypeRisk: mapScore[grade],
       };
       console.log(ans);
       setScore(score);
@@ -60,8 +60,9 @@ export function useSuitTest(corporateCode: string) {
   };
 
   const saveSuitTest = async (ans: any) => {
+    console.log(ans)
     try {
-      const res = await axios.post("/api/v1/suitetest/result/save", ans, {
+      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       console.log(ans);

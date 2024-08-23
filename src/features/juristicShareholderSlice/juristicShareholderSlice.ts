@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TJuristicsShareholders } from "@/pages/createJob/addedCorporateAccount/constants/types";
+import { TJuristicsShareholders } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 
 interface JuristicShareholderState {
   juristicShareholders: TJuristicsShareholders[];

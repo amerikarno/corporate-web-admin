@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import {
   corporateInfoSchema,
   TCorporateInfoSchema,
-} from "../constants/schemas";
+} from "../constants2/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TCorporateInfo } from "../constants/types";
+import { TCorporateInfo } from "../constants2/types";
 import { sleep } from "@/lib/utils";
 //import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -16,31 +16,42 @@ import { CheckBox } from "@/components/Checkbox";
 import {
   registeredCountryChoices,
   PrimaryCountryOfOperationChoices,
-} from "../constants/variables";
+} from "../constants2/variables";
 import { useState, useEffect } from "react";
+import { TCorporateData } from "../../constant/type";
+import { Button } from "@/components/ui/button";
 import { useFormCorporateInfo } from "../hook/useFormCorporateInfo";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
+  initData?: TCorporateInfoSchema;
+  corporatesInfo?: TCorporateData;
 };
 
-export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
+export function FormCorporateInfo({
+  onsubmit,
+  initData,
+  corporatesInfo,
+}: TCorporateInfoFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    // reset,
-    setValue,
+    reset,
   } = useForm<TCorporateInfoSchema>({
     resolver: zodResolver(corporateInfoSchema),
+    defaultValues: initData,
   });
 
-  const [registeredCountryError, setRegisteredCountryError] =
-    useState<boolean>(false);
-  const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
-    useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
 
+  const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 601
+  );
+  const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 602
+  );
+  
   useEffect(() => {
     if (shouldScrollUp) {
       window.scrollTo({
@@ -53,16 +64,22 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
   }, [shouldScrollUp]);
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
+    const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
+      registeredCapital: Number(data.registeredCapital?.replace(/,/g, '')),
+      revenuePerYear: Number(data.revenuePerYear?.replace(/,/g, '')),
+      netProFitLoss: Number(data.netProFitLoss?.replace(/,/g, '')),
+      shareholderEquity: Number(data.shareholderEquity?.replace(/,/g, '')),
+      corporateCode: corporatesInfo?.CorporateCode.toString(),
+      dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
-      isRegisteredOther:
-        registeredCountryPrimaryCountryOperation.registeredOther,
-      isRegisteredThailand:
+      registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
+      registeredThailand:
         registeredCountryPrimaryCountryOperation.registeredThailand,
       primary: registeredCountryPrimaryCountryOperation.primary,
-      isPrimaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
-      isPrimaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
+      primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
+      primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
       registeredBusiness: {
         address: [
           {
@@ -102,69 +119,18 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
         telephone: data.placeofIncorporation.telephone,
       },
     };
-
-    if (handleCheckboxError()) {
-      // console.log(formData);
-      onsubmit(formData);
-      await sleep(1000);
-      setShouldScrollUp(true);
-    } else {
-      setShouldScrollUp(true);
-    }
-  };
-
-  const handleCheckboxError = () => {
-    let isValid = true;
-
-    if (registeredCountryPrimaryCountryOperation.registeredThailand) {
-      setRegisteredCountryError(false);
-    } else {
-      if (!registeredCountryPrimaryCountryOperation.registered) {
-        setRegisteredCountryError(true);
-        isValid = false;
-      } else {
-        setRegisteredCountryError(false);
-      }
-    }
-
-    // if (!registeredCountryPrimaryCountryOperation.registered) {
-    //   setRegisteredCountryError(true);
-    //   isValid = false;
-    // } else {
-    //   setRegisteredCountryError(false);
-    // }
-
-    if (registeredCountryPrimaryCountryOperation.primaryCountry) {
-      setPrimaryCountryOfOperationError(false);
-    } else {
-      if (!registeredCountryPrimaryCountryOperation.primary) {
-        setPrimaryCountryOfOperationError(true);
-        isValid = false;
-      } else {
-        setPrimaryCountryOfOperationError(false);
-      }
-    }
-
-    // if (!registeredCountryPrimaryCountryOperation.primary) {
-    //   setPrimaryCountryOfOperationError(true);
-    //   isValid = false;
-    // } else {
-    //   setPrimaryCountryOfOperationError(false);
-    // }
-
-    return isValid;
+    await sleep(500);
+    reset();
+    onsubmit(formData);
+    setShouldScrollUp(true);
   };
 
   const {
-    disablePrimaryCountryOfOperation,
-    disableRegisteredCountry,
     handlePrimaryCountryOfOperationOthers,
     handleRegisteredCountryOthers,
-    isPrimaryCountryOfOperationOthers,
-    isRegisteredCountryOthers,
     registeredCountryPrimaryCountryOperation,
     handleInputOthers,
-  } = useFormCorporateInfo();
+  } = useFormCorporateInfo(corporatesInfo);
 
   return (
     <>
@@ -178,59 +144,41 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <h1 className="col-span-4 font-bold pb-4">
               Juristic Investor Information-For Account Opening
             </h1>
-            {/* <SideLabelInput title="Juristic Investor Name"> */}
             <Input
               id={"Juristic Investor Name"}
               label={"Juristic Investor Name"}
               {...register("name")}
               name="name"
               disabled={isSubmitting}
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`name`, value);
-              }}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Address"> */}
             <Input
               id={"Commercial Registration No."}
               label={"Commercial Registration No."}
               {...register("registrationNo")}
               name="registrationNo"
               disabled={isSubmitting}
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.registrationNo && (
               <p className="text-red-500">{errors.registrationNo.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Tax ID"> */}
             <Input
               id={"Juristic Investor Tax ID"}
               label={"Tax ID"}
               {...register("taxId")}
               name="taxId"
               disabled={isSubmitting}
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`taxId`, value);
-              }}
             />
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Email"> */}
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
               {...register("dateofincorporation")}
+              name="dateofincorporation"
               type="date"
               disabled={isSubmitting}
             />
@@ -239,7 +187,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 {errors.dateofincorporation.message}
               </p>
             )}
-            {/* </SideLabelInput> */}
           </div>
 
           <div className="p-4 space-y-4">
@@ -247,79 +194,80 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Registered Country</h1>
                 <div></div>
-                {registeredCountryChoices.map((item, i) => (
-                  <CheckBox
-                    id={`checkbox-${i}`}
-                    key={i}
-                    label={item}
-                    onChange={(e) => {
-                      handleRegisteredCountryOthers(e);
-                      if (
-                        registeredCountryPrimaryCountryOperation.registered ==
-                        ""
-                      ) {
-                        setRegisteredCountryError(false);
-                      } else {
-                        setRegisteredCountryError(true);
-                      }
-                    }}
-                    name={item}
-                    disabled={disableRegisteredCountry(item)}
-                  />
-                ))}
+                <CheckBox
+                  id={`checkbox-${registeredCountryChoices[0]}`}
+                  key={registeredCountryChoices[0]}
+                  label={registeredCountryChoices[0]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.registeredThailand
+                  }
+                  onChange={(e) => {
+                    handleRegisteredCountryOthers(e);
+                  }}
+                  name={registeredCountryChoices[0]}
+                />
+                <CheckBox
+                  id={`checkbox-${registeredCountryChoices[1]}`}
+                  key={registeredCountryChoices[1]}
+                  label={registeredCountryChoices[1]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.registeredOther
+                  }
+                  onChange={(e) => {
+                    handleRegisteredCountryOthers(e);
+                  }}
+                  name={registeredCountryChoices[1]}
+                />
               </div>
-              {isRegisteredCountryOthers && (
+              {registeredCountryPrimaryCountryOperation.registeredOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "registered")}
+                    defaultValue={resCorpRegisterCountry?.other}
                   />
                 </div>
-              )}
-              {registeredCountryError && (
-                <p className="text-red-500 px-4">
-                  Register Country must be filled.
-                </p>
               )}
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Primary Country of Operation</h1>
                 <div></div>
-                {PrimaryCountryOfOperationChoices.map((item, i) => (
-                  <CheckBox
-                    id={`checkbox2-${i}`}
-                    key={i}
-                    label={item}
-                    onChange={(e) => {
-                      handlePrimaryCountryOfOperationOthers(e);
-                      if (
-                        registeredCountryPrimaryCountryOperation.primary == ""
-                      ) {
-                        setPrimaryCountryOfOperationError(false);
-                      } else {
-                        setPrimaryCountryOfOperationError(true);
-                      }
-                    }}
-                    name={item}
-                    disabled={disablePrimaryCountryOfOperation(item)}
-                  />
-                ))}
+                <CheckBox
+                  id={`checkbox2-${PrimaryCountryOfOperationChoices[0]}`}
+                  key={PrimaryCountryOfOperationChoices[0]}
+                  label={PrimaryCountryOfOperationChoices[0]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.primaryCountry
+                  }
+                  onChange={(e) => {
+                    handlePrimaryCountryOfOperationOthers(e);
+                  }}
+                  name={PrimaryCountryOfOperationChoices[0]}
+                />
+                <CheckBox
+                  id={`checkbox2-${PrimaryCountryOfOperationChoices[1]}`}
+                  key={PrimaryCountryOfOperationChoices[1]}
+                  label={PrimaryCountryOfOperationChoices[1]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.primaryOther
+                  }
+                  onChange={(e) => {
+                    handlePrimaryCountryOfOperationOthers(e);
+                  }}
+                  name={PrimaryCountryOfOperationChoices[1]}
+                />
               </div>
-              {isPrimaryCountryOfOperationOthers && (
+              {registeredCountryPrimaryCountryOperation.primaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "primary")}
+                    defaultValue={resCorpPrimaryCountry?.other}
                   />
                 </div>
-              )}
-              {primaryCountryOfOperationError && (
-                <p className="text-red-500 px-4">
-                  Primary Country of Operation must be filled.
-                </p>
               )}
             </div>
           </div>
@@ -333,42 +281,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               register={register}
               keyType="placeofIncorporation"
             />
-            <div className="flex-col">
-              <Input
-                label="Email Address"
-                {...register(
-                  `placeofIncorporation.emailAddress` as keyof TCorporateInfoSchema
-                )}
-                name={`placeofIncorporation.emailAddress`}
-                id={`placeofIncorporation_emailAddress`}
-                disabled={isSubmitting}
-                type="email"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.placeofIncorporation?.emailAddress?.message}
-              </p>
-            )}
-
-            {/* Render telephone field */}
-            <div className="flex-col">
-              <Input
-                label="Telephone"
-                {...register(
-                  `placeofIncorporation.telephone` as keyof TCorporateInfoSchema
-                )}
-                name={`placeofIncorporation.telephone`}
-                id={`placeofIncorporation_telephone`}
-                disabled={isSubmitting}
-                type="tel"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.placeofIncorporation?.telephone?.message}
-              </p>
-            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -380,120 +292,60 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               isSubmitting={isSubmitting}
               keyType="registeredBusiness"
             />
-
-            <div className="flex-col">
-              <Input
-                label="Email Address"
-                {...register(
-                  `registeredBusiness.emailAddress` as keyof TCorporateInfoSchema
-                )}
-                name={`registeredBusiness.emailAddress`}
-                id={`registeredBusiness_emailAddress`}
-                disabled={isSubmitting}
-                type="email"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.registeredBusiness?.emailAddress?.message}
-              </p>
-            )}
-
-            {/* Render telephone field */}
-            <div className="flex-col">
-              <Input
-                label="Telephone"
-                {...register(
-                  `registeredBusiness.telephone` as keyof TCorporateInfoSchema
-                )}
-                name={`registeredBusiness.telephone`}
-                id={`registeredBusiness_telephone`}
-                disabled={isSubmitting}
-                type="tel"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.registeredBusiness?.telephone?.message}
-              </p>
-            )}
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
-            {/* <SideLabelInput title="Registered Capital"> */}
             <Input
+              step="0.01"
               id={"Registered Capital"}
               label={"Registered Capital"}
               {...register("registeredCapital")}
               name="registeredCapital"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
             <Input
+              step="0.01"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
               name="revenuePerYear"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Net Profit (Loss)"> */}
             <Input
+              step="0.01"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
               name="netProFitLoss"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Revenue Per Year"> */}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
+              step="0.01"
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
               name="shareholderEquity"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
+            <div className="flex justify-end">
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </div>
           </div>
-          {/* <div className="flex justify-end pb-4 pr-4">
-            <Button form="corporateInfo" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
-          </div> */}
         </form>
       </Card>
     </>

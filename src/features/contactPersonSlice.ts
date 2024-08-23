@@ -1,6 +1,6 @@
 // contactPersonSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TContactPerson } from "@/pages/createJob/addedCorporateAccount/constants/types";
+import { TContactPerson } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 import { TContact } from "@/pages/todoList/corporateAccountOpening/constant/type";
 
 interface ContactPersonState {

@@ -5,6 +5,16 @@ import {
   TRegisteredCountryPrimaryCountryOperation,
 } from "./types";
 
+export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation =
+  {
+    registered: "",
+    primary: "",
+    registeredThailand: false,
+    primaryCountry: false,
+    registeredOther: false,
+    primaryOther: false,
+  };
+
 export const initCorporateInfo = {
   name: "",
   commercialRegisteredNo: "",
@@ -171,16 +181,6 @@ export const individualContact = {
 //   sharePercentage: 0.0,
 // };
 
-export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation =
-  {
-    registered: "",
-    primary: "",
-    registeredThailand: false,
-    primaryCountry: false,
-    registeredOther: false,
-    primaryOther: false,
-  };
-
 export const initailJuristicOther = {
   otherBusinessType: "",
   otherIncome: "",
@@ -216,18 +216,23 @@ export const initailJuristicTypeAndIncome: TInitailJuristicTypeAndIncome = {
   isForeignCurrencyExchange: false,
   isCryptoRelated: false,
   isOtherBusiness: false,
+  // OtherBusinessType: "",
   isRevenue: false,
   isStock: false,
   isDonation: false,
   isLoan: false,
   isRevenueSelling: false,
   isOtherIncome: false,
+  // OtherIncome: "",
   isThailand: false,
   isOtherThailand: false,
+  // OtherCountry: "",
+  // InvestmentObject: "",
   isLiquidation: false,
   isInvestment: false,
   isCashManagement: false,
   isOtherInvestment: false,
+  // OtherInvestment: "",
 };
 
 export const emptyCorporateTypeAndIncome: TCorporateTypeAndIncome = {

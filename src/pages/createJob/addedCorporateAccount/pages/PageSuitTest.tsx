@@ -1,15 +1,17 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SuitQuestionComp } from "../components/suitQuestion";
 import { Button } from "@/components/ui/button";
-import { useSuitTest } from "../hook/useSuitTest";
+import { UseSuitTest } from "../hook/useSuitTest";
 import { SuitTableResult } from "../components/suitTableResult";
 import { CheckBox } from "@/components/Checkbox";
+import { TCorporateData } from "../../constant/type";
 
 type TPageSuitTestProps = {
   corporateCode: string;
+  corporatesInfo?: TCorporateData;
 };
 
-export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
+export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProps) {
   const {
     quizSuiteTest,
     handleChoice,
@@ -21,7 +23,7 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
     opitionalQuiz,
     handelOptionalQuiz,
     isSubmit,
-  } = useSuitTest(corporateCode);
+  } = UseSuitTest(corporateCode);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -29,6 +31,35 @@ export function PageSuitTest({ corporateCode }: TPageSuitTestProps) {
 
   return (
     <div className="p-4 space-y-10">
+        <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+              </div>
+            </div>
+          </div>
+        </Card>
       <Card>
         <CardHeader>
           <div className="flex flex-row space-x-6 items-end">

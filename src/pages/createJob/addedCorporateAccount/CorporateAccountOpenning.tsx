@@ -1,5 +1,5 @@
 import { useCorporateInfo } from "./hook/useCorporateInfo";
-import { TMapPages } from "./constants/types";
+import { TMapPages } from "./constants2/types";
 import { PageCorporateInfo } from "./pages/PageCorporateInfo";
 import { PageJuristicType } from "./pages/PageJuristicType";
 import { ListOfDirectors } from "./pages/ListOfDirectors";
@@ -10,20 +10,14 @@ import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
 import { PageBankAccount } from "./pages/PageBankAccount";
 import { useNavigate, useParams } from "react-router-dom";
 import { CreateCorporateFooter } from "./components/footer";
-import { PageSuitTest } from "./pages/PageSuitTest";
-import { useFormCorporateInfo2 } from "./hook/useFormCorporateInfo2";
-import { useEffect } from "react";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
-import { useDispatch, useSelector } from "react-redux";
+import { PageSuitTest } from "./pages/PageSuitTest";
+import { TCorporateData } from "../constant/type";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { mapDataToTCorporateInfo } from "./libs/utils";
 import { isAllowedPage } from "@/lib/utils";
-import UnAuthorize from "../../unAuthorizePage/unAuthorize";
-import { clearContactPersons } from "@/features/contactPersonSlice";
-import { clearDirector } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
-import { clearIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
-import { clearJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
-import { clearAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
-import { clearBank } from "@/features/bankSlice/bankSlice";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 type TPage = {
   page?: string;
@@ -34,35 +28,25 @@ export default function CorporateAccountOpenning() {
     return <UnAuthorize />;
   }
 
-  const user = useSelector((state: RootState) => state.user);
-  console.log(user);
-  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+  const corporateData: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
 
-  // const handleFormPassChange = (status: boolean) => {
-  //   setIsSecondFormPass(status);
-  // };
-  const { isSecondFormPass } = useFormCorporateInfo2();
+  const initFormData = mapDataToTCorporateInfo(corporateData);
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  const { corporatesInfo, handleSubmitCorporateInfo, currentCorporatesInfo } =
+  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  let corporateCode: string = currentCorporatesInfo?.corporateCode ?? "";
-  //let corporateCode: string = "80000004";
-
-  useEffect(() => {
-    if (pageId === 1) {
-      corporateCode = "";
-    }
-  }, [currentCorporatesInfo?.corporateCode, pageId]);
-
+  const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
-        corporatesInfo={corporatesInfo}
+        corporatesInfo={corporateData}
+        initData={initFormData}
         handleSubmitCorporateInfo={handleSubmitCorporateInfo}
       />
     ),
@@ -72,37 +56,21 @@ export default function CorporateAccountOpenning() {
         corporateCode={corporateCode}
       />
     ),
-    3: <PageContactPerson corporateCode={corporateCode} />,
-    4: <ListOfDirectors corporateCode={corporateCode} />,
-    5: <PageIndividualShareholder corporateCode={corporateCode} />,
-    6: <PageJuristicShareholder corporateCode={corporateCode} />,
-    7: <PageAuthorizedPerson corporateCode={corporateCode} />,
-    8: <PageBankAccount corporateCode={corporateCode} />,
-    9: <UploadFiles corporateCode={corporateCode} />,
-    10: <PageSuitTest corporateCode={corporateCode} />,
+    3: <PageContactPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    4: <ListOfDirectors corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    5: <PageIndividualShareholder corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    6: <PageJuristicShareholder corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    7: <PageAuthorizedPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    8: <PageBankAccount corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    9: <UploadFiles corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    10: <PageSuitTest corporateCode={corporateCode} corporatesInfo={corporateData}/>,
   };
 
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    } else if (type == "submit") {
-      dispatch(clearContactPersons());
-      dispatch(clearDirector());
-      dispatch(clearIndividualShareholder());
-      dispatch(clearJuristicShareholder());
-      dispatch(clearAuthorizedPerson());
-      dispatch(clearBank());
-      console.log(corporateCode);
-      if (corporateCode) {
-        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-      }
-    } else if (type == "submit2") {
-      if (isSecondFormPass) {
-        navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-      }
     } else if (type == "done") {
-      navigate(`/create-job/added-corporate-account/1`);
-      window.location.reload();
+      navigate(`/create-job/added-corporate-account`);
     } else {
       navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }

@@ -5,6 +5,7 @@ import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 import { Button } from "@/components/ui/button";
+import { RadioCheckBox } from "@/components/ui/Radio";
 
 type TCorporateTypeAndIncomeProps = {
   corporateInfo?: TCorporateInfo;
@@ -62,7 +63,7 @@ TCorporateTypeAndIncomeProps) {
         <div className="p-4 space-y-8">
           <div className="flex flex-row">
             <div className="w-1/3">
-              <CheckBox
+              <RadioCheckBox
                 id="0"
                 label={mapKeyLabel[0].label}
                 name="juristicInfo"
@@ -70,15 +71,15 @@ TCorporateTypeAndIncomeProps) {
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[0].key)}
               />
             </div>
-            <div className="w-2/3">
-              <CheckBox
+            <div className="w-2/3 flex flex-col space-y-2">
+              <RadioCheckBox
                 id="1"
                 label={mapKeyLabel[1].label}
                 name="juristicInfo"
                 checked={resFrom2?.isTaxExempt}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[1].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="2"
                 label={mapKeyLabel[2].label}
                 name="juristicInfo"
@@ -89,7 +90,7 @@ TCorporateTypeAndIncomeProps) {
           </div>
           <div className="flex flex-row">
             <div className="w-1/3">
-              <CheckBox
+              <RadioCheckBox
                 id="3"
                 label={mapKeyLabel[3].label}
                 name="juristicInfo"
@@ -97,15 +98,15 @@ TCorporateTypeAndIncomeProps) {
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[3].key)}
               />
             </div>
-            <div className="w-2/3">
-              <CheckBox
+            <div className="w-2/3 flex flex-col space-y-2">
+              <RadioCheckBox
                 id="4"
                 label={mapKeyLabel[4].label}
                 name="juristicInfo"
                 checked={resFrom2?.isOperatingInThailand}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[4].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="5"
                 label={mapKeyLabel[5].label}
                 name="juristicInfo"
@@ -116,7 +117,7 @@ TCorporateTypeAndIncomeProps) {
           </div>
           <div className="flex flex-row">
             <div className="w-1/3">
-              <CheckBox
+              <RadioCheckBox
                 id="6"
                 label={mapKeyLabel[6].label}
                 name="juristicInfo"
@@ -124,29 +125,29 @@ TCorporateTypeAndIncomeProps) {
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[6].key)}
               />
             </div>
-            <div className="w-2/3">
-              <CheckBox
+            <div className="w-2/3 flex flex-col space-y-2">
+              <RadioCheckBox
                 id="7"
                 label={mapKeyLabel[7].label}
                 name="juristicInfo"
                 checked={resFrom2?.isPartnership}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[7].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="8"
                 label={mapKeyLabel[8].label}
                 name="juristicInfo"
                 checked={resFrom2?.isGovernmentStateEnterprise}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[8].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="9"
                 label={mapKeyLabel[9].label}
                 name="juristicInfo"
                 checked={resFrom2?.isCoOperative}
                 onChange={(e) => handleCheckedBox(e, mapKeyLabel[9].key)}
               />
-              <CheckBox
+              <RadioCheckBox
                 id="10"
                 label={mapKeyLabel[10].label}
                 name="juristicInfo"
@@ -161,119 +162,119 @@ TCorporateTypeAndIncomeProps) {
       <Card>
         <h1 className="font-bold p-2">Business Type</h1>
         <div className="grid grid-cols-2 items-start gap-4 p-4">
-          <CheckBox
+          <RadioCheckBox
             id="11"
             label={mapKeyLabel[11].label}
             name="businessType"
             checked={resFrom2?.isAntiqueTrading}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[11].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="12"
             label={mapKeyLabel[12].label}
             name="businessType"
             checked={resFrom2?.isHotelRestaurant}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[12].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="13"
             label={mapKeyLabel[13].label}
             name="businessType"
             checked={resFrom2?.isArmament}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[13].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="14"
             label={mapKeyLabel[14].label}
             name="businessType"
             checked={resFrom2?.isInsuranceAssurance}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[14].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="15"
             label={mapKeyLabel[15].label}
             name="businessType"
             checked={resFrom2?.isCasinoGambling}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[15].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="16"
             label={mapKeyLabel[16].label}
             name="businessType"
             checked={resFrom2?.isJewelryGoldTrading}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[16].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="17"
             label={mapKeyLabel[17].label}
             name="businessType"
             checked={resFrom2?.isFoundation}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[17].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="18"
             label={mapKeyLabel[18].label}
             name="businessType"
             checked={resFrom2?.isPropertyRealEstate}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[18].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="19"
             label={mapKeyLabel[19].label}
             name="businessType"
             checked={resFrom2?.isMoneyTransfer}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[19].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="20"
             label={mapKeyLabel[20].label}
             name="businessType"
             checked={resFrom2?.isEmploymentAgency}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[20].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="21"
             label={mapKeyLabel[21].label}
             name="businessType"
             checked={resFrom2?.isEntertainment}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[21].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="22"
             label={mapKeyLabel[22].label}
             name="businessType"
             checked={resFrom2?.isTravel}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[22].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="23"
             label={mapKeyLabel[23].label}
             name="businessType"
             checked={resFrom2?.isFinancial}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[23].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="24"
             label={mapKeyLabel[24].label}
             name="businessType"
             checked={resFrom2?.isEducationCenter}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[24].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="25"
             label={mapKeyLabel[25].label}
             name="businessType"
             checked={resFrom2?.isForeignCurrencyExchange}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[25].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="26"
             label={mapKeyLabel[26].label}
             name="businessType"
             checked={resFrom2?.isCryptoRelated}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[26].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="27"
             label={mapKeyLabel[27].label}
             name="businessType"
@@ -352,14 +353,14 @@ TCorporateTypeAndIncomeProps) {
       <Card>
         <h1 className="font-bold p-2">Country Source Of Income</h1>
         <div className="grid grid-cols-2 items-start gap-4 p-4">
-          <CheckBox
+          <RadioCheckBox
             id="34"
             label={mapKeyLabel[34].label}
             name="countrySourceOfIncome"
             checked={resFrom2?.corporateCountry?.isThailand ? true : false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[34].key)}
           />
-          <CheckBox
+          <RadioCheckBox
             id="35"
             label={mapKeyLabel[35].label}
             name="countrySourceOfIncome"
