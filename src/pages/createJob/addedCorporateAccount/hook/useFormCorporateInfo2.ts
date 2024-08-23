@@ -154,6 +154,7 @@ export function useFormCorporateInfo2() {
 
 
   const saveJuristicType = async (data: CorporateResponse | null) => {
+    console.log(data?.corporateCountry?.isThailand)
     if (data !== null) {
       let body = {
         ...data,
@@ -176,7 +177,7 @@ export function useFormCorporateInfo2() {
         });
         // console.log(res);
         if (res.status === 200) {
-          console.log("request success", res.data);
+          console.log("update success", res.data);
           // setIsSecondFormPass(true);
           // onFormPassChange(true);
           // handleFormPassChange(true);
@@ -209,6 +210,8 @@ export function useFormCorporateInfo2() {
         body={
           ...body,
           corporateCode: corporateData.CorporateCode.toString(),
+          isThailand: data.corporateCountry?.isThailand ? true : false,
+          otherCountry: data.corporateCountry?.other,
         }
         // let body = {
         //   ...data,
