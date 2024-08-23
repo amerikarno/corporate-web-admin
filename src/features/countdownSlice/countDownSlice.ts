@@ -1,7 +1,7 @@
 // features/timers/timersSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface TimerState {
+export interface TimerState {
   [corporateCode: string]: number;
 }
 

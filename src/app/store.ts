@@ -12,14 +12,10 @@ import editCorporateReducer from "@/features/editCorporateData/editCorporateData
 import userReducer from "@/features/user/userSlice";
 import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
-import countDownReducer from "@/features/countdownSlice/countDownSlice";
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
 
-const persistedReducer = persistReducer(persistConfig, countDownReducer);
+
+
 
 export const store = configureStore({
   reducer: {
@@ -34,12 +30,11 @@ export const store = configureStore({
     user: userReducer,
     orderTrade: orderTradeReducer,
     juristicType: juristicTypeReducer,
-    countdown: persistedReducer,
+
   },
 });
 
-const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export { persistor };
+

@@ -6,7 +6,7 @@ import Login from "@/pages/login/login";
 import Layout from "@/components/Layout";
 import React from "react";
 import { Provider } from "react-redux";
-import { store,persistor  } from "./app/store";
+import { store  } from "./app/store";
 import { PersistGate } from 'redux-persist/integration/react';
 import CorporateAccountOpenning from "./pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import { customerRoutes } from "./routes/customerRoutes";
@@ -31,7 +31,6 @@ root.render(
   <>
     <React.StrictMode>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
           <HelmetProvider context={helmetContext}>
             <BrowserRouter>
               <Routes>
@@ -50,7 +49,6 @@ root.render(
               </Routes>
             </BrowserRouter>
           </HelmetProvider>
-        </PersistGate>
       </Provider>
     </React.StrictMode>
   </>

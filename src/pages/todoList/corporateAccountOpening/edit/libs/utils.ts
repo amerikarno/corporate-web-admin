@@ -114,10 +114,10 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
         emailAddress: resPlaceofIncorporation?.emailAddress || "",
         telephone: resPlaceofIncorporation?.telephone || "",
       },
-      registeredCapital: data.CorporateFinancials.registeredCapital || 0,
-      revenuePerYear: data.CorporateFinancials.revenuePerYear || 0,
-      netProFitLoss: data.CorporateFinancials.netProfitLoss || 0,
-      shareholderEquity: data.CorporateFinancials.shareholderEquity || 0,
+      registeredCapital: String(data.CorporateFinancials.registeredCapital || ""),
+      revenuePerYear: String(data.CorporateFinancials.revenuePerYear || ""),
+      netProFitLoss: String(data.CorporateFinancials.netProfitLoss || ""),
+      shareholderEquity: String(data.CorporateFinancials.shareholderEquity || ""),
     };
 
     return result;

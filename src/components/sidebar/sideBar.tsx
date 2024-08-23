@@ -14,10 +14,18 @@ import { isAllowedPage, isAllowedPageByRange } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import { TUser, setUser } from "@/features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
+import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
-
+  const handleClick = (pageId: number) => {
+    if (pageId === 2001) {
+      localStorage.clear();
+      dispatch(clearCorporateData());
+    }
+  };
+  
   if (user === null || user === undefined) {
     const token = getCookies();
     if (token) {
@@ -30,57 +38,43 @@ export default function Sidebar() {
     }
   }
 
-  return (
-    <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
-      <Accordion type="single" collapsible className="p-2">
-        {urlConfig.map((item: TUrlConfig, index: number) => {
-          return (
-            <div key={index}>
-              <AccordionItem
-                className="px-2 border-none "
-                value={`item-${index}`}
-              >
-                {isAllowedPageByRange(item.pages) && (
-                  <AccordionTrigger className="font-bold hover:no-underline text-[#b3b3b3]">
-                    {item.header}
-                  </AccordionTrigger>
-                )}
-
-                {item.children.map((child: TUrlConfigChild, index) => {
-                  return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
-                    <AccordionContent key={index} className="pl-6">
-                      <Link
-                        to={child.href}
-                        className="hover:underline text-[#b3b3b3] flex"
-                      >
-                        <MoveRight />
-                        &nbsp;<p>{child.label}</p>
-                      </Link>
-                    </AccordionContent>
-                  ) : (
-                    <div key={index}></div>
-                  );
-                  // return (
-                  //   <AccordionContent key={index} className="pl-6">
-                  //     <Link
-                  //       to={
-                  //         isAllowedPage(child.pageId)
-                  //           ? child.href
-                  //           : "/unAuthorize"
-                  //       }
-                  //       className="hover:underline text-[#b3b3b3] flex"
-                  //     >
-                  //       <MoveRight />
-                  //       &nbsp;<p>{child.label}</p>
-                  //     </Link>
-                  //   </AccordionContent>
-                  // );
-                })}
-              </AccordionItem>
-            </div>
-          );
-        })}
-      </Accordion>
-    </aside>
-  );
-}
+    return (
+      <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
+        <Accordion type="single" collapsible className="p-2">
+          {urlConfig.map((item: TUrlConfig, index: number) => {
+            return (
+              <div key={index}>
+                <AccordionItem
+                  className="px-2 border-none "
+                  value={`item-${index}`}
+                >
+                  {isAllowedPageByRange(item.pages) && (
+                    <AccordionTrigger className="font-bold hover:no-underline text-[#b3b3b3]">
+                      {item.header}
+                    </AccordionTrigger>
+                  )}
+  
+                  {item.children.map((child: TUrlConfigChild, index) => {
+                    return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
+                      <AccordionContent key={index} className="pl-6">
+                        <Link
+                          to={child.href}
+                          className="hover:underline text-[#b3b3b3] flex"
+                          onClick={() => handleClick(child.pageId)}
+                        >
+                          <MoveRight />
+                          &nbsp;<p>{child.label}</p>
+                        </Link>
+                      </AccordionContent>
+                    ) : (
+                      <div key={index}></div>
+                    );
+                  })}
+                </AccordionItem>
+              </div>
+            );
+          })}
+        </Accordion>
+      </aside>
+    );
+  }

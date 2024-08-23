@@ -107,7 +107,9 @@ export function useCorporateInfo() {
         return;
       }
   
-      const corporateCode = createResponse.data.corporateCode;
+      // const corporateCode = createResponse.data.corporateCode;
+      localStorage.setItem('corporateCode', createResponse.data.corporateCode.toString());
+      const corporateCode = localStorage.getItem('corporateCode') || '';
       data.corporateCode = corporateCode;
       console.log("Corporate Data with Code:", data);
   
