@@ -1,6 +1,15 @@
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import BlinkDetection from "./livenessOcr/livenessOcr";
+import { Card, CardContent } from "@/components/ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  TIndividualAccount,
+  individualAccountSchema,
+} from "./constant/schemas";
+import { Input } from "@/components/Input";
+import { Button } from "@/components/ui/button";
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
