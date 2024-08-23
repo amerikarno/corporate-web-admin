@@ -74,7 +74,7 @@ export function PageIndividualShareholder({
       .catch((error) => {
         console.error("Error fetching indivudual data:", error);
       });
-  }, [dispatch]);
+  }, [corporateCode, dispatch, token]);
 
   const { handleSubmitShareholders } = useShareholders();
   console.log(shareholderData);
