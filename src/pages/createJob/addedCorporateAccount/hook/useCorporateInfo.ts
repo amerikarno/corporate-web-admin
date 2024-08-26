@@ -61,11 +61,11 @@ export function useCorporateInfo() {
       netProFitLoss: 0,
       shareholderEquity: 0,
       registered: "",
-      registeredOther: false,
-      registeredThailand: true,
+      isRegisteredOther: false,
+      isRegisteredThailand: true,
       primary: "",
-      primaryCountry: true,
-      primaryOther: false,
+      isPrimaryCountry: true,
+      isPrimaryOther: false,
       corporateCode: "",
     });
 

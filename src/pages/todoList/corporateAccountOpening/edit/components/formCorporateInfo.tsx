@@ -81,12 +81,12 @@ export function FormCorporateInfo({
       corporateCode: corporatesInfo?.CorporateCode.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
-      registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
-      registeredThailand:
-        registeredCountryPrimaryCountryOperation.registeredThailand,
+      isRegisteredOther: registeredCountryPrimaryCountryOperation.isRegisteredOther,
+      isRegisteredThailand:
+        registeredCountryPrimaryCountryOperation.isRegisteredThailand,
       primary: registeredCountryPrimaryCountryOperation.primary,
-      primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
-      primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
+      isPrimaryCountry: registeredCountryPrimaryCountryOperation.isPrimaryCountry,
+      isPrimaryOther: registeredCountryPrimaryCountryOperation.isPrimaryOther,
       registeredBusiness: {
         address: [
           {
@@ -129,6 +129,7 @@ export function FormCorporateInfo({
     await sleep(500);
     reset();
     onsubmit(formData);
+    console.log("formdata : ",formData)
   };
 
   const {
@@ -205,7 +206,7 @@ export function FormCorporateInfo({
                   key={registeredCountryChoices[0]}
                   label={registeredCountryChoices[0]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.registeredThailand
+                    registeredCountryPrimaryCountryOperation.isRegisteredThailand
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
@@ -217,22 +218,15 @@ export function FormCorporateInfo({
                   key={registeredCountryChoices[1]}
                   label={registeredCountryChoices[1]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.registeredOther
+                    registeredCountryPrimaryCountryOperation.isRegisteredOther
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
-                    // if (
-                    //   registeredCountryPrimaryCountryOperation.registered == ""
-                    // ) {
-                    //   setRegisteredCountryError(false);
-                    // } else {
-                    //   setRegisteredCountryError(true);
-                    // }
                   }}
                   name={registeredCountryChoices[1]}
                 />
               </div>
-              {registeredCountryPrimaryCountryOperation.registeredOther && (
+              {registeredCountryPrimaryCountryOperation.isRegisteredOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
@@ -276,7 +270,7 @@ export function FormCorporateInfo({
                   key={PrimaryCountryOfOperationChoices[0]}
                   label={PrimaryCountryOfOperationChoices[0]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.primaryCountry
+                    registeredCountryPrimaryCountryOperation.isPrimaryCountry
                   }
                   onChange={(e) => {
                     handlePrimaryCountryOfOperationOthers(e);
@@ -295,7 +289,7 @@ export function FormCorporateInfo({
                   key={PrimaryCountryOfOperationChoices[1]}
                   label={PrimaryCountryOfOperationChoices[1]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.primaryOther
+                    registeredCountryPrimaryCountryOperation.isPrimaryOther
                   }
                   onChange={(e) => {
                     handlePrimaryCountryOfOperationOthers(e);
@@ -310,7 +304,7 @@ export function FormCorporateInfo({
                   name={PrimaryCountryOfOperationChoices[1]}
                 />
               </div>
-              {registeredCountryPrimaryCountryOperation.primaryOther && (
+              {registeredCountryPrimaryCountryOperation.isPrimaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
