@@ -190,8 +190,8 @@ export default function AddIndividualAccount() {
                   id="termOfAgreement"
                   {...register("termOfAgreement")}
                 />
-                <span className="text-gray-500 text-sm">
-                  ข้าพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัวซึ่งระบุวิธีการที่บริษัท
+                <span className="text-gray-500">
+                  ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัวซึ่งระบุวิธีการที่บริษัท
                   ฟินันเซียดิจิทัล แอสแซท จำกัด("บริษัท")
                 </span>
               </div>
@@ -208,7 +208,6 @@ export default function AddIndividualAccount() {
         </CardContent>
       </Card>
     </div>
-    // <CardWebcamInstructions />
-    // <IDCardCapture />
+    //<Liveness />
   );
 }

@@ -415,7 +415,7 @@ TCorporateTypeAndIncomeProps) {
 
       case "sourceOfIncomeOther":
         if (form2Data && form2Data !== null) {
-          form2Data.otherCountry = value;
+          form2Data.otherIncome = value;
         }
         break;
 

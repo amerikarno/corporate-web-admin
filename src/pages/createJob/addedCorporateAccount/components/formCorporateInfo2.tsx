@@ -474,6 +474,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
       case "businessTypeOther":
         if (form2Data && form2Data !== null) {
+          console.log("value", value);
           form2Data.otherBusinessType = value;
         }
         break;

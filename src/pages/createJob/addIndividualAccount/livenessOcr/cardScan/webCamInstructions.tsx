@@ -84,7 +84,7 @@ export function CardWebcamInstructions() {
             <Button
               type="button"
               onClick={() =>
-                navigate("create-job/added-individual-account/idCardCapture")
+                navigate("/create-job/added-individual-account/card-capture")
               }
             >
               ตกลง
