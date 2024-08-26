@@ -208,9 +208,6 @@ export default function AddIndividualAccount() {
     //     </CardContent>
     //   </Card>
     // </div>
-
     <Liveness />
-    // <CardWebcamInstructions />
-    // <IDCardCapture />
   );
 }

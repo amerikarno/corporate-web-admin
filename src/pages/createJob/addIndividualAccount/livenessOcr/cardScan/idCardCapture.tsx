@@ -1,8 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { Camera } from "lucide-react";
 import idCardOverlay from "@/assets/images/ID_Card_overlay.svg";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { base64ToFile, getImageSrcFromFile } from "@/lib/utils";
+import { setIdCardImage } from "@/features/livenessOcr/livenessOcr";
 
 const layoutWidth = 514;
 const layoutHeight = 326;
@@ -16,15 +20,27 @@ const videoConstraints = {
 export default function IDCardCapture() {
   const webcamRef = useRef<Webcam>(null);
   const [imageSrc, setImageSrc] = useState<string | null | undefined>();
+  const livenessOcr = useSelector((state: RootState) => state.livenessOcr);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (livenessOcr.idCardImage && livenessOcr.idCardImage !== null) {
+      setImageSrc(livenessOcr.idCardImage);
+    }
+  }, []);
 
   const handleCapture = () => {
     const srcImg = webcamRef.current?.getScreenshot();
     setImageSrc(srcImg);
+    if (srcImg && srcImg !== null) {
+      dispatch(setIdCardImage(srcImg));
+    }
     console.log(srcImg);
   };
 
   const handleSubmit = async () => {
     console.log("sent image to server");
+    console.log(livenessOcr.faceImage, livenessOcr.idCardImage);
   };
 
   return (

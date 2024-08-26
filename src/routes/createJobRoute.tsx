@@ -3,6 +3,8 @@ import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/Co
 import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
 import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
 import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
+import IDCardCapture from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/idCardCapture";
+import { CardWebcamInstructions } from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/webCamInstructions";
 import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
 import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 import { Outlet, Route } from "react-router-dom";
@@ -21,6 +23,8 @@ export const createJobRoutes = () => {
         <Route path="basicinfo" element={<BasicInfo />} />
         <Route path="suittestfatca" element={<SuitTestFatca />} />
         <Route path="liveness" element={<Liveness />} />
+        <Route path="card-instructions" element={<CardWebcamInstructions />} />
+        <Route path="card-capture" element={<IDCardCapture />} />
       </Route>
       <Route path="special-edd" element={<BlankPage name="Special EDD" />} />
       <Route

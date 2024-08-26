@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
-// import axios from "@/api/axios";
-// import { getCookies } from "@/lib/Cookies";
 import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { sleep } from "@/lib/utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFaceImage } from "@/features/livenessOcr/livenessOcr";
 import { useNavigate } from "react-router-dom";
-
-type TActionMessage = {
-  turnLeft: string | null;
-  turnRight: string | null;
-  mouthOpen: string | null;
-  center: string | null;
-};
+import { RootState } from "@/app/store";
 
 export default function Liveness() {
+  type TActionMessage = {
+    turnLeft: string | null;
+    turnRight: string | null;
+    mouthOpen: string | null;
+    center: string | null;
+  };
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isModelsLoaded, setIsModelsLoaded] = useState(false);
   const [isTurnLeft, setIsTurnLeft] = useState<boolean>(false);
@@ -26,17 +24,16 @@ export default function Liveness() {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasRef2 = useRef<HTMLCanvasElement>(null);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null | undefined>(null);
   const [actionMessage, setActionMessage] = useState<TActionMessage>({
     turnLeft: null,
     turnRight: null,
     mouthOpen: null,
     center: null,
   });
-  // const [file, setFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const livenessOcrFiles = useSelector((state: RootState) => state.livenessOcr);
+  const livenessOcrFiles = useSelector((state: RootState) => state.livenessOcr);
   let trackIsCenter = false;
   let trackIsLeft = false;
   let trackIsRight = false;
@@ -44,10 +41,6 @@ export default function Liveness() {
   let isCapture = false;
 
   let customerCode = 90000001;
-
-  // useEffect(() => {
-
-  // }, []);
 
   useEffect(() => {
     const loadModels = async () => {
@@ -58,6 +51,10 @@ export default function Liveness() {
       await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
       setIsModelsLoaded(true);
     };
+
+    if (livenessOcrFiles.faceImage && livenessOcrFiles.faceImage !== null) {
+      setImage(livenessOcrFiles.faceImage);
+    }
 
     loadModels();
   }, []);
@@ -176,18 +173,23 @@ export default function Liveness() {
         canvas.toBlob((blob) => {
           if (blob) {
             // Create a File from the Blob
-            const file = new File([blob], `${customerCode}-${Date.now()}.png`, {
-              type: "image/png",
-            });
+            const file = new File(
+              [blob],
+              `${customerCode}-face-${Date.now()}.png`,
+              {
+                type: "image/png",
+              }
+            );
 
             if (file) {
               const reader = new FileReader();
               reader.onloadend = () => {
-                setImage(reader.result as string);
+                const dataUrl = reader.result as string;
+                setImage(dataUrl);
+                dispatch(setFaceImage(dataUrl));
               };
               reader.readAsDataURL(file);
               // setFile(file);
-              dispatch(setFaceImage(file));
               isCapture = true;
             }
           }
@@ -224,34 +226,6 @@ export default function Liveness() {
     const mouthDistance = (p1_p4 + p2_p5 + p3_p6) / 3.0;
     return mouthDistance;
   };
-
-  // const sendFileToServer = async (file: File) => {
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("corporateCode", `${customerCode}`);
-  //   formData.append("docType", "id");
-
-  //   try {
-  //     const response = await axios.post(
-  //       "/api/v1/corporate/document/upload",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `Bearer ${getCookies()}`,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.status === 200) {
-  //       console.log("Image uploaded successfully");
-  //     } else {
-  //       console.error("Error uploading image");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error uploading image", error);
-  //   }
-  // };
 
   // const drawFaceLandmark = (
   //   result: faceapi.WithFaceLandmarks<{
@@ -426,11 +400,12 @@ export default function Liveness() {
   };
 
   const handleSubmit = async () => {
-    // if (file !== null) {
-    //   await sendFileToServer(file);
-    // }
-    navigate("");
+    navigate("/create-job/added-individual-account/card-instructions");
   };
+
+  if (!isModelsLoaded) {
+    return <p>Loading models...</p>;
+  }
 
   return (
     <div className="p-10">
@@ -444,7 +419,6 @@ export default function Liveness() {
           autoPlay
           muted
         />
-        {!isModelsLoaded && <p>Loading models...</p>}
 
         <canvas
           ref={canvasRef}
@@ -483,7 +457,7 @@ export default function Liveness() {
         </div>
       )}
 
-      {image && (
+      {isModelsLoaded && image && (
         <div className="w-1/2 pb-20">
           <img src={image} alt="Screenshot" />
           <div className="flex justify-center py-5">
