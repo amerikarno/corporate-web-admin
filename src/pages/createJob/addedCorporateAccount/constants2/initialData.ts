@@ -9,10 +9,10 @@ export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPr
   {
     registered: "",
     primary: "",
-    registeredThailand: false,
-    primaryCountry: false,
-    registeredOther: false,
-    primaryOther: false,
+    isRegisteredThailand: false,
+    isPrimaryCountry: false,
+    isRegisteredOther: false,
+    isPrimaryOther: false,
   };
 
 export const initCorporateInfo = {
