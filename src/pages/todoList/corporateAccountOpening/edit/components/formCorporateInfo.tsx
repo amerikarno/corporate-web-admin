@@ -5,7 +5,10 @@ import {
   TCorporateInfoSchema,
 } from "../constants/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TCorporateInfo, TRegisteredCountryPrimaryCountryOperation } from "../constants/types";
+import {
+  TCorporateInfo,
+  TRegisteredCountryPrimaryCountryOperation,
+} from "../constants/types";
 import { sleep } from "@/lib/utils";
 //import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -21,7 +24,7 @@ import {
 import { useState, useEffect } from "react";
 import { TCorporateData } from "../../constant/type";
 import { Button } from "@/components/ui/button";
-import { ZodIssue } from "zod";
+// import { ZodIssue } from "zod";
 import { copy } from "@/lib/utils";
 import { z } from "zod";
 import { getCookies } from "@/lib/Cookies";
@@ -59,7 +62,7 @@ export function FormCorporateInfo({
   );
 
   useEffect(() => {
-    console.log(initData)
+    console.log(initData);
     if (initData) {
       reset(initData);
     }
@@ -99,50 +102,59 @@ export function FormCorporateInfo({
   );
   const token = getCookies();
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 601
     );
-    console.log(resCorpRegisterCountry)
+    console.log(resCorpRegisterCountry);
     const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 602
     );
-    setRegisteredCountryPrimaryCountryOperation({...initCountryData,
+    setRegisteredCountryPrimaryCountryOperation({
+      ...initCountryData,
       registered: resCorpRegisterCountry?.other || "",
-      isRegisteredThailand : resCorpRegisterCountry?.isThailand || false,
-      isRegisteredOther : resCorpRegisterCountry?.other ? resCorpRegisterCountry?.other === "Thailand" ? false : true : false,
+      isRegisteredThailand: resCorpRegisterCountry?.isThailand || false,
+      isRegisteredOther: resCorpRegisterCountry?.other
+        ? resCorpRegisterCountry?.other === "Thailand"
+          ? false
+          : true
+        : false,
       primary: resCorpPrimaryCountry?.other || "",
       isPrimaryCountry: resCorpPrimaryCountry?.isThailand || false,
-      isPrimaryOther: resCorpPrimaryCountry?.other ? resCorpPrimaryCountry?.other === "Thailand" ? false : true : false,
-    })
-  },[token,dispatch,initData])
-  const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
-    useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+      isPrimaryOther: resCorpPrimaryCountry?.other
+        ? resCorpPrimaryCountry?.other === "Thailand"
+          ? false
+          : true
+        : false,
+    });
+  }, [token, dispatch, initData]);
+  // const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
+  //   useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
 
   const [
-    isPrimaryCountryOfOperationOthers,
-    setIsPrimaryCountryOfOperationOthers,
+    // isPrimaryCountryOfOperationOthers,
+    // setIsPrimaryCountryOfOperationOthers,
   ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
   // ] = useState<boolean>(false);
 
-  const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
+  // const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
 
-  const handleErrors = (error: ZodIssue[] | null) => {
-    setErrors(error);
-  };
+  // const handleErrors = (error: ZodIssue[] | null) => {
+  //   setErrors(error);
+  // };
 
-  const getError = (
-    keyName: string[],
-    errors: ZodIssue[] | null
-  ): ZodIssue | null => {
-    if (errors === null) return null;
+  // const getError = (
+  //   keyName: string[],
+  //   errors: ZodIssue[] | null
+  // ): ZodIssue | null => {
+  //   if (errors === null) return null;
 
-    return (
-      errors.find((error) =>
-        keyName.every((key) => error.path!.map(String).includes(key))
-      ) || null
-    );
-  };
+  //   return (
+  //     errors.find((error) =>
+  //       keyName.every((key) => error.path!.map(String).includes(key))
+  //     ) || null
+  //   );
+  // };
 
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
@@ -159,9 +171,9 @@ export function FormCorporateInfo({
     }
 
     setRegisteredCountryPrimaryCountryOperation(tmp);
-    if (name == "Others Countries (Please Specify)") {
-      setIsRegisteredCountryOthers(checked);
-    }
+    // if (name == "Others Countries (Please Specify)") {
+    //   setIsRegisteredCountryOthers(checked);
+    // }
   };
   const handleInputRegisteredCountryOthers = (e: any) => {
     const { value } = e.target;
@@ -187,9 +199,9 @@ export function FormCorporateInfo({
       tmp.isPrimaryOther = checked;
     }
     setRegisteredCountryPrimaryCountryOperation(tmp);
-    if (name == "Others Countries (Please Specify)") {
-      setIsPrimaryCountryOfOperationOthers(checked);
-    }
+    // if (name == "Others Countries (Please Specify)") {
+    //   setIsPrimaryCountryOfOperationOthers(checked);
+    // }
     validateLocal(tmp);
   };
   const handleInputPrimaryCountryOfOperationOthers = (e: any) => {
@@ -201,30 +213,30 @@ export function FormCorporateInfo({
     validateLocal(tmp);
   };
 
-  const validateForm = (): boolean => {
-    try {
-      registeredCountryPrimaryCountryOperationSchema.parse(
-        registeredCountryPrimaryCountryOperation
-      );
-      return true;
-    } catch (e) {
-      if (e instanceof z.ZodError) {
-        handleErrors(e.errors);
-      } else {
-        console.log(e);
-      }
-      return false;
-    }
-  };
+  // const validateForm = (): boolean => {
+  //   try {
+  //     registeredCountryPrimaryCountryOperationSchema.parse(
+  //       registeredCountryPrimaryCountryOperation
+  //     );
+  //     return true;
+  //   } catch (e) {
+  //     if (e instanceof z.ZodError) {
+  //       handleErrors(e.errors);
+  //     } else {
+  //       console.log(e);
+  //     }
+  //     return false;
+  //   }
+  // };
 
   const validateLocal = (obj: TRegisteredCountryPrimaryCountryOperation) => {
     try {
       registeredCountryPrimaryCountryOperationSchema.parse(obj);
-      handleErrors(null);
+      // handleErrors(null);
     } catch (e) {
       if (e instanceof z.ZodError) {
         console.log(e.errors);
-        handleErrors(e.errors);
+        // handleErrors(e.errors);
       } else {
         console.log(e);
       }
@@ -249,18 +261,26 @@ export function FormCorporateInfo({
     const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
-      registeredCapital: Math.floor(Number(data.registeredCapital?.replace(/,/g, ''))),
-      revenuePerYear: Math.floor(Number(data.revenuePerYear?.replace(/,/g, ''))),
-      netProFitLoss: Math.floor(Number(data.netProFitLoss?.replace(/,/g, ''))),
-      shareholderEquity: Math.floor(Number(data.shareholderEquity?.replace(/,/g, ''))),
+      registeredCapital: Math.floor(
+        Number(data.registeredCapital?.replace(/,/g, ""))
+      ),
+      revenuePerYear: Math.floor(
+        Number(data.revenuePerYear?.replace(/,/g, ""))
+      ),
+      netProFitLoss: Math.floor(Number(data.netProFitLoss?.replace(/,/g, ""))),
+      shareholderEquity: Math.floor(
+        Number(data.shareholderEquity?.replace(/,/g, ""))
+      ),
       corporateCode: corporatesInfo?.CorporateCode.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
-      isRegisteredOther: registeredCountryPrimaryCountryOperation.isRegisteredOther,
+      isRegisteredOther:
+        registeredCountryPrimaryCountryOperation.isRegisteredOther,
       isRegisteredThailand:
         registeredCountryPrimaryCountryOperation.isRegisteredThailand,
       primary: registeredCountryPrimaryCountryOperation.primary,
-      isPrimaryCountry: registeredCountryPrimaryCountryOperation.isPrimaryCountry,
+      isPrimaryCountry:
+        registeredCountryPrimaryCountryOperation.isPrimaryCountry,
       isPrimaryOther: registeredCountryPrimaryCountryOperation.isPrimaryOther,
       registeredBusiness: {
         address: [
@@ -304,7 +324,7 @@ export function FormCorporateInfo({
     await sleep(500);
     reset();
     onsubmit(formData);
-    console.log("formdata : ",formData)
+    console.log("formdata : ", formData);
   };
 
   return (
