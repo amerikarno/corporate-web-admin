@@ -101,21 +101,31 @@ const TransactionList = () => {
         },
       });
       if (res.status === 200) {
-        console.log(res.data)
+        console.log(res.data);
         const data = res.data ?? [];
-        const transactions: TTransaction[] = data.map((item: any) => {
-          console.log(item);
-          return {
-            id: item.id || "",
-            corporateCode: item.corporateCode || 0,
-            operations: item.operations || "",
-            cryptoAmount: item.cryptoAmount || 0,
-            cryptoPrice: item.cryptoPrice || 0,
-            currency: item.currency || "",
-            fiatAmount: item.fiatAmount || 0,
-            pair: item.pair || "",
-          };
-        });
+        const seenIds = new Set();
+        const transactions: TTransaction[] = data
+          .filter((item: any) => {
+            if (seenIds.has(item.id)) {
+              return false;
+            } else {
+              seenIds.add(item.id);
+              return true;
+            }
+          })
+          .map((item: any) => {
+            console.log(item);
+            return {
+              id: item.id || "",
+              corporateCode: item.corporateCode || 0,
+              operations: item.operations || "",
+              cryptoAmount: item.cryptoAmount || 0,
+              cryptoPrice: item.cryptoPrice || 0,
+              currency: item.currency || "",
+              fiatAmount: item.fiatAmount || 0,
+              pair: item.pair || "",
+            };
+          });
         setFetchedListOfTransaction(transactions);
       } else {
         console.error("Failed to fetch order list codes");
