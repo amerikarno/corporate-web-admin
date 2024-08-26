@@ -25,7 +25,10 @@ import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type"
 import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants2/types";
 import { RootState } from "@/app/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "@/api/axios";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -467,6 +470,10 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
 };
 
 export const getCheckedLabel = (corpData: TCorporateData) => {
+  console.log(corpData)
+  console.log(corpData?.CorporateTypes)
+  console.log(corpData?.BusinessTypes)
+  console.log(corpData?.SourceOfIncomes)
   const jrType = corpData?.CorporateTypes;
   const buType = corpData?.BusinessTypes;
   const srcOfIncome = corpData?.SourceOfIncomes;
@@ -514,7 +521,7 @@ export const getFrom2Response = () => {
     ...countrySrcOfIncomeTh,
 
   };
-  console
+  console.log(res)
   // console.log(JSON.stringify(res, null, 2));
   return res;
   // } else {

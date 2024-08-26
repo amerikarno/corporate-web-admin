@@ -177,30 +177,18 @@ export function useFormCorporateInfo2() {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(res);
         if (res.status === 200) {
           console.log("update success", res.data);
-          // setIsSecondFormPass(true);
-          // onFormPassChange(true);
-          // handleFormPassChange(true);
-          // dispatch(setJuristicType(data));
           setStoreData(data);
           navigate("/create-job/added-corporate-account/3");
         } else {
           alert("Invalid Input.");
           console.log("save failed");
-          // setIsSecondFormPass(false);
-          // onFormPassChange(false);
-          // handleFormPassChange(false);
         }
       } catch (error) {
         console.log(error);
         alert(error);
-        // setIsSecondFormPass(false);
-        // onFormPassChange(false);
-        // handleFormPassChange(false);
       }
-      // dispatch(setJuristicType(data));
     }
   };
 
@@ -215,17 +203,6 @@ export function useFormCorporateInfo2() {
           isThailand: data.corporateCountry?.isThailand ? true : false,
           otherCountry: data.corporateCountry?.other,
         }
-        // let body = {
-        //   ...data,
-        //   corporateCode: corporateData.CorporateCode.toString(),
-        //   CreatedAt: undefined,
-        //   DeletedAt: undefined,
-        //   createBy: undefined,
-        //   corporateCountry: undefined,
-        //   deleteBy: undefined,
-        //   isThailand: data.corporateCountry?.isThailand ? true : false,
-        //   otherCountry: data.corporateCountry?.other,
-        // };
         console.log("body: ",body)
       const token = getCookies();
       const res = await axios.post("/api/v1/corporate/create-type", body, {
