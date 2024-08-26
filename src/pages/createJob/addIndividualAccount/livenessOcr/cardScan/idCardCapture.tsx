@@ -5,7 +5,6 @@ import idCardOverlay from "@/assets/images/ID_Card_overlay.svg";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { base64ToFile, getImageSrcFromFile } from "@/lib/utils";
 import { setIdCardImage } from "@/features/livenessOcr/livenessOcr";
 
 const layoutWidth = 514;
