@@ -1,6 +1,6 @@
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import Liveness from "./livenessOcr/livenessOcr";
+// import Liveness from "./livenessOcr/livenessOcr";
 // import { Card, CardContent } from "@/components/ui/card";
 // import { zodResolver } from "@hookform/resolvers/zod";
 // import { useForm } from "react-hook-form";
@@ -208,8 +208,10 @@ export default function AddIndividualAccount() {
     //     </CardContent>
     //   </Card>
     // </div>
-
-    <Liveness />
+    <div>
+      livenessOcr
+    </div>
+    //<Liveness />
     // <CardWebcamInstructions />
     // <IDCardCapture />
   );
