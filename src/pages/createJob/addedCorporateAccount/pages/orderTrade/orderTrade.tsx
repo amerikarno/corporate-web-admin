@@ -343,12 +343,16 @@ export default function OrderTradeEdit() {
                       {errors.cryptoPrice.message}
                     </p>
                   )}
-                  <Input
-                    {...register("currency")}
-                    label="Currency"
-                    id="currency"
-                    disabled={isSubmitting}
-                  />
+                  <select
+                  {...register("currency")}
+                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+                text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
+                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
+                >
+                  <option value="">Currency</option>
+                  <option value="THB">THB</option>
+                  <option value="USD">USD</option>
+                </select>
                   {errors.currency && (
                     <p className="text-red-500 text-sm px-2">
                       {errors.currency.message}
