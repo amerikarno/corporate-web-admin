@@ -278,8 +278,8 @@ export default function Liveness() {
     // เคลียร์กรอบก่อนวาดใหม่
     ctx?.clearRect(0, 0, canvas!.width, canvas!.height);
     // วาดพื้นหลังสีทึบ
-    ctx!.fillStyle = "rgba(0, 0, 0, 0.7)";
-    // ctx!.fillStyle = "rgba(255,255, 255, 1.0)";
+    // ctx!.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx!.fillStyle = "rgba(255,255, 255, 1.0)";
     ctx!.fillRect(0, 0, canvas!.width, canvas!.height);
 
     // วาดกรอบวงรีตรงกลางหน้าจอ
@@ -457,12 +457,18 @@ export default function Liveness() {
         </div>
       )}
 
-      {isModelsLoaded && image && (
+      {/* {isModelsLoaded && image && (
         <div className="w-1/2 pb-20">
           <img src={image} alt="Screenshot" />
           <div className="flex justify-center py-5">
-            <Button onClick={() => handleSubmit()}>Submit</Button>
+            <Button onClick={() => handleSubmit()}>Next</Button>
           </div>
+        </div>
+      )} */}
+
+      {isModelsLoaded && image && (
+        <div className="w-[640px] flex justify-center">
+          <Button onClick={() => handleSubmit()}>Next</Button>
         </div>
       )}
     </div>
