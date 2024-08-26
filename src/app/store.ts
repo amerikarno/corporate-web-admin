@@ -20,8 +20,6 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, countDownReducer);
-
 export const store = configureStore({
   reducer: {
     authen: authenReducer,
@@ -47,8 +45,5 @@ export const store = configureStore({
     }),
 });
 
-const persistor = persistStore(store);
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export { persistor };

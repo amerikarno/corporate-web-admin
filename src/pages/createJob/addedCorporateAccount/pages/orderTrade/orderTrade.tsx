@@ -76,9 +76,13 @@ export default function OrderTradeEdit() {
       if (res.status === 200) {
         console.log(res.data);
         const orderTrades = res.data || [];
-
-        dispatch(setOrderTrades(orderTrades));
-        console.log("OrderTrade data fetched successfully.", orderTrades);
+  
+        const uniqueOrderTrades = orderTrades.filter((order:any, index:any, self:any) =>
+          index === self.findIndex((t:any) => t.id === order.id)
+        );
+  
+        dispatch(setOrderTrades(uniqueOrderTrades));
+        console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
       } else {
         console.log("Failed to fetch orderTrade");
       }
@@ -180,7 +184,8 @@ export default function OrderTradeEdit() {
       operations: buySell,
       id: choosedEditData?.id,
     };
-
+    console.log(choosedEditData)
+    console.log(body)
     try {
       const token = getCookies();
       if (body.id) {
@@ -221,14 +226,6 @@ export default function OrderTradeEdit() {
 
   return (
     <div className="md:p-10 flex flex-col justify-center space-y-4">
-      <Card className="p-4 w-full">
-        <DataTable
-          title="Rejected Orders / Trades Lists"
-          columns={columnsOrderTrade}
-          data={orderTradeData}
-          clearSelectedRows
-        />
-      </Card>
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -367,6 +364,14 @@ export default function OrderTradeEdit() {
             </Button>
           </div>
         </form>
+      </Card>
+      <Card className="p-4 w-full">
+        <DataTable
+          title="Rejected Orders / Trades Lists"
+          columns={columnsOrderTrade}
+          data={orderTradeData.map((orderTrade, index) => ({ ...orderTrade, key: index }))}
+          clearSelectedRows
+        />
       </Card>
     </div>
   );

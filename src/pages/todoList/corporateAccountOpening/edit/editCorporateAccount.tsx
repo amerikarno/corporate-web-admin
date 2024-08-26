@@ -13,14 +13,15 @@ import { CreateCorporateFooter } from "./components/footer";
 import UploadFiles from "./pages/uploadFiles/uploadFiles";
 import { PageSuitTest } from "./pages/PageSuitTest";
 import { TCorporateData } from "../constant/type";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { mapDataToTCorporateInfo } from "./libs/utils";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import { useEffect, useRef, useState } from "react";
-import RealTimeCounter from "@/pages/createJob/addedCorporateAccount/libs/countDownTimer";
-import CountdownTimer from "@/pages/createJob/addedCorporateAccount/libs/countDownTimer";
+import { useEffect,  useState } from "react";
+import { clearCorporateData, setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
 
 type TPage = {
   page?: string;
@@ -37,20 +38,44 @@ export function EditCorporateAccount() {
   // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
- 
-
+  const [corporateCode, setCorporateCode] = useState('');
+  const dispatch = useDispatch();
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
+  useEffect(() => {
+    const fetchCorporateData = async () => {
+      try {
+        const corporateCode = localStorage.getItem('corporateCode') || '';
+        setCorporateCode(corporateCode);
+        console.log(corporateCode)
+        const response = await axios.post('/api/v1/corporate/query', {corporateCode:corporateCode},{
+          headers: {
+            Authorization: `Bearer ${getCookies()}`,
+          },
+        });
+        console.log(response)
+        dispatch(setCorporateData(response.data[0]));
+      } catch (error) {
+        console.error('Error fetching corporate data:', error);
+      }
+    };
+
+    fetchCorporateData();
+  }, [corporateCode, pageId]);
 
 
+
+  
   
   const navigate = useNavigate();
   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
 
-  const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
+  // const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
   // console.log(corporateCode)
+  console.log(corporateData)
+
 
   const mappingPages: TMapPages = {
     1: (
@@ -80,6 +105,8 @@ export function EditCorporateAccount() {
     if (type == "next") {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId + 1}`);
     } else if (type == "done") {
+      localStorage.clear();
+      dispatch(clearCorporateData());
       navigate(`/todo-list/corporate-account-opening`);
     } else {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId - 1}`);
@@ -88,7 +115,6 @@ export function EditCorporateAccount() {
 
   return (
     <div className="space-y-8 pb-8">
-      <CountdownTimer corporateCode={corporateCode} initialTime={300} />
       {mappingPages[pageId]}
       <CreateCorporateFooter
         handlePages={handlePages}

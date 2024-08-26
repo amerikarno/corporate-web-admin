@@ -16,13 +16,13 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
   
   const initCountryData = {
     registered: resCorpRegisterCountry?.other || "",
-    registeredThailand: resCorpRegisterCountry ? resCorpRegisterCountry.isThailand : false,
-    registeredOther: resCorpRegisterCountry
+    isRegisteredThailand: resCorpRegisterCountry ? resCorpRegisterCountry.isThailand : false,
+    isRegisteredOther: resCorpRegisterCountry
       ? !resCorpRegisterCountry.isThailand
       : false, 
     primary: resCorpPrimaryCountry?.other || "",
-    primaryCountry: resCorpPrimaryCountry ? resCorpPrimaryCountry.isThailand : false,
-    primaryOther: resCorpPrimaryCountry
+    isPrimaryCountry: resCorpPrimaryCountry ? resCorpPrimaryCountry.isThailand : false,
+    isPrimaryOther: resCorpPrimaryCountry
       ? !resCorpPrimaryCountry.isThailand
       : false,
   };
@@ -76,12 +76,12 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
 
     if (name === "Thailand") {
       tmp.registered = checked ? name : "";
-      tmp.registeredThailand = checked;
-      tmp.registeredOther = false;
+      tmp.isRegisteredThailand = checked;
+      tmp.isRegisteredOther = false;
     } else if (name === "Others Countries (Please Specify)") {
       tmp.registered = "";
-      tmp.registeredThailand = false;
-      tmp.registeredOther = checked;
+      tmp.isRegisteredThailand = false;
+      tmp.isRegisteredOther = checked;
     }
 
     setRegisteredCountryPrimaryCountryOperation(tmp);
@@ -93,8 +93,8 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     const { value } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     tmp.registered = value;
-    tmp.registeredThailand = false;
-    tmp.registeredOther = true;
+    tmp.isRegisteredThailand = false;
+    tmp.isRegisteredOther = true;
     setRegisteredCountryPrimaryCountryOperation(tmp);
     // form1error ? validateLocal(tmp) : null;
     validateLocal(tmp);
@@ -105,12 +105,12 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     if (name === "Thailand") {
       tmp.primary = checked ? name : "";
-      tmp.primaryCountry = checked;
-      tmp.primaryOther = false;
+      tmp.isPrimaryCountry = checked;
+      tmp.isPrimaryOther = false;
     } else {
       tmp.primary = "";
-      tmp.primaryCountry = false;
-      tmp.primaryOther = checked;
+      tmp.isPrimaryCountry = false;
+      tmp.isPrimaryOther = checked;
     }
     setRegisteredCountryPrimaryCountryOperation(tmp);
     if (name == "Others Countries (Please Specify)") {
@@ -122,7 +122,7 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     const { value } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     tmp.primary = value;
-    tmp.primaryCountry = false;
+    tmp.isPrimaryCountry = false;
     setRegisteredCountryPrimaryCountryOperation(tmp);
     validateLocal(tmp);
   };

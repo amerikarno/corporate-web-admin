@@ -15,6 +15,7 @@ import axios from "@/api/axios";
 import { TContact, TCorporateData } from "../../constant/type";
 import { useEffect, useState } from "react";
 import { TCorporateInfoSchema } from "../constants2/schemas";
+import { TContactPerson } from "../constants2/types";
 
 type TPageContactPersonProps = {
   corporateCode: string;
@@ -56,6 +57,7 @@ export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContact
               personalId: contact.personalID,
             };
           });
+
           dispatch(setContactPersons(updatedContacts));
           console.log("Contact data fetched successfully.", contacts);
         } else {
@@ -65,7 +67,7 @@ export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContact
       .catch((error) => {
         console.error("Error fetching contact data:", error);
       });
-  }, [dispatch]);
+  }, [corporateCode, dispatch, token]);
 
   console.log(contactPersonData);
 

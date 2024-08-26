@@ -154,6 +154,8 @@ export function useFormCorporateInfo2() {
 
 
   const saveJuristicType = async (data: CorporateResponse | null) => {
+    console.log(data?.corporateCountry?.isThailand)
+    console.log(data?.corporateCountry?.other)
     if (data !== null) {
       let body = {
         ...data,
@@ -163,10 +165,11 @@ export function useFormCorporateInfo2() {
         corporateCountry: undefined,
         deleteBy: undefined,
         corporateCode: corp.CorporateCode?.toString(),
-        isThailand: data.corporateCountry?.isThailand ? true : false,
-        otherCountry: data.corporateCountry?.other,
+        isThailand: data.corporateCountry?.isThailand  ? (data.corporateCountry?.isThailand ? true : false) : false,
+        otherCountry: data.corporateCountry?.isThailand ? "" : data.corporateCountry?.other,
       };
-      console.log("body", body);
+      console.log(body.isThailand)
+      console.log(body.otherCountry)
       try {
         const token = getCookies();
         const res = await axios.post("/api/v1/corporate/update/type", body, {
@@ -174,30 +177,18 @@ export function useFormCorporateInfo2() {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(res);
         if (res.status === 200) {
-          console.log("request success", res.data);
-          // setIsSecondFormPass(true);
-          // onFormPassChange(true);
-          // handleFormPassChange(true);
-          // dispatch(setJuristicType(data));
+          console.log("update success", res.data);
           setStoreData(data);
           navigate("/create-job/added-corporate-account/3");
         } else {
           alert("Invalid Input.");
           console.log("save failed");
-          // setIsSecondFormPass(false);
-          // onFormPassChange(false);
-          // handleFormPassChange(false);
         }
       } catch (error) {
         console.log(error);
         alert(error);
-        // setIsSecondFormPass(false);
-        // onFormPassChange(false);
-        // handleFormPassChange(false);
       }
-      // dispatch(setJuristicType(data));
     }
   };
 
@@ -209,18 +200,9 @@ export function useFormCorporateInfo2() {
         body={
           ...body,
           corporateCode: corporateData.CorporateCode.toString(),
+          isThailand: data.corporateCountry?.isThailand ? true : false,
+          otherCountry: data.corporateCountry?.other,
         }
-        // let body = {
-        //   ...data,
-        //   corporateCode: corporateData.CorporateCode.toString(),
-        //   CreatedAt: undefined,
-        //   DeletedAt: undefined,
-        //   createBy: undefined,
-        //   corporateCountry: undefined,
-        //   deleteBy: undefined,
-        //   isThailand: data.corporateCountry?.isThailand ? true : false,
-        //   otherCountry: data.corporateCountry?.other,
-        // };
         console.log("body: ",body)
       const token = getCookies();
       const res = await axios.post("/api/v1/corporate/create-type", body, {
@@ -407,7 +389,7 @@ export function useFormCorporateInfo2() {
 
       case "sourceOfIncomeOther":
         if (form2Data && form2Data !== null) {
-          form2Data.otherCountry = value;
+          form2Data.otherIncome = value;
         }
         break;
 

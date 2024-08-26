@@ -61,11 +61,11 @@ export function useCorporateInfo() {
       netProFitLoss: 0,
       shareholderEquity: 0,
       registered: "",
-      registeredOther: false,
-      registeredThailand: true,
+      isRegisteredOther: false,
+      isRegisteredThailand: true,
       primary: "",
-      primaryCountry: true,
-      primaryOther: false,
+      isPrimaryCountry: true,
+      isPrimaryOther: false,
       corporateCode: "",
     });
 
@@ -107,7 +107,9 @@ export function useCorporateInfo() {
         return;
       }
   
-      const corporateCode = createResponse.data.corporateCode;
+      // const corporateCode = createResponse.data.corporateCode;
+      localStorage.setItem('corporateCode', createResponse.data.corporateCode.toString());
+      const corporateCode = localStorage.getItem('corporateCode') || '';
       data.corporateCode = corporateCode;
       console.log("Corporate Data with Code:", data);
   

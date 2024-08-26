@@ -14,7 +14,9 @@ import {
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-import { TCorporateData, TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
+import { TCorporateData, TIndividualShareholder, TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
+import { mapDataToTIndividualShareholder } from "../libs/utils";
+import { TIndividualsShareholders } from "../constants2/types";
 
 type TPageIndividualShareholderProps = {
   corporateCode: string;
@@ -51,13 +53,17 @@ export function PageIndividualShareholder({
       .then((res) => {
         console.log("API Response:", res.data);
         if (res.status === 200) {
-          const individualshareholder =
-            res.data[0]?.IndividualShareholders || [];
-          if (individualshareholder && individualshareholder.length > 0) {
-            // const updateIndividual:TIndividualShareholderEdit[] = individualshareholder.map((indivudual: any) => ({
-            //   ...indivudual,
-            // }));
-            dispatch(setIndividualShareholder(individualshareholder));
+          const individualshareholder =res.data[0]?.IndividualShareholders || [];
+          if (individualshareholder) {
+            const updateIndividualShareholder: TIndividualsShareholders[] = individualshareholder
+            .map((shareholder: TIndividualShareholderEdit) => ({
+              ...shareholder,
+              corporateCode: String(shareholder.corporateCode),
+            }))
+            .map(mapDataToTIndividualShareholder)
+            .filter((item: any) => item !== null) as TIndividualsShareholders[];
+            
+            dispatch(setIndividualShareholder(updateIndividualShareholder));
             console.log(
               "indivudual data fetched successfully.",
               individualshareholder
@@ -74,7 +80,7 @@ export function PageIndividualShareholder({
       .catch((error) => {
         console.error("Error fetching indivudual data:", error);
       });
-  }, [dispatch]);
+  }, [corporateCode, dispatch, token]);
 
   const { handleSubmitShareholders } = useShareholders();
   console.log(shareholderData);

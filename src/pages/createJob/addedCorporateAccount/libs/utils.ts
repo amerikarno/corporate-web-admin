@@ -25,7 +25,10 @@ import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type"
 import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants2/types";
 import { RootState } from "@/app/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "@/api/axios";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -227,10 +230,10 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
         emailAddress: resPlaceofIncorporation?.emailAddress || "",
         telephone: resPlaceofIncorporation?.telephone || "",
       },
-      registeredCapital: data.CorporateFinancials.registeredCapital || 0,
-      revenuePerYear: data.CorporateFinancials.revenuePerYear || 0,
-      netProFitLoss: data.CorporateFinancials.netProfitLoss || 0,
-      shareholderEquity: data.CorporateFinancials.shareholderEquity || 0,
+      registeredCapital: String(data.CorporateFinancials.registeredCapital || ""),
+      revenuePerYear: String(data.CorporateFinancials.revenuePerYear || ""),
+      netProFitLoss: String(data.CorporateFinancials.netProfitLoss || ""),
+      shareholderEquity: String(data.CorporateFinancials.shareholderEquity || ""),
     };
 
     return result;
@@ -467,6 +470,10 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
 };
 
 export const getCheckedLabel = (corpData: TCorporateData) => {
+  console.log(corpData)
+  console.log(corpData?.CorporateTypes)
+  console.log(corpData?.BusinessTypes)
+  console.log(corpData?.SourceOfIncomes)
   const jrType = corpData?.CorporateTypes;
   const buType = corpData?.BusinessTypes;
   const srcOfIncome = corpData?.SourceOfIncomes;
@@ -514,7 +521,7 @@ export const getFrom2Response = () => {
     ...countrySrcOfIncomeTh,
 
   };
-  console
+  console.log(res)
   // console.log(JSON.stringify(res, null, 2));
   return res;
   // } else {
@@ -562,7 +569,7 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
       isLoan: data.isLoan,
       isRevenueSelling: data.isRevenueSelling,
       isOtherIncome: data.isOtherIncome,
-      isThailand: data.isThailand,
+      isThailand: data.corporateCountry?.isThailand,
       isLiquidation: data.isLiquidation,
       isInvestment: data.isInvestment,
       isCashManagement: data.isCashManagement,
@@ -570,7 +577,7 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
       isCoOperative: data.isCoOperative,
       otherBusinessType: data.otherBusinessType,
       otherIncome: data.otherIncome,
-      otherCountry: data.otherCountry,
+      otherCountry: data.corporateCountry?.other,
       otherInvestment: data.otherInvestment,
       corporateCode: data.corporateCode?.toString(),
     }

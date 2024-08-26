@@ -53,6 +53,13 @@ export function FormCorporateInfo({
   );
 
   useEffect(() => {
+    console.log(initData)
+    if (initData) {
+      reset(initData);
+    }
+  }, [initData]);
+
+  useEffect(() => {
     if (shouldScrollUp) {
       window.scrollTo({
         top: 0,
@@ -67,19 +74,19 @@ export function FormCorporateInfo({
     const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
-      registeredCapital: Number(data.registeredCapital?.replace(/,/g, '')),
-      revenuePerYear: Number(data.revenuePerYear?.replace(/,/g, '')),
-      netProFitLoss: Number(data.netProFitLoss?.replace(/,/g, '')),
-      shareholderEquity: Number(data.shareholderEquity?.replace(/,/g, '')),
+      registeredCapital: Math.floor(Number(data.registeredCapital?.replace(/,/g, ''))),
+      revenuePerYear: Math.floor(Number(data.revenuePerYear?.replace(/,/g, ''))),
+      netProFitLoss: Math.floor(Number(data.netProFitLoss?.replace(/,/g, ''))),
+      shareholderEquity: Math.floor(Number(data.shareholderEquity?.replace(/,/g, ''))),
       corporateCode: corporatesInfo?.CorporateCode.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
-      registeredOther: registeredCountryPrimaryCountryOperation.registeredOther,
-      registeredThailand:
-        registeredCountryPrimaryCountryOperation.registeredThailand,
+      isRegisteredOther: registeredCountryPrimaryCountryOperation.isRegisteredOther,
+      isRegisteredThailand:
+        registeredCountryPrimaryCountryOperation.isRegisteredThailand,
       primary: registeredCountryPrimaryCountryOperation.primary,
-      primaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
-      primaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
+      isPrimaryCountry: registeredCountryPrimaryCountryOperation.isPrimaryCountry,
+      isPrimaryOther: registeredCountryPrimaryCountryOperation.isPrimaryOther,
       registeredBusiness: {
         address: [
           {
@@ -122,6 +129,7 @@ export function FormCorporateInfo({
     await sleep(500);
     reset();
     onsubmit(formData);
+    console.log("formdata : ",formData)
   };
 
   const {
@@ -198,7 +206,7 @@ export function FormCorporateInfo({
                   key={registeredCountryChoices[0]}
                   label={registeredCountryChoices[0]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.registeredThailand
+                    registeredCountryPrimaryCountryOperation.isRegisteredThailand
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
@@ -210,22 +218,15 @@ export function FormCorporateInfo({
                   key={registeredCountryChoices[1]}
                   label={registeredCountryChoices[1]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.registeredOther
+                    registeredCountryPrimaryCountryOperation.isRegisteredOther
                   }
                   onChange={(e) => {
                     handleRegisteredCountryOthers(e);
-                    // if (
-                    //   registeredCountryPrimaryCountryOperation.registered == ""
-                    // ) {
-                    //   setRegisteredCountryError(false);
-                    // } else {
-                    //   setRegisteredCountryError(true);
-                    // }
                   }}
                   name={registeredCountryChoices[1]}
                 />
               </div>
-              {registeredCountryPrimaryCountryOperation.registeredOther && (
+              {registeredCountryPrimaryCountryOperation.isRegisteredOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
@@ -269,7 +270,7 @@ export function FormCorporateInfo({
                   key={PrimaryCountryOfOperationChoices[0]}
                   label={PrimaryCountryOfOperationChoices[0]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.primaryCountry
+                    registeredCountryPrimaryCountryOperation.isPrimaryCountry
                   }
                   onChange={(e) => {
                     handlePrimaryCountryOfOperationOthers(e);
@@ -288,7 +289,7 @@ export function FormCorporateInfo({
                   key={PrimaryCountryOfOperationChoices[1]}
                   label={PrimaryCountryOfOperationChoices[1]}
                   checked={
-                    registeredCountryPrimaryCountryOperation.primaryOther
+                    registeredCountryPrimaryCountryOperation.isPrimaryOther
                   }
                   onChange={(e) => {
                     handlePrimaryCountryOfOperationOthers(e);
@@ -303,7 +304,7 @@ export function FormCorporateInfo({
                   name={PrimaryCountryOfOperationChoices[1]}
                 />
               </div>
-              {registeredCountryPrimaryCountryOperation.primaryOther && (
+              {registeredCountryPrimaryCountryOperation.isPrimaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"

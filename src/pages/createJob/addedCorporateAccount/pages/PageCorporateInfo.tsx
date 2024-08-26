@@ -14,7 +14,8 @@ export function PageCorporateInfo({
   handleSubmitCorporateInfo,
   initData,
 }: TPageCorporateInfoProps) {
-
+  console.log(corporatesInfo)
+    console.log(initData)
   return (
     <>
       <div className="p-4 space-y-8">

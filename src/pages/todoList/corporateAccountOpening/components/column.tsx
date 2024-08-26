@@ -12,7 +12,7 @@ const EditButtonCell = ({ row }: { row: TCorporateData }) => {
   const handleEditClick = () => {
     console.log(row);
     dispatch(setCorporateData(row));
-
+    localStorage.setItem('corporateCode', row.CorporateCode.toString());
     navigate("/todo-list/corporate-account-opening/edit/1", {
       state: row,
     });
