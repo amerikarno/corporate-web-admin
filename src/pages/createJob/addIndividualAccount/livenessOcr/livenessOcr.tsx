@@ -1,17 +1,54 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
-import axios from "@/api/axios";
-import { getCookies } from "@/lib/Cookies";
+// import axios from "@/api/axios";
+// import { getCookies } from "@/lib/Cookies";
+import { Camera } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { sleep } from "@/lib/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { setFaceImage } from "@/features/livenessOcr/livenessOcr";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "@/app/store";
 
-const BlinkDetection: React.FC = () => {
+type TActionMessage = {
+  turnLeft: string | null;
+  turnRight: string | null;
+  mouthOpen: string | null;
+  center: string | null;
+};
+
+export default function Liveness() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [modelsLoaded, setModelsLoaded] = useState(false);
-  const [leftImg, setLeftImg] = useState<boolean>(false);
-  const [rightImg, setRightImg] = useState<boolean>(false);
+  const [isModelsLoaded, setIsModelsLoaded] = useState(false);
+  const [isTurnLeft, setIsTurnLeft] = useState<boolean>(false);
+  const [isTurnRight, setIsTurnRight] = useState<boolean>(false);
+  const [isMouthOpen, setIsMouthOpen] = useState<boolean>(false);
+  const [isCenter, setIsCenter] = useState<boolean>(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasRef2 = useRef<HTMLCanvasElement>(null);
-  const [circleColor, setCircleColor] = useState<string>("black");
+  const [image, setImage] = useState<string | null>(null);
+  const [actionMessage, setActionMessage] = useState<TActionMessage>({
+    turnLeft: null,
+    turnRight: null,
+    mouthOpen: null,
+    center: null,
+  });
+  // const [file, setFile] = useState<File | null>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const livenessOcrFiles = useSelector((state: RootState) => state.livenessOcr);
+  let trackIsCenter = false;
+  let trackIsLeft = false;
+  let trackIsRight = false;
+  let trackIsMouthOpen = false;
+  let isCapture = false;
+
+  let customerCode = 90000001;
+
+  // useEffect(() => {
+
+  // }, []);
 
   useEffect(() => {
     const loadModels = async () => {
@@ -20,7 +57,7 @@ const BlinkDetection: React.FC = () => {
       await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
       await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
       await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
-      setModelsLoaded(true);
+      setIsModelsLoaded(true);
     };
 
     loadModels();
@@ -43,10 +80,10 @@ const BlinkDetection: React.FC = () => {
   }, [stream]);
 
   useEffect(() => {
-    if (modelsLoaded) {
+    if (isModelsLoaded) {
       startVideo();
     }
-  }, [modelsLoaded]);
+  }, [isModelsLoaded]);
 
   const startVideo = async () => {
     try {
@@ -62,78 +99,69 @@ const BlinkDetection: React.FC = () => {
     }
   };
 
-  const handleVideoPlay = () => {
-    const detectBlink = async () => {
-      if (videoRef.current) {
-        const options = new faceapi.TinyFaceDetectorOptions();
-        const result = await faceapi
-          .detectSingleFace(videoRef.current, options)
-          .withFaceLandmarks();
+  const faceDetect = async () => {
+    // console.log(trackIsCenter, trackIsLeft, trackIsRight, trackIsMouthOpen);
+    if (
+      trackIsCenter &&
+      trackIsLeft &&
+      trackIsRight &&
+      trackIsMouthOpen &&
+      isCapture === false
+    ) {
+      await sleep(1000);
+      capture();
+    }
 
-        if (result) {
-          const leftEye = result.landmarks.getLeftEye();
-          const rightEye = result.landmarks.getRightEye();
-          const leftEAR = calculateEAR(leftEye);
-          const rightEAR = calculateEAR(rightEye);
-          if (rightEAR > 0.65 && !rightImg) {
-            console.log("Turned left");
-            //   await captureImage("left");
-          }
-          if (leftEAR > 0.65 && !leftImg) {
-            console.log("Turned right");
-            //   await captureImage("right");
-          }
-          const mouth = result.landmarks.getMouth();
-          const mouthDist = mouthDistance([
-            mouth[13],
-            mouth[14],
-            mouth[15],
-            mouth[17],
-            mouth[18],
-            mouth[19],
-          ]);
-          if (mouthDist > 35) {
-            console.log("Mouth opened");
-          } else {
-            console.log("Mouth closed");
-          }
-          //   closeUp([
-          //     result.landmarks.positions[0],
-          //     result.landmarks.positions[16],
-          //   ]);
-          //   console.log("result", result);
-          //   drawFaceLandmark(result);
-          drawStaticEllipse(result);
+    if (videoRef.current) {
+      const options = new faceapi.TinyFaceDetectorOptions();
+      const result = await faceapi
+        .detectSingleFace(videoRef.current, options)
+        .withFaceLandmarks();
+
+      if (result) {
+        const leftEye = result.landmarks.getLeftEye();
+        const rightEye = result.landmarks.getRightEye();
+        const leftEAR = calculateEAR(leftEye);
+        const rightEAR = calculateEAR(rightEye);
+        if (rightEAR > 0.4 && trackIsCenter) {
+          console.log("Turned left");
+          setIsTurnLeft(true);
+          trackIsLeft = true;
         }
+        if (leftEAR > 0.4 && trackIsCenter) {
+          console.log("Turned right");
+          setIsTurnRight(true);
+          trackIsRight = true;
+        }
+
+        const mouth = result.landmarks.getMouth();
+        const mouthDist = mouthDistance([
+          mouth[13],
+          mouth[14],
+          mouth[15],
+          mouth[17],
+          mouth[18],
+          mouth[19],
+        ]);
+        if (mouthDist > 35 && trackIsCenter) {
+          console.log("Mouth opened");
+          setIsMouthOpen(true);
+          trackIsMouthOpen = true;
+        }
+
+        // drawFaceLandmark(result);
+        drawStaticEllipse(result);
       }
-
-      requestAnimationFrame(detectBlink);
-    };
-
-    detectBlink();
-  };
-
-  const closeUp = (face: faceapi.Point[]) => {
-    if (face[0].x > 220 && face[1].x > 420) {
-      console.log("far");
     }
 
-    if (face[0].x < 170 && face[1].x < 370) {
-      console.log("closed");
-    }
+    requestAnimationFrame(faceDetect);
   };
 
-  const captureImage = async (name: string) => {
-    if (name === "left" && !leftImg) {
-      await capture("left");
-      setLeftImg(true);
-    } else if (name === "right" && !rightImg) {
-      await capture("right");
-      setRightImg(true);
-    }
+  const handleVideoPlay = () => {
+    faceDetect();
   };
 
-  const capture = async (name: string) => {
+  const capture = async () => {
     if (videoRef.current) {
       // Create a canvas element
       const canvas = document.createElement("canvas");
@@ -149,18 +177,20 @@ const BlinkDetection: React.FC = () => {
         canvas.toBlob((blob) => {
           if (blob) {
             // Create a File from the Blob
-            const file = new File([blob], `${name}-${Date.now()}.png`, {
+            const file = new File([blob], `${customerCode}-${Date.now()}.png`, {
               type: "image/png",
             });
 
-            // Save the file locally (browser prompts user to save file)
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(file);
-            link.download = file.name;
-            link.click();
-
-            // Optionally, send the file to the server
-            // sendFileToServer(file);
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                setImage(reader.result as string);
+              };
+              reader.readAsDataURL(file);
+              // setFile(file);
+              dispatch(setFaceImage(file));
+              isCapture = true;
+            }
           }
         }, "image/png");
       }
@@ -196,82 +226,79 @@ const BlinkDetection: React.FC = () => {
     return mouthDistance;
   };
 
-  const sendFileToServer = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("corporateCode", "800000001");
-    formData.append("docType", "id");
+  // const sendFileToServer = async (file: File) => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("corporateCode", `${customerCode}`);
+  //   formData.append("docType", "id");
 
-    try {
-      const response = await axios.post(
-        "/api/v1/corporate/document/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${getCookies()}`,
-          },
-        }
-      );
+  //   try {
+  //     const response = await axios.post(
+  //       "/api/v1/corporate/document/upload",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${getCookies()}`,
+  //         },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        console.log("Image uploaded successfully");
-      } else {
-        console.error("Error uploading image");
-      }
-    } catch (error) {
-      console.error("Error uploading image", error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       console.log("Image uploaded successfully");
+  //     } else {
+  //       console.error("Error uploading image");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading image", error);
+  //   }
+  // };
 
-  const drawFaceLandmark = (
-    result: faceapi.WithFaceLandmarks<{
-      detection: faceapi.FaceDetection;
-    }>
-  ) => {
-    const ctx = canvasRef2.current?.getContext("2d");
-    if (ctx && videoRef.current) {
-      // Clear the previous drawings
-      ctx.clearRect(
-        0,
-        0,
-        canvasRef2.current!.width,
-        canvasRef2.current!.height
-      );
+  // const drawFaceLandmark = (
+  //   result: faceapi.WithFaceLandmarks<{
+  //     detection: faceapi.FaceDetection;
+  //   }>
+  // ) => {
+  //   const ctx = canvasRef2.current?.getContext("2d");
+  //   if (ctx && videoRef.current) {
+  //     // Clear the previous drawings
+  //     ctx.clearRect(
+  //       0,
+  //       0,
+  //       canvasRef2.current!.width,
+  //       canvasRef2.current!.height
+  //     );
 
-      // Resize canvas to match video dimensions
-      faceapi.matchDimensions(canvasRef2.current!, {
-        width: videoRef.current.videoWidth,
-        height: videoRef.current.videoHeight,
-      });
+  //     // Resize canvas to match video dimensions
+  //     faceapi.matchDimensions(canvasRef2.current!, {
+  //       width: videoRef.current.videoWidth,
+  //       height: videoRef.current.videoHeight,
+  //     });
 
-      const resizedResults = faceapi.resizeResults(result, {
-        width: videoRef.current.videoWidth,
-        height: videoRef.current.videoHeight,
-      });
+  //     const resizedResults = faceapi.resizeResults(result, {
+  //       width: videoRef.current.videoWidth,
+  //       height: videoRef.current.videoHeight,
+  //     });
 
-      const box = resizedResults.detection.box;
-      console.log("Face Bounding Box:", box);
-
-      // facelandmarks
-      faceapi.draw.drawFaceLandmarks(canvasRef2.current!, resizedResults);
-      // face box
-      faceapi.draw.drawDetections(canvasRef2.current!, resizedResults);
-    }
-  };
+  //     // facelandmarks
+  //     faceapi.draw.drawFaceLandmarks(canvasRef2.current!, resizedResults);
+  //     // face box
+  //     faceapi.draw.drawDetections(canvasRef2.current!, resizedResults);
+  //   }
+  // };
 
   const drawStaticEllipse = (
-    // color: string,
     detections: faceapi.WithFaceLandmarks<{
       detection: faceapi.FaceDetection;
     }>
   ) => {
     // Resize canvas to match video dimensions
-    faceapi.matchDimensions(canvasRef.current!, {
-      width: videoRef.current!.videoWidth,
-      height: videoRef.current!.videoHeight,
-    });
-
+    if (videoRef && videoRef.current !== null && canvasRef.current !== null) {
+      faceapi.matchDimensions(canvasRef.current, {
+        width: videoRef.current.videoWidth,
+        height: videoRef.current.videoHeight,
+      });
+    }
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
 
@@ -292,30 +319,33 @@ const BlinkDetection: React.FC = () => {
     const faceCenterX = box.x + box.width / 2;
     const faceCenterY = box.y + box.height / 2;
 
-    // console.log("face", box.x, box.width, box.y, box.height);
-    // console.log("centerX", centerX, "centerY", centerY);
-    // console.log("ellipse", ellipseWidth, ellipseHeight);
-    // console.log("canvas", canvas!.width, canvas!.height);
-    // console.log("faceCenter", faceCenterX, faceCenterY);
-
     let color = "green";
+    const faceDis = Math.sqrt(
+      Math.pow(
+        detections.landmarks.positions[0].x -
+          detections.landmarks.positions[16].x,
+        2
+      ) +
+        Math.pow(
+          detections.landmarks.positions[0].y -
+            detections.landmarks.positions[16].y,
+          2
+        )
+    );
 
     if (
-      Math.abs(faceCenterX - centerX) < 10 &&
-      Math.abs(faceCenterY - 30 - centerY) < 10
+      Math.abs(faceCenterX - centerX) < 30 &&
+      Math.abs(faceCenterY - 30 - centerY) < 30 &&
+      Math.abs(faceDis - ellipseWidth * 2) < 20
     ) {
-      //   console.log("face is in center");
       color = "green";
+      setIsCenter(true);
+      trackIsCenter = true;
     } else {
-      //   console.log("face is not in center");
       color = "black";
+      setIsCenter(false);
+      trackIsCenter = false;
     }
-
-    // const isInEllipse =
-    //   Math.pow(faceCenterX - centerX, 2) / Math.pow(ellipseWidth, 2) +
-    //     Math.pow(faceCenterY - centerY, 2) / Math.pow(ellipseHeight, 2) <=
-    //   1;
-    // console.log("is in ellipse", isInEllipse);
 
     // Set composite mode to 'destination-out' to cut out the ellipse area
     ctx!.globalCompositeOperation = "destination-out";
@@ -349,19 +379,73 @@ const BlinkDetection: React.FC = () => {
     ctx!.stroke();
   };
 
+  const takePhoto = () => {
+    if (isCenter && isMouthOpen && isTurnLeft && isTurnRight) {
+      console.log("take a photo");
+      capture();
+    } else {
+      console.log("actions incomplete");
+    }
+  };
+
+  const getMessage = () => {
+    if (!isCenter) {
+      actionMessage.center === null
+        ? setActionMessage((prevState) => ({
+            ...prevState,
+            center: "please center",
+          }))
+        : null;
+      return "please put your face in center";
+    } else if (!isTurnLeft) {
+      actionMessage.turnLeft === null
+        ? setActionMessage((prevState) => ({
+            ...prevState,
+            turnLeft: "please turn left",
+          }))
+        : null;
+      return "please turn left";
+    } else if (!isTurnRight) {
+      actionMessage.turnRight === null
+        ? setActionMessage((prevState) => ({
+            ...prevState,
+            turnRight: "please turn right",
+          }))
+        : null;
+      return "please turn right";
+    } else if (!isMouthOpen) {
+      actionMessage.mouthOpen === null
+        ? setActionMessage((prevState) => ({
+            ...prevState,
+            mouthOpen: "please open mouth",
+          }))
+        : null;
+      return "please open your mouth";
+    } else {
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    // if (file !== null) {
+    //   await sendFileToServer(file);
+    // }
+    navigate("");
+  };
+
   return (
-    <>
+    <div className="p-10">
       <div className="relative">
         <video
           ref={videoRef}
           onPlay={handleVideoPlay}
-          style={{ display: modelsLoaded ? "block" : "none" }}
-          width="720"
-          height="560"
+          style={{ display: isModelsLoaded ? "block" : "none" }}
+          width="640"
+          height="480"
           autoPlay
           muted
         />
-        {!modelsLoaded && <p>Loading models...</p>}
+        {!isModelsLoaded && <p>Loading models...</p>}
 
         <canvas
           ref={canvasRef}
@@ -369,8 +453,8 @@ const BlinkDetection: React.FC = () => {
             position: "absolute",
             top: 0,
             left: 0,
-            width: "720px",
-            height: "560px",
+            width: "640px",
+            height: "480px",
           }}
         />
         <canvas
@@ -379,13 +463,35 @@ const BlinkDetection: React.FC = () => {
             position: "absolute",
             top: 0,
             left: 0,
-            width: "720px",
-            height: "560px",
+            width: "640px",
+            height: "480px",
           }}
         />
       </div>
-    </>
-  );
-};
 
-export default BlinkDetection;
+      {isModelsLoaded && (
+        <div className="py-10 w-[640px] flex justify-center text-green-500 text-xl font-bold">
+          {getMessage()}
+        </div>
+      )}
+
+      {isModelsLoaded && (
+        <div
+          className="py-10 w-[640px] flex justify-center"
+          onClick={() => takePhoto()}
+        >
+          <Camera className="w-10 h-10" />
+        </div>
+      )}
+
+      {image && (
+        <div className="w-1/2 pb-20">
+          <img src={image} alt="Screenshot" />
+          <div className="flex justify-center py-5">
+            <Button onClick={() => handleSubmit()}>Submit</Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

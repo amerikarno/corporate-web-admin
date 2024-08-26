@@ -3,6 +3,7 @@ import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/Co
 import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
 import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
 import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
+import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
 import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 import { Outlet, Route } from "react-router-dom";
 
@@ -17,8 +18,9 @@ export const createJobRoutes = () => {
       <Route path="added-individual-account" element={<Outlet />}>
         <Route index element={<AddIndividualAccount />} />
         <Route path=":page" element={<AddIndividualAccount />} />
-        <Route path="basicinfo" element={<BasicInfo/>}/>
-        <Route path="suittestfatca" element={<SuitTestFatca/>}/>
+        <Route path="basicinfo" element={<BasicInfo />} />
+        <Route path="suittestfatca" element={<SuitTestFatca />} />
+        <Route path="liveness" element={<Liveness />} />
       </Route>
       <Route path="special-edd" element={<BlankPage name="Special EDD" />} />
       <Route
