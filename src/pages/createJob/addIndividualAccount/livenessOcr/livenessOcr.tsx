@@ -5,10 +5,9 @@ import * as faceapi from "face-api.js";
 import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { sleep } from "@/lib/utils";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFaceImage } from "@/features/livenessOcr/livenessOcr";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "@/app/store";
 
 type TActionMessage = {
   turnLeft: string | null;

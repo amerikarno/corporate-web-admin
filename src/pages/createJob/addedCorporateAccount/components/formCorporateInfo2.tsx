@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { mapKeyLabel } from "../constants2/variables";
 import { CheckBox } from "@/components/Checkbox";
-import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants2/types";
 import { Button } from "@/components/ui/button";
@@ -23,11 +22,9 @@ type TCorporateTypeAndIncomeProps = {
   corporateCode?: string;
 };
 
-export function FormCorporateTypeAndIncome({}:
-TCorporateTypeAndIncomeProps) {
-
+export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   const getCheckedLabel = (corpData: TCorporateData) => {
-    console.log(corpData)
+    console.log(corpData);
     const jrType = corpData?.CorporateTypes;
     const buType = corpData?.BusinessTypes;
     const srcOfIncome = corpData?.SourceOfIncomes;
@@ -50,7 +47,7 @@ TCorporateTypeAndIncomeProps) {
 
   const getFrom2Response = () => {
     const corpData = useSelector((state: RootState) => state.editCorporate);
-    console.log(corpData)
+    console.log(corpData);
     const {
       jrType,
       buType,
@@ -59,7 +56,7 @@ TCorporateTypeAndIncomeProps) {
       invType,
       countrySrcOfIncomeTh,
     } = getCheckedLabel(corpData) || {};
-  
+
     let res: CorporateResponse = {
       ...jrType,
       ...buType,
@@ -67,9 +64,8 @@ TCorporateTypeAndIncomeProps) {
       ...countrySrcOfIncome,
       ...invType,
       ...countrySrcOfIncomeTh,
-  
     };
-    console.log(res)
+    console.log(res);
     // console.log(JSON.stringify(res, null, 2));
     return res;
     // } else {
@@ -86,7 +82,7 @@ TCorporateTypeAndIncomeProps) {
   const token = getCookies();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   console.log(resFrom2);
   useEffect(() => {
     const fetchCorporateTypeData = async () => {
@@ -112,15 +108,20 @@ TCorporateTypeAndIncomeProps) {
     };
 
     fetchCorporateTypeData();
-    setResForm2({...corporateData.BusinessTypes,...corporateData.CorporateTypes,...corporateData.SourceOfIncomes,...corporateData.CountrySourceIncomes?.[0]})
-  }, [dispatch, corporateData.CorporateCode , token]);
+    setResForm2({
+      ...corporateData.BusinessTypes,
+      ...corporateData.CorporateTypes,
+      ...corporateData.SourceOfIncomes,
+      ...corporateData.CountrySourceIncomes?.[0],
+    });
+  }, [dispatch, corporateData.CorporateCode, token]);
 
   const setStoreData = (data: CorporateResponse) => {
-    console.log("go to this")
+    console.log("go to this");
     let tmp = copy(corporateData);
     console.log(tmp);
-    console.log(data)
-    console.log(tmp?.CountrySourceIncomes?.[0])
+    console.log(data);
+    console.log(tmp?.CountrySourceIncomes?.[0]);
     if (tmp.CorporateTypes) {
       tmp.CorporateTypes.isJuristicThailand = data.isJuristicThailand
         ? true
@@ -218,15 +219,14 @@ TCorporateTypeAndIncomeProps) {
         ? data.otherCountry
         : "";
     }
-    console.log(tmp)
+    console.log(tmp);
     dispatch(setCorporateData(tmp));
     setResForm2(data);
   };
 
-
   const saveJuristicType = async (data: CorporateResponse | null) => {
-    console.log(data?.corporateCountry?.isThailand)
-    console.log(data?.corporateCountry?.other)
+    console.log(data?.corporateCountry?.isThailand);
+    console.log(data?.corporateCountry?.other);
     if (data !== null) {
       let body = {
         ...data,
@@ -236,11 +236,17 @@ TCorporateTypeAndIncomeProps) {
         corporateCountry: undefined,
         deleteBy: undefined,
         corporateCode: corporateData.CorporateCode?.toString(),
-        isThailand: data.corporateCountry?.isThailand  ? (data.corporateCountry?.isThailand ? true : false) : false,
-        otherCountry: data.corporateCountry?.isThailand ? "" : data.corporateCountry?.other,
+        isThailand: data.corporateCountry?.isThailand
+          ? data.corporateCountry?.isThailand
+            ? true
+            : false
+          : false,
+        otherCountry: data.corporateCountry?.isThailand
+          ? ""
+          : data.corporateCountry?.other,
       };
-      console.log(body.isThailand)
-      console.log(body.otherCountry)
+      console.log(body.isThailand);
+      console.log(body.otherCountry);
       try {
         const res = await axios.post("/api/v1/corporate/update/type", body, {
           headers: {
@@ -261,33 +267,36 @@ TCorporateTypeAndIncomeProps) {
       }
     }
   };
-  const createJuristicType = async (data: CorporateResponse , corporateData:any) => {
-    
+  const createJuristicType = async (
+    data: CorporateResponse,
+    corporateData: any
+  ) => {
     try {
       if (data !== null) {
-        let body = mapToForm2Create(data)
-        body={
+        let body = mapToForm2Create(data);
+        body = {
           ...body,
           corporateCode: corporateData.CorporateCode.toString(),
           isThailand: data.corporateCountry?.isThailand ? true : false,
           otherCountry: data.corporateCountry?.other,
+        };
+        console.log("body: ", body);
+        const token = getCookies();
+        const res = await axios.post("/api/v1/corporate/create-type", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          console.log("request success", res.data);
+          setStoreData(body);
+          navigate("/create-job/added-corporate-account/3");
+        } else {
+          alert("Invalid Input.");
+          console.log("create failed");
         }
-        console.log("body: ",body)
-      const token = getCookies();
-      const res = await axios.post("/api/v1/corporate/create-type", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        console.log("request success", res.data);
-        setStoreData(body)
-        navigate("/create-job/added-corporate-account/3");
-      } else {
-        alert("Invalid Input.");
-        console.log("create failed");
       }
-    }    } catch (error) {
+    } catch (error) {
       console.log(error);
       alert(error);
     }
@@ -406,22 +415,21 @@ TCorporateTypeAndIncomeProps) {
         setResForm2({ ...srcIncome });
         break;
 
-        case "countrySourceOfIncome":
-          let countrySrcIncome = copy(resFrom2);
-          
-          if (!countrySrcIncome.corporateCountry) {
-            countrySrcIncome.corporateCountry = {};
-          }
-        
-          if (key === "isThailand") {
-            countrySrcIncome.corporateCountry.isThailand = checked;
-          } else {
-            countrySrcIncome.corporateCountry.isThailand = !checked;
-          }
-        
-          setResForm2({ ...countrySrcIncome });
-          break;
-        
+      case "countrySourceOfIncome":
+        let countrySrcIncome = copy(resFrom2);
+
+        if (!countrySrcIncome.corporateCountry) {
+          countrySrcIncome.corporateCountry = {};
+        }
+
+        if (key === "isThailand") {
+          countrySrcIncome.corporateCountry.isThailand = checked;
+        } else {
+          countrySrcIncome.corporateCountry.isThailand = !checked;
+        }
+
+        setResForm2({ ...countrySrcIncome });
+        break;
 
       case "investmentObjective":
         let invObj = copy(resFrom2);
@@ -475,22 +483,20 @@ TCorporateTypeAndIncomeProps) {
     }
     setResForm2({ ...form2Data });
   };
-  
+
   const onSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     console.log(resFrom2);
-    
-    if (corporateData.CountrySourceIncomes){
-      console.log("do update")
-      await saveJuristicType(resFrom2);
-    }
-    else{
-      console.log("do create")
-      await createJuristicType(resFrom2,corporateData);
-    }
 
+    if (corporateData.CountrySourceIncomes) {
+      console.log("do update");
+      await saveJuristicType(resFrom2);
+    } else {
+      console.log("do create");
+      await createJuristicType(resFrom2, corporateData);
+    }
   };
 
   if (resFrom2 === null) {
@@ -791,33 +797,32 @@ TCorporateTypeAndIncomeProps) {
       </Card>
 
       <Card>
-      <h1 className="font-bold p-2">Country Source Of Income</h1>
-      <div className="grid grid-cols-2 items-start gap-4 p-4">
-        <RadioCheckBox
-          id="34"
-          label={mapKeyLabel[34].label}
-          name="countrySourceOfIncome"
-          checked={resFrom2?.corporateCountry?.isThailand === true}
-          onChange={(e) => handleCheckedBox(e, mapKeyLabel[34].key)}
-        />
-        <RadioCheckBox
-          id="35"
-          label={mapKeyLabel[35].label}
-          name="countrySourceOfIncome"
-          checked={resFrom2?.corporateCountry?.isThailand === false}
-          onChange={(e) => handleCheckedBox(e, mapKeyLabel[35].key)}
-        />
-        {resFrom2?.corporateCountry?.isThailand === false && (
-          <Input
-            className="col-start-2"
-            name="countrySourceOfIncomeOther"
-            placeholder="Others Please Specify"
-            onChange={handleInputOthersOption}
-            value={resFrom2?.corporateCountry?.other || ""}
+        <h1 className="font-bold p-2">Country Source Of Income</h1>
+        <div className="grid grid-cols-2 items-start gap-4 p-4">
+          <RadioCheckBox
+            id="34"
+            label={mapKeyLabel[34].label}
+            name="countrySourceOfIncome"
+            checked={resFrom2?.corporateCountry?.isThailand === true}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[34].key)}
           />
-        )}
-      </div>
-
+          <RadioCheckBox
+            id="35"
+            label={mapKeyLabel[35].label}
+            name="countrySourceOfIncome"
+            checked={resFrom2?.corporateCountry?.isThailand === false}
+            onChange={(e) => handleCheckedBox(e, mapKeyLabel[35].key)}
+          />
+          {resFrom2?.corporateCountry?.isThailand === false && (
+            <Input
+              className="col-start-2"
+              name="countrySourceOfIncomeOther"
+              placeholder="Others Please Specify"
+              onChange={handleInputOthersOption}
+              value={resFrom2?.corporateCountry?.other || ""}
+            />
+          )}
+        </div>
 
         <h1 className="font-bold p-2">Investment Objective</h1>
         <div className="p-4 space-y-2">

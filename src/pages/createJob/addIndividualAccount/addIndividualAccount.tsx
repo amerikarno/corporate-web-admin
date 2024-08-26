@@ -1,8 +1,6 @@
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import Liveness from "./livenessOcr/livenessOcr";
-import { CardWebcamInstructions } from "./livenessOcr/cardScan/webCamInstructions";
-import IDCardCapture from "./livenessOcr/cardScan/idCardCapture";
 // import { Card, CardContent } from "@/components/ui/card";
 // import { zodResolver } from "@hookform/resolvers/zod";
 // import { useForm } from "react-hook-form";

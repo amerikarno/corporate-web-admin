@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TIndividualsShareholders } from "@/pages/createJob/addedCorporateAccount/constants2/types";
-import { TIndividualShareholder, TIndividualShareholder as TIndividualShareholderEdit } from "@/pages/todoList/corporateAccountOpening/constant/type";
 interface IndividualShareholderState {
   individualShareholders: TIndividualsShareholders[];
 }
@@ -32,9 +31,11 @@ export const individualShareholderSlice = createSlice({
     clearIndividualShareholder: (state) => {
       state.individualShareholders = [];
     },
-    setIndividualShareholder: (state,action: PayloadAction<TIndividualsShareholders[]>
+    setIndividualShareholder: (
+      state,
+      action: PayloadAction<TIndividualsShareholders[]>
     ) => {
-      state.individualShareholders = action.payload
+      state.individualShareholders = action.payload;
     },
     updateIndividualShareholder: (
       state,

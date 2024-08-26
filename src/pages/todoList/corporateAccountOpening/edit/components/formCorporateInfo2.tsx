@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { mapKeyLabel } from "../constants/variables";
 import { CheckBox } from "@/components/Checkbox";
-import { useFormCorporateInfo2 } from "../hook/useFormCorporateInfo2";
 import { Input } from "@/components/ui/input";
 import { TCorporateInfo } from "../constants/types";
 import { Button } from "@/components/ui/button";
@@ -25,7 +24,7 @@ export function FormCorporateTypeAndIncome({}: // corporateCode,
 TCorporateTypeAndIncomeProps) {
   const getFrom2Response = () => {
     const corpData = useSelector((state: RootState) => state.editCorporate);
-    console.log(corpData)
+    console.log(corpData);
     const {
       jrType,
       buType,
@@ -34,7 +33,7 @@ TCorporateTypeAndIncomeProps) {
       invType,
       countrySrcOfIncomeTh,
     } = getCheckedLabel(corpData) || {};
-  
+
     let res: CorporateResponse = {
       ...jrType,
       ...buType,
@@ -42,14 +41,13 @@ TCorporateTypeAndIncomeProps) {
       ...countrySrcOfIncome,
       ...invType,
       ...countrySrcOfIncomeTh,
-  
     };
-    console.log(res)
+    console.log(res);
     return res;
   };
 
   const getCheckedLabel = (corpData: TCorporateData) => {
-    console.log(corpData)
+    console.log(corpData);
     const jrType = corpData?.CorporateTypes;
     const buType = corpData?.BusinessTypes;
     const srcOfIncome = corpData?.SourceOfIncomes;
@@ -100,14 +98,19 @@ TCorporateTypeAndIncomeProps) {
     };
 
     fetchCorporateTypeData();
-    setResForm2({...corp.BusinessTypes,...corp.CorporateTypes,...corp.SourceOfIncomes,...corp.CountrySourceIncomes?.[0]})
-  }, [dispatch, corp.CorporateCode , token]);
+    setResForm2({
+      ...corp.BusinessTypes,
+      ...corp.CorporateTypes,
+      ...corp.SourceOfIncomes,
+      ...corp.CountrySourceIncomes?.[0],
+    });
+  }, [dispatch, corp.CorporateCode, token]);
   const setStoreData = (data: CorporateResponse) => {
-    console.log("go to this")
+    console.log("go to this");
     let tmp = copy(corp);
     console.log(tmp);
-    console.log(data)
-    console.log(tmp?.CountrySourceIncomes?.[0])
+    console.log(data);
+    console.log(tmp?.CountrySourceIncomes?.[0]);
     if (tmp.CorporateTypes) {
       tmp.CorporateTypes.isJuristicThailand = data.isJuristicThailand
         ? true
@@ -205,12 +208,12 @@ TCorporateTypeAndIncomeProps) {
         ? data.otherCountry
         : "";
     }
-    console.log(tmp)
+    console.log(tmp);
     dispatch(setCorporateData(tmp));
     setResForm2(data);
   };
   const saveJuristicType = async (data: CorporateResponse | null) => {
-    console.log(data?.corporateCountry?.isThailand)
+    console.log(data?.corporateCountry?.isThailand);
     if (data !== null) {
       let body = {
         ...data,
@@ -221,7 +224,9 @@ TCorporateTypeAndIncomeProps) {
         deleteBy: undefined,
         corporateCode: corp.CorporateCode?.toString(),
         isThailand: data.corporateCountry?.isThailand ? true : false,
-        otherCountry: data.corporateCountry?.isThailand ? "" :data.corporateCountry?.other,
+        otherCountry: data.corporateCountry?.isThailand
+          ? ""
+          : data.corporateCountry?.other,
       };
       console.log("body", body);
       try {
@@ -239,14 +244,11 @@ TCorporateTypeAndIncomeProps) {
         } else {
           alert("Invalid Input.");
           console.log("save failed");
-
         }
       } catch (error) {
         console.log(error);
         alert(error);
-
       }
-
     }
   };
   const handleCheckedBox = (
@@ -368,8 +370,8 @@ TCorporateTypeAndIncomeProps) {
         console.log(key, name, checked);
         if (countrySrcIncome && countrySrcIncome.corporateCountry) {
           if (key === "isThailand") {
-            countrySrcIncome.corporateCountry.isThailand = checked
-            
+            countrySrcIncome.corporateCountry.isThailand = checked;
+
             setResForm2({ ...countrySrcIncome });
           } else {
             countrySrcIncome.corporateCountry.isThailand = checked

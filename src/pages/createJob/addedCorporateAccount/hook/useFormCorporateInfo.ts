@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { copy } from "@/lib/utils";
 import { TRegisteredCountryPrimaryCountryOperation } from "../constants2/types";
 import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants2/initialData";
@@ -13,15 +13,19 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
   let resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 602
   );
-  
+
   const initCountryData = {
     registered: resCorpRegisterCountry?.other || "",
-    isRegisteredThailand: resCorpRegisterCountry ? resCorpRegisterCountry.isThailand : false,
+    isRegisteredThailand: resCorpRegisterCountry
+      ? resCorpRegisterCountry.isThailand
+      : false,
     isRegisteredOther: resCorpRegisterCountry
       ? !resCorpRegisterCountry.isThailand
-      : false, 
+      : false,
     primary: resCorpPrimaryCountry?.other || "",
-    isPrimaryCountry: resCorpPrimaryCountry ? resCorpPrimaryCountry.isThailand : false,
+    isPrimaryCountry: resCorpPrimaryCountry
+      ? resCorpPrimaryCountry.isThailand
+      : false,
     isPrimaryOther: resCorpPrimaryCountry
       ? !resCorpPrimaryCountry.isThailand
       : false,

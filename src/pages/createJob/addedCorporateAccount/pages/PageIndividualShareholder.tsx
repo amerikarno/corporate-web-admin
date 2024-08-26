@@ -14,7 +14,10 @@ import {
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-import { TCorporateData, TIndividualShareholder, TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
+import {
+  TCorporateData,
+  TIndividualShareholder as TIndividualShareholderEdit,
+} from "../../constant/type";
 import { mapDataToTIndividualShareholder } from "../libs/utils";
 import { TIndividualsShareholders } from "../constants2/types";
 
@@ -25,7 +28,7 @@ type TPageIndividualShareholderProps = {
 
 export function PageIndividualShareholder({
   corporateCode,
-  corporatesInfo
+  corporatesInfo,
 }: TPageIndividualShareholderProps) {
   const dispatch = useDispatch();
   const token = getCookies();
@@ -53,16 +56,20 @@ export function PageIndividualShareholder({
       .then((res) => {
         console.log("API Response:", res.data);
         if (res.status === 200) {
-          const individualshareholder =res.data[0]?.IndividualShareholders || [];
+          const individualshareholder =
+            res.data[0]?.IndividualShareholders || [];
           if (individualshareholder) {
-            const updateIndividualShareholder: TIndividualsShareholders[] = individualshareholder
-            .map((shareholder: TIndividualShareholderEdit) => ({
-              ...shareholder,
-              corporateCode: String(shareholder.corporateCode),
-            }))
-            .map(mapDataToTIndividualShareholder)
-            .filter((item: any) => item !== null) as TIndividualsShareholders[];
-            
+            const updateIndividualShareholder: TIndividualsShareholders[] =
+              individualshareholder
+                .map((shareholder: TIndividualShareholderEdit) => ({
+                  ...shareholder,
+                  corporateCode: String(shareholder.corporateCode),
+                }))
+                .map(mapDataToTIndividualShareholder)
+                .filter(
+                  (item: any) => item !== null
+                ) as TIndividualsShareholders[];
+
             dispatch(setIndividualShareholder(updateIndividualShareholder));
             console.log(
               "indivudual data fetched successfully.",
@@ -166,7 +173,9 @@ export function PageIndividualShareholder({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Commercial Number</h1>
-                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.registrationNo ?? ""}
+                </h1>
               </div>
             </div>
             <div className="w-1/2 space-y-4">
@@ -176,7 +185,9 @@ export function PageIndividualShareholder({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}
+                </h1>
               </div>
             </div>
           </div>
