@@ -30,10 +30,12 @@ export function useUploadFile() {
         if (fileSizeInMB < 2.0 && documentType !== null) {
           const formData = new FormData();
           formData.append("file", file);
-          // formData.append("flieName", file.name);
-          // formData.append("fileTypes", file.type);
           formData.append("docType", documentType.value);
           formData.append("corporateCode", corporateCode);
+
+          console.log("uploading files");
+          console.log("corporateCode", corporateCode);
+          console.log("docType", documentType.value);
 
           try {
             const response = await axios.post(

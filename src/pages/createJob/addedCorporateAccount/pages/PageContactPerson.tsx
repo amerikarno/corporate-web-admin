@@ -14,15 +14,16 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { TContact, TCorporateData } from "../../constant/type";
 import { useEffect, useState } from "react";
-import { TCorporateInfoSchema } from "../constants2/schemas";
-import { TContactPerson } from "../constants2/types";
 
 type TPageContactPersonProps = {
   corporateCode: string;
   corporatesInfo?: TCorporateData;
 };
 
-export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContactPersonProps) {
+export function PageContactPerson({
+  corporateCode,
+  corporatesInfo,
+}: TPageContactPersonProps) {
   const dispatch = useDispatch();
   const contactPersonData: TContact[] = useSelector<RootState>(
     (state) => state.contactPerson?.contactPersons
@@ -166,7 +167,9 @@ export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContact
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Commercial Number</h1>
-                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.registrationNo ?? ""}
+                </h1>
               </div>
             </div>
             <div className="w-1/2 space-y-4">
@@ -176,7 +179,9 @@ export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContact
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}
+                </h1>
               </div>
             </div>
           </div>

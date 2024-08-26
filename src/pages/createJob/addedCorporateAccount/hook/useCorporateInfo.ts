@@ -6,8 +6,6 @@ import axios from "@/api/axios";
 import { sleep } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { mapDataToTCorporateInfo } from "../libs/utils";
-import { TCorporateInfoSchema } from "../constants2/schemas";
 import { useDispatch } from "react-redux";
 
 export function useCorporateInfo() {
@@ -73,12 +71,11 @@ export function useCorporateInfo() {
   const dispatch = useDispatch();
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
-      if(data.corporateCode === "0" || !data.corporateCode){
+      if (data.corporateCode === "0" || !data.corporateCode) {
         await createCorporateInfo(data);
-      }else{
+      } else {
         await saveCorporateInfo(data);
       }
-      
     } else {
       console.log("session expired");
       alert("Session expired. Please login again");
@@ -87,44 +84,55 @@ export function useCorporateInfo() {
 
   const createCorporateInfo = async (data: TCorporateInfo) => {
     console.log("Input Data:", data);
-  
+
     const body = {
       ...data,
       dateofincorporation: new Date(data.dateofincorporation),
     };
     console.log("Request Body:", body);
-  
+
     try {
       const token = getCookies();
-      const createResponse = await axios.post("/api/v1/corporate/create", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
+      const createResponse = await axios.post(
+        "/api/v1/corporate/create",
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       if (createResponse.status !== 200) {
         alert(JSON.stringify(createResponse.data));
         return;
       }
-  
+
       // const corporateCode = createResponse.data.corporateCode;
-      localStorage.setItem('corporateCode', createResponse.data.corporateCode.toString());
-      const corporateCode = localStorage.getItem('corporateCode') || '';
+      localStorage.setItem(
+        "corporateCode",
+        createResponse.data.corporateCode.toString()
+      );
+      const corporateCode = localStorage.getItem("corporateCode") || "";
       data.corporateCode = corporateCode;
       console.log("Corporate Data with Code:", data);
-  
-      const queryResponse = await axios.post("/api/v1/corporate/query", { corporateCode }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+
+      const queryResponse = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (queryResponse.status === 200 && queryResponse.data.length > 0) {
         dispatch(setCorporateData(queryResponse.data[0]));
-  
+
         setCorporatesInfo((prev) => [...prev, data]);
         setCurrentCorporatesInfo(data);
-  
+
         await sleep(500);
         navigate("/create-job/added-corporate-account/2");
       } else {
@@ -132,10 +140,11 @@ export function useCorporateInfo() {
       }
     } catch (error) {
       console.error("Error creating corporate info:", error);
-      alert("An error occurred while creating corporate information. Please try again.");
+      alert(
+        "An error occurred while creating corporate information. Please try again."
+      );
     }
   };
-  
 
   const saveCorporateInfo = async (data: TCorporateInfo) => {
     console.log(data);
@@ -176,4 +185,3 @@ export function useCorporateInfo() {
     setCorporatesInfo,
   };
 }
-

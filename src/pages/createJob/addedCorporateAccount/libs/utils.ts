@@ -14,7 +14,6 @@ import {
   CorporateTypeBody,
   TAuthorizePerson,
   TContactPerson,
-  TCorporateInfo,
   TDirector,
   TIndividualsShareholders,
   TJuristicsShareholders,
@@ -25,10 +24,7 @@ import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type"
 import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants2/types";
 import { RootState } from "@/app/store";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import axios from "@/api/axios";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useSelector } from "react-redux";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -230,10 +226,14 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
         emailAddress: resPlaceofIncorporation?.emailAddress || "",
         telephone: resPlaceofIncorporation?.telephone || "",
       },
-      registeredCapital: String(data.CorporateFinancials.registeredCapital || ""),
+      registeredCapital: String(
+        data.CorporateFinancials.registeredCapital || ""
+      ),
       revenuePerYear: String(data.CorporateFinancials.revenuePerYear || ""),
       netProFitLoss: String(data.CorporateFinancials.netProfitLoss || ""),
-      shareholderEquity: String(data.CorporateFinancials.shareholderEquity || ""),
+      shareholderEquity: String(
+        data.CorporateFinancials.shareholderEquity || ""
+      ),
     };
 
     return result;
@@ -470,10 +470,10 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
 };
 
 export const getCheckedLabel = (corpData: TCorporateData) => {
-  console.log(corpData)
-  console.log(corpData?.CorporateTypes)
-  console.log(corpData?.BusinessTypes)
-  console.log(corpData?.SourceOfIncomes)
+  console.log(corpData);
+  console.log(corpData?.CorporateTypes);
+  console.log(corpData?.BusinessTypes);
+  console.log(corpData?.SourceOfIncomes);
   const jrType = corpData?.CorporateTypes;
   const buType = corpData?.BusinessTypes;
   const srcOfIncome = corpData?.SourceOfIncomes;
@@ -498,7 +498,7 @@ export const getCheckedLabel = (corpData: TCorporateData) => {
 
 export const getFrom2Response = () => {
   const corpData = useSelector((state: RootState) => state.editCorporate);
-  console.log(corpData)
+  console.log(corpData);
   // const juristicType = useSelector((state: RootState) => state.juristicType);
   // console.log(JSON.stringify(juristicType, null, 2));
   // if (juristicType.corporateCode === 0) {
@@ -519,9 +519,8 @@ export const getFrom2Response = () => {
     ...countrySrcOfIncome,
     ...invType,
     ...countrySrcOfIncomeTh,
-
   };
-  console.log(res)
+  console.log(res);
   // console.log(JSON.stringify(res, null, 2));
   return res;
   // } else {
@@ -529,7 +528,9 @@ export const getFrom2Response = () => {
   // }
 };
 
-export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | any =>{
+export const mapToForm2Create = (
+  data: CorporateResponse
+): CorporateTypeBody | any => {
   try {
     if (data === null) {
       return null;
@@ -537,13 +538,13 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
 
     const result: CorporateTypeBody = {
       isJuristicThailand: data.isJuristicThailand,
-      isTaxExempt:data.isTaxExempt,
-      isNonTaxExempt:data.isNonTaxExempt,
-      isJuristicForeign:data.isJuristicForeign,
-      isOperatingInThailand:data.isOperatingInThailand,
-      isNonOperatingInThailand:data.isNonOperatingInThailand,
-      isOther:data.isOther,
-      isPartnership:data.isPartnership,
+      isTaxExempt: data.isTaxExempt,
+      isNonTaxExempt: data.isNonTaxExempt,
+      isJuristicForeign: data.isJuristicForeign,
+      isOperatingInThailand: data.isOperatingInThailand,
+      isNonOperatingInThailand: data.isNonOperatingInThailand,
+      isOther: data.isOther,
+      isPartnership: data.isPartnership,
       isGovernmentStateEnterprise: data.isGovernmentStateEnterprise,
       isTaxExemptCompany: data.isTaxExemptCompany,
       isAntiqueTrading: data.isAntiqueTrading,
@@ -580,10 +581,9 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
       otherCountry: data.corporateCountry?.other,
       otherInvestment: data.otherInvestment,
       corporateCode: data.corporateCode?.toString(),
-    }
-    return result
-  }catch(error){
-    return null
+    };
+    return result;
+  } catch (error) {
+    return null;
   }
-  
-}
+};

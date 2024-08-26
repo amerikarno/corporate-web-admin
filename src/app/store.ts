@@ -1,6 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import authenReducer from "../features/authen/authenSlice";
 import contactPersonReducer from "../features/contactPersonSlice";
 import listOfDirectorReducer from "../features/ListOfDirectorSlice/listOfDirectorSlice";
@@ -12,10 +10,7 @@ import editCorporateReducer from "@/features/editCorporateData/editCorporateData
 import userReducer from "@/features/user/userSlice";
 import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
-
-
-
-
+import livenessOcr from "@/features/livenessOcr/livenessOcr";
 
 export const store = configureStore({
   reducer: {
@@ -30,11 +25,9 @@ export const store = configureStore({
     user: userReducer,
     orderTrade: orderTradeReducer,
     juristicType: juristicTypeReducer,
-
+    livenessOcr: livenessOcr,
   },
 });
 
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
