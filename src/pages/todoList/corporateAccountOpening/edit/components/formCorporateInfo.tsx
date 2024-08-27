@@ -324,6 +324,7 @@ export function FormCorporateInfo({
     await sleep(500);
     reset();
     onsubmit(formData);
+    setShouldScrollUp(true);
     console.log("formdata : ", formData);
   };
 
@@ -331,7 +332,7 @@ export function FormCorporateInfo({
     <>
       <Card>
         <form
-          id="corporateInfo"
+          id="corporateInfoEdit"
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-row gap-y-8"
         >
@@ -578,11 +579,11 @@ export function FormCorporateInfo({
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
-            <div className="flex justify-end">
+            {/* <div className="flex justify-end">
               <Button disabled={isSubmitting} type="submit">
                 {isSubmitting ? "Saving..." : "Save"}
               </Button>
-            </div>
+            </div> */}
           </div>
         </form>
       </Card>

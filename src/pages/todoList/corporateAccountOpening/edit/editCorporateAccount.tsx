@@ -104,7 +104,11 @@ export function EditCorporateAccount() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/todo-list/corporate-account-opening/edit/${pageId + 1}`);
-    } else if (type == "done") {
+    }else if (type == "submit"){
+
+    }else if (type == "submit2"){
+    
+    }else if (type == "done") {
       localStorage.clear();
       dispatch(clearCorporateData());
       navigate(`/todo-list/corporate-account-opening`);

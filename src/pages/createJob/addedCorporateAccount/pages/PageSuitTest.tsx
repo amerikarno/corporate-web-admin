@@ -133,8 +133,8 @@ export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProp
                 />
               </div>
             </div>
-            <div className="flex justify-end">
-              <Button onClick={handleSubmit}>Submit</Button>
+            <div className="flex justify-end relative">
+              <Button className="absolute top-20 right-0 w-24 " onClick={handleSubmit}>Submit</Button>
             </div>
           </div>
         </CardContent>

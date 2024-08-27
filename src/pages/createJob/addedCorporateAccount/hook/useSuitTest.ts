@@ -4,6 +4,9 @@ import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { mapScore } from "../constants2/variables";
 import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useNavigate } from "react-router-dom";
 
 export function UseSuitTest(corporateCode: string) {
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
@@ -54,7 +57,6 @@ export function UseSuitTest(corporateCode: string) {
       console.log(ans);
       setScore(score);
       setIsSubmit(true);
-
       saveSuitTest(ans);
     }
   };

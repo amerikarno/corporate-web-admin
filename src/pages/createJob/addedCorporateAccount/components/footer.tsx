@@ -36,7 +36,7 @@ export function CreateCorporateFooter({
             Next Form
           </Button>
         ) : pageId === 10 ? (
-        <Button onClick={() => handlePages("done")}>
+        <Button className="bg-white">
           Done
         </Button>
         ):(

@@ -1,10 +1,21 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 type TSuitTableResult = {
   totalScore: number;
 };
 export function SuitTableResult({ totalScore }: TSuitTableResult) {
   const borderTable = "border border-gray-300 p-2 text-center";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleDone = () =>{
+      localStorage.clear();
+      dispatch(clearCorporateData());
+      navigate(`/create-job/added-corporate-account`);
+  }
   return (
     <Card>
       <CardHeader>
@@ -157,6 +168,9 @@ export function SuitTableResult({ totalScore }: TSuitTableResult) {
               {totalScore}
             </div>
           </div>
+        </div>
+        <div className="flex justify-end relative">
+          <Button className="absolute top-20 right-0 w-24 " onClick={handleDone}>Done</Button>
         </div>
       </CardContent>
     </Card>
