@@ -52,19 +52,19 @@ export const basicInfoSchema = z.object({
         bankName: z.string(),
         bankBranchName: z.string(),
         bankAccountNumber: z.string(),
-        is_default: z.boolean(),
+        isDefault: z.boolean(),
     }),
     secondBankAccountBody : z.object({
         bankName: z.string(),
         bankBranchName: z.string(),
         bankAccountNumber: z.string(),
-        is_default: z.boolean(),
+        isDefault: z.boolean(),
     }),
     investment : z.object({
-        shortTermInvestment: z.string(),
-        longTermInvestment: z.string(),
-        taxesInvestment: z.string(),
-        retireInvestment: z.string(),
+        shortTermInvestment: z.boolean(),
+        longTermInvestment: z.boolean(),
+        taxesInvestment: z.boolean(),
+        retireInvestment: z.boolean(),
     }),
     });
 
