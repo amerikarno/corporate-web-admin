@@ -30,6 +30,7 @@ import { z } from "zod";
 import { getCookies } from "@/lib/Cookies";
 import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants/initialData";
 import { useDispatch } from "react-redux";
+import { CommaInput } from "@/components/ui/cmmaAutoInput";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -47,6 +48,7 @@ export function FormCorporateInfo({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue
   } = useForm<TCorporateInfoSchema>({
     resolver: zodResolver(corporateInfoSchema),
     defaultValues: initData,
@@ -65,6 +67,22 @@ export function FormCorporateInfo({
     console.log(initData);
     if (initData) {
       reset(initData);
+      const registeredCapitalValue = parseFloat(initData.registeredCapital || '');
+      const revenuePerYearValue = parseFloat(initData.revenuePerYear || '');
+      const netProfitValue = parseFloat(initData.netProFitLoss || '');
+      const shareholderEquity = parseFloat(initData.shareholderEquity || '');
+      if (!isNaN(registeredCapitalValue)) {
+        setValue("registeredCapital", registeredCapitalValue.toLocaleString());
+      }
+      if (!isNaN(revenuePerYearValue)) {
+        setValue("revenuePerYear", revenuePerYearValue.toLocaleString());
+      }
+      if (!isNaN(netProfitValue)) {
+        setValue("netProFitLoss", netProfitValue.toLocaleString());
+      }
+      if (!isNaN(shareholderEquity)) {
+        setValue("shareholderEquity", shareholderEquity.toLocaleString());
+      }
     }
   }, [initData]);
 
@@ -535,7 +553,7 @@ export function FormCorporateInfo({
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
-            <Input
+            <CommaInput
               step="0.01"
               id={"Registered Capital"}
               label={"Registered Capital"}
@@ -546,7 +564,7 @@ export function FormCorporateInfo({
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
-            <Input
+            <CommaInput
               step="0.01"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
@@ -557,7 +575,7 @@ export function FormCorporateInfo({
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            <Input
+            <CommaInput
               step="0.01"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
@@ -568,7 +586,7 @@ export function FormCorporateInfo({
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            <Input
+            <CommaInput
               step="0.01"
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}

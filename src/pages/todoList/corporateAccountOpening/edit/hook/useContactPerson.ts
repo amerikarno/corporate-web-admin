@@ -36,7 +36,7 @@ export function useContactPerson() {
         }
       } else {
         //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
-        const res = await axios.post("/api/v1/corporate/create-contact", data, {
+        const res = await axios.post("/api/v1/corporate/create/contact", data, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
