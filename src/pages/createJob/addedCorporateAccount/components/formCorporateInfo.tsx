@@ -551,11 +551,11 @@ export function FormCorporateInfo({
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
-            <div className="flex justify-end">
+            {/* <div className="flex justify-end">
               <Button disabled={isSubmitting} type="submit">
                 {isSubmitting ? "Saving..." : "Save"}
               </Button>
-            </div>
+            </div> */}
           </div>
         </form>
       </Card>

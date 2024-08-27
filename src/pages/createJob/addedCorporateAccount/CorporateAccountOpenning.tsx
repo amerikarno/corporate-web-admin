@@ -104,7 +104,11 @@ export default function CorporateAccountOpenning() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    } else if (type == "done") {
+    } else if (type == "submit"){
+
+    }else if (type == "submit2"){
+    
+    }else if(type == "done") {
       localStorage.clear();
       dispatch(clearCorporateData());
       navigate(`/create-job/added-corporate-account`);

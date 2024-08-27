@@ -866,8 +866,8 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
           )}
         </div>
 
-        <div className="p-4 flex justify-end">
-          <Button onClick={(e) => onSubmit(e)}>Submit</Button>
+        <div className="p-4 flex justify-end relative">
+          <Button className="absolute top-20 right-0 w-24 " onClick={(e) => onSubmit(e)}>Next Form</Button>
         </div>
       </Card>
     </>
