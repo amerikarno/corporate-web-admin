@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { TAuthorizePerson } from "../constants/types";
+import { TAuthorizePerson } from "../constants2/types";
 import axios from "@/api/axios";
-import { isExpiredToken, yyyyMMddToDate } from "@/lib/utils";
+import { isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
-import { addAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
+import { addAuthorizedPerson, updateAuthorizedPerson } from "@/features/authorizedPerson/authorizedPersonSlice";
 //import { RootState } from "@/app/store";
 import { useDispatch } from "react-redux";
 
@@ -14,12 +14,29 @@ export function useAuthorizePerson() {
   const saveAuthorizePerson = async (data: TAuthorizePerson) => {
     let body = {
       ...data,
-      expiryDate: yyyyMMddToDate(data.expiryDate).toISOString(),
+      expiryDate: new Date(data.expiryDate),
     };
     console.log(body);
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/personals/create", body, {
+      
+      if(body.personalId){
+        const res = await axios.post("/api/v1/personals/update",body,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          console.log(res)
+          dispatch(updateAuthorizedPerson({ ...data, personalId: res.data.personalId}));
+          setAuthorize([...authorize, data]);
+          console.log("update successful")
+        } else {
+          console.log("update failed");
+        }
+      }
+      else{
+        const res = await axios.post("/api/v1/personals/create", body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,12 +44,11 @@ export function useAuthorizePerson() {
       console.log(res);
       if (res.status === 200) {
         console.log(res.data.personalId);
-        dispatch(
-          addAuthorizedPerson({ ...body, personalId: res.data.personalId })
-        );
+        dispatch(addAuthorizedPerson({ ...data, personalId: res.data.personalId }));
         console.log("save successful");
       }
-    } catch (error: any) {
+    }
+    } catch (error : any) {
       console.log(error);
       alert(error.response.data.message);
     }
@@ -50,6 +66,6 @@ export function useAuthorizePerson() {
   return {
     authorize,
     handleSubmitAuthorize,
-    setAuthorize,
+    setAuthorize
   };
 }

@@ -76,9 +76,13 @@ export default function OrderTradeEdit() {
       if (res.status === 200) {
         console.log(res.data);
         const orderTrades = res.data || [];
-
-        dispatch(setOrderTrades(orderTrades));
-        console.log("OrderTrade data fetched successfully.", orderTrades);
+  
+        const uniqueOrderTrades = orderTrades.filter((order:any, index:any, self:any) =>
+          index === self.findIndex((t:any) => t.id === order.id)
+        );
+  
+        dispatch(setOrderTrades(uniqueOrderTrades));
+        console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
       } else {
         console.log("Failed to fetch orderTrade");
       }
@@ -180,7 +184,8 @@ export default function OrderTradeEdit() {
       operations: buySell,
       id: choosedEditData?.id,
     };
-
+    console.log(choosedEditData)
+    console.log(body)
     try {
       const token = getCookies();
       if (body.id) {
@@ -221,14 +226,6 @@ export default function OrderTradeEdit() {
 
   return (
     <div className="md:p-10 flex flex-col justify-center space-y-4">
-      <Card className="p-4 w-full">
-        <DataTable
-          title="Rejected Orders / Trades Lists"
-          columns={columnsOrderTrade}
-          data={orderTradeData}
-          clearSelectedRows
-        />
-      </Card>
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -346,12 +343,16 @@ export default function OrderTradeEdit() {
                       {errors.cryptoPrice.message}
                     </p>
                   )}
-                  <Input
-                    {...register("currency")}
-                    label="Currency"
-                    id="currency"
-                    disabled={isSubmitting}
-                  />
+                  <select
+                  {...register("currency")}
+                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+                text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
+                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
+                >
+                  <option value="">Currency</option>
+                  <option value="THB">THB</option>
+                  <option value="USD">USD</option>
+                </select>
                   {errors.currency && (
                     <p className="text-red-500 text-sm px-2">
                       {errors.currency.message}
@@ -367,6 +368,14 @@ export default function OrderTradeEdit() {
             </Button>
           </div>
         </form>
+      </Card>
+      <Card className="p-4 w-full">
+        <DataTable
+          title="Rejected Orders / Trades Lists"
+          columns={columnsOrderTrade}
+          data={orderTradeData.map((orderTrade, index) => ({ ...orderTrade, key: index }))}
+          clearSelectedRows
+        />
       </Card>
     </div>
   );

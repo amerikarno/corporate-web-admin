@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TIndividualsShareholders } from "@/pages/createJob/addedCorporateAccount/constants/types";
-import { TIndividualShareholder as TIndividualShareholderEdit } from "@/pages/todoList/corporateAccountOpening/constant/type";
+import { TIndividualsShareholders } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 interface IndividualShareholderState {
   individualShareholders: TIndividualsShareholders[];
 }
@@ -34,14 +33,9 @@ export const individualShareholderSlice = createSlice({
     },
     setIndividualShareholder: (
       state,
-      action: PayloadAction<TIndividualShareholderEdit[]>
+      action: PayloadAction<TIndividualsShareholders[]>
     ) => {
-      state.individualShareholders = action.payload.map(
-        (individualShareholder) => ({
-          ...individualShareholder,
-          corporateCode: String(individualShareholder.corporateCode),
-        })
-      ) as unknown as TIndividualsShareholders[];
+      state.individualShareholders = action.payload;
     },
     updateIndividualShareholder: (
       state,

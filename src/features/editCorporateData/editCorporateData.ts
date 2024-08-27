@@ -98,8 +98,11 @@ const editCorporateSlice = createSlice({
     setCorporateData(state, action: PayloadAction<TCorporateData>) {
       return { ...state, ...action.payload };
     },
+    clearCorporateData(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { setCorporateData } = editCorporateSlice.actions;
+export const { setCorporateData,clearCorporateData } = editCorporateSlice.actions;
 export default editCorporateSlice.reducer;

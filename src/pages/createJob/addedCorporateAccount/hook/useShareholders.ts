@@ -1,18 +1,17 @@
 //import { useState } from "react";
-import { isExpiredToken, yyyyMMddToDate } from "@/lib/utils";
+import { isExpiredToken } from "../libs/utils";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
-import { TIndividualsShareholders } from "../constants/types";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { addIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { TIndividualsShareholders } from "../constants2/types";
+import { useDispatch } from "react-redux";
+import {
+  addIndividualShareholder,
+  updateIndividualShareholder,
+} from "@/features/individualShareholder/individualShareholderSlice";
 
 export function useShareholders() {
+  const token = getCookies();
   const dispatch = useDispatch();
-  const individualShareholderData: TIndividualsShareholders[] =
-    useSelector<RootState>(
-      (state) => state.contactPerson?.contactPersons || []
-    ) as TIndividualsShareholders[];
 
   const handleSubmitShareholders = async (data: TIndividualsShareholders) => {
     if (!isExpiredToken()) {
@@ -31,32 +30,59 @@ export function useShareholders() {
       corporateCode: data.corporateCode ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
-      expiryDate: yyyyMMddToDate(data.expiryDate).toISOString(),
+      expiryDate: data.expiryDate ?? "",
       nationality: data.nationality,
       sharePercentage: data.sharePercentage,
       types: Number(data.types) ?? 301,
+      personalId: data.personalId,
     };
-    console.log("body", body);
+    let dataWithStringDate = { ...body, expiryDate: new Date(data.expiryDate) };
+    //console.log("body", body);
     try {
-      const token = getCookies();
-      const res = await axios.post("/api/v1/personals/create", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.status === 200) {
-        console.log("request success", res);
-        console.log(res.data.personalId);
-        dispatch(
-          addIndividualShareholder({ ...body, personalId: res.data.personalId })
+      console.log("sending data to dispatch : ", body);
+      console.log("sending data to database : ", dataWithStringDate);
+      if (data.personalId) {
+        //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
+        const res = await axios.post(
+          "/api/v1/personals/update",
+          dataWithStringDate,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
-        console.log(individualShareholderData);
+
+        if (res.status === 200) {
+          console.log("Edit successful");
+          dispatch(updateIndividualShareholder(body)); //expiryใน body  เป็น date
+        } else {
+          console.log("Edit failed");
+        }
       } else {
-        console.log("save failed");
+        //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
+
+        const res = await axios.post(
+          "/api/v1/personals/create",
+          dataWithStringDate,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        if (res.status === 200) {
+          console.log("Save successful ", res);
+
+          dispatch(
+            addIndividualShareholder({
+              ...body,
+              personalId: res.data.personalId,
+            })
+          );
+        } else {
+          console.log("Save failed");
+        }
       }
-    } catch (error: any) {
-      console.log(error);
-      alert(error);
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
 

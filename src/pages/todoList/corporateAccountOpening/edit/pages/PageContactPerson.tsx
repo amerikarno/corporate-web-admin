@@ -12,14 +12,15 @@ import {
 } from "@/features/contactPersonSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { TContact } from "../../constant/type";
+import { TContact, TCorporateData } from "../../constant/type";
 import { useEffect, useState } from "react";
 
 type TPageContactPersonProps = {
   corporateCode: string;
+  corporatesInfo?: TCorporateData;
 };
 
-export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
+export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContactPersonProps) {
   const dispatch = useDispatch();
   const contactPersonData: TContact[] = useSelector<RootState>(
     (state) => state.contactPerson?.contactPersons
@@ -63,7 +64,7 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       .catch((error) => {
         console.error("Error fetching contact data:", error);
       });
-  }, [dispatch]);
+  }, [corporateCode, dispatch, token]);
 
   console.log(contactPersonData);
 
@@ -104,11 +105,11 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       selector: (row: TContact) => row.fullNames?.[0]?.lastName || "",
     },
     {
-      name: "CitizenID",
+      name: "Position",
       selector: (row: TContact) => row.position || "",
     },
     {
-      name: "PassportID",
+      name: "Division",
       selector: (row: TContact) => row.division || "",
     },
     {
@@ -148,6 +149,35 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
   return (
     <>
       <div className="p-4 space-y-8">
+      <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+              </div>
+            </div>
+          </div>
+        </Card>
         <Card>
           <DataTable
             title="Contact Person"

@@ -70,8 +70,8 @@ export const corporateSubAddressSchema = z.object({
 
 export const corporateAddressSchema = z.object({
   address: z.array(corporateSubAddressSchema),
-  emailAddress: z.string().email(),
-  telephone: z.string(),
+  emailAddress: z.string(),
+  telephone: z.string().optional(),
 });
 
 export const corporateFinancialsSchema = z.object({

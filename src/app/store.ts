@@ -10,6 +10,7 @@ import editCorporateReducer from "@/features/editCorporateData/editCorporateData
 import userReducer from "@/features/user/userSlice";
 import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
+import livenessOcr from "@/features/livenessOcr/livenessOcr";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     user: userReducer,
     orderTrade: orderTradeReducer,
     juristicType: juristicTypeReducer,
+    livenessOcr: livenessOcr,
   },
 });
 

@@ -48,7 +48,7 @@ export const addressSchema = z.object({
   // PostalCode: z.string().min(1, "postalCode cannot be empty"),
   address: subAddressSchema,
   Telephone: z.string().min(1, "phone cannot be empty"),
-  EmailAddress: z.string().email(),
+  EmailAddress: z.string(),
 });
 
 // export const financialInfoSchema = z.object({
@@ -59,38 +59,16 @@ export const addressSchema = z.object({
 // });
 const registerBusinessAddressSchema = z.object({
   address: z.array(subAddressSchema),
-  emailAddress: z.string().email().min(1, "email cannot be empty"),
+  emailAddress: z.string(),
   telephone: z
-    .string()
-    .min(1, "phone cannot be empty")
-    .superRefine((val, ctx) => {
-      if (!isNumber(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid phone number",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
+    .string(),
 });
 
 const placeIncorporateAddressSchema = z.object({
   address: z.array(subAddressSchema),
-  emailAddress: z.string().email().min(1, "email cannot be empty"),
+  emailAddress: z.string(),
   telephone: z
-    .string()
-    .min(1, "phone cannot be empty")
-    .superRefine((val, ctx) => {
-      if (!isNumber(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid phone number",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
+    .string(),
 });
 
 export const corporateInfoSchema = z.object({
@@ -105,10 +83,10 @@ export const corporateInfoSchema = z.object({
   primary: z.string().optional(),
   registeredBusiness: registerBusinessAddressSchema,
   placeofIncorporation: placeIncorporateAddressSchema,
-  registeredCapital: z.coerce.number().optional(),
-  revenuePerYear: z.coerce.number().optional(),
-  netProFitLoss: z.coerce.number().optional(),
-  shareholderEquity: z.coerce.number().optional(),
+  registeredCapital: z.string().optional(),
+  revenuePerYear: z.string().optional(),
+  netProFitLoss: z.string().optional(),
+  shareholderEquity: z.string().optional(),
 });
 
 export const directorInfoSchema = z.object({
@@ -146,19 +124,8 @@ export const contactPersonSchema = z.object({
   position: z.string().min(1, "position cannot be empty"),
   division: z.string().min(1, "division cannot be empty"),
   telephone: z
-    .string()
-    .min(1, "telephone cannot be empty")
-    .superRefine((val, ctx) => {
-      if (!isNumber(val)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "telephone must be number",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
-  email: z.string().email(),
+    .string(),
+  email: z.string(),
 });
 
 export type TContactPersonSchema = z.infer<typeof contactPersonSchema>;
@@ -245,8 +212,8 @@ export const individualsContactPersonSchema = z.object({
   fullNames: fullNamesSchema,
   position: z.string().min(1, { message: "Position cannot be empty" }),
   division: z.string().min(1, { message: "Division cannot be empty" }),
-  telephone: z.string().min(1, { message: "Phone cannot be empty" }),
-  email: z.string().email(),
+  telephone: z.string(),
+  email: z.string(),
 });
 
 export type TIndividualsContactPersonSchema = z.infer<

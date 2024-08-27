@@ -91,6 +91,7 @@ export function FormIndividualsDirector({
   }, [choosedEditData, setValue]);
 
   useEffect(() => {
+
     const directorData = choosedEditData || {
       fullNames: [{ title: "", firstName: "", lastName: "" }],
       citizenId: "",

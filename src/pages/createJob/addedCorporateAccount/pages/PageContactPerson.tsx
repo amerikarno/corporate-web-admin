@@ -3,41 +3,76 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { FormIndividualsContactPerson } from "../components/formContactPerson";
 //import { columnsContactPerson } from "../constants/columns";
 import { useContactPerson } from "../hook/useContactPerson";
-// import { TContactPerson } from "../constants/types";
 import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { removeContactPerson } from "@/features/contactPersonSlice";
+import {
+  removeContactPerson,
+  setContactPersons,
+} from "@/features/contactPersonSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { TContact, TCorporateData } from "../../constant/type";
+import { useEffect, useState } from "react";
 
 type TPageContactPersonProps = {
   corporateCode: string;
+  corporatesInfo?: TCorporateData;
 };
 
-type TContactPersonWithID = {
-  contacts: {
-    fullNames: {
-      title: string;
-      firstName: string;
-      lastName: string;
-    }[];
-    position: string;
-    division: string;
-    telephone: string;
-    email: string;
-  }[];
-  personalId?: string;
-};
-
-export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
+export function PageContactPerson({
+  corporateCode,
+  corporatesInfo,
+}: TPageContactPersonProps) {
   const dispatch = useDispatch();
+  const contactPersonData: TContact[] = useSelector<RootState>(
+    (state) => state.contactPerson?.contactPersons
+  ) as TContact[];
+  const clearChoosedEditData = () => {
+    setChoosedEditData(undefined);
+  };
+
+  const token = getCookies();
   const { handleSubmitContactPerson } = useContactPerson();
-  const contactPersonData: TContactPersonWithID[] = useSelector<RootState>(
-    (state) => state.contactPerson?.contactPersons || []
-  ) as TContactPersonWithID[];
+  const [choosedEditData, setChoosedEditData] = useState<TContact>();
+
+  useEffect(() => {
+    axios
+      .post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("API Response:", res.data);
+
+        if (res.status === 200) {
+          const contacts = res.data[0]?.Contact || [];
+          const updatedContacts: TContact[] = contacts.map((contact: any) => {
+            return {
+              ...contact,
+              personalId: contact.personalID,
+            };
+          });
+
+          dispatch(setContactPersons(updatedContacts));
+          console.log("Contact data fetched successfully.", contacts);
+        } else {
+          console.log("Failed to fetch contact data or data is not an array.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching contact data:", error);
+      });
+  }, [corporateCode, dispatch, token]);
+
   console.log(contactPersonData);
-  const handleDelete = async (data: TContactPersonWithID) => {
+
+  const handleDelete = async (data: TContact) => {
     console.log(data);
     try {
       const token = getCookies();
@@ -53,52 +88,104 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
       if (res.status === 200) {
         console.log("delete successful");
         dispatch(removeContactPerson(data.personalId));
+        //dispatch(setCorporateData({...corporateData, Contact:contactPersonData}));
       }
     } catch (error) {
       console.log("delete failed", error);
     }
   };
 
-  const columnsContactPerson: TableColumn<TContactPersonWithID>[] = [
+  const columnsContactPerson: TableColumn<TContact>[] = [
     {
       name: "Title",
-      selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.title || "",
+      selector: (row: TContact) => row.fullNames?.[0]?.title || "",
     },
     {
       name: "Firstname",
-      selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.firstName || "",
+      selector: (row: TContact) => row.fullNames?.[0]?.firstName || "",
     },
     {
       name: "Lastname",
-      selector: (row) => row.contacts?.[0]?.fullNames?.[0]?.lastName || "",
+      selector: (row: TContact) => row.fullNames?.[0]?.lastName || "",
     },
     {
-      name: "CitizenID",
-      selector: (row) => row.contacts?.[0]?.position || "",
+      name: "Position",
+      selector: (row: TContact) => row.position || "",
     },
     {
-      name: "PassportID",
-      selector: (row) => row.contacts?.[0]?.division || "",
+      name: "Division",
+      selector: (row: TContact) => row.division || "",
     },
     {
       name: "Email",
-      selector: (row) => row.contacts?.[0]?.email || "",
+      selector: (row: TContact) => row.email || "",
     },
     {
       name: "Phone Number",
-      selector: (row) => row.contacts?.[0]?.telephone || "",
+      selector: (row: TContact) => row.telephone || "",
     },
     {
-      cell: (row: TContactPersonWithID) => (
-        <Button onClick={() => handleDelete(row)}>Delete</Button>
+      cell: (row: TContact) => (
+        <Button
+          onClick={() => {
+            handleDelete(row);
+          }}
+        >
+          Delete
+        </Button>
       ),
       ignoreRowClick: true,
     },
+    {
+      cell: (row: TContact) => (
+        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+      ),
+      ignoreRowClick: true,
+    },
+    // {
+    //   cell: (row: TContact) => (
+    //     <Button onClick={() =>console.log(row)}>See Data Row</Button>
+    //   ),
+    //   ignoreRowClick: true,
+    // },
   ];
 
   return (
     <>
       <div className="p-4 space-y-8">
+        <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.registrationNo ?? ""}
+                </h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </Card>
         <Card>
           <DataTable
             title="Contact Person"
@@ -108,6 +195,8 @@ export function PageContactPerson({ corporateCode }: TPageContactPersonProps) {
           />
         </Card>
         <FormIndividualsContactPerson
+          clearChoosedEditData={clearChoosedEditData}
+          choosedEditData={choosedEditData}
           onsubmit={handleSubmitContactPerson}
           corporateCode={corporateCode}
         />

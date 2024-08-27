@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import {
   corporateInfoSchema,
+  registeredCountryPrimaryCountryOperationSchema,
   TCorporateInfoSchema,
-} from "../constants/schemas";
+} from "../constants2/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TCorporateInfo } from "../constants/types";
+import {
+  TCorporateInfo,
+  TRegisteredCountryPrimaryCountryOperation,
+} from "../constants2/types";
 import { sleep } from "@/lib/utils";
 //import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -12,34 +16,57 @@ import { CorporateAddressForm } from "./CorporateAddressForm";
 import { Input } from "@/components/Input";
 import { Input as OtherInput } from "@/components/ui/input";
 import { CheckBox } from "@/components/Checkbox";
+import { z } from "zod";
 // import { useFormCorporateInfo } from "@/pages/corporate/hook/useFormCorporateInfo";
 import {
   registeredCountryChoices,
   PrimaryCountryOfOperationChoices,
-} from "../constants/variables";
+} from "../constants2/variables";
 import { useState, useEffect } from "react";
-import { useFormCorporateInfo } from "../hook/useFormCorporateInfo";
+import { TCorporateData } from "../../constant/type";
+import { Button } from "@/components/ui/button";
+import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants2/initialData";
+// import { ZodIssue } from "zod";
+import { copy } from "@/lib/utils";
+import { getCookies } from "@/lib/Cookies";
+import { useDispatch } from "react-redux";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
+  initData?: TCorporateInfoSchema;
+  corporatesInfo?: TCorporateData;
 };
 
-export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
+export function FormCorporateInfo({
+  onsubmit,
+  initData,
+  corporatesInfo,
+}: TCorporateInfoFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    // reset,
-    setValue,
+    reset,
   } = useForm<TCorporateInfoSchema>({
     resolver: zodResolver(corporateInfoSchema),
+    defaultValues: initData,
   });
 
-  const [registeredCountryError, setRegisteredCountryError] =
-    useState<boolean>(false);
-  const [primaryCountryOfOperationError, setPrimaryCountryOfOperationError] =
-    useState<boolean>(false);
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
+
+  const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 601
+  );
+  const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+    (item) => item.types === 602
+  );
+
+  useEffect(() => {
+    console.log(initData);
+    if (initData) {
+      reset(initData);
+    }
+  }, [initData]);
 
   useEffect(() => {
     if (shouldScrollUp) {
@@ -52,17 +79,218 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
     }
   }, [shouldScrollUp]);
 
+  const initCountryData = {
+    registered: resCorpRegisterCountry?.other || "",
+    isRegisteredThailand: resCorpRegisterCountry
+      ? resCorpRegisterCountry.isThailand
+      : false,
+    isRegisteredOther: resCorpRegisterCountry
+      ? !resCorpRegisterCountry.isThailand
+      : false,
+    primary: resCorpPrimaryCountry?.other || "",
+    isPrimaryCountry: resCorpPrimaryCountry
+      ? resCorpPrimaryCountry.isThailand
+      : false,
+    isPrimaryOther: resCorpPrimaryCountry
+      ? !resCorpPrimaryCountry.isThailand
+      : false,
+  };
+
+  const [
+    registeredCountryPrimaryCountryOperation,
+    setRegisteredCountryPrimaryCountryOperation,
+  ] = useState<TRegisteredCountryPrimaryCountryOperation>(
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
+  );
+  const token = getCookies();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
+      (item) => item.types === 601
+    );
+    console.log(resCorpRegisterCountry);
+    const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
+      (item) => item.types === 602
+    );
+    setRegisteredCountryPrimaryCountryOperation({
+      ...initCountryData,
+      registered: resCorpRegisterCountry?.other || "",
+      isRegisteredThailand: resCorpRegisterCountry?.isThailand || false,
+      isRegisteredOther: resCorpRegisterCountry?.other
+        ? resCorpRegisterCountry?.other === "Thailand"
+          ? false
+          : true
+        : false,
+      primary: resCorpPrimaryCountry?.other || "",
+      isPrimaryCountry: resCorpPrimaryCountry?.isThailand || false,
+      isPrimaryOther: resCorpPrimaryCountry?.other
+        ? resCorpPrimaryCountry?.other === "Thailand"
+          ? false
+          : true
+        : false,
+    });
+  }, [token, dispatch, initData]);
+  // const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
+  //   useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+
+  useState<TRegisteredCountryPrimaryCountryOperation>(
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
+  );
+  const [
+    // isPrimaryCountryOfOperationOthers,
+    // setIsPrimaryCountryOfOperationOthers,
+  ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // ] = useState<boolean>(false);
+
+  // const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
+
+  // const handleErrors = (error: ZodIssue[] | null) => {
+  //   setErrors(error);
+  // };
+
+  // const getError = (
+  //   keyName: string[],
+  //   errors: ZodIssue[] | null
+  // ): ZodIssue | null => {
+  //   if (errors === null) return null;
+
+  //   return (
+  //     errors.find((error) =>
+  //       keyName.every((key) => error.path!.map(String).includes(key))
+  //     ) || null
+  //   );
+  // };
+
+  const handleRegisteredCountryOthers = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(registeredCountryPrimaryCountryOperation);
+
+    if (name === "Thailand") {
+      tmp.registered = checked ? name : "";
+      tmp.isRegisteredThailand = checked;
+      tmp.isRegisteredOther = false;
+    } else if (name === "Others Countries (Please Specify)") {
+      tmp.registered = "";
+      tmp.isRegisteredThailand = false;
+      tmp.isRegisteredOther = checked;
+    }
+
+    setRegisteredCountryPrimaryCountryOperation(tmp);
+    // if (name == "Others Countries (Please Specify)") {
+    //   setIsRegisteredCountryOthers(checked);
+    // }
+  };
+  const handleInputRegisteredCountryOthers = (e: any) => {
+    const { value } = e.target;
+    let tmp = copy(registeredCountryPrimaryCountryOperation);
+    tmp.registered = value;
+    tmp.isRegisteredThailand = false;
+    tmp.isRegisteredOther = true;
+    setRegisteredCountryPrimaryCountryOperation(tmp);
+    // form1error ? validateLocal(tmp) : null;
+    validateLocal(tmp);
+    console.log(tmp);
+  };
+  const handlePrimaryCountryOfOperationOthers = (e: any) => {
+    const { name, checked } = e.target;
+    let tmp = copy(registeredCountryPrimaryCountryOperation);
+    if (name === "Thailand") {
+      tmp.primary = checked ? name : "";
+      tmp.isPrimaryCountry = checked;
+      tmp.isPrimaryOther = false;
+    } else {
+      tmp.primary = "";
+      tmp.isPrimaryCountry = false;
+      tmp.isPrimaryOther = checked;
+    }
+    setRegisteredCountryPrimaryCountryOperation(tmp);
+    // if (name == "Others Countries (Please Specify)") {
+    //   setIsPrimaryCountryOfOperationOthers(checked);
+    // }
+    validateLocal(tmp);
+  };
+  const handleInputPrimaryCountryOfOperationOthers = (e: any) => {
+    const { value } = e.target;
+    let tmp = copy(registeredCountryPrimaryCountryOperation);
+    tmp.primary = value;
+    tmp.isPrimaryCountry = false;
+    setRegisteredCountryPrimaryCountryOperation(tmp);
+    validateLocal(tmp);
+  };
+
+  // const validateForm = (): boolean => {
+  //   try {
+  //     registeredCountryPrimaryCountryOperationSchema.parse(
+  //       registeredCountryPrimaryCountryOperation
+  //     );
+  //     return true;
+  //   } catch (e) {
+  //     if (e instanceof z.ZodError) {
+  //       handleErrors(e.errors);
+  //     } else {
+  //       console.log(e);
+  //     }
+  //     return false;
+  //   }
+  // };
+
+  const validateLocal = (obj: TRegisteredCountryPrimaryCountryOperation) => {
+    try {
+      registeredCountryPrimaryCountryOperationSchema.parse(obj);
+      // handleErrors(null);
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        console.log(e.errors);
+        // handleErrors(e.errors);
+      } else {
+        console.log(e);
+      }
+    }
+  };
+  const handleInputOthers = (e: any, name: string) => {
+    switch (name) {
+      case "registered":
+        handleInputRegisteredCountryOthers(e);
+        break;
+
+      case "primary":
+        handleInputPrimaryCountryOfOperationOthers(e);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const onSubmit = async (data: TCorporateInfoSchema) => {
+    const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
+      registeredCapital: Math.floor(
+        Number(data.registeredCapital?.replace(/,/g, ""))
+      ),
+      revenuePerYear: Math.floor(
+        Number(data.revenuePerYear?.replace(/,/g, ""))
+      ),
+      netProFitLoss: Math.floor(Number(data.netProFitLoss?.replace(/,/g, ""))),
+      shareholderEquity: Math.floor(
+        Number(data.shareholderEquity?.replace(/,/g, ""))
+      ),
+      corporateCode: corporatesInfo?.CorporateCode.toString(),
+      dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
-        registeredCountryPrimaryCountryOperation.registeredOther,
+        registeredCountryPrimaryCountryOperation.isRegisteredOther,
       isRegisteredThailand:
-        registeredCountryPrimaryCountryOperation.registeredThailand,
+        registeredCountryPrimaryCountryOperation.isRegisteredThailand,
       primary: registeredCountryPrimaryCountryOperation.primary,
-      isPrimaryCountry: registeredCountryPrimaryCountryOperation.primaryCountry,
-      isPrimaryOther: registeredCountryPrimaryCountryOperation.primaryOther,
+      isPrimaryCountry:
+        registeredCountryPrimaryCountryOperation.isPrimaryCountry,
+      isPrimaryOther: registeredCountryPrimaryCountryOperation.isPrimaryOther,
       registeredBusiness: {
         address: [
           {
@@ -102,70 +330,18 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
         telephone: data.placeofIncorporation.telephone,
       },
     };
-
-    if (handleCheckboxError()) {
-      await sleep(500);
-      // console.log(formData);
-      onsubmit(formData);
-      sleep(1500);
-      setShouldScrollUp(true);
-    } else {
-      setShouldScrollUp(true);
-    }
+    await sleep(500);
+    reset();
+    onsubmit(formData);
+    setShouldScrollUp(true);
   };
 
-  const handleCheckboxError = () => {
-    let isValid = true;
-
-    if (registeredCountryPrimaryCountryOperation.registeredThailand) {
-      setRegisteredCountryError(false);
-    } else {
-      if (!registeredCountryPrimaryCountryOperation.registered) {
-        setRegisteredCountryError(true);
-        isValid = false;
-      } else {
-        setRegisteredCountryError(false);
-      }
-    }
-
-    // if (!registeredCountryPrimaryCountryOperation.registered) {
-    //   setRegisteredCountryError(true);
-    //   isValid = false;
-    // } else {
-    //   setRegisteredCountryError(false);
-    // }
-
-    if (registeredCountryPrimaryCountryOperation.primaryCountry) {
-      setPrimaryCountryOfOperationError(false);
-    } else {
-      if (!registeredCountryPrimaryCountryOperation.primary) {
-        setPrimaryCountryOfOperationError(true);
-        isValid = false;
-      } else {
-        setPrimaryCountryOfOperationError(false);
-      }
-    }
-
-    // if (!registeredCountryPrimaryCountryOperation.primary) {
-    //   setPrimaryCountryOfOperationError(true);
-    //   isValid = false;
-    // } else {
-    //   setPrimaryCountryOfOperationError(false);
-    // }
-
-    return isValid;
-  };
-
-  const {
-    disablePrimaryCountryOfOperation,
-    disableRegisteredCountry,
-    handlePrimaryCountryOfOperationOthers,
-    handleRegisteredCountryOthers,
-    isPrimaryCountryOfOperationOthers,
-    isRegisteredCountryOthers,
-    registeredCountryPrimaryCountryOperation,
-    handleInputOthers,
-  } = useFormCorporateInfo();
+  // const {
+  //   handlePrimaryCountryOfOperationOthers,
+  //   handleRegisteredCountryOthers,
+  //   registeredCountryPrimaryCountryOperation,
+  //   handleInputOthers,
+  // } = useFormCorporateInfo(corporatesInfo);
 
   return (
     <>
@@ -179,59 +355,41 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
             <h1 className="col-span-4 font-bold pb-4">
               Juristic Investor Information-For Account Opening
             </h1>
-            {/* <SideLabelInput title="Juristic Investor Name"> */}
             <Input
               id={"Juristic Investor Name"}
               label={"Juristic Investor Name"}
               {...register("name")}
               name="name"
               disabled={isSubmitting}
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`name`, value);
-              }}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Address"> */}
             <Input
               id={"Commercial Registration No."}
               label={"Commercial Registration No."}
               {...register("registrationNo")}
               name="registrationNo"
               disabled={isSubmitting}
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.registrationNo && (
               <p className="text-red-500">{errors.registrationNo.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Tax ID"> */}
             <Input
               id={"Juristic Investor Tax ID"}
               label={"Tax ID"}
               {...register("taxId")}
               name="taxId"
               disabled={isSubmitting}
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`taxId`, value);
-              }}
             />
             {errors.taxId && (
               <p className="text-red-500">{errors.taxId.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Juristic Investor Email"> */}
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
               {...register("dateofincorporation")}
+              name="dateofincorporation"
               type="date"
               disabled={isSubmitting}
             />
@@ -240,7 +398,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
                 {errors.dateofincorporation.message}
               </p>
             )}
-            {/* </SideLabelInput> */}
           </div>
 
           <div className="p-4 space-y-4">
@@ -248,79 +405,80 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Registered Country</h1>
                 <div></div>
-                {registeredCountryChoices.map((item, i) => (
-                  <CheckBox
-                    id={`checkbox-${i}`}
-                    key={i}
-                    label={item}
-                    onChange={(e) => {
-                      handleRegisteredCountryOthers(e);
-                      if (
-                        registeredCountryPrimaryCountryOperation.registered ==
-                        ""
-                      ) {
-                        setRegisteredCountryError(false);
-                      } else {
-                        setRegisteredCountryError(true);
-                      }
-                    }}
-                    name={item}
-                    disabled={disableRegisteredCountry(item)}
-                  />
-                ))}
+                <CheckBox
+                  id={`checkbox-${registeredCountryChoices[0]}`}
+                  key={registeredCountryChoices[0]}
+                  label={registeredCountryChoices[0]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.isRegisteredThailand
+                  }
+                  onChange={(e) => {
+                    handleRegisteredCountryOthers(e);
+                  }}
+                  name={registeredCountryChoices[0]}
+                />
+                <CheckBox
+                  id={`checkbox-${registeredCountryChoices[1]}`}
+                  key={registeredCountryChoices[1]}
+                  label={registeredCountryChoices[1]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.isRegisteredOther
+                  }
+                  onChange={(e) => {
+                    handleRegisteredCountryOthers(e);
+                  }}
+                  name={registeredCountryChoices[1]}
+                />
               </div>
-              {isRegisteredCountryOthers && (
+              {registeredCountryPrimaryCountryOperation.isRegisteredOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "registered")}
+                    defaultValue={resCorpRegisterCountry?.other}
                   />
                 </div>
-              )}
-              {registeredCountryError && (
-                <p className="text-red-500 px-4">
-                  Register Country must be filled.
-                </p>
               )}
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Primary Country of Operation</h1>
                 <div></div>
-                {PrimaryCountryOfOperationChoices.map((item, i) => (
-                  <CheckBox
-                    id={`checkbox2-${i}`}
-                    key={i}
-                    label={item}
-                    onChange={(e) => {
-                      handlePrimaryCountryOfOperationOthers(e);
-                      if (
-                        registeredCountryPrimaryCountryOperation.primary == ""
-                      ) {
-                        setPrimaryCountryOfOperationError(false);
-                      } else {
-                        setPrimaryCountryOfOperationError(true);
-                      }
-                    }}
-                    name={item}
-                    disabled={disablePrimaryCountryOfOperation(item)}
-                  />
-                ))}
+                <CheckBox
+                  id={`checkbox2-${PrimaryCountryOfOperationChoices[0]}`}
+                  key={PrimaryCountryOfOperationChoices[0]}
+                  label={PrimaryCountryOfOperationChoices[0]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.isPrimaryCountry
+                  }
+                  onChange={(e) => {
+                    handlePrimaryCountryOfOperationOthers(e);
+                  }}
+                  name={PrimaryCountryOfOperationChoices[0]}
+                />
+                <CheckBox
+                  id={`checkbox2-${PrimaryCountryOfOperationChoices[1]}`}
+                  key={PrimaryCountryOfOperationChoices[1]}
+                  label={PrimaryCountryOfOperationChoices[1]}
+                  checked={
+                    registeredCountryPrimaryCountryOperation.isPrimaryOther
+                  }
+                  onChange={(e) => {
+                    handlePrimaryCountryOfOperationOthers(e);
+                  }}
+                  name={PrimaryCountryOfOperationChoices[1]}
+                />
               </div>
-              {isPrimaryCountryOfOperationOthers && (
+              {registeredCountryPrimaryCountryOperation.isPrimaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "primary")}
+                    defaultValue={resCorpPrimaryCountry?.other}
                   />
                 </div>
-              )}
-              {primaryCountryOfOperationError && (
-                <p className="text-red-500 px-4">
-                  Primary Country of Operation must be filled.
-                </p>
               )}
             </div>
           </div>
@@ -334,42 +492,6 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               register={register}
               keyType="placeofIncorporation"
             />
-            <div className="flex-col">
-              <Input
-                label="Email Address"
-                {...register(
-                  `placeofIncorporation.emailAddress` as keyof TCorporateInfoSchema
-                )}
-                name={`placeofIncorporation.emailAddress`}
-                id={`placeofIncorporation_emailAddress`}
-                disabled={isSubmitting}
-                type="email"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.placeofIncorporation?.emailAddress?.message}
-              </p>
-            )}
-
-            {/* Render telephone field */}
-            <div className="flex-col">
-              <Input
-                label="Telephone"
-                {...register(
-                  `placeofIncorporation.telephone` as keyof TCorporateInfoSchema
-                )}
-                name={`placeofIncorporation.telephone`}
-                id={`placeofIncorporation_telephone`}
-                disabled={isSubmitting}
-                type="tel"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.placeofIncorporation?.telephone?.message}
-              </p>
-            )}
           </div>
 
           <div className="p-4 space-y-4">
@@ -381,120 +503,60 @@ export function FormCorporateInfo({ onsubmit }: TCorporateInfoFormProps) {
               isSubmitting={isSubmitting}
               keyType="registeredBusiness"
             />
-
-            <div className="flex-col">
-              <Input
-                label="Email Address"
-                {...register(
-                  `registeredBusiness.emailAddress` as keyof TCorporateInfoSchema
-                )}
-                name={`registeredBusiness.emailAddress`}
-                id={`registeredBusiness_emailAddress`}
-                disabled={isSubmitting}
-                type="email"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.registeredBusiness?.emailAddress?.message}
-              </p>
-            )}
-
-            {/* Render telephone field */}
-            <div className="flex-col">
-              <Input
-                label="Telephone"
-                {...register(
-                  `registeredBusiness.telephone` as keyof TCorporateInfoSchema
-                )}
-                name={`registeredBusiness.telephone`}
-                id={`registeredBusiness_telephone`}
-                disabled={isSubmitting}
-                type="tel"
-              />
-            </div>
-            {errors && (
-              <p className="text-red-500">
-                {errors?.registeredBusiness?.telephone?.message}
-              </p>
-            )}
           </div>
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
-            {/* <SideLabelInput title="Registered Capital"> */}
             <Input
+              step="0.01"
               id={"Registered Capital"}
               label={"Registered Capital"}
               {...register("registeredCapital")}
               name="registeredCapital"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
             <Input
+              step="0.01"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
               name="revenuePerYear"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Net Profit (Loss)"> */}
             <Input
+              step="0.01"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
               name="netProFitLoss"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Revenue Per Year"> */}
-            {/* </SideLabelInput>
-            <SideLabelInput title="Operating Expense Per Year"> */}
             <Input
+              step="0.01"
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
               name="shareholderEquity"
               disabled={isSubmitting}
-              inputMode="numeric"
-              onInput={(e) => {
-                const value = e.currentTarget.value;
-                setValue(`registrationNo`, value);
-              }}
             />
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>
             )}
+            <div className="flex justify-end">
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </div>
           </div>
-          {/* <div className="flex justify-end pb-4 pr-4">
-            <Button form="corporateInfo" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
-          </div> */}
         </form>
       </Card>
     </>

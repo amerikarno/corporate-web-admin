@@ -51,7 +51,7 @@ export function CorporateAddressForm({
                 label={newFields[index]}
                 {...register(`${keyType}.address[0].${fieldName}` as any)}
                 name={`${keyType}.address[0].${fieldName}`}
-                id={fieldName}
+                id={`id-${keyType}.address[0].${fieldName}`}
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
@@ -72,7 +72,7 @@ export function CorporateAddressForm({
           label="Email Address"
           {...register(`${keyType}.emailAddress` as keyof TCorporateInfoSchema)}
           name={`${keyType}.emailAddress`}
-          id="emailAddress"
+          id={`id-${keyType}.emailAddress`}
           disabled={isSubmitting}
           type="email"
         />
@@ -84,7 +84,7 @@ export function CorporateAddressForm({
           label="Telephone"
           {...register(`${keyType}.telephone` as keyof TCorporateInfoSchema)}
           name={`${keyType}.telephone`}
-          id="telephone"
+          id={`id-${keyType}.telephone`}
           disabled={isSubmitting}
           type="tel"
         />

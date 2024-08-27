@@ -124,6 +124,7 @@ export function useFormCorporateInfo2() {
   };
 
   const saveJuristicType = async (data: CorporateResponse | null) => {
+    console.log(data?.corporateCountry?.isThailand)
     if (data !== null) {
       let body = {
         ...data,
@@ -134,7 +135,7 @@ export function useFormCorporateInfo2() {
         deleteBy: undefined,
         corporateCode: corp.CorporateCode?.toString(),
         isThailand: data.corporateCountry?.isThailand ? true : false,
-        otherCountry: data.corporateCountry?.other,
+        otherCountry: data.corporateCountry?.isThailand ? "" :data.corporateCountry?.other,
       };
       console.log("body", body);
       try {
@@ -290,11 +291,12 @@ export function useFormCorporateInfo2() {
 
       case "countrySourceOfIncome":
         let countrySrcIncome = copy(resFrom2);
-        console.log(countrySrcIncome);
+        //console.log(countrySrcIncome);
         console.log(key, name, checked);
         if (countrySrcIncome && countrySrcIncome.corporateCountry) {
           if (key === "isThailand") {
-            countrySrcIncome.corporateCountry.isThailand = checked;
+            countrySrcIncome.corporateCountry.isThailand = checked
+            
             setResForm2({ ...countrySrcIncome });
           } else {
             countrySrcIncome.corporateCountry.isThailand = checked
@@ -311,10 +313,10 @@ export function useFormCorporateInfo2() {
         let invObj = copy(resFrom2);
         console.log(key, name, checked);
         if (invObj && invObj !== null) {
-          invObj.isLiquidation = false;
-          invObj.isInvestment = false;
-          invObj.isCashManagement = false;
-          invObj.isOtherInvestment = false;
+          // invObj.isLiquidation = false;
+          // invObj.isInvestment = false;
+          // invObj.isCashManagement = false;
+          // invObj.isOtherInvestment = false;
           (invObj[key as keyof typeof invObj] as boolean) = checked;
         }
         setResForm2({ ...invObj });
