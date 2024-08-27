@@ -24,14 +24,15 @@ import { TUser, setUser } from "@/features/user/userSlice";
 import { getCookies, removeCookies } from "@/lib/Cookies";
 import { jwtDecode } from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
+import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 export default function Header() {
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   if (user === null || user === undefined) {
     const token = getCookies();
     if (token) {
-      const dispatch = useDispatch();
       const user: TUser = jwtDecode(token);
       dispatch(setUser(user));
     } else {
@@ -40,6 +41,8 @@ export default function Header() {
   }
 
   const handleLogout = () => {
+    localStorage.clear();
+    dispatch(clearCorporateData());
     removeCookies();
     navigate("/login");
   };

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { setUser, TUser } from "@/features/user/userSlice";
+import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -67,7 +68,9 @@ const LoginForm = () => {
           dispatch(setToken(res.data.accessToken));
           setCookies(res.data.accessToken);
           const user: TUser = jwtDecode(res.data.accessToken);
-          dispatch(setUser(user));
+          localStorage.clear();
+          dispatch(clearCorporateData());
+          dispatch(setUser(user));  
           navigate("/");
         })
         .catch((err) => {
