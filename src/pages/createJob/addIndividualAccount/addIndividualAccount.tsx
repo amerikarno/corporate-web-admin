@@ -10,6 +10,7 @@ import {
 } from "./constant/schemas";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
@@ -39,12 +40,12 @@ export default function AddIndividualAccount() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
             <div className="space-y-4 pt-8">
               <div className="flex flex-col">
-                <div className="flex w-1/2">
+                <div className="w-1/2 pr-2">
                   <select
                     {...register("thTitle")}
-                    className="p-1  border-b-2 border-slate-700
-                    text-gray-900 text-sm block w-full hover:border-b-4 transition-all cursor-pointer"
-                  >
+                    className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent 
+                    rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
+                     dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600">
                     <option value="">คำนำหน้าชื่อ (ภาษาไทย)</option>
                     <option value="นาย">นาย</option>
                     <option value="นาง">นาง</option>
@@ -80,9 +81,9 @@ export default function AddIndividualAccount() {
                 <div className="w-1/2">
                   <select
                     {...register("engTitle")}
-                    className="p-1  border-b-2 border-slate-700
-                    text-gray-900 text-sm block w-full hover:border-b-4 transition-all cursor-pointer"
-                  >
+                    className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent 
+                    rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
+                     dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600">
                     <option value="">คำนำหน้าชื่อ (ภาษาอังกฤษ)</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Mrs.">Mrs.</option>
@@ -97,7 +98,7 @@ export default function AddIndividualAccount() {
                   <Input
                     type="text"
                     {...register("engName")}
-                    label="คำนำหน้าชื่อ (ภาษาอังกฤษ)"
+                    label="ชื่อ (ภาษาอังกฤษ)"
                     id="engName"
                   />
                   {errors.engName && <span className="text-red-500">{errors.engName.message}</span>}
@@ -195,10 +196,10 @@ export default function AddIndividualAccount() {
                   id="agreement"
                   {...register("agreement")}
                 />
-                <span className="text-gray-500">
+                <label htmlFor="agreement" className="text-gray-500">
                   ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัวซึ่งระบุวิธีการที่บริษัท
                   ฟินันเซียดิจิทัล แอสแซท จำกัด("บริษัท")
-                </span>
+                </label>
               </div>
               <div>
                 <span className="text-red-500 cursor-pointer">
