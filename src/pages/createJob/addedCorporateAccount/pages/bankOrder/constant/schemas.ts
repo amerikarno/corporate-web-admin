@@ -1,10 +1,7 @@
 import { z } from "zod";
 
 export const bankOrderSchema = z.object({
-  corporateCode: z.coerce.number().min(1,"Corporate Code is required"),
-  cryptoAmount: z.coerce.number().min(1,"Crypto Amount is required"),
-  fiatAmount: z.coerce.number().min(1,"Fiat Amount is required"),
-  currency: z.string().min(1,"Currency is required"),
-  cryptoPrice: z.coerce.number().min(1,"Crypto Price is required"),
-  pair: z.string()
+    bankName: z.string().min(1,"Bank Name is required"),
+    bankAccount: z.string().min(1,"Account ID is required"),
+    orderValue: z.coerce.number().min(1,"Amount is required"),
 });

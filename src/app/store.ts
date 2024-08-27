@@ -11,6 +11,7 @@ import userReducer from "@/features/user/userSlice";
 import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
 import livenessOcr from "@/features/livenessOcr/livenessOcr";
+import bankOrderReducer from "@/features/bankOrder/bankOrdersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     orderTrade: orderTradeReducer,
     juristicType: juristicTypeReducer,
     livenessOcr: livenessOcr,
+    bankOrder: bankOrderReducer,
   },
 });
 

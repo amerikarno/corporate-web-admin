@@ -1,5 +1,6 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
+import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrder/bankOrder";
 import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
 import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
 import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
@@ -80,6 +81,7 @@ export const createJobRoutes = () => {
         element={<BlankPage name="Airdrop Setting" />}
       />
       <Route path="orders-trades" element={<OrderTrade />} />
+      <Route path="bank-orders" element={<BankOrderEdit />} />
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}

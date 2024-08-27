@@ -1,10 +1,7 @@
 export type TBankOrder = {
-    corporateCode: number;
+    bankName: string;
+    bankAccount: string;
     operations? : string;
-    cryptoAmount:number;
-    fiatAmount:number;
-    currency:string;
-    cryptoPrice:number;
-    pair:string;
+    orderValue:number;
     id?:string;
 }
