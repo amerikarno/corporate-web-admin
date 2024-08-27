@@ -52,13 +52,11 @@ export const basicInfoSchema = z.object({
         bankName: z.string(),
         bankBranchName: z.string(),
         bankAccountNumber: z.string(),
-        isDefault: z.boolean(),
     }),
     secondBankAccountBody : z.object({
         bankName: z.string(),
         bankBranchName: z.string(),
         bankAccountNumber: z.string(),
-        isDefault: z.boolean(),
     }),
     investment : z.object({
         shortTermInvestment: z.boolean(),

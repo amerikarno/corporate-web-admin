@@ -11,7 +11,7 @@ export const individualAccountSchema = z.object({
   mobile: z.string().min(1, "mobile cannot be empty"),
   birthDate: z.string().min(1, "birthDate cannot be empty"),
   mariageStatus: z.string().min(1, "mariageStatus cannot be empty"),
-  idCard: z.string().min(1, "idCard cannot be empty"),
+  citizenId: z.string().min(1, "idCard cannot be empty"),
   laserCode: z.string().min(1, "laserCode cannot be empty"),
   agreement: z.boolean(),
 });

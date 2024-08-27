@@ -10,7 +10,6 @@ import {
 } from "./constant/schemas";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
-import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
@@ -171,11 +170,11 @@ export default function AddIndividualAccount() {
               <div className="w-1/2">
                 <Input
                   type="text"
-                  {...register("idCard")}
+                  {...register("citizenId")}
                   label="หมายเลขบัตรประชาชน"
-                  id="idCard"
+                  id="citizenId"
                 />
-                {errors.idCard && <span className="text-red-500">{errors.idCard.message}</span>}
+                {errors.citizenId && <span className="text-red-500">{errors.citizenId.message}</span>}
               </div>
 
               <div className="w-1/2">

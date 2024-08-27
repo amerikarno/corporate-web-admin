@@ -30,10 +30,50 @@ export default function BasicInfo() {
   });
 
   const onSubmit = (data: TBasicInfo) => {
-    console.log(data);
+    let prebody = {...data,
+      registeredAddress:{
+        ...data.registeredAddress,
+        types:1    
+      },
+      currentAddress:{
+        ...data.currentAddress,
+        types:2
+      },
+      officeAddress:{
+        ...data.officeAddress,
+        types:3
+      },
+      firstBankAccount:{
+        ...data.firstBankAccount,
+        type:1,
+        is_default:true
+      },
+      secondBankAccountBody:{
+        ...data.secondBankAccountBody,
+        type:2,
+        is_default:false
+      },
+    }
+  let body = {
+    //cid:
+    investment:prebody.investment,
+    occupation:prebody.occupation,
+    addresses:[
+      prebody.registeredAddress,
+      prebody.currentAddress,
+      prebody.officeAddress
+    ],
+    banks:[
+      prebody.firstBankAccount,
+      prebody.secondBankAccountBody
+    ],
+    pageID:300,
+
+  }
+    console.log(body);
   };
 
-  const uniqueGeographyTypes = [
+  const uniqueGeographyTypes = [ //unique ตัวที่ชื่อซํ้าใน list
     ...new Set(
       geographyTypes.map((geography) =>
         JSON.stringify({
@@ -108,12 +148,12 @@ export default function BasicInfo() {
                   )}
                 </div>
                 <div className="w-1/2">
-                  <Input type="text" label="Soi" id="soiIDCard" />
+                  <Input type="text" label="Soi" id="soiIDCard" {...register("registeredAddress.subStreetName")}/>
                 </div>
               </div>
               <div className="flex space-x-4">
                 <div className="w-1/2">
-                  <Input type="text" label="Road" id="roadIDCard" />
+                  <Input type="text" label="Road" id="roadIDCard" {...register("registeredAddress.streetName")}/>
                 </div>
                 <div className="w-1/2">
                   <Input
@@ -121,10 +161,11 @@ export default function BasicInfo() {
                     label="Tambon"
                     id="tambonIDCard"
                     list="tambonIDCardList"
+                    {...register("registeredAddress.subDistrictName")}
                   />
                   <datalist id="tambonIDCardList">
                     {geographyTypes.map((geography, index) => (
-                      <option key={index} value={geography.sub_district_name} />
+                      <option key={index} value={geography.sub_district_name}/>
                     ))}
                   </datalist>
                 </div>
@@ -136,6 +177,7 @@ export default function BasicInfo() {
                     label="Amphoe"
                     id="amphoeIDCard"
                     list="amphoeIDCardList"
+                    {...register("registeredAddress.districtName")}
                   />
                   <datalist id="amphoeIDCardList">
                     {uniqueGeographyTypes.map((geography, index) => (
@@ -149,6 +191,7 @@ export default function BasicInfo() {
                     label="Province"
                     id="provinceIDCard"
                     list="provinceIDCardList"
+                    {...register("registeredAddress.provinceName")}
                   />
                   <datalist id="provinceIDCardList">
                     {uniqueProvince.map((geography, index) => (
@@ -164,6 +207,7 @@ export default function BasicInfo() {
                     label="Postal Code"
                     id="postalCodeIDCard"
                     list="postalCodeIDCardList"
+                    {...register("registeredAddress.zipCode")}
                   />
                   <datalist id="postalCodeIDCardList">
                     {uniqueGeographyTypes.map((geography, index) => (
@@ -177,6 +221,7 @@ export default function BasicInfo() {
                     label="Country"
                     id="countryIDCard"
                     list="countriesIDCard"
+                    {...register("registeredAddress.countryName")}
                   />
                   <datalist id="countriesIDCard">
                     {countries.map((country) => (
@@ -232,23 +277,24 @@ export default function BasicInfo() {
                       type="text"
                       label="Address Number"
                       id="addressNoHome"
+                      {...register("currentAddress.homeNumber")}
                     />
                   </div>
                   <div className="w-1/2">
-                    <Input type="text" label="Floor" id="floorHome" />
+                    <Input type="text" label="Floor" id="floorHome" {...register("currentAddress.villageNumber")}/>
                   </div>
                 </div>
                 <div className="flex space-x-4">
                   <div className="w-1/2">
-                    <Input type="text" label="Moo" id="mooHome" />
+                    <Input type="text" label="Moo" id="mooHome" {...register("currentAddress.villageName")}/>
                   </div>
                   <div className="w-1/2">
-                    <Input type="text" label="Soi" id="soiHome" />
+                    <Input type="text" label="Soi" id="soiHome" {...register("currentAddress.subStreetName")}/>
                   </div>
                 </div>
                 <div className="flex space-x-4">
                   <div className="w-1/2">
-                    <Input type="text" label="Road" id="roadHome" />
+                    <Input type="text" label="Road" id="roadHome" {...register("currentAddress.streetName")}/>
                   </div>
                   <div className="w-1/2">
                     <Input
@@ -256,6 +302,7 @@ export default function BasicInfo() {
                       label="Tambon"
                       id="tambonHome"
                       list="tambonHomeList"
+                      {...register("currentAddress.subDistrictName")}
                     />
                     <datalist id="tambonHomeList">
                       {geographyTypes.map((geography, index) => (
@@ -274,6 +321,7 @@ export default function BasicInfo() {
                       label="Amphoe"
                       id="amphoeHome"
                       list="amphoeHomeList"
+                      {...register("currentAddress.districtName")}
                     />
                     <datalist id="amphoeHomeList">
                       {uniqueGeographyTypes.map((geography, index) => (
@@ -287,6 +335,7 @@ export default function BasicInfo() {
                       label="Province"
                       id="provinceHome"
                       list="provinceHomeList"
+                      {...register("currentAddress.provinceName")}
                     />
                     <datalist id="provinceHomeList">
                       {uniqueProvince.map((geography, index) => (
@@ -302,6 +351,7 @@ export default function BasicInfo() {
                       label="Postal Code"
                       id="postalCodeHome"
                       list="postalCodeHomeList"
+                      {...register("currentAddress.zipCode")}
                     />
                     <datalist id="postalCodeHomeList">
                       {uniqueGeographyTypes.map((geography, index) => (
@@ -315,6 +365,7 @@ export default function BasicInfo() {
                       label="Country"
                       id="countryHome"
                       list="countriesHome"
+                      {...register("currentAddress.countryName")}
                     />
                     <datalist id="countriesHome">
                       {countries.map((country) => (
@@ -338,6 +389,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6 ">
               <div className="flex w-1/2">
                 <select
+                {...register("occupation.education")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -352,6 +404,7 @@ export default function BasicInfo() {
               </div>
               <div className="w-1/2">
                 <select
+                {...register("occupation.sourceOfIncome")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -368,6 +421,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
+                {...register("occupation.currentOccupation")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                     text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                     dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -381,12 +435,13 @@ export default function BasicInfo() {
                 </select>
               </div>
               <div className="w-1/2">
-                <Input type="text" label="ชื่อสถานที่ทำงาน" id="workPlace" />
+                <Input type="text" label="ชื่อสถานที่ทำงาน" id="workPlace" {...register("occupation.officeName")}/>
               </div>
             </div>
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
+                {...register("occupation.typeOfBusiness")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -400,12 +455,13 @@ export default function BasicInfo() {
                 </select>
               </div>
               <div className="w-1/2">
-                <Input type="text" label="ตำแหน่งงาน" id="่jobPosition" />
+                <Input type="text" label="ตำแหน่งงาน" id="่jobPosition" {...register("occupation.positionName")}/>
               </div>
             </div>
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
+                {...register("occupation.salaryRange")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -473,23 +529,24 @@ export default function BasicInfo() {
                         type="text"
                         label="Address Number"
                         id="addressNoWork"
+                        {...register("officeAddress.homeNumber")}
                       />
                     </div>
                     <div className="w-1/2">
-                      <Input type="text" label="Floor" id="floorWork" />
+                      <Input type="text" label="Floor" id="floorWork" {...register("officeAddress.villageNumber")}/>
                     </div>
                   </div>
                   <div className="flex space-x-4">
                     <div className="w-1/2">
-                      <Input type="text" label="Moo" id="mooWork" />
+                      <Input type="text" label="Moo" id="mooWork" {...register("officeAddress.villageName")}/>
                     </div>
                     <div className="w-1/2">
-                      <Input type="text" label="Soi" id="soiWork" />
+                      <Input type="text" label="Soi" id="soiWork" {...register("officeAddress.subStreetName")}/>
                     </div>
                   </div>
                   <div className="flex space-x-4">
                     <div className="w-1/2">
-                      <Input type="text" label="Road" id="roadWork" />
+                      <Input type="text" label="Road" id="roadWork" {...register("officeAddress.streetName")}/>
                     </div>
                     <div className="w-1/2">
                       <Input
@@ -497,6 +554,7 @@ export default function BasicInfo() {
                         label="Tambon"
                         id="tambonWork"
                         list="tambonWorkList"
+                        {...register("officeAddress.subDistrictName")}
                       />
                       <datalist id="tambonWorkList">
                         {geographyTypes.map((geography, index) => (
@@ -515,6 +573,7 @@ export default function BasicInfo() {
                         label="Amphoe"
                         id="amphoeWork"
                         list="amphoeWorkList"
+                        {...register("officeAddress.districtName")}
                       />
                       <datalist id="amphoeWorkList">
                         {uniqueGeographyTypes.map((geography, index) => (
@@ -528,6 +587,7 @@ export default function BasicInfo() {
                         label="Province"
                         id="provinceWork"
                         list="provinceWorkList"
+                        {...register("officeAddress.provinceName")}
                       />
                       <datalist id="provinceWorkList">
                         {uniqueProvince.map((geography, index) => (
@@ -543,6 +603,7 @@ export default function BasicInfo() {
                         label="Postal Code"
                         id="postalCodeWork"
                         list="postalCodeWorkList"
+                        {...register("officeAddress.zipCode")}
                       />
                       <datalist id="postalCodeWorkList">
                         {uniqueGeographyTypes.map((geography, index) => (
@@ -556,6 +617,7 @@ export default function BasicInfo() {
                         label="Country"
                         id="countryWork"
                         list="countriesWork"
+                        {...register("officeAddress.countryName")}
                       />
                       <datalist id="countriesWork">
                         {countries.map((country) => (
@@ -583,7 +645,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-1"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  //{...register('register', { required: true })}
+                  {...register("investment.shortTermInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-1">
                   เพื่อการลงทุนระยะสั้น
@@ -595,7 +657,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-2"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  //{...register('register', { required: true })}
+                {...register("investment.longTermInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-2">
                   เพื่อการลงทุนระยะยาว
@@ -607,7 +669,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-3"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  //{...register('register', { required: true })}
+                {...register("investment.taxesInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-3">เพื่อเก็งกำไร</label>
               </div>
@@ -617,7 +679,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-4"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  //{...register('register', { required: true })}
+                {...register("investment.retireInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-4">เพื่อการออม</label>
               </div>
@@ -641,23 +703,24 @@ export default function BasicInfo() {
             <div className="space-y-4">
               <div className="flex space-x-4">
                 <select
+                {...register("firstBankAccount.bankName")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
                 >
                   <option value="">กรุณาเลือกธนาคาร</option>
                   {bank.map((status) => (
-                    <option key={status.code} value={status.code}>
+                    <option key={status.code} value={status.name}>
                       {status.name}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="flex space-x-4">
-                <Input type="text" label="ชื่อสาขา" id="bankBranch" />
+                <Input type="text" label="ชื่อสาขา" id="bankBranch" {...register("firstBankAccount.bankBranchName")}/>
               </div>
               <div className="flex space-x-4">
-                <Input type="text" label="กรุณาระบุเลขบัญชี" id="bankAccount" />
+                <Input type="text" label="กรุณาระบุเลขบัญชี" id="bankAccount" {...register("firstBankAccount.bankAccountNumber")} />
               </div>
             </div>
             <div>
@@ -698,13 +761,14 @@ export default function BasicInfo() {
                 <div className="space-y-4 pt-4">
                   <div className="flex space-x-4">
                     <select
+                    {...register("secondBankAccountBody.bankName")}
                       className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
                     >
                       <option value="">กรุณาเลือกธนาคาร</option>
                       {bank.map((status) => (
-                        <option key={status.code} value={status.code}>
+                        <option key={status.code} value={status.name}>
                           {status.name}
                         </option>
                       ))}
@@ -715,6 +779,7 @@ export default function BasicInfo() {
                       type="text"
                       label="ชื่อสาขา"
                       id="bankBranchAdditional"
+                      {...register("secondBankAccountBody.bankBranchName")}
                     />
                   </div>
                   <div className="flex space-x-4">
@@ -722,6 +787,7 @@ export default function BasicInfo() {
                       type="text"
                       label="กรุณาระบุเลขบัญชี"
                       id="bankAccountAdditional"
+                      {...register("secondBankAccountBody.bankAccountNumber")}
                     />
                   </div>
                 </div>

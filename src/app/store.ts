@@ -12,7 +12,7 @@ import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
 import livenessOcr from "@/features/livenessOcr/livenessOcr";
 import bankOrderReducer from "@/features/bankOrder/bankOrdersSlice";
-
+import addIndividualReducer from "@/features/addIndividual/addIndividualSlice"
 export const store = configureStore({
   reducer: {
     authen: authenReducer,
@@ -28,6 +28,7 @@ export const store = configureStore({
     juristicType: juristicTypeReducer,
     livenessOcr: livenessOcr,
     bankOrder: bankOrderReducer,
+    addIndividual: addIndividualReducer,
   },
 });
 
