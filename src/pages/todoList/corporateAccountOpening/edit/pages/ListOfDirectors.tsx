@@ -16,6 +16,17 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { mapDataToTDirector } from "../libs/utils";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type TListOfDirectorsProps = {
   corporateCode: string;
@@ -121,12 +132,7 @@ export function ListOfDirectors({ corporateCode,corporatesInfo }: TListOfDirecto
       name: "Nationality",
       selector: (row) => row.nationality || "",
     },
-    {
-      cell: (row: TDirector) => (
-        <Button onClick={() => handleDelete(row)}>Delete</Button>
-      ),
-      ignoreRowClick: true,
-    },
+
     {
       cell: (row: TDirector) => (
         <Button
@@ -137,6 +143,28 @@ export function ListOfDirectors({ corporateCode,corporatesInfo }: TListOfDirecto
         >
           Edit
         </Button>
+      ),
+      ignoreRowClick: true,
+    },
+    {
+      cell: (row: TDirector) => (
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       ),
       ignoreRowClick: true,
     },

@@ -14,6 +14,17 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { TContact, TCorporateData } from "../../constant/type";
 import { useEffect, useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type TPageContactPersonProps = {
   corporateCode: string;
@@ -124,21 +135,32 @@ export function PageContactPerson({
       name: "Phone Number",
       selector: (row: TContact) => row.telephone || "",
     },
+
     {
       cell: (row: TContact) => (
-        <Button
-          onClick={() => {
-            handleDelete(row);
-          }}
-        >
-          Delete
-        </Button>
+        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
       ),
       ignoreRowClick: true,
     },
     {
       cell: (row: TContact) => (
-        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       ),
       ignoreRowClick: true,
     },

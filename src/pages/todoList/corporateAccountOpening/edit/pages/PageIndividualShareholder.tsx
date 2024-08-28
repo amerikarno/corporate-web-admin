@@ -15,6 +15,17 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { TCorporateData, TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type TPageIndividualShareholderProps = {
   corporateCode: string;
@@ -130,15 +141,32 @@ export function PageIndividualShareholder({
       name: "Share Percentage",
       selector: (row) => row.sharePercentage?.toString() || "",
     },
+
     {
       cell: (row: TIndividualShareholderEdit) => (
-        <Button onClick={() => handleDelete(row)}>Delete</Button>
+        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
       ),
       ignoreRowClick: true,
     },
     {
       cell: (row: TIndividualShareholderEdit) => (
-        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       ),
       ignoreRowClick: true,
     },

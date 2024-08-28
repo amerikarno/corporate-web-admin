@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { setUser, TUser } from "@/features/user/userSlice";
+import { setUser, TUser ,setEmail} from "@/features/user/userSlice";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 const LoginForm = () => {

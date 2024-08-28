@@ -14,6 +14,17 @@ import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { mapDataToTBank } from "../libs/utils";
 import { TCorporateData } from "../../constant/type";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type TPageBankAccountProps = {
   corporateCode: string;
@@ -112,16 +123,7 @@ export function PageBankAccount({ corporateCode,corporatesInfo }: TPageBankAccou
       name: "SwiftCode",
       selector: (row) => row.bank?.[0].swiftCode || "",
     },
-    // {
-    //   name: "Address",
-    //   selector: (row: TDirector) => row.addresses || '',
-    // },
-    {
-      cell: (row: TBankWithID) => (
-        <Button onClick={() => handleDelete(row)}>Delete</Button>
-      ),
-      ignoreRowClick: true,
-    },
+
     {
       cell: (row: TBankWithID) => (
         <Button
@@ -132,6 +134,28 @@ export function PageBankAccount({ corporateCode,corporatesInfo }: TPageBankAccou
         >
           Edit
         </Button>
+      ),
+      ignoreRowClick: true,
+    },
+    {
+      cell: (row: TBankWithID) => (
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       ),
       ignoreRowClick: true,
     },

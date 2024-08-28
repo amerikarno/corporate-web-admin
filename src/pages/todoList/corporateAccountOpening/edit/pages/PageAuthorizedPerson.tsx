@@ -14,6 +14,17 @@ import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { TAuthorizedPerson as TAuthorizedPersonEdit, TCorporateData} from "../../constant/type";
 import { mapDataToTAuthoirzedPerson } from "../libs/utils";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type TPageAuthorizedPersonProps = {
   corporateCode: string;
@@ -108,17 +119,34 @@ export function PageAuthorizedPerson({
       name: "Nationality",
       selector: (row: TAuthorizePerson) => row.nationality || "",
     },
-    {
-      cell: (row: TAuthorizePerson) => (
-        <Button onClick={() => handleDelete(row)}>Delete</Button>
-      ),
-      ignoreRowClick: true,
-    },
+
     {
       cell: (row: TAuthorizePerson) => (
         <Button onClick={() => {{setChoosedEditData(row) 
           console.log(row)}}
         }>Edit</Button>
+      ),
+      ignoreRowClick: true,
+    },
+    {
+      cell: (row: TAuthorizePerson) => (
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       ),
       ignoreRowClick: true,
     },

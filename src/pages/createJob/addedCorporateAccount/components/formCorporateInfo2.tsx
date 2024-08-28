@@ -282,7 +282,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         };
         console.log("body: ", body);
         const token = getCookies();
-        const res = await axios.post("/api/v1/corporate/create-type", body, {
+        const res = await axios.post("/api/v1/corporate/create/type", body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
