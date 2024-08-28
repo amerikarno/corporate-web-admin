@@ -6,7 +6,7 @@ import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndi
 import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
 import IDCardCapture from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/idCardCapture";
 import { CardWebcamInstructions } from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/webCamInstructions";
-// import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
+import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
 import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 import { Outlet, Route } from "react-router-dom";
 
@@ -23,7 +23,7 @@ export const createJobRoutes = () => {
         <Route path=":page" element={<AddIndividualAccount />} />
         <Route path="basicinfo" element={<BasicInfo />} />
         <Route path="suittestfatca" element={<SuitTestFatca />} />
-        {/* <Route path="liveness" element={<Liveness />} /> */}
+        <Route path="liveness" element={<Liveness />} />
         <Route path="card-instructions" element={<CardWebcamInstructions />} />
         <Route path="card-capture" element={<IDCardCapture />} />
       </Route>

@@ -231,6 +231,6 @@ export default function AddIndividualAccount() {
         </CardContent>
       </Card>
     </div>
-    //<Liveness />
+    // <Liveness />
   );
 }

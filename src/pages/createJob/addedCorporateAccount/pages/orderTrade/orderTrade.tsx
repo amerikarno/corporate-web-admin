@@ -15,8 +15,6 @@ import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 
-const tradingPair = [{ name: "THB/USTD" }, { name: "THB/USDC" }];
-
 export default function OrderTradeEdit() {
   if (!isAllowedPage(2020)) {
     return <UnAuthorize />;
@@ -26,7 +24,8 @@ export default function OrderTradeEdit() {
   const [buySell, setBuySell] = useState<string>("buy");
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
-  const [selectedTradingPair, setSelectedTradingPair] = useState<string>("");
+  const [selectedTradingPair, setSelectedTradingPair] =
+    useState<string>("THB/USDT");
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
     { corporateCode: number }[]
   >([]);
@@ -34,6 +33,9 @@ export default function OrderTradeEdit() {
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
+  const [sellCurrency, setSellCurrency] = useState<string>("");
+  const tradingPair = [{ name: "THB/USDT" }, { name: "THB/USDC" }];
+  const buyCurrency = [{ name: "THB" }, { name: "USD" }];
 
   const orderTradeData: TOrderTrade[] = useSelector<RootState>(
     (state) => state.orderTrade?.orderTrades || []
@@ -74,20 +76,35 @@ export default function OrderTradeEdit() {
         },
       });
       if (res.status === 200) {
-        console.log(res.data);
+        // console.log(res.data);
         const orderTrades = res.data || [];
-  
-        const uniqueOrderTrades = orderTrades.filter((order:any, index:any, self:any) =>
-          index === self.findIndex((t:any) => t.id === order.id)
+
+        const uniqueOrderTrades = orderTrades.filter(
+          (order: any, index: any, self: any) =>
+            index === self.findIndex((t: any) => t.id === order.id)
         );
-  
+
         dispatch(setOrderTrades(uniqueOrderTrades));
-        console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
+        // console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
       } else {
         console.log("Failed to fetch orderTrade");
       }
     } catch (error) {
       console.log("Fetching order list of this role error!", error);
+    }
+  };
+
+  const getStatus = (status?: number) => {
+    if (status === -1) {
+      return "Reject";
+    } else if (status === 0) {
+      return "Pending";
+    } else if (status === 1) {
+      return "Checked";
+    } else if (status === 2) {
+      return "Approved";
+    } else {
+      return "";
     }
   };
 
@@ -121,11 +138,16 @@ export default function OrderTradeEdit() {
       selector: (row: TOrderTrade) => row.currency || "",
     },
     {
+      name: "Status",
+      selector: (row: TOrderTrade) => getStatus(row.transactionStatus) || "",
+    },
+    {
       cell: (row: TOrderTrade) => (
         <Button
           onClick={() => {
             setChoosedEditData(row);
           }}
+          disabled={row.transactionStatus === 1 || row.transactionStatus === 2}
         >
           Edit
         </Button>
@@ -143,12 +165,25 @@ export default function OrderTradeEdit() {
       fiatAmount: 0,
     };
     reset(orderListDatatoInputField);
-    setBuySell(choosedEditData?.operations || "buy");
+    if (choosedEditData?.operations === "buy") {
+      setBuySell("buy");
+    } else {
+      setBuySell("sell");
+      if (choosedEditData) {
+        const cur = choosedEditData.pair.split("/");
+        setSellCurrency(cur[1]);
+      }
+    }
+    // setBuySell(choosedEditData?.operations || "buy");
     console.log("use effect", orderListDatatoInputField);
   }, [choosedEditData]);
 
   const handleBuySell = (value: string) => {
     setBuySell(value);
+    if (value === "sell") {
+      const cur = selectedTradingPair.split("/");
+      setSellCurrency(cur[1]);
+    }
   };
 
   const {
@@ -161,7 +196,6 @@ export default function OrderTradeEdit() {
   });
 
   useEffect(() => {
-    console.log("do");
     fetchOrderList();
     fetchCorporateCodes();
   }, [reset]);
@@ -176,16 +210,21 @@ export default function OrderTradeEdit() {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setSelectedTradingPair(event.target.value);
+    const cur = event.target.value.split("/");
+    setSellCurrency(cur[1]);
   };
 
   const onSubmit = async (data: TOrderTrade) => {
+    const currency = buySell === "sell" ? sellCurrency : data.currency;
     let body: TOrderTrade = {
       ...data,
       operations: buySell,
+      currency: currency,
       id: choosedEditData?.id,
     };
-    console.log(choosedEditData)
-    console.log(body)
+    console.log(choosedEditData);
+    console.log(body);
+
     try {
       const token = getCookies();
       if (body.id) {
@@ -291,7 +330,7 @@ export default function OrderTradeEdit() {
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                   >
                     <option value="THB/USTD" disabled>
-                      THB/USTD
+                      THB/USDT
                     </option>
                     {tradingPair.map((pair, index) => (
                       <option key={index} value={pair.name}>
@@ -344,15 +383,25 @@ export default function OrderTradeEdit() {
                     </p>
                   )}
                   <select
-                  {...register("currency")}
-                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+                    {...register("currency")}
+                    // onChange={handleCurrencyChange}
+                    className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
-                >
-                  <option value="">Currency</option>
-                  <option value="THB">THB</option>
-                  <option value="USD">USD</option>
-                </select>
+                  >
+                    <option value="">Currency</option>
+                    {/* <option value="THB">THB</option>
+                    <option value="USD">USD</option> */}
+                    {buySell === "buy" ? (
+                      buyCurrency.map((currency, index) => (
+                        <option key={index} value={currency.name}>
+                          {currency.name}
+                        </option>
+                      ))
+                    ) : (
+                      <option value={sellCurrency}>{sellCurrency}</option>
+                    )}
+                  </select>
                   {errors.currency && (
                     <p className="text-red-500 text-sm px-2">
                       {errors.currency.message}
@@ -373,7 +422,10 @@ export default function OrderTradeEdit() {
         <DataTable
           title="Rejected Orders / Trades Lists"
           columns={columnsOrderTrade}
-          data={orderTradeData.map((orderTrade, index) => ({ ...orderTrade, key: index }))}
+          data={orderTradeData.map((orderTrade, index) => ({
+            ...orderTrade,
+            key: index,
+          }))}
           clearSelectedRows
         />
       </Card>
