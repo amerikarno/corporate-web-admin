@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { setUser, TUser } from "@/features/user/userSlice";
+import { setEmail, setUser, TUser } from "@/features/user/userSlice";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -36,6 +36,7 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<AuthForm> = (data) => {
     if (data.email && data.password) {
+      dispatch(setEmail(data.email));
       const hashedUsername = CryptoJs.SHA256(data.email).toString();
       const hashedPassword = CryptoJs.SHA256(data.password).toString();
       // const hashedUsername = "c9a7055009a52c43e656cf1ad258589c957696714be89968f65274dcb0d60e41";

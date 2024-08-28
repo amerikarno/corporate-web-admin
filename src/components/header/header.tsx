@@ -112,8 +112,8 @@ export default function Header() {
               <AvatarFallback>PIC</AvatarFallback>
             </Avatar>
             <div className="text-left w-full text-white">
-              <p>name</p>
-              <p>role</p>
+              <p>{user?.name}</p>
+              <p>{user?.roles}</p>
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="">

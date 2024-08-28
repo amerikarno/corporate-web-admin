@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFaceImage } from "@/features/livenessOcr/livenessOcr";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "@/app/store";
- 
+
 export default function Liveness() {
   type TActionMessage = {
     turnLeft: string | null;
@@ -39,9 +39,9 @@ export default function Liveness() {
   let trackIsRight = false;
   let trackIsMouthOpen = false;
   let isCapture = false;
- 
+
   let customerCode = 90000001;
- 
+
   useEffect(() => {
     const loadModels = async () => {
       const MODEL_URL = "/models";
@@ -51,14 +51,14 @@ export default function Liveness() {
       await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
       setIsModelsLoaded(true);
     };
- 
+
     if (livenessOcrFiles.faceImage && livenessOcrFiles.faceImage !== null) {
       setImage(livenessOcrFiles.faceImage);
     }
- 
+
     loadModels();
   }, []);
- 
+
   useEffect(() => {
     if (stream) {
       const track = stream.getVideoTracks()[0];
@@ -67,20 +67,20 @@ export default function Liveness() {
         setStream(null);
       };
     }
- 
+
     return () => {
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
     };
   }, [stream]);
- 
+
   useEffect(() => {
     if (isModelsLoaded) {
       startVideo();
     }
   }, [isModelsLoaded]);
- 
+
   const startVideo = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -94,7 +94,7 @@ export default function Liveness() {
       console.error("Error accessing webcam: ", error);
     }
   };
- 
+
   const faceDetect = async () => {
     // console.log(trackIsCenter, trackIsLeft, trackIsRight, trackIsMouthOpen);
     if (
@@ -107,13 +107,13 @@ export default function Liveness() {
       await sleep(1000);
       capture();
     }
- 
+
     if (videoRef.current) {
       const options = new faceapi.TinyFaceDetectorOptions();
       const result = await faceapi
         .detectSingleFace(videoRef.current, options)
         .withFaceLandmarks();
- 
+
       if (result) {
         const leftEye = result.landmarks.getLeftEye();
         const rightEye = result.landmarks.getRightEye();
@@ -129,7 +129,7 @@ export default function Liveness() {
           setIsTurnRight(true);
           trackIsRight = true;
         }
- 
+
         const mouth = result.landmarks.getMouth();
         const mouthDist = mouthDistance([
           mouth[13],
@@ -144,31 +144,31 @@ export default function Liveness() {
           setIsMouthOpen(true);
           trackIsMouthOpen = true;
         }
- 
+
         // drawFaceLandmark(result);
         drawStaticEllipse(result);
       }
     }
- 
+
     requestAnimationFrame(faceDetect);
   };
- 
+
   const handleVideoPlay = () => {
     faceDetect();
   };
- 
+
   const capture = async () => {
     if (videoRef.current) {
       // Create a canvas element
       const canvas = document.createElement("canvas");
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
- 
+
       // Draw the current video frame on the canvas
       const context = canvas.getContext("2d");
       if (context) {
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
- 
+
         // Convert canvas to Blob
         canvas.toBlob((blob) => {
           if (blob) {
@@ -180,7 +180,7 @@ export default function Liveness() {
                 type: "image/png",
               }
             );
- 
+
             if (file) {
               const reader = new FileReader();
               reader.onloadend = () => {
@@ -197,7 +197,7 @@ export default function Liveness() {
       }
     }
   };
- 
+
   const calculateEAR = (eye: faceapi.Point[]) => {
     const p2_p6 = Math.sqrt(
       Math.pow(eye[1].x - eye[5].x, 2) + Math.pow(eye[1].y - eye[5].y, 2)
@@ -211,7 +211,7 @@ export default function Liveness() {
     const EAR = (p2_p6 + p3_p5) / (2.0 * p1_p4);
     return EAR;
   };
- 
+
   const mouthDistance = (mp: faceapi.Point[]) => {
     const p1_p4 = Math.sqrt(
       Math.pow(mp[0].x - mp[3].x, 2) + Math.pow(mp[0].y - mp[3].y, 2)
@@ -222,11 +222,11 @@ export default function Liveness() {
     const p3_p6 = Math.sqrt(
       Math.pow(mp[2].x - mp[5].x, 2) + Math.pow(mp[2].y - mp[5].y, 2)
     );
- 
+
     const mouthDistance = (p1_p4 + p2_p5 + p3_p6) / 3.0;
     return mouthDistance;
   };
- 
+
   // const drawFaceLandmark = (
   //   result: faceapi.WithFaceLandmarks<{
   //     detection: faceapi.FaceDetection;
@@ -241,25 +241,25 @@ export default function Liveness() {
   //       canvasRef2.current!.width,
   //       canvasRef2.current!.height
   //     );
- 
+
   //     // Resize canvas to match video dimensions
   //     faceapi.matchDimensions(canvasRef2.current!, {
   //       width: videoRef.current.videoWidth,
   //       height: videoRef.current.videoHeight,
   //     });
- 
+
   //     const resizedResults = faceapi.resizeResults(result, {
   //       width: videoRef.current.videoWidth,
   //       height: videoRef.current.videoHeight,
   //     });
- 
+
   //     // facelandmarks
   //     faceapi.draw.drawFaceLandmarks(canvasRef2.current!, resizedResults);
   //     // face box
   //     faceapi.draw.drawDetections(canvasRef2.current!, resizedResults);
   //   }
   // };
- 
+
   const drawStaticEllipse = (
     detections: faceapi.WithFaceLandmarks<{
       detection: faceapi.FaceDetection;
@@ -274,84 +274,86 @@ export default function Liveness() {
     }
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
- 
-    // เคลียร์กรอบก่อนวาดใหม่
-    ctx?.clearRect(0, 0, canvas!.width, canvas!.height);
-    // วาดพื้นหลังสีทึบ
-    // ctx!.fillStyle = "rgba(0, 0, 0, 0.7)";
-    ctx!.fillStyle = "rgba(255,255, 255, 1.0)";
-    ctx!.fillRect(0, 0, canvas!.width, canvas!.height);
- 
-    // วาดกรอบวงรีตรงกลางหน้าจอ
-    const centerX = canvas!.width / 2;
-    const centerY = canvas!.height / 2;
-    const ellipseWidth = canvas!.width * 0.15;
-    const ellipseHeight = canvas!.height * 0.3;
- 
-    const box = detections.detection.box;
-    const faceCenterX = box.x + box.width / 2;
-    const faceCenterY = box.y + box.height / 2;
- 
-    let color = "green";
-    const faceDis = Math.sqrt(
-      Math.pow(
-        detections.landmarks.positions[0].x -
-          detections.landmarks.positions[16].x,
-        2
-      ) +
+
+    if (ctx && ctx !== null && canvas && canvas !== null) {
+      // เคลียร์กรอบก่อนวาดใหม่
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // วาดพื้นหลังสีทึบ
+      // ctx!.fillStyle = "rgba(0, 0, 0, 0.7)";
+      ctx.fillStyle = "rgba(255,255, 255, 1.0)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // วาดกรอบวงรีตรงกลางหน้าจอ
+      const centerX = canvas!.width / 2;
+      const centerY = canvas!.height / 2;
+      const ellipseWidth = canvas!.width * 0.15;
+      const ellipseHeight = canvas!.height * 0.3;
+
+      const box = detections.detection.box;
+      const faceCenterX = box.x + box.width / 2;
+      const faceCenterY = box.y + box.height / 2;
+
+      let color = "green";
+      const faceDis = Math.sqrt(
         Math.pow(
-          detections.landmarks.positions[0].y -
-            detections.landmarks.positions[16].y,
+          detections.landmarks.positions[0].x -
+            detections.landmarks.positions[16].x,
           2
-        )
-    );
- 
-    if (
-      Math.abs(faceCenterX - centerX) < 30 &&
-      Math.abs(faceCenterY - 30 - centerY) < 30 &&
-      Math.abs(faceDis - ellipseWidth * 2) < 20
-    ) {
-      color = "green";
-      setIsCenter(true);
-      trackIsCenter = true;
-    } else {
-      color = "black";
-      setIsCenter(false);
-      trackIsCenter = false;
+        ) +
+          Math.pow(
+            detections.landmarks.positions[0].y -
+              detections.landmarks.positions[16].y,
+            2
+          )
+      );
+
+      if (
+        Math.abs(faceCenterX - centerX) < 30 &&
+        Math.abs(faceCenterY - 30 - centerY) < 30 &&
+        Math.abs(faceDis - ellipseWidth * 2) < 20
+      ) {
+        color = "green";
+        setIsCenter(true);
+        trackIsCenter = true;
+      } else {
+        color = "black";
+        setIsCenter(false);
+        trackIsCenter = false;
+      }
+
+      // Set composite mode to 'destination-out' to cut out the ellipse area
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.ellipse(
+        centerX,
+        centerY,
+        ellipseWidth,
+        ellipseHeight,
+        0,
+        0,
+        2 * Math.PI
+      );
+      ctx.fill();
+      // Reset composite mode to default
+      ctx.globalCompositeOperation = "source-over";
+
+      // draw ellipse
+      ctx.beginPath();
+      ctx.ellipse(
+        centerX,
+        centerY,
+        ellipseWidth,
+        ellipseHeight,
+        0,
+        0,
+        2 * Math.PI
+      );
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = color;
+      ctx.stroke();
     }
- 
-    // Set composite mode to 'destination-out' to cut out the ellipse area
-    ctx!.globalCompositeOperation = "destination-out";
-    ctx!.beginPath();
-    ctx!.ellipse(
-      centerX,
-      centerY,
-      ellipseWidth,
-      ellipseHeight,
-      0,
-      0,
-      2 * Math.PI
-    );
-    ctx!.fill();
-    // Reset composite mode to default
-    ctx!.globalCompositeOperation = "source-over";
- 
-    // draw ellipse
-    ctx?.beginPath();
-    ctx?.ellipse(
-      centerX,
-      centerY,
-      ellipseWidth,
-      ellipseHeight,
-      0,
-      0,
-      2 * Math.PI
-    );
-    ctx!.lineWidth = 3;
-    ctx!.strokeStyle = color;
-    ctx!.stroke();
   };
- 
+
   const takePhoto = () => {
     if (isCenter && isMouthOpen && isTurnLeft && isTurnRight) {
       console.log("take a photo");
@@ -360,7 +362,7 @@ export default function Liveness() {
       console.log("actions incomplete");
     }
   };
- 
+
   const getMessage = () => {
     if (!isCenter) {
       actionMessage.center === null
@@ -398,15 +400,15 @@ export default function Liveness() {
       return null;
     }
   };
- 
+
   const handleSubmit = async () => {
     navigate("/create-job/added-individual-account/card-instructions");
   };
- 
+
   if (!isModelsLoaded) {
     return <p>Loading models...</p>;
   }
- 
+
   return (
     <div className="p-10">
       <div className="relative">
@@ -419,7 +421,7 @@ export default function Liveness() {
           autoPlay
           muted
         />
- 
+
         <canvas
           ref={canvasRef}
           style={{
@@ -441,13 +443,13 @@ export default function Liveness() {
           }}
         />
       </div>
- 
+
       {isModelsLoaded && (
         <div className="py-10 w-[640px] flex justify-center text-green-500 text-xl font-bold">
           {getMessage()}
         </div>
       )}
- 
+
       {isModelsLoaded && (
         <div
           className="py-10 w-[640px] flex justify-center"
@@ -456,7 +458,7 @@ export default function Liveness() {
           <Camera className="w-10 h-10" />
         </div>
       )}
- 
+
       {/* {isModelsLoaded && image && (
         <div className="w-1/2 pb-20">
           <img src={image} alt="Screenshot" />
@@ -465,7 +467,7 @@ export default function Liveness() {
           </div>
         </div>
       )} */}
- 
+
       {isModelsLoaded && image && (
         <div className="w-[640px] flex justify-center">
           <Button onClick={() => handleSubmit()}>Next</Button>

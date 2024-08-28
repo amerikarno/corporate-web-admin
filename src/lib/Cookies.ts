@@ -12,5 +12,4 @@ export const getCookies = (): string | undefined => {
 
 export const removeCookies = () => {
   Cookies.remove(TOKEN_KEY);
-  Cookies.remove("session");
 };

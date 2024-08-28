@@ -5,14 +5,20 @@ import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { TTransaction } from "./constant/type";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 const TransactionList = () => {
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user.user?.roles);
   const [listOfTransaction, setFetchedListOfTransaction] = useState<
     TTransaction[]
   >([]);
+
   const [checkboxStatus, setCheckboxStatus] = useState<{
     [transactionId: string]: { checkerStatus: boolean | undefined };
   }>({});
+
   const handleCheckboxChange = (
     transactionId: string,
     type: "approve" | "decline",
@@ -57,25 +63,29 @@ const TransactionList = () => {
             : undefined,
       }))
       .filter((data) => data.ReviewStatus !== undefined);
-  
+
     console.log(dataToSend);
-  
+
     try {
-      const response = await axios.post("/api/v1/transaction/order/review", dataToSend, {
-        headers: {
-          Authorization: `Bearer ${getCookies()}`,
-        },
-      });
-  
+      const response = await axios.post(
+        "/api/v1/transaction/order/review",
+        dataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${getCookies()}`,
+          },
+        }
+      );
+
       if (response.status === 200) {
         console.log("Data submitted successfully ", response);
-  
+
         const updatedListOfTransaction = listOfTransaction.filter(
           (transaction) =>
             !dataToSend.some((data) => data.transactionId === transaction.id)
         );
         setFetchedListOfTransaction(updatedListOfTransaction);
-  
+
         setCheckboxStatus((prevStatus) => {
           const updatedStatus = { ...prevStatus };
           dataToSend.forEach((data) => {
@@ -90,7 +100,6 @@ const TransactionList = () => {
       console.error("Error submitting data:", error);
     }
   };
-  
 
   const fetchListOfTransaction = async () => {
     try {
@@ -101,7 +110,7 @@ const TransactionList = () => {
         },
       });
       if (res.status === 200) {
-        console.log(res.data);
+        // console.log(res.data);
         const data = res.data ?? [];
         const seenIds = new Set();
         const transactions: TTransaction[] = data
@@ -114,7 +123,7 @@ const TransactionList = () => {
             }
           })
           .map((item: any) => {
-            console.log(item);
+            // console.log(item);
             return {
               id: item.id || "",
               corporateCode: item.corporateCode || 0,
@@ -124,9 +133,11 @@ const TransactionList = () => {
               currency: item.currency || "",
               fiatAmount: item.fiatAmount || 0,
               pair: item.pair || "",
+              transactionStatus: item.transactionStatus,
             };
           });
         setFetchedListOfTransaction(transactions);
+        // console.log(transactions);
       } else {
         console.error("Failed to fetch order list codes");
       }
@@ -139,7 +150,20 @@ const TransactionList = () => {
     fetchListOfTransaction();
   }, []);
 
-  console.log(listOfTransaction);
+  const getStatus = (status?: number) => {
+    // console.log(typeof status, status);
+    if (status === -1) {
+      return "Reject";
+    } else if (status === 0) {
+      return "Pending";
+    } else if (status === 1) {
+      return "Checked";
+    } else if (status === 2) {
+      return "Approved";
+    } else {
+      return "";
+    }
+  };
 
   const columnsContactPerson: TableColumn<TTransaction>[] = [
     {
@@ -175,6 +199,10 @@ const TransactionList = () => {
       selector: (row: TTransaction) => row.currency || "",
     },
     {
+      name: "Status",
+      selector: (row: TTransaction) => getStatus(row.transactionStatus) || "",
+    },
+    {
       name: "Approve",
       cell: (row: TTransaction) => (
         <input
@@ -183,6 +211,7 @@ const TransactionList = () => {
           onChange={(e) =>
             handleCheckboxChange(row.id, "approve", e.target.checked)
           }
+          // disabled={user.user && user.user!.roles!.includes(13) ? false : true}
         />
       ),
       ignoreRowClick: true,
@@ -196,6 +225,7 @@ const TransactionList = () => {
           onChange={(e) =>
             handleCheckboxChange(row.id, "decline", e.target.checked)
           }
+          // disabled={user.user && user.user!.roles!.includes(13) ? false : true}
         />
       ),
       ignoreRowClick: true,
