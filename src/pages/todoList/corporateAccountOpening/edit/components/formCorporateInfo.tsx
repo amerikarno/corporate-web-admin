@@ -67,22 +67,23 @@ export function FormCorporateInfo({
     console.log(initData);
     if (initData) {
       reset(initData);
-      const registeredCapitalValue = parseFloat(initData.registeredCapital || '');
-      const revenuePerYearValue = parseFloat(initData.revenuePerYear || '');
-      const netProfitValue = parseFloat(initData.netProFitLoss || '');
-      const shareholderEquity = parseFloat(initData.shareholderEquity || '');
-      if (!isNaN(registeredCapitalValue)) {
-        setValue("registeredCapital", registeredCapitalValue.toLocaleString());
-      }
-      if (!isNaN(revenuePerYearValue)) {
-        setValue("revenuePerYear", revenuePerYearValue.toLocaleString());
-      }
-      if (!isNaN(netProfitValue)) {
-        setValue("netProFitLoss", netProfitValue.toLocaleString());
-      }
-      if (!isNaN(shareholderEquity)) {
-        setValue("shareholderEquity", shareholderEquity.toLocaleString());
-      }
+      const registeredCapitalValue = Number(initData.registeredCapital ?? 0) / 100;
+      const revenuePerYearValue = Number(initData.revenuePerYear ?? 0) / 100;
+      const netProfitValue = Number(initData.netProFitLoss ?? 0) / 100;
+      const shareholderEquityValue = Number(initData.shareholderEquity ?? 0) / 100;
+
+  if (!isNaN(registeredCapitalValue)) {
+    setValue("registeredCapital", registeredCapitalValue.toFixed(2).toLocaleString());
+  }
+  if (!isNaN(revenuePerYearValue)) {
+    setValue("revenuePerYear", revenuePerYearValue.toFixed(2).toLocaleString());
+  }
+  if (!isNaN(netProfitValue)) {
+    setValue("netProFitLoss", netProfitValue.toFixed(2).toLocaleString());
+  }
+  if (!isNaN(shareholderEquityValue)) {
+    setValue("shareholderEquity", shareholderEquityValue.toFixed(2).toLocaleString());
+  }
     }
   }, [initData]);
 
@@ -146,33 +147,11 @@ export function FormCorporateInfo({
         : false,
     });
   }, [token, dispatch, initData]);
-  // const [isRegisteredCountryOthers, setIsRegisteredCountryOthers] =
-  //   useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
 
   const [
     // isPrimaryCountryOfOperationOthers,
     // setIsPrimaryCountryOfOperationOthers,
   ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
-  // ] = useState<boolean>(false);
-
-  // const [form1error, setErrors] = useState<ZodIssue[] | null>(null);
-
-  // const handleErrors = (error: ZodIssue[] | null) => {
-  //   setErrors(error);
-  // };
-
-  // const getError = (
-  //   keyName: string[],
-  //   errors: ZodIssue[] | null
-  // ): ZodIssue | null => {
-  //   if (errors === null) return null;
-
-  //   return (
-  //     errors.find((error) =>
-  //       keyName.every((key) => error.path!.map(String).includes(key))
-  //     ) || null
-  //   );
-  // };
 
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
@@ -231,21 +210,6 @@ export function FormCorporateInfo({
     validateLocal(tmp);
   };
 
-  // const validateForm = (): boolean => {
-  //   try {
-  //     registeredCountryPrimaryCountryOperationSchema.parse(
-  //       registeredCountryPrimaryCountryOperation
-  //     );
-  //     return true;
-  //   } catch (e) {
-  //     if (e instanceof z.ZodError) {
-  //       handleErrors(e.errors);
-  //     } else {
-  //       console.log(e);
-  //     }
-  //     return false;
-  //   }
-  // };
 
   const validateLocal = (obj: TRegisteredCountryPrimaryCountryOperation) => {
     try {
@@ -275,20 +239,31 @@ export function FormCorporateInfo({
     }
   };
 
+  const formatFinancialValue = (value: string | undefined): number => {
+    if (!value) return 0;
+
+    let newValue = value.replace(/,/g, "");
+
+    if (!newValue.includes(".")) {
+      newValue += ".00";
+    } else {
+      const [integerPart, decimalPart] = newValue.split(".");
+      newValue =
+        integerPart +
+        "." +
+        (decimalPart + "00").slice(0, 2); 
+    }
+
+    return parseFloat(newValue) * 100;
+  };
   const onSubmit = async (data: TCorporateInfoSchema) => {
     const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
-      registeredCapital: Math.floor(
-        Number(data.registeredCapital?.replace(/,/g, ""))
-      ),
-      revenuePerYear: Math.floor(
-        Number(data.revenuePerYear?.replace(/,/g, ""))
-      ),
-      netProFitLoss: Math.floor(Number(data.netProFitLoss?.replace(/,/g, ""))),
-      shareholderEquity: Math.floor(
-        Number(data.shareholderEquity?.replace(/,/g, ""))
-      ),
+      registeredCapital: formatFinancialValue(data.registeredCapital),
+      revenuePerYear: formatFinancialValue(data.revenuePerYear),
+      netProFitLoss: formatFinancialValue(data.netProFitLoss),
+      shareholderEquity: formatFinancialValue(data.shareholderEquity),
       corporateCode: corporatesInfo?.CorporateCode.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,

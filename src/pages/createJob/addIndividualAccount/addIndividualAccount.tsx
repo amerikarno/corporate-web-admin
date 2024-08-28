@@ -10,6 +10,8 @@ import {
 } from "./constant/schemas";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
@@ -24,12 +26,26 @@ export default function AddIndividualAccount() {
     resolver: zodResolver(individualAccountSchema),
   });
 
-  const onSubmit = (data: TIndividualAccount) => {
+  const onSubmit = async (data: TIndividualAccount) => {
     let body={...data,
         birthDate: new Date(data.birthDate),
         pageId:100,
       }
     console.log(body);
+    try {
+      const token = getCookies();
+      const res = await axios.post('/api/v1/individual/precreate', body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res);
+      if (res.status === 200) {
+        console.log('success');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
