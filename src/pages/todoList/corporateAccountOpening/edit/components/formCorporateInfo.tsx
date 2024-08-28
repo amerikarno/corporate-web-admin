@@ -418,35 +418,12 @@ export function FormCorporateInfo({
                   />
                 </div>
               )}
-              {/* {registeredCountryError && (
-                <p className="text-red-500 px-4">
-                  Register Country must be filled.
-                </p>
-              )} */}
+
             </div>
             <div className="p-4">
               <div className="grid grid-cols-2 ">
                 <h1 className="font-bold pb-4">Primary Country of Operation</h1>
                 <div></div>
-                {/* {PrimaryCountryOfOperationChoices.map((item, i) => (
-                  <CheckBox
-                    id={`checkbox2-${i}`}
-                    key={i}
-                    label={item}
-                    onChange={(e) => {
-                      handlePrimaryCountryOfOperationOthers(e);
-                      if (
-                        registeredCountryPrimaryCountryOperation.primary == ""
-                      ) {
-                        setPrimaryCountryOfOperationError(false);
-                      } else {
-                        setPrimaryCountryOfOperationError(true);
-                      }
-                    }}
-                    name={item}
-                    disabled={disablePrimaryCountryOfOperation(item)}
-                  />
-                ))} */}
                 <CheckBox
                   id={`checkbox2-${PrimaryCountryOfOperationChoices[0]}`}
                   key={PrimaryCountryOfOperationChoices[0]}
@@ -456,13 +433,7 @@ export function FormCorporateInfo({
                   }
                   onChange={(e) => {
                     handlePrimaryCountryOfOperationOthers(e);
-                    // if (
-                    //   registeredCountryPrimaryCountryOperation.primary == ""
-                    // ) {
-                    //   setPrimaryCountryOfOperationError(false);
-                    // } else {
-                    //   setPrimaryCountryOfOperationError(true);
-                    // }
+
                   }}
                   name={PrimaryCountryOfOperationChoices[0]}
                 />
@@ -475,13 +446,7 @@ export function FormCorporateInfo({
                   }
                   onChange={(e) => {
                     handlePrimaryCountryOfOperationOthers(e);
-                    // if (
-                    //   registeredCountryPrimaryCountryOperation.primary == ""
-                    // ) {
-                    //   setPrimaryCountryOfOperationError(false);
-                    // } else {
-                    //   setPrimaryCountryOfOperationError(true);
-                    // }
+
                   }}
                   name={PrimaryCountryOfOperationChoices[1]}
                 />
@@ -496,23 +461,8 @@ export function FormCorporateInfo({
                   />
                 </div>
               )}
-              {/* {primaryCountryOfOperationError && (
-                <p className="text-red-500 px-4">
-                  Primary Country of Operation must be filled.
-                </p>
-              )} */}
-            </div>
-          </div>
 
-          <div className="p-4 space-y-4">
-            <h1 className="font-bold">Place Of Incorporate </h1>
-            <div className="flex flex-row space-x-4 "></div>
-            <CorporateAddressForm
-              isSubmitting={isSubmitting}
-              errors={errors.placeofIncorporation?.address?.[0]}
-              register={register}
-              keyType="placeofIncorporation"
-            />
+            </div>
           </div>
 
           <div className="p-4 space-y-4">
@@ -523,6 +473,16 @@ export function FormCorporateInfo({
               register={register}
               isSubmitting={isSubmitting}
               keyType="registeredBusiness"
+            />
+          </div>
+          <div className="p-4 space-y-4">
+            <h1 className="font-bold">Place Of Incorporate </h1>
+            <div className="flex flex-row space-x-4 "></div>
+            <CorporateAddressForm
+              isSubmitting={isSubmitting}
+              errors={errors.placeofIncorporation?.address?.[0]}
+              register={register}
+              keyType="placeofIncorporation"
             />
           </div>
 

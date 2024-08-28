@@ -3,29 +3,19 @@ import { z } from "zod";
 const isNumber = (value: string): boolean => !isNaN(Number(value));
 
 export const subAddressSchema = z.object({
-  addressNo: z.string().min(1, "addressNo cannot be empty"),
+  addressNo: z.string().optional(),
   mooNo: z.string().optional(),
   soi: z.string().optional(),
   floor: z.string().optional(),
   building: z.string().optional(),
   road: z.string().optional(),
-  tambon: z.string().min(1, "subDistrict cannot be empty"),
-  amphoe: z.string().min(1, "district cannot be empty"),
-  province: z.string().min(1, "province cannot be empty"),
+  tambon: z.string().optional(),
+  amphoe: z.string().optional(),
+  province: z.string().optional(),
   postalCode: z
     .string()
-    .min(1, "postalCode cannot be empty")
-    .superRefine((str, ctx) => {
-      if (!isNumber(str)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "postalCode must be number",
-          fatal: true,
-        });
-        return z.NEVER;
-      }
-    }),
-  country: z.string().min(1, "Country cannot be empty"),
+    .optional(),
+  country: z.string().optional(),
 });
 
 const fullNamesSchema = z.array(
@@ -66,9 +56,9 @@ const registerBusinessAddressSchema = z.object({
 
 const placeIncorporateAddressSchema = z.object({
   address: z.array(subAddressSchema),
-  emailAddress: z.string(),
+  emailAddress: z.string().optional(),
   telephone: z
-    .string(),
+    .string().optional(),
 });
 
 export const corporateInfoSchema = z.object({
