@@ -4,6 +4,7 @@ import {
   CorporateResponse,
   TContact,
   TCorporateData,
+  TDocuments,
   TJuristic,
 } from "../../constant/type";
 import {
@@ -390,13 +391,7 @@ export const mapDataToTAuthoirzedPerson = (
       return null;
     }
     const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
-    // const dateParts = dateFormatted.split("-"); // ["2024", "08", "29"]
-    // const date = new Date(
-    //   Number(dateParts[0]),
-    //   Number(dateParts[1]) - 1,
-    //   Number(dateParts[2])
-    // );
-    const result: TAuthorizedPersonSchema = {
+    const result: TAuthorizePerson = {
       corporateCode: String(data.corporateCode ?? ""),
       fullNames: [
         {
@@ -412,7 +407,19 @@ export const mapDataToTAuthoirzedPerson = (
       personalId: data?.personalId ?? "",
       addresses:
         data?.addresses?.length > 0
-          ? data?.addresses
+          ? data?.addresses.map(address => ({
+              addressNo: address.addressNo ?? "",
+              building: address.building ?? "",
+              floor: address.floor ?? "",
+              mooNo: address.mooNo ?? "",
+              soi: address.soi ?? "",
+              road: address.road ?? "",
+              tambon: address.tambon ?? "",
+              amphoe: address.amphoe ?? "",
+              province: address.province ?? "",
+              postalCode: address.postalCode ?? "",
+              country: address.country ?? "",
+            }))
           : [
               {
                 addressNo: "",
@@ -583,6 +590,27 @@ export const mapToForm2Create = (
       corporateCode: data.corporateCode?.toString(),
     };
     return result;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
+  console.log(data)
+  try {
+    if (data === null) {
+      return null;
+    }
+    
+    return {
+      id:data?.id || "",
+      filePath: data?.filePath || "",
+      corporateCode: data?.corporateCode || 0,
+      docType: data?.docType || "",
+      fileName: data?.fileName || "",
+      fileTypes: data?.fileTypes || "",
+    };
+    
   } catch (error) {
     return null;
   }

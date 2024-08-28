@@ -3,9 +3,12 @@ import { getCookies } from "@/lib/Cookies";
 import { useState } from "react";
 import { TDropdownOption } from "../constant/type";
 import { acceptedFileTypes } from "../constant/variables";
+import { useDispatch } from "react-redux";
+import { addFile } from "@/features/uploadFile/uploadFileSlice";
 
 export function useUploadFile() {
   const [file, setFile] = useState<File | null>(null);
+  const dispatch = useDispatch();
   const [documentType, setDocumentType] = useState<TDropdownOption | null>(
     null
   );
@@ -48,6 +51,13 @@ export function useUploadFile() {
             );
             if (response.status === 200) {
               console.log("File uploaded successfully", response.data);
+              let fileinfo={
+                corporateCode:Number(corporateCode),
+                docType:documentType.value,
+                fileName:file.name,
+                fileTypes:file.type,
+              }
+              dispatch(addFile(fileinfo));
               setFile(null);
               setDocumentType(null);
             } else {

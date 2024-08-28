@@ -4,7 +4,15 @@ import { Dropdown } from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import { useUploadFile } from "./hook/useUploadFile";
 import { documents } from "./constant/variables";
-import { TCorporateData } from "@/pages/createJob/constant/type";
+import { TCorporateData, TDocuments } from "@/pages/createJob/constant/type";
+import { RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookies } from "@/lib/Cookies";
+import { useEffect } from "react";
+import axios from "@/api/axios";
+import { setFiles } from "@/features/uploadFile/uploadFileSlice";
+import { mapToUploadFile } from "../../libs/utils";
+import DocumentBox from "@/components/ui/BoxOfUploaded";
 
 type TUploadFilesProps = {
   corporateCode: string;
@@ -18,6 +26,44 @@ export default function UploadFiles({ corporateCode,corporatesInfo }: TUploadFil
     handleInputChange,
     handleUpload,
   } = useUploadFile();
+
+
+  const uploadFile: TDocuments[] = useSelector<RootState>(
+    (state) => state.uploadFile?.files || []
+  ) as TDocuments[];
+
+  console.log(uploadFile)
+  const token = getCookies();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchBankData = async () => {
+      try {
+        const res = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          const uploadFiles = res.data[0].Documents.map((uploadFile: any) => ({
+            ...uploadFile,
+            id: uploadFile.id,
+          }))
+            .map(mapToUploadFile)
+            .filter((item: any) => item !== null);
+          console.log(uploadFiles)
+          dispatch(setFiles(uploadFiles));
+        }
+      } catch (error) {
+        console.error("Error fetching upload File data:", error);
+      }
+    };
+
+    fetchBankData();
+  }, [corporateCode, dispatch, token]);
 
   return (
     <div className="p-4">
@@ -52,6 +98,20 @@ export default function UploadFiles({ corporateCode,corporatesInfo }: TUploadFil
           </div>
         </Card>
         <CardHeader>Upload Documents</CardHeader>
+        <div className="flex gap-2">
+          {uploadFile && uploadFile.length > 0 ? (
+          uploadFile.map((document, index) => (
+            <DocumentBox 
+              key={index} 
+              fileName={document.fileName} 
+              corporateCode={document.corporateCode} 
+              id={document.id}
+            />
+          ))
+        ) : (
+          "No document available"
+        )}
+          </div>
         <CardContent className="space-y-6">
           <div className="flex flex-row space-x-6 items-center">
             <h1>Document Type</h1>

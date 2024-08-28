@@ -36,12 +36,30 @@ export default function BasicInfo() {
         types:1    
       },
       currentAddress:{
-        ...data.currentAddress,
-        types:2
+        ...(radioAddressValue === "radio-1" ? 
+          {...data.registeredAddress,
+            types:2
+          } 
+                      : 
+          {...data.currentAddress,
+            types:2
+          }),
+        types: 2
       },
       officeAddress:{
-        ...data.officeAddress,
-        types:3
+        ...(radioWorkValue === "radio-3" ? 
+          {...data.registeredAddress,
+            types:3
+          } 
+                      : 
+          radioWorkValue === "radio-4" ?
+          {...data.currentAddress,
+            types:3
+          }           :
+          {...data.officeAddress,
+            types:3
+          }
+        ),
       },
       firstBankAccount:{
         ...data.firstBankAccount,
@@ -55,7 +73,7 @@ export default function BasicInfo() {
       },
     }
   let body = {
-    //cid:
+    cid:localStorage.getItem('cid'),
     investment:prebody.investment,
     occupation:prebody.occupation,
     addresses:[

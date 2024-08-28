@@ -185,6 +185,11 @@ export type TAddress = {
   DeletedAt: string | null;
   ReferenceID: string;
   addressNo: string;
+  building?: string;
+  floor?: string;
+  mooNo?: string;
+  soi?: string;
+  road?:string;
   tambon: string;
   amphoe: string;
   province: string;
@@ -285,6 +290,7 @@ export type TCorporateData = {
   IndividualShareholders: TIndividualShareholder[] | null;
   Juristics: TJuristic[];
   Banks: TBank[];
+  Documents?: TDocuments[];
 };
 
 export type TMapPages = {
@@ -406,3 +412,12 @@ export type CorporateCountryResponse = {
   other?: string;
   types?: number;
 };
+
+export type TDocuments = {
+  id?:string;
+  filePath?:string;
+  corporateCode:number;
+  docType:string;
+  fileName:string;
+  fileTypes:string;
+}

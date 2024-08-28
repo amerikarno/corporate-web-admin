@@ -4,6 +4,7 @@ import {
   CorporateResponse,
   TContact,
   TCorporateData,
+  TDocuments,
   TJuristic,
 } from "../../constant/type";
 import {
@@ -464,3 +465,24 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
   }
   
 }
+
+export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
+  console.log(data)
+  try {
+    if (data === null) {
+      return null;
+    }
+    
+    return {
+      id:data?.id || "",
+      filePath: data?.filePath || "",
+      corporateCode: data?.corporateCode || 0,
+      docType: data?.docType || "",
+      fileName: data?.fileName || "",
+      fileTypes: data?.fileTypes || "",
+    };
+    
+  } catch (error) {
+    return null;
+  }
+};

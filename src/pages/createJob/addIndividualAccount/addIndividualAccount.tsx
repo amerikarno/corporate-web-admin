@@ -1,7 +1,7 @@
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 // import Liveness from "./livenessOcr/livenessOcr";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -41,7 +41,8 @@ export default function AddIndividualAccount() {
       });
       console.log(res);
       if (res.status === 200) {
-        console.log('success');
+        localStorage.setItem('cid', res.data.id);
+        console.log('success',res,data);
       }
     } catch (error) {
       console.log(error);
@@ -54,6 +55,7 @@ export default function AddIndividualAccount() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
             <div className="space-y-4 pt-8">
+              <h1 className="text-lg font-bold underline-offset-1 underline pb-4">กรอกข้อมูลส่วนตัว</h1>
               <div className="flex flex-col">
                 <div className="w-1/2 pr-2">
                   <select

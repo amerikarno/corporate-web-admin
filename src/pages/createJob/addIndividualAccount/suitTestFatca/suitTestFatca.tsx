@@ -182,6 +182,22 @@ export default function SuitTestFatca() {
       </Card>
       <Card>
         <CardContent>
+          1. ท่านมีภาระค่าใช้จ่ายประจำเดือนเป็นสัดส่วนเท่าใดของรายได้
+        </CardContent>
+        {/* <input type="radio" id="choice1" {...register('choice')} value="Option 1" />
+        <label htmlFor="choice1">Option 1</label><br />
+
+        <input type="radio" id="choice2" {...register('choice')} value="Option 2" />
+        <label htmlFor="choice2">Option 2</label><br />
+
+        <input type="radio" id="choice3" {...register('choice')} value="Option 3" />
+        <label htmlFor="choice3">Option 3</label><br />
+
+        <input type="radio" id="choice4" {...register('choice')} value="Option 4" />
+        <label htmlFor="choice4">Option 4</label><br /><br /> */}
+      </Card>
+      <Card>
+        <CardContent>
           <div className="p-4 pl-8">
             <div>
               <span className="text-xl">

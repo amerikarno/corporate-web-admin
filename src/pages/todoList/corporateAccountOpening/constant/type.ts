@@ -269,6 +269,15 @@ export type TBank = {
   BankId: string;
 };
 
+export type TDocuments = {
+  id?:string;
+  filePath?:string;
+  corporateCode:number;
+  docType:string;
+  fileName:string;
+  fileTypes:string;
+}
+
 export type TCorporateData = {
   CorporateCode: number;
   Info: TCorporateInfo;
@@ -285,6 +294,7 @@ export type TCorporateData = {
   IndividualShareholders: TIndividualShareholder[] | null;
   Juristics: TJuristic[];
   Banks: TBank[];
+  Documents?: TDocuments[];
 };
 
 export type TMapPages = {

@@ -13,6 +13,8 @@ import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
 import livenessOcr from "@/features/livenessOcr/livenessOcr";
 import bankOrderReducer from "@/features/bankOrder/bankOrdersSlice";
 import addIndividualReducer from "@/features/addIndividual/addIndividualSlice"
+import uploadFileReducer from "@/features/uploadFile/uploadFileSlice"
+
 export const store = configureStore({
   reducer: {
     authen: authenReducer,
@@ -29,6 +31,7 @@ export const store = configureStore({
     livenessOcr: livenessOcr,
     bankOrder: bankOrderReducer,
     addIndividual: addIndividualReducer,
+    uploadFile:uploadFileReducer,
   },
 });
 
