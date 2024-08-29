@@ -165,6 +165,14 @@ const TransactionList = () => {
     }
   };
 
+  const isDisabled = (status?: number) => {
+    if (status === -1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const columnsContactPerson: TableColumn<TTransaction>[] = [
     {
       name: "Transaction ID",
@@ -212,6 +220,7 @@ const TransactionList = () => {
             handleCheckboxChange(row.id, "approve", e.target.checked)
           }
           // disabled={user.user && user.user!.roles!.includes(13) ? false : true}
+          disabled={isDisabled(row.transactionStatus)}
         />
       ),
       ignoreRowClick: true,
@@ -226,6 +235,7 @@ const TransactionList = () => {
             handleCheckboxChange(row.id, "decline", e.target.checked)
           }
           // disabled={user.user && user.user!.roles!.includes(13) ? false : true}
+          disabled={isDisabled(row.transactionStatus)}
         />
       ),
       ignoreRowClick: true,
