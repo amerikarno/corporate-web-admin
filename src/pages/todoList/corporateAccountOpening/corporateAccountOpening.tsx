@@ -35,7 +35,7 @@ export default function TodoCorporateAccountOpenning() {
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
     defaultValues: {
-      dateFrom: dateToyyyyMMdd(prev7Days),
+      dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     },
   });
@@ -75,6 +75,18 @@ export default function TodoCorporateAccountOpenning() {
           corporateCode: item.CorporateCode,
         }));
         setFetchedCorporateCodes(corporateCodes);
+
+        // const dateFrom = new Date();
+        // dateFrom.setDate(dateFrom.getDate() + 7);
+        const data: TCorporateAccountOpening = {
+          corporateCode: "",
+          // dateFrom: dateToyyyyMMdd(dateFrom),
+          // dateTo: dateToyyyyMMdd(dateFrom),
+          dateFrom: dateToyyyyMMdd(new Date()),
+          dateTo: dateToyyyyMMdd(new Date()),
+        };
+        await handleSearch(data);
+ 
       } else {
         console.log("Failed to fetch corporate codes");
       }

@@ -1,32 +1,35 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
+import SubSuitTest from "./subSuitTest";
 
 export default function SuitTestFatca() {
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
   return (
-    <form className="space-y-8 p-4">
+    <div className="space-y-8 p-4">
       <Card>
         <CardContent>
-          <div className="p-8 space-y-4 flex">
+          <div className="p-8 space-x-4 flex items-center">
             <select
-              className="p-1  border-b-2 border-slate-700 
-                        text-gray-900 text-lg block w-1/2 hover:border-b-4 transition-all cursor-pointer"
+              className="cursor-pointer p-1.5 block px-0 w-1/2 text-base text-black bg-transparent border-0 border-b-2
+               border-gray-500 dark:text-gray-400
+               dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-500 peer"
             >
               <option value="">ระดับความเสี่ยงในการลงทุนของท่าน</option>
-              <option value="นาย">choice1</option>
+              <option value="choice1">choice1</option>
               <option value="นาง">choice2</option>
               <option value="นางสาว">choice3</option>
             </select>
             <div className="w-1/4 flex justify-center">
-              <span className="cursor-pointer text-orange-500 underline  underline-offset-2">
+              <span className="cursor-pointer text-orange-500 underline  underline-offset-2 mt-4">
                 ศึกษาหรือแก้ไขรายละเอียดแบบประเมิน
               </span>
             </div>
           </div>
         </CardContent>
       </Card>
+      <SubSuitTest/>
       <Card>
         <CardContent>
           <div className="p-4 space-y-4 pr-8 pl-8 flex flex-col">
@@ -182,22 +185,6 @@ export default function SuitTestFatca() {
       </Card>
       <Card>
         <CardContent>
-          1. ท่านมีภาระค่าใช้จ่ายประจำเดือนเป็นสัดส่วนเท่าใดของรายได้
-        </CardContent>
-        {/* <input type="radio" id="choice1" {...register('choice')} value="Option 1" />
-        <label htmlFor="choice1">Option 1</label><br />
-
-        <input type="radio" id="choice2" {...register('choice')} value="Option 2" />
-        <label htmlFor="choice2">Option 2</label><br />
-
-        <input type="radio" id="choice3" {...register('choice')} value="Option 3" />
-        <label htmlFor="choice3">Option 3</label><br />
-
-        <input type="radio" id="choice4" {...register('choice')} value="Option 4" />
-        <label htmlFor="choice4">Option 4</label><br /><br /> */}
-      </Card>
-      <Card>
-        <CardContent>
           <div className="p-4 pl-8">
             <div>
               <span className="text-xl">
@@ -242,6 +229,6 @@ export default function SuitTestFatca() {
           </div>
         </CardContent>
       </Card>
-    </form>
+    </div>
   );
 }

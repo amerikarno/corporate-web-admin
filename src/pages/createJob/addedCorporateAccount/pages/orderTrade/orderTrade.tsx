@@ -167,14 +167,16 @@ export default function OrderTradeEdit() {
     reset(orderListDatatoInputField);
     if (choosedEditData?.operations === "buy") {
       setBuySell("buy");
-    } else {
+    } else if (choosedEditData?.operations === "sell") {
       setBuySell("sell");
       if (choosedEditData) {
         const cur = choosedEditData.pair.split("/");
         setSellCurrency(cur[1]);
       }
+    }else{
+      setBuySell("buy");
     }
-    // setBuySell(choosedEditData?.operations || "buy");
+
     console.log("use effect", orderListDatatoInputField);
   }, [choosedEditData]);
 

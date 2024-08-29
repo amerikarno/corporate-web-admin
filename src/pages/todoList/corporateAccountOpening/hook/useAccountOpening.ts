@@ -22,10 +22,8 @@ export function useAccountOpening() {
     const body: TBody = {
       ...data,
       dateFrom:
-        // dateFrom instanceof Date && !isNaN(dateFrom.getTime())
         dateFrom ? yyyyMMddToDate(dateFrom) : null,
       dateTo:
-        // dateTo instanceof Date && !isNaN(dateTo.getTime())
         dateTo ? yyyyMMddToDate(dateTo, true) : null,
     };
 
@@ -66,7 +64,11 @@ export function useAccountOpening() {
         return res.data;
       } catch (error) {
         console.log(error);
-        alert("No data found.");
+        if(data.dateFrom === data.dateTo){
+
+        }else{
+          alert("No data found.");
+        }
         return null;
       }
     }
