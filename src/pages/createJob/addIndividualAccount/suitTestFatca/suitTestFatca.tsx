@@ -38,7 +38,7 @@ export default function SuitTestFatca() {
     if(suitTestSuccess && (fatcaradio === "fatcaradio-2" || fatcaInfo !== "")){
       let body ={
         id: localStorage.getItem("cid"),
-        suiteTestResult: [1,"|",1,"|",1,"|",1,"|",1,"|",1,"|",1,"|",1,"|",1],
+        suiteTestResult: [1,1,1,1,1,1,1,1,1].join("|"),
         isFatca: fatcaradio === "fatcaradio-1",
         fatcaInfo: fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
