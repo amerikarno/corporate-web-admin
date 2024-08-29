@@ -12,6 +12,7 @@ import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
@@ -27,22 +28,19 @@ export default function AddIndividualAccount() {
   });
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body={...data,
-        birthDate: new Date(data.birthDate),
-        pageId:100,
-      }
+    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 };
     console.log(body);
     try {
       const token = getCookies();
-      const res = await axios.post('/api/v1/individual/precreate', body, {
+      const res = await axios.post("/api/v1/individual/precreate", body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       console.log(res);
       if (res.status === 200) {
-        localStorage.setItem('cid', res.data.id);
-        console.log('success',res,data);
+        localStorage.setItem("cid", res.data.id);
+        console.log("success", res, data);
       }
     } catch (error) {
       console.log(error);
@@ -55,21 +53,26 @@ export default function AddIndividualAccount() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
             <div className="space-y-4 pt-8">
-              <h1 className="text-lg font-bold underline-offset-1 underline pb-4">กรอกข้อมูลส่วนตัว</h1>
+              <h1 className="text-lg font-bold underline-offset-1 underline pb-4">
+                กรอกข้อมูลส่วนตัว
+              </h1>
               <div className="flex flex-col">
                 <div className="w-1/2 pr-2">
                   <select
                     {...register("thTitle")}
-                    className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent 
+                    className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
-                     dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600">
+                     dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600"
+                  >
                     <option value="">คำนำหน้าชื่อ (ภาษาไทย)</option>
                     <option value="นาย">นาย</option>
                     <option value="นาง">นาง</option>
                     <option value="นางสาว">นางสาว</option>
                   </select>
                 </div>
-                {errors.thTitle && <span className="text-red-500">{errors.thTitle.message}</span>}
+                {errors.thTitle && (
+                  <span className="text-red-500">{errors.thTitle.message}</span>
+                )}
                 <div className="w-1/2"></div>
               </div>
               <div className="flex space-x-4">
@@ -80,7 +83,11 @@ export default function AddIndividualAccount() {
                     label="ชื่อ (ภาษาไทย)"
                     id="thName"
                   />
-                  {errors.thName && <span className="text-red-500">{errors.thName.message}</span>}
+                  {errors.thName && (
+                    <span className="text-red-500">
+                      {errors.thName.message}
+                    </span>
+                  )}
                 </div>
                 <div className="w-1/2">
                   <Input
@@ -89,7 +96,11 @@ export default function AddIndividualAccount() {
                     label="ชื่อสกุล (ภาษาไทย)"
                     id="thSurname"
                   />
-                  {errors.thSurname && <span className="text-red-500">{errors.thSurname.message}</span>}
+                  {errors.thSurname && (
+                    <span className="text-red-500">
+                      {errors.thSurname.message}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -98,15 +109,20 @@ export default function AddIndividualAccount() {
                 <div className="w-1/2">
                   <select
                     {...register("engTitle")}
-                    className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent 
+                    className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
-                     dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600">
+                     dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600"
+                  >
                     <option value="">คำนำหน้าชื่อ (ภาษาอังกฤษ)</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Mrs.">Mrs.</option>
                     <option value="Mrs.">Miss.</option>
                   </select>
-                  {errors.engTitle && <span className="text-red-500">{errors.engTitle.message}</span>}
+                  {errors.engTitle && (
+                    <span className="text-red-500">
+                      {errors.engTitle.message}
+                    </span>
+                  )}
                 </div>
                 <div className="w-1/2"></div>
               </div>
@@ -118,7 +134,11 @@ export default function AddIndividualAccount() {
                     label="ชื่อ (ภาษาอังกฤษ)"
                     id="engName"
                   />
-                  {errors.engName && <span className="text-red-500">{errors.engName.message}</span>}
+                  {errors.engName && (
+                    <span className="text-red-500">
+                      {errors.engName.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="w-1/2">
@@ -129,7 +149,9 @@ export default function AddIndividualAccount() {
                     id="engSurname"
                   />
                   {errors.engSurname && (
-                    <span className="text-red-500">{errors.engSurname.message}</span>
+                    <span className="text-red-500">
+                      {errors.engSurname.message}
+                    </span>
                   )}
                 </div>
               </div>
@@ -142,7 +164,9 @@ export default function AddIndividualAccount() {
                   label="อีเมลล์"
                   id="email"
                 />
-                {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+                {errors.email && (
+                  <span className="text-red-500">{errors.email.message}</span>
+                )}
               </div>
 
               <div className="w-1/2">
@@ -152,7 +176,9 @@ export default function AddIndividualAccount() {
                   label="หมายเลขโทรศัพท์มือถือ"
                   id="mobile"
                 />
-                {errors.mobile && <span className="text-red-500">{errors.mobile.message}</span>}
+                {errors.mobile && (
+                  <span className="text-red-500">{errors.mobile.message}</span>
+                )}
               </div>
             </div>
 
@@ -163,7 +189,11 @@ export default function AddIndividualAccount() {
                   {...register("birthDate")}
                   label="วัน/เดือน/ปี เกิด"
                 />
-                {errors.birthDate && <span className="text-red-500">{errors.birthDate.message}</span>}
+                {errors.birthDate && (
+                  <span className="text-red-500">
+                    {errors.birthDate.message}
+                  </span>
+                )}
               </div>
 
               <div className="flex  flex-col w-1/2">
@@ -179,7 +209,9 @@ export default function AddIndividualAccount() {
                   <option value="อย่า">Divorce</option>
                 </select>
                 {errors.mariageStatus && (
-                  <span className="text-red-500">{errors.mariageStatus.message}</span>
+                  <span className="text-red-500">
+                    {errors.mariageStatus.message}
+                  </span>
                 )}
               </div>
             </div>
@@ -192,7 +224,11 @@ export default function AddIndividualAccount() {
                   label="หมายเลขบัตรประชาชน"
                   id="citizenId"
                 />
-                {errors.citizenId && <span className="text-red-500">{errors.citizenId.message}</span>}
+                {errors.citizenId && (
+                  <span className="text-red-500">
+                    {errors.citizenId.message}
+                  </span>
+                )}
               </div>
 
               <div className="w-1/2">
@@ -202,7 +238,11 @@ export default function AddIndividualAccount() {
                   label="เลขหลังบัตรประชาชน (Laser Code)"
                   id="lasorCode"
                 />
-                {errors.laserCode && <span className="text-red-500">{errors.laserCode.message}</span>}
+                {errors.laserCode && (
+                  <span className="text-red-500">
+                    {errors.laserCode.message}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -232,5 +272,6 @@ export default function AddIndividualAccount() {
       </Card>
     </div>
     // <Liveness />
+    // <OtpEmailConfirm />
   );
 }

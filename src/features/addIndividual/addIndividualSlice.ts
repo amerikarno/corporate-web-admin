@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AddIndividualState {
-  cid?:string;
+  cid?: string;
   thTitle?: string;
   thName?: string;
   thSurname?: string;
@@ -19,21 +19,36 @@ interface AddIndividualState {
 const initialState: AddIndividualState = {};
 
 const addIndividualSlice = createSlice({
-  name: 'addIndividual',
+  name: "addIndividual",
   initialState,
   reducers: {
     setAddIndividual: (state, action: PayloadAction<AddIndividualState>) => {
-      return { ...state, ...action.payload };
+      state = { ...state, ...action.payload };
+      return state;
     },
     setCid: (state, action: PayloadAction<string>) => {
-        state.cid = action.payload;
-      },
+      state.cid = action.payload;
+    },
+    setIndividualEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload;
+      return state;
+    },
+    setIndividualMobile: (state, action: PayloadAction<string>) => {
+      state.mobile = action.payload;
+      return state;
+    },
     clearAddIndividual: () => {
       return initialState;
     },
   },
 });
 
-export const { setAddIndividual, clearAddIndividual,setCid } = addIndividualSlice.actions;
+export const {
+  setAddIndividual,
+  clearAddIndividual,
+  setCid,
+  setIndividualEmail,
+  setIndividualMobile,
+} = addIndividualSlice.actions;
 
 export default addIndividualSlice.reducer;
