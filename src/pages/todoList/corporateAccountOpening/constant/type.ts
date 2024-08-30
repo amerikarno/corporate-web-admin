@@ -55,6 +55,24 @@ export type TCorporateSubAddress = {
   types: number;
 };
 
+export type TAttorney = {
+  id: string;
+  createBy: string;
+  CreatedAt: string;
+  DeletedAt: string | null;
+  personalId: string;
+  corporateCode: number;
+  fullNames: TFullName[];
+  addresses: TAddress[];
+  passportId?: string;
+  citizenId?: string;
+  expiryDate: string;
+  nationality: string;
+  types: number;
+  telephone:string;
+  email:string;
+};
+
 export type TCorporateFinancials = {
   id: string;
   createBy: string;
@@ -185,6 +203,11 @@ export type TAddress = {
   DeletedAt: string | null;
   ReferenceID: string;
   addressNo: string;
+  building?: string;
+  floor?: string;
+  mooNo?: string;
+  soi?: string;
+  road?:string;
   tambon: string;
   amphoe: string;
   province: string;
@@ -295,6 +318,7 @@ export type TCorporateData = {
   Juristics: TJuristic[];
   Banks: TBank[];
   Documents?: TDocuments[];
+  Attorneys?: TAttorney[] | null;
 };
 
 export type TMapPages = {

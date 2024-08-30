@@ -22,6 +22,7 @@ import { useEffect,  useState } from "react";
 import { clearCorporateData, setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
+import { PageAttorney } from "./pages/PageAttorny";
 
 type TPage = {
   page?: string;
@@ -96,9 +97,10 @@ export function EditCorporateAccount() {
     5: <PageIndividualShareholder corporateCode={corporateCode} corporatesInfo={corporateData}/>,
     6: <PageJuristicShareholder corporateCode={corporateCode} corporatesInfo={corporateData} />,
     7: <PageAuthorizedPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    8: <PageBankAccount corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    9: <UploadFiles corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    10: <PageSuitTest corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    8: <PageAttorney corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    9: <PageBankAccount corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    10: <UploadFiles corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    11: <PageSuitTest corporateCode={corporateCode} corporatesInfo={corporateData}/>,
   };
 
   const handlePages = (type: string) => {

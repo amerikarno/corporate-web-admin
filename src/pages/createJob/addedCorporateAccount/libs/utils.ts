@@ -13,6 +13,7 @@ import {
 } from "../constants2/schemas";
 import {
   CorporateTypeBody,
+  TAttorney,
   TAuthorizePerson,
   TContactPerson,
   TDirector,
@@ -26,6 +27,7 @@ import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants2/types";
 import { RootState } from "@/app/store";
 import { useSelector } from "react-redux";
+import { TAttorney as TAttorneyEdit } from "../../constant/type";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -445,14 +447,14 @@ export const mapDataToTAuthoirzedPerson = (
 };
 
 export const mapDataToTAttorney = (
-  data: TAuthorizedPersonEdit | null
-): TAuthorizePerson | null => {
+  data: TAttorneyEdit | null
+): TAttorney | null => {
   try {
     if (data === null) {
       return null;
     }
-    const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
-    const result: TAuthorizePerson = {
+    const dateFormatted = data.expiryDate?.split("T")[0];
+    const result: TAttorney = {
       corporateCode: String(data.corporateCode ?? ""),
       fullNames: [
         {

@@ -114,6 +114,20 @@ export type TBank = {
   swiftCode: string;
 };
 
+export type TAttorney = {
+  corporateCode?: string;
+  fullNames: TFullName[];
+  citizenId?: string;
+  passportId?: string;
+  expiryDate: string;
+  nationality: string;
+  addresses: TSubAddress[];
+  telephone?: string;
+  email?: string;
+  personalId?: string;
+  types?: number;
+}
+
 export type TAuthorizePerson = {
   corporateCode?: string;
   fullNames: TFullName[];
