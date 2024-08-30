@@ -16,7 +16,10 @@ interface AddIndividualState {
   laserCode?: string;
 }
 
-const initialState: AddIndividualState = {};
+const initialState: AddIndividualState = {
+  email: "test@email.com",
+  mobile: "0987654321",
+};
 
 const addIndividualSlice = createSlice({
   name: "addIndividual",

@@ -177,3 +177,7 @@ export const base64ToFile = (dataUrl: string, filename: string): File => {
 
   return new File([u8arr], filename, { type: mime });
 };
+
+export function isEmptyObject(obj: Record<string, any>): boolean {
+  return Object.keys(obj).length === 0;
+}

@@ -243,7 +243,9 @@ export type TSuitChoice = {
 };
 export type TSuitAns = {
   id: string;
-  ans: number;
+  quiz: number;
+  ans: number | number[];
+  type: number;
 };
 
 export type TKnowledgeTest = {
@@ -312,4 +314,25 @@ export type TErrors = {
   id: number;
   msg: string;
   paths: string[];
+};
+
+export type SuitTestResult = {
+  corporateCode?: string;
+  totalScore?: number;
+  level?: number;
+  invsetorTypeRisk?: string;
+  suitTestResult?: SuitTestResultAnswer;
+  type?: number;
+};
+
+export type SuitTestResultAnswer = {
+  answer: SuitAnswer[];
+  additional: Array<boolean | undefined | null>;
+};
+
+export type SuitAnswer = {
+  id?: string;
+  ans: number[] | number;
+  type: number;
+  quiz: number;
 };

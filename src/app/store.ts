@@ -12,8 +12,9 @@ import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
 import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
 import livenessOcr from "@/features/livenessOcr/livenessOcr";
 import bankOrderReducer from "@/features/bankOrder/bankOrdersSlice";
-import addIndividualReducer from "@/features/addIndividual/addIndividualSlice"
-import uploadFileReducer from "@/features/uploadFile/uploadFileSlice"
+import addIndividualReducer from "@/features/addIndividual/addIndividualSlice";
+import uploadFileReducer from "@/features/uploadFile/uploadFileSlice";
+import suitReducer from "@/features/suit/suitSlice";
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +32,8 @@ export const store = configureStore({
     livenessOcr: livenessOcr,
     bankOrder: bankOrderReducer,
     addIndividual: addIndividualReducer,
-    uploadFile:uploadFileReducer,
+    uploadFile: uploadFileReducer,
+    suit: suitReducer,
   },
 });
 
