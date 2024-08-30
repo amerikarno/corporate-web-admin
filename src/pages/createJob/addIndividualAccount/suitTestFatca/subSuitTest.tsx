@@ -175,7 +175,6 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
             </Button>
         </div>
         {suitTestDone &&
-        <Card>
             <div className="relative flex w-full m-8">
                 <div className="flex w-1/4 flex-col items-center space-y-4 border-l-4 p-8 pt-4">
                     <div>
@@ -260,7 +259,7 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
                     </div>
                 </div>
             </div>
-        </Card>}
+        }
       </div>
     </div>
   );

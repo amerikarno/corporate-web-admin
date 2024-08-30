@@ -55,7 +55,9 @@ export function FormCorporateInfo({
   });
 
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
-
+  const [placeIncorporateValue, setPlaceIncorporateValue] = useState<string>(
+    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : "place-radio-1"
+  );
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 601
   );
@@ -71,7 +73,6 @@ export function FormCorporateInfo({
       const revenuePerYearValue = Number(initData.revenuePerYear ?? 0) / 100;
       const netProfitValue = Number(initData.netProFitLoss ?? 0) / 100;
       const shareholderEquityValue = Number(initData.shareholderEquity ?? 0) / 100;
-
   if (!isNaN(registeredCapitalValue)) {
     setValue("registeredCapital", registeredCapitalValue.toFixed(2).toLocaleString());
   }
@@ -86,6 +87,27 @@ export function FormCorporateInfo({
   }
     }
   }, [initData]);
+  useEffect(()=>{
+    if(initData){
+      const registeredCapitalValue = Number(initData.registeredCapital ?? 0) / 100;
+      const revenuePerYearValue = Number(initData.revenuePerYear ?? 0) / 100;
+      const netProfitValue = Number(initData.netProFitLoss ?? 0) / 100;
+      const shareholderEquityValue = Number(initData.shareholderEquity ?? 0) / 100;
+
+    if (!isNaN(registeredCapitalValue)) {
+      setValue("registeredCapital", registeredCapitalValue.toFixed(2).toLocaleString());
+    }
+    if (!isNaN(revenuePerYearValue)) {
+      setValue("revenuePerYear", revenuePerYearValue.toFixed(2).toLocaleString());
+    }
+    if (!isNaN(netProfitValue)) {
+      setValue("netProFitLoss", netProfitValue.toFixed(2).toLocaleString());
+    }
+    if (!isNaN(shareholderEquityValue)) {
+      setValue("shareholderEquity", shareholderEquityValue.toFixed(2).toLocaleString());
+    }
+    }
+  },[placeIncorporateValue])
 
   useEffect(() => {
     if (shouldScrollUp) {
@@ -294,24 +316,44 @@ export function FormCorporateInfo({
         emailAddress: data.registeredBusiness.emailAddress,
         telephone: data.registeredBusiness.telephone,
       },
-      placeofIncorporation: {
+      placeofIncorporation: placeIncorporateValue === "place-radio-1" 
+      ? {
         address: [
           {
-            addressNo: data.placeofIncorporation.address[0].addressNo,
-            mooNo: data.placeofIncorporation.address[0].mooNo,
-            building: data.placeofIncorporation.address[0].building,
-            floor: data.placeofIncorporation.address[0].floor,
-            soi: data.placeofIncorporation.address[0].soi,
-            road: data.placeofIncorporation.address[0].road,
-            tambon: data.placeofIncorporation.address[0].tambon,
-            amphoe: data.placeofIncorporation.address[0].amphoe,
-            province: data.placeofIncorporation.address[0].province,
-            postalCode: data.placeofIncorporation.address[0].postalCode,
-            country: data.placeofIncorporation.address[0].country,
+            addressNo: data.registeredBusiness.address[0]?.addressNo ?? "",
+            mooNo: data.registeredBusiness.address[0]?.mooNo ?? "",
+            building: data.registeredBusiness.address[0]?.building ?? "",
+            floor: data.registeredBusiness.address[0]?.floor ?? "",
+            soi: data.registeredBusiness.address[0]?.soi ?? "",
+            road: data.registeredBusiness.address[0]?.road ?? "",
+            tambon: data.registeredBusiness.address[0]?.tambon ?? "",
+            amphoe: data.registeredBusiness.address[0]?.amphoe ?? "",
+            province: data.registeredBusiness.address[0]?.province ?? "",
+            postalCode: data.registeredBusiness.address[0]?.postalCode ?? "",
+            country: data.registeredBusiness.address[0]?.country ?? "",
           },
         ],
-        emailAddress: data.placeofIncorporation.emailAddress,
-        telephone: data.placeofIncorporation.telephone,
+        emailAddress: data.registeredBusiness.emailAddress ?? "",
+        telephone: data.registeredBusiness.telephone ?? "",
+      }
+      : {
+        address: [
+          {
+            addressNo: data.placeofIncorporation.address[0]?.addressNo ?? "",
+            mooNo: data.placeofIncorporation.address[0]?.mooNo ?? "",
+            building: data.placeofIncorporation.address[0]?.building ?? "",
+            floor: data.placeofIncorporation.address[0]?.floor ?? "",
+            soi: data.placeofIncorporation.address[0]?.soi ?? "",
+            road: data.placeofIncorporation.address[0]?.road ?? "",
+            tambon: data.placeofIncorporation.address[0]?.tambon ?? "",
+            amphoe: data.placeofIncorporation.address[0]?.amphoe ?? "",
+            province: data.placeofIncorporation.address[0]?.province ?? "",
+            postalCode: data.placeofIncorporation.address[0]?.postalCode ?? "",
+            country: data.placeofIncorporation.address[0]?.country ?? "",
+          },
+        ],
+        emailAddress: data.placeofIncorporation.emailAddress ?? "",
+        telephone: data.placeofIncorporation.telephone ?? "",
       },
     };
     await sleep(500);
@@ -476,14 +518,37 @@ export function FormCorporateInfo({
             />
           </div>
           <div className="p-4 space-y-4">
-            <h1 className="font-bold">Place Of Incorporate </h1>
-            <div className="flex flex-row space-x-4 "></div>
-            <CorporateAddressForm
+            <div className="flex flex-col space-y-4 ">
+              <h1 className="font-bold">Place Of Incorporate </h1>
+              <div className="flex space-x-6">
+                  <div className="space-x-2">
+                    <input
+                      id="radio-1"
+                      name="radio-for-placeincorporate"
+                      type="radio"
+                      checked={placeIncorporateValue === "place-radio-1"}
+                      onChange={() => setPlaceIncorporateValue("place-radio-1")}
+                    />
+                    <label htmlFor="radio-1">Use Registered/Business Address</label>
+                  </div>
+                  <div className="space-x-2">
+                    <input
+                      id="radio-2"
+                      name="radio-for-placeincorporate"
+                      type="radio"
+                      checked={placeIncorporateValue === "place-radio-2"}
+                      onChange={() => setPlaceIncorporateValue("place-radio-2")}
+                    />
+                    <label htmlFor="radio-2">Others Address (Please Specify)</label>
+                  </div>
+                </div>
+            </div>
+            {placeIncorporateValue === "place-radio-2" && <CorporateAddressForm
               isSubmitting={isSubmitting}
               errors={errors.placeofIncorporation?.address?.[0]}
               register={register}
               keyType="placeofIncorporation"
-            />
+            />}
           </div>
 
           <div className="p-4 space-y-4">

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SubSuitTest from "./subSuitTest";
 import KnowLedgeTest from "./knowLedgeTest";
 import { TiTick } from "react-icons/ti";
+import "./suitTestFatca.css";
 
 export default function SuitTestFatca() {
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
@@ -47,7 +48,8 @@ export default function SuitTestFatca() {
       }
       console.log(body)
     }else{
-      console.log("Please fill in the required information.")
+      alert("Please Do the Suit Test First.");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
