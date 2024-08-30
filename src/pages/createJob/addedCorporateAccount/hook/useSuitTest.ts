@@ -220,7 +220,7 @@ export function UseSuitTest(corporateCode: string) {
     } else {
       tmp[quizIndex] = { id: quizId, ans: choiceIndex + 1, type: 1, quiz: 1 };
       setAnswerSuiteTest(tmp);
-      console.log(quizIndex + 1, choiceIndex + 1);
+      // console.log(quizIndex + 1, choiceIndex + 1);
     }
     errorCheck(quizId);
   };
@@ -244,16 +244,17 @@ export function UseSuitTest(corporateCode: string) {
           if (res.status == 200) {
             const todo = "change all to real data";
             dispatch(setSuit(mock));
-            console.log("if");
             return mock;
           }
         } catch (error) {
           console.log(error);
         }
       } else {
-        console.log("else");
         return suitData;
       }
+    } else {
+      const empty: SuitTestResult = {};
+      return empty;
     }
   };
 
