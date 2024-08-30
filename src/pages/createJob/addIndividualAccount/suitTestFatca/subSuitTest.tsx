@@ -81,6 +81,17 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     setAnswers(updatedAnswers);
   };
 
+  const ageScore = (age : number) => {
+    let ageScore = 0
+    if (age >= 60) ageScore = 1
+    else if (age >= 45 && age <= 59) ageScore = 2
+    else if (age >= 35 && age <= 44) ageScore = 3
+    else if (age >= 20 && age < 35) ageScore = 4
+    else ageScore = 0
+
+    return ageScore
+}
+
   const handleSubmit = () => {
     let scoreCalculator = answers[2].score;
     const allAnswered = answers.every((ans, index) => {
@@ -103,6 +114,8 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     }else if(scoreCalculator >= 37){
         setInvestorType("เสี่ยงสูงมาก")
     }
+    const age = ageScore(Number(localStorage.getItem('age')));
+    scoreCalculator = scoreCalculator + age
     setTotalScore(scoreCalculator)
     console.log(scoreCalculator)
     console.log(answers)

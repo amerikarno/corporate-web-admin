@@ -215,8 +215,6 @@ export type TDirector = {
 };
 
 export type TAuthorizedPerson = {
-  toISOString(): unknown;
-  split(arg0: string): unknown;
   id: string;
   createBy: string;
   CreatedAt: string;
@@ -230,6 +228,24 @@ export type TAuthorizedPerson = {
   expiryDate: string;
   nationality: string;
   types: number;
+};
+
+export type TAttorney = {
+  id: string;
+  createBy: string;
+  CreatedAt: string;
+  DeletedAt: string | null;
+  personalId: string;
+  corporateCode: number;
+  fullNames: TFullName[];
+  addresses: TAddress[];
+  passportId?: string;
+  citizenId?: string;
+  expiryDate: string;
+  nationality: string;
+  types: number;
+  telephone:string;
+  email:string;
 };
 
 export type TIndividualShareholder = {
@@ -291,6 +307,7 @@ export type TCorporateData = {
   Juristics: TJuristic[];
   Banks: TBank[];
   Documents?: TDocuments[];
+  Attorneys?: TAttorney[] | null;
 };
 
 export type TMapPages = {

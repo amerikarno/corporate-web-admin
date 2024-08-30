@@ -111,7 +111,8 @@ export default function SuitTestFatca() {
                     onChange={() => {
                       setFatcaRadio("fatcaradio-2");
                       setFatcaInfo("");
-                      setIsButtonDisabled(false)
+                      setIsButtonDisabled(false);
+                      setCheckboxStates(new Array(8).fill(false));
                     }}
                   />
                   <label htmlFor="fatcaradio-2">ไม่ใช่</label>

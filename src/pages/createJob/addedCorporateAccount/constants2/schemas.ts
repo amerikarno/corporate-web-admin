@@ -196,6 +196,19 @@ export const authorizedPersonSchema = z.object({
   addresses: z.array(subAddressSchema),
 });
 
+export const attorneySchema = z.object({
+  corporateCode: z.string().optional(),
+  fullNames: fullNamesSchema,
+  citizenId: z.string().optional(),
+  nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
+  passportId: z.string().optional(),
+  personalId: z.string().optional(),
+  expiryDate: z.string().min(1, "date cannot be empty"),
+  addresses: z.array(subAddressSchema),
+  telephone: z.string().optional(),
+  email: z.string().optional(),
+})
+export type TAttorneySchema = z.infer<typeof attorneySchema>;
 export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
 
 export const individualsContactPersonSchema = z.object({
