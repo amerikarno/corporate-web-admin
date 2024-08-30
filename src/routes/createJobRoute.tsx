@@ -4,6 +4,7 @@ import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrd
 import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
 import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
 import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
+import IdentityVerification from "@/pages/createJob/addIndividualAccount/identityVerification/identityVerification";
 import IDCardCapture from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/idCardCapture";
 import { CardWebcamInstructions } from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/webCamInstructions";
 import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
@@ -23,6 +24,7 @@ export const createJobRoutes = () => {
         <Route path=":page" element={<AddIndividualAccount />} />
         <Route path="basicinfo" element={<BasicInfo />} />
         <Route path="suittestfatca" element={<SuitTestFatca />} />
+        <Route path="identityVerification" element={<IdentityVerification/>}/>
         <Route path="liveness" element={<Liveness />} />
         <Route path="card-instructions" element={<CardWebcamInstructions />} />
         <Route path="card-capture" element={<IDCardCapture />} />

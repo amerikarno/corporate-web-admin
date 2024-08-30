@@ -168,7 +168,7 @@ export const individualsShareholdersSchema = z.object({
   //     invalid_type_error: "Price must be Number",
   //   })
   // ),
-  sharePercentage: z.coerce.number(),
+  sharePercentage: z.coerce.number().max(100, { message: "Share percentage cannot be more than 100" }),
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -267,7 +267,7 @@ export const individualsJuristicShareholdersSchema = z.object({
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),
-  sharePercentage: z.coerce.number(),
+  sharePercentage: z.coerce.number().max(100, { message: "Share percentage cannot be more than 100" }),
   // sharePercentage: z.preprocess(
   //   (a) => parseFloat(z.string().parse(a)),
   //   z.number({
