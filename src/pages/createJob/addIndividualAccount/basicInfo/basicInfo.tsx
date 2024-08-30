@@ -5,7 +5,7 @@ import { TiHome } from "react-icons/ti";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { MdLocationPin } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   bank,
@@ -46,20 +46,14 @@ export default function BasicInfo() {
           }),
         types: 2
       },
-      officeAddress:{
-        ...(radioWorkValue === "radio-3" ? 
-          {...data.registeredAddress,
-            types:3
-          } 
-                      : 
-          radioWorkValue === "radio-4" ?
-          {...data.currentAddress,
-            types:3
-          }           :
-          {...data.officeAddress,
-            types:3
-          }
-        ),
+      officeAddress: {
+        ...(radioWorkValue === "radio-3"
+          ? { ...data.registeredAddress, types: 3 }
+          : radioWorkValue === "radio-4"
+          ? data.currentAddress.homeNumber
+            ? { ...data.currentAddress, types: 3 }
+            : { ...data.registeredAddress, types: 3 }
+          : { ...data.officeAddress, types: 3 }),
       },
       firstBankAccount:{
         ...data.firstBankAccount,
@@ -114,9 +108,24 @@ export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
     return <UnAuthorize />;
   }
-  const [radioAddressValue, setRadioAddressValue] = useState("radio-1");
-  const [radioWorkValue, setRadioWorkValue] = useState("radio-3");
-  const [addBankValue, setAddBankValue] = useState("radio-7");
+  const [radioAddressValue, setRadioAddressValue] = useState("radio-2");
+  const [radioWorkValue, setRadioWorkValue] = useState("radio-5");
+  const [addBankValue, setAddBankValue] = useState("radio-6");
+
+  const handleAddressRadioChange = (value:string) => {
+    console.log(value)
+    setRadioAddressValue(value);
+  };
+  const handleWorkRadioChange = (value:string) => {
+    console.log(value)
+    setRadioWorkValue(value);
+  };
+
+  const handleBankRadioChange = (value:string) => {
+    console.log(value)
+    setAddBankValue(value);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4">
       <Card>
@@ -128,16 +137,17 @@ export default function BasicInfo() {
             </div>
             <div className="space-y-4">
               <div className="flex space-x-4">
-                <div className="w-1/2">
+                <div className={`w-1/2`}>
                   <Input
                     type="text"
                     label="Address Number"
                     id="addressNoIDCard"
                     {...register("registeredAddress.homeNumber")}
+                    className={errors.registeredAddress?.homeNumber ?
+                      "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-red-500 border-2 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-red-500 peer"
+                        :"block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
+                    }
                   />
-                  {errors.registeredAddress?.homeNumber && (
-                    <span>{errors.registeredAddress?.homeNumber.message}</span>
-                  )}
                 </div>
                 <div className="w-1/2">
                   <Input
@@ -267,7 +277,8 @@ export default function BasicInfo() {
                     name="radio"
                     type="radio"
                     checked={radioAddressValue === "radio-1"}
-                    onChange={() => setRadioAddressValue("radio-1")}
+                    onChange={() => {handleAddressRadioChange("radio-1")
+                    }}
                   />
                   <label htmlFor="radio-1" className="radio-label">
                     ที่อยู่บัตรประชาชน
@@ -279,7 +290,7 @@ export default function BasicInfo() {
                     name="radio"
                     type="radio"
                     checked={radioAddressValue === "radio-2"}
-                    onChange={() => setRadioAddressValue("radio-2")}
+                    onChange={() => handleAddressRadioChange("radio-2")}
                   />
                   <label htmlFor="radio-2" className="radio-label">
                     ที่อยู่อื่น (โปรดระบุ)
@@ -512,7 +523,7 @@ export default function BasicInfo() {
                     name="radio-for-work"
                     type="radio"
                     checked={radioWorkValue === "radio-3"}
-                    onChange={() => setRadioWorkValue("radio-3")}
+                    onChange={() => handleWorkRadioChange("radio-3")}
                   />
                   <label htmlFor="radio-3">ที่อยู่บัตรประชาชน</label>
                 </div>
@@ -522,7 +533,7 @@ export default function BasicInfo() {
                     name="radio-for-work"
                     type="radio"
                     checked={radioWorkValue === "radio-4"}
-                    onChange={() => setRadioWorkValue("radio-4")}
+                    onChange={() => handleWorkRadioChange("radio-4")}
                   />
                   <label htmlFor="radio-4">ที่อยู่ปัจจุบัน</label>
                 </div>
@@ -532,7 +543,7 @@ export default function BasicInfo() {
                     name="radio-for-work"
                     type="radio"
                     checked={radioWorkValue === "radio-5"}
-                    onChange={() => setRadioWorkValue("radio-5")}
+                    onChange={() => handleWorkRadioChange("radio-5")}
                   />
                   <label htmlFor="radio-5">ที่อยู่อื่น (โปรดระบุ)</label>
                 </div>
@@ -753,7 +764,7 @@ export default function BasicInfo() {
                       name="radio-for-bank"
                       type="radio"
                       checked={addBankValue === "radio-6"}
-                      onChange={() => setAddBankValue("radio-6")}
+                      onChange={() => handleBankRadioChange("radio-6")}
                     />
                     <label htmlFor="radio-6">ใช้</label>
                   </div>
@@ -763,7 +774,7 @@ export default function BasicInfo() {
                       name="radio-for-bank"
                       type="radio"
                       checked={addBankValue === "radio-7"}
-                      onChange={() => setAddBankValue("radio-7")}
+                      onChange={() => handleBankRadioChange("radio-7")}
                     />
                     <label htmlFor="radio-7">ไม่ใช้</label>
                   </div>

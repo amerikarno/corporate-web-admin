@@ -31,12 +31,12 @@ export function CreateCorporateFooter({
             </Button>
           ) : pageId === 2 ? (
             <Button
-              className="bg-white"
+              className="hidden"
             >
               Next Form
             </Button>
           ) : pageId === 10 ? (
-          <Button className="bg-white">
+          <Button className="hidden">
             Done
           </Button>
           ):(
