@@ -122,7 +122,7 @@ const giveGrade = (score: number) => {
       return ans.answer !== '';
     });
     setSuitTestDone(allAnswered)
-    setSuitTestDone(allAnswered)
+    onSuitTestDone(allAnswered)
     let investorTypeTemp;
     if (scoreCalculator < 15){
         setInvestorType("เสี่ยงตํ่า")
@@ -143,11 +143,11 @@ const giveGrade = (score: number) => {
     const age = ageScore(Number(localStorage.getItem('age')));
     scoreCalculator = scoreCalculator + age
     setTotalScore(scoreCalculator)
-    console.log(scoreCalculator)
-    console.log(answers)
-    console.log(allAnswered)
-    console.log(totalScore)
-    console.log(suitTestDone)
+    // console.log(scoreCalculator)
+    // console.log(answers)
+    // console.log(allAnswered)
+    // console.log(totalScore)
+    // console.log(suitTestDone)
     if(allAnswered){
       const suitTestResult = answers.map((item:any)=>({
         id: item.questionIndex,
