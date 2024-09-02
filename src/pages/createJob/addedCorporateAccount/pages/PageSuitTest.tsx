@@ -29,7 +29,7 @@ export function PageSuitTest({
   } = UseSuitTest(corporateCode);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading Suitability Questions...</div>;
   }
 
   const isAdditionChecked = (quizIndex: number, name: string) => {

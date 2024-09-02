@@ -20,7 +20,7 @@ export function UseSuitTest(corporateCode: string) {
   const [opitionalQuiz, setOpitionalQuiz] = useState<string[]>(["", ""]);
   const [isSubmit, setIsSubmit] = useState(false);
   const additionalQuiz = useRef<boolean[]>([]);
-  const [suitability, setSuitability] = useState<SuitTestResult>();
+
   const mock = {
     corporateCode: "80000022",
     totalScore: 18,
@@ -160,20 +160,20 @@ export function UseSuitTest(corporateCode: string) {
 
   const saveSuitTest = async (ans: any) => {
     console.log(ans);
-    // try {
-    //   const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
-    //     headers: { Authorization: `Bearer ${getCookies()}` },
-    //   });
-    //   console.log(ans);
-    //   if (res.status === 200) {
-    //     console.log("request success", res.data);
-    //      dispatch(resetSuit());
-    //   } else {
-    //     console.log("save failed");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
+        headers: { Authorization: `Bearer ${getCookies()}` },
+      });
+      console.log(ans);
+      if (res.status === 200) {
+        console.log("request success", res.data);
+        dispatch(resetSuit());
+      } else {
+        console.log("save failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
     dispatch(resetSuit());
   };
 
@@ -271,49 +271,52 @@ export function UseSuitTest(corporateCode: string) {
       });
       if (res.status == 200) {
         setQuizSuiteTest(res.data);
+        return true;
       }
+      return false;
     } catch (error) {
       if (error instanceof AxiosError) {
-        alert(JSON.stringify(error.response?.data));
+        // alert(JSON.stringify(error.response?.data));
       } else {
         console.log(error);
       }
+      return false;
     }
   };
 
   const initData = async () => {
-    const data = await fetchSuitData();
-    await loadSuitTest();
-    setSuitability(data);
-    setIsLoading(false);
+    if (await loadSuitTest()) {
+      const data = await fetchSuitData();
+      setIsLoading(false);
 
-    console.log(data);
-    if (data) {
-      let tmpAns = [];
-      for (let i = 0; i < data.suitTestResult.answer.length; i++) {
-        const element = data.suitTestResult.answer[i];
-        const ans = {
-          id: element.id,
-          quiz: element.quiz,
-          ans: element.ans,
-          type: element.type,
-        };
-        tmpAns.push(ans);
-      }
-      console.log(tmpAns);
-      setAnswerSuiteTest(tmpAns);
-
-      let tmpAddition = [];
-      for (let i = 0; i < data.suitTestResult.additional.length; i++) {
-        const element = data.suitTestResult.additional[i];
-        if (element === undefined || element === null) {
-          tmpAddition.push("");
-        } else {
-          tmpAddition.push(element === true ? "yes" : "no");
+      console.log(data);
+      if (data) {
+        let tmpAns = [];
+        for (let i = 0; i < data.suitTestResult.answer.length; i++) {
+          const element = data.suitTestResult.answer[i];
+          const ans = {
+            id: element.id,
+            quiz: element.quiz,
+            ans: element.ans,
+            type: element.type,
+          };
+          tmpAns.push(ans);
         }
+        console.log(tmpAns);
+        setAnswerSuiteTest(tmpAns);
+
+        let tmpAddition = [];
+        for (let i = 0; i < data.suitTestResult.additional.length; i++) {
+          const element = data.suitTestResult.additional[i];
+          if (element === undefined || element === null) {
+            tmpAddition.push("");
+          } else {
+            tmpAddition.push(element === true ? "yes" : "no");
+          }
+        }
+        setOpitionalQuiz(tmpAddition);
+        console.log(tmpAddition);
       }
-      setOpitionalQuiz(tmpAddition);
-      console.log(tmpAddition);
     }
   };
 
@@ -334,6 +337,5 @@ export function UseSuitTest(corporateCode: string) {
     isSubmit,
     fetchSuitData,
     additionalQuiz,
-    suitability,
   };
 }
