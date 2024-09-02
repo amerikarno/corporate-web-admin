@@ -35,7 +35,7 @@ export default function TodoCorporateAccountOpenning() {
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
     defaultValues: {
-      dateFrom: dateToyyyyMMdd(new Date()),
+      dateFrom: dateToyyyyMMdd(prev7Days),
       dateTo: dateToyyyyMMdd(new Date()),
     },
   });

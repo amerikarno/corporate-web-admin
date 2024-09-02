@@ -125,7 +125,7 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
 
   return (
     <div className="">
-      <div className="px-16 flex flex-col space-y-8">
+      <div className="md:px-16 flex flex-col space-y-8">
         {questions.map((question, questionIndex) => ( questionIndex+1 === 3 ? 
             <Card className="p-4" key={questionIndex}>
                 <div className="flex flex-col space-y-4 p-8">
@@ -161,7 +161,7 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
                 }
                 <div className="flex flex-col space-y-4 p-8">
                     <p className="font-bold">{questionIndex + 1}.{question.question}</p>
-                    <div className="flex space-x-8">
+                    <div className="flex md:flex-row flex-col md:space-x-8">
                         {question.choices.map((choice, choiceIndex) => (
                         <div className="flex" key={choiceIndex}>
                             <input
@@ -188,9 +188,9 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
             </Button>
         </div>
         {suitTestDone &&
-            <div className="relative flex w-full m-8">
-                <div className="flex w-1/4 flex-col items-center space-y-4 border-l-4 p-8 pt-4">
-                    <div>
+            <div className="md:relative flex md:flex-row flex-col w-full m-8">
+                <div className="flex md:w-1/4 flex-col items-center space-y-4 border-t-4 md:border-l-4 md:border-t-0 p-4 pt-4">
+                    <div className="">
                         <span className="font-bold">ผลคะแนนที่ทำได้</span>
                     </div>
                     <svg className="w-3/4 h-full" viewBox="0 0 100 100">
@@ -218,57 +218,59 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
                         </>
                     </svg>
                 </div>
-                <div className="flex w-1/4 flex-col  space-y-4 border-x-4 p-4">
+                <div className="flex md:w-1/4 flex-col  space-y-4 border-y-4 md:border-y-0 md:border-x-4 p-4">
                     <div className="flex justify-center">
                         <span className="font-bold">การวิเคราะห์ผล</span>
                     </div>
-                    <div className="flex flex-col items-center">
-                        <span className="font-bold text-xl pt-20 text-slate-800">ท่านเป็นนักลงทุนประเภท</span>
+                    <div className="flex flex-col items-center h-full justify-center">
+                        <span className="font-bold text-xl text-slate-800">ท่านเป็นนักลงทุนประเภท</span>
                         <span className="font-bold text-xl text-slate-800">{investorType}</span>
                     </div>
                 </div>
-                <div className="flex flex-col w-1/2 p-4 space-y-4-8">
+                <div className="flex flex-col md:w-1/2 items-center p-4 space-y-4-8 gap-4">
                     <div className="flex pl-8">
                         <span className="font-bold">ประเภทตราสารที่สามารถลงทุนได้</span>
                     </div>
-                    <div className="flex justify-center items-center gap-8">
-                        <div  className="flex flex-col space-y-4 font-bold">
+                    <div className="flex justify-center gap-8">
+                        <div  className="flex flex-col space-y-4 justify-center font-bold">
                             <span>ตราสารหนี้</span>
                             <span>ตราสารทุนบางส่วน</span>
                             <span>ตราสารอนุพันธ์เล็กน้อย</span>
                             <span>หน่วยลงทุนที่มีระดับความเสี่ยง 1-5</span>
                             <span>สินทรัพท์ดิจิทรัลสัดส่วน 0%</span>
                         </div>
-                        <table className="table-auto w-1/2 border-collapse border border-gray-200">
-                            <thead>
-                                <tr className="bg-gray-100">
-                                    <th className="border border-gray-300 px-4 py-2">ประเภทผู้ลงทุน</th>
-                                    <th className="border border-gray-300 px-4 py-2">สัดส่วนการลงทุนในสินทรัพย์ดิจิทรัล</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr className="bg-white">
-                                    <td className="border border-gray-300 px-4 py-2 ">เสี่ยงตํ่า</td>
-                                    <td className="border border-gray-300 px-4 py-2 text-center">&lt;1%</td>
-                                </tr>
-                                <tr className="bg-gray-50">
-                                    <td className="border border-gray-300 px-4 py-2">เสี่ยงปานกลางค่อนตํ่า</td>
-                                    <td className="border border-gray-300 px-4 py-2 text-center">&lt;5%</td>
-                                </tr>
-                                <tr className="bg-white">
-                                    <td className="border border-gray-300 px-4 py-2">เสี่ยงปานกลางค่อนสูง</td>
-                                    <td className="border border-gray-300 px-4 py-2 text-center">&lt;10%</td>
-                                </tr>
-                                <tr className="bg-gray-50">
-                                    <td className="border border-gray-300 px-4 py-2">เสี่ยงสูง</td>
-                                    <td className="border border-gray-300 px-4 py-2 text-center">&lt;15%</td>
-                                </tr>
-                                <tr className="bg-white">
-                                    <td className="border border-gray-300 px-4 py-2">เสี่ยงสูงมาก</td>
-                                    <td className="border border-gray-300 px-4 py-2 text-center">&lt;20%</td>
-                                </tr>
-                            </tbody>
-                    </table>
+                        <div className="w-full h-full">
+                          <table className="table-auto w-full border-collapse border border-gray-200">
+                              <thead>
+                                  <tr className="bg-gray-100">
+                                      <th className="border border-gray-300 px-4 py-2">ประเภทผู้ลงทุน</th>
+                                      <th className="border border-gray-300 px-4 py-2">สัดส่วนการลงทุนในสินทรัพย์ดิจิทรัล</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr className="bg-white">
+                                      <td className="border border-gray-300 px-4 py-2 ">เสี่ยงตํ่า</td>
+                                      <td className="border border-gray-300 px-4 py-2 text-center">&lt;1%</td>
+                                  </tr>
+                                  <tr className="bg-gray-50">
+                                      <td className="border border-gray-300 px-4 py-2">เสี่ยงปานกลางค่อนตํ่า</td>
+                                      <td className="border border-gray-300 px-4 py-2 text-center">&lt;5%</td>
+                                  </tr>
+                                  <tr className="bg-white">
+                                      <td className="border border-gray-300 px-4 py-2">เสี่ยงปานกลางค่อนสูง</td>
+                                      <td className="border border-gray-300 px-4 py-2 text-center">&lt;10%</td>
+                                  </tr>
+                                  <tr className="bg-gray-50">
+                                      <td className="border border-gray-300 px-4 py-2">เสี่ยงสูง</td>
+                                      <td className="border border-gray-300 px-4 py-2 text-center">&lt;15%</td>
+                                  </tr>
+                                  <tr className="bg-white">
+                                      <td className="border border-gray-300 px-4 py-2">เสี่ยงสูงมาก</td>
+                                      <td className="border border-gray-300 px-4 py-2 text-center">&lt;20%</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                        </div>
                     </div>
                 </div>
             </div>
