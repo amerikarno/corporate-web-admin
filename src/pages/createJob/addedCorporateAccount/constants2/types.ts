@@ -21,17 +21,17 @@ export type TFullNameForCorporateInfo = [
 ];
 
 export type TSubAddress = {
-  addressNo: string;
+  addressNo?: string;
   building?: string;
   floor?: string;
   mooNo?: string;
   soi?: string;
   road?: string;
-  tambon: string;
-  amphoe: string;
-  province: string;
-  postalCode: string;
-  country: string;
+  tambon?: string;
+  amphoe?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
   //type?: number;
 };
 
@@ -113,6 +113,20 @@ export type TBank = {
   accountLocation: string;
   swiftCode: string;
 };
+
+export type TAttorney = {
+  corporateCode?: string;
+  fullNames: TFullName[];
+  citizenId?: string;
+  passportId?: string;
+  expiryDate: string;
+  nationality: string;
+  addresses: TSubAddress[];
+  telephone?: string;
+  email?: string;
+  personalId?: string;
+  types?: number;
+}
 
 export type TAuthorizePerson = {
   corporateCode?: string;

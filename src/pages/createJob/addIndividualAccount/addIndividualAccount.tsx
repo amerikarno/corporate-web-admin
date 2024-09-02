@@ -12,6 +12,8 @@ import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
 
 export default function AddIndividualAccount() {
@@ -27,6 +29,17 @@ export default function AddIndividualAccount() {
     resolver: zodResolver(individualAccountSchema),
   });
 
+  const navigate = useNavigate();
+  const calculateAge = (birthDate: Date) => {
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      return age - 1;
+    }
+    return age;
+  };
+
   const onSubmit = async (data: TIndividualAccount) => {
     let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 };
     console.log(body);
@@ -39,8 +52,14 @@ export default function AddIndividualAccount() {
       });
       console.log(res);
       if (res.status === 200) {
-        localStorage.setItem("cid", res.data.id);
-        console.log("success", res, data);
+        const age = calculateAge(body.birthDate);
+        localStorage.setItem('cid', res.data.id);
+        localStorage.setItem('age', age.toString());
+        console.log(age)
+        console.log('success',res,data);
+
+        navigate("/create-job/added-individual-account/basicinfo");
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       console.log(error);
@@ -141,33 +160,29 @@ export default function AddIndividualAccount() {
     //               )}
     //             </div>
 
-    //             <div className="w-1/2">
-    //               <Input
-    //                 type="text"
-    //                 {...register("engSurname")}
-    //                 label="ชื่อสกุล (ภาษาอังกฤษ)"
-    //                 id="engSurname"
-    //               />
-    //               {errors.engSurname && (
-    //                 <span className="text-red-500">
-    //                   {errors.engSurname.message}
-    //                 </span>
-    //               )}
-    //             </div>
-    //           </div>
-    //         </div>
-    //         <div className="flex space-x-4 pt-8">
-    //           <div className="w-1/2">
-    //             <Input
-    //               type="email"
-    //               {...register("email")}
-    //               label="อีเมลล์"
-    //               id="email"
-    //             />
-    //             {errors.email && (
-    //               <span className="text-red-500">{errors.email.message}</span>
-    //             )}
-    //           </div>
+                <div className="w-1/2">
+                  <Input
+                    type="text"
+                    {...register("engSurname")}
+                    label="ชื่อสกุล (ภาษาอังกฤษ)"
+                    id="engSurname"
+                  />
+                  {errors.engSurname && (
+                    <span className="text-red-500">{errors.engSurname.message}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex space-x-4 pt-8">
+              <div className="w-1/2">
+                <Input
+                  type="text"
+                  {...register("email")}
+                  label="อีเมลล์"
+                  id="email"
+                />
+                {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+              </div>
 
     //           <div className="w-1/2">
     //             <Input

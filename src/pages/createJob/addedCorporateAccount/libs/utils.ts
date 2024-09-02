@@ -13,6 +13,7 @@ import {
 } from "../constants2/schemas";
 import {
   CorporateTypeBody,
+  TAttorney,
   TAuthorizePerson,
   TContactPerson,
   TDirector,
@@ -26,6 +27,7 @@ import { TBank as TBankEdit } from "../../constant/type";
 import { TBank } from "../constants2/types";
 import { RootState } from "@/app/store";
 import { useSelector } from "react-redux";
+import { TAttorney as TAttorneyEdit } from "../../constant/type";
 
 export const isExpiredToken = (): boolean => {
   const token = getCookies();
@@ -392,6 +394,67 @@ export const mapDataToTAuthoirzedPerson = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
     const result: TAuthorizePerson = {
+      corporateCode: String(data.corporateCode ?? ""),
+      fullNames: [
+        {
+          title: data?.fullNames[0].title ?? "",
+          firstName: data?.fullNames[0].firstName ?? "",
+          lastName: data?.fullNames[0].lastName ?? "",
+        },
+      ],
+      passportId: data?.passportId ?? "",
+      citizenId: data?.citizenId ?? "",
+      expiryDate: dateFormatted ?? "",
+      nationality: data?.nationality ?? "",
+      personalId: data?.personalId ?? "",
+      addresses:
+        data?.addresses?.length > 0
+          ? data?.addresses.map(address => ({
+              addressNo: address.addressNo ?? "",
+              building: address.building ?? "",
+              floor: address.floor ?? "",
+              mooNo: address.mooNo ?? "",
+              soi: address.soi ?? "",
+              road: address.road ?? "",
+              tambon: address.tambon ?? "",
+              amphoe: address.amphoe ?? "",
+              province: address.province ?? "",
+              postalCode: address.postalCode ?? "",
+              country: address.country ?? "",
+            }))
+          : [
+              {
+                addressNo: "",
+                building: "",
+                floor: "",
+                mooNo: "",
+                soi: "",
+                road: "",
+                tambon: "",
+                amphoe: "",
+                province: "",
+                postalCode: "",
+                country: "",
+              },
+            ],
+    };
+
+    return result;
+  } catch (error) {
+    console.error("Cast type error", error);
+    return null;
+  }
+};
+
+export const mapDataToTAttorney = (
+  data: TAttorneyEdit | null
+): TAttorney | null => {
+  try {
+    if (data === null) {
+      return null;
+    }
+    const dateFormatted = data.expiryDate?.split("T")[0];
+    const result: TAttorney = {
       corporateCode: String(data.corporateCode ?? ""),
       fullNames: [
         {

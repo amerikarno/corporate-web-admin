@@ -31,16 +31,16 @@ export function CreateCorporateFooter({
             </Button>
           ) : pageId === 2 ? (
             <Button
-              className="bg-white"
+              className="hidden"
             >
               Next Form
             </Button>
-          ) : pageId === 10 ? (
-          <Button className="bg-white">
+          ) : pageId === 11 ? (
+          <Button className="hidden">
             Done
           </Button>
           ):(
-            <Button onClick={() => handlePages("next")} disabled={pageId >= 10}>
+            <Button onClick={() => handlePages("next")} disabled={pageId >= 11}>
             Next Form
           </Button>
           )}

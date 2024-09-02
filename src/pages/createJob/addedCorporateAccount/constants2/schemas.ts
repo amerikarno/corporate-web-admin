@@ -158,7 +158,7 @@ export const individualsShareholdersSchema = z.object({
   //     invalid_type_error: "Price must be Number",
   //   })
   // ),
-  sharePercentage: z.coerce.number(),
+  sharePercentage: z.coerce.number().max(100, { message: "Share percentage cannot be more than 100" }),
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -196,6 +196,19 @@ export const authorizedPersonSchema = z.object({
   addresses: z.array(subAddressSchema),
 });
 
+export const attorneySchema = z.object({
+  corporateCode: z.string().optional(),
+  fullNames: fullNamesSchema,
+  citizenId: z.string().optional(),
+  nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
+  passportId: z.string().optional(),
+  personalId: z.string().optional(),
+  expiryDate: z.string().min(1, "date cannot be empty"),
+  addresses: z.array(subAddressSchema),
+  telephone: z.string().optional(),
+  email: z.string().optional(),
+})
+export type TAttorneySchema = z.infer<typeof attorneySchema>;
 export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
 
 export const individualsContactPersonSchema = z.object({
@@ -243,7 +256,7 @@ export const individualsJuristicShareholdersSchema = z.object({
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),
-  sharePercentage: z.coerce.number(),
+  sharePercentage: z.coerce.number().max(100, { message: "Share percentage cannot be more than 100" }),
   // sharePercentage: z.preprocess(
   //   (a) => parseFloat(z.string().parse(a)),
   //   z.number({
