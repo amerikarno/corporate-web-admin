@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
+import { TiTick } from "react-icons/ti";
 
 const questionsData = {
     "id": "1",
@@ -171,10 +172,11 @@ type AnswersType = {
     const [currentPage, setCurrentPage] = useState(1);
     const [answers, setAnswers] = useState<AnswersType>({});
     const [highlightedQuestion, setHighlightedQuestion] = useState<number | null>(null);
+    const [incorrectAnswers, setIncorrectAnswers] = useState<{ [key: number]: string }>({});
     const totalPages = Math.ceil(questionsData.items.length / 5);
     const totalQuestions = questionsData.items.length;
     const answeredQuestionsCount = Object.keys(answers).length;
-
+    const [allTestSuccess , setAllTestSuccess] = useState(false);
 
     const handleNext = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -187,8 +189,7 @@ type AnswersType = {
     };
 
     const handleDone = () => {
-        let firstWrongPage = null;
-        let firstWrongQuestionId = null;
+        let incorrectAnswersTemp: { [key: number]: string } = {};
 
         for (let page = 1; page <= totalPages; page++) {
             const startIndex = (page - 1) * 5;
@@ -196,19 +197,25 @@ type AnswersType = {
 
             for (let question of questionsOnPage) {
                 if (answers[question.id] !== question.ans) {
-                    firstWrongPage = firstWrongPage || page;
-                    firstWrongQuestionId = firstWrongQuestionId || question.id;
-                    break;
+                    incorrectAnswersTemp[question.id] = question.ans_detail;
                 }
             }
-
-            if (firstWrongPage) break;
         }
 
-        if (firstWrongPage) {
-            setCurrentPage(firstWrongPage);
-            setHighlightedQuestion(firstWrongQuestionId);
+        if (Object.keys(incorrectAnswersTemp).length > 0) {
+            const firstWrongQuestion = Math.min(...Object.keys(incorrectAnswersTemp).map(Number))
+            if (firstWrongQuestion >= 1 && firstWrongQuestion <= 5) {
+                setCurrentPage(1);
+            } else if (firstWrongQuestion >= 6 && firstWrongQuestion <= 10) {
+                setCurrentPage(2);
+            } else {
+                setCurrentPage(3);
+            }
+            setAllTestSuccess(false)
+            setIncorrectAnswers(incorrectAnswersTemp);
+            setHighlightedQuestion(parseInt(Object.keys(incorrectAnswersTemp)[0], 10));
         } else {
+            setAllTestSuccess(true);
             onTestSuccess(true);
             console.log("All Answer Corrected!")
         }
@@ -244,6 +251,11 @@ type AnswersType = {
                         </div>
                     ))}
                 </div>
+                {incorrectAnswers[question.id] && (
+                    <div className="mt-2 text-red-600 bg-red-100">
+                        {incorrectAnswers[question.id]}
+                    </div>
+                )}
             </div>
         ));
     };
@@ -275,7 +287,8 @@ type AnswersType = {
                             {currentPage < totalPages ? (
                                 <Button onClick={handleNext}>Next</Button>
                             ) : (
-                                <Button onClick={handleDone}>Done</Button>
+                                <Button className={allTestSuccess? "bg-green-500 text-white border-4 rounded-full transition-all duration-500 cursor-pointer hover:bg-green-500" : ""}
+                                onClick={handleDone}>{allTestSuccess ? "All Corrected" : "Done "}{allTestSuccess && <TiTick className="text-xl" />}</Button>
                             )}
                         </div>
                     </div>

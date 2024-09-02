@@ -43,9 +43,9 @@ export const basicInfoSchema = z.object({
         education: z.string().min(1,"please choose this field"),
         sourceOfIncome: z.string().min(1,"please choose this field"),
         currentOccupation: z.string().min(1,"please choose this field"),
-        officeName: z.string().min(1,"please fill this field"),
-        typeOfBusiness: z.string().min(1,"please choose this field"),
-        positionName: z.string().min(1,"please fill this field"),
+        officeName: z.string().optional(),
+        typeOfBusiness: z.string().optional(),
+        positionName: z.string().optional(),
         salaryRange: z.string().min(1,"please choose this field"),
     }),
     firstBankAccount : z.object({

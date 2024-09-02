@@ -183,9 +183,9 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
             </Card> 
         ))}
         <div className="flex justify-center">
-            <Button type="button" className="w-1/8" onClick={handleSubmit}>
+            {!suitTestDone &&<Button type="button" className="w-1/8" onClick={handleSubmit}>
                 Done
-            </Button>
+            </Button>}
         </div>
         {suitTestDone &&
             <div className="md:relative flex md:flex-row flex-col w-full m-8">

@@ -339,65 +339,110 @@ export const businessTypes = [
 
 export const careerTypes = [
   {
-    id: 1,
-    name: "พนักงานรัฐวิสาหกิจ",
-  },
-  {
-    id: 2,
-    name: "เกษตรกร",
-  },
-  {
-    id: 3,
-    name: "พระภิกษุ/นักบวช",
-  },
-  {
-    id: 4,
-    name: "แพทย์/พยาบาล",
-  },
-  {
-    id: 5,
-    name: "ครู / อาจารย์",
-  },
-  {
-    id: 6,
-    name: "แม่บ้าน / พ่อบ้าน",
-  },
-  {
-    id: 7,
-    name: "ข้าราชการ",
-  },
-  {
-    id: 8,
-    name: "นักเรียน / นักศึกษา",
-  },
-  {
-    id: 9,
-    name: "เกษียณอายุ",
-  },
-  {
-    id: 10,
-    name: "นักการเมืองในประเทศ",
-  },
-  {
-    id: 11,
-    name: "นักลงทุน",
-  },
-  {
-    id: 12,
-    name: "อาชีพอิสระ",
-  },
-  {
-    id: 13,
-    name: "เจ้าของธุรกิจ/ธุรกิจส่วนตัว",
-  },
-  {
-    id: 14,
-    name: "พนักงานบริษัท",
-  },
-  {
-    id: 15,
-    name: "กิจการครอบครัว",
-  },
+    "id": 1,
+    "name": "พนักงานรัฐวิสาหกิจ",
+    "businessFlag": "N",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 2,
+    "name": "เกษตรกร",
+    "businessFlag": "N",
+    "workplaceFlag": "N",
+    "positionFlag": "N"
+},
+{
+    "id": 3,
+    "name": "พระภิกษุ/นักบวช",
+    "businessFlag": "N",
+    "workplaceFlag": "N",
+    "positionFlag": "N"
+},
+{
+    "id": 4,
+    "name": "แพทย์/พยาบาล",
+    "businessFlag": "N",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 5,
+    "name": "ครู / อาจารย์",
+    "businessFlag": "N",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 6,
+    "name": "แม่บ้าน / พ่อบ้าน",
+    "businessFlag": "N",
+    "workplaceFlag": "N",
+    "positionFlag": "N"
+},
+{
+    "id": 7,
+    "name": "ข้าราชการ",
+    "businessFlag": "N",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 8,
+    "name": "นักเรียน / นักศึกษา",
+    "businessFlag": "N",
+    "workplaceFlag": "N",
+    "positionFlag": "N"
+},
+{
+    "id": 9,
+    "name": "เกษียณอายุ",
+    "businessFlag": "N",
+    "workplaceFlag": "N",
+    "positionFlag": "N"
+},
+{
+    "id": 10,
+    "name": "นักการเมืองในประเทศ",
+    "businessFlag": "N",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 11,
+    "name": "นักลงทุน",
+    "businessFlag": "N",
+    "workplaceFlag": "N",
+    "positionFlag": "N"
+},
+{
+    "id": 12,
+    "name": "อาชีพอิสระ",
+    "businessFlag": "Y",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 13,
+    "name": "เจ้าของธุรกิจ/ธุรกิจส่วนตัว",
+    "businessFlag": "Y",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 14,
+    "name": "พนักงานบริษัท",
+    "businessFlag": "Y",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+},
+{
+    "id": 15,
+    "name": "กิจการครอบครัว",
+    "businessFlag": "Y",
+    "workplaceFlag": "Y",
+    "positionFlag": "Y"
+}
 ];
 
 export const educationTypes = [
