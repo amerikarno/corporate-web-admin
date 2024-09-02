@@ -34,7 +34,7 @@ export const store = configureStore({
     bankOrder: bankOrderReducer,
     addIndividual: addIndividualReducer,
     uploadFile: uploadFileReducer,
-    attorney:attorneyReducer
+    attorney: attorneyReducer,
     suit: suitReducer,
   },
 });
