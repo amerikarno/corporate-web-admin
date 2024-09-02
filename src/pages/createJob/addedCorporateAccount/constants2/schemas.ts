@@ -1,6 +1,5 @@
 //import { isNumber } from "@/lib/utils";
 import { z } from "zod";
-const isNumber = (value: string): boolean => !isNaN(Number(value));
 
 export const subAddressSchema = z.object({
   addressNo: z.string().optional(),
@@ -12,9 +11,7 @@ export const subAddressSchema = z.object({
   tambon: z.string().optional(),
   amphoe: z.string().optional(),
   province: z.string().optional(),
-  postalCode: z
-    .string()
-    .optional(),
+  postalCode: z.string().optional(),
   country: z.string().optional(),
 });
 
@@ -50,15 +47,13 @@ export const addressSchema = z.object({
 const registerBusinessAddressSchema = z.object({
   address: z.array(subAddressSchema),
   emailAddress: z.string(),
-  telephone: z
-    .string(),
+  telephone: z.string(),
 });
 
 const placeIncorporateAddressSchema = z.object({
   address: z.array(subAddressSchema),
   emailAddress: z.string().optional(),
-  telephone: z
-    .string().optional(),
+  telephone: z.string().optional(),
 });
 
 export const corporateInfoSchema = z.object({
@@ -113,8 +108,7 @@ export const contactPersonSchema = z.object({
   lastName: z.string().min(1, "lastname cannot be empty"),
   position: z.string().min(1, "position cannot be empty"),
   division: z.string().min(1, "division cannot be empty"),
-  telephone: z
-    .string(),
+  telephone: z.string(),
   email: z.string(),
 });
 
@@ -158,7 +152,9 @@ export const individualsShareholdersSchema = z.object({
   //     invalid_type_error: "Price must be Number",
   //   })
   // ),
-  sharePercentage: z.coerce.number().max(100, { message: "Share percentage cannot be more than 100" }),
+  sharePercentage: z.coerce
+    .number()
+    .max(100, { message: "Share percentage cannot be more than 100" }),
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -207,7 +203,7 @@ export const attorneySchema = z.object({
   addresses: z.array(subAddressSchema),
   telephone: z.string().optional(),
   email: z.string().optional(),
-})
+});
 export type TAttorneySchema = z.infer<typeof attorneySchema>;
 export type TAuthorizedPersonSchema = z.infer<typeof authorizedPersonSchema>;
 
@@ -256,7 +252,9 @@ export const individualsJuristicShareholdersSchema = z.object({
   registeredCountry: z
     .string()
     .min(1, { message: "Register Country cannot be empty" }),
-  sharePercentage: z.coerce.number().max(100, { message: "Share percentage cannot be more than 100" }),
+  sharePercentage: z.coerce
+    .number()
+    .max(100, { message: "Share percentage cannot be more than 100" }),
   // sharePercentage: z.preprocess(
   //   (a) => parseFloat(z.string().parse(a)),
   //   z.number({

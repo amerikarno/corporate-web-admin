@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Dropdown } from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,7 @@ export default function UploadFiles({
     (state) => state.uploadFile?.files || []
   ) as TDocuments[];
 
-  console.log(uploadFile)
+  console.log(uploadFile);
   const token = getCookies();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function UploadFiles({
           }))
             .map(mapToUploadFile)
             .filter((item: any) => item !== null);
-          console.log(uploadFiles)
+          console.log(uploadFiles);
           dispatch(setFiles(uploadFiles));
         }
       } catch (error) {
@@ -105,18 +105,16 @@ export default function UploadFiles({
         <div className="p-4 flex space-x-4">
           <div>Uploaded Documents:</div>
           <div className="flex gap-2">
-          {uploadFile && uploadFile.length > 0 ? (
-          uploadFile.map((document, index) => (
-            <DocumentBox 
-              key={index} 
-              fileName={document.fileName} 
-              corporateCode={document.corporateCode} 
-              id={document.id}
-            />
-          ))
-        ) : (
-          "No document available"
-        )}
+            {uploadFile && uploadFile.length > 0
+              ? uploadFile.map((document, index) => (
+                  <DocumentBox
+                    key={index}
+                    fileName={document.fileName}
+                    corporateCode={document.corporateCode}
+                    id={document.id}
+                  />
+                ))
+              : "No document available"}
           </div>
         </div>
         <CardContent className="space-y-6">
