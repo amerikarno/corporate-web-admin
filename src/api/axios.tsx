@@ -3,10 +3,10 @@ import axios from "axios";
 // import log from "@/log/log";
 
 // const BASE_URL = window.origin;
+// const BASE_URL = "http://sit-corporate-admin.finansiada.com";
 const BASE_URL = "http://cwa-alb-607898773.eu-north-1.elb.amazonaws.com";
-// const BASE_URL = "http://localhost:1323";
 
-console.log("base url:", BASE_URL);
+// console.log("base url:", BASE_URL);
 
 export default axios.create({
   baseURL: BASE_URL,

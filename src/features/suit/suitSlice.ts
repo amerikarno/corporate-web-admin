@@ -31,8 +31,12 @@ export const suitSlice = createSlice({
       state = action.payload;
       return state;
     },
+    resetSuit: (state) => {
+      state = initialState;
+      return state;
+    },
   },
 });
 
-export const { setSuit } = suitSlice.actions;
+export const { setSuit, resetSuit } = suitSlice.actions;
 export default suitSlice.reducer;

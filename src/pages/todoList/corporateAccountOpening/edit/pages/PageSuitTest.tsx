@@ -11,12 +11,15 @@ type TPageSuitTestProps = {
   corporatesInfo?: TCorporateData;
 };
 
-export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProps) {
+export function PageSuitTest({
+  corporateCode,
+  corporatesInfo,
+}: TPageSuitTestProps) {
   const {
+    answerSuiteTest,
     quizSuiteTest,
     handleChoice,
     isLoading,
-    answerSuiteTest,
     handleSubmit,
     errors,
     score,
@@ -29,37 +32,49 @@ export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProp
     return <div>Loading...</div>;
   }
 
+  const isAdditionChecked = (quizIndex: number, name: string) => {
+    if (opitionalQuiz[quizIndex] === "") {
+      return undefined;
+    } else {
+      return name === opitionalQuiz[quizIndex];
+    }
+  };
+
   return (
     <div className="p-4 space-y-10">
-        <Card className=" p-4 space-y-6">
-          <h1 className="text-xl font-bold">Juristic Infomations</h1>
-          <div className="flex">
-            <div className="w-1/2 space-y-4">
-              <div className="flex flex-row gap-4">
-                <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
-              </div>
-              <div className="flex flex-row gap-4">
-                <h1 className="font-bold">Juristic Investor Name</h1>
-                <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
-              </div>
-              <div className="flex flex-row gap-4">
-                <h1 className="font-bold">Commercial Number</h1>
-                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
-              </div>
+      <Card className=" p-4 space-y-6">
+        <h1 className="text-xl font-bold">Juristic Infomations</h1>
+        <div className="flex">
+          <div className="w-1/2 space-y-4">
+            <div className="flex flex-row gap-4">
+              <h1 className="font-bold">Juristic ID</h1>
+              <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
             </div>
-            <div className="w-1/2 space-y-4">
-              <div className="flex flex-row gap-4">
-                <h1 className="font-bold">Tax ID</h1>
-                <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
-              </div>
-              <div className="flex flex-row gap-4">
-                <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
-              </div>
+            <div className="flex flex-row gap-4">
+              <h1 className="font-bold">Juristic Investor Name</h1>
+              <h1 className="">: {corporatesInfo?.Info.name ?? ""}</h1>
+            </div>
+            <div className="flex flex-row gap-4">
+              <h1 className="font-bold">Commercial Number</h1>
+              <h1 className="">
+                : {corporatesInfo?.Info.registrationNo ?? ""}
+              </h1>
             </div>
           </div>
-        </Card>
+          <div className="w-1/2 space-y-4">
+            <div className="flex flex-row gap-4">
+              <h1 className="font-bold">Tax ID</h1>
+              <h1 className="">: {corporatesInfo?.Info.taxId ?? ""}</h1>
+            </div>
+            <div className="flex flex-row gap-4">
+              <h1 className="font-bold">Date Of Incorporation</h1>
+              <h1 className="">
+                : {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}
+              </h1>
+            </div>
+          </div>
+        </div>
+      </Card>
       <Card>
         <CardHeader>
           <div className="flex flex-row space-x-6 items-end">
@@ -72,10 +87,11 @@ export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProp
             {quizSuiteTest &&
               quizSuiteTest.map((item, index) => (
                 <SuitQuestionComp
+                  answer={answerSuiteTest}
                   key={index}
+                  quizIndex={index}
                   quiz={item}
                   handleChoice={handleChoice}
-                  answer={answerSuiteTest}
                   errors={errors}
                 />
               ))}
@@ -98,14 +114,14 @@ export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProp
                   id="11-1"
                   label="No"
                   name="no"
-                  checked={opitionalQuiz[0] == "no"}
+                  checked={isAdditionChecked(0, "no")}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
                 <CheckBox
                   id="11-2"
                   label="Yes"
                   name="yes"
-                  checked={opitionalQuiz[0] == "yes"}
+                  checked={isAdditionChecked(0, "yes")}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
               </div>
@@ -121,20 +137,25 @@ export function PageSuitTest({ corporateCode,corporatesInfo }: TPageSuitTestProp
                   id="12-1"
                   label="No"
                   name="no"
-                  checked={opitionalQuiz[1] == "no"}
+                  checked={isAdditionChecked(1, "no")}
                   onChange={(e) => handelOptionalQuiz(1, e)}
                 />
                 <CheckBox
                   id="12-2"
                   label="Yes"
                   name="yes"
-                  checked={opitionalQuiz[1] == "yes"}
+                  checked={isAdditionChecked(1, "yes")}
                   onChange={(e) => handelOptionalQuiz(1, e)}
                 />
               </div>
             </div>
             <div className="flex justify-end relative">
-              <Button className="absolute top-20 right-0 w-24 " onClick={handleSubmit}>Submit</Button>
+              <Button
+                className="absolute top-20 right-0 w-24 "
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </CardContent>

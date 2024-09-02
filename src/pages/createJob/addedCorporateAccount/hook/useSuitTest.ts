@@ -5,7 +5,7 @@ import { getCookies } from "@/lib/Cookies";
 import { mapScore } from "../constants2/variables";
 import { AxiosError } from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setSuit } from "@/features/suit/suitSlice";
+import { resetSuit, setSuit } from "@/features/suit/suitSlice";
 import { copy, isEmptyObject } from "@/lib/utils";
 
 export function UseSuitTest(corporateCode: string) {
@@ -154,25 +154,27 @@ export function UseSuitTest(corporateCode: string) {
       setScore(score);
       setIsSubmit(true);
       dispatch(setSuit(ans));
-      // saveSuitTest(ans);
+      saveSuitTest(ans);
     }
   };
 
   const saveSuitTest = async (ans: any) => {
     console.log(ans);
-    try {
-      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
-        headers: { Authorization: `Bearer ${getCookies()}` },
-      });
-      console.log(ans);
-      if (res.status === 200) {
-        console.log("request success", res.data);
-      } else {
-        console.log("save failed");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
+    //     headers: { Authorization: `Bearer ${getCookies()}` },
+    //   });
+    //   console.log(ans);
+    //   if (res.status === 200) {
+    //     console.log("request success", res.data);
+    //      dispatch(resetSuit());
+    //   } else {
+    //     console.log("save failed");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    dispatch(resetSuit());
   };
 
   const giveGrade = (score: number) => {
@@ -226,9 +228,10 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const fetchSuitData = async () => {
-    const code = null;
-    // const code = localStorage.getItem("corporateCode");
-    if (code) {
+    const todo = "change all to real data";
+    // const code = null;
+    const code = localStorage.getItem("corporateCode");
+    if (code && code !== null) {
       if (isEmptyObject(suitData)) {
         try {
           const res = await axios.post(

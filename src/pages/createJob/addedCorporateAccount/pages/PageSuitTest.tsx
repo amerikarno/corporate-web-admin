@@ -26,7 +26,6 @@ export function PageSuitTest({
     opitionalQuiz,
     handelOptionalQuiz,
     isSubmit,
-    suitability,
   } = UseSuitTest(corporateCode);
 
   if (isLoading) {

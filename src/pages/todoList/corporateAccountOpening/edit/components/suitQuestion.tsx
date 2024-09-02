@@ -2,11 +2,13 @@ import { CheckBox } from "@/components/Checkbox";
 import { TSuitAns, TSuitTest } from "../constants/types";
 
 type TSuitQuestionCompProps = {
+  answer?: TSuitAns[];
   quiz: TSuitTest;
-  answer: TSuitAns[];
+  quizIndex: number;
   handleChoice: (
     e: React.ChangeEvent<HTMLInputElement>,
-    i: number,
+    quizIndex: number,
+    choiceIndex: number,
     quizId: string,
     type?: string
   ) => void;
@@ -15,16 +17,28 @@ type TSuitQuestionCompProps = {
 
 export function SuitQuestionComp({
   quiz,
-  answer,
   handleChoice,
   errors,
+  quizIndex,
+  answer,
 }: TSuitQuestionCompProps) {
-  const isChecked = (quizId: string, index: number) => {
-    const ans = answer?.find((list) => list.id === quizId);
-    if (ans) {
-      return ans.ans - 1 === index;
+  const isCheckedType1 = (index: number) => {
+    let checked = false;
+    if (answer) {
+      checked = answer[quizIndex]?.ans === index + 1 ? true : false;
     }
-    return false;
+    return checked;
+  };
+
+  const isCheckedType2 = (index: number): boolean => {
+    let checked = false;
+    // console.log(JSON.stringify(answer, null, 2));
+    if (answer && answer?.length > 0) {
+      if (answer[quizIndex] && Array.isArray(answer[quizIndex].ans)) {
+        checked = answer[quizIndex].ans.includes(index + 1) ? true : false;
+      }
+    }
+    return checked;
   };
 
   const error = (id: string) => {
@@ -45,7 +59,10 @@ export function SuitQuestionComp({
               key={index}
               id={choice.id}
               label={`${index + 1}. ${choice.answer}`}
-              onChange={(e) => handleChoice(e, index, quiz.id, quiz.types)}
+              onChange={(e) =>
+                handleChoice(e, quizIndex, index, quiz.id, quiz.types)
+              }
+              checked={isCheckedType2(index)}
             />
           ) : (
             <CheckBox
@@ -54,8 +71,10 @@ export function SuitQuestionComp({
               type="radio"
               id={choice.id}
               label={`${index + 1}. ${choice.answer}`}
-              onChange={(e) => handleChoice(e, index, quiz.id, quiz.types)}
-              checked={isChecked(quiz.id, index)}
+              onChange={(e) =>
+                handleChoice(e, quizIndex, index, quiz.id, quiz.types)
+              }
+              checked={isCheckedType1(index)}
             />
           )
         )}
