@@ -5,7 +5,7 @@ import { TiHome } from "react-icons/ti";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { MdLocationPin } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   bank,
@@ -19,73 +19,19 @@ import {
 } from "@/constant/variables";
 import { basicInfoSchema, TBasicInfo } from "./constant/schemas";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function BasicInfo() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TBasicInfo>({
-    resolver: zodResolver(basicInfoSchema),
-  });
-
-  const onSubmit = (data: TBasicInfo) => {
-    let prebody = {...data,
-      registeredAddress:{
-        ...data.registeredAddress,
-        types:1    
-      },
-      currentAddress:{
-        ...(radioAddressValue === "radio-1" ? 
-          {...data.registeredAddress,
-            types:2
-          } 
-                      : 
-          {...data.currentAddress,
-            types:2
-          }),
-        types: 2
-      },
-      officeAddress: {
-        ...(radioWorkValue === "radio-3"
-          ? { ...data.registeredAddress, types: 3 }
-          : radioWorkValue === "radio-4"
-          ? data.currentAddress.homeNumber
-            ? { ...data.currentAddress, types: 3 }
-            : { ...data.registeredAddress, types: 3 }
-          : { ...data.officeAddress, types: 3 }),
-      },
-      firstBankAccount:{
-        ...data.firstBankAccount,
-        type:1,
-        is_default:true
-      },
-      secondBankAccountBody:{
-        ...data.secondBankAccountBody,
-        type:2,
-        is_default:false
-      },
-    }
-  let body = {
-    cid:localStorage.getItem('cid'),
-    investment:prebody.investment,
-    occupation:prebody.occupation,
-    addresses:[
-      prebody.registeredAddress,
-      prebody.currentAddress,
-      prebody.officeAddress
-    ],
-    banks:[
-      prebody.firstBankAccount,
-      prebody.secondBankAccountBody
-    ],
-    pageID:300,
-
+  if (!isAllowedPage(2002)) {
+    return <UnAuthorize />;
   }
-    console.log(body);
-  };
 
-  const uniqueGeographyTypes = [ //unique ตัวที่ชื่อซํ้าใน list
+  const navigate = useNavigate();
+  const [radioAddressValue, setRadioAddressValue] = useState("radio-2");
+  const [radioWorkValue, setRadioWorkValue] = useState("radio-5");
+  const [addBankValue, setAddBankValue] = useState("radio-6");
+  const uniqueGeographyTypes = [
+    //unique ตัวที่ชื่อซํ้าใน list
     ...new Set(
       geographyTypes.map((geography) =>
         JSON.stringify({
@@ -105,24 +51,74 @@ export default function BasicInfo() {
     ),
   ].map((json) => JSON.parse(json));
 
-  if (!isAllowedPage(2002)) {
-    return <UnAuthorize />;
-  }
-  const [radioAddressValue, setRadioAddressValue] = useState("radio-2");
-  const [radioWorkValue, setRadioWorkValue] = useState("radio-5");
-  const [addBankValue, setAddBankValue] = useState("radio-6");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TBasicInfo>({
+    resolver: zodResolver(basicInfoSchema),
+  });
 
-  const handleAddressRadioChange = (value:string) => {
-    console.log(value)
+  const onSubmit = (data: TBasicInfo) => {
+    let prebody = {
+      ...data,
+      registeredAddress: {
+        ...data.registeredAddress,
+        types: 1,
+      },
+      currentAddress: {
+        ...(radioAddressValue === "radio-1"
+          ? { ...data.registeredAddress, types: 2 }
+          : { ...data.currentAddress, types: 2 }),
+        types: 2,
+      },
+      officeAddress: {
+        ...(radioWorkValue === "radio-3"
+          ? { ...data.registeredAddress, types: 3 }
+          : radioWorkValue === "radio-4"
+          ? data.currentAddress.homeNumber
+            ? { ...data.currentAddress, types: 3 }
+            : { ...data.registeredAddress, types: 3 }
+          : { ...data.officeAddress, types: 3 }),
+      },
+      firstBankAccount: {
+        ...data.firstBankAccount,
+        type: 1,
+        is_default: true,
+      },
+      secondBankAccountBody: {
+        ...data.secondBankAccountBody,
+        type: 2,
+        is_default: false,
+      },
+    };
+    let body = {
+      cid: localStorage.getItem("cid"),
+      investment: prebody.investment,
+      occupation: prebody.occupation,
+      addresses: [
+        prebody.registeredAddress,
+        prebody.currentAddress,
+        prebody.officeAddress,
+      ],
+      banks: [prebody.firstBankAccount, prebody.secondBankAccountBody],
+      pageID: 300,
+    };
+    console.log(body);
+    navigate("/create-job/added-individual-account/suittestfatca");
+  };
+
+  const handleAddressRadioChange = (value: string) => {
+    console.log(value);
     setRadioAddressValue(value);
   };
-  const handleWorkRadioChange = (value:string) => {
-    console.log(value)
+  const handleWorkRadioChange = (value: string) => {
+    console.log(value);
     setRadioWorkValue(value);
   };
 
-  const handleBankRadioChange = (value:string) => {
-    console.log(value)
+  const handleBankRadioChange = (value: string) => {
+    console.log(value);
     setAddBankValue(value);
   };
 
@@ -143,7 +139,8 @@ export default function BasicInfo() {
                     label="Address Number"
                     id="addressNoIDCard"
                     {...register("registeredAddress.homeNumber")}
-                    className={"block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
+                    className={
+                      "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     }
                   />
                 </div>
@@ -174,12 +171,22 @@ export default function BasicInfo() {
                   )}
                 </div>
                 <div className="w-1/2">
-                  <Input type="text" label="Soi" id="soiIDCard" {...register("registeredAddress.subStreetName")}/>
+                  <Input
+                    type="text"
+                    label="Soi"
+                    id="soiIDCard"
+                    {...register("registeredAddress.subStreetName")}
+                  />
                 </div>
               </div>
               <div className="flex space-x-4">
                 <div className="w-1/2">
-                  <Input type="text" label="Road" id="roadIDCard" {...register("registeredAddress.streetName")}/>
+                  <Input
+                    type="text"
+                    label="Road"
+                    id="roadIDCard"
+                    {...register("registeredAddress.streetName")}
+                  />
                 </div>
                 <div className="w-1/2">
                   <Input
@@ -191,7 +198,7 @@ export default function BasicInfo() {
                   />
                   <datalist id="tambonIDCardList">
                     {geographyTypes.map((geography, index) => (
-                      <option key={index} value={geography.sub_district_name}/>
+                      <option key={index} value={geography.sub_district_name} />
                     ))}
                   </datalist>
                 </div>
@@ -275,7 +282,8 @@ export default function BasicInfo() {
                     name="radio"
                     type="radio"
                     checked={radioAddressValue === "radio-1"}
-                    onChange={() => {handleAddressRadioChange("radio-1")
+                    onChange={() => {
+                      handleAddressRadioChange("radio-1");
                     }}
                   />
                   <label htmlFor="radio-1" className="radio-label">
@@ -308,20 +316,40 @@ export default function BasicInfo() {
                     />
                   </div>
                   <div className="w-1/2">
-                    <Input type="text" label="Floor" id="floorHome" {...register("currentAddress.villageNumber")}/>
+                    <Input
+                      type="text"
+                      label="Floor"
+                      id="floorHome"
+                      {...register("currentAddress.villageNumber")}
+                    />
                   </div>
                 </div>
                 <div className="flex space-x-4">
                   <div className="w-1/2">
-                    <Input type="text" label="Moo" id="mooHome" {...register("currentAddress.villageName")}/>
+                    <Input
+                      type="text"
+                      label="Moo"
+                      id="mooHome"
+                      {...register("currentAddress.villageName")}
+                    />
                   </div>
                   <div className="w-1/2">
-                    <Input type="text" label="Soi" id="soiHome" {...register("currentAddress.subStreetName")}/>
+                    <Input
+                      type="text"
+                      label="Soi"
+                      id="soiHome"
+                      {...register("currentAddress.subStreetName")}
+                    />
                   </div>
                 </div>
                 <div className="flex space-x-4">
                   <div className="w-1/2">
-                    <Input type="text" label="Road" id="roadHome" {...register("currentAddress.streetName")}/>
+                    <Input
+                      type="text"
+                      label="Road"
+                      id="roadHome"
+                      {...register("currentAddress.streetName")}
+                    />
                   </div>
                   <div className="w-1/2">
                     <Input
@@ -416,7 +444,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6 ">
               <div className="flex w-1/2">
                 <select
-                {...register("occupation.education")}
+                  {...register("occupation.education")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -431,7 +459,7 @@ export default function BasicInfo() {
               </div>
               <div className="w-1/2">
                 <select
-                {...register("occupation.sourceOfIncome")}
+                  {...register("occupation.sourceOfIncome")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -448,7 +476,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
-                {...register("occupation.currentOccupation")}
+                  {...register("occupation.currentOccupation")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                     text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                     dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -462,13 +490,18 @@ export default function BasicInfo() {
                 </select>
               </div>
               <div className="w-1/2">
-                <Input type="text" label="ชื่อสถานที่ทำงาน" id="workPlace" {...register("occupation.officeName")}/>
+                <Input
+                  type="text"
+                  label="ชื่อสถานที่ทำงาน"
+                  id="workPlace"
+                  {...register("occupation.officeName")}
+                />
               </div>
             </div>
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
-                {...register("occupation.typeOfBusiness")}
+                  {...register("occupation.typeOfBusiness")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -482,13 +515,18 @@ export default function BasicInfo() {
                 </select>
               </div>
               <div className="w-1/2">
-                <Input type="text" label="ตำแหน่งงาน" id="่jobPosition" {...register("occupation.positionName")}/>
+                <Input
+                  type="text"
+                  label="ตำแหน่งงาน"
+                  id="่jobPosition"
+                  {...register("occupation.positionName")}
+                />
               </div>
             </div>
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
-                {...register("occupation.salaryRange")}
+                  {...register("occupation.salaryRange")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -560,20 +598,40 @@ export default function BasicInfo() {
                       />
                     </div>
                     <div className="w-1/2">
-                      <Input type="text" label="Floor" id="floorWork" {...register("officeAddress.villageNumber")}/>
+                      <Input
+                        type="text"
+                        label="Floor"
+                        id="floorWork"
+                        {...register("officeAddress.villageNumber")}
+                      />
                     </div>
                   </div>
                   <div className="flex space-x-4">
                     <div className="w-1/2">
-                      <Input type="text" label="Moo" id="mooWork" {...register("officeAddress.villageName")}/>
+                      <Input
+                        type="text"
+                        label="Moo"
+                        id="mooWork"
+                        {...register("officeAddress.villageName")}
+                      />
                     </div>
                     <div className="w-1/2">
-                      <Input type="text" label="Soi" id="soiWork" {...register("officeAddress.subStreetName")}/>
+                      <Input
+                        type="text"
+                        label="Soi"
+                        id="soiWork"
+                        {...register("officeAddress.subStreetName")}
+                      />
                     </div>
                   </div>
                   <div className="flex space-x-4">
                     <div className="w-1/2">
-                      <Input type="text" label="Road" id="roadWork" {...register("officeAddress.streetName")}/>
+                      <Input
+                        type="text"
+                        label="Road"
+                        id="roadWork"
+                        {...register("officeAddress.streetName")}
+                      />
                     </div>
                     <div className="w-1/2">
                       <Input
@@ -684,7 +742,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-2"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                {...register("investment.longTermInvestment")}
+                  {...register("investment.longTermInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-2">
                   เพื่อการลงทุนระยะยาว
@@ -696,7 +754,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-3"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                {...register("investment.taxesInvestment")}
+                  {...register("investment.taxesInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-3">เพื่อเก็งกำไร</label>
               </div>
@@ -706,7 +764,7 @@ export default function BasicInfo() {
                   id="objectiveCheckbox-4"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                {...register("investment.retireInvestment")}
+                  {...register("investment.retireInvestment")}
                 />
                 <label htmlFor="objectiveCheckbox-4">เพื่อการออม</label>
               </div>
@@ -730,7 +788,7 @@ export default function BasicInfo() {
             <div className="space-y-4">
               <div className="flex space-x-4">
                 <select
-                {...register("firstBankAccount.bankName")}
+                  {...register("firstBankAccount.bankName")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -744,10 +802,20 @@ export default function BasicInfo() {
                 </select>
               </div>
               <div className="flex space-x-4">
-                <Input type="text" label="ชื่อสาขา" id="bankBranch" {...register("firstBankAccount.bankBranchName")}/>
+                <Input
+                  type="text"
+                  label="ชื่อสาขา"
+                  id="bankBranch"
+                  {...register("firstBankAccount.bankBranchName")}
+                />
               </div>
               <div className="flex space-x-4">
-                <Input type="text" label="กรุณาระบุเลขบัญชี" id="bankAccount" {...register("firstBankAccount.bankAccountNumber")} />
+                <Input
+                  type="text"
+                  label="กรุณาระบุเลขบัญชี"
+                  id="bankAccount"
+                  {...register("firstBankAccount.bankAccountNumber")}
+                />
               </div>
             </div>
             <div>
@@ -788,7 +856,7 @@ export default function BasicInfo() {
                 <div className="space-y-4 pt-4">
                   <div className="flex space-x-4">
                     <select
-                    {...register("secondBankAccountBody.bankName")}
+                      {...register("secondBankAccountBody.bankName")}
                       className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"

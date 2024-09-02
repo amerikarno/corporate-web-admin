@@ -1,16 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SubSuitTest from "./subSuitTest";
 import KnowLedgeTest from "./knowLedgeTest";
 import { TiTick } from "react-icons/ti";
 import "./suitTestFatca.css";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import { useNavigate } from "react-router-dom";
 
 export default function SuitTestFatca() {
+  if (!isAllowedPage(2002)) {
+    return <UnAuthorize />;
+  }
+
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
-  const [fatcaInfo,setFatcaInfo] = useState<string | boolean[]>("")
-  const [checkboxStates, setCheckboxStates] = useState<boolean[]>(new Array(8).fill(false)); 
+  const [fatcaInfo, setFatcaInfo] = useState<string | boolean[]>("");
+  const [checkboxStates, setCheckboxStates] = useState<boolean[]>(
+    new Array(8).fill(false)
+  );
 
   const handleCheckboxChange = (index: number) => {
     const updatedCheckboxStates = [...checkboxStates];
@@ -18,9 +27,11 @@ export default function SuitTestFatca() {
     setCheckboxStates(updatedCheckboxStates);
     setFatcaInfo(updatedCheckboxStates);
   };
-  const [isButtonDisabled,setIsButtonDisabled] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [knowLedgeTestSuccess, setKnowLedgeTestSuccess] = useState(false);
-  const [suitTestSuccess,setSuitTestSuccess] = useState(false);
+  const [suitTestSuccess, setSuitTestSuccess] = useState(false);
+  const navigate = useNavigate();
+
   const handleKnowLedgeTestSuccess = (success: boolean) => {
         setKnowLedgeTestSuccess(success);
         console.log('Test Success:', success);
@@ -32,34 +43,38 @@ export default function SuitTestFatca() {
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
 
   const handleSubmitSuitTestFatca = () => {
-    console.log(isButtonDisabled)
-    console.log(suitTestSuccess)
-    console.log(fatcaradio === "fatcaradio-2")
-    console.log(fatcaInfo !== "")
-    if(suitTestSuccess && (fatcaradio === "fatcaradio-2" || fatcaInfo !== "")){
-      let body ={
+    console.log(isButtonDisabled);
+    console.log(suitTestSuccess);
+    console.log(fatcaradio === "fatcaradio-2");
+    console.log(fatcaInfo !== "");
+    if (
+      suitTestSuccess &&
+      (fatcaradio === "fatcaradio-2" || fatcaInfo !== "")
+    ) {
+      let body = {
         id: localStorage.getItem("cid"),
-        suiteTestResult: [1,1,1,1,1,1,1,1,1].join("|"),
+        suiteTestResult: [1, 1, 1, 1, 1, 1, 1, 1, 1].join("|"),
         isFatca: fatcaradio === "fatcaradio-1",
         fatcaInfo: fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
         knowLedgeTestResult: knowLedgeTestSuccess ? 15 : 0,
-        pageID:400
-      }
-      console.log(body)
-    }else{
+        pageID: 400,
+      };
+      console.log(body);
+      navigate("/create-job/added-individual-account/identityVerification");
+    } else {
       alert("Please Do the Suit Test First.");
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }
-
-
+  };
 
   return (
     <div className="space-y-8 p-4">
       <div className="mx-16 mt-16">
-          <div className="text-xl font-bold text-slate-800">แบบประเมินความเหมาะสมในการลงทุน</div>
-          {/* <div className="p-8 space-x-4 flex items-center">
+        <div className="text-xl font-bold text-slate-800">
+          แบบประเมินความเหมาะสมในการลงทุน
+        </div>
+        {/* <div className="p-8 space-x-4 flex items-center">
             <select
               className="cursor-pointer p-1.5 block px-0 w-1/2 text-base text-black bg-transparent border-0 border-b-2
                border-gray-500 dark:text-gray-400
@@ -77,7 +92,7 @@ export default function SuitTestFatca() {
             </div>
           </div> */}
       </div>
-      <SubSuitTest onSuitTestDone={handleSuitTestSuccess}/>
+      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} />
       <Card>
         <CardContent>
           <div className="p-4 space-y-4 pr-8 pl-8 flex flex-col">
@@ -119,7 +134,7 @@ export default function SuitTestFatca() {
                 </div>
               </div>
               <div className="pl-4">
-              {fatcaradio === "fatcaradio-1" && (
+                {fatcaradio === "fatcaradio-1" && (
                   <div className="space-y-4 flex flex-col">
                     {[
                       "เป็นพลเมืองอเมริกา",
@@ -129,7 +144,7 @@ export default function SuitTestFatca() {
                       "มีที่อยู่ในอเมริกาสำหรับบัญชีที่เปิดกับบริษัท ฟินันเซีย ดิจิทัล แอสเซท จำกัด",
                       "มีเบอร์โทรอเมริกา (ตนเองหรือผู้เกี่ยวข้อง) เกี่ยวข้องกับบัญชีที่เปิดกับบริษัท ฟินันเซีย ดิจิทัล แอสเซท จำกัด",
                       "มีการโอนเงินอัตโนมัติจากบัญชีที่เปิดกับบริษัท ฟินันเซีย ดิจิทัล แอสเซท จำกัด ไปบัญชีอเมริกา",
-                      "ได้มอบอำนาจให้บุคคลที่อยู่ในอเมริกาทำธุรกรรมใดๆที่เกี่ยวข้องกับบัญชี บริษัท ฟินันเซีย ดิจิทัล เเอสเซท จำกัด"
+                      "ได้มอบอำนาจให้บุคคลที่อยู่ในอเมริกาทำธุรกรรมใดๆที่เกี่ยวข้องกับบัญชี บริษัท ฟินันเซีย ดิจิทัล เเอสเซท จำกัด",
                     ].map((label, index) => (
                       <div key={index} className="space-x-4">
                         <input
@@ -139,16 +154,30 @@ export default function SuitTestFatca() {
                           checked={checkboxStates[index]}
                           onChange={() => handleCheckboxChange(index)}
                         />
-                        <label htmlFor={`fatcaCheckbox-${index + 1}`}>{label}</label>
+                        <label htmlFor={`fatcaCheckbox-${index + 1}`}>
+                          {label}
+                        </label>
                       </div>
                     ))}
                     <div className="">
-                      <Button 
-                        className={isButtonDisabled ? "bg-green-500 text-white border-4 rounded-full transition-all duration-500 cursor-pointer" : ""}
+                      <Button
+                        className={
+                          isButtonDisabled
+                            ? "bg-green-500 text-white border-4 rounded-full transition-all duration-500 cursor-pointer"
+                            : ""
+                        }
                         // disabled={isButtonDisabled}
-                        onClick={()=>{ 
-                          setIsButtonDisabled(true)
-                        console.log("fatcaInfo : ",fatcaInfo)}}>{isButtonDisabled ? <TiTick className="text-xl"/> : "ถัดไป"}</Button>
+                        onClick={() => {
+                          setIsButtonDisabled(true);
+                          console.log("fatcaInfo : ", fatcaInfo);
+                        }}
+                      >
+                        {isButtonDisabled ? (
+                          <TiTick className="text-xl" />
+                        ) : (
+                          "ถัดไป"
+                        )}
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -191,24 +220,22 @@ export default function SuitTestFatca() {
                 </div>
               </div>
             </div>
-            {knowLedgeTest === "knowLedgeTest-1" && 
+            {knowLedgeTest === "knowLedgeTest-1" && (
               <div>
                 <KnowLedgeTest onTestSuccess={handleKnowLedgeTestSuccess} />
-            </div>
-            }
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
       <div className="flex justify-end">
-            <Button onClick={handleSubmitSuitTestFatca}>
-                Next Form
-            </Button>
-          </div>
-          <div>
-          {/* {suitTestSuccess ? <div>Suit Test Completed Successfully!</div> : <div>Suit Test Not Completed</div>}
+        <Button onClick={handleSubmitSuitTestFatca}>Next Form</Button>
+      </div>
+      <div>
+        {/* {suitTestSuccess ? <div>Suit Test Completed Successfully!</div> : <div>Suit Test Not Completed</div>}
           {<div className="">isAmerican ? : {fatcaradio === "fatcaradio-1" ? "true" : "false"}</div>}
           {knowLedgeTestSuccess ? <div>KnowLedge Test Completed Successfully!</div> : <div>KnowLedge Test Not Completed</div>} */}
-          </div>
+      </div>
     </div>
   );
 }

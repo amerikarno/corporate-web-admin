@@ -18,14 +18,13 @@ import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 
-
 export default function TodoCorporateAccountOpenning() {
   if (!isAllowedPage(3001)) {
     return <UnAuthorize />;
   }
 
-  const prev7Days = new Date();
-  prev7Days.setDate(prev7Days.getDate() - 7);
+  // const prev7Days = new Date();
+  // prev7Days.setDate(prev7Days.getDate() - 7);
 
   const {
     register,
@@ -35,7 +34,8 @@ export default function TodoCorporateAccountOpenning() {
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
     defaultValues: {
-      dateFrom: dateToyyyyMMdd(prev7Days),
+      // dateFrom: dateToyyyyMMdd(prev7Days),
+      dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     },
   });
@@ -46,8 +46,8 @@ export default function TodoCorporateAccountOpenning() {
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-  { corporateCode: number }[]
->([]);
+    { corporateCode: number }[]
+  >([]);
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
@@ -65,12 +65,13 @@ export default function TodoCorporateAccountOpenning() {
         {},
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
       );
       if (res.status === 200) {
-        console.log(res)
+        console.log(res);
         const corporateCodes = res.data.map((item: any) => ({
           corporateCode: item.CorporateCode,
         }));
@@ -86,7 +87,6 @@ export default function TodoCorporateAccountOpenning() {
           dateTo: dateToyyyyMMdd(new Date()),
         };
         await handleSearch(data);
- 
       } else {
         console.log("Failed to fetch corporate codes");
       }
@@ -97,9 +97,9 @@ export default function TodoCorporateAccountOpenning() {
 
   useEffect(() => {
     fetchCorporateCodes();
-    console.log("all-corporate Code",mockedCorporateCodes)
+    console.log("all-corporate Code", mockedCorporateCodes);
   }, []);
-  
+
   const handleDisableCode = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
       setDisableCode(true);
@@ -141,7 +141,7 @@ export default function TodoCorporateAccountOpenning() {
               {errors && (
                 <p className="text-red-500">{errors.corporateCode?.message}</p>
               )}
-               <datalist id="juristicId">
+              <datalist id="juristicId">
                 {mockedCorporateCodes.map((code, index) => (
                   <option key={index} value={code.corporateCode}>
                     {code.corporateCode}

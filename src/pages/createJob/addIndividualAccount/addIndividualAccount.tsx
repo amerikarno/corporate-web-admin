@@ -1,7 +1,7 @@
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 // import Liveness from "./livenessOcr/livenessOcr";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -13,8 +13,7 @@ import { Button } from "@/components/ui/button";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
+// import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
@@ -66,6 +65,13 @@ export default function AddIndividualAccount() {
       }
     } catch (error) {
       console.log(error);
+
+      const todo = "remove all below";
+      const age = calculateAge(body.birthDate);
+      localStorage.setItem("cid", "90000001");
+      localStorage.setItem("age", age.toString());
+      navigate("/create-job/added-individual-account/basicinfo");
+      window.scrollTo(0, 0);
     }
   };
 

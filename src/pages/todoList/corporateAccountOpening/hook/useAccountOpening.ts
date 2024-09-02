@@ -21,10 +21,8 @@ export function useAccountOpening() {
     // Set invalid dates to null
     const body: TBody = {
       ...data,
-      dateFrom:
-        dateFrom ? yyyyMMddToDate(dateFrom) : null,
-      dateTo:
-        dateTo ? yyyyMMddToDate(dateTo, true) : null,
+      dateFrom: dateFrom ? yyyyMMddToDate(dateFrom) : null,
+      dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
     };
 
     console.log(body);
@@ -39,6 +37,7 @@ export function useAccountOpening() {
           {},
           {
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${getCookies()}`,
             },
           }
@@ -56,6 +55,7 @@ export function useAccountOpening() {
         console.log(body);
         const res = await axios.post("/api/v1/corporate/query", body, {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${getCookies()}`,
           },
         });
@@ -64,9 +64,8 @@ export function useAccountOpening() {
         return res.data;
       } catch (error) {
         console.log(error);
-        if(data.dateFrom === data.dateTo){
-
-        }else{
+        if (data.dateFrom === data.dateTo) {
+        } else {
           alert("No data found.");
         }
         return null;
