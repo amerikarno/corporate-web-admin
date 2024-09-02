@@ -27,7 +27,7 @@ export default function SuitTestFatca() {
     };
   const handleSuitTestSuccess = (success:boolean) =>{
       setSuitTestSuccess(success)
-      console.log("Suit Test Success!")
+      console.log("Suit Test submit button pressed!")
   }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
 
