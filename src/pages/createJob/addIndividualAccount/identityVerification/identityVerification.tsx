@@ -4,6 +4,17 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function IdentityVerification() {
   return (
@@ -23,7 +34,23 @@ export default function IdentityVerification() {
           <span>2. ทำรายการให้สำเร็จภายใน 1 ชม.</span>
           <span className="p-4 pl-0 md:pl-4"><span className="underline font-bold pr-4">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
           <div className="absolute bottom-4 left-[43%]">
-            <Button className="w-36 font-bold">ตกลง</Button>
+            <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>คุณแน่ใจมั้ย?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                    หมายเหตุ ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction>ตกลง</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
           </div>
         </div>
       </Card>
@@ -37,7 +64,23 @@ export default function IdentityVerification() {
           <span>2. ทำรายการให้สำเร็จภายใน 1 วัน</span>
           <span className="p-4 pl-0 md:pl-4"><span className="underline font-bold pr-4">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
           <div className="absolute bottom-4 left-[43%]">
-            <Button className="w-36 font-bold">ตกลง</Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>คุณแน่ใจมั้ย?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                  หมายเหตุ ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>ตกลง</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </Card>
