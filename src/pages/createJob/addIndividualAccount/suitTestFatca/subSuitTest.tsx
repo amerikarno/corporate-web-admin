@@ -6,6 +6,7 @@ interface Answer {
   questionIndex: number;
   answer: string | string[] | number[];
   score:number;
+  listOfBooleanScore?:number[];
 }
 
 type SubSuitTestProps = {
@@ -73,13 +74,19 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     const currentAnswers = answers[questionIndex].answer as number[];
     const newAnswers = [...currentAnswers];
     newAnswers[choiceIndex] = newAnswers[choiceIndex] === 1 ? 0 : 1;
+    console.log(newAnswers);
+    
+    const checkboxAnswers = newAnswers.map((val, index) => (val === 1 ? index+1 : 0));
+    console.log(checkboxAnswers)
     const highestIndex = newAnswers.reduce((maxIndex, val, index) => (val === 1 ? index : maxIndex), -1);
     const score = highestIndex + 1;
+    
     const updatedAnswers = answers.map((ans, index) =>
-      index === questionIndex ? { ...ans, questionIndex, answer: newAnswers, score } : ans
+        index === questionIndex ? { ...ans, questionIndex, answer: newAnswers, score, listOfBooleanScore: checkboxAnswers } : ans
     );
+    
     setAnswers(updatedAnswers);
-  };
+};
 
   const ageScore = (age : number) => {
     let ageScore = 0
@@ -144,7 +151,7 @@ const giveGrade = (score: number) => {
       onSuitTestDone(true)
       const suitTestResult = answers.map((item:any)=>({
         id: item.questionIndex,
-        ans: item.score,
+        ans: item.questionIndex === 2 ?  item.listOfBooleanScore :  item.score,
         type: item.questionIndex === 2 ? 2 : 1,
         quiz: 1,
       }))
@@ -222,7 +229,7 @@ const giveGrade = (score: number) => {
             </Card> 
         ))}
         <div className="flex justify-center">
-            {!suitTestDone &&<Button type="button" className="w-1/8" onClick={handleSubmit}>
+            {<Button type="button" className="w-1/8" onClick={handleSubmit}>
                 Done
             </Button>}
         </div>
