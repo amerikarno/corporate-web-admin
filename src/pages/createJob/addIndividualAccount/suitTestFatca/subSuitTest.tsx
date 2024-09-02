@@ -229,7 +229,7 @@ const giveGrade = (score: number) => {
             </Card> 
         ))}
         <div className="flex justify-center">
-            {<Button type="button" className="w-1/8" onClick={handleSubmit}>
+            {!suitTestDone && <Button type="button" className="w-1/8" onClick={handleSubmit}>
                 Done
             </Button>}
         </div>
