@@ -91,6 +91,19 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
 
     return ageScore
 }
+const giveGrade = (score: number) => {
+  if (score <= 15) {
+    return 1;
+  } else if (score < 22) {
+    return 2;
+  } else if (score < 29) {
+    return 3;
+  } else if (score < 36) {
+    return 4;
+  } else {
+    return 5;
+  }
+};
 
   const handleSubmit = () => {
     let scoreCalculator = answers[2].score;
@@ -102,17 +115,22 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
       return ans.answer !== '';
     });
     setSuitTestDone(allAnswered)
-    onSuitTestDone(allAnswered)
+    let investorTypeTemp;
     if (scoreCalculator < 15){
         setInvestorType("เสี่ยงตํ่า")
+        investorTypeTemp = "เสี่ยงตํ่า"
     }else if(scoreCalculator <= 15 || scoreCalculator <= 21){
         setInvestorType("เสี่ยงปานกลางค่อนตํ่า")
+        investorTypeTemp = "เสี่ยงปานกลางค่อนตํ่า"
     }else if(scoreCalculator <= 22 || scoreCalculator <= 29){
         setInvestorType("เสี่ยงปานกลางค่อนสูง")
+        investorTypeTemp = "เสี่ยงปานกลางค่อนสูง"
     }else if(scoreCalculator <= 30 || scoreCalculator <= 36){
         setInvestorType("เสี่ยงสูง")
+        investorTypeTemp = "เสี่ยงสูง"
     }else if(scoreCalculator >= 37){
         setInvestorType("เสี่ยงสูงมาก")
+        investorTypeTemp = "เสี่ยงสูงมาก"
     }
     const age = ageScore(Number(localStorage.getItem('age')));
     scoreCalculator = scoreCalculator + age
@@ -121,6 +139,27 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     console.log(answers)
     console.log(allAnswered)
     console.log(totalScore)
+    console.log(suitTestDone)
+    if(allAnswered){
+      onSuitTestDone(true)
+      const suitTestResult = answers.map((item:any)=>({
+        id: item.questionIndex,
+        ans: item.score,
+        type: item.questionIndex === 2 ? 2 : 1,
+        quiz: 1,
+      }))
+      let body={
+        cid: localStorage.getItem('cid'),
+        investorTypeRisk: investorTypeTemp,
+        level : giveGrade(scoreCalculator),
+        totalScore: scoreCalculator,
+        suitTestResult: {answer:{...suitTestResult}}
+      }
+      console.log(body)
+    }else{
+      alert("Do suit test first.")
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
