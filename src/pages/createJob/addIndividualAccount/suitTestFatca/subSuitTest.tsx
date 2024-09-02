@@ -122,6 +122,7 @@ const giveGrade = (score: number) => {
       return ans.answer !== '';
     });
     setSuitTestDone(allAnswered)
+    setSuitTestDone(allAnswered)
     let investorTypeTemp;
     if (scoreCalculator < 15){
         setInvestorType("เสี่ยงตํ่า")
@@ -148,7 +149,6 @@ const giveGrade = (score: number) => {
     console.log(totalScore)
     console.log(suitTestDone)
     if(allAnswered){
-      onSuitTestDone(true)
       const suitTestResult = answers.map((item:any)=>({
         id: item.questionIndex,
         ans: item.questionIndex === 2 ?  item.listOfBooleanScore :  item.score,
