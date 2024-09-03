@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
+import "./radio.css";
 
 interface TCheckbox {
   id: string;
@@ -17,12 +18,9 @@ export function RadioCheckBox({
   ...props
 }: checkboxProps) {
   return (
-    <div className={cn("relative inline-block", className)}>
-      <input id={id} {...props} type={type} className="opacity-0 absolute" />
-      <label htmlFor={id} className="relative pl-6 cursor-pointer">
-        <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-4 h-4 border border-gray-400 rounded-full bg-white"></span>
-        {label}
-      </label>
+    <div className={cn("", "radio")}>
+      <input id={id} {...props} type={type} />
+      <label htmlFor={id}>{label}</label>
     </div>
   );
 }

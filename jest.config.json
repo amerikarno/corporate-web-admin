@@ -13,6 +13,7 @@
         "node"
     ],
     "moduleNameMapper": {
-        "^@/(.*)$": "<rootDir>/src/$1"
+        "^@/(.*)$": "<rootDir>/src/$1",
+        "\\.(css|less|sass|scss)$": "<rootDir>/src/__Test__/styleMock.js"
     }
 }
