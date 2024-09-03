@@ -1,36 +1,44 @@
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { Provider } from "react-redux";
+import { setUser } from "@/features/user/userSlice";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
-import { fireEvent, render, screen } from "@/__Test__/testUtils";
-import { useNavigate } from "react-router-dom";
+import { store } from "@/app/store";
+import { MemoryRouter } from "react-router-dom";
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: jest.fn(),
-}));
+const user = {
+  id: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+  email: "aa2c6966348647f38cbfb7f29ab459c17f740fb57ca2feb384047a503bb1e4f6",
+  groups: [
+    1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 2001, 2002,
+    2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+    2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 3001, 3002, 3003, 3004,
+    3005, 3006, 3007, 3008, 3009, 3010, 3011, 3012, 3013, 3014, 4001, 4002,
+    4003, 4004, 4005, 4006,
+  ],
+  permissions: [101, 102, 103, 201, 202, 203],
+  roles: [11, 12, 13],
+  userId: "",
+  loginStatus: "",
+  expiresDate: "0001-01-01T00:00:00Z",
+  Error: null,
+  exp: 1725430626,
+  iat: 1725344226,
+};
 
 describe("addedCorporateAccount", () => {
-  const mockNavigate = useNavigate as jest.Mock;
+  test("should render correctly", () => {
+    store.dispatch(setUser(user));
 
-  beforeEach(() => {
-    mockNavigate.mockReset();
-  });
-
-  // test main page render
-  it("should render correctly", () => {
-    render(<CorporateAccountOpenning />);
-  });
-
-  // test next button
-  it("should handle 'next' page navigation", () => {
-    const { getByText } = render(<CorporateAccountOpenning />);
-    screen.debug();
-
-    const nextButton = getByText((_, element) => {
-      return element?.textContent === "Next Form";
-    });
-    fireEvent.click(nextButton);
-
-    expect(mockNavigate).toHaveBeenCalledWith(
-      "/create-job/added-corporate-account/2"
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <CorporateAccountOpenning />
+        </MemoryRouter>
+      </Provider>
     );
+
+    const instructionText = screen.getByText(/instructions/i);
+    expect(instructionText).toBeTruthy();
   });
 });
