@@ -95,7 +95,7 @@ export const isExpiredToken = (): boolean => {
 
 export const isAllowedPage = (pageId: number): boolean => {
   const user = useSelector((state: RootState) => state.user.user);
-  if (user && user.groups) {
+  if (user && user !== null && user.groups) {
     return user.groups.includes(pageId);
   } else {
     return false;

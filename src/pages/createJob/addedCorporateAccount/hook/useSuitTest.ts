@@ -228,7 +228,7 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const fetchSuitData = async () => {
-    const todo = "change all to real data";
+    // const todo = "change all to real data";
     // const code = null;
     const code = localStorage.getItem("corporateCode");
     if (code && code !== null) {
@@ -245,7 +245,7 @@ export function UseSuitTest(corporateCode: string) {
             }
           );
           if (res.status == 200) {
-            const todo = "change all to real data";
+            // const todo = "change all to real data";
             dispatch(setSuit(mock));
             return mock;
           }
