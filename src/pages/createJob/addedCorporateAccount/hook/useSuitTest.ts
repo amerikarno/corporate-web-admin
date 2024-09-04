@@ -7,6 +7,7 @@ import { AxiosError } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSuit, setSuit } from "@/features/suit/suitSlice";
 import { copy, isEmptyObject } from "@/lib/utils";
+import { number } from "zod";
 
 export function UseSuitTest(corporateCode: string) {
   const suitData = useSelector((state: any) => state.suit);
@@ -20,80 +21,7 @@ export function UseSuitTest(corporateCode: string) {
   const [opitionalQuiz, setOpitionalQuiz] = useState<string[]>(["", ""]);
   const [isSubmit, setIsSubmit] = useState(false);
   const additionalQuiz = useRef<boolean[]>([]);
-
-  const mock = {
-    corporateCode: "80000022",
-    totalScore: 18,
-    level: 2,
-    invsetorTypeRisk: "Moderate to Low",
-    suitTestResult: {
-      answer: [
-        {
-          id: "cd7bc545-b28f-4fd8-b156-c1336fe3c2b0",
-          ans: 1,
-          type: 1,
-          quiz: 1,
-        },
-        {
-          id: "7c807c2f-4bfa-438d-b44a-cfff8a81ac2b",
-          ans: 4,
-          type: 1,
-          quiz: 2,
-        },
-        {
-          id: "b52326a2-8c77-4be9-8a17-5f901f04f767",
-          ans: 1,
-          type: 1,
-          quiz: 3,
-        },
-        {
-          id: "d3d13ec1-ff5e-4177-88dc-341d24c49d68",
-          ans: [0, 2, 3, 0],
-          type: 2,
-          quiz: 4,
-        },
-        {
-          id: "695451aa-b95b-412b-8f6f-9ab322df4d52",
-          ans: 1,
-          type: 1,
-          quiz: 5,
-        },
-        {
-          id: "ff6c0cb1-2952-40e1-a759-a624fa0495c4",
-          ans: 3,
-          type: 1,
-          quiz: 6,
-        },
-        {
-          id: "cb59f6ca-4904-4c2a-9869-e9c4c0dc4afe",
-          ans: 1,
-          type: 1,
-          quiz: 7,
-        },
-
-        {
-          id: "ee411a9b-8012-42be-903f-1a080f369daf",
-          ans: 2,
-          type: 1,
-          quiz: 8,
-        },
-        {
-          id: "47710e6d-4341-40e3-b699-ba4d98cbb81c",
-          ans: 1,
-          type: 1,
-          quiz: 9,
-        },
-        {
-          id: "59dbea36-94e7-4f67-b728-0a9de7f1cc22",
-          ans: 1,
-          type: 1,
-          quiz: 10,
-        },
-      ],
-      additional: [null, false],
-    },
-    type: 80000000,
-  };
+  const [isSave, setIsSave] = useState(false);
 
   const validate = () => {
     let err: string[] = [];
@@ -160,14 +88,18 @@ export function UseSuitTest(corporateCode: string) {
 
   const saveSuitTest = async (ans: any) => {
     console.log(ans);
+    const url = isSave
+      ? "/api/v1/suitetest/result/edit"
+      : "/api/v1/suitetest/save";
     try {
-      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
+      const res = await axios.post(url, ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       console.log(ans);
       if (res.status === 200) {
         console.log("request success", res.data);
         dispatch(resetSuit());
+        setIsSave(true);
       } else {
         console.log("save failed");
       }
@@ -215,12 +147,22 @@ export function UseSuitTest(corporateCode: string) {
     if (type === "2") {
       let listChoice = typeTwoAns;
       listChoice[choiceIndex] = e.target.checked ? choiceIndex + 1 : 0;
-      tmp[quizIndex] = { id: quizId, ans: listChoice, type: 2, quiz: 1 };
+      tmp[quizIndex] = {
+        id: quizId,
+        ans: listChoice,
+        type: 2,
+        quiz: quizIndex + 1,
+      };
       setAnswerSuiteTest(tmp);
       setTypeTwoAns(listChoice);
       // console.log(rm);
     } else {
-      tmp[quizIndex] = { id: quizId, ans: choiceIndex + 1, type: 1, quiz: 1 };
+      tmp[quizIndex] = {
+        id: quizId,
+        ans: choiceIndex + 1,
+        type: 1,
+        quiz: quizIndex + 1,
+      };
       setAnswerSuiteTest(tmp);
       // console.log(quizIndex + 1, choiceIndex + 1);
     }
@@ -228,8 +170,6 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const fetchSuitData = async () => {
-    // const todo = "change all to real data";
-    // const code = null;
     const code = localStorage.getItem("corporateCode");
     if (code && code !== null) {
       if (isEmptyObject(suitData)) {
@@ -245,12 +185,9 @@ export function UseSuitTest(corporateCode: string) {
             }
           );
           if (res.status == 200) {
-            // const todo = "change all to real data";
-            // dispatch(setSuit(mock));
-            // return mock;
             console.log(res.data[0].SuitTestResult);
-            dispatch(setSuit(res.data.SuitTestResult[0]));
-            return res.data;
+            dispatch(setSuit(res.data[0].SuitTestResult));
+            return res.data[0].SuitTestResult;
           }
         } catch (error) {
           console.log(error);
@@ -293,28 +230,63 @@ export function UseSuitTest(corporateCode: string) {
       setIsLoading(false);
 
       console.log(data);
-      if (data) {
+      if (data && data !== null) {
         let tmpAns = [];
-        for (let i = 0; i < data.suitTestResult.answer.length; i++) {
-          const element = data.suitTestResult.answer[i];
-          const ans = {
-            id: element.id,
-            quiz: element.quiz,
-            ans: element.ans,
-            type: element.type,
-          };
-          tmpAns.push(ans);
+        // let sort = [];
+        if (
+          data.suitTestResult.answer !== undefined &&
+          data.suitTestResult.answer !== null
+        ) {
+          for (let i = 0; i < data.suitTestResult.answer.length; i++) {
+            const element = data.suitTestResult.answer[i];
+            let ans;
+            if (element.type === 1) {
+              ans = {
+                id: element.id,
+                quiz: element.quiz,
+                ans: Number(element.ans),
+                type: element.type,
+              };
+            } else {
+              const split = element.ans.split("|").map(Number);
+              ans = {
+                id: element.id,
+                quiz: element.quiz,
+                ans: split,
+                type: element.type,
+              };
+            }
+
+            tmpAns.push(ans);
+          }
+          // console.log(tmpAns);
+
+          // for (let i = 0; i < tmpAns.length - 1; i++) {
+          //   const element = tmpAns.find((item) => item.quiz === i + 1);
+          //   if (element) {
+          //     sort.push(element);
+          //   } else {
+          //     sort.push({ id: "", quiz: 0, ans: 0, type: 0 });
+          //     // sort.push({id: "", quiz: i + 1, ans: 0, type: 0});
+          //   }
+          // }
         }
-        console.log(tmpAns);
         setAnswerSuiteTest(tmpAns);
+        // setAnswerSuiteTest(sort);
+        // console.log(sort);
 
         let tmpAddition = [];
-        for (let i = 0; i < data.suitTestResult.additional.length; i++) {
-          const element = data.suitTestResult.additional[i];
-          if (element === undefined || element === null) {
-            tmpAddition.push("");
-          } else {
-            tmpAddition.push(element === true ? "yes" : "no");
+        if (
+          data.suitTestResult.additional !== undefined &&
+          data.suitTestResult.additional !== null
+        ) {
+          for (let i = 0; i < data.suitTestResult.additional.length; i++) {
+            const element = data.suitTestResult.additional[i];
+            if (element === undefined || element === null) {
+              tmpAddition.push("");
+            } else {
+              tmpAddition.push(element === true ? "yes" : "no");
+            }
           }
         }
         setOpitionalQuiz(tmpAddition);
