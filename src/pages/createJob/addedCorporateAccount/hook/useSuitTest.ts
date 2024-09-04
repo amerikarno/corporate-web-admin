@@ -7,7 +7,6 @@ import { AxiosError } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSuit, setSuit } from "@/features/suit/suitSlice";
 import { copy, isEmptyObject } from "@/lib/utils";
-import { number } from "zod";
 
 export function UseSuitTest(corporateCode: string) {
   const suitData = useSelector((state: any) => state.suit);

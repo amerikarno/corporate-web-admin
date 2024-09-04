@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "@/lib/Cookies";
-import axios from "@/api/axios";
-import { setUser, TUser ,setEmail} from "@/features/user/userSlice";
+import api from "@/api/axios";
+import { setUser, TUser, setEmail } from "@/features/user/userSlice";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 const LoginForm = () => {
@@ -45,7 +45,7 @@ const LoginForm = () => {
       console.log(hashedUsername);
       console.log(hashedPassword);
 
-      axios
+      api
         .post(
           // "http://localhost:1323/admin/v1/login",
           "/api/v1/authen/login",
@@ -71,7 +71,7 @@ const LoginForm = () => {
           const user: TUser = jwtDecode(res.data.accessToken);
           localStorage.clear();
           dispatch(clearCorporateData());
-          dispatch(setUser(user));  
+          dispatch(setUser(user));
           navigate("/");
         })
         .catch((err) => {

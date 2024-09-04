@@ -66,12 +66,12 @@ export default function AddIndividualAccount() {
     } catch (error) {
       console.log(error);
 
-      const todo = "remove all below";
-      const age = calculateAge(body.birthDate);
-      localStorage.setItem("cid", "90000001");
-      localStorage.setItem("age", age.toString());
-      navigate("/create-job/added-individual-account/basicinfo");
-      window.scrollTo(0, 0);
+      // const todo = "remove all below";
+      // const age = calculateAge(body.birthDate);
+      // localStorage.setItem("cid", "90000001");
+      // localStorage.setItem("age", age.toString());
+      // navigate("/create-job/added-individual-account/basicinfo");
+      // window.scrollTo(0, 0);
     }
   };
 
