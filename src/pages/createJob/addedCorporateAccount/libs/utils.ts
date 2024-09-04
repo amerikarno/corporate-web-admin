@@ -7,10 +7,7 @@ import {
   TDocuments,
   TJuristic,
 } from "../../constant/type";
-import {
-  TAuthorizedPersonSchema,
-  TCorporateInfoSchema,
-} from "../constants2/schemas";
+import { TCorporateInfoSchema } from "../constants2/schemas";
 import {
   CorporateTypeBody,
   TAttorney,
@@ -409,7 +406,7 @@ export const mapDataToTAuthoirzedPerson = (
       personalId: data?.personalId ?? "",
       addresses:
         data?.addresses?.length > 0
-          ? data?.addresses.map(address => ({
+          ? data?.addresses.map((address) => ({
               addressNo: address.addressNo ?? "",
               building: address.building ?? "",
               floor: address.floor ?? "",
@@ -470,7 +467,7 @@ export const mapDataToTAttorney = (
       personalId: data?.personalId ?? "",
       addresses:
         data?.addresses?.length > 0
-          ? data?.addresses.map(address => ({
+          ? data?.addresses.map((address) => ({
               addressNo: address.addressNo ?? "",
               building: address.building ?? "",
               floor: address.floor ?? "",
@@ -659,21 +656,20 @@ export const mapToForm2Create = (
 };
 
 export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
-  console.log(data)
+  console.log(data);
   try {
     if (data === null) {
       return null;
     }
-    
+
     return {
-      id:data?.id || "",
+      id: data?.id || "",
       filePath: data?.filePath || "",
       corporateCode: data?.corporateCode || 0,
       docType: data?.docType || "",
       fileName: data?.fileName || "",
       fileTypes: data?.fileTypes || "",
     };
-    
   } catch (error) {
     return null;
   }

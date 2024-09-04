@@ -21,7 +21,10 @@ import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { useEffect, useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { clearCorporateData, setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import {
+  clearCorporateData,
+  setCorporateData,
+} from "@/features/editCorporateData/editCorporateData";
 import { PageAttorney } from "./pages/PageAttorney";
 
 type TPage = {
@@ -34,7 +37,7 @@ export default function CorporateAccountOpenning() {
   }
 
   const dispatch = useDispatch();
-  const [corporateCode, setCorporateCode] = useState('');
+  const [corporateCode, setCorporateCode] = useState("");
 
   const corporateData: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
@@ -48,29 +51,33 @@ export default function CorporateAccountOpenning() {
   useEffect(() => {
     const fetchCorporateData = async () => {
       try {
-        const corporateCode = localStorage.getItem('corporateCode') || '';
+        const corporateCode = localStorage.getItem("corporateCode") || "";
         setCorporateCode(corporateCode);
-        console.log(corporateCode)
-        
-        if(corporateCode){
-          const response = await axios.post('/api/v1/corporate/query', {corporateCode:corporateCode},{
-            headers: {
-              Authorization: `Bearer ${getCookies()}`,
-            },
-          });
-          console.log(response)
+        console.log(corporateCode);
+
+        if (corporateCode) {
+          const response = await axios.post(
+            "/api/v1/corporate/query",
+            { corporateCode: corporateCode },
+            {
+              headers: {
+                Authorization: `Bearer ${getCookies()}`,
+              },
+            }
+          );
+          console.log(response);
           dispatch(setCorporateData(response.data[0]));
-        }else{
+        } else {
           dispatch(clearCorporateData());
-          console.log('corporateCode not found')
+          console.log("corporateCode not found");
         }
       } catch (error) {
-        console.error('Error fetching corporate data:', error);
+        console.error("Error fetching corporate data:", error);
       }
     };
 
     fetchCorporateData();
-  }, [corporateCode, pageId , dispatch]);
+  }, [corporateCode, pageId, dispatch]);
 
   console.log(corporateData);
   const navigate = useNavigate();
@@ -92,25 +99,68 @@ export default function CorporateAccountOpenning() {
         corporateCode={corporateCode}
       />
     ),
-    3: <PageContactPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    4: <ListOfDirectors corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    5: <PageIndividualShareholder corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    6: <PageJuristicShareholder corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    7: <PageAuthorizedPerson corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    8: <PageAttorney corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    9: <PageBankAccount corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    10: <UploadFiles corporateCode={corporateCode} corporatesInfo={corporateData}/>,
-    11: <PageSuitTest corporateCode={corporateCode} corporatesInfo={corporateData}/>,
+    3: (
+      <PageContactPerson
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    4: (
+      <ListOfDirectors
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    5: (
+      <PageIndividualShareholder
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    6: (
+      <PageJuristicShareholder
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    7: (
+      <PageAuthorizedPerson
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    8: (
+      <PageAttorney
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    9: (
+      <PageBankAccount
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    10: (
+      <UploadFiles
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
+    11: (
+      <PageSuitTest
+        corporateCode={corporateCode}
+        corporatesInfo={corporateData}
+      />
+    ),
   };
 
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    } else if (type == "submit"){
-
-    }else if (type == "submit2"){
-    
-    }else if(type == "done") {
+    } else if (type == "submit") {
+    } else if (type == "submit2") {
+    } else if (type == "done") {
       localStorage.clear();
       dispatch(clearCorporateData());
       navigate(`/create-job/added-corporate-account`);

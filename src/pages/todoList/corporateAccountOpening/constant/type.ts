@@ -69,8 +69,8 @@ export type TAttorney = {
   expiryDate: string;
   nationality: string;
   types: number;
-  telephone:string;
-  email:string;
+  telephone: string;
+  email: string;
 };
 
 export type TCorporateFinancials = {
@@ -207,7 +207,7 @@ export type TAddress = {
   floor?: string;
   mooNo?: string;
   soi?: string;
-  road?:string;
+  road?: string;
   tambon: string;
   amphoe: string;
   province: string;
@@ -233,8 +233,6 @@ export type TDirector = {
 };
 
 export type TAuthorizedPerson = {
-  toISOString(): unknown;
-  split(arg0: string): unknown;
   id: string;
   createBy: string;
   CreatedAt: string;

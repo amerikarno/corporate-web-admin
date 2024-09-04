@@ -228,7 +228,7 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const fetchSuitData = async () => {
-    const todo = "change all to real data";
+    // const todo = "change all to real data";
     // const code = null;
     const code = localStorage.getItem("corporateCode");
     if (code && code !== null) {
@@ -245,9 +245,12 @@ export function UseSuitTest(corporateCode: string) {
             }
           );
           if (res.status == 200) {
-            const todo = "change all to real data";
-            dispatch(setSuit(mock));
-            return mock;
+            // const todo = "change all to real data";
+            // dispatch(setSuit(mock));
+            // return mock;
+            console.log(res.data[0].SuitTestResult);
+            dispatch(setSuit(res.data.SuitTestResult[0]));
+            return res.data;
           }
         } catch (error) {
           console.log(error);

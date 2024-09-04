@@ -1,0 +1,19 @@
+{
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "transform": {
+        "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "node"
+    ],
+    "moduleNameMapper": {
+        "^@/(.*)$": "<rootDir>/src/$1",
+        "\\.(css|less|sass|scss)$": "<rootDir>/src/__Test__/styleMock.js"
+    }
+}

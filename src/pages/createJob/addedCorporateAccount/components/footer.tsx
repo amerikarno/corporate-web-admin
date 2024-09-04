@@ -30,19 +30,17 @@ export function CreateCorporateFooter({
             Next Form
           </Button>
         ) : pageId === 2 ? (
+          <Button className="hidden">Next Form</Button>
+        ) : pageId === 11 ? (
+          <Button className="hidden">Done</Button>
+        ) : (
           <Button
-            className="hidden"
+            data-testid="next-button"
+            onClick={() => handlePages("next")}
+            disabled={pageId >= 11}
           >
             Next Form
           </Button>
-        ) : pageId === 11 ? (
-        <Button className="hidden">
-          Done
-        </Button>
-        ):(
-          <Button onClick={() => handlePages("next")} disabled={pageId >= 11}>
-          Next Form
-        </Button>
         )}
         {/* {pageId === 1 ? (
           <Button

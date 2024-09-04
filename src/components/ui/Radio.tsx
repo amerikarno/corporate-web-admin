@@ -18,11 +18,9 @@ export function RadioCheckBox({
   ...props
 }: checkboxProps) {
   return (
-        <div className={cn("", "radio")}>
-            <input id={id} {...props} type={type} />
-            <label htmlFor={id}>
-                {label}
-            </label>
-        </div>
+    <div className={cn("", "radio")}>
+      <input id={id} {...props} type={type} />
+      <label htmlFor={id}>{label}</label>
+    </div>
   );
 }

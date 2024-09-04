@@ -46,17 +46,15 @@ export function CorporateAddressForm({
         {fields.map(([fieldName], index) => {
           return (
             <div key={index} className="flex-col">
-              {/* <SideLabelInput title={mappingAddress[fieldName]}> */}
               <Input
                 label={newFields[index]}
                 {...register(`${keyType}.address[0].${fieldName}` as any)}
                 name={`${keyType}.address[0].${fieldName}`}
                 id={`id-${keyType}.address[0].${fieldName}`}
-                //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
+                data-testid={`${keyType}-${index}`}
               />
-              {/* </SideLabelInput> */}
               {errors && errors[fieldName as keyof TSubAddressSchema] && (
                 <p className="text-red-500">
                   {errors[fieldName as keyof TSubAddressSchema]?.message}
