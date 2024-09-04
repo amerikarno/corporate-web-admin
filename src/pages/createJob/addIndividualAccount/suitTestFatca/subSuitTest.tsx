@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface Answer {
   questionIndex: number;
@@ -220,7 +220,7 @@ const giveGrade = (score: number) => {
                                 className="mr-4"
                             />
                             <label htmlFor={`question-${questionIndex}-choice-${choiceIndex}`} className="">
-                            {choice}
+                            <span className="">{choiceIndex+1}.</span> {choice}
                             </label>
                         </div>
                         ))}
