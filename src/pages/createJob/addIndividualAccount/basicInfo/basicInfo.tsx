@@ -20,6 +20,8 @@ import {
 import { basicInfoSchema, TBasicInfo } from "./constant/schemas";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -84,7 +86,7 @@ export default function BasicInfo() {
     setAddBankValue("radio-7")
   },[])
 
-  const onSubmit = (data: TBasicInfo) => {
+  const onSubmit = async (data: TBasicInfo) => {
     let prebody = {
       ...data,
       registeredAddress: {
@@ -130,7 +132,20 @@ export default function BasicInfo() {
       pageID: 300,
     };
     console.log(body);
-    navigate("/create-job/added-individual-account/suittestfatca");
+    try{
+      const token = getCookies();
+      const res = await axios.post("/api/v1/individual/postcreate",body,{
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if(res.status === 200){
+        console.log("submit basic info success",res);
+        navigate("/create-job/added-individual-account/suittestfatca");
+      }else{
+        console.log("submit basic info unsuccess x",res);
+      }
+    }catch(error){
+      console.log(error);
+    }
   };
 
   const handleAddressRadioChange = (value: string) => {
