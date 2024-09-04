@@ -79,14 +79,14 @@ export default function TodoCorporateAccountOpenning() {
 
         // const dateFrom = new Date();
         // dateFrom.setDate(dateFrom.getDate() + 7);
-        const data: TCorporateAccountOpening = {
-          corporateCode: "",
-          // dateFrom: dateToyyyyMMdd(dateFrom),
-          // dateTo: dateToyyyyMMdd(dateFrom),
-          dateFrom: dateToyyyyMMdd(new Date()),
-          dateTo: dateToyyyyMMdd(new Date()),
-        };
-        await handleSearch(data);
+        // const data: TCorporateAccountOpening = {
+        //   corporateCode: "",
+        //   // dateFrom: dateToyyyyMMdd(dateFrom),
+        //   // dateTo: dateToyyyyMMdd(dateFrom),
+        //   dateFrom: dateToyyyyMMdd(new Date()),
+        //   dateTo: dateToyyyyMMdd(new Date()),
+        // };
+        // await handleSearch(data);
       } else {
         console.log("Failed to fetch corporate codes");
       }
@@ -95,9 +95,20 @@ export default function TodoCorporateAccountOpenning() {
     }
   };
 
+  const initData = async () => {
+    await fetchCorporateCodes();
+    const data: TCorporateAccountOpening = {
+      corporateCode: "",
+      dateFrom: dateToyyyyMMdd(new Date()),
+      dateTo: dateToyyyyMMdd(new Date()),
+    };
+    await handleSearch(data);
+  };
+
   useEffect(() => {
-    fetchCorporateCodes();
-    console.log("all-corporate Code", mockedCorporateCodes);
+    // fetchCorporateCodes();
+    // console.log("all-corporate Code", mockedCorporateCodes);
+    initData();
   }, []);
 
   const handleDisableCode = (e: React.ChangeEvent<HTMLInputElement>) => {
