@@ -91,7 +91,7 @@ describe("addedCorporateAccount", () => {
     fireEvent.change(registerProvince, { target: { value: "province" } });
     expect(registerProvince).toHaveValue("province");
     fireEvent.change(registerZipCode, { target: { value: 12345 } });
-    expect(registerZipCode).toHaveValue(12345);
+    expect(registerZipCode).toHaveValue("12345");
     fireEvent.change(registerCountry, { target: { value: "country" } });
     expect(registerCountry).toHaveValue("country");
     fireEvent.change(incorporatePlaceAddressNumber, {
@@ -107,7 +107,7 @@ describe("addedCorporateAccount", () => {
     });
     expect(incorporatePlaceProvince).toHaveValue("province");
     fireEvent.change(incorporatePlaceZipCode, { target: { value: 12345 } });
-    expect(incorporatePlaceZipCode).toHaveValue(12345);
+    expect(incorporatePlaceZipCode).toHaveValue("12345");
     fireEvent.change(incorporatePlaceCountry, { target: { value: "country" } });
     expect(incorporatePlaceCountry).toHaveValue("country");
 
