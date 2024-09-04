@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { useState } from 'react';
 
 interface Answer {
   questionIndex: number;
@@ -277,45 +277,36 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
             </Card>
           ) : (
             <Card className="p-4" key={questionIndex}>
-              {questionIndex === 0 && (
-                <div className="flex text-gray-400 text-l p-4">
-                  <h2>
-                    กรุณาเลือกข้อที่ตรงกับท่านมากที่สุดเพื่อท่านจะได้ทราบว่าท่านเหมาะที่จะลงทุนในทรัพย์สินประเภทใด
-                  </h2>
-                  <span className="text-red-500">*</span>
-                </div>
-              )}
-              <div className="flex flex-col space-y-4 p-8">
-                <p className="font-bold">
-                  {questionIndex + 1}.{question.question}
-                </p>
-                <div className="flex md:flex-row flex-col md:space-x-8">
-                  {question.choices.map((choice, choiceIndex) => (
-                    <div className="flex" key={choiceIndex}>
-                      <input
-                        type="radio"
-                        name={`question-${questionIndex}`}
-                        id={`question-${questionIndex}-choice-${choiceIndex}`}
-                        value={choice}
-                        checked={answers[questionIndex].answer === choice}
-                        onChange={() =>
-                          handleOptionChange(questionIndex, choice, choiceIndex)
-                        }
-                        className="mr-4"
-                      />
-                      <label
-                        htmlFor={`question-${questionIndex}-choice-${choiceIndex}`}
-                        className=""
-                      >
-                        {choice}
-                      </label>
+                {
+                    questionIndex === 0 && 
+                    <div className="flex text-gray-400 text-l p-4">
+                        <h2>กรุณาเลือกข้อที่ตรงกับท่านมากที่สุดเพื่อท่านจะได้ทราบว่าท่านเหมาะที่จะลงทุนในทรัพย์สินประเภทใด</h2>
+                        <span className="text-red-500">*</span>
                     </div>
-                  ))}
+                }
+                <div className="flex flex-col space-y-4 p-8">
+                    <p className="font-bold">{questionIndex + 1}.{question.question}</p>
+                    <div className="flex md:flex-row flex-col md:space-x-8">
+                        {question.choices.map((choice, choiceIndex) => (
+                        <div className="flex" key={choiceIndex}>
+                            <input
+                                type="radio"
+                                name={`question-${questionIndex}`}
+                                id={`question-${questionIndex}-choice-${choiceIndex}`}
+                                value={choice}
+                                checked={answers[questionIndex].answer === choice}
+                                onChange={() => handleOptionChange(questionIndex, choice, choiceIndex)}
+                                className="mr-4"
+                            />
+                            <label htmlFor={`question-${questionIndex}-choice-${choiceIndex}`} className="">
+                            <span className="">{choiceIndex+1}.</span> {choice}
+                            </label>
+                        </div>
+                        ))}
+                    </div>
                 </div>
-              </div>
-            </Card>
-          )
-        )}
+            </Card> 
+        ))}
         <div className="flex justify-center">
           {!suitTestDone && (
             <Button type="button" className="w-1/8" onClick={handleSubmit}>

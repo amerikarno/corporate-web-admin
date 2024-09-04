@@ -222,10 +222,19 @@ type AnswersType = {
     };
 
     const handleAnswerChange = (questionId: number, answer: number) => {
-        setAnswers((prevAnswers) => ({
-            ...prevAnswers,
-            [questionId]: answer,
-        }));
+        setAnswers((prevAnswers) => {
+            const updatedAnswers = { ...prevAnswers, [questionId]: answer };
+            
+            const question = questionsData.items.find((q) => q.id === questionId);
+            if (question && updatedAnswers[questionId] === question.ans) {
+                setIncorrectAnswers((prevIncorrectAnswers) => {
+                    const { [questionId]: _, ...remainingIncorrectAnswers } = prevIncorrectAnswers;
+                    return remainingIncorrectAnswers;
+                });
+            }
+    
+            return updatedAnswers;
+        });
         setHighlightedQuestion(null);
     };
 

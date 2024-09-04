@@ -23,8 +23,8 @@ export default function TodoCorporateAccountOpenning() {
     return <UnAuthorize />;
   }
 
-  // const prev7Days = new Date();
-  // prev7Days.setDate(prev7Days.getDate() - 7);
+  const prev7Days = new Date();
+  prev7Days.setDate(prev7Days.getDate() - 7);
 
   const {
     register,
@@ -34,8 +34,8 @@ export default function TodoCorporateAccountOpenning() {
   } = useForm<TCorporateAccountOpening>({
     resolver: zodResolver(corporateAccountOpeningSchema),
     defaultValues: {
-      // dateFrom: dateToyyyyMMdd(prev7Days),
-      dateFrom: dateToyyyyMMdd(new Date()),
+      dateFrom: dateToyyyyMMdd(prev7Days),
+      // dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     },
   });
