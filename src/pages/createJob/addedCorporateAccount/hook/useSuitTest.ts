@@ -231,48 +231,22 @@ export function UseSuitTest(corporateCode: string) {
       console.log(data);
       if (data && data !== null) {
         let tmpAns = [];
-        // let sort = [];
         if (
           data.suitTestResult.answer !== undefined &&
           data.suitTestResult.answer !== null
         ) {
           for (let i = 0; i < data.suitTestResult.answer.length; i++) {
             const element = data.suitTestResult.answer[i];
-            let ans;
-            if (element.type === 1) {
-              ans = {
-                id: element.id,
-                quiz: element.quiz,
-                ans: Number(element.ans),
-                type: element.type,
-              };
-            } else {
-              const split = element.ans.split("|").map(Number);
-              ans = {
-                id: element.id,
-                quiz: element.quiz,
-                ans: split,
-                type: element.type,
-              };
-            }
-
+            const ans = {
+              id: element.id,
+              quiz: element.quiz,
+              ans: element.ans,
+              type: element.type,
+            };
             tmpAns.push(ans);
           }
-          // console.log(tmpAns);
-
-          // for (let i = 0; i < tmpAns.length - 1; i++) {
-          //   const element = tmpAns.find((item) => item.quiz === i + 1);
-          //   if (element) {
-          //     sort.push(element);
-          //   } else {
-          //     sort.push({ id: "", quiz: 0, ans: 0, type: 0 });
-          //     // sort.push({id: "", quiz: i + 1, ans: 0, type: 0});
-          //   }
-          // }
         }
         setAnswerSuiteTest(tmpAns);
-        // setAnswerSuiteTest(sort);
-        // console.log(sort);
 
         let tmpAddition = [];
         if (
