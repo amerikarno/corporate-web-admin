@@ -136,19 +136,27 @@ export function UseSuitTest(corporateCode: string) {
     type?: string
   ) => {
     isSubmit ? setIsSubmit(false) : null;
-    // const hasSelected = answerSuiteTest?.some((list) => list.id === quizId);
     let tmp = copy(answerSuiteTest);
+    console.log();
     if (type === "2") {
       let listChoice = typeTwoAns;
       listChoice[choiceIndex] = e.target.checked ? choiceIndex + 1 : 0;
-      tmp[quizIndex] = { id: quizId, ans: listChoice, type: 2, quiz: 1 };
+      tmp[quizIndex] = {
+        id: quizId,
+        ans: listChoice,
+        type: 2,
+        quiz: quizIndex + 1,
+      };
       setAnswerSuiteTest(tmp);
       setTypeTwoAns(listChoice);
-      // console.log(rm);
     } else {
-      tmp[quizIndex] = { id: quizId, ans: choiceIndex + 1, type: 1, quiz: 1 };
+      tmp[quizIndex] = {
+        id: quizId,
+        ans: choiceIndex + 1,
+        type: 1,
+        quiz: quizIndex + 1,
+      };
       setAnswerSuiteTest(tmp);
-      // console.log(quizIndex + 1, choiceIndex + 1);
     }
     errorCheck(quizId);
   };
