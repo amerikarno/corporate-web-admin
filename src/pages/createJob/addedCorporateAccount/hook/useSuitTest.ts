@@ -89,7 +89,7 @@ export function UseSuitTest(corporateCode: string) {
     console.log(ans);
     const url = isSave
       ? "/api/v1/suitetest/result/edit"
-      : "/api/v1/suitetest/save";
+      : "/api/v1/suitetest/result/save";
     try {
       const res = await axios.post(url, ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
