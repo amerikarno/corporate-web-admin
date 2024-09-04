@@ -5,7 +5,7 @@ import { TiHome } from "react-icons/ti";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { MdLocationPin } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   bank,
@@ -54,10 +54,35 @@ export default function BasicInfo() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<TBasicInfo>({
     resolver: zodResolver(basicInfoSchema),
   });
+
+  const currentOccupation = watch("occupation.currentOccupation");
+  const [showBusinessType, setShowBusinessType] = useState(true);
+  const [showWorkplace, setShowWorkplace] = useState(true);
+  const [showWorkPosition, setShowWorkPosition] = useState(true);
+  useEffect(() => {
+    const selectedCareer = careerTypes.find(
+      (career) => career.id === Number(currentOccupation)
+    );
+
+    if (selectedCareer) {
+      setShowBusinessType(selectedCareer.businessFlag === "Y");
+      setShowWorkplace(selectedCareer.workplaceFlag === "Y");
+      setShowWorkPosition(selectedCareer.positionFlag === "Y");
+    } else {
+      setShowBusinessType(true);
+      setShowWorkplace(true);
+      setShowWorkPosition(true);
+    }
+  }, [currentOccupation]);
+
+  useEffect(()=>{
+    setAddBankValue("radio-7")
+  },[])
 
   const onSubmit = (data: TBasicInfo) => {
     let prebody = {
@@ -489,17 +514,40 @@ export default function BasicInfo() {
                   ))}
                 </select>
               </div>
-              <div className="w-1/2">
+              {showWorkplace ? (<div className="w-1/2">
                 <Input
                   type="text"
                   label="ชื่อสถานที่ทำงาน"
                   id="workPlace"
                   {...register("occupation.officeName")}
                 />
-              </div>
+              </div>) : showWorkPosition ?
+              (<div className="w-1/2">
+                <Input
+                  type="text"
+                  label="ตำแหน่งงาน"
+                  id="่jobPosition"
+                  {...register("occupation.positionName")}
+                />
+              </div>) :
+              (<div className="w-1/2">
+                <select
+                  {...register("occupation.salaryRange")}
+                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+                                        text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
+                                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
+                >
+                  <option value="">รายได้ต่อเดือน</option>
+                  {salaryRange.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
+                </select>
+              </div>)}
             </div>
             <div className="flex space-x-6">
-              <div className="w-1/2">
+              {showBusinessType ? (<div className="w-1/2">
                 <select
                   {...register("occupation.typeOfBusiness")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
@@ -513,17 +561,31 @@ export default function BasicInfo() {
                     </option>
                   ))}
                 </select>
-              </div>
-              <div className="w-1/2">
+              </div>) : (!showBusinessType && !showWorkPosition && !showWorkplace) ? (<div className="w-1/2"></div>) :(<div className="w-1/2">
+                <select
+                  {...register("occupation.salaryRange")}
+                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+                                        text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
+                                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
+                >
+                  <option value="">รายได้ต่อเดือน</option>
+                  {salaryRange.map((status) => (
+                    <option key={status.id} value={status.id}>
+                      {status.name}
+                    </option>
+                  ))}
+                </select>
+              </div>)}
+              {showWorkPosition&&showWorkplace ? (<div className="w-1/2">
                 <Input
                   type="text"
                   label="ตำแหน่งงาน"
                   id="่jobPosition"
                   {...register("occupation.positionName")}
                 />
-              </div>
+              </div>) : (<div className="w-1/2"></div>)}
             </div>
-            <div className="flex space-x-6">
+            {showBusinessType && <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
                   {...register("occupation.salaryRange")}
@@ -540,7 +602,7 @@ export default function BasicInfo() {
                 </select>
               </div>
               <div className="w-1/2"></div>
-            </div>
+            </div>}
           </div>
         </CardContent>
       </Card>

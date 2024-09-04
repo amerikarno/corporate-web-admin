@@ -33,13 +33,13 @@ export default function SuitTestFatca() {
   const navigate = useNavigate();
 
   const handleKnowLedgeTestSuccess = (success: boolean) => {
-    setKnowLedgeTestSuccess(success);
-    console.log("Test Success:", success);
-  };
-  const handleSuitTestSuccess = (success: boolean) => {
-    setSuitTestSuccess(success);
-    console.log("Suit Test Success!");
-  };
+        setKnowLedgeTestSuccess(success);
+        console.log('Test Success:', success);
+    };
+  const handleSuitTestSuccess = (success:boolean) =>{
+      setSuitTestSuccess(success)
+      console.log("Suit Test submit button pressed!")
+  }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
 
   const handleSubmitSuitTestFatca = () => {

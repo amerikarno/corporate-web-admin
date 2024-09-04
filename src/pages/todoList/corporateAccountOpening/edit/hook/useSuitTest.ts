@@ -160,20 +160,20 @@ export function UseSuitTest(corporateCode: string) {
 
   const saveSuitTest = async (ans: any) => {
     console.log(ans);
-    // try {
-    //   const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
-    //     headers: { Authorization: `Bearer ${getCookies()}` },
-    //   });
-    //   console.log(ans);
-    //   if (res.status === 200) {
-    //     console.log("request success", res.data);
-    //      dispatch(resetSuit());
-    //   } else {
-    //     console.log("save failed");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
+        headers: { Authorization: `Bearer ${getCookies()}` },
+      });
+      console.log(ans);
+      if (res.status === 200) {
+        console.log("request success", res.data);
+        dispatch(resetSuit());
+      } else {
+        console.log("save failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
     dispatch(resetSuit());
   };
 
@@ -228,37 +228,64 @@ export function UseSuitTest(corporateCode: string) {
   };
 
   const fetchSuitData = async () => {
-    const todo = "change all to real data";
-    // const code = null;
     const code = localStorage.getItem("corporateCode");
-    if (code && code !== null) {
-      if (isEmptyObject(suitData)) {
-        try {
-          const res = await axios.post(
-            "/api/v1/corporate/query",
-            { corporateCode: code },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${getCookies()}`,
-              },
-            }
-          );
-          if (res.status == 200) {
-            const todo = "change all to real data";
-            dispatch(setSuit(mock));
-            return mock;
+    console.log(code);
+    if (isEmptyObject(suitData)) {
+      try {
+        const res = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode: corporateCode },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getCookies()}`,
+            },
           }
-        } catch (error) {
-          console.log(error);
+        );
+        if (res.status == 200) {
+          // const todo = "change all to real data";
+          // dispatch(setSuit(mock));
+          // return mock;
+          console.log(res.data[0].SuitTestResult);
+          dispatch(setSuit(res.data.SuitTestResult[0]));
+          return res.data;
         }
-      } else {
-        return suitData;
+      } catch (error) {
+        console.log(error);
       }
     } else {
-      const empty: SuitTestResult = {};
-      return empty;
+      return suitData;
     }
+    // // const code = null;
+    // const code = localStorage.getItem("corporateCode");
+    // if (code && code !== null) {
+    //   if (isEmptyObject(suitData)) {
+    //     try {
+    //       const res = await axios.post(
+    //         "/api/v1/corporate/query",
+    //         { corporateCode: code },
+    //         {
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //             Authorization: `Bearer ${getCookies()}`,
+    //           },
+    //         }
+    //       );
+    //       if (res.status == 200) {
+    //         const todo = "change all to real data";
+    //         dispatch(setSuit(mock));
+    //         return mock;
+    //       }
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   } else {
+    //     return suitData;
+    //   }
+    // } else {
+    //   const empty: SuitTestResult = {};
+    //   return empty;
+    // }
   };
 
   const loadSuitTest = async () => {

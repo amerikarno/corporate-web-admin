@@ -84,7 +84,7 @@ export default function IdentityVerification() {
           </div>
         </div>
       </Card>
-      <div className="flex flex-col text-lg font-bold">
+      <div className="flex flex-col md:text-lg font-bold">
         <div className="flex justify-center">
           <span className="font-normal">สอบถามข้อมูลเพิ่มเติม</span>
         </div>

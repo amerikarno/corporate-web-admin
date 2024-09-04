@@ -246,8 +246,11 @@ export function UseSuitTest(corporateCode: string) {
           );
           if (res.status == 200) {
             // const todo = "change all to real data";
-            dispatch(setSuit(mock));
-            return mock;
+            // dispatch(setSuit(mock));
+            // return mock;
+            console.log(res.data[0].SuitTestResult);
+            dispatch(setSuit(res.data.SuitTestResult[0]));
+            return res.data;
           }
         } catch (error) {
           console.log(error);

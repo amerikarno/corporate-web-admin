@@ -74,7 +74,7 @@ export function CorporateAddressForm({
           name={`${keyType}.emailAddress`}
           id={`id-${keyType}.emailAddress`}
           disabled={isSubmitting}
-          type="email"
+          type="text"
         />
       </div>
 
@@ -86,7 +86,7 @@ export function CorporateAddressForm({
           name={`${keyType}.telephone`}
           id={`id-${keyType}.telephone`}
           disabled={isSubmitting}
-          type="tel"
+          type="text"
         />
       </div>
     </>

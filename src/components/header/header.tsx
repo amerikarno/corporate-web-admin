@@ -109,18 +109,18 @@ export default function Header() {
       <div className="flex text-secondary-backoffice space-x-2 p-4 w-2/5 justify-between">
         <Separator orientation={"vertical"} />
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center space-x-2 w-56">
+          <DropdownMenuTrigger className="flex pr-4 space-x-2 outline-none">
             <Avatar>
               {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
               <AvatarFallback>PIC</AvatarFallback>
             </Avatar>
-            <div className="text-left w-full text-white">
+            {/* <div className="text-left w-full text-white">
               <p>{user?.name}</p>
               <p>{user?.roles}</p>
-            </div>
+            </div> */}
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="">
-            <DropdownMenuItem onClick={() => handleLogout()}>
+          <DropdownMenuContent className="border-black mr-12">
+            <DropdownMenuItem className="cursor-pointer" onClick={() => handleLogout()}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
