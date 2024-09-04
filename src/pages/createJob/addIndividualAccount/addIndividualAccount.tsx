@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 // import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
 
 export default function AddIndividualAccount() {
@@ -28,6 +29,38 @@ export default function AddIndividualAccount() {
     resolver: zodResolver(individualAccountSchema),
   });
 
+  const [thTitle,setThTitle] = useState("");
+  const [engTitle,setEngTitle] = useState("");
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const choosedTitle = e.target.value;
+    console.log(choosedTitle)
+    if(choosedTitle === "นาย"){
+      setThTitle("นาย")
+      setEngTitle("Mr.")
+    }
+    else if(choosedTitle === "นาง"){
+      setThTitle("นาง")
+      setEngTitle("Mrs.")
+    }
+    else if(choosedTitle === "นางสาว"){
+      console.log("go to this")
+      setThTitle("นางสาว")
+      setEngTitle("Miss.")
+    }
+    else if(choosedTitle === "Mr."){
+      setThTitle("นาย")
+      setEngTitle("Mr.")
+    }
+    else if(choosedTitle === "Mrs."){
+      setThTitle("นาง")
+      setEngTitle("Mrs.")
+    }
+    else if(choosedTitle === "Miss."){
+      setThTitle("นางสาว")
+      setEngTitle("Miss.")
+    }
+  }
   const navigate = useNavigate();
   const calculateAge = (birthDate: Date) => {
     const today = new Date();
@@ -88,6 +121,8 @@ export default function AddIndividualAccount() {
                 <div className="w-1/2 pr-2">
                   <select
                     {...register("thTitle")}
+                    onChange={handleTitleChange}
+                    value={thTitle}
                     className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
                      dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600"
@@ -137,6 +172,8 @@ export default function AddIndividualAccount() {
                 <div className="w-1/2">
                   <select
                     {...register("engTitle")}
+                    onChange={handleTitleChange}
+                    value={engTitle}
                     className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
                      dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600"
@@ -144,7 +181,7 @@ export default function AddIndividualAccount() {
                     <option value="">คำนำหน้าชื่อ (ภาษาอังกฤษ)</option>
                     <option value="Mr.">Mr.</option>
                     <option value="Mrs.">Mrs.</option>
-                    <option value="Mrs.">Miss.</option>
+                    <option value="Miss.">Miss.</option>
                   </select>
                   {errors.engTitle && (
                     <span className="text-red-500">
