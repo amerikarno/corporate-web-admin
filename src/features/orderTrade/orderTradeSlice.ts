@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TOrderTrade } from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/constant/type";
+import { TOrderTrade } from "@/pages/createJob/orderTrade/constant/type";
 
 interface OrderTradeState {
   orderTrades: TOrderTrade[];

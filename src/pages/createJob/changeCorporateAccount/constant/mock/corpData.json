@@ -1,0 +1,427 @@
+[
+    {
+        "CorporateCode": 80000000,
+        "Info": {
+            "id": "fef3bca8-0500-4d4c-a9d1-7ae3bab6e486",
+            "createBy": "moss@123.com",
+            "CreatedAt": "2024-08-01T13:41:44.126+07:00",
+            "DeletedAt": null,
+            "corporateCode": 80000000,
+            "name": "ABC Co.ltd",
+            "registrationNo": "1234567",
+            "taxId": "1234567890",
+            "dateOfIncorporation": "2025-01-01T07:00:00+07:00"
+        },
+        "CorporateCountry": [
+            {
+                "id": "7b1678ff-8c3e-4760-9c4d-1f107fa4e4bf",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:44.14+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "isThailand": true,
+                "other": "Thailand",
+                "types": 601
+            },
+            {
+                "id": "f76cc7cd-a646-41c5-be78-c22cfe4ea657",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:44.14+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "other": "Thailand",
+                "types": 602
+            }
+        ],
+        "CorporateAddress": [
+            {
+                "id": "75ba2edc-6006-4a0b-b303-973822b7231d",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:44.172+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "addressNo": "123",
+                "mooNo": "4",
+                "building": "tisco",
+                "floor": "16",
+                "soi": "14",
+                "road": "sirom",
+                "tambon": "sirom",
+                "amphoe": "sirom",
+                "province": "bangkok",
+                "postalCode": "10100",
+                "country": "thailand",
+                "types": 702
+            },
+            {
+                "id": "e37bef04-a93c-4d39-9969-fd3e330bb248",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:44.187+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "addressNo": "123",
+                "mooNo": "4",
+                "building": "tisco",
+                "floor": "16",
+                "soi": "14",
+                "road": "sirom",
+                "tambon": "sirom",
+                "amphoe": "sirom",
+                "province": "bangkok",
+                "postalCode": "10100",
+                "country": "thailand",
+                "types": 701
+            }
+        ],
+        "CorporateFinancials": {
+            "id": "6e6678fc-d597-4a8d-a2d8-bdcd00f31a7a",
+            "createBy": "moss@123.com",
+            "CreatedAt": "2024-08-01T13:41:44.158+07:00",
+            "DeletedAt": null,
+            "corporateCode": 80000000,
+            "registeredCapital": 12346,
+            "revenuePerYear": 123456,
+            "netProfitLoss": 123456,
+            "shareholderEquity": 123456
+        },
+        "CorporateTypes": {
+            "id": "0aaea90a-e22c-4834-bfbc-e48e50b6f312",
+            "createBy": "moss@123.com",
+            "CreatedAt": "2024-08-01T13:41:52.658+07:00",
+            "DeletedAt": null,
+            "corporateCode": 80000000,
+            "istaxExempt": true,
+            "isnonTaxExempt": true,
+            "isoperatingInThailand": true,
+            "isnonOperatingInThailand": true,
+            "isother": true,
+            "ispartnership": true,
+            "isgovernmentStateEnterprise": true
+        },
+        "BusinessTypes": {
+            "id": "4813a555-b4e1-4e4a-b907-5aa7ae2c2b90",
+            "createBy": "moss@123.com",
+            "CreatedAt": "2024-08-01T13:41:52.638+07:00",
+            "DeletedAt": null,
+            "corporateCode": 80000000,
+            "isarmament": true,
+            "isinsuranceAssurance": true,
+            "iscasinoGambling": true,
+            "isjewelryGoldTrading": true,
+            "isfoundation": true,
+            "ispropertyRealEstate": true,
+            "ismoneyTransfer": true,
+            "isemploymentAgency": true,
+            "isentertainment": true,
+            "istravel": true,
+            "isfinancial": true,
+            "iseducationCenter": true,
+            "isforeignCurrencyExchange": true,
+            "iscryptoRelated": true,
+            "isotherBusiness": true,
+            "otherBusinessType": "qqqqqqqqqqq"
+        },
+        "SourceOfIncomes": {
+            "id": "80972f9f-9d24-43f0-bb3b-0a4797a964db",
+            "createBy": "moss@123.com",
+            "CreatedAt": "2024-08-01T13:41:52.679+07:00",
+            "DeletedAt": null,
+            "corporateCode": 80000000,
+            "isrevenue": true,
+            "otherIncome": "aaaaaaaaaa"
+        },
+        "CountrySourceIncomes": {
+            "id": "04b68b2c-5470-4c52-8bc5-59af107ad7a4",
+            "createBy": "moss@123.com",
+            "CreatedAt": "2024-08-01T13:41:52.699+07:00",
+            "DeletedAt": null,
+            "corporateCode": 80000000,
+            "investmentObject": "zzzzzzz",
+            "iscashManagement": true,
+            "otherInvestment": "ccccccc",
+            "contact": {
+                "id": "cea0aaed-5f65-491d-a0ec-193c31c4c51f",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:52.719+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "other": "zzzzzz",
+                "types": 603
+            }
+        },
+        "Contact": [
+            {
+                "id": "10fd241e-b44a-4651-a24d-6ff743bcc50f",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:44.203+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "telephone": "0912341511",
+                "email": "aaaaaa@ooooo.com",
+                "types": 701
+            },
+            {
+                "id": "111a32f0-53d5-4d4c-b6cd-dec3b88c246e",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:44.218+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "telephone": "0912341511",
+                "email": "aaaaaa@ooooo.com",
+                "types": 702
+            },
+            {
+                "id": "1b65f7c3-75ae-4313-af52-01e023ff0984",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:58.751+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "personalID": "c826953e-8b78-432d-a48c-bca38594e99d",
+                "position": "CEO",
+                "division": "ABC",
+                "telephone": "01234456778",
+                "email": "MMM@123.gmail.con",
+                "types": 401
+            },
+            {
+                "id": "8fe674b7-505a-4d4e-8b61-0e8f0c1106e0",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:58.751+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "personalID": "ff4f858b-a75e-4935-ae32-d2d095da9473",
+                "position": "CEO",
+                "division": "ABC",
+                "telephone": "01234456778",
+                "email": "MMM@123.gmail.con",
+                "types": 401
+            }
+        ],
+        "Directors": [
+            {
+                "id": "054e6042-6d9a-4bd7-8cae-a62ca057cad8",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:44:53.458+07:00",
+                "DeletedAt": null,
+                "personalId": "26ee9d27-019b-4bb6-984a-92455c2c7a0b",
+                "corporateCode": 80000000,
+                "fullnames": [
+                    {
+                        "id": "3437d441-a198-48b0-9a6d-0160cfd3bbc2",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:53.483+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "26ee9d27-019b-4bb6-984a-92455c2c7a0b",
+                        "firstName": "Johnfforreal",
+                        "lastName": "Doefdd",
+                        "types": 101
+                    },
+                    {
+                        "id": "557cb559-8175-4ea7-a6f8-8f767513b16d",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:53.483+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "26ee9d27-019b-4bb6-984a-92455c2c7a0b",
+                        "firstName": "JohnMore",
+                        "lastName": "Doefd",
+                        "types": 101
+                    }
+                ],
+                "addresses": [
+                    {
+                        "id": "74fd1b6d-0a8c-4bc4-b2ca-c5d9fc6d7084",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:53.471+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "26ee9d27-019b-4bb6-984a-92455c2c7a0b",
+                        "addressNo": "2423",
+                        "tambon": "Tam",
+                        "amphoe": "Chan",
+                        "province": "Bangkok",
+                        "postalCode": "10520",
+                        "country": "Thailand",
+                        "types": 101
+                    },
+                    {
+                        "id": "bb9faff6-e088-4ce3-bbec-720ffb77aaf9",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:53.471+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "26ee9d27-019b-4bb6-984a-92455c2c7a0b",
+                        "addressNo": "123",
+                        "mooNo": "1",
+                        "soi": "Sukhumvit",
+                        "road": "Somewhere",
+                        "tambon": "Tam",
+                        "amphoe": "Klong",
+                        "province": "Bangkok",
+                        "postalCode": "10120",
+                        "country": "Thailand",
+                        "types": 101
+                    }
+                ],
+                "passportId": "3993693",
+                "expiryDate": "2025-01-01T07:00:00+07:00",
+                "nationality": "Thai",
+                "types": 101
+            }
+        ],
+        "AuthorizedPersons": [
+            {
+                "id": "9d487a26-6164-4544-afbe-960e1f0b547f",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:44:07.431+07:00",
+                "DeletedAt": null,
+                "personalId": "ef52a6c0-abe5-4914-bbe3-03221cc488a5",
+                "corporateCode": 80000000,
+                "fullnames": [
+                    {
+                        "id": "0149ee6e-49ac-4ffd-8bb3-b62b949fd9e0",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:07.465+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "ef52a6c0-abe5-4914-bbe3-03221cc488a5",
+                        "firstName": "Johnfforreal",
+                        "lastName": "Doefdd",
+                        "types": 201
+                    },
+                    {
+                        "id": "f330dbf8-3eaf-431d-91d2-fe8965c87927",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:07.465+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "ef52a6c0-abe5-4914-bbe3-03221cc488a5",
+                        "firstName": "JohnMore",
+                        "lastName": "Doefd",
+                        "types": 201
+                    }
+                ],
+                "addresses": [
+                    {
+                        "id": "032e62f9-c3cb-4dc4-8f23-b20167575354",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:07.445+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "ef52a6c0-abe5-4914-bbe3-03221cc488a5",
+                        "addressNo": "2423",
+                        "tambon": "Tam",
+                        "amphoe": "Chan",
+                        "province": "Bangkok",
+                        "postalCode": "10520",
+                        "country": "Thailand",
+                        "types": 201
+                    },
+                    {
+                        "id": "fb8309ea-1b2e-4450-bb63-79fb8257fccb",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:07.445+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "ef52a6c0-abe5-4914-bbe3-03221cc488a5",
+                        "addressNo": "123",
+                        "mooNo": "1",
+                        "soi": "Sukhumvit",
+                        "road": "Somewhere",
+                        "tambon": "Tam",
+                        "amphoe": "Klong",
+                        "province": "Bangkok",
+                        "postalCode": "10120",
+                        "country": "Thailand",
+                        "types": 201
+                    }
+                ],
+                "passportId": "12345676",
+                "expiryDate": "2025-01-01T07:00:00+07:00",
+                "nationality": "Thai",
+                "types": 201
+            }
+        ],
+        "IndividualShareholders": [
+            {
+                "id": "c530c49f-361d-422e-8591-8174275a8354",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:44:21.216+07:00",
+                "DeletedAt": null,
+                "personalId": "09ee8d0d-8884-417f-884b-66b60d1dc9d6",
+                "corporateCode": 80000000,
+                "fullnames": [
+                    {
+                        "id": "626e7a5e-115d-4946-aa57-16bc90dcc6ce",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:21.229+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "09ee8d0d-8884-417f-884b-66b60d1dc9d6",
+                        "firstName": "Dollar",
+                        "lastName": "Burger",
+                        "types": 301
+                    },
+                    {
+                        "id": "ca6e329e-a5f2-42cf-8da4-c7ee54f86c00",
+                        "createBy": "moss@123.com",
+                        "CreatedAt": "2024-08-01T13:44:21.229+07:00",
+                        "DeletedAt": null,
+                        "ReferenceID": "09ee8d0d-8884-417f-884b-66b60d1dc9d6",
+                        "firstName": "Money",
+                        "lastName": "Cash",
+                        "types": 301
+                    }
+                ],
+                "passportId": "1248068655",
+                "expiryDate": "2025-01-01T07:00:00+07:00",
+                "nationality": "Thai",
+                "types": 301,
+                "sharePercentage": 28.3333
+            }
+        ],
+        "Juristics": [
+            {
+                "id": "1e5cf1fd-d3d1-4544-baac-ab14361516da",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:46:46.792+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "juristicName": "Real Corporation",
+                "registrationNo": "REG123456",
+                "registeredCountry": "Thailand",
+                "sharePercentage": 75
+            }
+        ],
+        "Banks": [
+            {
+                "id": "12af016f-db63-4c82-95f4-864283675a73",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:56.128+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "accountType": "savings",
+                "bankName": "Bank G",
+                "accountNo": "5566778899",
+                "accountLocation": "Udon Thani",
+                "swiftCode": "UDO12345"
+            },
+            {
+                "id": "13083b92-a833-41b1-a887-0962e374367c",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:56.128+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "accountType": "fixed",
+                "bankName": "Bank I",
+                "accountNo": "9988776655",
+                "accountLocation": "Khon Kaen",
+                "swiftCode": "KHO12345"
+            },
+            {
+                "id": "3424dd62-6cba-4d5a-acea-97b706f3b549",
+                "createBy": "moss@123.com",
+                "CreatedAt": "2024-08-01T13:41:56.128+07:00",
+                "DeletedAt": null,
+                "corporateCode": 80000000,
+                "accountType": "investment",
+                "bankName": "Bank H",
+                "accountNo": "2233445566",
+                "accountLocation": "Nakhon Ratchasima",
+                "swiftCode": "NAK12345"
+            }
+        ]
+    }
+]
