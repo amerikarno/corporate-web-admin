@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { marriageStatus } from "@/constant/variables";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 
 
@@ -74,7 +73,7 @@ export default function AddIndividualAccount() {
         engName: individualData.engName || "",
         engSurname: individualData.engSurname || "",
         mobile: individualData.mobile || "",
-        birthDate: "",
+        birthDate: individualData.birthDate || "",
         mariageStatus: individualData.marriageStatus || "",
         laserCode: individualData.laserCode || "",
         agreement: true,

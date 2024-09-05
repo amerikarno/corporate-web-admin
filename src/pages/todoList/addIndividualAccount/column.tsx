@@ -13,7 +13,7 @@ const EditButtonCell = ({ row }: { row: TIndividualData }) => {
     console.log(row);
     dispatch(setIndividualData(row));
     localStorage.setItem('cid', row.id.toString());
-    navigate("/todo-list/added-individual-account/edit/1", {
+    navigate("/todo-list/individual-account-opening/edit/1", {
       state: row,
     });
   };

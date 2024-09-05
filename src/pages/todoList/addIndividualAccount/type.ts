@@ -34,6 +34,7 @@ export type SuitAnswer = {
     engSurname: string;
     email: string;
     mobile: string;
+    birthDate: string;
     marriageStatus: string;
     citizenId: string;
     laserCode: string;

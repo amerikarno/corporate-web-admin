@@ -30,6 +30,7 @@ export default function SuitTestFatca() {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [knowLedgeTestSuccess, setKnowLedgeTestSuccess] = useState(false);
   const [suitTestSuccess, setSuitTestSuccess] = useState(false);
+  const [suitTestResult,setSuitTestResult] = useState();
   const navigate = useNavigate();
 
   const handleKnowLedgeTestSuccess = (success: boolean) => {
@@ -39,6 +40,11 @@ export default function SuitTestFatca() {
   const handleSuitTestSuccess = (success:boolean) =>{
       setSuitTestSuccess(success)
       console.log("Suit Test submit button pressed!")
+  }
+
+    const handleSuitTestResult = (exam_result : any) =>{
+      console.log(exam_result)
+      setSuitTestResult(exam_result)
   }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
 
@@ -53,7 +59,7 @@ export default function SuitTestFatca() {
     ) {
       let body = {
         id: localStorage.getItem("cid"),
-        suiteTestResult: [1, 1, 1, 1, 1, 1, 1, 1, 1].join("|"),
+        suiteTestResult: suitTestResult,
         isFatca: fatcaradio === "fatcaradio-1",
         fatcaInfo: fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
@@ -61,7 +67,7 @@ export default function SuitTestFatca() {
         pageID: 400,
       };
       console.log(body);
-      navigate("/create-job/added-individual-account/identityVerification");
+      navigate("/create-job/added-individual-account/4");
     } else {
       alert("Please Do the Suit Test First.");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -92,7 +98,7 @@ export default function SuitTestFatca() {
             </div>
           </div> */}
       </div>
-      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} />
+      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} suitTestResult={handleSuitTestResult}/>
       <Card>
         <CardContent>
           <div className="p-4 space-y-4 pr-8 pl-8 flex flex-col">

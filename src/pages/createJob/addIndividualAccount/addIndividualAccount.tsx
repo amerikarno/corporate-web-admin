@@ -93,7 +93,7 @@ export default function AddIndividualAccount() {
         console.log(age);
         console.log("success", res, data);
 
-        navigate("/create-job/added-individual-account/basicinfo");
+        navigate("/create-job/added-individual-account/2");
         window.scrollTo(0, 0);
       }
     } catch (error) {

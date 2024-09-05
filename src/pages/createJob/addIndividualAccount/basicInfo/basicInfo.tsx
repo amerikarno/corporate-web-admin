@@ -139,7 +139,7 @@ export default function BasicInfo() {
       });
       if(res.status === 200){
         console.log("submit basic info success",res);
-        navigate("/create-job/added-individual-account/suittestfatca");
+        navigate("/create-job/added-individual-account/3");
       }else{
         console.log("submit basic info unsuccess x",res);
       }

@@ -131,13 +131,13 @@ export default function BasicInfo() {
           countryName: ""
         },
         occupation: {
-          education: "",
-          sourceOfIncome: "",
-          currentOccupation: "",
+          education: individualData?.education || "",
+          sourceOfIncome: individualData?.sourceOfIncome || "",
+          currentOccupation: individualData?.currentOccupation || "",
           officeName: individualData?.officeName || "",
-          typeOfBusiness: "",
-          positionName: "",
-          salaryRange: ""
+          typeOfBusiness: individualData?.typeOfBusiness || "",
+          positionName: individualData?.positionName || "",
+          salaryRange: individualData?.salaryRange || "",
         },
         firstBankAccount: {
           bankName: "",
@@ -180,9 +180,9 @@ export default function BasicInfo() {
     }
   }, [currentOccupation]);
 
-  useEffect(()=>{
-    setAddBankValue("radio-7")
-  },[])
+  // useEffect(()=>{
+  //   setAddBankValue("radio-6")
+  // },[])
 
   const onSubmit = async (data: TBasicInfo) => {
     let prebody = {

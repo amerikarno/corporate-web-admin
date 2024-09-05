@@ -10,10 +10,11 @@ interface Answer {
 }
 
 type SubSuitTestProps = {
+  suitTestResult: (result: any) => void;
   onSuitTestDone: (done: boolean) => void;
 };
 
-export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
+export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTestProps) {
   const questions = [
     {
       question: "ท่านมีภาระค่าใช้จ่ายประจำดือนเป็นสัดส่วนเท่าใดของรายได้",
@@ -179,6 +180,14 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     }
   };
 
+  const mapTosuitTestResult = (score:number)=>{
+    const index = score - 1;
+    let resList = [0,0,0,0];
+    resList[index] = 1;
+
+    return resList;
+  }
+
   const handleSubmit = () => {
     let scoreCalculator = answers[2].score;
     const allAnswered = answers.every((ans, index) => {
@@ -216,19 +225,20 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     // console.log(totalScore)
     // console.log(suitTestDone)
     if (allAnswered) {
-      const suitTestResult = answers.map((item: any) => ({
-        id: item.questionIndex,
-        ans: item.questionIndex === 2 ? item.listOfBooleanScore : item.score,
-        type: item.questionIndex === 2 ? 2 : 1,
-        quiz: 1,
+      const suitTestCalculate = answers.map((item: any) => ({
+        // id: item.questionIndex,
+        ans: item.questionIndex === 2 ? item.listOfBooleanScore : mapTosuitTestResult(item.score),
+        // type: item.questionIndex === 2 ? 2 : 1,
+        // quiz: 1,
       }));
       let body = {
         cid: localStorage.getItem("cid"),
         investorTypeRisk: investorTypeTemp,
         level: giveGrade(scoreCalculator),
         totalScore: scoreCalculator,
-        suitTestResult: { answer: { ...suitTestResult } },
+        suitTestResult: { answer: { ...suitTestCalculate } },
       };
+      suitTestResult(body)
       console.log(body);
     } else {
       alert("Do suit test first.");
