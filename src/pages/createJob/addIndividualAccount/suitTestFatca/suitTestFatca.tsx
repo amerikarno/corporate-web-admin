@@ -16,7 +16,7 @@ export default function SuitTestFatca() {
 
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
-  const [fatcaInfo, setFatcaInfo] = useState<string | boolean[]>("");
+  const [fatcaInfo, setFatcaInfo] = useState<string | number[]>("");
   const [checkboxStates, setCheckboxStates] = useState<boolean[]>(
     new Array(8).fill(false)
   );
@@ -24,8 +24,12 @@ export default function SuitTestFatca() {
   const handleCheckboxChange = (index: number) => {
     const updatedCheckboxStates = [...checkboxStates];
     updatedCheckboxStates[index] = !updatedCheckboxStates[index];
+
+    //change from true to 1 and false to 0
+    const numericCheckboxStates = updatedCheckboxStates.map(state => state ? 1 : 0);
+    console.log(numericCheckboxStates)
     setCheckboxStates(updatedCheckboxStates);
-    setFatcaInfo(updatedCheckboxStates);
+    setFatcaInfo(numericCheckboxStates);
   };
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [knowLedgeTestSuccess, setKnowLedgeTestSuccess] = useState(false);

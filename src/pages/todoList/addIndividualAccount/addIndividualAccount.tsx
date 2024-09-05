@@ -89,30 +89,42 @@ export default function AddIndividualAccount() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const choosedTitle = e.target.value;
     console.log(choosedTitle)
-    if (choosedTitle === "นาย") {
+    if(choosedTitle === "นาย"){
       setThTitle("นาย")
       setEngTitle("Mr.")
+      setValue("thTitle","นาย")
+      setValue("engTitle","Mr.")
     }
-    else if (choosedTitle === "นาง") {
+    else if(choosedTitle === "นาง"){
       setThTitle("นาง")
       setEngTitle("Mrs.")
+      setValue("thTitle","นาง")
+      setValue("engTitle","Mrs.")
     }
-    else if (choosedTitle === "นางสาว") {
+    else if(choosedTitle === "นางสาว"){
       console.log("go to this")
       setThTitle("นางสาว")
       setEngTitle("Miss.")
+      setValue("thTitle","นางสาว")
+      setValue("engTitle","Miss.")
     }
-    else if (choosedTitle === "Mr.") {
+    else if(choosedTitle === "Mr."){
       setThTitle("นาย")
       setEngTitle("Mr.")
+      setValue("thTitle","นาย")
+      setValue("engTitle","Mr.")
     }
-    else if (choosedTitle === "Mrs.") {
+    else if(choosedTitle === "Mrs."){
       setThTitle("นาง")
       setEngTitle("Mrs.")
+      setValue("thTitle","นาง")
+      setValue("engTitle","Mrs.")
     }
-    else if (choosedTitle === "Miss.") {
+    else if(choosedTitle === "Miss."){
       setThTitle("นางสาว")
       setEngTitle("Miss.")
+      setValue("thTitle","นางสาว")
+      setValue("engTitle","Miss.")
     }
   }
 

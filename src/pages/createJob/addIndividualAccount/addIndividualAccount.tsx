@@ -24,6 +24,7 @@ export default function AddIndividualAccount() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TIndividualAccount>({
     resolver: zodResolver(individualAccountSchema),
@@ -38,27 +39,39 @@ export default function AddIndividualAccount() {
     if(choosedTitle === "นาย"){
       setThTitle("นาย")
       setEngTitle("Mr.")
+      setValue("thTitle","นาย")
+      setValue("engTitle","Mr.")
     }
     else if(choosedTitle === "นาง"){
       setThTitle("นาง")
       setEngTitle("Mrs.")
+      setValue("thTitle","นาง")
+      setValue("engTitle","Mrs.")
     }
     else if(choosedTitle === "นางสาว"){
       console.log("go to this")
       setThTitle("นางสาว")
       setEngTitle("Miss.")
+      setValue("thTitle","นางสาว")
+      setValue("engTitle","Miss.")
     }
     else if(choosedTitle === "Mr."){
       setThTitle("นาย")
       setEngTitle("Mr.")
+      setValue("thTitle","นาย")
+      setValue("engTitle","Mr.")
     }
     else if(choosedTitle === "Mrs."){
       setThTitle("นาง")
       setEngTitle("Mrs.")
+      setValue("thTitle","นาง")
+      setValue("engTitle","Mrs.")
     }
     else if(choosedTitle === "Miss."){
       setThTitle("นางสาว")
       setEngTitle("Miss.")
+      setValue("thTitle","นางสาว")
+      setValue("engTitle","Miss.")
     }
   }
   const navigate = useNavigate();
