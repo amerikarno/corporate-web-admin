@@ -24,11 +24,23 @@ export const createJobRoutes = () => {
         <Route path=":page" element={<AddIndividualAccount />} />
         <Route path="basicinfo" element={<BasicInfo />} />
         <Route path="suittestfatca" element={<SuitTestFatca />} />
-        <Route path="identityVerification" element={<IdentityVerification/>}/>
+        <Route path="identityVerification" element={<IdentityVerification />} />
         <Route path="liveness" element={<Liveness />} />
         <Route path="card-instructions" element={<CardWebcamInstructions />} />
         <Route path="card-capture" element={<IDCardCapture />} />
       </Route>
+      <Route
+        path="change-corporate-account"
+        element={<BlankPage name="change corporate account" />}
+      />
+      <Route
+        path="change-individual-account"
+        element={<BlankPage name="change individual account" />}
+      />
+      <Route
+        path="bank-deposite-withdraw"
+        element={<BlankPage name="Bank deposite/withdraw" />}
+      />
       <Route path="special-edd" element={<BlankPage name="Special EDD" />} />
       <Route
         path="adjust-cash-balance"
