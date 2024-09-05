@@ -20,8 +20,12 @@ type TCorporateTypeAndIncomeProps = {
   corporateCode?: string;
 };
 
-export function FormCorporateTypeAndIncome({}: // corporateCode,
-TCorporateTypeAndIncomeProps) {
+export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
+  const corp = useSelector((state: RootState) => state.editCorporate);
+  const dispatch = useDispatch();
+  const token = getCookies();
+  const navigate = useNavigate();
+
   const getFrom2Response = () => {
     const corpData = useSelector((state: RootState) => state.editCorporate);
     // console.log(corpData);
@@ -68,13 +72,10 @@ TCorporateTypeAndIncomeProps) {
     };
   };
 
-  const navigate = useNavigate();
   const [resFrom2, setResForm2] = useState<CorporateResponse>(
     getFrom2Response()
   );
-  const corp = useSelector((state: RootState) => state.editCorporate);
-  const dispatch = useDispatch();
-  const token = getCookies();
+
   useEffect(() => {
     const fetchCorporateTypeData = async () => {
       try {
@@ -252,6 +253,7 @@ TCorporateTypeAndIncomeProps) {
       }
     }
   };
+
   const handleCheckedBox = (
     e: React.ChangeEvent<HTMLInputElement>,
     key: string
@@ -369,6 +371,20 @@ TCorporateTypeAndIncomeProps) {
         let countrySrcIncome = copy(resFrom2);
         console.log(key, name, checked);
         if (countrySrcIncome && countrySrcIncome.corporateCountry) {
+          if (key === "isThailand") {
+            countrySrcIncome.corporateCountry.isThailand = checked;
+
+            setResForm2({ ...countrySrcIncome });
+          } else {
+            countrySrcIncome.corporateCountry.isThailand = checked
+              ? false
+              : true;
+            setResForm2({
+              ...countrySrcIncome,
+            });
+          }
+        } else if (!countrySrcIncome.corporateCountry) {
+          countrySrcIncome.corporateCountry = {};
           if (key === "isThailand") {
             countrySrcIncome.corporateCountry.isThailand = checked;
 
