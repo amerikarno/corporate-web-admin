@@ -193,7 +193,7 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "TO DO List",
     icon: "icon",
-    pages: [3000, 3015],
+    pages: [3000, 3016],
     children: [
       {
         label: "corporate account opening",
@@ -275,6 +275,16 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/todo-list/fx-rate-approve",
       //   pageId: 3013,
       // },
+      {
+        label: "individual account opening",
+        href: "/todo-list/added-individual-account",
+        pageId: 3012,
+      },
+      {
+        label: "orders/trades",
+        href: "/todo-list/orders-trades",
+        pageId: 3014,
+      },
     ],
   },
   {

@@ -1,8 +1,10 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import TransactionList from "@/pages/todoList/orderTrade/transactionList";
 import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
+import TodoIndividualAccount from "@/pages/todoList/addIndividualAccount/ToDoIndividualAccount";
 import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import { Route, Outlet } from "react-router-dom";
+import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/EditPageAddIndividualAccount";
 
 export const todoListRoutes = () => {
   return (
@@ -15,10 +17,13 @@ export const todoListRoutes = () => {
           <Route path=":page" element={<EditCorporateAccount />} />
         </Route>
       </Route>
-      <Route
-        path="individual-account-opening"
-        element={<BlankPage name="Individual Account Opening" />}
-      />
+      <Route path="added-individual-account" element={<Outlet />}>
+        <Route index element={<TodoIndividualAccount />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<EditPageAddIndividualAccount />} />
+          <Route path=":page" element={<EditPageAddIndividualAccount />} />
+        </Route>
+      </Route>
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}

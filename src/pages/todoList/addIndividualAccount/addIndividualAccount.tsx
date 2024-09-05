@@ -13,21 +13,45 @@ import { Button } from "@/components/ui/button";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-// import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
     return <UnAuthorize />;
   }
+  
+  const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TIndividualAccount>({
     resolver: zodResolver(individualAccountSchema),
   });
+
+  useEffect(()=>{
+    let fillData: TIndividualAccount = {
+      email: "getter",
+      citizenId: "getter",
+      thTitle: "นาย",
+      thName: "getter",
+      thSurname: "getter",
+      engTitle: "Mr.",
+      engName: "getter",
+      engSurname: "getter",
+      mobile: "getter",
+      // birthDate: data.birthDate,
+      mariageStatus: "Married",
+      laserCode: "getter",
+      agreement: true,
+    }
+    reset(fillData)
+  },[])
 
   const [thTitle,setThTitle] = useState("");
   const [engTitle,setEngTitle] = useState("");

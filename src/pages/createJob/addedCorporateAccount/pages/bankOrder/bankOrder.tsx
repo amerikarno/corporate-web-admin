@@ -210,7 +210,7 @@ export default function BankOrderEdit() {
   return (
     <div className="md:p-10 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
-        <h1 className="font-bold md:text-xl py-4">Bank Orders</h1>
+        <h1 className="font-bold md:text-xl py-4">Cash Deposit-Withdraw</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
             <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%] space-y-4">
@@ -253,7 +253,7 @@ export default function BankOrderEdit() {
               </div>
 
               <div className="flex pt-4 gap-4 items-center justify-center">
-                <div className="w-2/3 border-y-4"></div>
+                <div className="w-2/3 border-y-2 border-slate-800"></div>
               </div>
               <div className="flex flex-row justify-center text-xs md:text-base">
                 <div
@@ -299,7 +299,7 @@ export default function BankOrderEdit() {
       </Card>
       <Card className="p-4 w-full">
         <DataTable
-          title="Bank Order Lists"
+          title="Cash Deposit-Withdraw Lists"
           columns={columnsOrderTrade}
           data={orderTradeData.map((orderTrade, index) => ({
             ...orderTrade,
