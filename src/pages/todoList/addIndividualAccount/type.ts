@@ -44,8 +44,10 @@ export type SuitAnswer = {
     typeOfBusiness: string;
     positionName: string;
     salaryRange: string;
-    shortTermInvestment: boolean;
-    taxesInvestment: boolean;
+    shortTermInvestment?: boolean;
+    taxesInvestment?: boolean;
+    longTermInvestment?:boolean;
+    retireInvestment?:boolean;
     pageId?: number;
     update?: string;
     SuitTestResult: SuitTestResult;

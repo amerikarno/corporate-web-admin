@@ -163,6 +163,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/orders-trades",
         pageId: 2020,
       },
+      {
+        label:"cash deposit/withdraw",
+        href: "/create-job/cash-deposit-withdraw",
+        pageId:2021
+      }
       // {
       //   label: "whitelist(bank)",
       //   href: "/create-job/whitelist-bank",
@@ -255,6 +260,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/orders-trades",
         pageId: 3014,
       },
+      {
+        label:"cash deposit/withdraw",
+        href:"/todo-list/cash-deposit-withdraw",
+        pageId:3013
+      }
     ],
   },
   {

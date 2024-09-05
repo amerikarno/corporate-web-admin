@@ -14,8 +14,10 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { marriageStatus } from "@/constant/variables";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 
 
 export default function AddIndividualAccount() {
@@ -23,69 +25,100 @@ export default function AddIndividualAccount() {
     return <UnAuthorize />;
   }
   
-  const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
-
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<TIndividualAccount>({
     resolver: zodResolver(individualAccountSchema),
   });
 
-  useEffect(()=>{
-    let fillData: TIndividualAccount = {
-      email: "getter",
-      citizenId: "getter",
-      thTitle: "นาย",
-      thName: "getter",
-      thSurname: "getter",
-      engTitle: "Mr.",
-      engName: "getter",
-      engSurname: "getter",
-      mobile: "getter",
-      // birthDate: data.birthDate,
-      mariageStatus: "Married",
-      laserCode: "getter",
-      agreement: true,
-    }
-    reset(fillData)
-  },[])
+  const dispatch = useDispatch();
+  const token = getCookies();
 
-  const [thTitle,setThTitle] = useState("");
-  const [engTitle,setEngTitle] = useState("");
+  const fetchIndividualData = async (AccountID: string) => {
+    try {
+      console.log(AccountID);
+      const res = await axios.post("/api/v1/individual/list", { AccountID }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
+
+  useEffect(() => {
+    const cidValue = localStorage.getItem('cid');
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch]);
+
+  useEffect(() => {
+    if (individualData) {
+      console.log(individualData)
+      const fillData: TIndividualAccount = {
+        email: individualData.email || "",
+        citizenId: individualData.citizenId || "",
+        thTitle: individualData.thTitle || "",
+        thName: individualData.thName || "",
+        thSurname: individualData.thSurname || "",
+        engTitle: individualData.engTitle || "",
+        engName: individualData.engName || "",
+        engSurname: individualData.engSurname || "",
+        mobile: individualData.mobile || "",
+        birthDate: "",
+        mariageStatus: individualData.marriageStatus || "",
+        laserCode: individualData.laserCode || "",
+        agreement: true,
+      };
+      console.log(fillData)
+      reset(fillData);
+    }
+  }, [individualData, reset]);
+
+  const [thTitle, setThTitle] = useState("");
+  const [engTitle, setEngTitle] = useState("");
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const choosedTitle = e.target.value;
     console.log(choosedTitle)
-    if(choosedTitle === "นาย"){
+    if (choosedTitle === "นาย") {
       setThTitle("นาย")
       setEngTitle("Mr.")
     }
-    else if(choosedTitle === "นาง"){
+    else if (choosedTitle === "นาง") {
       setThTitle("นาง")
       setEngTitle("Mrs.")
     }
-    else if(choosedTitle === "นางสาว"){
+    else if (choosedTitle === "นางสาว") {
       console.log("go to this")
       setThTitle("นางสาว")
       setEngTitle("Miss.")
     }
-    else if(choosedTitle === "Mr."){
+    else if (choosedTitle === "Mr.") {
       setThTitle("นาย")
       setEngTitle("Mr.")
     }
-    else if(choosedTitle === "Mrs."){
+    else if (choosedTitle === "Mrs.") {
       setThTitle("นาง")
       setEngTitle("Mrs.")
     }
-    else if(choosedTitle === "Miss."){
+    else if (choosedTitle === "Miss.") {
       setThTitle("นางสาว")
       setEngTitle("Miss.")
     }
   }
+
   const navigate = useNavigate();
+
   const calculateAge = (birthDate: Date) => {
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
@@ -117,7 +150,7 @@ export default function AddIndividualAccount() {
         console.log(age);
         console.log("success", res, data);
 
-        navigate("/create-job/added-individual-account/basicinfo");
+        navigate("/todo-list/added-individual-account/edit/2");
         window.scrollTo(0, 0);
       }
     } catch (error) {

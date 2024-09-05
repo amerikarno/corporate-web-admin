@@ -24,9 +24,9 @@ export default function BankOrderEdit() {
   //   const [selectedCorporateCode, setSelectedCorporateCode] =
   //     useState<string>("");
   //   const [selectedTradingPair, setSelectedTradingPair] = useState<string>("");
-  //   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-  //     { corporateCode: number }[]
-  //   >([]);
+    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
+      { corporateCode: number }[]
+    >([]);
   const [choosedEditData, setChoosedEditData] = useState<TBankOrder>();
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
@@ -36,31 +36,31 @@ export default function BankOrderEdit() {
     (state) => state.orderTrade?.orderTrades || []
   ) as TBankOrder[];
 
-  //   const fetchCorporateCodes = async () => {
-  //     try {
-  //       const token = getCookies();
+    const fetchCorporateCodes = async () => {
+      try {
+        const token = getCookies();
 
-  //       const res = await axios.post(
-  //         "/api/v1/corporate/query/all",
-  //         {},
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       if (res.status === 200) {
-  //         const corporateCodes = res.data.map((item: any) => ({
-  //           corporateCode: item.CorporateCode,
-  //         }));
-  //         setFetchedCorporateCodes(corporateCodes);
-  //       } else {
-  //         console.log("Failed to fetch corporate codes");
-  //       }
-  //     } catch (error) {
-  //       console.log("Error fetching corporate codes:", error);
-  //     }
-  //   };
+        const res = await axios.post(
+          "/api/v1/corporate/query/all",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          const corporateCodes = res.data.map((item: any) => ({
+            corporateCode: item.CorporateCode,
+          }));
+          setFetchedCorporateCodes(corporateCodes);
+        } else {
+          console.log("Failed to fetch corporate codes");
+        }
+      } catch (error) {
+        console.log("Error fetching corporate codes:", error);
+      }
+    };
 
   //   const fetchOrderList = async () => {
   //     try {
@@ -125,6 +125,7 @@ export default function BankOrderEdit() {
       bankAccount: "",
       operations: "",
       orderValue: 0,
+      corporateCode: 0,
     };
     reset(orderListDatatoInputField);
     setBuySell(choosedEditData?.operations || "deposite");
@@ -146,33 +147,21 @@ export default function BankOrderEdit() {
 
   useEffect(() => {
     // fetchOrderList();
-    // fetchCorporateCodes();
+    fetchCorporateCodes();
   }, [reset]);
-
-  //   const handleCorporateCodeChange = (
-  //     event: React.ChangeEvent<HTMLInputElement>
-  //   ) => {
-  //     setSelectedCorporateCode(event.target.value);
-  //   };
-
-  //   const handleTradingPairChange = (
-  //     event: React.ChangeEvent<HTMLSelectElement>
-  //   ) => {
-  //     setSelectedTradingPair(event.target.value);
-  //   };
 
   const onSubmit = async (data: TBankOrder) => {
     let body: TBankOrder = {
       ...data,
       operations: buySell,
-      id: choosedEditData?.id,
+      // corporateCode: choosedEditData?.corporateCode || 0,
     };
     console.log(choosedEditData);
     console.log(body);
     try {
       const token = getCookies();
-      if (body.id) {
-        const res = await axios.post("/api/v1/transaction/order/edit", body, {
+      if (body.corporateCode && body.corporateCode !== 0) {
+        const res = await axios.post("/api/v1/transaction/bank/edit", body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -187,7 +176,7 @@ export default function BankOrderEdit() {
           console.log("edit failed");
         }
       } else {
-        const res = await axios.post("/api/v1/transaction/order/create", body, {
+        const res = await axios.post("/api/v1/transaction/bank/create", body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -210,12 +199,35 @@ export default function BankOrderEdit() {
   return (
     <div className="md:p-10 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
-        <h1 className="font-bold md:text-xl py-4">Cash Deposit-Withdraw</h1>
+        <h1 className="font-bold md:text-xl py-4">Cash Deposit/Withdraw</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
             <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%] space-y-4">
-              <div className="flex flex-row space-x-4 justify-center">
-                <div className="md:w-2/3 w-1/2">
+              <div className="flex justify-center ">
+                <div className="w-2/3">
+                <Input
+                      {...register("corporateCode")}
+                      label="Corporate Code"
+                      id="corporateCode"
+                      disabled={isSubmitting}
+                      list="corporateCodes"
+                    />
+                    {errors.corporateCode && (
+                      <p className="text-red-500 text-sm px-2">
+                        {errors.corporateCode.message}
+                      </p>
+                    )}
+                    <datalist id="corporateCodes">
+                      {mockedCorporateCodes.map((code, index) => (
+                        <option key={index} value={code.corporateCode}>
+                          {code.corporateCode}
+                        </option>
+                      ))}
+                    </datalist>
+                </div>
+              </div>
+              <div className="flex justify-center ">
+                <div className="w-2/3 flex flex-col">
                   <select
                     {...register("bankName")}
                     className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
@@ -236,8 +248,8 @@ export default function BankOrderEdit() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-row space-x-4 justify-center">
-                <div className="md:w-2/3 w-1/2">
+              <div className="flex justify-center ">
+                <div className="w-2/3">
                   <Input
                     {...register("bankAccount")}
                     label="Bank Account ID"
@@ -253,7 +265,7 @@ export default function BankOrderEdit() {
               </div>
 
               <div className="flex pt-4 gap-4 items-center justify-center">
-                <div className="w-2/3 border-y-2 border-slate-800"></div>
+                <div className="w-2/3 border-slate-800"></div>
               </div>
               <div className="flex flex-row justify-center text-xs md:text-base">
                 <div
@@ -273,7 +285,7 @@ export default function BankOrderEdit() {
                   Withdraw
                 </div>
               </div>
-              <div className="flex pt-4 gap-4 justify-center ">
+              <div className="flex justify-center ">
                 <div className="w-2/3 space-y-4">
                   <Input
                     {...register("orderValue")}
@@ -299,7 +311,7 @@ export default function BankOrderEdit() {
       </Card>
       <Card className="p-4 w-full">
         <DataTable
-          title="Cash Deposit-Withdraw Lists"
+          title="Cash Deposit/Withdraw Lists"
           columns={columnsOrderTrade}
           data={orderTradeData.map((orderTrade, index) => ({
             ...orderTrade,

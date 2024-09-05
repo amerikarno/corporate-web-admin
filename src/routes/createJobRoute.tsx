@@ -84,7 +84,7 @@ export const createJobRoutes = () => {
         element={<BlankPage name="Airdrop Setting" />}
       />
       <Route path="orders-trades" element={<OrderTrade />} />
-      <Route path="bank-orders" element={<BankOrderEdit />} />
+      <Route path="cash-deposit-withdraw" element={<BankOrderEdit />} />
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}
