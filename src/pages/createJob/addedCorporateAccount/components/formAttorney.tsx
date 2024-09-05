@@ -107,7 +107,7 @@ export function FormAttorney({
       
       let body: TAttorney = {
         ...formData,
-        types: 201,
+        types: 302,
         addresses: data.addresses,
         fullNames: data.fullNames,
         corporateCode: corporateCode,

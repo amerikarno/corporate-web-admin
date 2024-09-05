@@ -79,7 +79,7 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     let tmp = copy(registeredCountryPrimaryCountryOperation);
 
     if (name === "Thailand") {
-      tmp.registered = checked ? name : "";
+      tmp.registered = "";
       tmp.isRegisteredThailand = checked;
       tmp.isRegisteredOther = false;
     } else if (name === "Others Countries (Please Specify)") {
@@ -108,7 +108,7 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
     if (name === "Thailand") {
-      tmp.primary = checked ? name : "";
+      tmp.primary = "";
       tmp.isPrimaryCountry = checked;
       tmp.isPrimaryOther = false;
     } else {

@@ -73,6 +73,26 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/added-individual-account",
         pageId: 2002,
       },
+      {
+        label: "change corporate account",
+        href: "/create-job/change-corporate-account",
+        pageId: 2003,
+      },
+      {
+        label: "change individual account",
+        href: "/create-job/change-individual-account",
+        pageId: 2004,
+      },
+      {
+        label: "orders/trades",
+        href: "/create-job/orders-trades",
+        pageId: 2005,
+      },
+      {
+        label: "bank deposite/withdraw",
+        href: "/create-job/bank-deposite-withdraw",
+        pageId: 2006,
+      },
       // {
       //   label: "special edd",
       //   href: "/create-job/special-edd",
@@ -158,11 +178,6 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/create-job/airdrop-setting",
       //   pageId: 2019,
       // },
-      {
-        label: "orders/trades",
-        href: "/create-job/orders-trades",
-        pageId: 2020,
-      },
       // {
       //   label: "whitelist(bank)",
       //   href: "/create-job/whitelist-bank",
@@ -184,6 +199,21 @@ export const urlConfig: TUrlConfig[] = [
         label: "corporate account opening",
         href: "/todo-list/corporate-account-opening",
         pageId: 3001,
+      },
+      {
+        label: "individual account opening",
+        href: "/todo-list/individual-account-opening",
+        pageId: 3002,
+      },
+      {
+        label: "orders/trades",
+        href: "/todo-list/orders-trades",
+        pageId: 3003,
+      },
+      {
+        label: "bank deposite/withdraw",
+        href: "/todo-list/bank-deposite-withdraw",
+        pageId: 3004,
       },
       // {
       //   label: "individual account opening",
@@ -245,11 +275,6 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/todo-list/fx-rate-approve",
       //   pageId: 3013,
       // },
-      {
-        label: "orders/trades",
-        href: "/todo-list/orders-trades",
-        pageId: 3014,
-      },
     ],
   },
   {
