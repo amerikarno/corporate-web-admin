@@ -1,5 +1,5 @@
 import BlankPage from "@/pages/blankPages/blankPage";
-import TransactionList from "@/pages/todoList/transactionList/transactionList";
+import TransactionList from "@/pages/todoList/orderTrade/transactionList";
 import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
 import TodoIndividualAccount from "@/pages/todoList/addIndividualAccount/ToDoIndividualAccount";
 import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
@@ -18,7 +18,7 @@ export const todoListRoutes = () => {
           <Route path=":page" element={<EditCorporateAccount />} />
         </Route>
       </Route>
-      <Route path="added-individual-account" element={<Outlet />}>
+      <Route path="individual-account-opening" element={<Outlet />}>
         <Route index element={<TodoIndividualAccount />} />
         <Route path="edit" element={<Outlet />}>
           <Route index element={<EditPageAddIndividualAccount />} />
@@ -52,7 +52,10 @@ export const todoListRoutes = () => {
         element={<BlankPage name="FX Rate Approve" />}
       />
       <Route path="orders-trades" element={<TransactionList />} />
-      <Route path="cash-deposit-withdraw" element={<BankTransactionList />} />
+      <Route
+        path="bank-deposite-withdraw"
+        element={<BlankPage name="bank deposite withdraw" />}
+      />
     </Route>
   );
 };

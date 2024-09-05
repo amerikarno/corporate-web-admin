@@ -8,8 +8,6 @@ import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import CorporateAccountOpenning from "./pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
-import { customerRoutes } from "./routes/customerRoutes";
-import { thirdPartyRoutes } from "./routes/thirdPartyRoute";
 import { reportsRoutes } from "./routes/reportRoute";
 import { systemManagementRoutes } from "./routes/systemManagementRoute";
 import { createJobRoutes } from "./routes/createJobRoute";
@@ -42,8 +40,6 @@ root.render(
                 {todoListRoutes()}
                 {enquireRoutes()}
                 {reportsRoutes()}
-                {thirdPartyRoutes()}
-                {customerRoutes()}
               </Route>
             </Routes>
           </BrowserRouter>

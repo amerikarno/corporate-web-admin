@@ -1,16 +1,11 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrder/bankOrder";
-import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
-import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
-import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
-import IdentityVerification from "@/pages/createJob/addIndividualAccount/identityVerification/identityVerification";
-import IDCardCapture from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/idCardCapture";
-import { CardWebcamInstructions } from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/webCamInstructions";
-import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
+import OrderTrade from "@/pages/createJob/orderTrade/orderTrade";
 import PageAddIndividualAccount from "@/pages/createJob/addIndividualAccount/PageAddIndividualAccount";
-import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 import { Outlet, Route } from "react-router-dom";
+import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/changeCorporateAccount";
+import { EditCorporateAccount } from "@/pages/createJob/changeCorporateAccount/edit/editCorporateAccount";
 
 export const createJobRoutes = () => {
   return (
@@ -23,13 +18,22 @@ export const createJobRoutes = () => {
       <Route path="added-individual-account" element={<Outlet />}>
         <Route index element={<PageAddIndividualAccount />} />
         <Route path=":page" element={<PageAddIndividualAccount />} />
-        {/* <Route path="basicinfo" element={<BasicInfo />} />
-        <Route path="suittestfatca" element={<SuitTestFatca />} />
-        <Route path="identityVerification" element={<IdentityVerification/>}/>
-        <Route path="liveness" element={<Liveness />} />
-        <Route path="card-instructions" element={<CardWebcamInstructions />} />
-        <Route path="card-capture" element={<IDCardCapture />} /> */}
       </Route>
+      <Route path="change-corporate-account" element={<Outlet />}>
+        <Route index element={<ChangeCorporateAccountOpenning />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<EditCorporateAccount />} />
+          <Route path=":page" element={<EditCorporateAccount />} />
+        </Route>
+      </Route>
+      <Route
+        path="change-individual-account"
+        element={<BlankPage name="change individual account" />}
+      />
+      <Route
+        path="bank-deposite-withdraw"
+        element={<BlankPage name="Bank deposite/withdraw" />}
+      />
       <Route path="special-edd" element={<BlankPage name="Special EDD" />} />
       <Route
         path="adjust-cash-balance"
