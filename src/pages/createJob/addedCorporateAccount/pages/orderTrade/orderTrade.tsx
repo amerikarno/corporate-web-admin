@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 
 export default function OrderTradeEdit() {
-  if (!isAllowedPage(2020)) {
+  if (!isAllowedPage(2005)) {
     return <UnAuthorize />;
   }
 
@@ -173,7 +173,7 @@ export default function OrderTradeEdit() {
         const cur = choosedEditData.pair.split("/");
         setSellCurrency(cur[1]);
       }
-    }else{
+    } else {
       setBuySell("buy");
     }
 

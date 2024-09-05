@@ -7,8 +7,13 @@ import { TTransaction } from "./constant/type";
 import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 
 const TransactionList = () => {
+  if (!isAllowedPage(3003)) {
+    return <UnAuthorize />;
+  }
   const user = useSelector((state: RootState) => state.user);
   console.log(user.user?.roles);
   const [listOfTransaction, setFetchedListOfTransaction] = useState<
