@@ -24,7 +24,7 @@ export function FormCorporateTypeAndIncome({}: // corporateCode,
 TCorporateTypeAndIncomeProps) {
   const getFrom2Response = () => {
     const corpData = useSelector((state: RootState) => state.editCorporate);
-    console.log(corpData);
+    // console.log(corpData);
     const {
       jrType,
       buType,
@@ -42,12 +42,12 @@ TCorporateTypeAndIncomeProps) {
       ...invType,
       ...countrySrcOfIncomeTh,
     };
-    console.log(res);
+    // console.log(JSON.stringify(res, null, 2));
     return res;
   };
 
   const getCheckedLabel = (corpData: TCorporateData) => {
-    console.log(corpData);
+    // console.log(JSON.stringify(corpData, null, 2));
     const jrType = corpData?.CorporateTypes;
     const buType = corpData?.BusinessTypes;
     const srcOfIncome = corpData?.SourceOfIncomes;
@@ -105,8 +105,8 @@ TCorporateTypeAndIncomeProps) {
       ...corp.CountrySourceIncomes?.[0],
     });
   }, [dispatch, corp.CorporateCode, token]);
+
   const setStoreData = (data: CorporateResponse) => {
-    console.log("go to this");
     let tmp = copy(corp);
     console.log(tmp);
     console.log(data);
@@ -212,8 +212,9 @@ TCorporateTypeAndIncomeProps) {
     dispatch(setCorporateData(tmp));
     setResForm2(data);
   };
+
   const saveJuristicType = async (data: CorporateResponse | null) => {
-    console.log(data?.corporateCountry?.isThailand);
+    // console.log(data?.corporateCountry?.isThailand);
     if (data !== null) {
       let body = {
         ...data,
@@ -366,7 +367,6 @@ TCorporateTypeAndIncomeProps) {
 
       case "countrySourceOfIncome":
         let countrySrcIncome = copy(resFrom2);
-        //console.log(countrySrcIncome);
         console.log(key, name, checked);
         if (countrySrcIncome && countrySrcIncome.corporateCountry) {
           if (key === "isThailand") {
@@ -382,6 +382,7 @@ TCorporateTypeAndIncomeProps) {
             });
           }
         }
+        console.log(countrySrcIncome);
         break;
 
       case "investmentObjective":
@@ -812,7 +813,12 @@ TCorporateTypeAndIncomeProps) {
         </div>
 
         <div className="p-4 flex justify-end relative">
-          <Button className="absolute top-20 right-0 w-24 " onClick={(e) => onSubmit(e)}>Next Form</Button>
+          <Button
+            className="absolute top-20 right-0 w-24 "
+            onClick={(e) => onSubmit(e)}
+          >
+            Next Form
+          </Button>
         </div>
       </Card>
     </>
