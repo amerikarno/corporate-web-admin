@@ -8,6 +8,7 @@ import IdentityVerification from "@/pages/createJob/addIndividualAccount/identit
 import IDCardCapture from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/idCardCapture";
 import { CardWebcamInstructions } from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/webCamInstructions";
 import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
+import PageAddIndividualAccount from "@/pages/createJob/addIndividualAccount/PageAddIndividualAccount";
 import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 import { Outlet, Route } from "react-router-dom";
 
@@ -20,14 +21,14 @@ export const createJobRoutes = () => {
         <Route path=":page" element={<CorporateAccountOpenning />} />
       </Route>
       <Route path="added-individual-account" element={<Outlet />}>
-        <Route index element={<AddIndividualAccount />} />
-        <Route path=":page" element={<AddIndividualAccount />} />
-        <Route path="basicinfo" element={<BasicInfo />} />
+        <Route index element={<PageAddIndividualAccount />} />
+        <Route path=":page" element={<PageAddIndividualAccount />} />
+        {/* <Route path="basicinfo" element={<BasicInfo />} />
         <Route path="suittestfatca" element={<SuitTestFatca />} />
         <Route path="identityVerification" element={<IdentityVerification/>}/>
         <Route path="liveness" element={<Liveness />} />
         <Route path="card-instructions" element={<CardWebcamInstructions />} />
-        <Route path="card-capture" element={<IDCardCapture />} />
+        <Route path="card-capture" element={<IDCardCapture />} /> */}
       </Route>
       <Route path="special-edd" element={<BlankPage name="Special EDD" />} />
       <Route
