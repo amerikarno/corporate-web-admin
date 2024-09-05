@@ -17,7 +17,7 @@ export const todoListRoutes = () => {
           <Route path=":page" element={<EditCorporateAccount />} />
         </Route>
       </Route>
-      <Route path="added-individual-account" element={<Outlet />}>
+      <Route path="individual-account-opening" element={<Outlet />}>
         <Route index element={<TodoIndividualAccount />} />
         <Route path="edit" element={<Outlet />}>
           <Route index element={<EditPageAddIndividualAccount />} />

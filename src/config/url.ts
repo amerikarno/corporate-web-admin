@@ -200,6 +200,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/corporate-account-opening",
         pageId: 3001,
       },
+      // {
+      //   label: "individual account opening",
+      //   href: "/todo-list/individual-account-opening",
+      //   pageId: 3002,
+      // },
       {
         label: "individual account opening",
         href: "/todo-list/individual-account-opening",
@@ -215,6 +220,7 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/bank-deposite-withdraw",
         pageId: 3004,
       },
+
       // {
       //   label: "individual account opening",
       //   href: "/todo-list/individual-account-opening",
@@ -275,16 +281,6 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/todo-list/fx-rate-approve",
       //   pageId: 3013,
       // },
-      {
-        label: "individual account opening",
-        href: "/todo-list/added-individual-account",
-        pageId: 3012,
-      },
-      {
-        label: "orders/trades",
-        href: "/todo-list/orders-trades",
-        pageId: 3014,
-      },
     ],
   },
   {
