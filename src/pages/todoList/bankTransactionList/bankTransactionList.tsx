@@ -146,10 +146,10 @@ const BankTransactionList = () => {
         setFetchedListOfTransaction(transactions);
         // console.log(transactions);
       } else {
-        console.error("Failed to fetch order list codes");
+        console.error("Failed to fetch bank list codes");
       }
     } catch (error) {
-      console.error("Error fetching order list:", error);
+      console.error("Error fetching bank list:", error);
     }
   };
 

@@ -368,7 +368,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
               <div className="">
                 <span className="font-bold">ผลคะแนนที่ทำได้</span>
               </div>
-              <svg className="w-3/4 h-full" viewBox="0 0 100 100">
+              <svg className="w-1/3 md:w-3/4 h-full" viewBox="0 0 100 100">
                 <>
                   <circle
                     className="text-gray-200 stroke-current"
