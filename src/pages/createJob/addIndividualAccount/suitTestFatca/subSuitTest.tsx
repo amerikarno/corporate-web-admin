@@ -101,14 +101,51 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
       ],
     },
   ];
+  const fetchedData = [[0, 0, 0, 0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0]];
+  const initialAnswers = questions.map((_, index) => {
+    if (fetchedData) {
+      const answerFromData = fetchedData[index];
+      let answerValue: string | number[] = "";
+      let score = 0;
 
-  const [answers, setAnswers] = useState<Answer[]>(
-    questions.map((_, index) => ({
-      questionIndex: index,
-      answer: index === 2 ? [0, 0, 0, 0] : "",
-      score: 0,
-    }))
-  );
+      if (answerFromData && index === 2) {
+        // Handling the checkbox case for questionIndex 2
+        answerValue = answerFromData;
+        const selectedChoices = answerFromData
+          .map((val, idx) => (val === 1 ? idx + 1 : 0))
+          .filter(val => val !== 0);
+        score = Math.max(...selectedChoices);
+      } else if (answerFromData) {
+        const selectedChoiceIndex = answerFromData.findIndex((choice) => choice === 1);
+        if (selectedChoiceIndex !== -1) {
+          score = selectedChoiceIndex + 1;
+          answerValue = questions[index].choices[selectedChoiceIndex];
+        }
+      }
+
+      return {
+        questionIndex: index,
+        answer: answerValue,
+        score,
+      };
+    } else {
+      return {
+        questionIndex: index,
+        answer: index === 2 ? [0, 0, 0, 0] : "",
+        score: 0,
+      };
+    }
+  });
+
+  const [answers, setAnswers] = useState<Answer[]>(initialAnswers);
+
+  // const [answers, setAnswers] = useState<Answer[]>(
+  //   questions.map((_, index) => ({
+  //     questionIndex: index,
+  //     answer: index === 2 ? [0, 0, 0, 0] : "",
+  //     score: 0,
+  //   }))
+  // );
   const [totalScore, setTotalScore] = useState(0);
   const [investorType, setInvestorType] = useState("");
   const [suitTestDone, setSuitTestDone] = useState(false);
@@ -189,6 +226,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
   }
 
   const handleSubmit = () => {
+    console.log(answers);
     let scoreCalculator = answers[2].score;
     const allAnswered = answers.every((ans, index) => {
       if (index === 2) {
@@ -227,7 +265,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
     if (allAnswered) {
       const suitTestCalculate = answers.map((item: any) => ({
         // id: item.questionIndex,
-        ans: item.questionIndex === 2 ? item.listOfBooleanScore : mapTosuitTestResult(item.score),
+        ans: item.questionIndex === 2 ? item.answer : mapTosuitTestResult(item.score),
         // type: item.questionIndex === 2 ? 2 : 1,
         // quiz: 1,
       }));

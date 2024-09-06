@@ -90,7 +90,7 @@ export default function IdentityVerification() {
         </div>
         <div className="flex md:flex-row flex-col md:space-x-4 items-center">
           <span className="flex items-center"><FaPhoneAlt />020884666</span>
-          <span className="flex items-center"><MdEmail />callcenter@finansiada.com</span>
+          <span className="flex items-center"><MdEmail />callcenter@email.com</span>
         </div>  
       </div>
     </div>

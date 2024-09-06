@@ -12,7 +12,7 @@ function login() {
         <section className="mx-auto w-1/3 rounded-xl max-w-lg border-primary border-2 py-10 px-5">
           <div className="divide-y divide-solid d space-y-10">
             <h1 className="text-center font-bold text-3xl">
-              FDA Corporate Admin
+              Corporate Admin
             </h1>
             <LoginForm />
           </div>
