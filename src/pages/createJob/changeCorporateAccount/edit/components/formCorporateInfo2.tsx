@@ -381,6 +381,20 @@ TCorporateTypeAndIncomeProps) {
               ...countrySrcIncome,
             });
           }
+        } else if (!countrySrcIncome.corporateCountry) {
+          countrySrcIncome.corporateCountry = {};
+          if (key === "isThailand") {
+            countrySrcIncome.corporateCountry.isThailand = checked;
+
+            setResForm2({ ...countrySrcIncome });
+          } else {
+            countrySrcIncome.corporateCountry.isThailand = checked
+              ? false
+              : true;
+            setResForm2({
+              ...countrySrcIncome,
+            });
+          }
         }
         break;
 
