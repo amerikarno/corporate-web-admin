@@ -53,7 +53,7 @@ export default function Header() {
       <div className="flex w-[270px] justify-start pl-4 sm:pl-0 sm:justify-center items-center">
         <div id="logo" className="hidden sm:inline">
           {/* <img src={Logo} alt="logo" /> */}
-          <div className="font-bold headerlogo text-xl">Digital Asset</div>
+          <div className="font-bold text-xl headerlogo">Digital Asset</div>
         </div>
         <div id="hamburger-menu" className="md:hidden ">
           <Sheet>

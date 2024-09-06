@@ -367,22 +367,18 @@ TCorporateTypeAndIncomeProps) {
 
       case "countrySourceOfIncome":
         let countrySrcIncome = copy(resFrom2);
-        console.log(key, name, checked);
-        if (countrySrcIncome && countrySrcIncome.corporateCountry) {
-          if (key === "isThailand") {
-            countrySrcIncome.corporateCountry.isThailand = checked;
-
-            setResForm2({ ...countrySrcIncome });
-          } else {
-            countrySrcIncome.corporateCountry.isThailand = checked
-              ? false
-              : true;
-            setResForm2({
-              ...countrySrcIncome,
-            });
-          }
+  
+        if (!countrySrcIncome.corporateCountry) {
+          countrySrcIncome.corporateCountry = {};
         }
-        console.log(countrySrcIncome);
+  
+        if (key === "isThailand") {
+          countrySrcIncome.corporateCountry.isThailand = checked;
+        } else {
+          countrySrcIncome.corporateCountry.isThailand = !checked;
+        }
+  
+        setResForm2({ ...countrySrcIncome });
         break;
 
       case "investmentObjective":
