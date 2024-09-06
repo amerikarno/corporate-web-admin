@@ -9,7 +9,7 @@ import { RootState } from "@/app/store";
 
 type TTransaction ={
     id: string;
-    corporateCode: number;
+    accountId: number;
     bankName: string;
     bankAccount:string;
     operations?:string;
@@ -113,7 +113,7 @@ const BankTransactionList = () => {
   const fetchListOfTransaction = async () => {
     try {
       const token = getCookies();
-      const res = await axios.get("/api/v1/transaction/order/get", {
+      const res = await axios.get("/api/v1/transaction/bank/get/individual", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -135,7 +135,7 @@ const BankTransactionList = () => {
             // console.log(item);
             return {
                 id: item.id,
-                corporateCode: item.corporateCode,
+                accountId: item.accountId,
                 bankName: item.bankName,
                 bankAccount: item.bankAccount,
                 operations: item.operations,
@@ -187,7 +187,7 @@ const BankTransactionList = () => {
     },
     {
       name: "Corporate Code",
-      selector: (row: TTransaction) => row.corporateCode || "",
+      selector: (row: TTransaction) => row.accountId || "",
     },
     {
       name: "Bank Name",

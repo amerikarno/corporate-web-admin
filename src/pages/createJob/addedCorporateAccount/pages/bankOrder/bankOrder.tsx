@@ -11,15 +11,16 @@ import axios from "@/api/axios";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { bank } from "@/constant/variables";
+import { setBankOrder } from "@/features/bankOrder/bankOrdersSlice";
 
 export default function BankOrderEdit() {
   if (!isAllowedPage(2020)) {
     return <UnAuthorize />;
   }
-
+  const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("depostie");
   //   const [selectedCorporateCode, setSelectedCorporateCode] =
   //     useState<string>("");
@@ -32,8 +33,8 @@ export default function BankOrderEdit() {
     setChoosedEditData(undefined);
   };
 
-  const orderTradeData: TBankOrder[] = useSelector<RootState>(
-    (state) => state.orderTrade?.orderTrades || []
+  const orderBank: TBankOrder[] = useSelector<RootState>(
+    (state) => state.bankOrder?.bankOrders || []
   ) as TBankOrder[];
 
     const fetchCorporateCodes = async () => {
@@ -62,33 +63,37 @@ export default function BankOrderEdit() {
       }
     };
 
-  //   const fetchOrderList = async () => {
-  //     try {
-  //       const token = getCookies();
-  //       const res = await axios.get("/api/v1/transaction/order/get", {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       if (res.status === 200) {
-  //         console.log(res.data);
-  //         const orderTrades = res.data || [];
+    const fetchOrderList = async () => {
+      try {
+        const token = getCookies();
+        const res = await axios.get("/api/v1/transaction/bank/get/individual", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          console.log(res.data);
+          const orderTrades = res.data || [];
 
-  //         const uniqueOrderTrades = orderTrades.filter((order:any, index:any, self:any) =>
-  //           index === self.findIndex((t:any) => t.id === order.id)
-  //         );
+          const uniqueOrderTrades = orderTrades.filter((order:any, index:any, self:any) =>
+            index === self.findIndex((t:any) => t.id === order.id)
+          );
 
-  //         dispatch(setOrderTrades(uniqueOrderTrades));
-  //         console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
-  //       } else {
-  //         console.log("Failed to fetch orderTrade");
-  //       }
-  //     } catch (error) {
-  //       console.log("Fetching order list of this role error!", error);
-  //     }
-  //   };
+          dispatch(setBankOrder(uniqueOrderTrades));
+          console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
+        } else {
+          console.log("Failed to fetch orderTrade");
+        }
+      } catch (error) {
+        console.log("Fetching order list of this role error!", error);
+      }
+    };
 
   const columnsOrderTrade: TableColumn<TBankOrder>[] = [
+    {
+      name: "CorporateCode",
+      selector: (row: TBankOrder) => row.accountId || "",
+    },
     {
       name: "Bank Name",
       selector: (row: TBankOrder) => row.bankName || "",
@@ -125,7 +130,7 @@ export default function BankOrderEdit() {
       bankAccount: "",
       operations: "",
       orderValue: 0,
-      corporateCode: 0,
+      accountId: 0,
     };
     reset(orderListDatatoInputField);
     setBuySell(choosedEditData?.operations || "deposite");
@@ -146,7 +151,7 @@ export default function BankOrderEdit() {
   });
 
   useEffect(() => {
-    // fetchOrderList();
+    fetchOrderList();
     fetchCorporateCodes();
   }, [reset]);
 
@@ -154,13 +159,13 @@ export default function BankOrderEdit() {
     let body: TBankOrder = {
       ...data,
       operations: buySell,
-      // corporateCode: choosedEditData?.corporateCode || 0,
+      id:choosedEditData?.id || "",
     };
     console.log(choosedEditData);
     console.log(body);
     try {
       const token = getCookies();
-      if (body.corporateCode && body.corporateCode !== 0) {
+      if (body.accountId && body.accountId !== 0) {
         const res = await axios.post("/api/v1/transaction/bank/edit", body, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -171,7 +176,7 @@ export default function BankOrderEdit() {
           clearChoosedEditData();
           //   setSelectedCorporateCode("");
           console.log("edit successful");
-          //   fetchOrderList();
+            fetchOrderList();
         } else {
           console.log("edit failed");
         }
@@ -186,7 +191,7 @@ export default function BankOrderEdit() {
           clearChoosedEditData();
           //   setSelectedCorporateCode("");
           console.log("save successful");
-          //   fetchOrderList();
+          fetchOrderList();
         } else {
           console.log("save failed");
         }
@@ -206,15 +211,15 @@ export default function BankOrderEdit() {
               <div className="flex justify-center ">
                 <div className="w-2/3">
                 <Input
-                      {...register("corporateCode")}
+                      {...register("accountId")}
                       label="Corporate Code"
-                      id="corporateCode"
+                      id="accountId"
                       disabled={isSubmitting}
                       list="corporateCodes"
                     />
-                    {errors.corporateCode && (
+                    {errors.accountId && (
                       <p className="text-red-500 text-sm px-2">
-                        {errors.corporateCode.message}
+                        {errors.accountId.message}
                       </p>
                     )}
                     <datalist id="corporateCodes">
@@ -313,7 +318,7 @@ export default function BankOrderEdit() {
         <DataTable
           title="Cash Deposit/Withdraw Lists"
           columns={columnsOrderTrade}
-          data={orderTradeData.map((orderTrade, index) => ({
+          data={orderBank.map((orderTrade, index) => ({
             ...orderTrade,
             key: index,
           }))}

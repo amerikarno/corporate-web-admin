@@ -3,5 +3,6 @@ export type TBankOrder = {
     bankAccount: string;
     operations? : string;
     orderValue:number;
-    corporateCode:number;
+    accountId:number;
+    id?:string;
 }
