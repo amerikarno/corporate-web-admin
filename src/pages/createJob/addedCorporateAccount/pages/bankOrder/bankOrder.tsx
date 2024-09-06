@@ -165,7 +165,7 @@ export default function BankOrderEdit() {
     console.log(body);
     try {
       const token = getCookies();
-      if (body.accountId && body.accountId !== 0) {
+      if (body.id && body.id !== "") {
         const res = await axios.post("/api/v1/transaction/bank/edit", body, {
           headers: {
             Authorization: `Bearer ${token}`,
