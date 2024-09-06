@@ -6,7 +6,8 @@ import PageAddIndividualAccount from "@/pages/createJob/addIndividualAccount/Pag
 import { Outlet, Route } from "react-router-dom";
 import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/changeCorporateAccount";
 import { EditCorporateAccount } from "@/pages/createJob/changeCorporateAccount/edit/editCorporateAccount";
-
+import ChangePageAddIndividualAccount from "@/pages/createJob/changeIndividualAccount/ChangePageAddIndividualAccount";
+import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccount/ToDoIndividualAccount";
 export const createJobRoutes = () => {
   return (
     <Route path="create-job" element={<Outlet />}>
@@ -24,6 +25,13 @@ export const createJobRoutes = () => {
         <Route path="edit" element={<Outlet />}>
           <Route index element={<EditCorporateAccount />} />
           <Route path=":page" element={<EditCorporateAccount />} />
+        </Route>
+      </Route>
+      <Route path="change-individual-account" element={<Outlet />}>
+        <Route index element={<ChangeTodoIndividualAccount />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<ChangePageAddIndividualAccount />} />
+          <Route path=":page" element={<ChangePageAddIndividualAccount />} />
         </Route>
       </Route>
       <Route
@@ -88,7 +96,7 @@ export const createJobRoutes = () => {
         element={<BlankPage name="Airdrop Setting" />}
       />
       <Route path="orders-trades" element={<OrderTrade />} />
-      <Route path="bank-orders" element={<BankOrderEdit />} />
+      <Route path="cash-deposit-withdraw" element={<BankOrderEdit />} />
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}

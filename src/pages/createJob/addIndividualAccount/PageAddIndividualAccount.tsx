@@ -51,7 +51,10 @@ export default function PageAddIndividualAccount() {
   const handlePages = (type: string) => {
     if (type === "next") {
       navigate(`/create-job/added-individual-account/${pageId + 1}`);
-    } else {
+    } else if(type == "done"){
+      localStorage.clear();
+      navigate(`/create-job/added-individual-account`);
+    }else {
       navigate(`/create-job/added-individual-account/${pageId - 1}`);
     }
   };

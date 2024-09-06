@@ -1,0 +1,20 @@
+.headerlogo {
+    --a: -45deg;
+    --t: .23em; 
+    color: #ffffff;
+  }
+  
+  .headerlogo{
+    --_s: calc(var(--t)*cos(var(--a)));
+    background:
+      linear-gradient(var(--a),#0000 var(--_s),#ff6a00 0 calc(100% - var(--_s)),#0000 0) 
+      bottom/var(--i,100%) var(--t) no-repeat;
+    padding: 0 .25em calc(var(--t) + .1em);
+    -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+    transition: .3s;
+    cursor: pointer;
+  }
+  .headerlogo:hover {
+    --i: 120%;
+  }

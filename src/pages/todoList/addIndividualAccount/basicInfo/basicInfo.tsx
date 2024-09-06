@@ -22,6 +22,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
+import { useDispatch, useSelector } from "react-redux";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { RootState } from "@/app/store";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -29,6 +32,9 @@ export default function BasicInfo() {
   }
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = getCookies();
+
   const [radioAddressValue, setRadioAddressValue] = useState("radio-2");
   const [radioWorkValue, setRadioWorkValue] = useState("radio-5");
   const [addBankValue, setAddBankValue] = useState("radio-6");
@@ -57,10 +63,102 @@ export default function BasicInfo() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<TBasicInfo>({
     resolver: zodResolver(basicInfoSchema),
   });
+
+  const fetchIndividualData = async (AccountID: string) =>{
+    try {
+      console.log(AccountID);
+      const res = await axios.post("/api/v1/individual/list", {AccountID}, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const individualData = useSelector((state: RootState) => state.individualData.individualDatas); 
+  useEffect(() => {
+    const cidValue = localStorage.getItem('cid');
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch]);
+  
+  useEffect(() => {
+    if(individualData){
+      console.log(individualData);
+      let fillData: TBasicInfo = {
+        registeredAddress: {
+          homeNumber: "",
+          villageNumber: "",
+          villageName: "",
+          subStreetName: "",
+          streetName: "",
+          subDistrictName: "",
+          districtName: "",
+          provinceName: "",
+          zipCode: "",
+          countryName: ""
+        },
+        currentAddress: {
+          homeNumber: "",
+          villageNumber: "",
+          villageName: "",
+          subStreetName: "",
+          streetName: "",
+          subDistrictName: "",
+          districtName: "",
+          provinceName: "",
+          zipCode: "",
+          countryName: ""
+        },
+        officeAddress: {
+          homeNumber: "",
+          villageNumber: "",
+          villageName: "",
+          subStreetName: "",
+          streetName: "",
+          subDistrictName: "",
+          districtName: "",
+          provinceName: "",
+          zipCode: "",
+          countryName: ""
+        },
+        occupation: {
+          education: individualData?.education || "",
+          sourceOfIncome: individualData?.sourceOfIncome || "",
+          currentOccupation: individualData?.currentOccupation || "",
+          officeName: individualData?.officeName || "",
+          typeOfBusiness: individualData?.typeOfBusiness || "",
+          positionName: individualData?.positionName || "",
+          salaryRange: individualData?.salaryRange || "",
+        },
+        firstBankAccount: {
+          bankName: "",
+          bankBranchName: "",
+          bankAccountNumber: ""
+        },
+        secondBankAccountBody: {
+          bankName: "",
+          bankBranchName: "",
+          bankAccountNumber: ""
+        },
+        investment: {
+          shortTermInvestment: individualData?.shortTermInvestment || false,
+          longTermInvestment: individualData?.longTermInvestment || false,
+          taxesInvestment: individualData?.taxesInvestment || false,
+          retireInvestment: individualData?.retireInvestment || false
+        }
+      };
+      reset(fillData);
+    }
+  }, [individualData, reset]);
 
   const currentOccupation = watch("occupation.currentOccupation");
   const [showBusinessType, setShowBusinessType] = useState(true);
@@ -82,9 +180,9 @@ export default function BasicInfo() {
     }
   }, [currentOccupation]);
 
-  useEffect(()=>{
-    setAddBankValue("radio-7")
-  },[])
+  // useEffect(()=>{
+  //   setAddBankValue("radio-6")
+  // },[])
 
   const onSubmit = async (data: TBasicInfo) => {
     let prebody = {

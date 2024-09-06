@@ -16,7 +16,7 @@ export default function SuitTestFatca() {
 
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
-  const [fatcaInfo, setFatcaInfo] = useState<string | boolean[]>("");
+  const [fatcaInfo, setFatcaInfo] = useState<string | number[]>("");
   const [checkboxStates, setCheckboxStates] = useState<boolean[]>(
     new Array(8).fill(false)
   );
@@ -24,12 +24,17 @@ export default function SuitTestFatca() {
   const handleCheckboxChange = (index: number) => {
     const updatedCheckboxStates = [...checkboxStates];
     updatedCheckboxStates[index] = !updatedCheckboxStates[index];
+
+    //change from true to 1 and false to 0
+    const numericCheckboxStates = updatedCheckboxStates.map(state => state ? 1 : 0);
+    console.log(numericCheckboxStates)
     setCheckboxStates(updatedCheckboxStates);
-    setFatcaInfo(updatedCheckboxStates);
+    setFatcaInfo(numericCheckboxStates);
   };
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [knowLedgeTestSuccess, setKnowLedgeTestSuccess] = useState(false);
   const [suitTestSuccess, setSuitTestSuccess] = useState(false);
+  const [suitTestResult,setSuitTestResult] = useState();
   const navigate = useNavigate();
 
   const handleKnowLedgeTestSuccess = (success: boolean) => {
@@ -39,6 +44,11 @@ export default function SuitTestFatca() {
   const handleSuitTestSuccess = (success:boolean) =>{
       setSuitTestSuccess(success)
       console.log("Suit Test submit button pressed!")
+  }
+
+    const handleSuitTestResult = (exam_result : any) =>{
+      console.log(exam_result)
+      setSuitTestResult(exam_result)
   }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
 
@@ -53,7 +63,7 @@ export default function SuitTestFatca() {
     ) {
       let body = {
         id: localStorage.getItem("cid"),
-        suiteTestResult: [1, 1, 1, 1, 1, 1, 1, 1, 1].join("|"),
+        suiteTestResult: suitTestResult,
         isFatca: fatcaradio === "fatcaradio-1",
         fatcaInfo: fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
@@ -61,7 +71,7 @@ export default function SuitTestFatca() {
         pageID: 400,
       };
       console.log(body);
-      navigate("/create-job/added-individual-account/identityVerification");
+      navigate("/todo-list/individual-account-opening/edit/4");
     } else {
       alert("Please Do the Suit Test First.");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -92,7 +102,7 @@ export default function SuitTestFatca() {
             </div>
           </div> */}
       </div>
-      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} />
+      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} suitTestResult={handleSuitTestResult}/>
       <Card>
         <CardContent>
           <div className="p-4 space-y-4 pr-8 pl-8 flex flex-col">
@@ -141,10 +151,10 @@ export default function SuitTestFatca() {
                       "มีกรีนการ์ดหรือบัตรผู้มีที่อยู่ถาวรในอเมริกา",
                       "มีที่อยู่ในอเมริกาเพื่อวัตถุประสงค์ทางภาษี",
                       "เกิดในอเมริกาแต่สละสถานะพลเมืองแล้ว",
-                      "มีที่อยู่ในอเมริกาสำหรับบัญชีที่เปิดกับบริษัท ฟินันเซีย ดิจิทัล แอสเซท จำกัด",
-                      "มีเบอร์โทรอเมริกา (ตนเองหรือผู้เกี่ยวข้อง) เกี่ยวข้องกับบัญชีที่เปิดกับบริษัท ฟินันเซีย ดิจิทัล แอสเซท จำกัด",
-                      "มีการโอนเงินอัตโนมัติจากบัญชีที่เปิดกับบริษัท ฟินันเซีย ดิจิทัล แอสเซท จำกัด ไปบัญชีอเมริกา",
-                      "ได้มอบอำนาจให้บุคคลที่อยู่ในอเมริกาทำธุรกรรมใดๆที่เกี่ยวข้องกับบัญชี บริษัท ฟินันเซีย ดิจิทัล เเอสเซท จำกัด",
+                      "มีที่อยู่ในอเมริกาสำหรับบัญชีที่เปิดกับบริษัท",
+                      "มีเบอร์โทรอเมริกา (ตนเองหรือผู้เกี่ยวข้อง) เกี่ยวข้องกับบัญชีที่เปิดกับบริษัท",
+                      "มีการโอนเงินอัตโนมัติจากบัญชีที่เปิดกับบริษัทไปบัญชีอเมริกา",
+                      "ได้มอบอำนาจให้บุคคลที่อยู่ในอเมริกาทำธุรกรรมใดๆที่เกี่ยวข้องกับบัญชีบริษัท",
                     ].map((label, index) => (
                       <div key={index} className="space-x-4">
                         <input

@@ -65,9 +65,12 @@ export default function EditPageAddIndividualAccount() {
 
   const handlePages = (type: string) => {
     if (type == "next") {
-      navigate(`/create-job/added-individual-account/${pageId + 1}`);
+      navigate(`/todo-list/individual-account-opening/edit/${pageId + 1}`);
+    }else if(type == "done"){
+      localStorage.clear();
+      navigate(`/todo-list/individual-account-opening/`);
     }else {
-      navigate(`/create-job/added-individual-account/${pageId - 1}`);
+      navigate(`/todo-list/individual-account-opening/edit/${pageId - 1}`);
     }
   };
 

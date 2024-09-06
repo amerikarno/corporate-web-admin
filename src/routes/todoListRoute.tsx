@@ -5,6 +5,7 @@ import TodoIndividualAccount from "@/pages/todoList/addIndividualAccount/ToDoInd
 import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import { Route, Outlet } from "react-router-dom";
 import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/EditPageAddIndividualAccount";
+import BankTransactionList from "@/pages/todoList/bankTransactionList/bankTransactionList";
 
 export const todoListRoutes = () => {
   return (
@@ -52,8 +53,9 @@ export const todoListRoutes = () => {
       />
       <Route path="orders-trades" element={<TransactionList />} />
       <Route
-        path="bank-deposite-withdraw"
-        element={<BlankPage name="bank deposite withdraw" />}
+        path="cash-deposit-withdraw"
+        element={<BankTransactionList/>}
+        // element={<BlankPage name="cash deposit/withdraw transaction is developing"/>}
       />
     </Route>
   );

@@ -1,0 +1,11 @@
+@keyframes glitter {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .glitter-effect {
+    background: linear-gradient(135deg, #94de79 25%, #7bff77 25%, #51e73a 50%, #93f875 50%, #60d535 75%, #9af38d 75%, #6bfcc0 100%);
+    background-size: 400% 400%;
+    animation: glitter 1.5s infinite;
+  }

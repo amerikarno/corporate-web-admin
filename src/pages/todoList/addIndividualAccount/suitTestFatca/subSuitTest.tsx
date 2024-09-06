@@ -10,10 +10,11 @@ interface Answer {
 }
 
 type SubSuitTestProps = {
+  suitTestResult: (result: any) => void;
   onSuitTestDone: (done: boolean) => void;
 };
 
-export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
+export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTestProps) {
   const questions = [
     {
       question: "ท่านมีภาระค่าใช้จ่ายประจำดือนเป็นสัดส่วนเท่าใดของรายได้",
@@ -100,14 +101,51 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
       ],
     },
   ];
+  const fetchedData = [[0, 0, 0, 0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0]];
+  const initialAnswers = questions.map((_, index) => {
+    if (fetchedData) {
+      const answerFromData = fetchedData[index];
+      let answerValue: string | number[] = "";
+      let score = 0;
 
-  const [answers, setAnswers] = useState<Answer[]>(
-    questions.map((_, index) => ({
-      questionIndex: index,
-      answer: index === 2 ? [0, 0, 0, 0] : "",
-      score: 0,
-    }))
-  );
+      if (answerFromData && index === 2) {
+        // Handling the checkbox case for questionIndex 2
+        answerValue = answerFromData;
+        const selectedChoices = answerFromData
+          .map((val, idx) => (val === 1 ? idx + 1 : 0))
+          .filter(val => val !== 0);
+        score = Math.max(...selectedChoices);
+      } else if (answerFromData) {
+        const selectedChoiceIndex = answerFromData.findIndex((choice) => choice === 1);
+        if (selectedChoiceIndex !== -1) {
+          score = selectedChoiceIndex + 1;
+          answerValue = questions[index].choices[selectedChoiceIndex];
+        }
+      }
+
+      return {
+        questionIndex: index,
+        answer: answerValue,
+        score,
+      };
+    } else {
+      return {
+        questionIndex: index,
+        answer: index === 2 ? [0, 0, 0, 0] : "",
+        score: 0,
+      };
+    }
+  });
+
+  const [answers, setAnswers] = useState<Answer[]>(initialAnswers);
+
+  // const [answers, setAnswers] = useState<Answer[]>(
+  //   questions.map((_, index) => ({
+  //     questionIndex: index,
+  //     answer: index === 2 ? [0, 0, 0, 0] : "",
+  //     score: 0,
+  //   }))
+  // );
   const [totalScore, setTotalScore] = useState(0);
   const [investorType, setInvestorType] = useState("");
   const [suitTestDone, setSuitTestDone] = useState(false);
@@ -179,7 +217,16 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     }
   };
 
+  const mapTosuitTestResult = (score:number)=>{
+    const index = score - 1;
+    let resList = [0,0,0,0];
+    resList[index] = 1;
+
+    return resList;
+  }
+
   const handleSubmit = () => {
+    console.log(answers);
     let scoreCalculator = answers[2].score;
     const allAnswered = answers.every((ans, index) => {
       if (index === 2) {
@@ -216,19 +263,20 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
     // console.log(totalScore)
     // console.log(suitTestDone)
     if (allAnswered) {
-      const suitTestResult = answers.map((item: any) => ({
-        id: item.questionIndex,
-        ans: item.questionIndex === 2 ? item.listOfBooleanScore : item.score,
-        type: item.questionIndex === 2 ? 2 : 1,
-        quiz: 1,
+      const suitTestCalculate = answers.map((item: any) => ({
+        // id: item.questionIndex,
+        ans: item.questionIndex === 2 ? item.answer : mapTosuitTestResult(item.score),
+        // type: item.questionIndex === 2 ? 2 : 1,
+        // quiz: 1,
       }));
       let body = {
         cid: localStorage.getItem("cid"),
         investorTypeRisk: investorTypeTemp,
         level: giveGrade(scoreCalculator),
         totalScore: scoreCalculator,
-        suitTestResult: { answer: { ...suitTestResult } },
+        suitTestResult: { answer: { ...suitTestCalculate } },
       };
+      suitTestResult(body)
       console.log(body);
     } else {
       alert("Do suit test first.");
@@ -320,7 +368,7 @@ export default function SubSuitTest({ onSuitTestDone }: SubSuitTestProps) {
               <div className="">
                 <span className="font-bold">ผลคะแนนที่ทำได้</span>
               </div>
-              <svg className="w-3/4 h-full" viewBox="0 0 100 100">
+              <svg className="w-1/3 md:w-3/4 h-full" viewBox="0 0 100 100">
                 <>
                   <circle
                     className="text-gray-200 stroke-current"

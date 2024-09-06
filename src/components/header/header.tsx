@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import "./header.css"
 
 import Logo from "@/assets/logo.svg";
 import { urlConfig } from "@/config/url";
@@ -51,7 +52,8 @@ export default function Header() {
     <nav className="w-full bg-slate-900 fixed top-0 h-16 flex justify-between items-center z-50">
       <div className="flex w-[270px] justify-start pl-4 sm:pl-0 sm:justify-center items-center">
         <div id="logo" className="hidden sm:inline">
-          <img src={Logo} alt="logo" />
+          {/* <img src={Logo} alt="logo" /> */}
+          <div className="font-bold text-xl headerlogo">Digital Asset</div>
         </div>
         <div id="hamburger-menu" className="md:hidden ">
           <Sheet>

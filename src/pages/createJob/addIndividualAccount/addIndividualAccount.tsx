@@ -24,6 +24,7 @@ export default function AddIndividualAccount() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TIndividualAccount>({
     resolver: zodResolver(individualAccountSchema),
@@ -38,27 +39,39 @@ export default function AddIndividualAccount() {
     if(choosedTitle === "นาย"){
       setThTitle("นาย")
       setEngTitle("Mr.")
+      setValue("thTitle","นาย")
+      setValue("engTitle","Mr.")
     }
     else if(choosedTitle === "นาง"){
       setThTitle("นาง")
       setEngTitle("Mrs.")
+      setValue("thTitle","นาง")
+      setValue("engTitle","Mrs.")
     }
     else if(choosedTitle === "นางสาว"){
       console.log("go to this")
       setThTitle("นางสาว")
       setEngTitle("Miss.")
+      setValue("thTitle","นางสาว")
+      setValue("engTitle","Miss.")
     }
     else if(choosedTitle === "Mr."){
       setThTitle("นาย")
       setEngTitle("Mr.")
+      setValue("thTitle","นาย")
+      setValue("engTitle","Mr.")
     }
     else if(choosedTitle === "Mrs."){
       setThTitle("นาง")
       setEngTitle("Mrs.")
+      setValue("thTitle","นาง")
+      setValue("engTitle","Mrs.")
     }
     else if(choosedTitle === "Miss."){
       setThTitle("นางสาว")
       setEngTitle("Miss.")
+      setValue("thTitle","นางสาว")
+      setValue("engTitle","Miss.")
     }
   }
   const navigate = useNavigate();
@@ -93,7 +106,7 @@ export default function AddIndividualAccount() {
         console.log(age);
         console.log("success", res, data);
 
-        navigate("/create-job/added-individual-account/basicinfo");
+        navigate("/create-job/added-individual-account/2");
         window.scrollTo(0, 0);
       }
     } catch (error) {
@@ -319,8 +332,7 @@ export default function AddIndividualAccount() {
                   {...register("agreement")}
                 />
                 <label htmlFor="agreement" className="text-gray-500">
-                  ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัวซึ่งระบุวิธีการที่บริษัท
-                  ฟินันเซียดิจิทัล แอสแซท จำกัด("บริษัท")
+                  ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัว
                 </label>
               </div>
               <div>
