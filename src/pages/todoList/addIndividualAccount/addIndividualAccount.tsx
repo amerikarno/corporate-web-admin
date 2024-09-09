@@ -51,8 +51,8 @@ export default function AddIndividualAccount() {
     } catch (error) {
       console.log(error);
     }
-  };
-
+   };
+  
   const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function AddIndividualAccount() {
   useEffect(() => {
     if (individualData) {
       console.log(individualData)
-      console.log(individualData.birthDate)
+      const dateFormatted = individualData?.birthDate?.split("T")[0];
       const fillData: TIndividualAccount = {
         email: individualData.email || "",
         citizenId: individualData.citizenId || "",
@@ -74,7 +74,7 @@ export default function AddIndividualAccount() {
         engName: individualData.engName || "",
         engSurname: individualData.engSurname || "",
         mobile: individualData.mobile || "",
-        birthDate: individualData.birthDate || "",
+        birthDate: dateFormatted || "",
         marriageStatus: individualData.marriageStatus || "",
         laserCode: individualData.laserCode || "",
         agreement: true,
@@ -162,7 +162,7 @@ export default function AddIndividualAccount() {
         console.log(age);
         console.log("success", res, data);
 
-        navigate("/todo-list/added-individual-account/edit/2");
+        navigate("/todo-list/individual-account-opening/edit/2");
         window.scrollTo(0, 0);
       }
     } catch (error) {
