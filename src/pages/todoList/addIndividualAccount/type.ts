@@ -21,7 +21,34 @@ export type SuitAnswer = {
     suitTestResult: SuitTestResultAnswer;
     type: number;
   };
+
+  export type TBasicinfoAddress = {
+    CreatedAt?: string;
+    DeletedAt?: string | null;
+    id: string;
+    homeNumber: string;
+    villageNumber: string;
+    villageName: string;
+    subStreetName: string;
+    streetName: string;
+    subDistrictName: string;
+    districtName: string;
+    provinceName: string;
+    zipCode: string;
+    countryName: string;
+    types: number;
+  }
   
+  export type TBasicInfoBank = {
+    CreatedAt?: string;
+    DeletedAt?: string;
+    id: string;
+    bankName: string;
+    bankBranchName: string;
+    bankAccountNumber: string;
+    types: number;
+  }
+
   export type TIndividualData = {
     CreatedAt?: string;
     DeletedAt?: string;
@@ -52,4 +79,6 @@ export type SuitAnswer = {
     pageId?: number;
     update?: string;
     SuitTestResult: SuitTestResult;
+    address : TBasicinfoAddress[];
+    bank: TBasicInfoBank[];
   };

@@ -202,6 +202,10 @@ const BankTransactionList = () => {
       selector: (row: TTransaction) => row.operations || "",
     },
     {
+      name: "Cash Value",
+      selector: (row: TTransaction) => row.orderValue || "",
+    },
+    {
       name: "Status",
       selector: (row: TTransaction) => getStatus(row.transactionStatus) || "",
     },
