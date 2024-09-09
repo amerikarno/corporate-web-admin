@@ -1,16 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { TCorporateData } from "../constant/type";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { isAllowedPage } from "@/lib/utils";
-import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import { useEffect, useState } from "react";
-import { getCookies } from "@/lib/Cookies";
-import axios from "@/api/axios";
-import {
-  clearCorporateData,
-  setCorporateData,
-} from "@/features/editCorporateData/editCorporateData";
+// import { TCorporateData } from "../constant/type";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "@/app/store";
+// import { isAllowedPage } from "@/lib/utils";
+// import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+// import { useEffect, useState } from "react";
+// import { getCookies } from "@/lib/Cookies";
+// import axios from "@/api/axios";
+// import {
+//   clearCorporateData,
+//   setCorporateData,
+// } from "@/features/editCorporateData/editCorporateData";
 import AddIndividualAccount from "./addIndividualAccount";
 import BasicInfo from "./basicInfo/basicInfo";
 import SuitTestFatca from "./suitTestFatca/suitTestFatca";
@@ -23,12 +23,12 @@ type TPage = {
 
 export default function PageAddIndividualAccount() {
   // Ensure hooks are called unconditionally and in the same order
-  const dispatch = useDispatch();
-  const [corporateCode, setCorporateCode] = useState("");
+  // const dispatch = useDispatch();
+  // const [corporateCode, setCorporateCode] = useState("");
 
-  const corporateData: TCorporateData = useSelector<RootState>(
-    (state) => state.editCorporate
-  ) as TCorporateData;
+  // const corporateData: TCorporateData = useSelector<RootState>(
+  //   (state) => state.editCorporate
+  // ) as TCorporateData;
 
   // const initFormData = mapDataToTCorporateInfo(corporateData);
 
@@ -51,10 +51,10 @@ export default function PageAddIndividualAccount() {
   const handlePages = (type: string) => {
     if (type === "next") {
       navigate(`/create-job/added-individual-account/${pageId + 1}`);
-    } else if(type == "done"){
+    } else if (type == "done") {
       localStorage.clear();
       navigate(`/create-job/added-individual-account`);
-    }else {
+    } else {
       navigate(`/create-job/added-individual-account/${pageId - 1}`);
     }
   };

@@ -3,25 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { TIndividualData } from "./type";
-import {
-    searchIndividualSchema,
-  TSearchIndividualSchema,
-} from "./schema";
+import { searchIndividualSchema, TSearchIndividualSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { ColumnsOfIndividualSearch } from "./column";
-import { dateToyyyyMMdd, isAllowedPage } from "@/lib/utils";
-import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import { getCookies } from "@/lib/Cookies";
-import axios from "@/api/axios";
+import { dateToyyyyMMdd } from "@/lib/utils";
 import { useToDoIndividualAccount } from "./useToDoIndividualAccount";
 
 export default function TodoIndividualAccount() {
-//   if (!isAllowedPage(3001)) {
-//     return <UnAuthorize />;
-//   }
+  //   if (!isAllowedPage(3001)) {
+  //     return <UnAuthorize />;
+  //   }
 
   const prev7Days = new Date();
   prev7Days.setDate(prev7Days.getDate() - 7);
@@ -45,9 +39,9 @@ export default function TodoIndividualAccount() {
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-//   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-//     { corporateCode: number }[]
-//   >([]);
+  //   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
+  //     { corporateCode: number }[]
+  //   >([]);
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
@@ -56,44 +50,44 @@ export default function TodoIndividualAccount() {
       setDisableDate(false);
     }
   };
-//   const fetchCorporateCodes = async () => {
-//     try {
-//       const token = getCookies();
+  //   const fetchCorporateCodes = async () => {
+  //     try {
+  //       const token = getCookies();
 
-//       const res = await axios.post(
-//         "/api/v1/corporate/query/all",
-//         {},
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-//       if (res.status === 200) {
-//         console.log(res);
-//         const corporateCodes = res.data.map((item: any) => ({
-//           corporateCode: item.CorporateCode,
-//         }));
-//         setFetchedCorporateCodes(corporateCodes);
+  //       const res = await axios.post(
+  //         "/api/v1/corporate/query/all",
+  //         {},
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       if (res.status === 200) {
+  //         console.log(res);
+  //         const corporateCodes = res.data.map((item: any) => ({
+  //           corporateCode: item.CorporateCode,
+  //         }));
+  //         setFetchedCorporateCodes(corporateCodes);
 
-//         // const dateFrom = new Date();
-//         // dateFrom.setDate(dateFrom.getDate() + 7);
-//         // const data: TCorporateAccountOpening = {
-//         //   corporateCode: "",
-//         //   // dateFrom: dateToyyyyMMdd(dateFrom),
-//         //   // dateTo: dateToyyyyMMdd(dateFrom),
-//         //   dateFrom: dateToyyyyMMdd(new Date()),
-//         //   dateTo: dateToyyyyMMdd(new Date()),
-//         // };
-//         // await handleSearch(data);
-//       } else {
-//         console.log("Failed to fetch corporate codes");
-//       }
-//     } catch (error) {
-//       console.log("Error fetching corporate codes:", error);
-//     }
-//   };
+  //         // const dateFrom = new Date();
+  //         // dateFrom.setDate(dateFrom.getDate() + 7);
+  //         // const data: TCorporateAccountOpening = {
+  //         //   corporateCode: "",
+  //         //   // dateFrom: dateToyyyyMMdd(dateFrom),
+  //         //   // dateTo: dateToyyyyMMdd(dateFrom),
+  //         //   dateFrom: dateToyyyyMMdd(new Date()),
+  //         //   dateTo: dateToyyyyMMdd(new Date()),
+  //         // };
+  //         // await handleSearch(data);
+  //       } else {
+  //         console.log("Failed to fetch corporate codes");
+  //       }
+  //     } catch (error) {
+  //       console.log("Error fetching corporate codes:", error);
+  //     }
+  //   };
 
   const initData = async () => {
     // await fetchCorporateCodes();
@@ -127,9 +121,7 @@ export default function TodoIndividualAccount() {
 
   useEffect(() => {
     if (searchResult) {
-        setFetchData(
-        Array.isArray(searchResult) ? searchResult : [searchResult]
-      );
+      setFetchData(Array.isArray(searchResult) ? searchResult : [searchResult]);
     }
   }, [searchResult]);
 
