@@ -92,62 +92,62 @@ export default function BasicInfo() {
   }, [token, dispatch]);
   
   useEffect(() => {
-    if(individualData){
+    if (individualData) {
       console.log(individualData);
-
-      const registeredAddressFind:TBasicinfoAddress | null = individualData?.address.find(addr => addr.types === 1) || null;
-      const currentAddressFind:TBasicinfoAddress | null = individualData?.address.find(addr => addr.types === 2) || null;
-      const officeAddressFind:TBasicinfoAddress | null = individualData?.address.find(addr => addr.types === 3) || null;
-
-      const firstBank:TBasicInfoBank | null = individualData?.bank.find(addr => addr.types === 0) || null;
-      const secondBank:TBasicInfoBank | null = individualData?.bank.find(addr => addr.types === 1) || null;
-
+  
+      const registeredAddressFind: TBasicinfoAddress | null = individualData?.address?.find(addr => addr.types === 1) || null;
+      const currentAddressFind: TBasicinfoAddress | null = individualData?.address?.find(addr => addr.types === 2) || null;
+      const officeAddressFind: TBasicinfoAddress | null = individualData?.address?.find(addr => addr.types === 3) || null;
+  
+      const firstBank: TBasicInfoBank | null = individualData?.bank?.find(addr => addr.types === 0) || null;
+      const secondBank: TBasicInfoBank | null = individualData?.bank?.find(addr => addr.types === 1) || null;
+  
       let fillData: TBasicInfo = {
-          registeredAddress: {
-            homeNumber: registeredAddressFind?.homeNumber || "",
-            villageNumber: registeredAddressFind?.villageNumber || "",
-            villageName: registeredAddressFind?.villageName || "",
-            subStreetName: registeredAddressFind?.subStreetName || "",
-            streetName: registeredAddressFind?.streetName || "",
-            subDistrictName: registeredAddressFind?.subDistrictName || "",
-            districtName: registeredAddressFind?.districtName || "",
-            provinceName: registeredAddressFind?.provinceName || "",
-            zipCode: registeredAddressFind?.zipCode || "",
-            countryName: registeredAddressFind?.countryName || ""
-          },
-          currentAddress: {
-              homeNumber: currentAddressFind?.homeNumber || "",
-              villageNumber: currentAddressFind?.villageNumber || "",
-              villageName: currentAddressFind?.villageName || "",
-              subStreetName: currentAddressFind?.subStreetName || "",
-              streetName: currentAddressFind?.streetName || "",
-              subDistrictName: currentAddressFind?.subDistrictName || "",
-              districtName: currentAddressFind?.districtName || "",
-              provinceName: currentAddressFind?.provinceName || "",
-              zipCode: currentAddressFind?.zipCode || "",
-              countryName: currentAddressFind?.countryName || ""
-          },
-          officeAddress: {
-              homeNumber: officeAddressFind?.homeNumber || "",
-              villageNumber: officeAddressFind?.villageNumber || "",
-              villageName: officeAddressFind?.villageName || "",
-              subStreetName: officeAddressFind?.subStreetName || "",
-              streetName: officeAddressFind?.streetName || "",
-              subDistrictName: officeAddressFind?.subDistrictName || "",
-              districtName: officeAddressFind?.districtName || "",
-              provinceName: officeAddressFind?.provinceName || "",
-              zipCode: officeAddressFind?.zipCode || "",
-              countryName: officeAddressFind?.countryName || ""
-          },
-          occupation: {
-            education: individualData?.education || "",
-            sourceOfIncome: individualData?.sourceOfIncome || "",
-            currentOccupation: individualData?.currentOccupation || "",
-            officeName: individualData?.officeName || "",
-            typeOfBusiness: individualData?.typeOfBusiness || "",
-            positionName: individualData?.positionName || "",
-            salaryRange: individualData?.salaryRange || "",
-          },
+        registeredAddress: {
+          homeNumber: registeredAddressFind?.homeNumber || "",
+          villageNumber: registeredAddressFind?.villageNumber || "",
+          villageName: registeredAddressFind?.villageName || "",
+          subStreetName: registeredAddressFind?.subStreetName || "",
+          streetName: registeredAddressFind?.streetName || "",
+          subDistrictName: registeredAddressFind?.subDistrictName || "",
+          districtName: registeredAddressFind?.districtName || "",
+          provinceName: registeredAddressFind?.provinceName || "",
+          zipCode: registeredAddressFind?.zipCode || "",
+          countryName: registeredAddressFind?.countryName || ""
+        },
+        currentAddress: {
+          homeNumber: currentAddressFind?.homeNumber || "",
+          villageNumber: currentAddressFind?.villageNumber || "",
+          villageName: currentAddressFind?.villageName || "",
+          subStreetName: currentAddressFind?.subStreetName || "",
+          streetName: currentAddressFind?.streetName || "",
+          subDistrictName: currentAddressFind?.subDistrictName || "",
+          districtName: currentAddressFind?.districtName || "",
+          provinceName: currentAddressFind?.provinceName || "",
+          zipCode: currentAddressFind?.zipCode || "",
+          countryName: currentAddressFind?.countryName || ""
+        },
+        officeAddress: {
+          homeNumber: officeAddressFind?.homeNumber || "",
+          villageNumber: officeAddressFind?.villageNumber || "",
+          villageName: officeAddressFind?.villageName || "",
+          subStreetName: officeAddressFind?.subStreetName || "",
+          streetName: officeAddressFind?.streetName || "",
+          subDistrictName: officeAddressFind?.subDistrictName || "",
+          districtName: officeAddressFind?.districtName || "",
+          provinceName: officeAddressFind?.provinceName || "",
+          zipCode: officeAddressFind?.zipCode || "",
+          countryName: officeAddressFind?.countryName || ""
+        },
+        occupation: {
+          education: individualData?.education || "",
+          sourceOfIncome: individualData?.sourceOfIncome || "",
+          currentOccupation: individualData?.currentOccupation || "",
+          officeName: individualData?.officeName || "",
+          typeOfBusiness: individualData?.typeOfBusiness || "",
+          positionName: individualData?.positionName || "",
+          salaryRange: individualData?.salaryRange || "",
+        },
         firstBankAccount: {
           bankName: firstBank?.bankName || "",
           bankBranchName: firstBank?.bankBranchName || "",

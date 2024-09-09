@@ -63,6 +63,7 @@ export default function AddIndividualAccount() {
   useEffect(() => {
     if (individualData) {
       console.log(individualData)
+      console.log(individualData.birthDate)
       const fillData: TIndividualAccount = {
         email: individualData.email || "",
         citizenId: individualData.citizenId || "",
@@ -74,7 +75,7 @@ export default function AddIndividualAccount() {
         engSurname: individualData.engSurname || "",
         mobile: individualData.mobile || "",
         birthDate: individualData.birthDate || "",
-        mariageStatus: individualData.marriageStatus || "",
+        marriageStatus: individualData.marriageStatus || "",
         laserCode: individualData.laserCode || "",
         agreement: true,
       };
@@ -331,7 +332,7 @@ export default function AddIndividualAccount() {
 
               <div className="flex  flex-col w-1/2">
                 <select
-                  {...register("mariageStatus")}
+                  {...register("marriageStatus")}
                   className="cursor-pointer border p-3.5 border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full dark:bg-gray-700 dark:border-gray-600
                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -341,9 +342,9 @@ export default function AddIndividualAccount() {
                   <option value="สมรส">Married</option>
                   <option value="อย่า">Divorce</option>
                 </select>
-                {errors.mariageStatus && (
+                {errors.marriageStatus && (
                   <span className="text-red-500">
-                    {errors.mariageStatus.message}
+                    {errors.marriageStatus.message}
                   </span>
                 )}
               </div>
