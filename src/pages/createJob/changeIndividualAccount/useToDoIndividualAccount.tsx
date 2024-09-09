@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchIndividualSchema,TSearchIndividualSchema } from "./schema";
+import { TSearchIndividualSchema } from "./schema";
 import { TIndividualData } from "./type";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
