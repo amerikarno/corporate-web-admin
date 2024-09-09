@@ -89,8 +89,8 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2005,
       },
       {
-        label: "bank deposite/withdraw",
-        href: "/create-job/bank-deposite-withdraw",
+        label: "cash deposite/withdraw",
+        href: "/create-job/cash-deposit-withdraw",
         pageId: 2006,
       },
       // {
@@ -193,13 +193,18 @@ export const urlConfig: TUrlConfig[] = [
   {
     header: "TO DO List",
     icon: "icon",
-    pages: [3000, 3015],
+    pages: [3000, 3016],
     children: [
       {
         label: "corporate account opening",
         href: "/todo-list/corporate-account-opening",
         pageId: 3001,
       },
+      // {
+      //   label: "individual account opening",
+      //   href: "/todo-list/individual-account-opening",
+      //   pageId: 3002,
+      // },
       {
         label: "individual account opening",
         href: "/todo-list/individual-account-opening",
@@ -211,10 +216,11 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3003,
       },
       {
-        label: "bank deposite/withdraw",
-        href: "/todo-list/bank-deposite-withdraw",
+        label: "cash deposite/withdraw",
+        href: "/todo-list/cash-deposit-withdraw",
         pageId: 3004,
       },
+
       // {
       //   label: "individual account opening",
       //   href: "/todo-list/individual-account-opening",

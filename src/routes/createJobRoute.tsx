@@ -1,16 +1,13 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrder/bankOrder";
-import OrderTrade from "@/pages/createJob/addedCorporateAccount/pages/orderTrade/orderTrade";
-import AddIndividualAccount from "@/pages/createJob/addIndividualAccount/addIndividualAccount";
-import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
-import IdentityVerification from "@/pages/createJob/addIndividualAccount/identityVerification/identityVerification";
-import IDCardCapture from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/idCardCapture";
-import { CardWebcamInstructions } from "@/pages/createJob/addIndividualAccount/livenessOcr/cardScan/webCamInstructions";
-import Liveness from "@/pages/createJob/addIndividualAccount/livenessOcr/livenessOcr";
-import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
+import OrderTrade from "@/pages/createJob/orderTrade/orderTrade";
+import PageAddIndividualAccount from "@/pages/createJob/addIndividualAccount/PageAddIndividualAccount";
 import { Outlet, Route } from "react-router-dom";
-
+import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/changeCorporateAccount";
+import { EditCorporateAccount } from "@/pages/createJob/changeCorporateAccount/edit/editCorporateAccount";
+import ChangePageAddIndividualAccount from "@/pages/createJob/changeIndividualAccount/ChangePageAddIndividualAccount";
+import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccount/ToDoIndividualAccount";
 export const createJobRoutes = () => {
   return (
     <Route path="create-job" element={<Outlet />}>
@@ -20,19 +17,23 @@ export const createJobRoutes = () => {
         <Route path=":page" element={<CorporateAccountOpenning />} />
       </Route>
       <Route path="added-individual-account" element={<Outlet />}>
-        <Route index element={<AddIndividualAccount />} />
-        <Route path=":page" element={<AddIndividualAccount />} />
-        <Route path="basicinfo" element={<BasicInfo />} />
-        <Route path="suittestfatca" element={<SuitTestFatca />} />
-        <Route path="identityVerification" element={<IdentityVerification />} />
-        <Route path="liveness" element={<Liveness />} />
-        <Route path="card-instructions" element={<CardWebcamInstructions />} />
-        <Route path="card-capture" element={<IDCardCapture />} />
+        <Route index element={<PageAddIndividualAccount />} />
+        <Route path=":page" element={<PageAddIndividualAccount />} />
       </Route>
-      <Route
-        path="change-corporate-account"
-        element={<BlankPage name="change corporate account" />}
-      />
+      <Route path="change-corporate-account" element={<Outlet />}>
+        <Route index element={<ChangeCorporateAccountOpenning />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<EditCorporateAccount />} />
+          <Route path=":page" element={<EditCorporateAccount />} />
+        </Route>
+      </Route>
+      <Route path="change-individual-account" element={<Outlet />}>
+        <Route index element={<ChangeTodoIndividualAccount />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<ChangePageAddIndividualAccount />} />
+          <Route path=":page" element={<ChangePageAddIndividualAccount />} />
+        </Route>
+      </Route>
       <Route
         path="change-individual-account"
         element={<BlankPage name="change individual account" />}
@@ -95,7 +96,7 @@ export const createJobRoutes = () => {
         element={<BlankPage name="Airdrop Setting" />}
       />
       <Route path="orders-trades" element={<OrderTrade />} />
-      <Route path="bank-orders" element={<BankOrderEdit />} />
+      <Route path="cash-deposit-withdraw" element={<BankOrderEdit />} />
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}
