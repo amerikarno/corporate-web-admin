@@ -25,6 +25,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
+import { TBasicinfoAddress, TBasicInfoBank } from "../type";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -93,61 +94,69 @@ export default function BasicInfo() {
   useEffect(() => {
     if(individualData){
       console.log(individualData);
+
+      const registeredAddressFind:TBasicinfoAddress | null = individualData?.address.find(addr => addr.types === 1) || null;
+      const currentAddressFind:TBasicinfoAddress | null = individualData?.address.find(addr => addr.types === 2) || null;
+      const officeAddressFind:TBasicinfoAddress | null = individualData?.address.find(addr => addr.types === 3) || null;
+
+      const firstBank:TBasicInfoBank | null = individualData?.bank.find(addr => addr.types === 0) || null;
+      const secondBank:TBasicInfoBank | null = individualData?.bank.find(addr => addr.types === 1) || null;
+
       let fillData: TBasicInfo = {
-        registeredAddress: {
-          homeNumber: "",
-          villageNumber: "",
-          villageName: "",
-          subStreetName: "",
-          streetName: "",
-          subDistrictName: "",
-          districtName: "",
-          provinceName: "",
-          zipCode: "",
-          countryName: ""
-        },
-        currentAddress: {
-          homeNumber: "",
-          villageNumber: "",
-          villageName: "",
-          subStreetName: "",
-          streetName: "",
-          subDistrictName: "",
-          districtName: "",
-          provinceName: "",
-          zipCode: "",
-          countryName: ""
-        },
-        officeAddress: {
-          homeNumber: "",
-          villageNumber: "",
-          villageName: "",
-          subStreetName: "",
-          streetName: "",
-          subDistrictName: "",
-          districtName: "",
-          provinceName: "",
-          zipCode: "",
-          countryName: ""
-        },
-        occupation: {
-          education: individualData?.education || "",
-          sourceOfIncome: individualData?.sourceOfIncome || "",
-          currentOccupation: individualData?.currentOccupation || "",
-          officeName: individualData?.officeName || "",
-          typeOfBusiness: individualData?.typeOfBusiness || "",
-          positionName: individualData?.positionName || "",
-          salaryRange: individualData?.salaryRange || "",
-        },
+          registeredAddress: {
+            homeNumber: registeredAddressFind?.homeNumber || "",
+            villageNumber: registeredAddressFind?.villageNumber || "",
+            villageName: registeredAddressFind?.villageName || "",
+            subStreetName: registeredAddressFind?.subStreetName || "",
+            streetName: registeredAddressFind?.streetName || "",
+            subDistrictName: registeredAddressFind?.subDistrictName || "",
+            districtName: registeredAddressFind?.districtName || "",
+            provinceName: registeredAddressFind?.provinceName || "",
+            zipCode: registeredAddressFind?.zipCode || "",
+            countryName: registeredAddressFind?.countryName || ""
+          },
+          currentAddress: {
+              homeNumber: currentAddressFind?.homeNumber || "",
+              villageNumber: currentAddressFind?.villageNumber || "",
+              villageName: currentAddressFind?.villageName || "",
+              subStreetName: currentAddressFind?.subStreetName || "",
+              streetName: currentAddressFind?.streetName || "",
+              subDistrictName: currentAddressFind?.subDistrictName || "",
+              districtName: currentAddressFind?.districtName || "",
+              provinceName: currentAddressFind?.provinceName || "",
+              zipCode: currentAddressFind?.zipCode || "",
+              countryName: currentAddressFind?.countryName || ""
+          },
+          officeAddress: {
+              homeNumber: officeAddressFind?.homeNumber || "",
+              villageNumber: officeAddressFind?.villageNumber || "",
+              villageName: officeAddressFind?.villageName || "",
+              subStreetName: officeAddressFind?.subStreetName || "",
+              streetName: officeAddressFind?.streetName || "",
+              subDistrictName: officeAddressFind?.subDistrictName || "",
+              districtName: officeAddressFind?.districtName || "",
+              provinceName: officeAddressFind?.provinceName || "",
+              zipCode: officeAddressFind?.zipCode || "",
+              countryName: officeAddressFind?.countryName || ""
+          },
+          occupation: {
+            education: individualData?.education || "",
+            sourceOfIncome: individualData?.sourceOfIncome || "",
+            currentOccupation: individualData?.currentOccupation || "",
+            officeName: individualData?.officeName || "",
+            typeOfBusiness: individualData?.typeOfBusiness || "",
+            positionName: individualData?.positionName || "",
+            salaryRange: individualData?.salaryRange || "",
+          },
         firstBankAccount: {
-          bankName: "",
-          bankBranchName: "",
-          bankAccountNumber: ""
+          bankName: firstBank?.bankName || "",
+          bankBranchName: firstBank?.bankBranchName || "",
+          bankAccountNumber: firstBank?.bankAccountNumber || "",
         },
         secondBankAccountBody: {
-          bankName: "",
-          bankBranchName: "",
-          bankAccountNumber: ""
+          bankName: secondBank?.bankName || "",
+          bankBranchName: secondBank?.bankBranchName || "",
+          bankAccountNumber: secondBank?.bankAccountNumber || "",
         },
         investment: {
           shortTermInvestment: individualData?.shortTermInvestment || false,
