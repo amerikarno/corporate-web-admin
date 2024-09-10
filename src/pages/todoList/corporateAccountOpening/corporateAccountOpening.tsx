@@ -18,7 +18,12 @@ import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 
-export default function TodoCorporateAccountOpenning() {
+type TTodoCorporateAccountOpening = {
+  onDataFetched?: (data: any) => void;
+};
+export default function TodoCorporateAccountOpenning({
+  onDataFetched,
+}: TTodoCorporateAccountOpening) {
   if (!isAllowedPage(3001)) {
     return <UnAuthorize />;
   }
@@ -35,7 +40,6 @@ export default function TodoCorporateAccountOpenning() {
     resolver: zodResolver(corporateAccountOpeningSchema),
     defaultValues: {
       dateFrom: dateToyyyyMMdd(prev7Days),
-      // dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     },
   });
@@ -71,7 +75,7 @@ export default function TodoCorporateAccountOpenning() {
         }
       );
       if (res.status === 200) {
-        console.log(res);
+        // console.log(res);
         const corporateCodes = res.data.map((item: any) => ({
           corporateCode: item.CorporateCode,
         }));
@@ -103,6 +107,7 @@ export default function TodoCorporateAccountOpenning() {
       dateTo: dateToyyyyMMdd(new Date()),
     };
     await handleSearch(data);
+    if (onDataFetched) onDataFetched(JSON.stringify(data));
   };
 
   useEffect(() => {
@@ -120,16 +125,17 @@ export default function TodoCorporateAccountOpenning() {
   };
 
   const onSubmit = async (data: TCorporateAccountOpening) => {
-    console.log(data);
+    // console.log(data);
     await handleSearch(data);
     //reset();
   };
 
   useEffect(() => {
     if (searchResult) {
-      setCorporateData(
-        Array.isArray(searchResult) ? searchResult : [searchResult]
-      );
+      // setCorporateData(
+      //   Array.isArray(searchResult) ? searchResult : [searchResult]
+      // );
+      setCorporateData(searchResult);
     }
   }, [searchResult]);
 
@@ -143,6 +149,7 @@ export default function TodoCorporateAccountOpenning() {
           >
             <SideLabelInput title="Juristic ID">
               <Input
+                data-testid="juristicId"
                 {...register("corporateCode")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
@@ -163,6 +170,7 @@ export default function TodoCorporateAccountOpenning() {
             <div className="col-start-1">
               <SideLabelInput title="Date From">
                 <Input
+                  data-testid="dateFrom"
                   type="date"
                   {...register("dateFrom")}
                   onChange={handleDisableCode}
@@ -177,6 +185,7 @@ export default function TodoCorporateAccountOpenning() {
             </div>
             <SideLabelInput title="Date To">
               <Input
+                data-testid="dateTo"
                 type="date"
                 {...register("dateTo")}
                 onChange={handleDisableCode}
@@ -189,7 +198,7 @@ export default function TodoCorporateAccountOpenning() {
               )}
             </SideLabelInput>
             <div className="col-start-2 flex justify-end">
-              <Button type="submit">
+              <Button type="submit" data-testid="searchBtn">
                 {isSubmitting ? "Search..." : "Search"}
               </Button>
             </div>

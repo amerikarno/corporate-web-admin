@@ -14,6 +14,7 @@ import { createJobRoutes } from "./routes/createJobRoute";
 import { todoListRoutes } from "./routes/todoListRoute";
 import { enquireRoutes } from "./routes/enquiryRoute";
 import UnAuthorize from "./pages/unAuthorizePage/unAuthorize";
+import { secReportRoutes } from "./routes/secReportsRoute";
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -40,6 +41,7 @@ root.render(
                 {todoListRoutes()}
                 {enquireRoutes()}
                 {reportsRoutes()}
+                {secReportRoutes()}
               </Route>
             </Routes>
           </BrowserRouter>

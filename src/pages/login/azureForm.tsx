@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 
@@ -19,8 +20,19 @@ const AzureForm: React.FC = () => {
     }
   }, [location.search]);
 
-  const handleLogin = () => {
-    window.location.href = "http://localhost/api/v1/authen/login";
+  const handleLogin = async () => {
+    try {
+      const res = await api.get("/api/v1/authen/login/azure", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    window.location.href = "http://localhost:1323/api/v1/authen/login/azure";
   };
 
   // useEffect(() => {
@@ -59,9 +71,12 @@ const AzureForm: React.FC = () => {
       <h1 className="text-xl text-center">Microsoft Azure OAuth2 Login</h1>
       {!accessToken ? (
         // <button onClick={handleLogin}>Login with Microsoft</button>
-        <Button className="w-full" onClick={handleLogin}>
-          Login with Microsoft
-        </Button>
+        <>
+          {/* <Input label="Email" onChange={handleAzure} /> */}
+          <Button className="w-full" onClick={handleLogin}>
+            Login with Microsoft
+          </Button>
+        </>
       ) : (
         <div>
           <h2>User Info</h2>

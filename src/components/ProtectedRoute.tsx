@@ -63,6 +63,8 @@ import { setToken } from "@/features/authen/authenSlice";
 import { useNavigate } from "react-router-dom";
 import { getCookies, setCookies } from "@/lib/Cookies";
 import { LoaderCircle } from "lucide-react";
+import { setUser, TUser } from "@/features/user/userSlice";
+import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 interface DecodedToken {
   exp?: number;
@@ -75,7 +77,7 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   const checkToken = async () => {
-    console.log("check token");
+    // console.log("check token");
     if (token && token !== null) {
       const decode: DecodedToken = jwtDecode(token);
       const expire = decode.exp ? decode.exp : 0;
@@ -110,7 +112,21 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/login");
+      const query = new URLSearchParams(location.search);
+      const paramToken = query.get("access_token");
+
+      if (paramToken) {
+        // console.log("Token:", paramToken);
+
+        dispatch(setToken(paramToken));
+        setCookies(paramToken);
+        const user: TUser = jwtDecode(paramToken);
+        localStorage.clear();
+        dispatch(clearCorporateData());
+        dispatch(setUser(user));
+      } else {
+        navigate("/login");
+      }
     }
 
     checkToken();

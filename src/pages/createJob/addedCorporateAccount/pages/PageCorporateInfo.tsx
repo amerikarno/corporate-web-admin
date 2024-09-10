@@ -14,18 +14,18 @@ export function PageCorporateInfo({
   handleSubmitCorporateInfo,
   initData,
 }: TPageCorporateInfoProps) {
-  console.log(corporatesInfo)
-    console.log(initData)
+  // console.log(corporatesInfo)
+  //   console.log(initData)
   return (
     <>
       <div className="p-4 space-y-8">
         <Card className="p-4">
           <p className="text-xl font-bold">Instructions</p>
           <div className="pt-4">
-            In order to access the services offered by DIGITAL ASSET
-            COMPANY LIMITED, you will need to complete and submit this account
-            opening application form, due diligence questionnaire and
-            declaration for accredited/institutional investors.
+            In order to access the services offered by DIGITAL ASSET COMPANY
+            LIMITED, you will need to complete and submit this account opening
+            application form, due diligence questionnaire and declaration for
+            accredited/institutional investors.
           </div>
         </Card>
         <FormCorporateInfo
