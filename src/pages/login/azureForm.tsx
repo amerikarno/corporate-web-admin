@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
+import { Input } from "@/components/Input";
 
 const AzureForm: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<any>(null);
   const location = useLocation();
+  let emailAzure = useRef<string>("");
+
+  const handleAzure = (e: React.ChangeEvent<HTMLInputElement>) => {
+    emailAzure.current = e.target.value;
+    console.log(emailAzure.current);
+  };
 
   useEffect(() => {
     // ดึง access_token จาก URL query parameters
@@ -19,8 +26,17 @@ const AzureForm: React.FC = () => {
     }
   }, [location.search]);
 
-  const handleLogin = () => {
-    window.location.href = "http://localhost/api/v1/authen/login";
+  const handleLogin = async () => {
+    // window.location.href = "http://localhost/api/v1/authen/login/azure";
+    await axios
+      .post("http://localhost:1323/api/v1/authen/login/azure", {})
+      .then((response) => {
+        console.log("User Data:", response.data);
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
   };
 
   // useEffect(() => {
@@ -59,9 +75,12 @@ const AzureForm: React.FC = () => {
       <h1 className="text-xl text-center">Microsoft Azure OAuth2 Login</h1>
       {!accessToken ? (
         // <button onClick={handleLogin}>Login with Microsoft</button>
-        <Button className="w-full" onClick={handleLogin}>
-          Login with Microsoft
-        </Button>
+        <>
+          {/* <Input label="Email" onChange={handleAzure} /> */}
+          <Button className="w-full" onClick={handleLogin}>
+            Login with Microsoft
+          </Button>
+        </>
       ) : (
         <div>
           <h2>User Info</h2>
