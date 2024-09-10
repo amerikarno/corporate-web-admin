@@ -252,14 +252,28 @@ export default function BasicInfo() {
     console.log(body);
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/individual/postcreate", body, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.status === 200) {
-        console.log("submit basic info success", res);
-        navigate("/create-job/added-individual-account/suittestfatca");
-      } else {
-        console.log("submit basic info unsuccess x", res);
+      const registeredAddressFind: TBasicinfoAddress | null =
+        individualData?.address?.find((addr) => addr.types === 1) || null;
+      if(registeredAddressFind?.homeNumber){
+        const res = await axios.post("/api/v1/individual/update/post", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 200) {
+          console.log("update basic info success", res);
+          navigate("/create-job/added-individual-account/suittestfatca");
+        } else {
+          console.log("update basic info unsuccess x", res);
+        }
+      }else{
+        const res = await axios.post("/api/v1/individual/postcreate", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 200) {
+          console.log("submit basic info success", res);
+          navigate("/create-job/added-individual-account/suittestfatca");
+        } else {
+          console.log("submit basic info unsuccess x", res);
+        }
       }
     } catch (error) {
       console.log(error);

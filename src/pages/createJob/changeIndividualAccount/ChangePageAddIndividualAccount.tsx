@@ -45,7 +45,7 @@ export default function ChangePageAddIndividualAccount() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/change-individual-account/edit/${pageId + 1}`);
-    } else if (type == "done") {
+    } else if (type == "Done") {
       localStorage.clear();
       navigate(`/create-job/change-individual-account`);
     } else {

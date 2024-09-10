@@ -15,14 +15,16 @@ import { getCookies } from "@/lib/Cookies";
 import { TUser, setUser } from "@/features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { clearAddIndividual } from "@/features/addIndividual/addIndividualSlice";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const handleClick = (pageId: number) => {
-    if (pageId === 2001) {
+    if (pageId === 2001 || pageId === 2002) {
       localStorage.clear();
       dispatch(clearCorporateData());
+      dispatch(clearAddIndividual());
     }
   };
   

@@ -458,6 +458,7 @@ export function FormCorporateInfo({
                 <h1 className="font-bold pb-4">Registered Country</h1>
                 <div></div>
                 <CheckBox
+                  data-testid={`registeredCountry-${registeredCountryChoices[0]}`}
                   id={`checkbox-${registeredCountryChoices[0]}`}
                   key={registeredCountryChoices[0]}
                   label={registeredCountryChoices[0]}
@@ -470,9 +471,11 @@ export function FormCorporateInfo({
                   name={registeredCountryChoices[0]}
                 />
                 <CheckBox
+                  data-testid={`registeredCountry-${registeredCountryChoices[1]}`}
                   id={`checkbox-${registeredCountryChoices[1]}`}
                   key={registeredCountryChoices[1]}
                   label={registeredCountryChoices[1]}
+
                   checked={
                     registeredCountryPrimaryCountryOperation.isRegisteredOther
                   }
@@ -489,6 +492,7 @@ export function FormCorporateInfo({
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "registered")}
                     defaultValue={resCorpRegisterCountry?.other}
+                    data-testid={`registeredCountry-otherInput`}
                   />
                 </div>
               )}
@@ -498,6 +502,7 @@ export function FormCorporateInfo({
                 <h1 className="font-bold pb-4">Primary Country of Operation</h1>
                 <div></div>
                 <CheckBox
+                  data-testid={`primaryCountry-${PrimaryCountryOfOperationChoices[0]}`}
                   id={`checkbox2-${PrimaryCountryOfOperationChoices[0]}`}
                   key={PrimaryCountryOfOperationChoices[0]}
                   label={PrimaryCountryOfOperationChoices[0]}
@@ -510,6 +515,7 @@ export function FormCorporateInfo({
                   name={PrimaryCountryOfOperationChoices[0]}
                 />
                 <CheckBox
+                  data-testid={`primaryCountry-${PrimaryCountryOfOperationChoices[1]}`}
                   id={`checkbox2-${PrimaryCountryOfOperationChoices[1]}`}
                   key={PrimaryCountryOfOperationChoices[1]}
                   label={PrimaryCountryOfOperationChoices[1]}
@@ -525,6 +531,7 @@ export function FormCorporateInfo({
               {registeredCountryPrimaryCountryOperation.isPrimaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
+                    data-testid={`primaryCountry-otherInput`}
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "primary")}

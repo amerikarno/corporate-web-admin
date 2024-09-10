@@ -57,7 +57,7 @@ export default function EditPageAddIndividualAccount() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/todo-list/individual-account-opening/edit/${pageId + 1}`);
-    } else if (type == "done") {
+    } else if (type == "Done") {
       localStorage.clear();
       navigate(`/todo-list/individual-account-opening/`);
     } else {

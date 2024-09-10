@@ -149,21 +149,41 @@ export default function AddIndividualAccount() {
     console.log(body);
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/individual/precreate", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res);
-      if (res.status === 200) {
-        const age = calculateAge(body.birthDate);
-        localStorage.setItem("cid", res.data.id);
-        localStorage.setItem("age", age.toString());
-        console.log(age);
-        console.log("success", res, data);
+      console.log("body to send")
+      if(individualData?.id){
+        const res = await axios.post("/api/v1/individual/update/pre", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        if (res.status === 200) {
+          const age = calculateAge(body.birthDate);
+          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("age", age.toString());
+          console.log(age);
+          console.log("update success", res, data);
 
-        navigate("/todo-list/individual-account-opening/edit/2");
-        window.scrollTo(0, 0);
+          navigate("/todo-list/individual-account-opening/edit/2");
+          window.scrollTo(0, 0);
+        }
+      }
+      else{
+        const res = await axios.post("/api/v1/individual/precreate", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        if (res.status === 200) {
+          const age = calculateAge(body.birthDate);
+          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("age", age.toString());
+          console.log("create success", res, data);
+
+          navigate("/todo-list/individual-account-opening/edit/2");
+          window.scrollTo(0, 0);
+        }
       }
     } catch (error) {
       console.log(error);
