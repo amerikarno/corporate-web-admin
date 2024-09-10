@@ -53,7 +53,7 @@ export default function CorporateAccountOpenning() {
       try {
         const corporateCode = localStorage.getItem("corporateCode") || "";
         setCorporateCode(corporateCode);
-        console.log(corporateCode);
+        // console.log(corporateCode);
 
         if (corporateCode) {
           const response = await axios.post(
@@ -65,11 +65,11 @@ export default function CorporateAccountOpenning() {
               },
             }
           );
-          console.log(response);
+          // console.log(response);
           dispatch(setCorporateData(response.data[0]));
         } else {
           dispatch(clearCorporateData());
-          console.log("corporateCode not found");
+          // console.log("corporateCode not found");
         }
       } catch (error) {
         console.error("Error fetching corporate data:", error);
@@ -79,7 +79,7 @@ export default function CorporateAccountOpenning() {
     fetchCorporateData();
   }, [corporateCode, pageId, dispatch]);
 
-  console.log(corporateData);
+  // console.log(corporateData);
   const navigate = useNavigate();
   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();
