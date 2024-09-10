@@ -19,16 +19,13 @@ import { mapDataToTCorporateInfo } from "./libs/utils";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { useEffect, useState } from "react";
-import { getCookies, setCookies } from "@/lib/Cookies";
+import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import {
   clearCorporateData,
   setCorporateData,
 } from "@/features/editCorporateData/editCorporateData";
 import { PageAttorney } from "./pages/PageAttorney";
-import { setToken } from "@/features/authen/authenSlice";
-import { setUser, TUser } from "@/features/user/userSlice";
-import { jwtDecode } from "jwt-decode";
 
 type TPage = {
   page?: string;
