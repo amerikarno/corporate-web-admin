@@ -25,6 +25,50 @@ export default function FxExchangeEdit() {
   }
 
   const dispatch = useDispatch();
+  const [youSend,setYouSend] = useState<string>();
+  const [recipientGets,setRecipientGets] = useState<string>();
+  const [youSendValue,setYouSendValue] = useState<number | null>(null);
+  const [exchangeResult,setExchangeResult] = useState<number>(0);
+  const [exchangeSpread, setExchangeSpread] = useState<number | null>(null);
+  const [operationSpread, setOperationSpread] = useState<number | null>(null);
+  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
+
+  const formatNumberWithCommas = (number: number) => {
+    return new Intl.NumberFormat('en-US').format(number);
+  };
+
+  useEffect(() => {
+    if (exchangeSpread !== null && operationSpread !== null && exchangeRate !== null && youSendValue !== null) {
+      const sum = youSendValue + exchangeSpread + operationSpread * exchangeRate;
+      setExchangeResult(sum);
+    }else if(exchangeSpread || operationSpread || exchangeRate || youSendValue === null){
+      setExchangeResult(0);
+    }
+  }, [exchangeSpread, operationSpread, exchangeRate,youSendValue]);
+
+  const handleYouSend = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setYouSend(e.target.value);
+  }
+
+  const handleRecipientGets = (e: React.ChangeEvent<HTMLSelectElement>) =>{
+    setRecipientGets(e.target.value)
+  }
+
+  const handleYouSendValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYouSendValue(parseFloat(e.target.value) || null);
+  };
+
+  const handleExchangeSpreadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExchangeSpread(parseFloat(e.target.value) || null);
+  };
+
+  const handleOperationSpreadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOperationSpread(parseFloat(e.target.value) || null);
+  };
+
+  const handleExchangeRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExchangeRate(parseFloat(e.target.value) || null);
+  };
 
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
@@ -181,7 +225,7 @@ export default function FxExchangeEdit() {
    
     let body: TFxExchange = {
       ...data,
-      exchange:"USD/THB"
+      exchange:`${youSend}/${recipientGets}`
     };
     console.log(choosedEditData);
     console.log(body);
@@ -257,15 +301,16 @@ export default function FxExchangeEdit() {
                     ))}
                 </datalist>
             </div>
-            <div className="flex flex-col items-center space-y-8 py-8">
-                <div className="">
+            <div className="flex flex-row justify-center space-x-[1rem]">
+                <div className="w-1/2">
                     <Input
                         {...register("exchangeSpread")}
+                        onChange={handleExchangeSpreadChange}
                         label="Exchange Spread"
                         id="exchangeSpread"
                         disabled={isSubmitting}
                         type="number"
-                        inputClassName="w-[20rem] md:w-[25rem]"
+                        inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.exchangeSpread && (
                         <p className="text-red-500 text-sm px-2">
@@ -273,20 +318,15 @@ export default function FxExchangeEdit() {
                         </p>
                     )}
                 </div>
-                <div className="w-full flex justify-center relative">
-                    <hr className="w-full h-px border-slate-800 border-2 dark:bg-gray-700"></hr>
-                    <div className="bg-slate-800 p-2 rounded-full absolute -bottom-5">
-                        <CgArrowsExchangeAltV   style={{color:"white", fontSize:"1.5rem"}}/>
-                    </div>
-                </div>
-                <div className="">
+                <div className="w-1/2">
                     <Input
                         {...register("operationSpread")}
+                        onChange={handleOperationSpreadChange}
                         label="Operation Spread"
                         id="operationSpread"
                         disabled={isSubmitting}
                         type="number"
-                        inputClassName="w-[20rem] md:w-[25rem]"
+                        inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.operationSpread && (
                         <p className="text-red-500 text-sm px-2">
@@ -303,6 +343,7 @@ export default function FxExchangeEdit() {
                     disabled={isSubmitting}
                     type="number"
                     inputClassName="w-[20rem] md:w-[25rem]"
+                    onChange={handleExchangeRateChange}
                 />
                 {errors.exchangeRate &&(
                     <p className="text-red-500 text-sm px-2">
@@ -310,8 +351,58 @@ export default function FxExchangeEdit() {
                     </p>
                 )}
             </div>
-            {/* <hr className="w-full h-px border-gray-200 border-2 dark:bg-gray-700"></hr> */}
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center space-y-8 py-4">
+              <div className="flex w-[20rem] md:w-[25rem]">
+                <select
+                  onChange={handleYouSend}
+                  id="categories"
+                  className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                >
+                  <option value="">Currency</option>
+                  <option value="THB">THB</option>
+                  <option value="USD">USD</option>
+                </select>
+                <div className="relative w-full">
+                  <input
+                    onChange={handleYouSendValue}
+                    type="search"
+                    id="search-dropdown"
+                    className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="You Send"
+                    required
+                  />
+                </div>
+              </div>
+                <div className="w-full flex justify-center relative">
+                    <hr className="w-full h-px border-slate-800 border-2 dark:bg-gray-700"></hr>
+                    <div className="bg-slate-800 p-2 rounded-full absolute -bottom-5">
+                        <CgArrowsExchangeAltV   style={{color:"white", fontSize:"1.5rem"}}/>
+                    </div>
+                </div>
+                <div className="flex w-[20rem] md:w-[25rem]">
+                  <select
+                  onChange={handleRecipientGets}
+                    id="categories"
+                    className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  >
+                    <option value="">Currency</option>
+                    <option value="THB">THB</option>
+                    <option value="USD">USD</option>
+                  </select>
+                  <div className="relative w-full">
+                    <input
+                      disabled={true}
+                      type="search"
+                      id="search-dropdown"
+                      className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                      placeholder="Recipient Gets"
+                      value={exchangeResult}
+                    />
+                  </div>
+              </div>
+            </div>
+            <div className="flex justify-center pt-4 relative">
+                <span className="-top-4 text-gray-400 text-sm absolute">Recipient Gets : {formatNumberWithCommas(exchangeResult)} {recipientGets}</span>
                 <Button className="w-[20rem]">
                     Submit
                 </Button>
