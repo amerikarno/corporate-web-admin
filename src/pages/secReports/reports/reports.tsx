@@ -143,12 +143,16 @@ export default function Reports() {
   };
 
   return (
-    <Card>
+    <Card className="border-none shadow-none">
       <CardHeader>
         <CardTitle>Reports</CardTitle>
       </CardHeader>
       <CardContent className="overflow-x-auto">
-        <DataTable columns={columnsReports} data={data} />
+        <DataTable
+          className="border-b border-gray-300"
+          columns={columnsReports}
+          data={data}
+        />
       </CardContent>
     </Card>
   );
