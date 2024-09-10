@@ -25,8 +25,8 @@ export default function FxExchangeEdit() {
   }
 
   const dispatch = useDispatch();
-  const [youSend,setYouSend] = useState<string>();
-  const [recipientGets,setRecipientGets] = useState<string>();
+  const [youSend,setYouSend] = useState<string>("THB");
+  const [recipientGets,setRecipientGets] = useState<string>("USD");
   const [youSendValue,setYouSendValue] = useState<number | null>(null);
   const [exchangeResult,setExchangeResult] = useState<number>(0);
   const [exchangeSpread, setExchangeSpread] = useState<number | null>(null);
@@ -358,7 +358,6 @@ export default function FxExchangeEdit() {
                   id="categories"
                   className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 >
-                  <option value="">Currency</option>
                   <option value="THB">THB</option>
                   <option value="USD">USD</option>
                 </select>
@@ -385,9 +384,8 @@ export default function FxExchangeEdit() {
                     id="categories"
                     className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                   >
-                    <option value="">Currency</option>
-                    <option value="THB">THB</option>
                     <option value="USD">USD</option>
+                    <option value="THB">THB</option>
                   </select>
                   <div className="relative w-full">
                     <input
