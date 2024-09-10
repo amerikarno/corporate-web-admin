@@ -176,6 +176,8 @@ export default function BasicInfo() {
           retireInvestment: individualData?.retireInvestment || false,
         },
       };
+      console.log(firstBank)
+      console.log(fillData)
       reset(fillData);
     }
   }, [individualData, reset]);
@@ -260,7 +262,7 @@ export default function BasicInfo() {
         });
         if (res.status === 200) {
           console.log("update basic info success", res);
-          navigate("/create-job/added-individual-account/suittestfatca");
+          navigate("/todo-list/individual-account-opening/edit/3");
         } else {
           console.log("update basic info unsuccess x", res);
         }
@@ -270,7 +272,7 @@ export default function BasicInfo() {
         });
         if (res.status === 200) {
           console.log("submit basic info success", res);
-          navigate("/create-job/added-individual-account/suittestfatca");
+          navigate("/todo-list/individual-account-opening/edit/3");
         } else {
           console.log("submit basic info unsuccess x", res);
         }

@@ -1,6 +1,11 @@
+import axios from '@/api/axios';
+import { RootState } from '@/app/store';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { useState } from 'react';
+import { setIndividualData } from '@/features/fetchIndividualData/fetchIndividualDataSlice';
+import { getCookies } from '@/lib/Cookies';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface Answer {
   questionIndex: number;
@@ -101,21 +106,50 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
       ],
     },
   ];
-  const fetchedData = [[0, 0, 0, 0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0]];
+  const token = getCookies();
+  const dispatch = useDispatch();
+  const fetchIndividualData = async (AccountID: string) => {
+    try {
+      console.log(AccountID);
+      const res = await axios.post(
+        "/api/v1/individual/list",
+        { AccountID },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const individualData = useSelector(
+    (state: RootState) => state.individualData.individualDatas
+  );
+
+  const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suitTestResult.answer;
+  const fetchedData = Object.keys(fetchSuitTestResult || []).map(key => fetchSuitTestResult?.[key].ans);
+  console.log(fetchedData);
+  // const fetchedData = [[0, 0, 0, 0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0]];
+
   const initialAnswers = questions.map((_, index) => {
     if (fetchedData) {
       const answerFromData = fetchedData[index];
       let answerValue: string | number[] = "";
       let score = 0;
 
-      if (answerFromData && index === 2) {
-        // Handling the checkbox case for questionIndex 2
+      if (Array.isArray(answerFromData) && index === 2) {
+
         answerValue = answerFromData;
         const selectedChoices = answerFromData
           .map((val, idx) => (val === 1 ? idx + 1 : 0))
           .filter(val => val !== 0);
         score = Math.max(...selectedChoices);
-      } else if (answerFromData) {
+      } else if (Array.isArray(answerFromData)) {
         const selectedChoiceIndex = answerFromData.findIndex((choice) => choice === 1);
         if (selectedChoiceIndex !== -1) {
           score = selectedChoiceIndex + 1;
@@ -136,8 +170,58 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
       };
     }
   });
-
   const [answers, setAnswers] = useState<Answer[]>(initialAnswers);
+
+
+  useEffect(() => {
+    const cidValue = localStorage.getItem("cid");
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch,]);
+
+  useEffect(() => {
+    if (individualData) {
+      const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suitTestResult.answer;
+      const fetchedData = Object.keys(fetchSuitTestResult || []).map(key => fetchSuitTestResult?.[key].ans);
+      console.log(fetchedData);
+
+      const initialAnswers = questions.map((_, index) => {
+        if (fetchedData) {
+          const answerFromData = fetchedData[index];
+          let answerValue: string | number[] = "";
+          let score = 0;
+
+          if (Array.isArray(answerFromData) && index === 2) {
+            answerValue = answerFromData;
+            const selectedChoices = answerFromData
+              .map((val, idx) => (val === 1 ? idx + 1 : 0))
+              .filter(val => val !== 0);
+            score = Math.max(...selectedChoices);
+          } else if (Array.isArray(answerFromData)) {
+            const selectedChoiceIndex = answerFromData.findIndex((choice) => choice === 1);
+            if (selectedChoiceIndex !== -1) {
+              score = selectedChoiceIndex + 1;
+              answerValue = questions[index].choices[selectedChoiceIndex];
+            }
+          }
+
+          return {
+            questionIndex: index,
+            answer: answerValue,
+            score,
+          };
+        } else {
+          return {
+            questionIndex: index,
+            answer: index === 2 ? [0, 0, 0, 0] : "",
+            score: 0,
+          };
+        }
+      });
+
+      setAnswers(initialAnswers);
+      handleSubmit();
+    }
+  }, [individualData]);
 
   // const [answers, setAnswers] = useState<Answer[]>(
   //   questions.map((_, index) => ({
@@ -279,7 +363,6 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
       suitTestResult(body)
       console.log(body);
     } else {
-      alert("Do suit test first.");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -356,11 +439,14 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
             </Card> 
         ))}
         <div className="flex justify-center">
-          {!suitTestDone && (
+          {/* {!suitTestDone && (
             <Button type="button" className="w-1/8" onClick={handleSubmit}>
               Done
             </Button>
-          )}
+          )} */}
+          <Button type="button" className="w-1/8" onClick={handleSubmit}>
+              Done
+            </Button>
         </div>
         {suitTestDone && (
           <div className="md:relative flex md:flex-row flex-col w-full m-8">

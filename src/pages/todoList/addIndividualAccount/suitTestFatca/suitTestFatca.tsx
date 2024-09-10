@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubSuitTest from "./subSuitTest";
 import KnowLedgeTest from "./knowLedgeTest";
 import { TiTick } from "react-icons/ti";
@@ -8,11 +8,47 @@ import "./suitTestFatca.css";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
+import { useDispatch, useSelector } from "react-redux";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { RootState } from "@/app/store";
 
 export default function SuitTestFatca() {
   if (!isAllowedPage(2002)) {
     return <UnAuthorize />;
   }
+
+
+  const token = getCookies();
+  const dispatch = useDispatch();
+  const fetchIndividualData = async (AccountID: string) => {
+    try {
+      console.log(AccountID);
+      const res = await axios.post(
+        "/api/v1/individual/list",
+        { AccountID },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const individualData = useSelector(
+    (state: RootState) => state.individualData.individualDatas
+  );
+  useEffect(() => {
+    const cidValue = localStorage.getItem("cid");
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch,]);
+
 
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
@@ -20,6 +56,23 @@ export default function SuitTestFatca() {
   const [checkboxStates, setCheckboxStates] = useState<boolean[]>(
     new Array(8).fill(false)
   );
+
+  useEffect(()=>{
+    if(individualData?.SuiteTestResult.isFatca){
+      setFatcaInfo(individualData.SuiteTestResult.fatcaInfo)
+      if (Array.isArray(fatcaInfo)) {
+        const initialCheckboxStates = fatcaInfo.map(state => state === 1);
+        setCheckboxStates(initialCheckboxStates);
+      }
+      setFatcaRadio("fatcaradio-1")
+    }else{
+
+    }
+
+    if(individualData?.SuiteTestResult.isKnowLedgeDone){
+      setKnowLedgeTest("knowLedgeTest-1")
+    }
+  },[individualData])
 
   const handleCheckboxChange = (index: number) => {
     const updatedCheckboxStates = [...checkboxStates];
@@ -51,8 +104,7 @@ export default function SuitTestFatca() {
       setSuitTestResult(exam_result)
   }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
-
-  const handleSubmitSuitTestFatca = () => {
+  const handleSubmitSuitTestFatca = async () => {
     console.log(isButtonDisabled);
     console.log(suitTestSuccess);
     console.log(fatcaradio === "fatcaradio-2");
@@ -65,13 +117,29 @@ export default function SuitTestFatca() {
         id: localStorage.getItem("cid"),
         suiteTestResult: suitTestResult,
         isFatca: fatcaradio === "fatcaradio-1",
-        fatcaInfo: fatcaInfo,
+        fatcaInfo: fatcaInfo === "" ? [] : fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
         knowLedgeTestResult: knowLedgeTestSuccess ? 15 : 0,
         pageID: 400,
       };
       console.log(body);
-      navigate("/todo-list/individual-account-opening/edit/4");
+      try{
+        const res = await axios.post("/api/v1/suitetest/result/individual/save", body,  {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        console.log(res)
+        if (res.status === 200) {
+          console.log("suit test save success", res.data);
+          navigate("/todo-list/individual-account-opening/edit/4");
+        }else{
+          console.log("suit test save not success")
+        }
+      }catch(error){
+        console.log(error)
+      }
     } else {
       alert("Please Do the Suit Test First.");
       window.scrollTo({ top: 0, behavior: "smooth" });

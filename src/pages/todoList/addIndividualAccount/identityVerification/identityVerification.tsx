@@ -20,19 +20,19 @@ export default function IdentityVerification() {
   return (
     <div className="flex flex-col items-center p-8 pt-16 space-y-8 md:mx-16">
       <div className="flex flex-col items-center text-slate-800">
-        <span className="font-bold text-2xl">ท่านสามารถเลือก "ยืนยันตัวตน" ดังนี้</span>
-        <span className="text-lg">กรุณาเลือกช่องทางการยืนยันตัวตนที่ท่านสะดวกอย่างใดอย่างหนึ่ง</span>
-        <span className="text-lg">หลังการยืนยันตัวตน ท่านจะได้รับ Username & Password ผ่านทางอีเมลล์</span>
+        <span className="font-bold text-lg md:text-2xl">ท่านสามารถเลือก "ยืนยันตัวตน" ดังนี้</span>
+        <span className="text-base md:text-lg">กรุณาเลือกช่องทางการยืนยันตัวตนที่ท่านสะดวกอย่างใดอย่างหนึ่ง</span>
+        <span className="text-base md:text-lg">หลังการยืนยันตัวตน ท่านจะได้รับ Username & Password ผ่านทางอีเมลล์</span>
       </div>
       <Card className="flex items-center pb-14 md:w-3/4 relative">
-        <div className="m-8 w-28 flex-shrink-0 flex">
+        <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
           <img src={ndid} alt="NDID"/>
         </div>
         <div className="flex flex-col">
-          <span className="text-slate-800 font-bold py-4 text-2xl ">1.NDID</span>
-          <span>1. ยืนยันตัวตนและสมัคร NDID กับธนาคารที่ท่านใช้บริการเรียบร้อยแล้วเท่านั้น</span>
-          <span>2. ทำรายการให้สำเร็จภายใน 1 ชม.</span>
-          <span className="p-4 pl-0 md:pl-4"><span className="underline font-bold pr-4">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
+          <span className="text-slate-800 font-bold py-4 text-lg md:text-2xl ">1.NDID</span>
+          <span className="text-sm md:text-base">1. ยืนยันตัวตนและสมัคร NDID กับธนาคารที่ท่านใช้บริการเรียบร้อยแล้วเท่านั้น</span>
+          <span className="text-sm md:text-base">2. ทำรายการให้สำเร็จภายใน 1 ชม.</span>
+          <span className="p-4 pl-0 md:pl-4 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
           <div className="absolute bottom-4 left-[43%]">
             <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -55,14 +55,14 @@ export default function IdentityVerification() {
         </div>
       </Card>
       <Card className="flex items-center pb-14 md:w-3/4 relative">
-      <div className="m-8 w-32 h-32 flex-shrink-0 flex">
+      <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
           <img src={thaiid} alt="THAIID"/>
         </div>
         <div className="flex flex-col">
-          <span className="text-slate-800 font-bold py-4 text-2xl ">2.THAID</span>
-          <span>1. ยืนยันตัวตนผ่าน THAID</span>
-          <span>2. ทำรายการให้สำเร็จภายใน 1 วัน</span>
-          <span className="p-4 pl-0 md:pl-4"><span className="underline font-bold pr-4">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
+          <span className="text-slate-800 font-bold py-4 text-lg md:text-2xl ">2.THAID</span>
+          <span className="text-sm md:text-base">1. ยืนยันตัวตนผ่าน THAID</span>
+          <span className="text-sm md:text-base">2. ทำรายการให้สำเร็จภายใน 1 วัน</span>
+          <span className="p-4 pl-0 md:pl-4 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
           <div className="absolute bottom-4 left-[43%]">
             <AlertDialog>
               <AlertDialogTrigger asChild>

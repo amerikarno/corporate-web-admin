@@ -145,11 +145,10 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 };
-    console.log(body);
+    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
     try {
       const token = getCookies();
-      console.log("body to send")
+      console.log("body to send ",body)
       if(individualData?.id){
         const res = await axios.post("/api/v1/individual/update/pre", body, {
           headers: {

@@ -93,6 +93,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/cash-deposit-withdraw",
         pageId: 2006,
       },
+      {
+        label: "fx exchange",
+        href: "/create-job/fx-exchange",
+        pageId: 2007,
+      },
       // {
       //   label: "special edd",
       //   href: "/create-job/special-edd",
