@@ -19,13 +19,16 @@ import { mapDataToTCorporateInfo } from "./libs/utils";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { useEffect, useState } from "react";
-import { getCookies } from "@/lib/Cookies";
+import { getCookies, setCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import {
   clearCorporateData,
   setCorporateData,
 } from "@/features/editCorporateData/editCorporateData";
 import { PageAttorney } from "./pages/PageAttorney";
+import { setToken } from "@/features/authen/authenSlice";
+import { setUser, TUser } from "@/features/user/userSlice";
+import { jwtDecode } from "jwt-decode";
 
 type TPage = {
   page?: string;
@@ -48,34 +51,34 @@ export default function CorporateAccountOpenning() {
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
-  useEffect(() => {
-    const fetchCorporateData = async () => {
-      try {
-        const corporateCode = localStorage.getItem("corporateCode") || "";
-        setCorporateCode(corporateCode);
-        // console.log(corporateCode);
+  const fetchCorporateData = async () => {
+    try {
+      const corporateCode = localStorage.getItem("corporateCode") || "";
+      setCorporateCode(corporateCode);
+      // console.log(corporateCode);
 
-        if (corporateCode) {
-          const response = await axios.post(
-            "/api/v1/corporate/query",
-            { corporateCode: corporateCode },
-            {
-              headers: {
-                Authorization: `Bearer ${getCookies()}`,
-              },
-            }
-          );
-          // console.log(response);
-          dispatch(setCorporateData(response.data[0]));
-        } else {
-          dispatch(clearCorporateData());
-          // console.log("corporateCode not found");
-        }
-      } catch (error) {
-        console.error("Error fetching corporate data:", error);
+      if (corporateCode) {
+        const response = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode: corporateCode },
+          {
+            headers: {
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          }
+        );
+        // console.log(response);
+        dispatch(setCorporateData(response.data[0]));
+      } else {
+        dispatch(clearCorporateData());
+        // console.log("corporateCode not found");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching corporate data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchCorporateData();
   }, [corporateCode, pageId, dispatch]);
 

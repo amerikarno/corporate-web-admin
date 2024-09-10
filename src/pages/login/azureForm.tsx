@@ -2,20 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "@/api/axios";
 import { Button } from "@/components/ui/button";
-import { useLocation, useNavigate } from "react-router-dom";
-import { setCookies } from "@/lib/Cookies";
-import { setToken } from "@/features/authen/authenSlice";
-import { useDispatch } from "react-redux";
-import { setUser, TUser } from "@/features/user/userSlice";
-import { jwtDecode } from "jwt-decode";
-import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useLocation } from "react-router-dom";
 
 const AzureForm: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<any>(null);
   const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     // ดึง access_token จาก URL query parameters
@@ -28,60 +20,19 @@ const AzureForm: React.FC = () => {
     }
   }, [location.search]);
 
-  const mockLogin = async () => {
-    const hashedUsername =
-      "f0179dd3d8f5f85dd303326911320bd3f985ac4cb89d6b3a44b30f0f36249a75";
-    const hashedPassword =
-      "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
-
-    api
-      .post(
-        "/api/v1/authen/login",
-        {
-          hashedUsername: `${hashedUsername}`,
-          hashedPassword: `${hashedPassword}`,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        dispatch(setToken(res.data.accessToken));
-        setCookies(res.data.accessToken);
-        const user: TUser = jwtDecode(res.data.accessToken);
-        localStorage.clear();
-        dispatch(clearCorporateData());
-        dispatch(setUser(user));
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleLogin = async () => {
-    // mockLogin();
-
-    // window.location.href = "http://localhost/api/v1/authen/login/azure";
     try {
-      const res = await api.post(
-        "/api/v1/authen/login/azure",
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const res = await api.get("/api/v1/authen/login/azure", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
       console.log(res);
     } catch (error) {
       console.log(error);
     }
+    window.location.href = "http://localhost:1323/api/v1/authen/login/azure";
   };
 
   // useEffect(() => {
