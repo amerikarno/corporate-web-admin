@@ -109,9 +109,9 @@ export default function BasicInfo() {
         individualData?.address?.find((addr) => addr.types === 3) || null;
 
       const firstBank: TBasicInfoBank | null =
-        individualData?.bank?.find((addr) => addr.types === 0) || null;
-      const secondBank: TBasicInfoBank | null =
         individualData?.bank?.find((addr) => addr.types === 1) || null;
+      const secondBank: TBasicInfoBank | null =
+        individualData?.bank?.find((addr) => addr.types === 2) || null;
 
       let fillData: TBasicInfo = {
         registeredAddress: {
