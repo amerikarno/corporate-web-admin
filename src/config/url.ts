@@ -225,6 +225,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/cash-deposit-withdraw",
         pageId: 3004,
       },
+      {
+        label:"fx exchange",
+        href: "/todo-list/fx-exchange",
+        pageId:3005
+      },
 
       // {
       //   label: "individual account opening",

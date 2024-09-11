@@ -8,6 +8,7 @@ export const fxExchangeSchema = z.object({
   id: z.string().optional(),
   transactionStatus: z.coerce.number().optional(),
   exchange: z.string().optional(),
+  buyCurrency: z.coerce.number().min(1,"please fill this field first"),
 });
 
 export type TFxExchange = z.infer<typeof fxExchangeSchema>;

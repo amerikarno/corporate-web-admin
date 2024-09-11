@@ -9,16 +9,17 @@ import { RootState } from "@/app/store";
 
 type TTransaction ={
     id: string;
+    buyCurrency: number;
     corporateCode: number;
     exchangeSpread: number;
     operationSpread: number;
     exchangeRate: number;
     transactionStatus?: number;
+    exchange:string;
 }
 
 const FxExchangeTransactionList = () => {
   const user = useSelector((state: RootState) => state.user);
-  console.log(user.user?.roles);
   const [listOfTransaction, setFetchedListOfTransaction] = useState<
     TTransaction[]
   >([]);
@@ -76,7 +77,7 @@ const FxExchangeTransactionList = () => {
 
     try {
       const response = await axios.post(
-        "/api/v1/transaction/bank/review",
+        "/api/v1/transaction/exchange/review",
         dataToSend,
         {
           headers: {
@@ -112,13 +113,13 @@ const FxExchangeTransactionList = () => {
   const fetchListOfTransaction = async () => {
     try {
       const token = getCookies();
-      const res = await axios.get("/api/v1/transaction/bank/get/individual", {
+      const res = await axios.get("/api/v1/transaction/exchange/get/corporate", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (res.status === 200) {
-        // console.log(res.data);
+        console.log(res.data);
         const data = res.data ?? [];
         const seenIds = new Set();
         const transactions: TTransaction[] = data
@@ -133,14 +134,15 @@ const FxExchangeTransactionList = () => {
           .map((item: any) => {
             // console.log(item);
             return {
-                id: item.id,
-                accountId: item.accountId,
-                bankName: item.bankName,
-                bankAccount: item.bankAccount,
-                operations: item.operations,
-                orderValue: item.orderValue,
-                transactionStatus: item.transactionStatus,
-            };
+              id: item.id,
+              buyCurrency: item.buyCurrency,
+              corporateCode: item.corporateCode,
+              exchangeSpread: item.exchangeSpread,
+              operationSpread: item.operationSpread,
+              exchangeRate: item.exchangeRate,
+              transactionStatus: item.transactionStatus,
+              exchange: item.exchange
+          };
           });
         setFetchedListOfTransaction(transactions);
         // console.log(transactions);
@@ -189,16 +191,24 @@ const FxExchangeTransactionList = () => {
       selector: (row: TTransaction) => row.corporateCode || "",
     },
     {
-      name: "Bank Name",
+      name:"Buy Amount",
+      selector:(row: TTransaction) => row.buyCurrency || "",
+    },
+    {
+      name: "Exchange Pairs",
+      selector: (row: TTransaction) => row.exchange || "",
+    },
+    {
+      name: "Exchange Rate",
+      selector: (row: TTransaction) => row.exchangeRate || "",
+    },
+    {
+      name: "Exchange Spread",
       selector: (row: TTransaction) => row.exchangeSpread || "",
     },
     {
-      name: "Bank Account",
+      name: "Operation Spread",
       selector: (row: TTransaction) => row.operationSpread || "",
-    },
-    {
-      name: "Deposit/Withdraw",
-      selector: (row: TTransaction) => row.exchangeRate || "",
     },
     {
       name: "Status",
@@ -240,7 +250,7 @@ const FxExchangeTransactionList = () => {
     <div className="p-4 space-y-8">
       <Card>
         <DataTable
-          title="List of Cash deposit/withdraw"
+          title="List of FX Exchange"
           columns={columnsContactPerson}
           data={listOfTransaction}
           clearSelectedRows

@@ -83,4 +83,6 @@ export type TIndividualData = {
   SuiteTestResult: SuiteTestResult;
   address: TBasicinfoAddress[];
   bank: TBasicInfoBank[];
+  ndid:boolean;
+  thaid:boolean;
 };

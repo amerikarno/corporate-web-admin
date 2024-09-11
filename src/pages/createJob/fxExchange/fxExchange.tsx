@@ -73,14 +73,14 @@ export default function FxExchangeEdit() {
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
 
-    const mockeddata: TFxExchange[] = [{
-      corporateCode: 80000014,
-      exchangeRate: 231,
-      exchangeSpread: 132,
-      operationSpread: 546,
-      exchange: "THB/USD",
-      transactionStatus: 0,
-    }]
+    // const mockeddata: TFxExchange[] = [{
+    //   corporateCode: 80000014,
+    //   exchangeRate: 231,
+    //   exchangeSpread: 132,
+    //   operationSpread: 546,
+    //   exchange: "THB/USD",
+    //   transactionStatus: 0,
+    // }]
 
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
     { corporateCode: number }[]
@@ -120,32 +120,32 @@ export default function FxExchangeEdit() {
     }
   };
 
-//   const fetchOrderList = async () => {
-//     try {
-//       const token = getCookies();
-//       const res = await axios.get("/api/v1/transaction/order/get", {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-//       if (res.status === 200) {
-//         // console.log(res.data);
-//         const orderTrades = res.data || [];
+  const fetchOrderList = async () => {
+    try {
+      const token = getCookies();
+      const res = await axios.get("/api/v1/transaction/exchange/get/corporate", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        // console.log(res.data);
+        const orderTrades = res.data || [];
 
-//         const uniqueOrderTrades = orderTrades.filter(
-//           (order: any, index: any, self: any) =>
-//             index === self.findIndex((t: any) => t.id === order.id)
-//         );
+        const uniqueOrderTrades = orderTrades.filter(
+          (order: any, index: any, self: any) =>
+            index === self.findIndex((t: any) => t.id === order.id)
+        );
 
-//         dispatch(setOrderTrades(uniqueOrderTrades));
-//         // console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
-//       } else {
-//         console.log("Failed to fetch orderTrade");
-//       }
-//     } catch (error) {
-//       console.log("Fetching order list of this role error!", error);
-//     }
-//   };
+        dispatch(setFxExchanges(uniqueOrderTrades));
+        // console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
+      } else {
+        console.log("Failed to fetch orderTrade");
+      }
+    } catch (error) {
+      console.log("Fetching order list of this role error!", error);
+    }
+  };
 
   const getStatus = (status?: number) => {
     if (status === -1) {
@@ -167,6 +167,14 @@ export default function FxExchangeEdit() {
       selector: (row: TFxExchange) => row.corporateCode || "",
     },
     {
+      name:"Buy Amount",
+      selector:(row: TFxExchange) => row.buyCurrency || "",
+    },
+    {
+      name: "Exchange Pairs",
+      selector: (row: TFxExchange) => row.exchange || "",
+    },
+    {
       name: "Exchange Rate",
       selector: (row: TFxExchange) => row.exchangeRate || "",
     },
@@ -177,10 +185,6 @@ export default function FxExchangeEdit() {
     {
       name: "Operation Spread",
       selector: (row: TFxExchange) => row.operationSpread || "",
-    },
-    {
-      name: "Exchange Pairs",
-      selector: (row: TFxExchange) => row.exchange || "",
     },
     {
       name: "Status",
@@ -245,42 +249,42 @@ export default function FxExchangeEdit() {
     console.log(choosedEditData);
     console.log(body);
 
-    // try {
-    //   const token = getCookies();
-    //   if (body.id) {
-    //     const res = await axios.post("/api/v1/transaction/order/edit", body, {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     });
-    //     if (res.status === 200) {
-    //       reset();
-    //       clearChoosedEditData();
-    //       setSelectedCorporateCode("");
-    //       console.log("edit successful");
-    //     //   fetchOrderList();
-    //     } else {
-    //       console.log("edit failed");
-    //     }
-    //   } else {
-    //     const res = await axios.post("/api/v1/transaction/order/create", body, {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     });
-    //     if (res.status === 200) {
-    //       reset();
-    //       clearChoosedEditData();
-    //       setSelectedCorporateCode("");
-    //       console.log("save successful");
-    //       fetchOrderList();
-    //     } else {
-    //       console.log("save failed");
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const token = getCookies();
+      if (body.id) {
+        const res = await axios.post("/api/v1/transaction/exchange/edit", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          reset();
+          clearChoosedEditData();
+          setSelectedCorporateCode("");
+          console.log("edit successful");
+          fetchOrderList();
+        } else {
+          console.log("edit failed");
+        }
+      } else {
+        const res = await axios.post("/api/v1/transaction/exchange/create", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          reset();
+          clearChoosedEditData();
+          setSelectedCorporateCode("");
+          console.log("save successful");
+          fetchOrderList();
+        } else {
+          console.log("save failed");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -297,7 +301,6 @@ export default function FxExchangeEdit() {
                     label="Corporate Code"
                     id="corporateCode"
                     disabled={isSubmitting}
-                    value={selectedCorporateCode}
                     onChange={handleCorporateCodeChange}
                     list="corporateCodes"
                     autoComplete="off"
@@ -324,7 +327,6 @@ export default function FxExchangeEdit() {
                         label="Exchange Spread"
                         id="exchangeSpread"
                         disabled={isSubmitting}
-                        type="number"
                         inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.exchangeSpread && (
@@ -340,7 +342,6 @@ export default function FxExchangeEdit() {
                         label="Operation Spread"
                         id="operationSpread"
                         disabled={isSubmitting}
-                        type="number"
                         inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.operationSpread && (
@@ -356,7 +357,6 @@ export default function FxExchangeEdit() {
                     label="Exchange Rate"
                     id="exchangeRate"
                     disabled={isSubmitting}
-                    type="number"
                     inputClassName="w-[20rem] md:w-[25rem]"
                     onChange={handleExchangeRateChange}
                 />
@@ -378,12 +378,12 @@ export default function FxExchangeEdit() {
                 </select>
                 <div className="relative w-full">
                   <input
+                    {...register("buyCurrency")}
                     onChange={handleYouSendValue}
                     type="search"
                     id="search-dropdown"
                     className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:outline-none"
                     placeholder="You Send"
-                    required
                   />
                 </div>
               </div>
@@ -409,7 +409,7 @@ export default function FxExchangeEdit() {
                       id="search-dropdown"
                       className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                       placeholder="Recipient Gets"
-                      value={exchangeResult}
+                      value={exchangeResult || ""}
                     />
                   </div>
               </div>
@@ -427,11 +427,10 @@ export default function FxExchangeEdit() {
         <DataTable
           title="Rejected FX Exchange Lists"
           columns={columnsFxExchange}
-          // data={fxExchangeData.map((orderTrade, index) => ({
-          //   ...orderTrade,
-          //   key: index,
-          // }))}
-          data={mockeddata}
+          data={fxExchangeData.map((orderTrade, index) => ({
+            ...orderTrade,
+            key: index,
+          }))}
           clearSelectedRows
         />
       </Card>

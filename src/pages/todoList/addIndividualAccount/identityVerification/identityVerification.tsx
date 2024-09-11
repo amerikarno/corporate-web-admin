@@ -17,50 +17,161 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
+import { useDispatch, useSelector } from "react-redux";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { RootState } from "@/app/store";
+import { useEffect } from "react";
 
 export default function IdentityVerification() {
   const navigate = useNavigate();
-  const handleNdid = () => {
-    console.log("ndid choosed")
+  const token = getCookies();
+  const dispatch = useDispatch();
+
+  const fetchIndividualData = async (AccountID: string) => {
+    try {
+      console.log(AccountID);
+      const res = await axios.post(
+        "/api/v1/individual/list",
+        { AccountID },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const individualData = useSelector(
+    (state: RootState) => state.individualData.individualDatas
+  );
+  useEffect(() => {
+    const cidValue = localStorage.getItem("cid");
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch]);
+
+
+  const handleNdid = async () => {
     let body = {
       ndid:true,
-      accountId:localStorage.getItem('cid')
+      cid:localStorage.getItem('cid')
     }
-    Swal.fire({
-      title: "Verification Selected",
-      text:"Thanks for your submission",
-      icon: "success",
-      confirmButtonText: "Go back to todolist",
-      customClass: {
-        confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
-      },
-    }).then((result)=>{
-      if(result.isConfirmed){
-        console.log("getter")
-        navigate("/todo-list/individual-account-opening/");
+    console.log("ndid choosed : ",body)
+    try{
+      if(individualData?.thaid || individualData?.ndid){
+        const res = await axios.post("/api/v1/individual/update/ndidthaid",body,
+          { headers: {
+           Authorization: `Bearer ${token}`,
+         }},)
+         if(res.status === 200){
+           console.log("update ndid success :",res)
+           Swal.fire({
+             title: "Verification Selected",
+             text:"Thanks for your submission",
+             icon: "success",
+             confirmButtonText: "Go back to todolist",
+             customClass: {
+               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+             },
+           }).then((result)=>{
+             if(result.isConfirmed){
+               navigate("/todo-list/individual-account-opening/");
+             }
+           });
+         }else{
+          console.log("update ndid not success :",res)
+         }
+      }else{
+        const res = await axios.post("/api/v1/individual/ndidthaid",body,
+          { headers: {
+           Authorization: `Bearer ${token}`,
+         }},)
+         if(res.status === 200){
+           console.log("save ndid success :",res)
+           Swal.fire({
+             title: "Verification Selected",
+             text:"Thanks for your submission",
+             icon: "success",
+             confirmButtonText: "Go back to todolist",
+             customClass: {
+               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+             },
+           }).then((result)=>{
+             if(result.isConfirmed){
+               navigate("/todo-list/individual-account-opening/");
+             }
+           });
+         }else{
+          console.log("save ndid not success :",res)
+         }
       }
-    });
-    
+    }catch(error){
+      console.log("save ndid not success :",error)
+    } 
   }
-  const handlethaiid = () => {
-    console.log("thaid choosed")
+  const handlethaiid = async () => {
     let body = {
       thaid:true,
-      accountId:localStorage.getItem('cid')
+      cid:localStorage.getItem('cid')
     }
-    Swal.fire({
-      title: "Verification Selected",
-      text:"Thanks for your submission",
-      icon: "success",
-      confirmButtonText: "Go back to todolist",
-      customClass: {
-        confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
-      },
-    }).then((result)=>{
-      if(result.isConfirmed){
-        navigate("/todo-list/individual-account-opening/");
+    console.log("thaid choosed : ",body)
+    try{
+      if(individualData?.thaid || individualData?.ndid){
+        const res = await axios.post("/api/v1/individual/update/ndidthaid",body,
+          { headers: {
+           Authorization: `Bearer ${token}`,
+         }},)
+         if(res.status === 200){
+           console.log("update thaid success :",res)
+           Swal.fire({
+             title: "Verification Selected",
+             text:"Thanks for your submission",
+             icon: "success",
+             confirmButtonText: "Go back to todolist",
+             customClass: {
+               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+             },
+           }).then((result)=>{
+             if(result.isConfirmed){
+               navigate("/todo-list/individual-account-opening/");
+             }
+           });
+         }else{
+          console.log("update thaid not success :",res)
+         }
+      }else{
+        const res = await axios.post("/api/v1/individual/ndidthaid",body,
+          { headers: {
+           Authorization: `Bearer ${token}`,
+         }},)
+         if(res.status === 200){
+           console.log("save thaid success :",res)
+           Swal.fire({
+             title: "Verification Selected",
+             text:"Thanks for your submission",
+             icon: "success",
+             confirmButtonText: "Go back to todolist",
+             customClass: {
+               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+             },
+           }).then((result)=>{
+             if(result.isConfirmed){
+               navigate("/todo-list/individual-account-opening/");
+             }
+           });
+         }else{
+          console.log("save thaid not success :",res)
+         }
       }
-    });
+    }catch(error){
+      console.log("save ndid not success :",error)
+    } 
   }
   return (
     <div className="flex flex-col items-center p-8 pt-16 space-y-8 md:mx-16">
