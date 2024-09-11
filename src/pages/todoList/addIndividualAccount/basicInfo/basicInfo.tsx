@@ -263,6 +263,7 @@ export default function BasicInfo() {
         if (res.status === 200) {
           console.log("update basic info success", res);
           navigate("/todo-list/individual-account-opening/edit/3");
+          window.scrollTo(0, 0);
         } else {
           console.log("update basic info unsuccess x", res);
         }
@@ -273,6 +274,7 @@ export default function BasicInfo() {
         if (res.status === 200) {
           console.log("submit basic info success", res);
           navigate("/todo-list/individual-account-opening/edit/3");
+          window.scrollTo(0, 0);
         } else {
           console.log("submit basic info unsuccess x", res);
         }

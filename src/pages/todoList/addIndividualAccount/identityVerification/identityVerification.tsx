@@ -16,9 +16,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useNavigate } from "react-router-dom";
 
 export default function IdentityVerification() {
-
+  const navigate = useNavigate();
   const handleNdid = () => {
     console.log("ndid choosed")
     let body = {
@@ -32,6 +33,11 @@ export default function IdentityVerification() {
       confirmButtonText: "Go back to todolist",
       customClass: {
         confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+      },
+    }).then((result)=>{
+      if(result.isConfirmed){
+        console.log("getter")
+        navigate("/todo-list/individual-account-opening/");
       }
     });
   }
@@ -48,6 +54,10 @@ export default function IdentityVerification() {
       confirmButtonText: "Go back to todolist",
       customClass: {
         confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+      },
+    }).then((result)=>{
+      if(result.isConfirmed){
+        navigate("/todo-list/individual-account-opening/");
       }
     });
   }
