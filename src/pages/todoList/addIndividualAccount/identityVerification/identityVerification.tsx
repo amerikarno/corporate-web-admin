@@ -40,6 +40,7 @@ export default function IdentityVerification() {
         navigate("/todo-list/individual-account-opening/");
       }
     });
+    
   }
   const handlethaiid = () => {
     console.log("thaid choosed")
