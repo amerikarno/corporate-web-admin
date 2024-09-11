@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import Swal from 'sweetalert2'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,6 +18,39 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function IdentityVerification() {
+
+  const handleNdid = () => {
+    console.log("ndid choosed")
+    let body = {
+      ndid:true,
+      accountId:localStorage.getItem('cid')
+    }
+    Swal.fire({
+      title: "Verification Selected",
+      text:"Thanks for your submission",
+      icon: "success",
+      confirmButtonText: "Go back to todolist",
+      customClass: {
+        confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+      }
+    });
+  }
+  const handlethaiid = () => {
+    console.log("thaid choosed")
+    let body = {
+      thaid:true,
+      accountId:localStorage.getItem('cid')
+    }
+    Swal.fire({
+      title: "Verification Selected",
+      text:"Thanks for your submission",
+      icon: "success",
+      confirmButtonText: "Go back to todolist",
+      customClass: {
+        confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
+      }
+    });
+  }
   return (
     <div className="flex flex-col items-center p-8 pt-16 space-y-8 md:mx-16">
       <div className="flex flex-col items-center text-slate-800">
@@ -26,7 +60,7 @@ export default function IdentityVerification() {
       </div>
       <Card className="flex items-center pb-14 md:w-3/4 relative">
         <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
-          <img src={ndid} alt="NDID"/>
+          <img src={ndid} alt="ndid"/>
         </div>
         <div className="flex flex-col">
           <span className="text-slate-800 font-bold py-4 text-lg md:text-2xl ">1.NDID</span>
@@ -47,7 +81,7 @@ export default function IdentityVerification() {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>ตกลง</AlertDialogAction>
+                    <AlertDialogAction onClick={handleNdid}>ตกลง</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -56,7 +90,7 @@ export default function IdentityVerification() {
       </Card>
       <Card className="flex items-center pb-14 md:w-3/4 relative">
       <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
-          <img src={thaiid} alt="THAIID"/>
+          <img src={thaiid} alt="thaiid"/>
         </div>
         <div className="flex flex-col">
           <span className="text-slate-800 font-bold py-4 text-lg md:text-2xl ">2.THAID</span>
@@ -77,7 +111,7 @@ export default function IdentityVerification() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>ตกลง</AlertDialogAction>
+                  <AlertDialogAction onClick={handlethaiid}>ตกลง</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

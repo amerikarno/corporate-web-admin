@@ -73,6 +73,15 @@ export default function FxExchangeEdit() {
   const [selectedCorporateCode, setSelectedCorporateCode] =
     useState<string>("");
 
+    const mockeddata: TFxExchange[] = [{
+      corporateCode: 80000014,
+      exchangeRate: 231,
+      exchangeSpread: 132,
+      operationSpread: 546,
+      exchange: "THB/USD",
+      transactionStatus: 0,
+    }]
+
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
     { corporateCode: number }[]
   >([]);
@@ -81,8 +90,8 @@ export default function FxExchangeEdit() {
     setChoosedEditData(undefined);
   };
 
-  const orderTradeData: TFxExchange[] = useSelector<RootState>(
-    (state) => state.orderTrade?.orderTrades || []
+  const fxExchangeData: TFxExchange[] = useSelector<RootState>(
+    (state) => state.fxExchange?.fxExchanges || []
   ) as TFxExchange[];
 
   const fetchCorporateCodes = async () => {
@@ -152,7 +161,7 @@ export default function FxExchangeEdit() {
     }
   };
 
-  const columnsOrderTrade: TableColumn<TFxExchange>[] = [
+  const columnsFxExchange: TableColumn<TFxExchange>[] = [
     {
       name: "Corporate Code",
       selector: (row: TFxExchange) => row.corporateCode || "",
@@ -168,6 +177,10 @@ export default function FxExchangeEdit() {
     {
       name: "Operation Spread",
       selector: (row: TFxExchange) => row.operationSpread || "",
+    },
+    {
+      name: "Exchange Pairs",
+      selector: (row: TFxExchange) => row.exchange || "",
     },
     {
       name: "Status",
@@ -188,18 +201,20 @@ export default function FxExchangeEdit() {
     },
   ];
 
-//   useEffect(() => {
-//     const orderListDatatoInputField = choosedEditData || {
-//       corporateCode: 0,
-//       cryptoAmount: 0,
-//       cryptoPrice: 0,
-//       currency: "",
-//       fiatAmount: 0,
-//     };
-//     reset(orderListDatatoInputField);
+  useEffect(() => {
+    const orderListDatatoInputField = choosedEditData || {
+      corporateCode: 0,
+      exchangeRate:0,
+      exchangeSpread:0,
+      operationSpread:0,
+    };
+    const [firstVariable, secondVariable] = choosedEditData?.exchange?.split('/') || ["THB", "USD"];
+    setYouSend(firstVariable);
+    setRecipientGets(secondVariable);
+    reset(orderListDatatoInputField);
 
-//     console.log("use effect", orderListDatatoInputField);
-//   }, [choosedEditData]);
+    console.log("use effect", orderListDatatoInputField);
+  }, [choosedEditData]);
 
   const {
     register,
@@ -411,11 +426,12 @@ export default function FxExchangeEdit() {
       <Card className="p-4 w-full">
         <DataTable
           title="Rejected FX Exchange Lists"
-          columns={columnsOrderTrade}
-          data={orderTradeData.map((orderTrade, index) => ({
-            ...orderTrade,
-            key: index,
-          }))}
+          columns={columnsFxExchange}
+          // data={fxExchangeData.map((orderTrade, index) => ({
+          //   ...orderTrade,
+          //   key: index,
+          // }))}
+          data={mockeddata}
           clearSelectedRows
         />
       </Card>

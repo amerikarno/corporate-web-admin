@@ -362,8 +362,6 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
       };
       suitTestResult(body)
       console.log(body);
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 

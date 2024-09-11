@@ -197,7 +197,7 @@ export default function AddIndividualAccount() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 relative">
       <Card>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
@@ -416,8 +416,8 @@ export default function AddIndividualAccount() {
                 </span>
               </div>
             </div>
-            <div className="flex justify-end">
-              <Button type="submit">Submit</Button>
+            <div className="absolute right-4 -bottom-[4.5rem]">
+              <Button type="submit">Next Form</Button>
             </div>
           </form>
         </CardContent>

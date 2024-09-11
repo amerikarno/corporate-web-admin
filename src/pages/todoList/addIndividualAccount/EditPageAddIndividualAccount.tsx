@@ -15,7 +15,7 @@ import AddIndividualAccount from "./addIndividualAccount";
 import BasicInfo from "./basicInfo/basicInfo";
 import SuitTestFatca from "./suitTestFatca/suitTestFatca";
 import IdentityVerification from "./identityVerification/identityVerification";
-import { IndividualFooter } from "@/pages/createJob/addedCorporateAccount/components/IndividualFooter";
+import { IndividualFooter } from "./IndividualFooter";
 
 type TPage = {
   page?: string;

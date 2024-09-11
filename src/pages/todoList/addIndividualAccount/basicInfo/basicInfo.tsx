@@ -230,12 +230,12 @@ export default function BasicInfo() {
       },
       firstBankAccount: {
         ...data.firstBankAccount,
-        type: 1,
+        types: 1,
         is_default: true,
       },
       secondBankAccountBody: {
         ...data.secondBankAccountBody,
-        type: 2,
+        types: 2,
         is_default: false,
       },
     };
@@ -297,7 +297,7 @@ export default function BasicInfo() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4 relative">
       <Card>
         <CardContent>
           <div className="p-4 space-y-4">
@@ -1118,8 +1118,8 @@ export default function BasicInfo() {
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-end">
-        <Button type="submit">Submit</Button>
+      <div className="absolute right-4 -bottom-[4.5rem]">
+        <Button type="submit">Next Form</Button>
       </div>
     </form>
   );

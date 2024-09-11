@@ -13,6 +13,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
+import Swal from "sweetalert2";
 
 export default function SuitTestFatca() {
   if (!isAllowedPage(2002)) {
@@ -123,31 +124,56 @@ export default function SuitTestFatca() {
         pageID: 400,
       };
       console.log(body);
-      try{
-        const res = await axios.post("/api/v1/suitetest/result/individual/save", body,  {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        console.log(res)
-        if (res.status === 200) {
-          console.log("suit test save success", res.data);
-          navigate("/todo-list/individual-account-opening/edit/4");
-        }else{
-          console.log("suit test save not success")
-        }
-      }catch(error){
-        console.log(error)
+      if(individualData?.SuiteTestResult.suiteTestResult.totalScore){
+          console.log("suite test updating...")
+          try{
+            const res = await axios.post("/api/v1/suitetest/result/individual/edit", body,  {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            console.log(res)
+            if (res.status === 200) {
+              console.log("suit test edit success", res.data);
+              navigate("/todo-list/individual-account-opening/edit/4");
+            }else{
+              console.log("suit test edit not success")
+            }
+          }catch(error){
+            console.log(error)
+          }
+      }else{
+          console.log("suite test saving...")
+          try{
+            const res = await axios.post("/api/v1/suitetest/result/individual/save", body,  {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            console.log(res)
+            if (res.status === 200) {
+              console.log("suit test save success", res.data);
+              navigate("/todo-list/individual-account-opening/edit/4");
+            }else{
+              console.log("suit test save not success")
+            }
+          }catch(error){
+            console.log(error)
+          }
       }
     } else {
-      alert("Please Do the Suit Test First.");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      Swal.fire({
+        icon: "error",
+        title: "Please Submit the suite test first",
+        text: "if you are an American citizen, please complete the FATCA form first",
+      });
     }
   };
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8 p-4 relative">
       <div className="mx-16 mt-16">
         <div className="text-xl font-bold text-slate-800">
           แบบประเมินความเหมาะสมในการลงทุน
@@ -306,7 +332,7 @@ export default function SuitTestFatca() {
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-end">
+      <div className="absolute right-4 -bottom-[4.5rem]">
         <Button onClick={handleSubmitSuitTestFatca}>Next Form</Button>
       </div>
       <div>
