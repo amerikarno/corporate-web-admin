@@ -11,7 +11,7 @@ import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccou
 export const createJobRoutes = () => {
   return (
     <Route path="create-job" element={<Outlet />}>
-      <Route index element={<BlankPage name="Added Corporate Account" />} />
+      <Route index element={<CorporateAccountOpenning />} />
       <Route path="added-corporate-account" element={<Outlet />}>
         <Route index element={<CorporateAccountOpenning />} />
         <Route path=":page" element={<CorporateAccountOpenning />} />
