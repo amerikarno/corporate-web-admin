@@ -1,182 +1,210 @@
-import { useCorporateInfo } from "./hook/useCorporateInfo";
-import { TMapPages } from "./constants2/types";
-import { PageCorporateInfo } from "./pages/PageCorporateInfo";
-import { PageJuristicType } from "./pages/PageJuristicType";
-import { ListOfDirectors } from "./pages/ListOfDirectors";
-import { PageAuthorizedPerson } from "./pages/PageAuthorizedPerson";
-import { PageContactPerson } from "./pages/PageContactPerson";
-import { PageIndividualShareholder } from "./pages/PageIndividualShareholder";
-import { PageJuristicShareholder } from "./pages/PageJuristicShareholder";
-import { PageBankAccount } from "./pages/PageBankAccount";
-import { useNavigate, useParams } from "react-router-dom";
-import { CreateCorporateFooter } from "./components/footer";
-import UploadFiles from "./pages/uploadFiles/uploadFiles";
-import { PageSuitTest } from "./pages/PageSuitTest";
-import { TCorporateData } from "../constant/type";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { mapDataToTCorporateInfo } from "./libs/utils";
-import { isAllowedPage } from "@/lib/utils";
-import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import { SideLabelInput } from "@/components/SideLabelInput";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useAccountOpening } from "./hook/useAccountOpening";
+import { TCorporateData } from "./constant/type";
+import {
+  corporateAccountOpeningSchema,
+  TCorporateAccountOpening,
+} from "./constant/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import DataTable from "react-data-table-component";
+import { columnsCorporateInfo } from "./components/column";
+import { dateToyyyyMMdd, isAllowedPage } from "@/lib/utils";
+import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import {
-  clearCorporateData,
-  setCorporateData,
-} from "@/features/editCorporateData/editCorporateData";
-import { PageAttorney } from "./pages/PageAttorney";
-
-type TPage = {
-  page?: string;
-};
 
 export default function CorporateAccountOpenning() {
-  if (!isAllowedPage(2001)) {
+  if (!isAllowedPage(3001)) {
     return <UnAuthorize />;
   }
 
-  const dispatch = useDispatch();
-  const [corporateCode, setCorporateCode] = useState("");
+  const prev7Days = new Date();
+  prev7Days.setDate(prev7Days.getDate() - 7);
 
-  const corporateData: TCorporateData = useSelector<RootState>(
-    (state) => state.editCorporate
-  ) as TCorporateData;
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TCorporateAccountOpening>({
+    resolver: zodResolver(corporateAccountOpeningSchema),
+    defaultValues: {
+      dateFrom: dateToyyyyMMdd(prev7Days),
+      // dateFrom: dateToyyyyMMdd(new Date()),
+      dateTo: dateToyyyyMMdd(new Date()),
+    },
+  });
 
-  const initFormData = mapDataToTCorporateInfo(corporateData);
+  // console.log("reset:", reset);
+  const { handleSearch, searchResult } = useAccountOpening();
+  const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
+  const [disableDate, setDisableDate] = useState<boolean>(false);
+  const [disableCode, setDisableCode] = useState<boolean>(false);
+  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
+    { corporateCode: number }[]
+  >([]);
 
-  const { page } = useParams<TPage>();
-  let pageId = page ? Number(page) : 1;
-
-  useEffect(() => {
-    const fetchCorporateData = async () => {
-      try {
-        const corporateCode = localStorage.getItem("corporateCode") || "";
-        setCorporateCode(corporateCode);
-        console.log(corporateCode);
-
-        if (corporateCode) {
-          const response = await axios.post(
-            "/api/v1/corporate/query",
-            { corporateCode: corporateCode },
-            {
-              headers: {
-                Authorization: `Bearer ${getCookies()}`,
-              },
-            }
-          );
-          console.log(response);
-          dispatch(setCorporateData(response.data[0]));
-        } else {
-          dispatch(clearCorporateData());
-          console.log("corporateCode not found");
-        }
-      } catch (error) {
-        console.error("Error fetching corporate data:", error);
-      }
-    };
-
-    fetchCorporateData();
-  }, [corporateCode, pageId, dispatch]);
-
-  console.log(corporateData);
-  const navigate = useNavigate();
-  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
-    useCorporateInfo();
-
-  //const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
-  const mappingPages: TMapPages = {
-    1: (
-      <PageCorporateInfo
-        corporatesInfo={corporateData}
-        initData={initFormData}
-        handleSubmitCorporateInfo={handleSubmitCorporateInfo}
-      />
-    ),
-    2: (
-      <PageJuristicType
-        currentCorporatesInfo={currentCorporatesInfo}
-        corporateCode={corporateCode}
-      />
-    ),
-    3: (
-      <PageContactPerson
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    4: (
-      <ListOfDirectors
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    5: (
-      <PageIndividualShareholder
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    6: (
-      <PageJuristicShareholder
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    7: (
-      <PageAuthorizedPerson
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    8: (
-      <PageAttorney
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    9: (
-      <PageBankAccount
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    10: (
-      <UploadFiles
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    11: (
-      <PageSuitTest
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-  };
-
-  const handlePages = (type: string) => {
-    if (type == "next") {
-      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
-    } else if (type == "submit") {
-    } else if (type == "submit2") {
-    } else if (type == "done") {
-      localStorage.clear();
-      dispatch(clearCorporateData());
-      navigate(`/create-job/added-corporate-account`);
+  const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      setDisableDate(true);
     } else {
-      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
+      setDisableDate(false);
+    }
+  };
+  const fetchCorporateCodes = async () => {
+    try {
+      const token = getCookies();
+
+      const res = await axios.post(
+        "/api/v1/corporate/query/all",
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        console.log(res);
+        const corporateCodes = res.data.map((item: any) => ({
+          corporateCode: item.CorporateCode,
+        }));
+        setFetchedCorporateCodes(corporateCodes);
+
+        // const dateFrom = new Date();
+        // dateFrom.setDate(dateFrom.getDate() + 7);
+        // const data: TCorporateAccountOpening = {
+        //   corporateCode: "",
+        //   // dateFrom: dateToyyyyMMdd(dateFrom),
+        //   // dateTo: dateToyyyyMMdd(dateFrom),
+        //   dateFrom: dateToyyyyMMdd(new Date()),
+        //   dateTo: dateToyyyyMMdd(new Date()),
+        // };
+        // await handleSearch(data);
+      } else {
+        console.log("Failed to fetch corporate codes");
+      }
+    } catch (error) {
+      console.log("Error fetching corporate codes:", error);
     }
   };
 
+  const initData = async () => {
+    await fetchCorporateCodes();
+    const data: TCorporateAccountOpening = {
+      corporateCode: "",
+      dateFrom: dateToyyyyMMdd(new Date()),
+      dateTo: dateToyyyyMMdd(new Date()),
+    };
+    await handleSearch(data);
+  };
+
+  useEffect(() => {
+    // fetchCorporateCodes();
+    // console.log("all-corporate Code", mockedCorporateCodes);
+    initData();
+  }, []);
+
+  const handleDisableCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      setDisableCode(true);
+    } else {
+      setDisableCode(false);
+    }
+  };
+
+  const onSubmit = async (data: TCorporateAccountOpening) => {
+    console.log(data);
+    await handleSearch(data);
+    //reset();
+  };
+
+  useEffect(() => {
+    if (searchResult) {
+      setCorporateData(
+        Array.isArray(searchResult) ? searchResult : [searchResult]
+      );
+    }
+  }, [searchResult]);
+
   return (
-    <div className="space-y-8 pb-8">
-      {mappingPages[pageId]}
-      <CreateCorporateFooter
-        handlePages={handlePages}
-        pageId={pageId}
-        totalPages={Object.keys(mappingPages).length}
-      />
+    <div className="p-4 space-y-10">
+      <Card>
+        <CardContent>
+          <form
+            className="grid grid-cols-2 gap-4 pt-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <SideLabelInput title="Juristic ID">
+              <Input
+                {...register("corporateCode")}
+                onChange={handleDisableDate}
+                disabled={disableCode}
+                list="juristicId"
+                autoComplete="off"
+              />
+              {errors && (
+                <p className="text-red-500">{errors.corporateCode?.message}</p>
+              )}
+              <datalist id="juristicId">
+                {mockedCorporateCodes.map((code, index) => (
+                  <option key={index} value={code.corporateCode}>
+                    {code.corporateCode}
+                  </option>
+                ))}
+              </datalist>
+            </SideLabelInput>
+            <div className="col-start-1">
+              <SideLabelInput title="Date From">
+                <Input
+                  type="date"
+                  {...register("dateFrom")}
+                  onChange={handleDisableCode}
+                  disabled={disableDate}
+                />
+                {errors && (
+                  <p className="w-full text-red-500 py-1">
+                    {errors.dateFrom?.message}
+                  </p>
+                )}
+              </SideLabelInput>
+            </div>
+            <SideLabelInput title="Date To">
+              <Input
+                type="date"
+                {...register("dateTo")}
+                onChange={handleDisableCode}
+                disabled={disableDate}
+              />
+              {errors && (
+                <p className="w-full py-1 text-red-500">
+                  {errors.dateTo?.message}
+                </p>
+              )}
+            </SideLabelInput>
+            <div className="col-start-2 flex justify-end">
+              <Button type="submit">
+                {isSubmitting ? "Search..." : "Search"}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Corporates Infomations</CardTitle>
+        </CardHeader>
+        <CardContent className="overflow-x-auto h-[360px]">
+          <DataTable columns={columnsCorporateInfo} data={corporateData} />
+        </CardContent>
+      </Card>
     </div>
   );
 }
