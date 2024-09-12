@@ -35,7 +35,7 @@ export default function UploadFiles({
   const token = getCookies();
   const dispatch = useDispatch();
   useEffect(() => {
-    const fetchBankData = async () => {
+    const fetchedData = async () => {
       try {
         const res = await axios.post(
           "/api/v1/corporate/query",
@@ -61,7 +61,7 @@ export default function UploadFiles({
       }
     };
 
-    fetchBankData();
+    fetchedData();
   }, [corporateCode, dispatch, token]);
   return (
     <div className="p-4">

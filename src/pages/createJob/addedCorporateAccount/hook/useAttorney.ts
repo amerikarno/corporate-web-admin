@@ -28,7 +28,7 @@ export function useAttorney() {
         });
         if (res.status === 200) {
           console.log(res)
-          dispatch(updateAttorney({ ...data, personalId: res.data.personalId}));
+          dispatch(updateAttorney({ ...data, personalId: body.personalId}));
           setAttorney([...attorney, data]);
           console.log("update successful")
         } else {

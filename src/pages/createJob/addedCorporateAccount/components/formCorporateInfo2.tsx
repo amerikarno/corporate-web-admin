@@ -45,8 +45,8 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
     };
   };
 
+  const corpData = useSelector((state: RootState) => state.editCorporate);
   const getFrom2Response = () => {
-    const corpData = useSelector((state: RootState) => state.editCorporate);
     console.log(corpData);
     const {
       jrType,
@@ -84,30 +84,33 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   const dispatch = useDispatch();
 
   console.log(resFrom2);
-  useEffect(() => {
-    const fetchCorporateTypeData = async () => {
-      try {
-        const token = getCookies();
-        const corporateCodeString = corporateData.CorporateCode.toString();
-        const res = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode: corporateCodeString },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("form2 fetch data: ", res);
-        if (res.status === 200) {
-          dispatch(setCorporateData(res.data[0]));
-        }
-      } catch (error) {
-        console.error("Error fetchCorporateTypeData data:", error);
-      }
-    };
 
-    fetchCorporateTypeData();
+  const fetchCorporateTypeData = async () => {
+    try {
+      const token = getCookies();
+      const corporateCodeString = corporateData.CorporateCode.toString();
+      const res = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode: corporateCodeString },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("form2 fetch data: ", res);
+      if (res.status === 200) {
+        dispatch(setCorporateData(res.data[0]));
+      }
+    } catch (error) {
+      console.error("Error fetchCorporateTypeData data:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    if(corpData.CorporateCode !== 0)
+      fetchCorporateTypeData();
     setResForm2({
       ...corporateData.BusinessTypes,
       ...corporateData.CorporateTypes,

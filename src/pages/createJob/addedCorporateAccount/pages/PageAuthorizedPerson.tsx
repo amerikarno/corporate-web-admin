@@ -25,15 +25,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageAuthorizedPersonProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 
 export function PageAuthorizedPerson({
-  corporateCode,
-  corporatesInfo
 }: TPageAuthorizedPersonProps) {
   const { handleSubmitAuthorize} =useAuthorizePerson();
   const dispatch = useDispatch();
@@ -44,17 +41,18 @@ export function PageAuthorizedPerson({
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
+  const corporatesInfo = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const corporateCode = localStorage.getItem("corporateCode") || "";
 
-  useEffect(() => {
-    axios.post("/api/v1/corporate/query", { corporateCode }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      console.log("API Response:", res.data);
+  const fetchedData = async () => {
+    try{
+      const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
-      if (res.status === 200) {
+      if(res.status === 200){
         console.log(res)
         const authorizedPerson = res.data[0]?.AuthorizedPersons || [];;
         console.log(authorizedPerson)
@@ -66,15 +64,19 @@ export function PageAuthorizedPerson({
         .filter((item:any) => item !== null) as TAuthorizePerson[];
         
         dispatch(setAuthorizedPersons(updateAuthorized));
+        dispatch(setCorporateData(res.data[0]));
         console.log("authorized person data fetched successfully.", updateAuthorized);
       } else {
         console.log("Failed to fetch authorized person data or data is not an array.");
       }
-    })
-    .catch((error) => {
+    }catch(error){
       console.error("Error fetching Authorized Person data:", error);
-    });
-  }, [corporateCode, dispatch, token , choosedEditData]);
+    }
+  }
+
+  useEffect(() => {
+    fetchedData();
+  },[])
   
   const handleDelete = async (data: TAuthorizePerson) => {
   console.log(data)

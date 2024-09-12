@@ -29,11 +29,9 @@ import {
 } from "@/components/ui/alert-dialog"
 
 type TListOfDirectorsProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 
-export function ListOfDirectors({ corporateCode,corporatesInfo }: TListOfDirectorsProps) {
+export function ListOfDirectors({}: TListOfDirectorsProps) {
   const dispatch = useDispatch();
   const { handleSubmitDirectors } = useListOfDirector();
 
@@ -47,8 +45,11 @@ export function ListOfDirectors({ corporateCode,corporatesInfo }: TListOfDirecto
   };
   console.log(listOfDirectorData);
 
-  useEffect(() => {
-    axios
+  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const fetchedData = async () =>{
+    try{
+      const res = await axios
       .post(
         "/api/v1/corporate/query",
         { corporateCode },
@@ -58,32 +59,32 @@ export function ListOfDirectors({ corporateCode,corporatesInfo }: TListOfDirecto
           },
         }
       )
-      .then((res) => {
-        console.log("API Response:", res.data);
+      if (res.status === 200) {
+        console.log(res);
+        const listofdirectors = res.data[0].Directors || [];
+        const updateDirector: TDirector[] = listofdirectors
+          .map((listofdirector: TDirectorEdit) => ({
+            ...listofdirector,
+            listofdirector: listofdirector.personalId,
+          }))
+          .map(mapDataToTDirector)
+          .filter((item: any) => item !== null) as TDirector[];
 
-        if (res.status === 200) {
-          console.log(res);
-          const listofdirectors = res.data[0].Directors || [];
-          const updateDirector: TDirector[] = listofdirectors
-            .map((listofdirector: TDirectorEdit) => ({
-              ...listofdirector,
-              listofdirector: listofdirector.personalId,
-            }))
-            .map(mapDataToTDirector)
-            .filter((item: any) => item !== null) as TDirector[];
+        dispatch(setDirectorEdit(updateDirector));
+        console.log("director data fetched successfully.", updateDirector);
+      } else {
+        console.log(
+          "Failed to fetch jurisdirectortic data or data is not an array."
+        );
+      }
+    }catch(error){
+      console.error("Error fetching director data:", error);
+    }
+  }
 
-          dispatch(setDirectorEdit(updateDirector));
-          console.log("director data fetched successfully.", updateDirector);
-        } else {
-          console.log(
-            "Failed to fetch jurisdirectortic data or data is not an array."
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching director data:", error);
-      });
-  }, [corporateCode, dispatch, token]);
+  useEffect(() => {
+    fetchedData();
+  }, []);
 
   const handleDelete = async (data: TDirector) => {
     console.log(data);

@@ -72,6 +72,7 @@ export default function SuitTestFatca() {
 
     if(individualData?.SuiteTestResult.isKnowLedgeDone){
       setKnowLedgeTest("knowLedgeTest-1")
+      setKnowLedgeTestSuccess(true);
     }
   },[individualData])
 
@@ -318,7 +319,10 @@ export default function SuitTestFatca() {
                     name="radio-for-knowLedgeTest"
                     type="radio"
                     checked={knowLedgeTest === "knowLedgeTest-2"}
-                    onChange={() => setKnowLedgeTest("knowLedgeTest-2")}
+                    onChange={() => {
+                      setKnowLedgeTest("knowLedgeTest-2");
+                      setKnowLedgeTestSuccess(false);
+                    }}
                   />
                   <label htmlFor="knowLedgeTest-2">ทำภายหลัง</label>
                 </div>

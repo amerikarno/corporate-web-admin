@@ -48,8 +48,8 @@ export function useBank() {
           console.log("save successful");
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      alert(error.response.data.message);
     }
   };
 
