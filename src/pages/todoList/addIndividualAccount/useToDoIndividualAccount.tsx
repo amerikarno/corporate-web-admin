@@ -53,6 +53,15 @@ export function useToDoIndividualAccount() {
     } else {
       try {
         console.log(body);
+        let formatBody
+        if(body.AccountID){
+          formatBody = {
+            corporateCode: body.AccountID
+          }
+        }else{
+          formatBody = body
+        }
+        console.log("formatBody:",formatBody);
         const res = await axios.post("/api/v1/individual/list", body, {
           headers: {
             "Content-Type": "application/json",
