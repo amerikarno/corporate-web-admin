@@ -29,23 +29,22 @@ export const attorneySlice = createSlice({
       state.attorneys = [];
     },
     updateAttorney: (state, action) => {
-      const index = state.attorneys.findIndex(
-        (data) => data.personalId === action.payload.personalId
-      );
-
+      const index = state.attorneys.findIndex((data) => {
+        return data.personalId === action.payload.personalId;
+      });
       if (index !== -1) {
+        console.log("Attorney found. Updating...");
         state.attorneys[index] = {
           ...state.attorneys[index],
           ...action.payload,
         };
+      }else{
+        console.log("Attorney found. Updating... => attorney not found");
       }
     },
-    setAttorney: (
-      state,
-      action: PayloadAction<TAttorney[]>
-    ) => {
+    setAttorney: (state, action) => {
       state.attorneys = action.payload;
-    },
+    }
   },
 });
 

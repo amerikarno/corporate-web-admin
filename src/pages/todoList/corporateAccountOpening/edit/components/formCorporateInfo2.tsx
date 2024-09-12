@@ -75,30 +75,32 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   const [resFrom2, setResForm2] = useState<CorporateResponse>(
     getFrom2Response()
   );
-
-  useEffect(() => {
-    const fetchCorporateTypeData = async () => {
-      try {
-        const corporateCodeString = corp.CorporateCode.toString();
-        const res = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode: corporateCodeString },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("form2 fetch data: ", res);
-        if (res.status === 200) {
-          dispatch(setCorporateData(res.data[0]));
+  const corporateCodeString = corp.CorporateCode.toString();
+  const fetchCorporateTypeData = async () => {
+    try {
+      console.log("send form2 req ",{ corporateCode: corporateCodeString })
+      const res = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode: corporateCodeString },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        console.error("Error fetchCorporateTypeData data:", error);
+      );
+      console.log("form2 fetch data: ", res);
+      if (res.status === 200) {
+        dispatch(setCorporateData(res.data[0]));
       }
-    };
-
-    fetchCorporateTypeData();
+    } catch (error) {
+      console.error("Error fetchCorporateTypeData data:", error);
+    }
+  };
+  
+  useEffect(() => {
+    if(corp.CorporateCode !== 0){
+      fetchCorporateTypeData();
+    }
     setResForm2({
       ...corp.BusinessTypes,
       ...corp.CorporateTypes,

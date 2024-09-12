@@ -25,16 +25,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageAttorneyProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 
 export function PageAttorney({
-  corporateCode,
-  corporatesInfo
 }: TPageAttorneyProps) {
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const corporateCode = localStorage.getItem("corporateCode") || "";
   const { handleSubmitAttorney} =useAttorney();
   const dispatch = useDispatch();
   const attorneyData: TAttorney[] = useSelector<RootState>((state) => state.attorney?.attorneys || []) as TAttorney[];
@@ -45,36 +44,36 @@ export function PageAttorney({
     setChoosedEditData(undefined);
   };
 
-  useEffect(() => {
-    axios.post("/api/v1/corporate/query", { corporateCode }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      console.log("API Response:", res.data);
-
+  const fetchedData = async () => {
+    try{
+      const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       if (res.status === 200) {
         console.log(res)
-        const attorney = res.data[0]?.Attorneys || [];;
-        console.log(attorney)
-        const updateAttorney: TAttorney[] = attorney.map((attorneyitems: TAttorneyEdit) => ({
+        const updateAttorney= res.data[0].Attorneys.map((attorneyitems: any) => ({
           ...attorneyitems,
           personalId: attorneyitems.personalId, 
         }))
         .map(mapDataToTAttorney)
-        .filter((item:any) => item !== null) as TAttorney[];
+        .filter((item:any) => item !== null);
         
         dispatch(setAttorney(updateAttorney));
+        dispatch(setCorporateData(res.data[0]));
         console.log("Attorney data fetched successfully.", updateAttorney);
       } else {
         console.log("Failed to fetch Attorney data or data is not an array.");
       }
-    })
-    .catch((error) => {
+    }catch(error){
       console.error("Error fetching Attorney data:", error);
-    });
-  }, [corporateCode, dispatch, token , choosedEditData]);
+    }
+  }
+
+  useEffect(() => {
+    fetchedData();
+  }, []);
   
   const handleDelete = async (data: TAttorney) => {
   console.log(data)
@@ -92,9 +91,9 @@ export function PageAttorney({
       }catch(error){
         console.log("delete fail ,",error)
       }
-    };;
+    };
 
-  const columnsAuthorizePerson: TableColumn<TAttorney>[] = [
+  const columnsAttorney: TableColumn<TAttorney>[] = [
     {
       name: "Title",
       selector: (row: TAttorney) => row.fullNames[0].title || "",
@@ -194,7 +193,7 @@ export function PageAttorney({
         <Card>
           <DataTable
             title="List of Attorney"
-            columns={columnsAuthorizePerson}
+            columns={columnsAttorney}
             data={attorneyData}
           />
         </Card>
