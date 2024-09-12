@@ -52,7 +52,7 @@ export function EditCorporateAccount() {
       try {
         const corporateCode = localStorage.getItem("corporateCode") || "";
         setCorporateCode(corporateCode);
-        console.log(corporateCode);
+        // console.log(corporateCode);
         const response = await axios.post(
           "/api/v1/corporate/query",
           { corporateCode: corporateCode },

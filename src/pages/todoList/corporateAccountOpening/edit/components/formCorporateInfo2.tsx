@@ -89,7 +89,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             },
           }
         );
-        console.log("form2 fetch data: ", res);
+        // console.log("form2 fetch data: ", res);
         if (res.status === 200) {
           dispatch(setCorporateData(res.data[0]));
         }
@@ -109,9 +109,9 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
   const setStoreData = (data: CorporateResponse) => {
     let tmp = copy(corp);
-    console.log(tmp);
-    console.log(data);
-    console.log(tmp?.CountrySourceIncomes?.[0]);
+    // console.log(tmp);
+    // console.log(data);
+    // console.log(tmp?.CountrySourceIncomes?.[0]);
     if (tmp.CorporateTypes) {
       tmp.CorporateTypes.isJuristicThailand = data.isJuristicThailand
         ? true
@@ -209,7 +209,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         ? data.otherCountry
         : "";
     }
-    console.log(tmp);
+    // console.log(tmp);
     dispatch(setCorporateData(tmp));
     setResForm2(data);
   };
@@ -230,7 +230,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
           ? ""
           : data.corporateCountry?.other,
       };
-      console.log("body", body);
+      // console.log("body", body);
       try {
         const token = getCookies();
         const res = await axios.post("/api/v1/corporate/update/type", body, {
@@ -240,12 +240,12 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         });
         // console.log(res);
         if (res.status === 200) {
-          console.log("request success", res.data);
+          // console.log("request success", res.data);
           setStoreData(data);
           navigate("/todo-list/corporate-account-opening/edit/3");
         } else {
           alert("Invalid Input.");
-          console.log("save failed");
+          // console.log("save failed");
         }
       } catch (error) {
         console.log(error);
@@ -385,7 +385,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
       case "investmentObjective":
         let invObj = copy(resFrom2);
-        console.log(key, name, checked);
+        // console.log(key, name, checked);
         if (invObj && invObj !== null) {
           // invObj.isLiquidation = false;
           // invObj.isInvestment = false;
@@ -440,7 +440,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log(resFrom2);
+    // console.log(resFrom2);
     await saveJuristicType(resFrom2);
   };
 

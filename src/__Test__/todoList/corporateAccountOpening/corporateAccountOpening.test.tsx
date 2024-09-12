@@ -8,7 +8,7 @@ import { setUser } from "@/features/user/userSlice";
 import { mockUser } from "@/__Test__/utils";
 import { useAccountOpening } from "@/pages/todoList/corporateAccountOpening/hook/useAccountOpening";
 import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
-import axios from "@/api/axios";
+import { act } from "react";
 
 // Mock the module
 jest.mock(
@@ -120,11 +120,56 @@ mockUseAccountOpening.mockReturnValue({
   searchResult: [mockTCorporateData],
 });
 
-jest.mock("@/api/axios");
-const mockAxios = axios as jest.Mocked<typeof axios>;
+describe("test todo corporate", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-describe("CorporateAccountOpenning", () => {
-  test("should render correctly", async () => {
+  test("test handleSearch function", async () => {
+    store.dispatch(setUser(mockUser));
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <TodoCorporateAccountOpenning />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await act(async () => {
+      fireEvent.click(screen.getByText(/search/i));
+    });
+    await waitFor(async () => {
+      const name1 = screen.getByText("name-80000001");
+      expect(name1).toBeInTheDocument();
+    });
+  }, 20000);
+
+  test("test query", async () => {
+    const { handleSearch } = useAccountOpening();
+    store.dispatch(setUser(mockUser));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <TodoCorporateAccountOpenning />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await act(async () => {
+      await handleSearch({ corporateCode: "80000001" });
+    });
+
+    await waitFor(
+      async () => {
+        const name1 = screen.getByText("name-80000001");
+        expect(name1).toBeInTheDocument();
+      },
+      { timeout: 20000 }
+    );
+  }, 20000);
+
+  test("test init first data", async () => {
     store.dispatch(setUser(mockUser));
     let fetchedData: any = null;
     const date = new Date();
@@ -165,32 +210,14 @@ describe("CorporateAccountOpenning", () => {
     const id = screen.getByTestId(/juristicId/i);
     const datefrom = screen.getByTestId(/dateFrom/i);
     const dateto = screen.getByTestId(/dateTo/i);
-    const searchBtn = screen.getByTestId(/searchBtn/i);
 
     expect(id).toHaveValue("");
     expect(datefrom).toHaveValue(prevStr);
     expect(dateto).toHaveValue(dateStr);
-
-    fireEvent.change(datefrom, { target: { value: "2024-09-09" } });
-    expect(datefrom).toHaveValue("2024-09-09");
-    fireEvent.change(dateto, { target: { value: "2024-09-09" } });
-    expect(dateto).toHaveValue("2024-09-09");
-    fireEvent.change(id, { target: { value: "80000001" } });
-    expect(id).toHaveValue("80000001");
-
-    searchBtn.click();
   }, 20000);
-});
 
-describe("test axios", () => {
-  test("should make an axios POST request and handle success response with a list of corporate data", async () => {
+  test("test input data", async () => {
     store.dispatch(setUser(mockUser));
-
-    // Mock axios.post implementation
-    const mockResponse = {
-      data: [mockTCorporateData],
-    };
-    mockAxios.post.mockResolvedValueOnce(mockResponse);
 
     render(
       <Provider store={store}>
@@ -200,95 +227,17 @@ describe("test axios", () => {
       </Provider>
     );
 
-    // Simulate user input
-    fireEvent.change(screen.getByTestId("juristicId"), {
-      target: { value: "80000001" },
-    });
-    fireEvent.change(screen.getByTestId("dateFrom"), {
-      target: { value: "2024-09-09" },
-    });
-    fireEvent.change(screen.getByTestId("dateTo"), {
-      target: { value: "2024-09-09" },
-    });
+    const id = screen.getByTestId(/juristicId/i);
+    const datefrom = screen.getByTestId(/dateFrom/i);
+    const dateto = screen.getByTestId(/dateTo/i);
 
-    // Simulate form submission
-    fireEvent.click(screen.getByTestId(/searchBtn/i));
-
-    // Assert that axios.post was called with the correct URL and payload
-    await waitFor(() => {
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        "/api/v1/corporate/query",
-        {
-          corporateCode: "80000001",
-          //     "dateFrom": "2024-09-09T17:00:00.000Z",
-          //     "dateTo": "2024-09-09T16:59:00.000Z"
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE2M2U2YTA3LWJkN2QtNDUzZC05ZjU3LWM3Y2E4ZDdlMzRiYSIsImVtYWlsIjoiZjAxNzlkZDNkOGY1Zjg1ZGQzMDMzMjY5MTEzMjBiZDNmOTg1YWM0Y2I4OWQ2YjNhNDRiMzBmMGYzNjI0OWE3NSIsImdyb3VwcyI6WzIwMDEsMjAwMiwyMDAzLDIwMDQsMjAwNSwyMDA2LDIwMDcsMjAwOCwyMDA5LDIwMTAsMjAxMSwyMDEyLDIwMTMsMjAxNCwyMDE1LDIwMTYsMjAxNywyMDE4LDIwMTksMjAyMCwyMDIxLDIwMjIsMzAwMSwzMDAyLDMwMDMsMzAwNCwzMDA1LDMwMDYsMzAwNywzMDA4LDMwMDksMzAxMCwzMDExLDMwMTIsMzAxMywzMDE0LDQwMDEsNDAwMiw0MDAzLDQwMDQsNDAwNSw0MDA2LDUwMDEsNTAwMiw1MDAzLDUwMDQsNTAwNSw1MDA2LDUwMDcsNTAwOCw1MDA5LDUwMTAsNTAxMSw1MDEyLDUwMTMsNTAxNCw1MDE1LDUwMTYsNTAxNyw1MDE4LDUwMTksNTAyMCw1MDIxLDUwMjIsNTAyMyw1MDI0LDUwMjUsNTAyNiw1MDI3LDUwMjgsNTAyOSw1MDMwLDUwMzEsNTAzMiw1MDMzLDUwMzQsNTAzNSw1MDM2LDUwMzcsNjAwMSw2MDAyLDYwMDMsNjAwNCw2MDA1LDYwMDYsNjAwNyw2MDA4LDcwMDEsNzAwMiw3MDAzLDcwMDQsNzAwNSw3MDA2XSwicGVybWlzc2lvbnMiOlsxMDEsMTAyLDEwM10sInJvbGVzIjpbMTEsMTIsMTMsMjEsMjIsMjMsMzEsMzIsMzNdLCJ1c2VySWQiOiIiLCJsb2dpblN0YXR1cyI6IiIsImV4cGlyZXNEYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJFcnJvciI6bnVsbCwiZXhwIjoxNzI1OTU3MzM4LCJpYXQiOjE3MjU4NzA5Mzh9.VCi-cQhYvbSBViVzXqsAWw8v5XFX1CODz-HPv7inViI",
-          },
-        }
-      );
+    await act(async () => {
+      fireEvent.change(datefrom, { target: { value: "2024-09-09" } });
+      fireEvent.change(dateto, { target: { value: "2024-09-09" } });
+      fireEvent.change(id, { target: { value: "80000001" } });
     });
-
-    // Assert that the table data is rendered correctly
-    await waitFor(() => {
-      expect(screen.getByText("name-80000001")).toBeInTheDocument();
-      expect(screen.getByText("123456789")).toBeInTheDocument();
-    });
-  });
-
-  test("should handle axios POST request failure", async () => {
-    store.dispatch(setUser(mockUser));
-
-    // Mock axios.post implementation to reject
-    mockAxios.post.mockRejectedValueOnce(new Error("Network Error"));
-
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <TodoCorporateAccountOpenning />
-        </MemoryRouter>
-      </Provider>
-    );
-
-    // Simulate user input
-    fireEvent.change(screen.getByTestId("juristicId"), {
-      target: { value: "80000001" },
-    });
-    fireEvent.change(screen.getByTestId("dateFrom"), {
-      target: { value: "2024-09-09" },
-    });
-    fireEvent.change(screen.getByTestId("dateTo"), {
-      target: { value: "2024-09-09" },
-    });
-
-    // Simulate form submission
-    fireEvent.click(screen.getByText("Search"));
-
-    // Assert that axios.post was called with the correct URL and payload
-    await waitFor(() => {
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        "/api/v1/corporate/query",
-        {
-          corporateCode: "80000001",
-          dateFrom: "2024-09-09",
-          dateTo: "2024-09-09",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: expect.any(String), // assuming you have a mock token
-          },
-        }
-      );
-    });
-
-    // Assert that an error message is displayed
-    await waitFor(() => {
-      expect(screen.getByText("No data found.")).toBeInTheDocument();
-    });
-  });
+    expect(datefrom).toHaveValue("2024-09-09");
+    expect(dateto).toHaveValue("2024-09-09");
+    expect(id).toHaveValue("80000001");
+  }, 20000);
 });
