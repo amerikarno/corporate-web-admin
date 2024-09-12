@@ -73,7 +73,7 @@ export function EditCorporateAccount() {
   }, [corporateCode, pageId]);
 
   const navigate = useNavigate();
-  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
+  const { handleSubmitCorporateInfo } =
     useCorporateInfo();
 
   // const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
