@@ -63,6 +63,29 @@ export function FormCorporateInfo({
   const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 602
   );
+  const initCountryData: TRegisteredCountryPrimaryCountryOperation = {
+    registered: resCorpRegisterCountry?.other || "",
+    isRegisteredThailand: resCorpRegisterCountry?.isThailand ?? false,
+    isRegisteredOther: resCorpRegisterCountry
+      ? !resCorpRegisterCountry.isThailand
+      : false,
+    primary: resCorpPrimaryCountry?.other || "",
+    isPrimaryCountry: resCorpPrimaryCountry?.isThailand ?? false,
+    isPrimaryOther: resCorpPrimaryCountry
+      ? !resCorpPrimaryCountry.isThailand
+      : false,
+  };
+
+  const [
+    registeredCountryPrimaryCountryOperation,
+    setRegisteredCountryPrimaryCountryOperation,
+  ] = useState<TRegisteredCountryPrimaryCountryOperation>(
+    corporatesInfo
+      ? initCountryData
+      : emptyRegisteredCountryPrimaryCountryOperation
+  );
+  const token = getCookies();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(initData);
@@ -97,6 +120,7 @@ export function FormCorporateInfo({
       }
     }
   }, [initData]);
+
   useEffect(() => {
     if (initData) {
       const registeredCapitalValue =
@@ -141,30 +165,8 @@ export function FormCorporateInfo({
     }
   }, [shouldScrollUp]);
 
-  const initCountryData: TRegisteredCountryPrimaryCountryOperation = {
-    registered: resCorpRegisterCountry?.other || "",
-    isRegisteredThailand: resCorpRegisterCountry?.isThailand ?? false,
-    isRegisteredOther: resCorpRegisterCountry
-      ? !resCorpRegisterCountry.isThailand
-      : false,
-    primary: resCorpPrimaryCountry?.other || "",
-    isPrimaryCountry: resCorpPrimaryCountry?.isThailand ?? false,
-    isPrimaryOther: resCorpPrimaryCountry
-      ? !resCorpPrimaryCountry.isThailand
-      : false,
-  };
-
-  const [
-    registeredCountryPrimaryCountryOperation,
-    setRegisteredCountryPrimaryCountryOperation,
-  ] = useState<TRegisteredCountryPrimaryCountryOperation>(
-    corporatesInfo
-      ? initCountryData
-      : emptyRegisteredCountryPrimaryCountryOperation
-  );
-  const token = getCookies();
-  const dispatch = useDispatch();
   useEffect(() => {
+    console.log(corporatesInfo?.CorporateCountry);
     const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 601
     );
@@ -172,6 +174,7 @@ export function FormCorporateInfo({
     const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 602
     );
+    console.log(resCorpPrimaryCountry);
     setRegisteredCountryPrimaryCountryOperation({
       ...initCountryData,
       registered: resCorpRegisterCountry?.other || "",
@@ -199,7 +202,6 @@ export function FormCorporateInfo({
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
     let tmp = copy(registeredCountryPrimaryCountryOperation);
-
     if (name === "Thailand") {
       tmp.registered = "";
       tmp.isRegisteredThailand = checked;

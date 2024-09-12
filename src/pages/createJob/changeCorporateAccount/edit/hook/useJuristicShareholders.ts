@@ -37,11 +37,11 @@ export function useJuristicShareholders() {
         });
         if (res.status === 200) {
           console.log(res);
-          console.log("update success", res.data.juristicId);
+          console.log("update success", data.juristicId);
           dispatch(
             updateJuristicShareholder({
               ...data,
-              juristicId: res.data.juristicId,
+              juristicId: data.juristicId,
             })
           );
           setJuristics([...juristics, data]);

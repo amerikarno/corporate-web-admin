@@ -52,24 +52,28 @@ export function PageAttorney({
         },
       })
       if (res.status === 200) {
-        console.log(res)
-        const updateAttorney= res.data[0].Attorneys.map((attorneyitems: any) => ({
-          ...attorneyitems,
-          personalId: attorneyitems.personalId, 
-        }))
-        .map(mapDataToTAttorney)
-        .filter((item:any) => item !== null);
-        
-        dispatch(setAttorney(updateAttorney));
-        dispatch(setCorporateData(res.data[0]));
-        console.log("Attorney data fetched successfully.", updateAttorney);
+        console.log(res);
+        if (Array.isArray(res.data[0]?.Attorneys)) {
+          const updateAttorney = res.data[0].Attorneys.map((attorneyitems: any) => ({
+            ...attorneyitems,
+            personalId: attorneyitems.personalId, 
+          }))
+          .map(mapDataToTAttorney)
+          .filter((item: any) => item !== null);
+  
+          dispatch(setAttorney(updateAttorney));
+          dispatch(setCorporateData(res.data[0]));
+          console.log("Attorney data fetched successfully.", updateAttorney);
+        } else {
+          console.log("Failed to fetch Attorney data or data is not an array.");
+        }
       } else {
         console.log("Failed to fetch Attorney data or data is not an array.");
       }
-    }catch(error){
+    } catch (error) {
       console.error("Error fetching Attorney data:", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchedData();

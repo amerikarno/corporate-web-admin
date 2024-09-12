@@ -27,11 +27,9 @@ import {
 } from "@/components/ui/alert-dialog"
 
 type TPageContactPersonProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 
-export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContactPersonProps) {
+export function PageContactPerson({}: TPageContactPersonProps) {
   const dispatch = useDispatch();
   const contactPersonData: TContact[] = useSelector<RootState>(
     (state) => state.contactPerson?.contactPersons
@@ -39,13 +37,15 @@ export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContact
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
-
+  const corporateCode = localStorage.getItem("corporateCode") || "";
   const token = getCookies();
   const { handleSubmitContactPerson } = useContactPerson();
   const [choosedEditData, setChoosedEditData] = useState<TContact>();
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
 
-  useEffect(() => {
-    axios
+  const fetchedData = async () => {
+    try {
+      const res = await axios
       .post(
         "/api/v1/corporate/query",
         { corporateCode },
@@ -55,27 +55,26 @@ export function PageContactPerson({ corporateCode,corporatesInfo }: TPageContact
           },
         }
       )
-      .then((res) => {
-        console.log("API Response:", res.data);
-
-        if (res.status === 200) {
-          const contacts = res.data[0]?.Contact || [];
-          const updatedContacts: TContact[] = contacts.map((contact: any) => {
-            return {
-              ...contact,
-              personalId: contact.personalID,
-            };
-          });
-          dispatch(setContactPersons(updatedContacts));
-          console.log("Contact data fetched successfully.", contacts);
-        } else {
-          console.log("Failed to fetch contact data or data is not an array.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching contact data:", error);
-      });
-  }, [corporateCode, dispatch, token]);
+      if (res.status === 200) {
+        const contacts = res.data[0]?.Contact || [];
+        const updatedContacts: TContact[] = contacts.map((contact: any) => {
+          return {
+            ...contact,
+            personalId: contact.personalID,
+          };
+        });
+        dispatch(setContactPersons(updatedContacts));
+        console.log("Contact data fetched successfully.", contacts);
+      } else {
+        console.log("Failed to fetch contact data or data is not an array.");
+      }
+    }catch(error){
+      console.error("Error fetching contact data:", error);
+    }
+  }
+  useEffect(() => {
+    fetchedData();
+  }, []);
 
   console.log(contactPersonData);
 

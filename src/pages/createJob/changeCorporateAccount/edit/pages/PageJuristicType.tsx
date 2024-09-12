@@ -5,15 +5,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { TCorporateData } from "../../constant/type";
 import { mapDataToTCorporateInfo } from "../libs/utils";
+import { useCorporateInfo } from "../hook/useCorporateInfo";
 
 type TPageJuristicTypeProps = {
-  currentCorporatesInfo: TCorporateInfo;
-  corporateCode?: string;
 };
 export function PageJuristicType({
-  currentCorporatesInfo,
-  corporateCode,
 }: TPageJuristicTypeProps) {
+  const {currentCorporatesInfo } =
+    useCorporateInfo();
+  const corporateCode = localStorage.getItem("corporateCode") || "";
   const corporateData: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
