@@ -62,7 +62,7 @@ export function useToDoIndividualAccount() {
           formatBody = body
         }
         console.log("formatBody:",formatBody);
-        const res = await axios.post("/api/v1/individual/list", body, {
+        const res = await axios.post("/api/v1/individual/list", formatBody, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getCookies()}`,

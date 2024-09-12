@@ -62,7 +62,7 @@ export function useAccountOpening() {
           formatBody = body
         }
         console.log("formatBody:",formatBody);
-        const res = await axios.post("/api/v1/corporate/query", body, {
+        const res = await axios.post("/api/v1/corporate/query", formatBody, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getCookies()}`,
