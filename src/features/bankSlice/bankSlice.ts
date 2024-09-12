@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TBank } from "@/pages/createJob/constant/type";
 
 interface BankState {
@@ -28,7 +28,7 @@ export const bankSlice = createSlice({
     setBank: (state, action) => {
       state.banks = action.payload;
     },
-    updateBank: (state, action) => {
+    updateBank: (state, action: PayloadAction<{BankId: string, newBankId: string,bank :any}>) => {
       console.log("Updating bank with BankId:", action.payload.BankId);
       const index = state.banks.findIndex(
         (data :any) => data.BankId === action.payload.BankId
@@ -37,12 +37,12 @@ export const bankSlice = createSlice({
       if (index !== -1) {
         console.log("Bank found. Updating...");
         state.banks[index] = {
-          ...state.banks[index],
-          ...action.payload,
+          ...action.payload.bank,
+          BankId:action.payload.newBankId
         };
       } else {
         console.log("Bank not found. Adding new bank...");
-        state.banks.push(action.payload);
+        state.banks.push(action.payload.bank);
       }
     },
   },

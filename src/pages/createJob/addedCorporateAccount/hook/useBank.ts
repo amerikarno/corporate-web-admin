@@ -30,7 +30,10 @@ export function useBank() {
         if (res.status === 200) {
           console.log(res);
           console.log("update success");
-          dispatch(updateBank(data));
+          dispatch(updateBank({
+            BankId: data.BankId,
+            newBankId: res.data.BankId,
+            bank:data}));
         } else {
           console.log("update failed");
         }

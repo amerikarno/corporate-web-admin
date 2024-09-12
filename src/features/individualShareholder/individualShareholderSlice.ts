@@ -39,7 +39,7 @@ export const individualShareholderSlice = createSlice({
     },
     updateIndividualShareholder: (
       state,
-      action: PayloadAction<TIndividualsShareholders>
+      action: PayloadAction<{ personalId: string, newPersonalId: string,individualShareholder :TIndividualsShareholders}>
     ) => {
       const index = state.individualShareholders.findIndex(
         (individualShareholder) =>
@@ -48,9 +48,9 @@ export const individualShareholderSlice = createSlice({
       if (index !== -1) {
         //const expiryDate = new Date(action.payload.expiryDate);
         state.individualShareholders[index] = {
-          ...state.individualShareholders[index],
-          ...action.payload,
-          corporateCode: String(action.payload.corporateCode),
+          ...action.payload.individualShareholder,
+          personalId: action.payload.newPersonalId,
+          corporateCode: String(action.payload.individualShareholder.corporateCode),
         };
       }
     },

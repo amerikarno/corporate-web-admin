@@ -28,15 +28,15 @@ export const attorneySlice = createSlice({
     clearAttorney: (state) => {
       state.attorneys = [];
     },
-    updateAttorney: (state, action) => {
+    updateAttorney: (state, action: PayloadAction<{personalId: string, newPersonalId: string,attorney :TAttorney}>) => {
       const index = state.attorneys.findIndex((data) => {
         return data.personalId === action.payload.personalId;
       });
       if (index !== -1) {
         console.log("Attorney found. Updating...");
         state.attorneys[index] = {
-          ...state.attorneys[index],
-          ...action.payload,
+          ...action.payload.attorney,
+          personalId: action.payload.newPersonalId,
         };
       }else{
         console.log("Attorney found. Updating... => attorney not found");

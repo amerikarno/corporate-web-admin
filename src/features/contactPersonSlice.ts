@@ -36,12 +36,15 @@ export const contactPersonSlice = createSlice({
         corporateCode: String(contact.corporateCode),
       })) as TContactPerson[];
     },
-    updateContactPerson: (state, action: PayloadAction<TContactPerson>) => {
+    updateContactPerson: (state, action: PayloadAction<{ personalId: string, newPersonalId: string, contactPerson: TContactPerson }>) => {
       const index = state.contactPersons.findIndex(
         (person) => person.personalId === action.payload.personalId
       );
       if (index !== -1) {
-        state.contactPersons[index] = action.payload;
+        state.contactPersons[index] = {
+          ...action.payload.contactPerson,
+          personalId: action.payload.newPersonalId
+        };
       }
     },
   },

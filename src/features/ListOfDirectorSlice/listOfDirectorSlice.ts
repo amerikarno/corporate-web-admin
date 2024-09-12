@@ -37,12 +37,15 @@ export const DirectorSlice = createSlice({
     setDirectorEdit: (state, action: PayloadAction<TDirector[]>) => {
       state.listOfDirectors = action.payload;
     },
-    updateDirector: (state, action: PayloadAction<TDirector>) => {
+    updateDirector: (state, action: PayloadAction<{personalId:string,newPersonalId:string,listOfDirector:TDirector}>) => {
       const index = state.listOfDirectors.findIndex(
         (director) => director.personalId === action.payload.personalId
       );
       if (index !== -1) {
-        state.listOfDirectors[index] = action.payload;
+        state.listOfDirectors[index] = {
+          ...action.payload.listOfDirector,
+          personalId: action.payload.newPersonalId
+        };
       }
     },
   },

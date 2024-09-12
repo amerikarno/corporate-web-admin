@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TJuristicsShareholders } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 
 interface JuristicShareholderState {
@@ -31,15 +31,15 @@ export const juristicShareholderSlice = createSlice({
     setJuristicShareholder: (state, action) => {
       state.juristicShareholders = action.payload;
     },
-    updateJuristicShareholder: (state, action) => {
+    updateJuristicShareholder: (state, action: PayloadAction<{ juristicId: string, newJuristicId: string,juristicShareholder : TJuristicsShareholders}>) => {
       const index = state.juristicShareholders.findIndex(
         (data) => data.juristicId === action.payload.juristicId
       );
 
       if (index !== -1) {
         state.juristicShareholders[index] = {
-          ...state.juristicShareholders[index],
-          ...action.payload,
+          ...action.payload.juristicShareholder,
+          juristicId: action.payload.newJuristicId,
         };
       }
     },
