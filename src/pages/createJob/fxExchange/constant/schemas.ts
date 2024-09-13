@@ -11,5 +11,14 @@ export const fxExchangeSchema = z.object({
   buyCurrency: z.coerce.number().min(1,"please fill this field first"),
 });
 
-export type TFxExchange = z.infer<typeof fxExchangeSchema>;
+export type TFxExchange = {
+  corporateCode: number | undefined;
+  exchangeRate: number | undefined;
+  exchangeSpread: number | undefined;
+  operationSpread: number | undefined;
+  id?: string;
+  transactionStatus?: number | undefined;
+  exchange?: string;
+  buyCurrency?: number | undefined;
+}
 

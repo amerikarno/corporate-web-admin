@@ -159,10 +159,10 @@ export default function OrderTradeEdit() {
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
       corporateCode: 0,
-      cryptoAmount: 0,
-      cryptoPrice: 0,
+      cryptoAmount: null,
+      cryptoPrice: null,
       currency: "",
-      fiatAmount: 0,
+      fiatAmount: null,
     };
     reset(orderListDatatoInputField);
     if (choosedEditData?.operations === "buy") {

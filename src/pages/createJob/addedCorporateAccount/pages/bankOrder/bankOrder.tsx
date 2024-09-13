@@ -158,8 +158,8 @@ export default function BankOrderEdit() {
       bankName: "",
       bankAccount: "",
       operations: "",
-      orderValue: 0,
-      accountId: 0,
+      orderValue: null,
+      accountId: null,
     };
     if(choosedEditData?.bankName){
       setBankRemove(true)
