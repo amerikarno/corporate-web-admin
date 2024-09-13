@@ -82,6 +82,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               localStorage.clear();
              }
            });
          }else{
@@ -105,6 +106,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               localStorage.clear();
              }
            });
          }else{
@@ -140,6 +142,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               localStorage.clear();
              }
            });
          }else{
@@ -163,6 +166,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               localStorage.clear();
              }
            });
          }else{
