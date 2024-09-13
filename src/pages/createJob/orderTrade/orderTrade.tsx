@@ -159,10 +159,10 @@ export default function OrderTradeEdit() {
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
       corporateCode: 0,
-      cryptoAmount: 0,
-      cryptoPrice: 0,
+      cryptoAmount: null,
+      cryptoPrice: null,
       currency: "",
-      fiatAmount: 0,
+      fiatAmount: null,
     };
     reset(orderListDatatoInputField);
     if (choosedEditData?.operations === "buy") {
@@ -266,12 +266,12 @@ export default function OrderTradeEdit() {
   };
 
   return (
-    <div className="md:p-10 flex flex-col justify-center space-y-4">
+    <div className="md:p-4 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
-            <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%]">
+            <Card className="w-2/3 p-4 md:space-y-4 md:p-10">
               <div className="w-full flex justify-center items-center">
                 <div className="w-2/3">
                   <Input
@@ -309,7 +309,7 @@ export default function OrderTradeEdit() {
                         value={selectedTradingPair}
                         onChange={handleTradingPairChange}
                         disabled={isSubmitting}
-                        className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-md block w-full py-2.5 px-4 focus:outline-none appearance-none"
+                        className="h-11 cursor-pointer bg-slate-700 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-md block w-full py-2.5 px-4 focus:outline-none appearance-none"
                       >
                         <option value="THB/USTD" disabled>
                           THB/USDT

@@ -1,7 +1,12 @@
+import axios from "@/api/axios";
+import { RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { getCookies } from "@/lib/Cookies";
+import { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
 
 const questionsData = {
     "id": "1",
@@ -177,6 +182,46 @@ type AnswersType = {
     const totalQuestions = questionsData.items.length;
     const answeredQuestionsCount = Object.keys(answers).length;
     const [allTestSuccess , setAllTestSuccess] = useState(false);
+    const dispatch = useDispatch();
+    const token = getCookies();
+
+    const fetchIndividualData = async (AccountID: string) => {
+        try {
+          console.log(AccountID);
+          const res = await axios.post(
+            "/api/v1/individual/list",
+            { AccountID },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          dispatch(setIndividualData(res.data[0]));
+          console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      const individualData = useSelector(
+        (state: RootState) => state.individualData.individualDatas
+      );
+      
+    useEffect(() => {
+        const cidValue = localStorage.getItem("cid");
+        fetchIndividualData(cidValue || "");
+      }, [token, dispatch,]);
+
+    useEffect(()=>{
+        if(individualData?.SuiteTestResult.isKnowLedgeDone){
+            const initialAnswers: { [key: number]: number } = {};
+            questionsData.items.forEach((question) => {
+                initialAnswers[question.id] = question.ans;
+            });
+            setAnswers(initialAnswers);
+        }
+    },[individualData])
 
     const handleNext = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));

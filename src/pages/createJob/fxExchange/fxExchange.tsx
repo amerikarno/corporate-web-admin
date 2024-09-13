@@ -5,7 +5,7 @@ import { TFxExchange } from "./constant/schemas";
 import { fxExchangeSchema } from "./constant/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { isAllowedPage } from "@/lib/utils";
@@ -16,13 +16,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { SiExpertsexchange } from "react-icons/si";
-
-
+// import { FaMoneyBillWave } from "react-icons/fa6";
+import "./scrollbar.css";
 
 export default function FxExchangeEdit() {
   if (!isAllowedPage(2005)) {
     return <UnAuthorize />;
   }
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsDropdownOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const currencyPairs = [
+    { 0: "THB", 1: "USD" , 2:"THB / USD" },
+    // { 0: "THB", 1: "EUR" , 2:"THB / EUR" },
+    // { 0: "THB", 1: "AUD" , 2:"THB / AUD" },
+    { 0: "USD", 1: "THB" , 2:"USD / THB" },
+    // { 0: "EUR", 1: "THB" , 2:"EUR / THB" },
+    // { 0: "AUD", 1: "THB" , 2:"AUD / THB" },
+  ];
 
   const dispatch = useDispatch();
   const [youSend,setYouSend] = useState<string>("THB");
@@ -37,21 +59,36 @@ export default function FxExchangeEdit() {
     return new Intl.NumberFormat('en-US').format(number);
   };
 
-  useEffect(() => {
-    if (exchangeSpread !== null && operationSpread !== null && exchangeRate !== null && youSendValue !== null) {
-      const sum = youSendValue + exchangeSpread + operationSpread * exchangeRate;
-      setExchangeResult(sum);
-    }else if(exchangeSpread || operationSpread || exchangeRate || youSendValue === null){
-      setExchangeResult(0);
-    }
-  }, [exchangeSpread, operationSpread, exchangeRate,youSendValue]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedPair, setSelectedPair] = useState('THB / USD');
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
   const handleYouSend = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setYouSend(e.target.value);
+    const pair:any = currencyPairs.find(pair => pair[2] === selectedPair);
+    console.log(pair)
+    if (pair) {
+      setRecipientGets(pair[0] === e.target.value ? pair[1] : pair[0]);
+    }
   }
+
+  const handleSelectPair = (pair: { 0: string, 1: string }) => {
+    setYouSend(pair[0]);
+    setRecipientGets(pair[1]);
+    setSelectedPair(`${pair[0]} / ${pair[1]}`);
+    setIsDropdownOpen(false);
+  };
 
   const handleRecipientGets = (e: React.ChangeEvent<HTMLSelectElement>) =>{
     setRecipientGets(e.target.value)
+    const pair:any = currencyPairs.find(pair => pair[2] === selectedPair);
+    console.log(pair)
+    if (pair) {
+      setYouSend(pair[0] === e.target.value ? pair[1] : pair[0]);
+    }
   }
 
   const handleYouSendValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,6 +198,24 @@ export default function FxExchangeEdit() {
     }
   };
 
+  const generateOptions = (selectedPair: string) => {
+    if (selectedPair === "THB / USD") {
+      return ["THB", "USD"];
+    }else if (selectedPair === "THB / EUR"){
+      return ["THB", "EUR"];
+    }else if (selectedPair === "THB / AUD"){
+      return ["THB", "AUD"];
+    }else if (selectedPair === "USD / THB"){
+      return ["USD", "THB"];
+    }else if (selectedPair === "EUR / THB"){
+      return ["EUR", "THB"];
+    }else if (selectedPair === "AUD / THB"){
+      return ["AUD", "THB"];
+    }
+    
+    return [];
+  };
+
   const columnsFxExchange: TableColumn<TFxExchange>[] = [
     {
       name: "Corporate Code",
@@ -205,17 +260,39 @@ export default function FxExchangeEdit() {
     },
   ];
 
+
+  useEffect(() => {
+    // console.log(exchangeSpread)
+    // console.log(operationSpread)
+    // console.log(exchangeRate)
+    // console.log(youSendValue)
+    if (exchangeSpread !== null && operationSpread !== null && exchangeRate !== null && youSendValue !== null) {
+      const sum = youSendValue + exchangeSpread + operationSpread * exchangeRate;
+      setExchangeResult(sum);
+    }else if(exchangeSpread || operationSpread || exchangeRate || youSendValue === null){
+      setExchangeResult(0);
+    }
+  }, [exchangeSpread, operationSpread, exchangeRate,youSendValue,choosedEditData]);
+
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: 0,
-      exchangeRate:0,
-      exchangeSpread:0,
-      operationSpread:0,
+      corporateCode: undefined,
+      exchangeRate:undefined,
+      exchangeSpread:undefined,
+      operationSpread:undefined,
     };
     const [firstVariable, secondVariable] = choosedEditData?.exchange?.split('/') || ["THB", "USD"];
+    console.log({0 : firstVariable , 1 : secondVariable})
+    handleSelectPair({0 : firstVariable , 1 : secondVariable});
     setYouSend(firstVariable);
     setRecipientGets(secondVariable);
+    setExchangeSpread(choosedEditData?.exchangeSpread || 0);
+    setOperationSpread(choosedEditData?.operationSpread || 0);
+    setExchangeRate(choosedEditData?.exchangeRate || 0);
+    setYouSendValue(choosedEditData?.buyCurrency || 0);
     reset(orderListDatatoInputField);
+
+    console.log(choosedEditData)
 
     console.log("use effect", orderListDatatoInputField);
   }, [choosedEditData]);
@@ -259,6 +336,7 @@ export default function FxExchangeEdit() {
         });
         if (res.status === 200) {
           reset();
+          setExchangeResult(0);
           clearChoosedEditData();
           setSelectedCorporateCode("");
           console.log("edit successful");
@@ -274,6 +352,7 @@ export default function FxExchangeEdit() {
         });
         if (res.status === 200) {
           reset();
+          setExchangeResult(0);
           clearChoosedEditData();
           setSelectedCorporateCode("");
           console.log("save successful");
@@ -288,8 +367,9 @@ export default function FxExchangeEdit() {
   };
 
   return (
-    <div className="md:p-10 flex flex-col justify-center space-y-4">
+    <div className="md:p-4 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
+      <h1 className="font-bold md:text-xl py-4">FX Exchange</h1>
         <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
           <Card className="p-16 py-8 flex flex-col items-center space-y-4">
             <div className="flex flex-row justify-start w-full">
@@ -366,15 +446,49 @@ export default function FxExchangeEdit() {
                     </p>
                 )}
             </div>
+            <div className="w-full flex justify-center">
+              <div className="relative w-full " ref={dropdownRef}>
+                <div className="absolute text-white top-3 left-[30%]">
+                  {/* <FaMoneyBillWave/> */}
+                </div>
+                <button 
+                  id="dropdownDefaultButton" 
+                  data-dropdown-toggle="dropdown" 
+                  className="text-white bg-slate-800 w-full hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center items-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800" 
+                  type="button"
+                  onClick={handleDropdownToggle}
+                >
+                  {selectedPair}
+                  <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+                </button>
+                <div id="dropdown" className={`z-10 ${isDropdownOpen ? '' : 'hidden'} absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}>
+                    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 max-h-28 overflow-auto custom-scrollbar" aria-labelledby="dropdownDefaultButton">
+                      {currencyPairs.map((pair, index) => (
+                        <li key={index} onClick={() => handleSelectPair(pair)}>
+                          <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
+                            {pair[0]} / {pair[1]}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                </div>
+              </div>
+            </div>
             <div className="flex flex-col items-center space-y-8 py-4">
               <div className="flex w-[20rem] md:w-[25rem]">
                 <select
+                  value={youSend}
                   onChange={handleYouSend}
                   id="categories"
-                  className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  className="flex-shrink-0 z-9 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 >
-                  <option value="THB">THB</option>
-                  <option value="USD">USD</option>
+                  {generateOptions(selectedPair).map((currency) => (
+                        <option key={currency} value={currency}>
+                          {currency}
+                        </option>
+                      ))}
                 </select>
                 <div className="relative w-full">
                   <input
@@ -382,7 +496,7 @@ export default function FxExchangeEdit() {
                     onChange={handleYouSendValue}
                     type="search"
                     id="search-dropdown"
-                    className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:outline-none"
+                    className="block p-2.5 w-full z-9 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:outline-none"
                     placeholder="You Send"
                   />
                 </div>
@@ -395,19 +509,23 @@ export default function FxExchangeEdit() {
                 </div>
                 <div className="flex w-[20rem] md:w-[25rem]">
                   <select
+                  value={recipientGets}
                   onChange={handleRecipientGets}
                     id="categories"
-                    className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                  >
-                    <option value="USD">USD</option>
-                    <option value="THB">THB</option>
+                    className="flex-shrink-0 z-9 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                  > 
+                     {generateOptions(selectedPair).map((currency) => (
+                        <option key={currency} value={currency}>
+                          {currency}
+                        </option>
+                      ))}
                   </select>
                   <div className="relative w-full">
                     <input
                       disabled={true}
                       type="search"
                       id="search-dropdown"
-                      className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                      className="block p-2.5 w-full z-9 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                       placeholder="Recipient Gets"
                       value={exchangeResult || ""}
                     />

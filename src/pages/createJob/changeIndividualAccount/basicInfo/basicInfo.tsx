@@ -25,6 +25,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
+import { TBasicinfoAddress, TBasicInfoBank } from "../type";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -69,66 +70,85 @@ export default function BasicInfo() {
     resolver: zodResolver(basicInfoSchema),
   });
 
-  const fetchIndividualData = async (AccountID: string) =>{
+  const fetchIndividualData = async (AccountID: string) => {
     try {
       console.log(AccountID);
-      const res = await axios.post("/api/v1/individual/list", {AccountID}, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        "/api/v1/individual/list",
+        { AccountID },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       dispatch(setIndividualData(res.data[0]));
       console.log(res);
     } catch (error) {
       console.log(error);
     }
-  }
-  const individualData = useSelector((state: RootState) => state.individualData.individualDatas); 
+  };
+  const individualData = useSelector(
+    (state: RootState) => state.individualData.individualDatas
+  );
   useEffect(() => {
-    const cidValue = localStorage.getItem('cid');
+    const cidValue = localStorage.getItem("cid");
     fetchIndividualData(cidValue || "");
   }, [token, dispatch]);
-  
+
   useEffect(() => {
-    if(individualData){
+    if (individualData) {
       console.log(individualData);
+
+      const registeredAddressFind: TBasicinfoAddress | null =
+        individualData?.address?.find((addr) => addr.types === 1) || null;
+      const currentAddressFind: TBasicinfoAddress | null =
+        individualData?.address?.find((addr) => addr.types === 2) || null;
+      const officeAddressFind: TBasicinfoAddress | null =
+        individualData?.address?.find((addr) => addr.types === 3) || null;
+
+      const firstBank: TBasicInfoBank | null =
+        individualData?.bank?.find((addr) => addr.types === 1) || null;
+      const secondBank: TBasicInfoBank | null =
+        individualData?.bank?.find((addr) => addr.types === 2) || null;
+
       let fillData: TBasicInfo = {
         registeredAddress: {
-          homeNumber: "",
-          villageNumber: "",
-          villageName: "",
-          subStreetName: "",
-          streetName: "",
-          subDistrictName: "",
-          districtName: "",
-          provinceName: "",
-          zipCode: "",
-          countryName: ""
+          homeNumber: registeredAddressFind?.homeNumber || "",
+          villageNumber: registeredAddressFind?.villageNumber || "",
+          villageName: registeredAddressFind?.villageName || "",
+          subStreetName: registeredAddressFind?.subStreetName || "",
+          streetName: registeredAddressFind?.streetName || "",
+          subDistrictName: registeredAddressFind?.subDistrictName || "",
+          districtName: registeredAddressFind?.districtName || "",
+          provinceName: registeredAddressFind?.provinceName || "",
+          zipCode: registeredAddressFind?.zipCode || "",
+          countryName: registeredAddressFind?.countryName || "",
         },
         currentAddress: {
-          homeNumber: "",
-          villageNumber: "",
-          villageName: "",
-          subStreetName: "",
-          streetName: "",
-          subDistrictName: "",
-          districtName: "",
-          provinceName: "",
-          zipCode: "",
-          countryName: ""
+          homeNumber: currentAddressFind?.homeNumber || "",
+          villageNumber: currentAddressFind?.villageNumber || "",
+          villageName: currentAddressFind?.villageName || "",
+          subStreetName: currentAddressFind?.subStreetName || "",
+          streetName: currentAddressFind?.streetName || "",
+          subDistrictName: currentAddressFind?.subDistrictName || "",
+          districtName: currentAddressFind?.districtName || "",
+          provinceName: currentAddressFind?.provinceName || "",
+          zipCode: currentAddressFind?.zipCode || "",
+          countryName: currentAddressFind?.countryName || "",
         },
         officeAddress: {
-          homeNumber: "",
-          villageNumber: "",
-          villageName: "",
-          subStreetName: "",
-          streetName: "",
-          subDistrictName: "",
-          districtName: "",
-          provinceName: "",
-          zipCode: "",
-          countryName: ""
+          homeNumber: officeAddressFind?.homeNumber || "",
+          villageNumber: officeAddressFind?.villageNumber || "",
+          villageName: officeAddressFind?.villageName || "",
+          subStreetName: officeAddressFind?.subStreetName || "",
+          streetName: officeAddressFind?.streetName || "",
+          subDistrictName: officeAddressFind?.subDistrictName || "",
+          districtName: officeAddressFind?.districtName || "",
+          provinceName: officeAddressFind?.provinceName || "",
+          zipCode: officeAddressFind?.zipCode || "",
+          countryName: officeAddressFind?.countryName || "",
         },
         occupation: {
           education: individualData?.education || "",
@@ -140,22 +160,24 @@ export default function BasicInfo() {
           salaryRange: individualData?.salaryRange || "",
         },
         firstBankAccount: {
-          bankName: "",
-          bankBranchName: "",
-          bankAccountNumber: ""
+          bankName: firstBank?.bankName || "",
+          bankBranchName: firstBank?.bankBranchName || "",
+          bankAccountNumber: firstBank?.bankAccountNumber || "",
         },
         secondBankAccountBody: {
-          bankName: "",
-          bankBranchName: "",
-          bankAccountNumber: ""
+          bankName: secondBank?.bankName || "",
+          bankBranchName: secondBank?.bankBranchName || "",
+          bankAccountNumber: secondBank?.bankAccountNumber || "",
         },
         investment: {
           shortTermInvestment: individualData?.shortTermInvestment || false,
           longTermInvestment: individualData?.longTermInvestment || false,
           taxesInvestment: individualData?.taxesInvestment || false,
-          retireInvestment: individualData?.retireInvestment || false
-        }
+          retireInvestment: individualData?.retireInvestment || false,
+        },
       };
+      console.log(firstBank)
+      console.log(fillData)
       reset(fillData);
     }
   }, [individualData, reset]);
@@ -208,12 +230,12 @@ export default function BasicInfo() {
       },
       firstBankAccount: {
         ...data.firstBankAccount,
-        type: 1,
+        types: 1,
         is_default: true,
       },
       secondBankAccountBody: {
         ...data.secondBankAccountBody,
-        type: 2,
+        types: 2,
         is_default: false,
       },
     };
@@ -230,18 +252,34 @@ export default function BasicInfo() {
       pageID: 300,
     };
     console.log(body);
-    try{
+    try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/individual/postcreate",body,{
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if(res.status === 200){
-        console.log("submit basic info success",res);
-        navigate("/create-job/change-individual-account/edit/suittestfatca");
+      const registeredAddressFind: TBasicinfoAddress | null =
+        individualData?.address?.find((addr) => addr.types === 1) || null;
+      if(registeredAddressFind?.homeNumber){
+        const res = await axios.post("/api/v1/individual/update/post", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 200) {
+          console.log("update basic info success", res);
+          navigate("/create-job/change-individual-account/edit/3");
+          window.scrollTo(0, 0);
+        } else {
+          console.log("update basic info unsuccess x", res);
+        }
       }else{
-        console.log("submit basic info unsuccess x",res);
+        const res = await axios.post("/api/v1/individual/postcreate", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 200) {
+          console.log("submit basic info success", res);
+          navigate("/create-job/change-individual-account/edit/3");
+          window.scrollTo(0, 0);
+        } else {
+          console.log("submit basic info unsuccess x", res);
+        }
       }
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   };
@@ -261,7 +299,7 @@ export default function BasicInfo() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4 relative">
       <Card>
         <CardContent>
           <div className="p-4 space-y-4">
@@ -627,95 +665,111 @@ export default function BasicInfo() {
                   ))}
                 </select>
               </div>
-              {showWorkplace ? (<div className="w-1/2">
-                <Input
-                  type="text"
-                  label="ชื่อสถานที่ทำงาน"
-                  id="workPlace"
-                  {...register("occupation.officeName")}
-                />
-              </div>) : showWorkPosition ?
-              (<div className="w-1/2">
-                <Input
-                  type="text"
-                  label="ตำแหน่งงาน"
-                  id="่jobPosition"
-                  {...register("occupation.positionName")}
-                />
-              </div>) :
-              (<div className="w-1/2">
-                <select
-                  {...register("occupation.salaryRange")}
-                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+              {showWorkplace ? (
+                <div className="w-1/2">
+                  <Input
+                    type="text"
+                    label="ชื่อสถานที่ทำงาน"
+                    id="workPlace"
+                    {...register("occupation.officeName")}
+                  />
+                </div>
+              ) : showWorkPosition ? (
+                <div className="w-1/2">
+                  <Input
+                    type="text"
+                    label="ตำแหน่งงาน"
+                    id="่jobPosition"
+                    {...register("occupation.positionName")}
+                  />
+                </div>
+              ) : (
+                <div className="w-1/2">
+                  <select
+                    {...register("occupation.salaryRange")}
+                    className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
-                >
-                  <option value="">รายได้ต่อเดือน</option>
-                  {salaryRange.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </select>
-              </div>)}
+                  >
+                    <option value="">รายได้ต่อเดือน</option>
+                    {salaryRange.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
             <div className="flex space-x-6">
-              {showBusinessType ? (<div className="w-1/2">
-                <select
-                  {...register("occupation.typeOfBusiness")}
-                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+              {showBusinessType ? (
+                <div className="w-1/2">
+                  <select
+                    {...register("occupation.typeOfBusiness")}
+                    className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
-                >
-                  <option value="">ประเภทธุระกิจ</option>
-                  {businessTypes.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </select>
-              </div>) : (!showBusinessType && !showWorkPosition && !showWorkplace) ? (<div className="w-1/2"></div>) :(<div className="w-1/2">
-                <select
-                  {...register("occupation.salaryRange")}
-                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+                  >
+                    <option value="">ประเภทธุระกิจ</option>
+                    {businessTypes.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : !showBusinessType && !showWorkPosition && !showWorkplace ? (
+                <div className="w-1/2"></div>
+              ) : (
+                <div className="w-1/2">
+                  <select
+                    {...register("occupation.salaryRange")}
+                    className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
-                >
-                  <option value="">รายได้ต่อเดือน</option>
-                  {salaryRange.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </select>
-              </div>)}
-              {showWorkPosition&&showWorkplace ? (<div className="w-1/2">
-                <Input
-                  type="text"
-                  label="ตำแหน่งงาน"
-                  id="่jobPosition"
-                  {...register("occupation.positionName")}
-                />
-              </div>) : (<div className="w-1/2"></div>)}
+                  >
+                    <option value="">รายได้ต่อเดือน</option>
+                    {salaryRange.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {showWorkPosition && showWorkplace ? (
+                <div className="w-1/2">
+                  <Input
+                    type="text"
+                    label="ตำแหน่งงาน"
+                    id="่jobPosition"
+                    {...register("occupation.positionName")}
+                  />
+                </div>
+              ) : (
+                <div className="w-1/2"></div>
+              )}
             </div>
-            {showBusinessType && <div className="flex space-x-6">
-              <div className="w-1/2">
-                <select
-                  {...register("occupation.salaryRange")}
-                  className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
+            {showBusinessType && (
+              <div className="flex space-x-6">
+                <div className="w-1/2">
+                  <select
+                    {...register("occupation.salaryRange")}
+                    className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
-                >
-                  <option value="">รายได้ต่อเดือน</option>
-                  {salaryRange.map((status) => (
-                    <option key={status.id} value={status.id}>
-                      {status.name}
-                    </option>
-                  ))}
-                </select>
+                  >
+                    <option value="">รายได้ต่อเดือน</option>
+                    {salaryRange.map((status) => (
+                      <option key={status.id} value={status.id}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="w-1/2"></div>
               </div>
-              <div className="w-1/2"></div>
-            </div>}
+            )}
           </div>
         </CardContent>
       </Card>
@@ -1066,8 +1120,8 @@ export default function BasicInfo() {
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-end">
-        <Button type="submit">Submit</Button>
+      <div className="absolute right-4 -bottom-[4.5rem]">
+        <Button type="submit">Next Form</Button>
       </div>
     </form>
   );

@@ -158,8 +158,8 @@ export default function BankOrderEdit() {
       bankName: "",
       bankAccount: "",
       operations: "",
-      orderValue: 0,
-      accountId: 0,
+      orderValue: null,
+      accountId: null,
     };
     if(choosedEditData?.bankName){
       setBankRemove(true)
@@ -238,12 +238,12 @@ export default function BankOrderEdit() {
   };
 
   return (
-    <div className="md:p-10 flex flex-col justify-center space-y-4">
+    <div className="md:p-4 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Cash Deposit/Withdraw</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
-            <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%] space-y-4">
+            <Card className="w-2/3 p-4 md:space-y-4 md:p-10  space-y-4">
               <div className="flex justify-center ">
                 <div className="w-2/3">
                 <Input
@@ -273,7 +273,7 @@ export default function BankOrderEdit() {
                     <select
                       {...register("bankName")}
                       onChange={handleBankChange}
-                      className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
+                      className="h-12 cursor-pointer bg-slate-700 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
                         >
                       <option value="">Select Bank</option>
                       {bank.map((status) => (

@@ -13,25 +13,79 @@ import { Button } from "@/components/ui/button";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-// import { OtpEmailConfirm } from "./otpEmailConfirm/otpEmailConfirm";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+
 
 export default function AddIndividualAccount() {
   if (!isAllowedPage(2002)) {
     return <UnAuthorize />;
   }
-
+  
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors },
   } = useForm<TIndividualAccount>({
     resolver: zodResolver(individualAccountSchema),
   });
 
-  const [thTitle,setThTitle] = useState("");
-  const [engTitle,setEngTitle] = useState("");
+  const dispatch = useDispatch();
+  const token = getCookies();
+
+  const fetchIndividualData = async (AccountID: string) => {
+    try {
+      console.log(AccountID);
+      const res = await axios.post("/api/v1/individual/list", { AccountID }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+   };
+  
+  const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
+
+  useEffect(() => {
+    const cidValue = localStorage.getItem('cid');
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch]);
+
+  useEffect(() => {
+    if (individualData) {
+      console.log(individualData)
+      const dateFormatted = individualData?.birthDate?.split("T")[0];
+      const fillData: TIndividualAccount = {
+        email: individualData.email || "",
+        citizenId: individualData.citizenId || "",
+        thTitle: individualData.thTitle || "",
+        thName: individualData.thName || "",
+        thSurname: individualData.thSurname || "",
+        engTitle: individualData.engTitle || "",
+        engName: individualData.engName || "",
+        engSurname: individualData.engSurname || "",
+        mobile: individualData.mobile || "",
+        birthDate: dateFormatted || "",
+        marriageStatus: individualData.marriageStatus || "",
+        laserCode: individualData.laserCode || "",
+        agreement: true,
+      };
+      console.log(fillData)
+      reset(fillData);
+    }
+  }, [individualData, reset]);
+
+  const [thTitle, setThTitle] = useState("");
+  const [engTitle, setEngTitle] = useState("");
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const choosedTitle = e.target.value;
@@ -74,7 +128,9 @@ export default function AddIndividualAccount() {
       setValue("engTitle","Miss.")
     }
   }
+
   const navigate = useNavigate();
+
   const calculateAge = (birthDate: Date) => {
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
@@ -89,25 +145,46 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 };
-    console.log(body);
+    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/individual/precreate", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res);
-      if (res.status === 200) {
-        const age = calculateAge(body.birthDate);
-        localStorage.setItem("cid", res.data.id);
-        localStorage.setItem("age", age.toString());
-        console.log(age);
-        console.log("success", res, data);
+      console.log("body to send ",body)
+      if(individualData?.id){
+        console.log("api : /api/v1/individual/update/pre")
+        const res = await axios.post("/api/v1/individual/update/pre", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        if (res.status === 200) {
+          const age = calculateAge(body.birthDate);
+          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("age", age.toString());
+          console.log(age);
+          console.log("update success", res, data);
 
-        navigate("/create-job/added-individual-account/2");
-        window.scrollTo(0, 0);
+          navigate("/create-job/added-individual-account/2");
+          window.scrollTo(0, 0);
+        }
+      }
+      else{
+        console.log("api : /api/v1/individual/precreate")
+        const res = await axios.post("/api/v1/individual/precreate", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        if (res.status === 200) {
+          const age = calculateAge(body.birthDate);
+          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("age", age.toString());
+          console.log("create success", res, data);
+
+          navigate("/create-job/added-individual-account/2");
+          window.scrollTo(0, 0);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -122,7 +199,7 @@ export default function AddIndividualAccount() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 relative">
       <Card>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
@@ -341,8 +418,8 @@ export default function AddIndividualAccount() {
                 </span>
               </div>
             </div>
-            <div className="flex justify-end">
-              <Button type="submit">Submit</Button>
+            <div className="absolute right-4 -bottom-[4.5rem]">
+              <Button type="submit">Next Form</Button>
             </div>
           </form>
         </CardContent>
