@@ -17,6 +17,7 @@ export function useJuristicShareholders() {
   const dispatch = useDispatch();
 
   const handleSubmitJuristics = async (data: TJuristicsShareholders) => {
+    console.log(data);
     if (!isExpiredToken()) {
       await saveJuristicShareholders(data);
     } else {
@@ -82,5 +83,6 @@ export function useJuristicShareholders() {
     juristics,
     handleSubmitJuristics,
     setJuristics,
+    saveJuristicShareholders,
   };
 }

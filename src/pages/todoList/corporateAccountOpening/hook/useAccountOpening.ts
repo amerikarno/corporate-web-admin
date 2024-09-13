@@ -52,7 +52,7 @@ export function useAccountOpening() {
       }
     } else {
       try {
-        console.log(body);
+        // console.log(body);
         let formatBody;
         if (body.corporateCode) {
           formatBody = {
@@ -61,7 +61,7 @@ export function useAccountOpening() {
         } else {
           formatBody = body;
         }
-        console.log("formatBody:", formatBody);
+        // console.log("formatBody:", formatBody);
         const res = await axios.post("/api/v1/corporate/query", formatBody, {
           headers: {
             "Content-Type": "application/json",

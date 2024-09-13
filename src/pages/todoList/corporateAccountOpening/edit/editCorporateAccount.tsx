@@ -70,7 +70,7 @@ export function EditCorporateAccount() {
     };
 
     fetchCorporateData();
-  }, [corporateCode, pageId]);
+  }, []);
 
   const navigate = useNavigate();
   const { handleSubmitCorporateInfo } = useCorporateInfo();

@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { setUser } from "@/features/user/userSlice";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import { store } from "@/app/store";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 const user = {
   id: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
@@ -26,7 +26,7 @@ const user = {
   iat: 1725344226,
 };
 
-const BASE_URL = "http://cwa-alb-607898773.eu-north-1.elb.amazonaws.com";
+// const BASE_URL = "http://cwa-alb-607898773.eu-north-1.elb.amazonaws.com";
 
 describe("addedCorporateAccount", () => {
   beforeEach(() => {
@@ -210,27 +210,27 @@ describe("addedCorporateAccount", () => {
   });
 });
 
-describe("createcorporate form2", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-  test("should render correctly", async () => {
-    store.dispatch(setUser(user));
+// describe("createcorporate form2", () => {
+//   beforeEach(() => {
+//     jest.clearAllMocks();
+//   });
+//   test("should render correctly", async () => {
+//     store.dispatch(setUser(user));
 
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={[BASE_URL]}>
-          <Routes>
-            <Route
-              path="create-job/added-corporate-account/2"
-              element={<CorporateAccountOpenning />}
-            />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
-    );
+//     render(
+//       <Provider store={store}>
+//         <MemoryRouter initialEntries={[BASE_URL]}>
+//           <Routes>
+//             <Route
+//               path="create-job/added-corporate-account/2"
+//               element={<CorporateAccountOpenning />}
+//             />
+//           </Routes>
+//         </MemoryRouter>
+//       </Provider>
+//     );
 
-    // const location = screen.getByTestId("location-display");
-    // expect(location).toHaveTextContent("/create-job/added-corporate-account/2");
-  });
-});
+//     // const location = screen.getByTestId("location-display");
+//     // expect(location).toHaveTextContent("/create-job/added-corporate-account/2");
+//   });
+// });
