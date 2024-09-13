@@ -4,22 +4,19 @@ import { getCookies } from "@/lib/Cookies";
 import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Button } from "@/components/ui/button";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
 
-type TTransaction ={
-    id: string;
-    buyCurrency: number;
-    corporateCode: number;
-    exchangeSpread: number;
-    operationSpread: number;
-    exchangeRate: number;
-    transactionStatus?: number;
-    exchange:string;
-}
+type TTransaction = {
+  id: string;
+  buyCurrency: number;
+  corporateCode: number;
+  exchangeSpread: number;
+  operationSpread: number;
+  exchangeRate: number;
+  transactionStatus?: number;
+  exchange: string;
+};
 
 const FxExchangeTransactionList = () => {
-  const user = useSelector((state: RootState) => state.user);
   const [listOfTransaction, setFetchedListOfTransaction] = useState<
     TTransaction[]
   >([]);
@@ -113,11 +110,14 @@ const FxExchangeTransactionList = () => {
   const fetchListOfTransaction = async () => {
     try {
       const token = getCookies();
-      const res = await axios.get("/api/v1/transaction/exchange/get/corporate", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        "/api/v1/transaction/exchange/get/corporate",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res.status === 200) {
         console.log(res.data);
         const data = res.data ?? [];
@@ -141,8 +141,8 @@ const FxExchangeTransactionList = () => {
               operationSpread: item.operationSpread,
               exchangeRate: item.exchangeRate,
               transactionStatus: item.transactionStatus,
-              exchange: item.exchange
-          };
+              exchange: item.exchange,
+            };
           });
         setFetchedListOfTransaction(transactions);
         // console.log(transactions);
@@ -191,8 +191,8 @@ const FxExchangeTransactionList = () => {
       selector: (row: TTransaction) => row.corporateCode || "",
     },
     {
-      name:"Buy Amount",
-      selector:(row: TTransaction) => row.buyCurrency || "",
+      name: "Buy Amount",
+      selector: (row: TTransaction) => row.buyCurrency || "",
     },
     {
       name: "Exchange Pairs",
