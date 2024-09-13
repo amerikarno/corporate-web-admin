@@ -1,25 +1,27 @@
 export type SuitAnswer = {
-  id: string;
   ans: number | number[];
-  type: number;
-  quiz: number;
 };
 
 export type SuitTestResultAnswer = {
-  answer: SuitAnswer[];
-  additional: Array<boolean | undefined | null>;
+  answer: { [key: string]: SuitAnswer };
 };
 
-export type SuitTestResult = {
-  CreatedAt: string;
-  DeletedAt: string | null;
-  corporateCode: string;
-  accountID: string;
-  totalScore: number;
-  level: number;
+export type NestedSuitTestResult = {
+  cid: string;
   investorTypeRisk: string;
+  level: number;
+  totalScore: number;
   suitTestResult: SuitTestResultAnswer;
-  type: number;
+};
+
+export type SuiteTestResult = {
+  createBy: string;
+  id: string;
+  suiteTestResult: NestedSuitTestResult;
+  isFatca: boolean;
+  fatcaInfo: any | null;
+  isKnowLedgeDone: boolean;
+  knowLedgeTestResult: number;
 };
 
 export type TBasicinfoAddress = {
@@ -38,6 +40,7 @@ export type TBasicinfoAddress = {
   countryName: string;
   types: number;
 };
+
 export type TBasicInfoBank = {
   CreatedAt?: string;
   DeletedAt?: string;
@@ -77,7 +80,9 @@ export type TIndividualData = {
   retireInvestment?: boolean;
   pageId?: number;
   update?: string;
-  SuitTestResult: SuitTestResult;
+  SuiteTestResult: SuiteTestResult;
   address: TBasicinfoAddress[];
   bank: TBasicInfoBank[];
+  ndid:boolean;
+  thaid:boolean;
 };
