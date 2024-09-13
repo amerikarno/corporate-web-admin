@@ -75,7 +75,7 @@ export default function IdentityVerification() {
              title: "Verification Selected",
              text:"Thanks for your submission",
              icon: "success",
-             confirmButtonText: "Go back to todolist",
+             confirmButtonText: "Go back to changelist",
              customClass: {
                confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
              },
@@ -99,7 +99,7 @@ export default function IdentityVerification() {
              title: "Verification Selected",
              text:"Thanks for your submission",
              icon: "success",
-             confirmButtonText: "Go back to todolist",
+             confirmButtonText: "Go back to changelist",
              customClass: {
                confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
              },
@@ -135,7 +135,7 @@ export default function IdentityVerification() {
              title: "Verification Selected",
              text:"Thanks for your submission",
              icon: "success",
-             confirmButtonText: "Go back to todolist",
+             confirmButtonText: "Go back to changelist",
              customClass: {
                confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
              },
@@ -159,7 +159,7 @@ export default function IdentityVerification() {
              title: "Verification Selected",
              text:"Thanks for your submission",
              icon: "success",
-             confirmButtonText: "Go back to todolist",
+             confirmButtonText: "Go back to changelist",
              customClass: {
                confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
              },
