@@ -18,8 +18,8 @@ import {
   TCorporateData,
   TIndividualShareholder as TIndividualShareholderEdit,
 } from "../../constant/type";
-import { mapDataToTIndividualShareholder } from "../libs/utils";
-import { TIndividualsShareholders } from "../constants2/types";
+// import { mapDataToTIndividualShareholder } from "../libs/utils";
+// import { TIndividualsShareholders } from "../constants2/types";
 import {
   AlertDialog,
   AlertDialogAction,

@@ -12,7 +12,8 @@ import { removeAttorney , setAttorney } from "@/features/attorney/attorney";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-import { TAttorney as TAttorneyEdit, TCorporateData} from "../../constant/type";
+// import { TAttorney as TAttorneyEdit, TCorporateData} from "../../constant/type";
+import { TCorporateData } from "../../constant/type";
 import { mapDataToTAttorney } from "../libs/utils";
 import {
   AlertDialog,
