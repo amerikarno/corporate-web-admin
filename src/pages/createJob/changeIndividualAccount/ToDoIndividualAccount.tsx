@@ -11,6 +11,8 @@ import DataTable from "react-data-table-component";
 import { ColumnsOfIndividualSearch } from "./column";
 import { dateToyyyyMMdd } from "@/lib/utils";
 import { useToDoIndividualAccount } from "./useToDoIndividualAccount";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
 
 export default function ChangeTodoIndividualAccount() {
   //   if (!isAllowedPage(3001)) {
@@ -39,9 +41,9 @@ export default function ChangeTodoIndividualAccount() {
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-  //   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-  //     { corporateCode: number }[]
-  //   >([]);
+    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
+      { corporateCode: number }[]
+    >([]);
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
@@ -50,44 +52,44 @@ export default function ChangeTodoIndividualAccount() {
       setDisableDate(false);
     }
   };
-  //   const fetchCorporateCodes = async () => {
-  //     try {
-  //       const token = getCookies();
+    const fetchCorporateCodes = async () => {
+      try {
+        const token = getCookies();
 
-  //       const res = await axios.post(
-  //         "/api/v1/corporate/query/all",
-  //         {},
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       if (res.status === 200) {
-  //         console.log(res);
-  //         const corporateCodes = res.data.map((item: any) => ({
-  //           corporateCode: item.CorporateCode,
-  //         }));
-  //         setFetchedCorporateCodes(corporateCodes);
+        const res = await axios.post(
+          "/api/v1/individual/list/all",
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          console.log(res);
+          const corporateCodes = res.data.map((item: any) => ({
+            corporateCode: item.id,
+          }));
+          setFetchedCorporateCodes(corporateCodes);
 
-  //         // const dateFrom = new Date();
-  //         // dateFrom.setDate(dateFrom.getDate() + 7);
-  //         // const data: TCorporateAccountOpening = {
-  //         //   corporateCode: "",
-  //         //   // dateFrom: dateToyyyyMMdd(dateFrom),
-  //         //   // dateTo: dateToyyyyMMdd(dateFrom),
-  //         //   dateFrom: dateToyyyyMMdd(new Date()),
-  //         //   dateTo: dateToyyyyMMdd(new Date()),
-  //         // };
-  //         // await handleSearch(data);
-  //       } else {
-  //         console.log("Failed to fetch corporate codes");
-  //       }
-  //     } catch (error) {
-  //       console.log("Error fetching corporate codes:", error);
-  //     }
-  //   };
+          // const dateFrom = new Date();
+          // dateFrom.setDate(dateFrom.getDate() + 7);
+          // const data: TCorporateAccountOpening = {
+          //   corporateCode: "",
+          //   // dateFrom: dateToyyyyMMdd(dateFrom),
+          //   // dateTo: dateToyyyyMMdd(dateFrom),
+          //   dateFrom: dateToyyyyMMdd(new Date()),
+          //   dateTo: dateToyyyyMMdd(new Date()),
+          // };
+          // await handleSearch(data);
+        } else {
+          console.log("Failed to fetch corporate codes");
+        }
+      } catch (error) {
+        console.log("Error fetching corporate codes:", error);
+      }
+    };
 
   const initData = async () => {
     // await fetchCorporateCodes();
@@ -100,7 +102,7 @@ export default function ChangeTodoIndividualAccount() {
   };
 
   useEffect(() => {
-    // fetchCorporateCodes();
+    fetchCorporateCodes();
     // console.log("all-corporate Code", mockedCorporateCodes);
     initData();
   }, []);
@@ -138,19 +140,19 @@ export default function ChangeTodoIndividualAccount() {
                 {...register("AccountID")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
-                // list="juristicId"
+                list="juristicId"
                 autoComplete="off"
               />
               {errors && (
                 <p className="text-red-500">{errors.AccountID?.message}</p>
               )}
-              {/* <datalist id="juristicId">
+              <datalist id="juristicId">
                 {mockedCorporateCodes.map((code, index) => (
                   <option key={index} value={code.corporateCode}>
                     {code.corporateCode}
                   </option>
                 ))}
-              </datalist> */}
+              </datalist>
             </SideLabelInput>
             <div className="col-start-1">
               <SideLabelInput title="Date From">

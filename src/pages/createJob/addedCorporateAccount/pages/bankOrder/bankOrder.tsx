@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { bank } from "@/constant/variables";
 import { setBankOrder } from "@/features/bankOrder/bankOrdersSlice";
+import { BsBank2 } from "react-icons/bs";
 
 export default function BankOrderEdit() {
   if (!isAllowedPage(2020)) {
@@ -31,6 +32,30 @@ export default function BankOrderEdit() {
   const [choosedEditData, setChoosedEditData] = useState<TBankOrder>();
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
+  };
+  const [bankRemove,setBankRemove] = useState(false)
+
+  const handleBankChange = (e:any) =>{
+    console.log(e.target.value)
+    if(e.target.value === ""){
+      setBankRemove(false)
+    }else{
+      setBankRemove(true)
+    }
+  }
+
+  const getStatus = (status?: number) => {
+    if (status === -1) {
+      return "Reject";
+    } else if (status === 0) {
+      return "Pending";
+    } else if (status === 1) {
+      return "Checked";
+    } else if (status === 2) {
+      return "Approved";
+    } else {
+      return "";
+    }
   };
 
   const orderBank: TBankOrder[] = useSelector<RootState>(
@@ -111,6 +136,10 @@ export default function BankOrderEdit() {
       selector: (row: TBankOrder) => row.orderValue || "",
     },
     {
+      name: "Status",
+      selector: (row: TBankOrder) => getStatus(row.transactionStatus) || "",
+    },
+    {
       cell: (row: TBankOrder) => (
         <Button
           onClick={() => {
@@ -132,6 +161,11 @@ export default function BankOrderEdit() {
       orderValue: 0,
       accountId: 0,
     };
+    if(choosedEditData?.bankName){
+      setBankRemove(true)
+    }else{
+      setBankRemove(false)
+    }
     reset(orderListDatatoInputField);
     setBuySell(choosedEditData?.operations || "deposite");
     console.log("use effect", orderListDatatoInputField);
@@ -173,6 +207,7 @@ export default function BankOrderEdit() {
         });
         if (res.status === 200) {
           reset();
+          setBankRemove(false)
           clearChoosedEditData();
           //   setSelectedCorporateCode("");
           console.log("edit successful");
@@ -188,6 +223,7 @@ export default function BankOrderEdit() {
         });
         if (res.status === 200) {
           reset();
+          setBankRemove(false)
           clearChoosedEditData();
           //   setSelectedCorporateCode("");
           console.log("save successful");
@@ -232,20 +268,22 @@ export default function BankOrderEdit() {
                 </div>
               </div>
               <div className="flex justify-center ">
-                <div className="w-2/3 flex flex-col">
-                  <select
-                    {...register("bankName")}
-                    className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
-                            text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
-                            dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
-                  >
-                    <option value="">Select Bank</option>
-                    {bank.map((status) => (
-                      <option key={status.code} value={status.name}>
-                        {status.name}
-                      </option>
-                    ))}
-                  </select>
+                <div className="w-2/3 ">
+                  <div className="relative">
+                    <select
+                      {...register("bankName")}
+                      onChange={handleBankChange}
+                      className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
+                        >
+                      <option value="">Select Bank</option>
+                      {bank.map((status) => (
+                        <option key={status.code} value={status.name}>
+                          {status.name}
+                        </option>
+                      ))}
+                    </select>
+                    {!bankRemove && <BsBank2 className="absolute text-xl right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-white" />}
+                  </div>
                   {errors.bankName && (
                     <p className="text-red-500 text-sm px-2">
                       {errors.bankName.message}

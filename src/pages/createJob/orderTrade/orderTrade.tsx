@@ -14,7 +14,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-
+import { MdCurrencyExchange } from "react-icons/md";
 export default function OrderTradeEdit() {
   if (!isAllowedPage(2005)) {
     return <UnAuthorize />;
@@ -270,35 +270,66 @@ export default function OrderTradeEdit() {
       <Card className="p-4 w-full">
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-row space-x-4 justify-center">
-            <div className="md:w-1/2 w-full">
-              <Input
-                {...register("corporateCode")}
-                label="Corporate Code"
-                id="corporateCode"
-                disabled={isSubmitting}
-                value={selectedCorporateCode}
-                onChange={handleCorporateCodeChange}
-                list="corporateCodes"
-                autoComplete="off"
-              />
-              {errors.corporateCode && !selectedCorporateCode && (
-                <p className="text-red-500 text-sm px-2">
-                  {errors.corporateCode.message}
-                </p>
-              )}
-              <datalist id="corporateCodes">
-                {mockedCorporateCodes.map((code, index) => (
-                  <option key={index} value={code.corporateCode}>
-                    {code.corporateCode}
-                  </option>
-                ))}
-              </datalist>
-            </div>
-          </div>
           <div className="w-full flex justify-center">
             <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%]">
-              <div className="flex flex-row justify-center ">
+              <div className="w-full flex justify-center items-center">
+                <div className="w-2/3">
+                  <Input
+                    {...register("corporateCode")}
+                    label="Corporate Code"
+                    id="corporateCode"
+                    disabled={isSubmitting}
+                    value={selectedCorporateCode}
+                    onChange={handleCorporateCodeChange}
+                    list="corporateCodes"
+                    autoComplete="off"
+                    inputClassName=""
+                  />
+                  {errors.corporateCode && !selectedCorporateCode && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.corporateCode.message}
+                    </p>
+                  )}
+                  <datalist id="corporateCodes">
+                    {mockedCorporateCodes.map((code, index) => (
+                      <option key={index} value={code.corporateCode}>
+                        {code.corporateCode}
+                      </option>
+                    ))}
+                  </datalist>
+                </div>
+              </div>
+              <div className="flex items-center justify-center pt-4">
+                <div className="w-1/2 ">
+                  <div className="relative">
+                     {/* <label className="absolute bg-white text-xs rounded-full border-none -top-4">Pairs</label> */}
+                      <select
+                        id="pair"
+                        {...register("pair")}
+                        value={selectedTradingPair}
+                        onChange={handleTradingPairChange}
+                        disabled={isSubmitting}
+                        className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-md block w-full py-2.5 px-4 focus:outline-none appearance-none"
+                      >
+                        <option value="THB/USTD" disabled>
+                          THB/USDT
+                        </option>
+                        {tradingPair.map((pair, index) => (
+                          <option key={index} value={pair.name}>
+                            {pair.name}
+                          </option>
+                        ))}
+                      </select>
+                      <MdCurrencyExchange className="absolute text-xl right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-white" />
+                    </div>
+                  {errors.pair && (
+                    <p className="text-red-500 text-sm px-2">
+                      {errors.pair.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-row justify-center pb-4">
                 <div
                   className={`flex justify-center select-none cursor-default w-1/4 text-white px-4 py-2 rounded-l transition-colors duration-300 ${
                     buySell === "buy" ? "bg-slate-800" : "bg-slate-500"
@@ -316,38 +347,7 @@ export default function OrderTradeEdit() {
                   Sell
                 </div>
               </div>
-
-              <div className="flex pt-4 gap-4 items-center justify-center">
-                <div className="w-1/2 border-y-4">
-                  <label
-                    htmlFor="pair"
-                    className="block text-sm font-medium text-gray-700"
-                  ></label>
-                  <select
-                    id="pair"
-                    {...register("pair")}
-                    value={selectedTradingPair}
-                    onChange={handleTradingPairChange}
-                    disabled={isSubmitting}
-                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                  >
-                    <option value="THB/USTD" disabled>
-                      THB/USDT
-                    </option>
-                    {tradingPair.map((pair, index) => (
-                      <option key={index} value={pair.name}>
-                        {pair.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.pair && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.pair.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="flex pt-4 gap-4 items-center ">
+              <div className="flex gap-4 items-center ">
                 <div className="w-1/2 space-y-4">
                   <Input
                     {...register("cryptoAmount")}

@@ -230,7 +230,7 @@ export default function FxExchangeEdit() {
   });
 
   useEffect(() => {
-    // fetchOrderList();
+    fetchOrderList();
     fetchCorporateCodes();
   }, [reset]);
 
