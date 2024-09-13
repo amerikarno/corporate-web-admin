@@ -50,10 +50,14 @@ export function useShareholders() {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-
+        
         if (res.status === 200) {
           console.log("Edit successful");
-          dispatch(updateIndividualShareholder(body)); //expiryใน body  เป็น date
+          dispatch(updateIndividualShareholder(
+           { personalId: body.personalId!,
+             newPersonalId: res.data.personalId,
+             individualShareholder:body}
+          )); //expiryใน body  เป็น date
         } else {
           console.log("Edit failed");
         }

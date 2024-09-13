@@ -28,15 +28,15 @@ export const authorizedPersonSlice = createSlice({
     clearAuthorizedPerson: (state) => {
       state.authorizedPersons = [];
     },
-    updateAuthorizedPerson: (state, action) => {
+    updateAuthorizedPerson: (state, action: PayloadAction<{personalId: string, newPersonalId: string,authorizedPerson :TAuthorizePerson}>) => {
       const index = state.authorizedPersons.findIndex(
         (data) => data.personalId === action.payload.personalId
       );
 
       if (index !== -1) {
         state.authorizedPersons[index] = {
-          ...state.authorizedPersons[index],
-          ...action.payload,
+          ...action.payload.authorizedPerson,
+          personalId:action.payload.newPersonalId
         };
       }
     },

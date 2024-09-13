@@ -8,6 +8,7 @@ import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAcc
 import { EditCorporateAccount } from "@/pages/createJob/changeCorporateAccount/edit/editCorporateAccount";
 import ChangePageAddIndividualAccount from "@/pages/createJob/changeIndividualAccount/ChangePageAddIndividualAccount";
 import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccount/ToDoIndividualAccount";
+import FxExchangeEdit from "@/pages/createJob/fxExchange/fxExchange";
 export const createJobRoutes = () => {
   return (
     <Route path="create-job" element={<Outlet />}>
@@ -96,6 +97,7 @@ export const createJobRoutes = () => {
         element={<BlankPage name="Airdrop Setting" />}
       />
       <Route path="orders-trades" element={<OrderTrade />} />
+      <Route path="fx-exchange" element={<FxExchangeEdit/>}/>
       <Route path="cash-deposit-withdraw" element={<BankOrderEdit />} />
       <Route
         path="whitelist-bank"

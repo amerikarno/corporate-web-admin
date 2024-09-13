@@ -53,7 +53,16 @@ export function useToDoIndividualAccount() {
     } else {
       try {
         console.log(body);
-        const res = await axios.post("/api/v1/individual/list", body, {
+        let formatBody
+        if(body.AccountID){
+          formatBody = {
+            accountID: body.AccountID
+          }
+        }else{
+          formatBody = body
+        }
+        console.log("formatBody:",formatBody);
+        const res = await axios.post("/api/v1/individual/list", formatBody, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getCookies()}`,

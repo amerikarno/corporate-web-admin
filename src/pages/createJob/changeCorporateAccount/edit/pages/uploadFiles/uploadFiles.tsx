@@ -15,12 +15,8 @@ import { setFiles } from "@/features/uploadFile/uploadFileSlice";
 import { RootState } from "@/app/store";
 
 type TUploadFilesProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 export default function UploadFiles({
-  corporateCode,
-  corporatesInfo,
 }: TUploadFilesProps) {
   const {
     file,
@@ -33,12 +29,13 @@ export default function UploadFiles({
   const uploadFile: TDocuments[] = useSelector<RootState>(
     (state) => state.uploadFile?.files || []
   ) as TDocuments[];
-
+  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   console.log(uploadFile);
   const token = getCookies();
   const dispatch = useDispatch();
   useEffect(() => {
-    const fetchBankData = async () => {
+    const fetchedData = async () => {
       try {
         const res = await axios.post(
           "/api/v1/corporate/query",
@@ -64,7 +61,7 @@ export default function UploadFiles({
       }
     };
 
-    fetchBankData();
+    fetchedData();
   }, [corporateCode, dispatch, token]);
   return (
     <div className="p-4">

@@ -28,7 +28,10 @@ export function useAuthorizePerson() {
         });
         if (res.status === 200) {
           console.log(res)
-          dispatch(updateAuthorizedPerson({ ...data, personalId: res.data.personalId}));
+          dispatch(updateAuthorizedPerson({
+            personalId: body.personalId,
+            newPersonalId: res.data.personalId,
+            authorizedPerson:{ ...data, personalId: body.personalId}}));
           setAuthorize([...authorize, data]);
           console.log("update successful")
         } else {

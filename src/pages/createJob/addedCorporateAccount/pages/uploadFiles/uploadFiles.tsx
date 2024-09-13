@@ -15,10 +15,8 @@ import { mapToUploadFile } from "../../libs/utils";
 import DocumentBox from "@/components/ui/BoxOfUploaded";
 
 type TUploadFilesProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
-export default function UploadFiles({ corporateCode,corporatesInfo }: TUploadFilesProps) {
+export default function UploadFiles({}: TUploadFilesProps) {
   const {
     file,
     documentType,
@@ -27,7 +25,8 @@ export default function UploadFiles({ corporateCode,corporatesInfo }: TUploadFil
     handleUpload,
   } = useUploadFile();
 
-
+  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   const uploadFile: TDocuments[] = useSelector<RootState>(
     (state) => state.uploadFile?.files || []
   ) as TDocuments[];
@@ -35,34 +34,34 @@ export default function UploadFiles({ corporateCode,corporatesInfo }: TUploadFil
   console.log(uploadFile)
   const token = getCookies();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchBankData = async () => {
-      try {
-        const res = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (res.status === 200) {
-          const uploadFiles = res.data[0].Documents.map((uploadFile: any) => ({
-            ...uploadFile,
-            id: uploadFile.id,
-          }))
-            .map(mapToUploadFile)
-            .filter((item: any) => item !== null);
-          console.log(uploadFiles)
-          dispatch(setFiles(uploadFiles));
+  const fetchedData = async () => {
+    try {
+      const res = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        console.error("Error fetching upload File data:", error);
+      );
+      if (res.status === 200) {
+        const uploadFiles = res.data[0].Documents.map((uploadFile: any) => ({
+          ...uploadFile,
+          id: uploadFile.id,
+        }))
+          .map(mapToUploadFile)
+          .filter((item: any) => item !== null);
+        console.log(uploadFiles)
+        dispatch(setFiles(uploadFiles));
       }
-    };
-
-    fetchBankData();
+    } catch (error) {
+      console.error("Error fetching upload File data:", error);
+    }
+  };
+  useEffect(() => {
+    if (corporateCode)
+      fetchedData();
   }, [corporateCode, dispatch, token]);
 
   return (

@@ -28,14 +28,11 @@ import {
 } from "@/components/ui/alert-dialog"
 
 type TPageIndividualShareholderProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 
 export function PageIndividualShareholder({
-  corporateCode,
-  corporatesInfo
 }: TPageIndividualShareholderProps) {
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   const dispatch = useDispatch();
   const token = getCookies();
   const shareholderData: TIndividualShareholderEdit[] = useSelector<RootState>(
@@ -43,13 +40,14 @@ export function PageIndividualShareholder({
   ) as TIndividualShareholderEdit[];
   const [choosedEditData, setChoosedEditData] =
     useState<TIndividualShareholderEdit>();
-
+  const corporateCode = localStorage.getItem("corporateCode") || "";
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
 
-  useEffect(() => {
-    axios
+  const fetchedData = async () => {
+    try {
+      const res = await axios
       .post(
         "/api/v1/corporate/query",
         { corporateCode },
@@ -59,33 +57,31 @@ export function PageIndividualShareholder({
           },
         }
       )
-      .then((res) => {
-        console.log("API Response:", res.data);
-        if (res.status === 200) {
-          const individualshareholder =
-            res.data[0]?.IndividualShareholders || [];
-          if (individualshareholder && individualshareholder.length > 0) {
-            // const updateIndividual:TIndividualShareholderEdit[] = individualshareholder.map((indivudual: any) => ({
-            //   ...indivudual,
-            // }));
-            dispatch(setIndividualShareholder(individualshareholder));
-            console.log(
-              "indivudual data fetched successfully.",
-              individualshareholder
-            );
-          } else {
-            console.log("No individual shareholder data found.");
-          }
-        } else {
+      if (res.status === 200) {
+        const individualshareholder =
+          res.data[0]?.IndividualShareholders || [];
+        if (individualshareholder && individualshareholder.length > 0) {
+          dispatch(setIndividualShareholder(individualshareholder));
           console.log(
-            "Failed to fetch indivudual data or data is not an array."
+            "indivudual data fetched successfully.",
+            individualshareholder
           );
+        } else {
+          console.log("No individual shareholder data found.");
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching indivudual data:", error);
-      });
-  }, [corporateCode, dispatch, token]);
+      } else {
+        console.log(
+          "Failed to fetch indivudual data or data is not an array."
+        );
+      }
+    }catch(error){
+      console.error("Error fetching indivudual data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchedData();
+  }, []);
 
   const { handleSubmitShareholders } = useShareholders();
   console.log(shareholderData);

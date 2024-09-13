@@ -32,15 +32,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-type TPageJuristicShareholderProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
-};
+type TPageJuristicShareholderProps = {};
 
-export function PageJuristicShareholder({
-  corporateCode,
-  corporatesInfo,
-}: TPageJuristicShareholderProps) {
+export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
   const { handleSubmitJuristics } = useJuristicShareholders();
 
   const juristicShareholderData: TJuristicsShareholders[] =
@@ -50,6 +44,10 @@ export function PageJuristicShareholder({
   // console.log(juristicShareholderData);
   const dispatch = useDispatch();
   const token = getCookies();
+  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const corporatesInfo: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
 
   const [choosedEditData, setChoosedEditData] =
     useState<TJuristicsShareholders>();
@@ -57,9 +55,9 @@ export function PageJuristicShareholder({
     setChoosedEditData(undefined);
   };
 
-  useEffect(() => {
-    axios
-      .post(
+  const fetchedData = async () => {
+    try {
+      const res = await axios.post(
         "/api/v1/corporate/query",
         { corporateCode },
         {
@@ -67,31 +65,32 @@ export function PageJuristicShareholder({
             Authorization: `Bearer ${token}`,
           },
         }
-      )
-      .then((res) => {
-        // console.log("API Response:", res.data);
+      );
 
-        if (res.status === 200) {
-          // console.log(res);
-          const juristicShareholder = res.data[0].Juristics || [];
-          const updateJuristic: TJuristicsShareholders[] = juristicShareholder
-            .map((juristic: TJuristicEdit) => ({
-              ...juristic,
-              juristicId: juristic.id,
-            }))
-            .map(mapDataToTJuristicShareholder)
-            .filter((item: any) => item !== null) as TJuristicsShareholders[];
+      if (res.status === 200) {
+        console.log(res);
+        const juristicShareholder = res.data[0].Juristics || [];
+        const updateJuristic: TJuristicsShareholders[] = juristicShareholder
+          .map((juristic: TJuristicEdit) => ({
+            ...juristic,
+            juristicId: juristic.id,
+          }))
+          .map(mapDataToTJuristicShareholder)
+          .filter((item: any) => item !== null) as TJuristicsShareholders[];
 
-          dispatch(setJuristicShareholder(updateJuristic));
-          // console.log("juristic data fetched successfully.", updateJuristic);
-        } else {
-          // console.log("Failed to fetch juristic data or data is not an array.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching juristic data:", error);
-      });
-  }, [corporateCode, dispatch, token, choosedEditData]);
+        dispatch(setJuristicShareholder(updateJuristic));
+        console.log("juristic data fetched successfully.", updateJuristic);
+      } else {
+        console.log("Failed to fetch juristic data or data is not an array.");
+      }
+    } catch (error) {
+      console.error("Error fetching juristic data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchedData();
+  }, []);
 
   const handleDelete = async (data: TJuristicsShareholders) => {
     console.log(data);

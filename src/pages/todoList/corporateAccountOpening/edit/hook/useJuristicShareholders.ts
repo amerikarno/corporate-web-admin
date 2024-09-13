@@ -40,8 +40,12 @@ export function useJuristicShareholders() {
           // console.log("update success", res.data.juristicId);
           dispatch(
             updateJuristicShareholder({
-              ...data,
-              juristicId: res.data.juristicId,
+              juristicId: data.juristicId,
+              newJuristicId: res.data.juristicId,
+              juristicShareholder: {
+                ...data,
+                juristicId: data.juristicId,
+              },
             })
           );
           setJuristics([...juristics, data]);

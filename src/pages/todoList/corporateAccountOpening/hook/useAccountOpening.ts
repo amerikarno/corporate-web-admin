@@ -52,8 +52,17 @@ export function useAccountOpening() {
       }
     } else {
       try {
-        // console.log(body);
-        const res = await axios.post("/api/v1/corporate/query", body, {
+        console.log(body);
+        let formatBody;
+        if (body.corporateCode) {
+          formatBody = {
+            corporateCode: body.corporateCode,
+          };
+        } else {
+          formatBody = body;
+        }
+        console.log("formatBody:", formatBody);
+        const res = await axios.post("/api/v1/corporate/query", formatBody, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getCookies()}`,

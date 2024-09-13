@@ -93,6 +93,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/cash-deposit-withdraw",
         pageId: 2006,
       },
+      {
+        label: "fx exchange",
+        href: "/create-job/fx-exchange",
+        pageId: 2007,
+      },
       // {
       //   label: "special edd",
       //   href: "/create-job/special-edd",
@@ -219,6 +224,11 @@ export const urlConfig: TUrlConfig[] = [
         label: "cash deposite/withdraw",
         href: "/todo-list/cash-deposit-withdraw",
         pageId: 3004,
+      },
+      {
+        label:"fx exchange",
+        href: "/todo-list/fx-exchange",
+        pageId:3005
       },
 
       // {

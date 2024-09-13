@@ -16,6 +16,7 @@ import uploadFileReducer from "@/features/uploadFile/uploadFileSlice";
 import suitReducer from "@/features/suit/suitSlice";
 import attorneyReducer from "@/features/attorney/attorney";
 import individualDataReducer from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import fxExchangeReducer from "@/features/fxExchange/fxExhangeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -37,6 +38,7 @@ export const store = configureStore({
     attorney: attorneyReducer,
     suit: suitReducer,
     individualData: individualDataReducer,
+    fxExchange: fxExchangeReducer,
   },
 });
 

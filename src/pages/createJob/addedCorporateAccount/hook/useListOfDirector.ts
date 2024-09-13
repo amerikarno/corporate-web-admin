@@ -45,7 +45,11 @@ export function useListOfDirector() {
           console.log(body.personalId);
           console.log(res.data.personalId);
           console.log("Edit successful");
-          dispatch(updateDirector(data));
+          dispatch(updateDirector({
+            personalId: body.personalId!,
+            newPersonalId: res.data.personalId,
+            listOfDirector:data
+          }));
         } else {
           console.log("Edit failed");
         }
@@ -70,8 +74,8 @@ export function useListOfDirector() {
           console.log("Save failed");
         }
       }
-    } catch (error) {
-      console.log("Error:", error);
+    } catch (error:any) {
+      alert(error.response.data.message);
     }
   };
   const handleSubmitDirectors = async (data: TDirector) => {
