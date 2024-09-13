@@ -53,7 +53,7 @@ export function FormJuristicShareholders({
       sharePercentage: 0,
     };
     reset(juristicData);
-    console.log("use effect", juristicData);
+    // console.log("use effect", juristicData);
   }, [choosedEditData]);
 
   // const debug = (event: React.FormEvent<HTMLFormElement>) => {
