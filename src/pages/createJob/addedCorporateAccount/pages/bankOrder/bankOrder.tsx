@@ -273,7 +273,7 @@ export default function BankOrderEdit() {
                     <select
                       {...register("bankName")}
                       onChange={handleBankChange}
-                      className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
+                      className="h-12 cursor-pointer bg-slate-700 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
                         >
                       <option value="">Select Bank</option>
                       {bank.map((status) => (

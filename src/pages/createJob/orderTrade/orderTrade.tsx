@@ -309,7 +309,7 @@ export default function OrderTradeEdit() {
                         value={selectedTradingPair}
                         onChange={handleTradingPairChange}
                         disabled={isSubmitting}
-                        className="h-11 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-md block w-full py-2.5 px-4 focus:outline-none appearance-none"
+                        className="h-11 cursor-pointer bg-slate-700 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-md block w-full py-2.5 px-4 focus:outline-none appearance-none"
                       >
                         <option value="THB/USTD" disabled>
                           THB/USDT
