@@ -57,7 +57,9 @@ export default function AddIndividualAccount() {
 
   useEffect(() => {
     const cidValue = localStorage.getItem('cid');
-    fetchIndividualData(cidValue || "");
+    if(cidValue){
+      fetchIndividualData(cidValue || "");
+    }
   }, [token, dispatch]);
 
   useEffect(() => {

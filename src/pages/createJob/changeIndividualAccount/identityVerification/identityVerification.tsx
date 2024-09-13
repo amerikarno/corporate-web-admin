@@ -20,9 +20,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
-import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { clearIndividualData, setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
 import { useEffect } from "react";
+import { clearAddIndividual } from "@/features/addIndividual/addIndividualSlice";
 
 export default function IdentityVerification() {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               dispatch(clearIndividualData());
                localStorage.clear();
              }
            });
@@ -106,6 +108,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               dispatch(clearIndividualData());
                localStorage.clear();
              }
            });
@@ -142,6 +145,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               dispatch(clearIndividualData());
                localStorage.clear();
              }
            });
@@ -166,6 +170,7 @@ export default function IdentityVerification() {
            }).then((result)=>{
              if(result.isConfirmed){
                navigate("/create-job/change-individual-account");
+               dispatch(clearIndividualData());
                localStorage.clear();
              }
            });

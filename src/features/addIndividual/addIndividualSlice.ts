@@ -17,8 +17,19 @@ interface AddIndividualState {
 }
 
 const initialState: AddIndividualState = {
-  email: "test@email.com",
-  mobile: "0987654321",
+  cid: "",
+  thTitle: "",
+  thName: "",
+  thSurname: "",
+  engTitle: "",
+  engName: "",
+  engSurname: "",
+  email: "",
+  mobile: "",
+  birthDate: "",
+  mariageStatus: "",
+  citizenId: "",
+  laserCode: "",
 };
 
 const addIndividualSlice = createSlice({
