@@ -73,8 +73,7 @@ export function EditCorporateAccount() {
   }, [corporateCode, pageId]);
 
   const navigate = useNavigate();
-  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
-    useCorporateInfo();
+  const { handleSubmitCorporateInfo } = useCorporateInfo();
 
   // const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
   // console.log(corporateCode)
@@ -88,42 +87,15 @@ export function EditCorporateAccount() {
         handleSubmitCorporateInfo={handleSubmitCorporateInfo}
       />
     ),
-    2: (
-      <PageJuristicType
-      />
-    ),
-    3: (
-      <PageContactPerson
-      />
-    ),
-    4: (
-      <ListOfDirectors
-      />
-    ),
-    5: (
-      <PageIndividualShareholder
-      />
-    ),
-    6: (
-      <PageJuristicShareholder
-      />
-    ),
-    7: (
-      <PageAuthorizedPerson
-      />
-    ),
-    8: (
-      <PageAttorney
-      />
-    ),
-    9: (
-      <PageBankAccount
-      />
-    ),
-    10: (
-      <UploadFiles
-      />
-    ),
+    2: <PageJuristicType />,
+    3: <PageContactPerson />,
+    4: <ListOfDirectors />,
+    5: <PageIndividualShareholder />,
+    6: <PageJuristicShareholder />,
+    7: <PageAuthorizedPerson />,
+    8: <PageAttorney />,
+    9: <PageBankAccount />,
+    10: <UploadFiles />,
     11: (
       <PageSuitTest
         corporateCode={corporateCode}

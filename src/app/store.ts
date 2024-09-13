@@ -30,7 +30,6 @@ export const store = configureStore({
     editCorporate: editCorporateReducer,
     user: userReducer,
     orderTrade: orderTradeReducer,
-    // juristicType: juristicTypeReducer,
     livenessOcr: livenessOcr,
     bankOrder: bankOrderReducer,
     addIndividual: addIndividualReducer,

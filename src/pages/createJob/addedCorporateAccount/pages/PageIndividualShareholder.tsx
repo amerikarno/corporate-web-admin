@@ -18,8 +18,6 @@ import {
   TCorporateData,
   TIndividualShareholder as TIndividualShareholderEdit,
 } from "../../constant/type";
-import { mapDataToTIndividualShareholder } from "../libs/utils";
-import { TIndividualsShareholders } from "../constants2/types";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,13 +28,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 
-type TPageIndividualShareholderProps = {
-};
+type TPageIndividualShareholderProps = {};
 
-export function PageIndividualShareholder({
-}: TPageIndividualShareholderProps) {
+export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
   const dispatch = useDispatch();
   const token = getCookies();
   const shareholderData: TIndividualShareholderEdit[] = useSelector<RootState>(
@@ -48,13 +44,14 @@ export function PageIndividualShareholder({
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
-  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const corporatesInfo: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
   const corporateCode = localStorage.getItem("corporateCode") || "";
 
   const fetchedData = async () => {
     try {
-      const res = await axios
-      .post(
+      const res = await axios.post(
         "/api/v1/corporate/query",
         { corporateCode },
         {
@@ -62,10 +59,9 @@ export function PageIndividualShareholder({
             Authorization: `Bearer ${token}`,
           },
         }
-      )
+      );
       if (res.status === 200) {
-        const individualshareholder =
-          res.data[0]?.IndividualShareholders || [];
+        const individualshareholder = res.data[0]?.IndividualShareholders || [];
         if (individualshareholder && individualshareholder.length > 0) {
           dispatch(setIndividualShareholder(individualshareholder));
           console.log(
@@ -76,14 +72,12 @@ export function PageIndividualShareholder({
           console.log("No individual shareholder data found.");
         }
       } else {
-        console.log(
-          "Failed to fetch indivudual data or data is not an array."
-        );
+        console.log("Failed to fetch indivudual data or data is not an array.");
       }
-    }catch(error){
+    } catch (error) {
       console.error("Error fetching indivudual data:", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchedData();
@@ -151,23 +145,28 @@ export function PageIndividualShareholder({
     },
     {
       cell: (row: TIndividualShareholderEdit) => (
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" className="bg-red-600 text-white">
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently remove your
+                data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete(row)}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       ),
       ignoreRowClick: true,
     },
