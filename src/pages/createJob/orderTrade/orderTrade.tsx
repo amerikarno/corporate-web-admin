@@ -271,7 +271,7 @@ export default function OrderTradeEdit() {
         <h1 className="font-bold md:text-xl py-4">Orders / Trades</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
-            <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%]">
+            <Card className="w-2/3 p-4 md:space-y-4 md:p-10">
               <div className="w-full flex justify-center items-center">
                 <div className="w-2/3">
                   <Input

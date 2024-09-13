@@ -243,7 +243,7 @@ export default function BankOrderEdit() {
         <h1 className="font-bold md:text-xl py-4">Cash Deposit/Withdraw</h1>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
-            <Card className=" p-4 md:space-y-4 md:p-10 md:w-[60%] space-y-4">
+            <Card className="w-2/3 p-4 md:space-y-4 md:p-10  space-y-4">
               <div className="flex justify-center ">
                 <div className="w-2/3">
                 <Input
