@@ -5,4 +5,5 @@ export type TBankOrder = {
     orderValue:number;
     accountId:number;
     id?:string;
+    transactionStatus?: number;
 }
