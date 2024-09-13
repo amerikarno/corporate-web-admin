@@ -367,7 +367,7 @@ export default function FxExchangeEdit() {
   };
 
   return (
-    <div className="md:p-10 flex flex-col justify-center space-y-4">
+    <div className="md:p-4 flex flex-col justify-center space-y-4">
       <Card className="p-4 w-full">
       <h1 className="font-bold md:text-xl py-4">FX Exchange</h1>
         <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
