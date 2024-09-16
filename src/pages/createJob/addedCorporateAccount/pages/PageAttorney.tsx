@@ -79,6 +79,9 @@ export function PageAttorney({
   useEffect(() => {
     if(corporateCode)
       fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
   
   const handleDelete = async (data: TAttorney) => {

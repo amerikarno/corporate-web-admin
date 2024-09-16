@@ -94,7 +94,11 @@ export default function BasicInfo() {
   );
   useEffect(() => {
     const cidValue = localStorage.getItem("cid");
-    fetchIndividualData(cidValue || "");
+    if (cidValue) {
+      fetchIndividualData(cidValue || "");
+    }else{
+      console.log("cid not found");
+    }
   }, [token, dispatch]);
 
   useEffect(() => {

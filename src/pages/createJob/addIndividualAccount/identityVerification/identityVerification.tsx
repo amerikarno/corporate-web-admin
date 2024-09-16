@@ -54,7 +54,11 @@ export default function IdentityVerification() {
   );
   useEffect(() => {
     const cidValue = localStorage.getItem("cid");
-    fetchIndividualData(cidValue || "");
+    if (cidValue) {
+      fetchIndividualData(cidValue || "");
+    }else{
+      console.log("cid not found");
+    }
   }, [token, dispatch]);
 
 

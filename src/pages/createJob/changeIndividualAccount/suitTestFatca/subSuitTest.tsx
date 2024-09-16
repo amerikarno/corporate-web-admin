@@ -175,8 +175,12 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
 
   useEffect(() => {
     const cidValue = localStorage.getItem("cid");
-    fetchIndividualData(cidValue || "");
-  }, [token, dispatch,]);
+    if (cidValue) {
+      fetchIndividualData(cidValue || "");
+    }else{
+      console.log("cid not found");
+    }
+  }, [token, dispatch]);
 
   useEffect(() => {
     if (individualData) {

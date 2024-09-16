@@ -56,8 +56,12 @@ export default function AddIndividualAccount() {
   const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
 
   useEffect(() => {
-    const cidValue = localStorage.getItem('cid');
-    fetchIndividualData(cidValue || "");
+    const cidValue = localStorage.getItem("cid");
+    if (cidValue) {
+      fetchIndividualData(cidValue || "");
+    }else{
+      console.log("cid not found");
+    }
   }, [token, dispatch]);
 
   useEffect(() => {

@@ -73,7 +73,11 @@ export function PageContactPerson({}: TPageContactPersonProps) {
     }
   }
   useEffect(() => {
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   console.log(contactPersonData);

@@ -86,7 +86,11 @@ export function PageIndividualShareholder({
   }
 
   useEffect(() => {
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   const { handleSubmitShareholders } = useShareholders();
