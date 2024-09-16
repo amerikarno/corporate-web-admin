@@ -8,11 +8,10 @@ import { TAttorney } from "../constants2/types";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { removeAttorney , setAttorney } from "@/features/attorney/attorney";
+import { removeAttorney, setAttorney } from "@/features/attorney/attorney";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-// import { TAttorney as TAttorneyEdit, TCorporateData} from "../../constant/type";
 import { TCorporateData } from "../../constant/type";
 import { mapDataToTAttorney } from "../libs/utils";
 import {
@@ -25,43 +24,51 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
-type TPageAttorneyProps = {
-};
+type TPageAttorneyProps = {};
 
-export function PageAttorney({
-}: TPageAttorneyProps) {
-  const { handleSubmitAttorney} =useAttorney();
+export function PageAttorney({}: TPageAttorneyProps) {
+  const { handleSubmitAttorney } = useAttorney();
   const dispatch = useDispatch();
-  const attorneyData: TAttorney[] = useSelector<RootState>((state) => state.attorney?.attorneys || []) as TAttorney[];
-  console.log(attorneyData)
+  const attorneyData: TAttorney[] = useSelector<RootState>(
+    (state) => state.attorney?.attorneys || []
+  ) as TAttorney[];
+  console.log(attorneyData);
   const token = getCookies();
-  const [choosedEditData,setChoosedEditData] = useState<TAttorney>();
+  const [choosedEditData, setChoosedEditData] = useState<TAttorney>();
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
-  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const corporatesInfo: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
   const corporateCode = localStorage.getItem("corporateCode") || "";
 
   const fetchedData = async () => {
-    try{
-      const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    try {
+      const res = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res.status === 200) {
         console.log(res);
         if (Array.isArray(res.data[0]?.Attorneys)) {
-          const updateAttorney = res.data[0].Attorneys.map((attorneyitems: any) => ({
-            ...attorneyitems,
-            personalId: attorneyitems.personalId, 
-          }))
-          .map(mapDataToTAttorney)
-          .filter((item: any) => item !== null);
-  
+          const updateAttorney = res.data[0].Attorneys.map(
+            (attorneyitems: any) => ({
+              ...attorneyitems,
+              personalId: attorneyitems.personalId,
+            })
+          )
+            .map(mapDataToTAttorney)
+            .filter((item: any) => item !== null);
+
           dispatch(setAttorney(updateAttorney));
           dispatch(setCorporateData(res.data[0]));
           console.log("Attorney data fetched successfully.", updateAttorney);
@@ -83,24 +90,28 @@ export function PageAttorney({
       console.log("corporateCode not found")
     }
   }, []);
-  
+
   const handleDelete = async (data: TAttorney) => {
-  console.log(data)
-  try{
-        const token = getCookies();
-        const res = await axios.post("/api/v1/personals/delete",{personalId : data.personalId},{
+    console.log(data);
+    try {
+      const token = getCookies();
+      const res = await axios.post(
+        "/api/v1/personals/delete",
+        { personalId: data.personalId },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-        if (res.status === 200){
-          console.log("delete successful")
-          dispatch(removeAttorney(data.personalId));
         }
-      }catch(error){
-        console.log("delete fail ,",error)
+      );
+      if (res.status === 200) {
+        console.log("delete successful");
+        dispatch(removeAttorney(data.personalId));
       }
-    };;
+    } catch (error) {
+      console.log("delete fail ,", error);
+    }
+  };
 
   const columnsAuthorizePerson: TableColumn<TAttorney>[] = [
     {
@@ -128,40 +139,52 @@ export function PageAttorney({
       selector: (row: TAttorney) => row.nationality || "",
     },
     {
-        name: "Telephone",
-        selector: (row: TAttorney) => row.telephone || "",
-      },
-      {
-        name: "Email",
-        selector: (row: TAttorney) => row.email || "",
-      },
+      name: "Telephone",
+      selector: (row: TAttorney) => row.telephone || "",
+    },
+    {
+      name: "Email",
+      selector: (row: TAttorney) => row.email || "",
+    },
     {
       cell: (row: TAttorney) => (
-        <Button onClick={() => {{setChoosedEditData(row) 
-          console.log(row)}}
-        }>Edit</Button>
+        <Button
+          onClick={() => {
+            {
+              setChoosedEditData(row);
+              console.log(row);
+            }
+          }}
+        >
+          Edit
+        </Button>
       ),
       ignoreRowClick: true,
     },
     {
       cell: (row: TAttorney) => (
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" className="bg-red-600 text-white">
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently remove your
+                data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete(row)}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       ),
       ignoreRowClick: true,
     },
@@ -184,7 +207,9 @@ export function PageAttorney({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Commercial Number</h1>
-                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.registrationNo ?? ""}
+                </h1>
               </div>
             </div>
             <div className="w-1/2 space-y-4">
@@ -194,7 +219,9 @@ export function PageAttorney({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}
+                </h1>
               </div>
             </div>
           </div>
@@ -216,4 +243,3 @@ export function PageAttorney({
     </>
   );
 }
-

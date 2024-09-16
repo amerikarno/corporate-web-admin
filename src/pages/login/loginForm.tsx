@@ -13,6 +13,7 @@ import { setCookies } from "@/lib/Cookies";
 import api from "@/api/axios";
 import { setUser, TUser, setEmail } from "@/features/user/userSlice";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+import AzureForm from "./azureForm";
 
 const LoginForm = () => {
   const token = useSelector((state: any) => state.authen.accessToken);
@@ -87,6 +88,7 @@ const LoginForm = () => {
 
   return (
     <>
+      <AzureForm />
       <form
         className="flex flex-col space-y-5"
         onSubmit={handleSubmit(onSubmit)}

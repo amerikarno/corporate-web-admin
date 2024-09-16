@@ -48,38 +48,38 @@ export default function CorporateAccountOpenning() {
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
-  useEffect(() => {
-    const fetchCorporateData = async () => {
-      try {
-        const corporateCode = localStorage.getItem("corporateCode") || "";
-        setCorporateCode(corporateCode);
-        console.log(corporateCode);
+  const fetchCorporateData = async () => {
+    try {
+      const corporateCode = localStorage.getItem("corporateCode") || "";
+      setCorporateCode(corporateCode);
+      // console.log(corporateCode);
 
-        if (corporateCode) {
-          const response = await axios.post(
-            "/api/v1/corporate/query",
-            { corporateCode: corporateCode },
-            {
-              headers: {
-                Authorization: `Bearer ${getCookies()}`,
-              },
-            }
-          );
-          console.log(response);
-          dispatch(setCorporateData(response.data[0]));
-        } else {
-          dispatch(clearCorporateData());
-          console.log("corporateCode not found");
-        }
-      } catch (error) {
-        console.error("Error fetching corporate data:", error);
+      if (corporateCode) {
+        const response = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode: corporateCode },
+          {
+            headers: {
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          }
+        );
+        // console.log(response);
+        dispatch(setCorporateData(response.data[0]));
+      } else {
+        dispatch(clearCorporateData());
+        // console.log("corporateCode not found");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching corporate data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchCorporateData();
   }, [corporateCode, pageId, dispatch]);
 
-  console.log(corporateData);
+  // console.log(corporateData);
   const navigate = useNavigate();
   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
     useCorporateInfo();

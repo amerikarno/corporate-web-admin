@@ -14,7 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { TCorporateData, TJuristic as TJuristicEdit } from "../../constant/type";
+import {
+  TCorporateData,
+  TJuristic as TJuristicEdit,
+} from "../../constant/type";
 import { useEffect, useState } from "react";
 import { mapDataToTJuristicShareholder } from "../libs/utils";
 import {
@@ -27,24 +30,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 
-type TPageJuristicShareholderProps = {
-};
+type TPageJuristicShareholderProps = {};
 
-export function PageJuristicShareholder({
-}: TPageJuristicShareholderProps) {
+export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
   const { handleSubmitJuristics } = useJuristicShareholders();
 
   const juristicShareholderData: TJuristicsShareholders[] =
     useSelector<RootState>(
       (state) => state.juristicShareholder?.juristicShareholders || []
     ) as TJuristicsShareholders[];
-  console.log(juristicShareholderData);
+  // console.log(juristicShareholderData);
   const dispatch = useDispatch();
   const token = getCookies();
   const corporateCode = localStorage.getItem("corporateCode") || "";
-  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const corporatesInfo: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
 
   const [choosedEditData, setChoosedEditData] =
     useState<TJuristicsShareholders>();
@@ -52,10 +55,9 @@ export function PageJuristicShareholder({
     setChoosedEditData(undefined);
   };
 
-  const fetchedData = async () =>{
-    try{
-      const res = await axios
-      .post(
+  const fetchedData = async () => {
+    try {
+      const res = await axios.post(
         "/api/v1/corporate/query",
         { corporateCode },
         {
@@ -63,7 +65,7 @@ export function PageJuristicShareholder({
             Authorization: `Bearer ${token}`,
           },
         }
-      )
+      );
 
       if (res.status === 200) {
         console.log(res);
@@ -81,10 +83,10 @@ export function PageJuristicShareholder({
       } else {
         console.log("Failed to fetch juristic data or data is not an array.");
       }
-    }catch(error){
+    } catch (error) {
       console.error("Error fetching juristic data:", error);
     }
-  }
+  };
 
   useEffect(() => {
     if(corporateCode)
@@ -108,7 +110,7 @@ export function PageJuristicShareholder({
         }
       );
       if (res.status === 200) {
-        console.log("delete successful");
+        // console.log("delete successful");
         dispatch(removeJuristicShareholder(data.juristicId));
       }
     } catch (error) {
@@ -149,22 +151,27 @@ export function PageJuristicShareholder({
     {
       cell: (row: TJuristicsShareholders) => (
         <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" className="bg-red-600 text-white">
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently remove your
+                data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete(row)}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       ),
       ignoreRowClick: true,
     },
@@ -187,7 +194,9 @@ export function PageJuristicShareholder({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Commercial Number</h1>
-                <h1 className="">: {corporatesInfo?.Info.registrationNo ?? ""}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.registrationNo ?? ""}
+                </h1>
               </div>
             </div>
             <div className="w-1/2 space-y-4">
@@ -197,7 +206,9 @@ export function PageJuristicShareholder({
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}</h1>
+                <h1 className="">
+                  : {corporatesInfo?.Info.dateOfIncorporation.split("T")[0]}
+                </h1>
               </div>
             </div>
           </div>

@@ -522,88 +522,16 @@ export const urlConfig: TUrlConfig[] = [
       // },
     ],
   },
-  // {
-  //   header: "3rd party",
-  //   icon: "icon",
-  //   pages: [6000, 6100],
-  //   children: [
-  //     {
-  //       label: "BANK",
-  //       href: "/3rd-party/bank",
-  //       pageId: 6001,
-  //     },
-  //     {
-  //       label: "CUSTODIAN",
-  //       href: "/3rd-party/custodian",
-  //       pageId: 6002,
-  //     },
-  //     {
-  //       label: "CDD",
-  //       href: "/3rd-party/cdd",
-  //       pageId: 6003,
-  //     },
-  //     {
-  //       label: "DOPA",
-  //       href: "/3rd-party/dopa",
-  //       pageId: 6004,
-  //     },
-  //     {
-  //       label: "NDID/ThaiD",
-  //       href: "/3rd-party/ndid-thaid",
-  //       pageId: 6005,
-  //     },
-  //     {
-  //       label: "Google",
-  //       href: "/3rd-party/google",
-  //       pageId: 6006,
-  //     },
-  //     {
-  //       label: "Azure AD",
-  //       href: "/3rd-party/azure-ad",
-  //       pageId: 6007,
-  //     },
-  //     {
-  //       label: "Amazon",
-  //       href: "/3rd-party/amazon",
-  //       pageId: 6008,
-  //     },
-  //   ],
-  // },
-  // {
-  //   header: "Customer",
-  //   icon: "icon",
-  //   pages: [7000, 7100],
-  //   children: [
-  //     {
-  //       label: "Login",
-  //       href: "/login",
-  //       pageId: 7001,
-  //     },
-  //     {
-  //       label: "DA",
-  //       href: "/customer/da",
-  //       pageId: 7002,
-  //     },
-  //     {
-  //       label: "Balance",
-  //       href: "/customer/balance",
-  //       pageId: 7003,
-  //     },
-  //     {
-  //       label: "Deposit/Withdraw DA",
-  //       href: "/customer/deposit-withdraw-da",
-  //       pageId: 7004,
-  //     },
-  //     {
-  //       label: "Deposit/Withdraw Cash",
-  //       href: "/customer/deposit-withdraw-cash",
-  //       pageId: 7005,
-  //     },
-  //     {
-  //       label: "Google Authenticator",
-  //       href: "/customer/google-authenticator",
-  //       pageId: 7006,
-  //     },
-  //   ],
-  // },
+  {
+    header: "SEC Reports",
+    icon: "icon",
+    pages: [6000, 6002],
+    children: [
+      {
+        label: "reports",
+        href: "/sec-reports/reports",
+        pageId: 6001,
+      },
+    ],
+  },
 ];

@@ -66,7 +66,7 @@ export function FormCorporateInfo({
   );
 
   useEffect(() => {
-    console.log(initData);
+    // console.log(initData);
     if (initData) {
       reset(initData);
       const registeredCapitalValue =
@@ -175,7 +175,7 @@ export function FormCorporateInfo({
     const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 601
     );
-    console.log(resCorpRegisterCountry);
+    // console.log(resCorpRegisterCountry);
     const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 602
     );
