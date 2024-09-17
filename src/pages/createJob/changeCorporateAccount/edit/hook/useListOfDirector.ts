@@ -45,7 +45,11 @@ export function useListOfDirector() {
           console.log(body.personalId);
           console.log(res.data.personalId);
           console.log("Edit successful");
-          dispatch(updateDirector(data));
+          dispatch(updateDirector({
+            personalId: body.personalId!,
+            newPersonalId: res.data.personalId,
+            listOfDirector:data
+          }));
         } else {
           console.log("Edit failed");
         }

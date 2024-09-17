@@ -145,25 +145,44 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 };
-    console.log(body);
+    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/individual/precreate", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res);
-      if (res.status === 200) {
-        const age = calculateAge(body.birthDate);
-        localStorage.setItem("cid", res.data.id);
-        localStorage.setItem("age", age.toString());
-        console.log(age);
-        console.log("success", res, data);
+      console.log("body to send ",body)
+      if(individualData?.id){
+        const res = await axios.post("/api/v1/individual/update/pre", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        if (res.status === 200) {
+          const age = calculateAge(body.birthDate);
+          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("age", age.toString());
+          console.log(age);
+          console.log("update success", res, data);
 
-        navigate("/todo-list/individual-account-opening/edit/2");
-        window.scrollTo(0, 0);
+          navigate("/todo-list/individual-account-opening/edit/2");
+          window.scrollTo(0, 0);
+        }
+      }
+      else{
+        const res = await axios.post("/api/v1/individual/precreate", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(res);
+        if (res.status === 200) {
+          const age = calculateAge(body.birthDate);
+          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("age", age.toString());
+          console.log("create success", res, data);
+
+          navigate("/todo-list/individual-account-opening/edit/2");
+          window.scrollTo(0, 0);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -178,7 +197,7 @@ export default function AddIndividualAccount() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 relative">
       <Card>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-8">
@@ -397,8 +416,8 @@ export default function AddIndividualAccount() {
                 </span>
               </div>
             </div>
-            <div className="flex justify-end">
-              <Button type="submit">Submit</Button>
+            <div className="absolute right-4 -bottom-[4.5rem]">
+              <Button type="submit">Next Form</Button>
             </div>
           </form>
         </CardContent>

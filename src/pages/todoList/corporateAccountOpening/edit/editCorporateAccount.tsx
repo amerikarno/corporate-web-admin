@@ -52,7 +52,7 @@ export function EditCorporateAccount() {
       try {
         const corporateCode = localStorage.getItem("corporateCode") || "";
         setCorporateCode(corporateCode);
-        console.log(corporateCode);
+        // console.log(corporateCode);
         const response = await axios.post(
           "/api/v1/corporate/query",
           { corporateCode: corporateCode },
@@ -70,11 +70,10 @@ export function EditCorporateAccount() {
     };
 
     fetchCorporateData();
-  }, [corporateCode, pageId]);
+  }, []);
 
   const navigate = useNavigate();
-  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
-    useCorporateInfo();
+  const { handleSubmitCorporateInfo } = useCorporateInfo();
 
   // const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
   // console.log(corporateCode)
@@ -88,60 +87,15 @@ export function EditCorporateAccount() {
         handleSubmitCorporateInfo={handleSubmitCorporateInfo}
       />
     ),
-    2: (
-      <PageJuristicType
-        currentCorporatesInfo={currentCorporatesInfo}
-        corporateCode={corporateCode}
-      />
-    ),
-    3: (
-      <PageContactPerson
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    4: (
-      <ListOfDirectors
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    5: (
-      <PageIndividualShareholder
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    6: (
-      <PageJuristicShareholder
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    7: (
-      <PageAuthorizedPerson
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    8: (
-      <PageAttorney
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    9: (
-      <PageBankAccount
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
-    10: (
-      <UploadFiles
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
-      />
-    ),
+    2: <PageJuristicType />,
+    3: <PageContactPerson />,
+    4: <ListOfDirectors />,
+    5: <PageIndividualShareholder />,
+    6: <PageJuristicShareholder />,
+    7: <PageAuthorizedPerson />,
+    8: <PageAttorney />,
+    9: <PageBankAccount />,
+    10: <UploadFiles />,
     11: (
       <PageSuitTest
         corporateCode={corporateCode}

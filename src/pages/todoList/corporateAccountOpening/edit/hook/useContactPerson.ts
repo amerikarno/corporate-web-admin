@@ -30,7 +30,11 @@ export function useContactPerson() {
 
         if (res.status === 200) {
           console.log("Edit successful");
-          dispatch(updateContactPerson(data.contacts[0]));
+          dispatch(updateContactPerson({
+            personalId: data.contacts[0].personalId,
+            newPersonalId: res.data.personalId,
+            contactPerson: data.contacts[0],
+          }));
         } else {
           console.log("Edit failed");
         }

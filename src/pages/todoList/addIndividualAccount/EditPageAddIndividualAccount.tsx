@@ -15,7 +15,7 @@ import AddIndividualAccount from "./addIndividualAccount";
 import BasicInfo from "./basicInfo/basicInfo";
 import SuitTestFatca from "./suitTestFatca/suitTestFatca";
 import IdentityVerification from "./identityVerification/identityVerification";
-import { IndividualFooter } from "@/pages/createJob/addedCorporateAccount/components/IndividualFooter";
+import { IndividualFooter } from "./IndividualFooter";
 
 type TPage = {
   page?: string;
@@ -57,7 +57,7 @@ export default function EditPageAddIndividualAccount() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/todo-list/individual-account-opening/edit/${pageId + 1}`);
-    } else if (type == "done") {
+    } else if (type == "Done") {
       localStorage.clear();
       navigate(`/todo-list/individual-account-opening/`);
     } else {

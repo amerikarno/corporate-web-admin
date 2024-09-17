@@ -53,19 +53,8 @@ export function FormJuristicShareholders({
       sharePercentage: 0,
     };
     reset(juristicData);
-    console.log("use effect", juristicData);
+    // console.log("use effect", juristicData);
   }, [choosedEditData]);
-
-  // const debug = (event: React.FormEvent<HTMLFormElement>) => {
-  //   const formData = new FormData(event.currentTarget);
-  //   const data: TJuristicsShareholders = {
-  //     juristicName: formData.get("juristicName") as string,
-  //     registrationNo: formData.get("registrationNo") as string,
-  //     registeredCountry: formData.get("registeredCountry") as string,
-  //     sharePercentage: Number(formData.get("sharePercentage")),
-  //   };
-  //   console.log(data);
-  // };
 
   return (
     <>

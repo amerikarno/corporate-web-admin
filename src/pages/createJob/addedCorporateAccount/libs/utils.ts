@@ -495,6 +495,8 @@ export const mapDataToTAttorney = (
                 country: "",
               },
             ],
+      email: data?.email ?? "",
+      telephone: data?.telephone ?? "",
     };
 
     return result;

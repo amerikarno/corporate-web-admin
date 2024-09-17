@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-// import { TCorporateData } from "../constant/type";
 // import { useDispatch, useSelector } from "react-redux";
 // import { RootState } from "@/app/store";
+// import { mapDataToTCorporateInfo } from "./libs/utils";
 // import { isAllowedPage } from "@/lib/utils";
 // import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 // import { useEffect, useState } from "react";
@@ -15,28 +15,34 @@ import AddIndividualAccount from "./addIndividualAccount";
 import BasicInfo from "./basicInfo/basicInfo";
 import SuitTestFatca from "./suitTestFatca/suitTestFatca";
 import IdentityVerification from "./identityVerification/identityVerification";
-import { IndividualFooter } from "../addedCorporateAccount/components/IndividualFooter";
+import { IndividualFooter } from "./IndividualFooter";
 
 type TPage = {
   page?: string;
 };
 
 export default function PageAddIndividualAccount() {
-  // Ensure hooks are called unconditionally and in the same order
-  // const dispatch = useDispatch();
-  // const [corporateCode, setCorporateCode] = useState("");
+  //   if (!isAllowedPage(2001)) {
+  //     return <UnAuthorize />;
+  //   }
 
-  // const corporateData: TCorporateData = useSelector<RootState>(
-  //   (state) => state.editCorporate
-  // ) as TCorporateData;
+  //   const dispatch = useDispatch();
+  //   const [corporateCode, setCorporateCode] = useState("");
 
-  // const initFormData = mapDataToTCorporateInfo(corporateData);
+  //   const corporateData: TCorporateData = useSelector<RootState>(
+  //     (state) => state.editCorporate
+  //   ) as TCorporateData;
+
+  //   const initFormData = mapDataToTCorporateInfo(corporateData);
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
   const navigate = useNavigate();
-  // const { handleSubmitCorporateInfo, currentCorporatesInfo } = useCorporateInfo();
+  //   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
+  //     useCorporateInfo();
+
+  //const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
 
   type TMapPages = {
     [key: number]: JSX.Element;
@@ -49,11 +55,11 @@ export default function PageAddIndividualAccount() {
   };
 
   const handlePages = (type: string) => {
-    if (type === "next") {
+    if (type == "next") {
       navigate(`/create-job/added-individual-account/${pageId + 1}`);
-    } else if (type == "done") {
+    } else if (type == "Done") {
       localStorage.clear();
-      navigate(`/create-job/added-individual-account`);
+      navigate(`/create-job/added-individual-account/`);
     } else {
       navigate(`/create-job/added-individual-account/${pageId - 1}`);
     }

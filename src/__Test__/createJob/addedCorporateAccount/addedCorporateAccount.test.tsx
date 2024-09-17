@@ -1,4 +1,3 @@
-// import { render } from "@testing-library/react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
@@ -27,8 +26,14 @@ const user = {
   iat: 1725344226,
 };
 
+// const BASE_URL = "http://cwa-alb-607898773.eu-north-1.elb.amazonaws.com";
+
 describe("addedCorporateAccount", () => {
-  test("should render correctly", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should render correctly", async () => {
     store.dispatch(setUser(user));
 
     render(
@@ -50,12 +55,34 @@ describe("addedCorporateAccount", () => {
     );
     const taxId = screen.getByLabelText(/tax id/i);
     const dateOfIncorporation = screen.getByLabelText(/date of incorporation/i);
+
+    const registeredCountryThailand = screen.getByTestId(
+      /registeredCountry-Thailand/i
+    );
+    const registeredCountryOther = screen.getByTestId(
+      /registeredCountry-Others Countries \(Please Specify\)/i
+    );
+
+    const primaryCountryThailand = screen.getByTestId(
+      /primaryCountry-Thailand/i
+    );
+    const primaryCountryOther = screen.getByTestId(
+      /primaryCountry-Others Countries \(Please Specify\)/i
+    );
+
     const registerAddressNumber = screen.getByTestId(/registeredBusiness-0/i);
     const registerTambon = screen.getByTestId(/registeredBusiness-6/i);
     const registerAmphoe = screen.getByTestId(/registeredBusiness-7/i);
     const registerProvince = screen.getByTestId(/registeredBusiness-8/i);
     const registerZipCode = screen.getByTestId(/registeredBusiness-9/i);
     const registerCountry = screen.getByTestId(/registeredBusiness-10/i);
+    const registerEmail = screen.getByTestId(
+      /registeredBusiness-emailAddress/i
+    );
+    const registerTelephone = screen.getByTestId(
+      /registeredBusiness-telephone/i
+    );
+
     const incorporatePlaceAddressNumber = screen.getByTestId(
       /placeofIncorporation-0/i
     );
@@ -74,6 +101,12 @@ describe("addedCorporateAccount", () => {
     const incorporatePlaceCountry = screen.getByTestId(
       /placeofIncorporation-10/i
     );
+    const incorporatePlaceEmail = screen.getByTestId(
+      /placeofIncorporation-emailAddress/i
+    );
+    const incorporatePlaceTelephone = screen.getByTestId(
+      /placeofIncorporation-telephone/i
+    );
 
     fireEvent.change(juristicInvestorName, { target: { value: "hello" } });
     expect(juristicInvestorName).toHaveValue("hello");
@@ -83,6 +116,39 @@ describe("addedCorporateAccount", () => {
     expect(taxId).toHaveValue("123456789");
     fireEvent.change(dateOfIncorporation, { target: { value: "1988-11-12" } });
     expect(dateOfIncorporation).toHaveValue("1988-11-12");
+
+    fireEvent.click(registeredCountryThailand);
+    expect(registeredCountryThailand).toBeChecked();
+    expect(registeredCountryOther).not.toBeChecked();
+    fireEvent.click(registeredCountryOther);
+    const registeredCountrySpecificInput = screen.getByTestId(
+      /registeredCountry-otherInput/i
+    );
+    expect(registeredCountryThailand).not.toBeChecked();
+    expect(registeredCountryOther).toBeChecked();
+    expect(registeredCountrySpecificInput).toBeInTheDocument();
+    fireEvent.change(registeredCountrySpecificInput, {
+      target: { value: "registered country brazil" },
+    });
+    expect(registeredCountrySpecificInput).toHaveValue(
+      "registered country brazil"
+    );
+
+    fireEvent.click(primaryCountryThailand);
+    expect(primaryCountryThailand).toBeChecked();
+    expect(primaryCountryOther).not.toBeChecked();
+    fireEvent.click(primaryCountryOther);
+    const primaryCountrySpecificInput = screen.getByTestId(
+      /primaryCountry-otherInput/i
+    );
+    expect(primaryCountryOther).toBeChecked();
+    expect(primaryCountryThailand).not.toBeChecked();
+    expect(primaryCountrySpecificInput).toBeInTheDocument();
+    fireEvent.change(primaryCountrySpecificInput, {
+      target: { value: "primary country brazil" },
+    });
+    expect(primaryCountrySpecificInput).toHaveValue("primary country brazil");
+
     fireEvent.change(registerAddressNumber, { target: { value: "123" } });
     expect(registerAddressNumber).toHaveValue("123");
     fireEvent.change(registerTambon, { target: { value: "tambon" } });
@@ -95,6 +161,11 @@ describe("addedCorporateAccount", () => {
     expect(registerZipCode).toHaveValue("12345");
     fireEvent.change(registerCountry, { target: { value: "country" } });
     expect(registerCountry).toHaveValue("country");
+    fireEvent.change(registerEmail, { target: { value: "test@gmail.com" } });
+    expect(registerEmail).toHaveValue("test@gmail.com");
+    fireEvent.change(registerTelephone, { target: { value: "0888888888" } });
+    expect(registerTelephone).toHaveValue("0888888888");
+
     fireEvent.change(incorporatePlaceAddressNumber, {
       target: { value: "777" },
     });
@@ -111,9 +182,55 @@ describe("addedCorporateAccount", () => {
     expect(incorporatePlaceZipCode).toHaveValue("12345");
     fireEvent.change(incorporatePlaceCountry, { target: { value: "country" } });
     expect(incorporatePlaceCountry).toHaveValue("country");
+    fireEvent.change(incorporatePlaceEmail, {
+      target: { value: "test@gmail.com" },
+    });
+    expect(incorporatePlaceEmail).toHaveValue("test@gmail.com");
+    fireEvent.change(incorporatePlaceTelephone, {
+      target: { value: "0888888888" },
+    });
+    expect(incorporatePlaceTelephone).toHaveValue("0888888888");
 
-    // const nextBtn = screen.getByText(/next form/i);
-    // fireEvent.click(nextBtn);
-    // expect(instructionText).not.toBeTruthy();
+    const financialRegisteredCapital =
+      screen.getByLabelText(/Registered Capital/i);
+    const financialRevenuePerYear = screen.getByLabelText(/Revenue Per Year/i);
+    const financialNetProFitLoss =
+      screen.getByLabelText(/Net Profit \(Loss\)/i);
+    const financialShareholderEquity =
+      screen.getByLabelText(/Shareholder's equity/i);
+
+    fireEvent.change(financialRegisteredCapital, { target: { value: 123456 } });
+    expect(financialRegisteredCapital).toHaveValue("123,456");
+    fireEvent.change(financialRevenuePerYear, { target: { value: 123456 } });
+    expect(financialRevenuePerYear).toHaveValue("123,456");
+    fireEvent.change(financialNetProFitLoss, { target: { value: 123456 } });
+    expect(financialNetProFitLoss).toHaveValue("123,456");
+    fireEvent.change(financialShareholderEquity, { target: { value: 123456 } });
+    expect(financialShareholderEquity).toHaveValue("123,456");
   });
 });
+
+// describe("createcorporate form2", () => {
+//   beforeEach(() => {
+//     jest.clearAllMocks();
+//   });
+//   test("should render correctly", async () => {
+//     store.dispatch(setUser(user));
+
+//     render(
+//       <Provider store={store}>
+//         <MemoryRouter initialEntries={[BASE_URL]}>
+//           <Routes>
+//             <Route
+//               path="create-job/added-corporate-account/2"
+//               element={<CorporateAccountOpenning />}
+//             />
+//           </Routes>
+//         </MemoryRouter>
+//       </Provider>
+//     );
+
+//     // const location = screen.getByTestId("location-display");
+//     // expect(location).toHaveTextContent("/create-job/added-corporate-account/2");
+//   });
+// });

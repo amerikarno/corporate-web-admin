@@ -18,8 +18,6 @@ import {
   TCorporateData,
   TIndividualShareholder as TIndividualShareholderEdit,
 } from "../../constant/type";
-import { mapDataToTIndividualShareholder } from "../libs/utils";
-import { TIndividualsShareholders } from "../constants2/types";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,17 +28,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 
-type TPageIndividualShareholderProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
-};
+type TPageIndividualShareholderProps = {};
 
-export function PageIndividualShareholder({
-  corporateCode,
-  corporatesInfo,
-}: TPageIndividualShareholderProps) {
+export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
   const dispatch = useDispatch();
   const token = getCookies();
   const shareholderData: TIndividualShareholderEdit[] = useSelector<RootState>(
@@ -52,10 +44,14 @@ export function PageIndividualShareholder({
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
+  const corporatesInfo: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
+  const corporateCode = localStorage.getItem("corporateCode") || "";
 
-  useEffect(() => {
-    axios
-      .post(
+  const fetchedData = async () => {
+    try {
+      const res = await axios.post(
         "/api/v1/corporate/query",
         { corporateCode },
         {
@@ -63,42 +59,29 @@ export function PageIndividualShareholder({
             Authorization: `Bearer ${token}`,
           },
         }
-      )
-      .then((res) => {
-        console.log("API Response:", res.data);
-        if (res.status === 200) {
-          const individualshareholder =
-            res.data[0]?.IndividualShareholders || [];
-          if (individualshareholder) {
-            const updateIndividualShareholder: TIndividualsShareholders[] =
-              individualshareholder
-                .map((shareholder: TIndividualShareholderEdit) => ({
-                  ...shareholder,
-                  corporateCode: String(shareholder.corporateCode),
-                }))
-                .map(mapDataToTIndividualShareholder)
-                .filter(
-                  (item: any) => item !== null
-                ) as TIndividualsShareholders[];
-
-            dispatch(setIndividualShareholder(updateIndividualShareholder));
-            console.log(
-              "indivudual data fetched successfully.",
-              individualshareholder
-            );
-          } else {
-            console.log("No individual shareholder data found.");
-          }
-        } else {
+      );
+      if (res.status === 200) {
+        const individualshareholder = res.data[0]?.IndividualShareholders || [];
+        if (individualshareholder && individualshareholder.length > 0) {
+          dispatch(setIndividualShareholder(individualshareholder));
           console.log(
-            "Failed to fetch indivudual data or data is not an array."
+            "indivudual data fetched successfully.",
+            individualshareholder
           );
+        } else {
+          console.log("No individual shareholder data found.");
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching indivudual data:", error);
-      });
-  }, [corporateCode, dispatch, token]);
+      } else {
+        console.log("Failed to fetch indivudual data or data is not an array.");
+      }
+    } catch (error) {
+      console.error("Error fetching indivudual data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchedData();
+  }, []);
 
   const { handleSubmitShareholders } = useShareholders();
   console.log(shareholderData);
@@ -162,23 +145,28 @@ export function PageIndividualShareholder({
     },
     {
       cell: (row: TIndividualShareholderEdit) => (
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" className="bg-red-600 text-white">
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently remove your
+                data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete(row)}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       ),
       ignoreRowClick: true,
     },

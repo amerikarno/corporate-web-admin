@@ -6,6 +6,7 @@ import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/e
 import { Route, Outlet } from "react-router-dom";
 import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/EditPageAddIndividualAccount";
 import BankTransactionList from "@/pages/todoList/bankTransactionList/bankTransactionList";
+import FxExchangeTransactionList from "@/pages/todoList/fxExchange/fxExchangeTransaction";
 
 export const todoListRoutes = () => {
   return (
@@ -57,6 +58,7 @@ export const todoListRoutes = () => {
         element={<BankTransactionList/>}
         // element={<BlankPage name="cash deposit/withdraw transaction is developing"/>}
       />
+      <Route path="fx-exchange" element={<FxExchangeTransactionList/>}/>
     </Route>
   );
 };

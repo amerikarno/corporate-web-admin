@@ -1,9 +1,21 @@
 import { useNavigate, useParams } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "@/app/store";
+// import { mapDataToTCorporateInfo } from "./libs/utils";
+// import { isAllowedPage } from "@/lib/utils";
+// import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+// import { useEffect, useState } from "react";
+// import { getCookies } from "@/lib/Cookies";
+// import axios from "@/api/axios";
+// import {
+//   clearCorporateData,
+//   setCorporateData,
+// } from "@/features/editCorporateData/editCorporateData";
 import AddIndividualAccount from "./addIndividualAccount";
 import BasicInfo from "./basicInfo/basicInfo";
 import SuitTestFatca from "./suitTestFatca/suitTestFatca";
 import IdentityVerification from "./identityVerification/identityVerification";
-import { IndividualFooter } from "@/pages/createJob/addedCorporateAccount/components/IndividualFooter";
+import { IndividualFooter } from "./IndividualFooter";
 
 type TPage = {
   page?: string;
@@ -45,9 +57,9 @@ export default function ChangePageAddIndividualAccount() {
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/change-individual-account/edit/${pageId + 1}`);
-    } else if (type == "done") {
+    } else if (type == "Done") {
       localStorage.clear();
-      navigate(`/create-job/change-individual-account`);
+      navigate(`/create-job/change-individual-account/`);
     } else {
       navigate(`/create-job/change-individual-account/edit/${pageId - 1}`);
     }

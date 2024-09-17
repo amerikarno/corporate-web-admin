@@ -24,7 +24,7 @@ type TCorporateTypeAndIncomeProps = {
 
 export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   const getCheckedLabel = (corpData: TCorporateData) => {
-    console.log(corpData);
+    // console.log(corpData);
     const jrType = corpData?.CorporateTypes;
     const buType = corpData?.BusinessTypes;
     const srcOfIncome = corpData?.SourceOfIncomes;
@@ -45,9 +45,9 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
     };
   };
 
+  const corpData = useSelector((state: RootState) => state.editCorporate);
   const getFrom2Response = () => {
-    const corpData = useSelector((state: RootState) => state.editCorporate);
-    console.log(corpData);
+    // console.log(corpData);
     const {
       jrType,
       buType,
@@ -65,7 +65,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
       ...invType,
       ...countrySrcOfIncomeTh,
     };
-    console.log(res);
+    // console.log(res);
     // console.log(JSON.stringify(res, null, 2));
     return res;
     // } else {
@@ -83,31 +83,32 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log(resFrom2);
-  useEffect(() => {
-    const fetchCorporateTypeData = async () => {
-      try {
-        const token = getCookies();
-        const corporateCodeString = corporateData.CorporateCode.toString();
-        const res = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode: corporateCodeString },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("form2 fetch data: ", res);
-        if (res.status === 200) {
-          dispatch(setCorporateData(res.data[0]));
-        }
-      } catch (error) {
-        console.error("Error fetchCorporateTypeData data:", error);
-      }
-    };
+  // console.log(resFrom2);
 
-    fetchCorporateTypeData();
+  const fetchCorporateTypeData = async () => {
+    try {
+      const token = getCookies();
+      const corporateCodeString = corporateData.CorporateCode.toString();
+      const res = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode: corporateCodeString },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log("form2 fetch data: ", res);
+      if (res.status === 200) {
+        dispatch(setCorporateData(res.data[0]));
+      }
+    } catch (error) {
+      console.error("Error fetchCorporateTypeData data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (corpData.CorporateCode !== 0) fetchCorporateTypeData();
     setResForm2({
       ...corporateData.BusinessTypes,
       ...corporateData.CorporateTypes,
@@ -117,11 +118,10 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   }, [dispatch, corporateData.CorporateCode, token]);
 
   const setStoreData = (data: CorporateResponse) => {
-    console.log("go to this");
     let tmp = copy(corporateData);
-    console.log(tmp);
-    console.log(data);
-    console.log(tmp?.CountrySourceIncomes?.[0]);
+    // console.log(tmp);
+    // console.log(data);
+    // console.log(tmp?.CountrySourceIncomes?.[0]);
     if (tmp.CorporateTypes) {
       tmp.CorporateTypes.isJuristicThailand = data.isJuristicThailand
         ? true
@@ -219,14 +219,14 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         ? data.otherCountry
         : "";
     }
-    console.log(tmp);
+    // console.log(tmp);
     dispatch(setCorporateData(tmp));
     setResForm2(data);
   };
 
   const saveJuristicType = async (data: CorporateResponse | null) => {
-    console.log(data?.corporateCountry?.isThailand);
-    console.log(data?.corporateCountry?.other);
+    // console.log(data?.corporateCountry?.isThailand);
+    // console.log(data?.corporateCountry?.other);
     if (data !== null) {
       let body = {
         ...data,
@@ -245,8 +245,8 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
           ? ""
           : data.corporateCountry?.other,
       };
-      console.log(body.isThailand);
-      console.log(body.otherCountry);
+      // console.log(body.isThailand);
+      // console.log(body.otherCountry);
       try {
         const res = await axios.post("/api/v1/corporate/update/type", body, {
           headers: {
@@ -254,12 +254,12 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
           },
         });
         if (res.status === 200) {
-          console.log("update success", res.data);
+          // console.log("update success", res.data);
           setStoreData(data);
           navigate("/create-job/added-corporate-account/3");
         } else {
           alert("Invalid Input.");
-          console.log("save failed");
+          // console.log("save failed");
         }
       } catch (error) {
         console.log(error);
@@ -280,7 +280,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
           isThailand: data.corporateCountry?.isThailand ? true : false,
           otherCountry: data.corporateCountry?.other,
         };
-        console.log("body: ", body);
+        // console.log("body: ", body);
         const token = getCookies();
         const res = await axios.post("/api/v1/corporate/create/type", body, {
           headers: {
@@ -288,12 +288,12 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
           },
         });
         if (res.status === 200) {
-          console.log("request success", res.data);
+          // console.log("request success", res.data);
           setStoreData(body);
           navigate("/create-job/added-corporate-account/3");
         } else {
           alert("Invalid Input.");
-          console.log("create failed");
+          // console.log("create failed");
         }
       }
     } catch (error) {
@@ -433,7 +433,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
       case "investmentObjective":
         let invObj = copy(resFrom2);
-        console.log(key, name, checked);
+        // console.log(key, name, checked);
         if (invObj && invObj !== null) {
           // invObj.isLiquidation = false;
           // invObj.isInvestment = false;
@@ -474,7 +474,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
       case "businessTypeOther":
         if (form2Data && form2Data !== null) {
-          console.log("value", value);
+          // console.log("value", value);
           form2Data.otherBusinessType = value;
         }
         break;
@@ -489,13 +489,13 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log(resFrom2);
+    // console.log(resFrom2);
 
     if (corporateData.CountrySourceIncomes) {
-      console.log("do update");
+      // console.log("do update");
       await saveJuristicType(resFrom2);
     } else {
-      console.log("do create");
+      // console.log("do create");
       await createJuristicType(resFrom2, corporateData);
     }
   };
@@ -867,7 +867,12 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         </div>
 
         <div className="p-4 flex justify-end relative">
-          <Button className="absolute top-20 right-0 w-24 " onClick={(e) => onSubmit(e)}>Next Form</Button>
+          <Button
+            className="absolute top-20 right-0 w-24 "
+            onClick={(e) => onSubmit(e)}
+          >
+            Next Form
+          </Button>
         </div>
       </Card>
     </>

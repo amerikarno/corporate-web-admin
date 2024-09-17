@@ -9,7 +9,6 @@ import bankReducer from "@/features/bankSlice/bankSlice";
 import editCorporateReducer from "@/features/editCorporateData/editCorporateData";
 import userReducer from "@/features/user/userSlice";
 import orderTradeReducer from "@/features/orderTrade/orderTradeSlice";
-import juristicTypeReducer from "@/features/juristicType/juristicTypeSlice";
 import livenessOcr from "@/features/livenessOcr/livenessOcr";
 import bankOrderReducer from "@/features/bankOrder/bankOrdersSlice";
 import addIndividualReducer from "@/features/addIndividual/addIndividualSlice";
@@ -17,6 +16,7 @@ import uploadFileReducer from "@/features/uploadFile/uploadFileSlice";
 import suitReducer from "@/features/suit/suitSlice";
 import attorneyReducer from "@/features/attorney/attorney";
 import individualDataReducer from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import fxExchangeReducer from "@/features/fxExchange/fxExhangeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,7 +30,6 @@ export const store = configureStore({
     editCorporate: editCorporateReducer,
     user: userReducer,
     orderTrade: orderTradeReducer,
-    juristicType: juristicTypeReducer,
     livenessOcr: livenessOcr,
     bankOrder: bankOrderReducer,
     addIndividual: addIndividualReducer,
@@ -38,6 +37,7 @@ export const store = configureStore({
     attorney: attorneyReducer,
     suit: suitReducer,
     individualData: individualDataReducer,
+    fxExchange: fxExchangeReducer,
   },
 });
 

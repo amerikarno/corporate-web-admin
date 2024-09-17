@@ -17,10 +17,11 @@ export function useJuristicShareholders() {
   const dispatch = useDispatch();
 
   const handleSubmitJuristics = async (data: TJuristicsShareholders) => {
+    console.log(data);
     if (!isExpiredToken()) {
       await saveJuristicShareholders(data);
     } else {
-      console.log("session expired");
+      // console.log("session expired");
       alert("Session expired. Please login again");
     }
   };
@@ -36,18 +37,23 @@ export function useJuristicShareholders() {
           },
         });
         if (res.status === 200) {
-          console.log(res);
-          console.log("update success", res.data.juristicId);
+          // console.log(res);
+          // console.log("update success", res.data.juristicId);
           dispatch(
             updateJuristicShareholder({
-              ...data,
-              juristicId: res.data.juristicId,
+              juristicId: data.juristicId,
+              newJuristicId: res.data.juristicId,
+              juristicShareholder: {
+                ...data,
+                juristicId: data.juristicId,
+              },
             })
           );
           setJuristics([...juristics, data]);
-        } else {
-          console.log("update failed");
         }
+        // else {
+        //   console.log("update failed");
+        // }
       } else {
         const res = await axios.post("/api/v1/juristic/create", data, {
           headers: {
@@ -56,15 +62,16 @@ export function useJuristicShareholders() {
         });
 
         if (res.status === 200) {
-          console.log(res);
-          console.log("request success", res.data.juristicId);
+          // console.log(res);
+          // console.log("request success", res.data.juristicId);
           dispatch(
             addJuristicShareholder({ ...data, juristicId: res.data.juristicId })
           );
           setJuristics([...juristics, data]);
-        } else {
-          console.log("save failed");
         }
+        // else {
+        //   console.log("save failed");
+        // }
       }
     } catch (error: any) {
       console.log(error);
@@ -76,5 +83,6 @@ export function useJuristicShareholders() {
     juristics,
     handleSubmitJuristics,
     setJuristics,
+    saveJuristicShareholders,
   };
 }

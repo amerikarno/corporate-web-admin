@@ -109,9 +109,9 @@ export default function BasicInfo() {
         individualData?.address?.find((addr) => addr.types === 3) || null;
 
       const firstBank: TBasicInfoBank | null =
-        individualData?.bank?.find((addr) => addr.types === 0) || null;
-      const secondBank: TBasicInfoBank | null =
         individualData?.bank?.find((addr) => addr.types === 1) || null;
+      const secondBank: TBasicInfoBank | null =
+        individualData?.bank?.find((addr) => addr.types === 2) || null;
 
       let fillData: TBasicInfo = {
         registeredAddress: {
@@ -176,6 +176,8 @@ export default function BasicInfo() {
           retireInvestment: individualData?.retireInvestment || false,
         },
       };
+      console.log(firstBank)
+      console.log(fillData)
       reset(fillData);
     }
   }, [individualData, reset]);
@@ -228,12 +230,12 @@ export default function BasicInfo() {
       },
       firstBankAccount: {
         ...data.firstBankAccount,
-        type: 1,
+        types: 1,
         is_default: true,
       },
       secondBankAccountBody: {
         ...data.secondBankAccountBody,
-        type: 2,
+        types: 2,
         is_default: false,
       },
     };
@@ -252,14 +254,30 @@ export default function BasicInfo() {
     console.log(body);
     try {
       const token = getCookies();
-      const res = await axios.post("/api/v1/individual/postcreate", body, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.status === 200) {
-        console.log("submit basic info success", res);
-        navigate("/create-job/added-individual-account/suittestfatca");
-      } else {
-        console.log("submit basic info unsuccess x", res);
+      const registeredAddressFind: TBasicinfoAddress | null =
+        individualData?.address?.find((addr) => addr.types === 1) || null;
+      if(registeredAddressFind?.homeNumber){
+        const res = await axios.post("/api/v1/individual/update/post", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 200) {
+          console.log("update basic info success", res);
+          navigate("/todo-list/individual-account-opening/edit/3");
+          window.scrollTo(0, 0);
+        } else {
+          console.log("update basic info unsuccess x", res);
+        }
+      }else{
+        const res = await axios.post("/api/v1/individual/postcreate", body, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 200) {
+          console.log("submit basic info success", res);
+          navigate("/todo-list/individual-account-opening/edit/3");
+          window.scrollTo(0, 0);
+        } else {
+          console.log("submit basic info unsuccess x", res);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -281,7 +299,7 @@ export default function BasicInfo() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-4 relative">
       <Card>
         <CardContent>
           <div className="p-4 space-y-4">
@@ -1102,8 +1120,8 @@ export default function BasicInfo() {
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-end">
-        <Button type="submit">Submit</Button>
+      <div className="absolute right-4 -bottom-[4.5rem]">
+        <Button type="submit">Next Form</Button>
       </div>
     </form>
   );

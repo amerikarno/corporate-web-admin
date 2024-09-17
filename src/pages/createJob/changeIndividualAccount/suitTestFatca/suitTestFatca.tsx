@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubSuitTest from "./subSuitTest";
 import KnowLedgeTest from "./knowLedgeTest";
 import { TiTick } from "react-icons/ti";
@@ -8,11 +8,48 @@ import "./suitTestFatca.css";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
+import { useDispatch, useSelector } from "react-redux";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { RootState } from "@/app/store";
+import Swal from "sweetalert2";
 
 export default function SuitTestFatca() {
   if (!isAllowedPage(2002)) {
     return <UnAuthorize />;
   }
+
+
+  const token = getCookies();
+  const dispatch = useDispatch();
+  const fetchIndividualData = async (AccountID: string) => {
+    try {
+      console.log(AccountID);
+      const res = await axios.post(
+        "/api/v1/individual/list",
+        { AccountID },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(setIndividualData(res.data[0]));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const individualData = useSelector(
+    (state: RootState) => state.individualData.individualDatas
+  );
+  useEffect(() => {
+    const cidValue = localStorage.getItem("cid");
+    fetchIndividualData(cidValue || "");
+  }, [token, dispatch,]);
+
 
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
@@ -20,6 +57,24 @@ export default function SuitTestFatca() {
   const [checkboxStates, setCheckboxStates] = useState<boolean[]>(
     new Array(8).fill(false)
   );
+
+  useEffect(()=>{
+    if(individualData?.SuiteTestResult.isFatca){
+      setFatcaInfo(individualData.SuiteTestResult.fatcaInfo)
+      if (Array.isArray(fatcaInfo)) {
+        const initialCheckboxStates = fatcaInfo.map(state => state === 1);
+        setCheckboxStates(initialCheckboxStates);
+      }
+      setFatcaRadio("fatcaradio-1")
+    }else{
+
+    }
+
+    if(individualData?.SuiteTestResult.isKnowLedgeDone){
+      setKnowLedgeTest("knowLedgeTest-1")
+      setKnowLedgeTestSuccess(true);
+    }
+  },[individualData])
 
   const handleCheckboxChange = (index: number) => {
     const updatedCheckboxStates = [...checkboxStates];
@@ -51,8 +106,7 @@ export default function SuitTestFatca() {
       setSuitTestResult(exam_result)
   }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
-
-  const handleSubmitSuitTestFatca = () => {
+  const handleSubmitSuitTestFatca = async () => {
     console.log(isButtonDisabled);
     console.log(suitTestSuccess);
     console.log(fatcaradio === "fatcaradio-2");
@@ -65,21 +119,62 @@ export default function SuitTestFatca() {
         id: localStorage.getItem("cid"),
         suiteTestResult: suitTestResult,
         isFatca: fatcaradio === "fatcaradio-1",
-        fatcaInfo: fatcaInfo,
+        fatcaInfo: fatcaInfo === "" ? [] : fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
         knowLedgeTestResult: knowLedgeTestSuccess ? 15 : 0,
         pageID: 400,
       };
       console.log(body);
-      navigate("/create-job/change-individual-account/edit/4");
+      if(individualData?.SuiteTestResult.suiteTestResult.totalScore){
+          console.log("suite test updating...")
+          try{
+            const res = await axios.post("/api/v1/suitetest/result/individual/edit", body,  {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            console.log(res)
+            if (res.status === 200) {
+              console.log("suit test edit success", res.data);
+              navigate("/create-job/change-individual-account/edit/4");
+            }else{
+              console.log("suit test edit not success")
+            }
+          }catch(error){
+            console.log(error)
+          }
+      }else{
+          console.log("suite test saving...")
+          try{
+            const res = await axios.post("/api/v1/suitetest/result/individual/save", body,  {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            console.log(res)
+            if (res.status === 200) {
+              console.log("suit test save success", res.data);
+              navigate("/create-job/change-individual-account/edit/4");
+            }else{
+              console.log("suit test save not success")
+            }
+          }catch(error){
+            console.log(error)
+          }
+      }
     } else {
-      alert("Please Do the Suit Test First.");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      Swal.fire({
+        icon: "error",
+        title: "Please Submit the suite test first",
+        text: "if you are an American citizen, please complete the FATCA form first",
+      });
     }
   };
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8 p-4 relative">
       <div className="mx-16 mt-16">
         <div className="text-xl font-bold text-slate-800">
           แบบประเมินความเหมาะสมในการลงทุน
@@ -224,7 +319,10 @@ export default function SuitTestFatca() {
                     name="radio-for-knowLedgeTest"
                     type="radio"
                     checked={knowLedgeTest === "knowLedgeTest-2"}
-                    onChange={() => setKnowLedgeTest("knowLedgeTest-2")}
+                    onChange={() => {
+                      setKnowLedgeTest("knowLedgeTest-2");
+                      setKnowLedgeTestSuccess(false);
+                    }}
                   />
                   <label htmlFor="knowLedgeTest-2">ทำภายหลัง</label>
                 </div>
@@ -238,7 +336,7 @@ export default function SuitTestFatca() {
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-end">
+      <div className="absolute right-4 -bottom-[4.5rem]">
         <Button onClick={handleSubmitSuitTestFatca}>Next Form</Button>
       </div>
       <div>

@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import "./header.css"
+import "./header.css";
 
 import Logo from "@/assets/logo.svg";
 import { urlConfig } from "@/config/url";
@@ -20,26 +20,12 @@ import { TUrlConfig, TUrlConfigChild } from "@/config/types";
 import { Menu } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
-import { RootState } from "@/app/store";
-import { TUser, setUser } from "@/features/user/userSlice";
-import { getCookies, removeCookies } from "@/lib/Cookies";
-import { jwtDecode } from "jwt-decode";
-import { useSelector, useDispatch } from "react-redux";
+import { removeCookies } from "@/lib/Cookies";
+import { useDispatch } from "react-redux";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 export default function Header() {
-  const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  if (user === null || user === undefined) {
-    const token = getCookies();
-    if (token) {
-      const user: TUser = jwtDecode(token);
-      dispatch(setUser(user));
-    } else {
-      navigate("/login");
-    }
-  }
 
   const handleLogout = () => {
     localStorage.clear();
@@ -122,7 +108,10 @@ export default function Header() {
             </div> */}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="border-black mr-12">
-            <DropdownMenuItem className="cursor-pointer" onClick={() => handleLogout()}>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => handleLogout()}
+            >
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

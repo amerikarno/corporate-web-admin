@@ -25,10 +25,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageBankAccountProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
 };
 
 type TBankWithID = {
@@ -36,7 +35,7 @@ type TBankWithID = {
   bank: TBank[];
   BankId?: string;
 };
-export function PageBankAccount({ corporateCode,corporatesInfo }: TPageBankAccountProps) {
+export function PageBankAccount({}: TPageBankAccountProps) {
   const { handleSubmitBank } = useBank();
   const bankData: TBankWithID[] = useSelector<RootState>(
     (state) => state.bank?.banks || []
@@ -48,36 +47,39 @@ export function PageBankAccount({ corporateCode,corporatesInfo }: TPageBankAccou
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
+  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
+  const fetchBankData = async () => {
+    try {
+      const res = await axios.post(
+        "/api/v1/corporate/query",
+        { corporateCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        const banks = res.data[0].Banks.map((bank: any) => ({
+          ...bank,
+          BankId: bank.id,
+        }))
+          .map(mapDataToTBank)
+          .filter((item: any) => item !== null);
+
+        dispatch(setBank(banks));
+        dispatch(setCorporateData(res.data[0]))
+      }
+    } catch (error) {
+      console.error("Error fetching bank data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchBankData = async () => {
-      try {
-        const res = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (res.status === 200) {
-          const banks = res.data[0].Banks.map((bank: any) => ({
-            ...bank,
-            BankId: bank.id,
-          }))
-            .map(mapDataToTBank)
-            .filter((item: any) => item !== null);
-
-          dispatch(setBank(banks));
-        }
-      } catch (error) {
-        console.error("Error fetching bank data:", error);
-      }
-    };
-
-    fetchBankData();
-  }, [corporateCode, dispatch, token]);
+    if (corporateCode)
+      fetchBankData();
+  }, []);
 
   console.log(bankData);
   const handleDelete = async (data: TBankWithID) => {

@@ -5,6 +5,7 @@ import axios from "axios";
 const BASE_URL = window.origin;
 
 // const BASE_URL = "http://cwa-alb-607898773.eu-north-1.elb.amazonaws.com";
+
 // console.log("base url:", BASE_URL);
 
 export default axios.create({
