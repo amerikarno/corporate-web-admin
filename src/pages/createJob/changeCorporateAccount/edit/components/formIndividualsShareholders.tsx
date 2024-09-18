@@ -89,7 +89,7 @@ export function FormIndividualsShareholders({
       newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
     }
 
-    return parseFloat(newValue) * 100000;
+    return Math.round(parseFloat(newValue) * 100);
   };
 
   
