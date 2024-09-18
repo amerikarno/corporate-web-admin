@@ -56,7 +56,7 @@ export function useShareholders() {
           dispatch(updateIndividualShareholder(
             { personalId: body.personalId!,
               newPersonalId: res.data.personalId,
-              individualShareholder:body}
+              individualShareholder:{...body,sharePercentage: body.sharePercentage/100000}}
            )); //expiryใน body  เป็น date
         } else {
           console.log("Edit failed");
@@ -79,6 +79,7 @@ export function useShareholders() {
             addIndividualShareholder({
               ...body,
               personalId: res.data.personalId,
+              sharePercentage: data.sharePercentage/100000
             })
           );
         } else {

@@ -90,6 +90,7 @@ const FxExchangeTransactionList = () => {
           (transaction) =>
             !dataToSend.some((data) => data.transactionId === transaction.id)
         );
+        
         setFetchedListOfTransaction(updatedListOfTransaction);
 
         setCheckboxStatus((prevStatus) => {
@@ -135,11 +136,11 @@ const FxExchangeTransactionList = () => {
             // console.log(item);
             return {
               id: item.id,
-              buyCurrency: item.buyCurrency,
+              buyCurrency: item.buyCurrency/100000,
               corporateCode: item.corporateCode,
-              exchangeSpread: item.exchangeSpread,
-              operationSpread: item.operationSpread,
-              exchangeRate: item.exchangeRate,
+              exchangeSpread: item.exchangeSpread/100000,
+              operationSpread: item.operationSpread/100000,
+              exchangeRate: item.exchangeRate/100000,
               transactionStatus: item.transactionStatus,
               exchange: item.exchange,
             };
@@ -190,10 +191,10 @@ const FxExchangeTransactionList = () => {
       name: "Corporate Code",
       selector: (row: TTransaction) => row.corporateCode || "",
     },
-    {
-      name: "Buy Amount",
-      selector: (row: TTransaction) => row.buyCurrency || "",
-    },
+    // {
+    //   name: "Buy Amount",
+    //   selector: (row: TTransaction) => row.buyCurrency || "",
+    // },
     {
       name: "Exchange Pairs",
       selector: (row: TTransaction) => row.exchange || "",

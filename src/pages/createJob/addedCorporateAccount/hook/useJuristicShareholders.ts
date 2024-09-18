@@ -44,7 +44,9 @@ export function useJuristicShareholders() {
               newJuristicId: res.data.juristicId,
               juristicShareholder:{
               ...data,
-              juristicId: data.juristicId,}
+              juristicId: data.juristicId,
+              sharePercentage: data.sharePercentage/100000
+            }
             })
           );
           setJuristics([...juristics, data]);
@@ -62,7 +64,7 @@ export function useJuristicShareholders() {
           console.log(res);
           console.log("request success", res.data.juristicId);
           dispatch(
-            addJuristicShareholder({ ...data, juristicId: res.data.juristicId })
+            addJuristicShareholder({ ...data, juristicId: res.data.juristicId,sharePercentage: data.sharePercentage/100000 })
           );
           setJuristics([...juristics, data]);
         } else {

@@ -13,7 +13,6 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
-import Swal from "sweetalert2";
 
 export default function SuitTestFatca() {
   if (!isAllowedPage(2002)) {
@@ -117,7 +116,7 @@ export default function SuitTestFatca() {
     console.log(fatcaInfo !== "");
     if (
       suitTestSuccess &&
-      (fatcaradio === "fatcaradio-2" || fatcaInfo !== "")
+      (fatcaradio === "fatcaradio-2" || JSON.stringify(fatcaInfo) !== JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0]))
     ) {
       let body = {
         id: localStorage.getItem("cid"),
@@ -168,12 +167,9 @@ export default function SuitTestFatca() {
             console.log(error)
           }
       }
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Please Submit the suite test first",
-        text: "if you are an American citizen, please complete the FATCA form first",
-      });
+    }else {
+      alert(`Please complete the suite test,
+if you are an American citizen, please complete the FATCA form first.`);
     }
   };
 

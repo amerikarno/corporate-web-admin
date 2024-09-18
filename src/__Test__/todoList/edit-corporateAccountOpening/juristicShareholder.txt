@@ -1,21 +1,21 @@
-import { render, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import axios from "axios";
-import { mockUser } from "@/__Test__/utils";
-import { store } from "@/app/store";
-import { setUser } from "@/features/user/userSlice";
-import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
-import { PageJuristicShareholder } from "@/pages/todoList/corporateAccountOpening/edit/pages/PageJuristicShareholder";
-import { getCookies } from "@/lib/Cookies";
+// import { render, waitFor } from "@testing-library/react";
+// import "@testing-library/jest-dom";
+// import axios from "axios";
+// import { mockUser } from "@/__Test__/utils";
+// import { store } from "@/app/store";
+// import { setUser } from "@/features/user/userSlice";
+// import { Provider } from "react-redux";
+// import { MemoryRouter } from "react-router-dom";
+// import { PageJuristicShareholder } from "@/pages/todoList/corporateAccountOpening/edit/pages/PageJuristicShareholder";
+// import { getCookies } from "@/lib/Cookies";
 
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// jest.mock("axios");
+// const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-jest.mock("@/lib/Cookies.ts");
-const mockedGetCookies = getCookies as jest.MockedFunction<typeof getCookies>;
+// jest.mock("@/lib/Cookies.ts");
+// const mockedGetCookies = getCookies as jest.MockedFunction<typeof getCookies>;
 
-describe("sud", () => {
+// describe("sud", () => {
   // const mockRes1 = [
   //   {
   //     CorporateCode: 80000001,
@@ -975,33 +975,33 @@ describe("sud", () => {
   //   },
   // ];
 
-  beforeEach(() => {
-    mockedGetCookies.mockReturnValue(
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliODRjNzZkLWZlODQtNDExMy1iYTMwLTE3MDE0YTAyYjZiNSIsImVtYWlsIjoiYWEyYzY5NjYzNDg2NDdmMzhjYmZiN2YyOWFiNDU5YzE3Zjc0MGZiNTdjYTJmZWIzODQwNDdhNTAzYmIxZTRmNiIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDEwMDQsMTAwNSwxMDA2LDEwMDcsMTAwOCwxMDA5LDEwMTAsMjAwMSwyMDAyLDIwMDMsMjAwNCwyMDA1LDIwMDYsMjAwNywyMDA4LDIwMDksMjAxMCwyMDExLDIwMTIsMjAxMywyMDE0LDIwMTUsMjAxNiwyMDE3LDIwMTgsMjAxOSwyMDIwLDIwMjEsMjAyMiwzMDAxLDMwMDIsMzAwMywzMDA0LDMwMDUsMzAwNiwzMDA3LDMwMDgsMzAwOSwzMDEwLDMwMTEsMzAxMiwzMDEzLDMwMTQsNDAwMSw0MDAyLDQwMDMsNDAwNCw0MDA1LDQwMDYsNTAwMSw1MDAyLDUwMDMsNTAwNCw1MDA1LDUwMDYsNTAwNyw1MDA4LDUwMDksNTAxMCw1MDExLDUwMTIsNTAxMyw1MDE0LDUwMTUsNTAxNiw1MDE3LDUwMTgsNTAxOSw1MDIwLDUwMjEsNTAyMiw1MDIzLDUwMjQsNTAyNSw1MDI2LDUwMjcsNTAyOCw1MDI5LDUwMzAsNTAzMSw1MDMyLDUwMzMsNTAzNCw1MDM1LDUwMzYsNTAzNyw2MDAxLDYwMDIsNjAwMyw2MDA0LDYwMDUsNjAwNiw2MDA3LDYwMDgsNzAwMSw3MDAyLDcwMDMsNzAwNCw3MDA1LDcwMDZdLCJwZXJtaXNzaW9ucyI6WzEwMSwxMDIsMTAzLDIwMSwyMDIsMjAzXSwicm9sZXMiOlsxMSwxMiwxMywyMSwyMiwyMywzMSwzMiwzM10sInVzZXJJZCI6IiIsImxvZ2luU3RhdHVzIjoiIiwiZXhwaXJlc0RhdGUiOiIwMDAxLTAxLTAxVDAwOjAwOjAwWiIsIkVycm9yIjpudWxsLCJleHAiOjE3MjYyNzkzODQsImlhdCI6MTcyNjE5Mjk4NH0.OTot9uNA_ZstpyXDIra6aBy-D1zayxEU0n1aJawCWlU"
-    );
-    store.dispatch(setUser(mockUser));
-  });
+  // beforeEach(() => {
+  //   mockedGetCookies.mockReturnValue(
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliODRjNzZkLWZlODQtNDExMy1iYTMwLTE3MDE0YTAyYjZiNSIsImVtYWlsIjoiYWEyYzY5NjYzNDg2NDdmMzhjYmZiN2YyOWFiNDU5YzE3Zjc0MGZiNTdjYTJmZWIzODQwNDdhNTAzYmIxZTRmNiIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDEwMDQsMTAwNSwxMDA2LDEwMDcsMTAwOCwxMDA5LDEwMTAsMjAwMSwyMDAyLDIwMDMsMjAwNCwyMDA1LDIwMDYsMjAwNywyMDA4LDIwMDksMjAxMCwyMDExLDIwMTIsMjAxMywyMDE0LDIwMTUsMjAxNiwyMDE3LDIwMTgsMjAxOSwyMDIwLDIwMjEsMjAyMiwzMDAxLDMwMDIsMzAwMywzMDA0LDMwMDUsMzAwNiwzMDA3LDMwMDgsMzAwOSwzMDEwLDMwMTEsMzAxMiwzMDEzLDMwMTQsNDAwMSw0MDAyLDQwMDMsNDAwNCw0MDA1LDQwMDYsNTAwMSw1MDAyLDUwMDMsNTAwNCw1MDA1LDUwMDYsNTAwNyw1MDA4LDUwMDksNTAxMCw1MDExLDUwMTIsNTAxMyw1MDE0LDUwMTUsNTAxNiw1MDE3LDUwMTgsNTAxOSw1MDIwLDUwMjEsNTAyMiw1MDIzLDUwMjQsNTAyNSw1MDI2LDUwMjcsNTAyOCw1MDI5LDUwMzAsNTAzMSw1MDMyLDUwMzMsNTAzNCw1MDM1LDUwMzYsNTAzNyw2MDAxLDYwMDIsNjAwMyw2MDA0LDYwMDUsNjAwNiw2MDA3LDYwMDgsNzAwMSw3MDAyLDcwMDMsNzAwNCw3MDA1LDcwMDZdLCJwZXJtaXNzaW9ucyI6WzEwMSwxMDIsMTAzLDIwMSwyMDIsMjAzXSwicm9sZXMiOlsxMSwxMiwxMywyMSwyMiwyMywzMSwzMiwzM10sInVzZXJJZCI6IiIsImxvZ2luU3RhdHVzIjoiIiwiZXhwaXJlc0RhdGUiOiIwMDAxLTAxLTAxVDAwOjAwOjAwWiIsIkVycm9yIjpudWxsLCJleHAiOjE3MjYyNzkzODQsImlhdCI6MTcyNjE5Mjk4NH0.OTot9uNA_ZstpyXDIra6aBy-D1zayxEU0n1aJawCWlU"
+  //   );
+  //   store.dispatch(setUser(mockUser));
+  // });
 
-  test("k", async () => {
-    // Mock the parent API call to fail
-    mockedAxios.post.mockRejectedValueOnce(new Error("Parent API call failed"));
+  // test("k", async () => {
+  //   // Mock the parent API call to fail
+  //   mockedAxios.post.mockRejectedValueOnce(new Error("Parent API call failed"));
 
-    // Mock the child API call
-    const childApiMock = jest.fn();
-    axios.post = childApiMock;
+  //   // Mock the child API call
+  //   const childApiMock = jest.fn();
+  //   axios.post = childApiMock;
 
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <PageJuristicShareholder />
-        </MemoryRouter>
-      </Provider>
-    );
+  //   render(
+  //     <Provider store={store}>
+  //       <MemoryRouter>
+  //         <PageJuristicShareholder />
+  //       </MemoryRouter>
+  //     </Provider>
+  //   );
 
-    // Wait for the parent API call to fail
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
+  //   // Wait for the parent API call to fail
+  //   await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
 
-    // Ensure the child API call is not made
-    expect(childApiMock).not.toHaveBeenCalled();
-  }, 30000);
-});
+  //   // Ensure the child API call is not made
+  //   expect(childApiMock).not.toHaveBeenCalled();
+  // }, 30000);
+// });

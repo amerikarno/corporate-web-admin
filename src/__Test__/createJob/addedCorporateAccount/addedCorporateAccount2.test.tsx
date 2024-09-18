@@ -1,477 +1,483 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { setUser } from "@/features/user/userSlice";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
-import { store } from "@/app/store";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { RootState, store } from "@/app/store";
+import { MemoryRouter } from "react-router-dom";
 // import { createStore } from "redux";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+// import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { PageContactPerson } from "@/pages/createJob/addedCorporateAccount/pages/PageContactPerson";
+// import { removeContactPerson } from "@/features/contactPersonSlice";
+// import { getCookies } from "@/lib/Cookies";
+import MockAdapter from "axios-mock-adapter";
+import axios from "@/api/axios";
+import configureStore from 'redux-mock-store';
 
-const mockCorporateData = {
-  CorporateCode: 80000091,
-  Info: {
-    id: "65932599-23f3-4686-8067-e40e2f930a58",
-    createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-    CreatedAt: "2024-09-11T05:23:10.874Z",
-    DeletedAt: null,
-    corporateCode: 80000091,
-    name: "test",
-    registrationNo: "getter",
-    taxId: "123",
-    dateOfIncorporation: "2024-09-20T00:00:00Z",
-  },
-  CorporateCountry: [
-    {
-      id: "192a97af-5030-441e-8921-25a54720dde3",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:23:10.877Z",
-      DeletedAt: null,
-      corporateCode: 80000091,
-      isThailand: true,
-      other: "",
-      types: 601,
-    },
-    {
-      id: "9980aab7-98ba-413c-8ce3-a57118469baa",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:23:28.304Z",
-      DeletedAt: null,
-      corporateCode: 80000091,
-      isThailand: true,
-      other: "",
-      types: 603,
-    },
-    {
-      id: "e9593861-3b81-4bfb-96d8-cf38551c745d",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:23:10.877Z",
-      DeletedAt: null,
-      corporateCode: 80000091,
-      isThailand: true,
-      other: "",
-      types: 602,
-    },
-  ],
-  CorporateAddress: [
-    {
-      corporateCode: "",
-      address: [
-        {
-          id: "a0edcf67-7d68-4679-8ded-62644f6b1bf8",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:23:10.882Z",
-          DeletedAt: null,
-          corporateCode: 80000091,
-          addressNo: "70/178 ramintra65 yak 2-4",
-          mooNo: "Google",
-          tambon: "Google",
-          amphoe: "Google",
-          building: "g",
-          floor: "g",
-          soi: "g",
-          road: "g",
-          province: "Bangkok",
-          postalCode: "10220",
-          country: "Thailand",
-          types: 701,
-        },
-      ],
-      emailAddress: "teste@exemplo.us",
-      telephone: "0884744411",
-    },
-    {
-      corporateCode: "",
-      address: [
-        {
-          id: "e165d151-75cd-48e4-95b7-b1aeed3f32be",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:23:10.884Z",
-          DeletedAt: null,
-          corporateCode: 80000091,
-          addressNo: "70/178 ramintra65 yak 2-4",
-          mooNo: "Google",
-          tambon: "Google",
-          amphoe: "Google",
-          province: "Bangkok",
-          building: "g",
-          floor: "g",
-          soi: "g",
-          road: "g",
-          postalCode: "10220",
-          country: "Thailand",
-          types: 702,
-        },
-      ],
-      emailAddress: "teste@exemplo.us",
-      telephone: "0884744411",
-    },
-  ],
-  CorporateFinancials: {
-    id: "84132fda-fa95-406e-bd1a-87bd59b73ea1",
-    createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-    CreatedAt: "2024-09-11T05:23:10.88Z",
-    DeletedAt: null,
-    corporateCode: 80000091,
-    registeredCapital: 100,
-    revenuePerYear: 100,
-    netProfitLoss: 100,
-    shareholderEquity: 100,
-  },
-  CorporateTypes: {
-    id: "f2656a96-c76b-4f1e-bfa1-1ef3b5ed74e9",
-    createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-    CreatedAt: "2024-09-11T05:23:28.292Z",
-    DeletedAt: null,
-    corporateCode: 80000091,
-    isJuristicThailand: true,
-    isTaxExempt: false,
-    isNonTaxExempt: true,
-    isJuristicForeign: false,
-    isOperatingInThailand: false,
-    isNonOperatingInThailand: false,
-    isOther: false,
-    isPartnership: false,
-    isGovernmentStateEnterprise: false,
-    isCoOperative: false,
-    isTaxExemptCompany: false,
-  },
-  BusinessTypes: {
-    id: "d570a3d6-30de-4aea-a557-ff814fe5ab1a",
-    createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-    CreatedAt: "2024-09-11T05:23:28.296Z",
-    DeletedAt: null,
-    corporateCode: 80000091,
-    isAntiqueTrading: true,
-    isHotelRestaurant: false,
-    isArmament: false,
-    isInsuranceAssurance: false,
-    isCasinoGambling: false,
-    isJewelryGoldTrading: false,
-    isFoundation: false,
-    isPropertyRealEstate: false,
-    isMoneyTransfer: false,
-    isEmploymentAgency: false,
-    isEntertainment: false,
-    isTravel: false,
-    isFinancial: false,
-    isEducationCenter: false,
-    isForeignCurrencyExchange: false,
-    isCryptoRelated: false,
-    isOtherBusiness: false,
-    otherBusinessType: "",
-  },
-  Banks: [
-    {
-      BankId: "e0d209a6-8f3b-4be3-a6f1-2dee6fc07bcb",
-      id: "e0d209a6-8f3b-4be3-a6f1-2dee6fc07bcb",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:45:00.998Z",
-      DeletedAt: null,
-      corporateCode: 80000091,
-      accountType: "nowtoto",
-      bankName: "1",
-      accountNo: "123",
-      accountLocation: "test1",
-      swiftCode: "test1",
-    },
-  ],
-  SourceOfIncomes: {
-    id: "6150d4ac-6d0c-4ea1-897e-e1a488c19e22",
-    createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-    CreatedAt: "2024-09-11T05:23:28.299Z",
-    DeletedAt: null,
-    corporateCode: 80000091,
-    isRevenue: true,
-    isStock: false,
-    isDonation: true,
-    isLoan: false,
-    isRevenueSelling: false,
-    isOtherIncome: false,
-    otherIncome: "",
-  },
-  CountrySourceIncomes: [
-    {
-      CreatedAt: "0001-01-01T00:00:00Z",
-      DeletedAt: null,
-      corporateCode: 0,
-      corporateCountry: {
-        id: "9980aab7-98ba-413c-8ce3-a57118469baa",
-        createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-        CreatedAt: "2024-09-11T05:23:28.304Z",
-        DeletedAt: null,
-        corporateCode: 80000091,
-        isThailand: true,
-        other: "",
-        types: 603,
-      },
-      otherCountry: "",
-      investmentObject: "",
-      isLiquidation: true,
-      isInvestment: true,
-      isCashManagement: false,
-      isliquidation: false,
-      isOtherInvestment: false,
-      otherInvestment: "",
-    },
-  ],
-  Contact: [
-    {
-      id: "436e68b7-d10c-4b2d-9bf0-79c19e35542e",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:23:42.225Z",
-      DeletedAt: null,
-      corporateCode: 80000091,
-      personalId: "dac0f95f-4a87-4174-ab4e-d4003795a511",
-      fullNames: [
-        {
-          id: "6fab3f74-f047-451a-979e-e7553cfc3e7b",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:23:42.228Z",
-          DeletedAt: null,
-          contactID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
-          title: "123123",
-          firstName: "123123",
-          lastName: "1",
-          types: 401,
-        },
-      ],
-      personalID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
-      position: "q",
-      division: "2",
-      telephone: "0884744411",
-      email: "user1@gmail.com",
-      types: 401,
-    },
-  ],
-  Directors: [
-    {
-      id: "59b542f0-32a5-4058-8436-5a8804c5a433",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:24:05.818Z",
-      DeletedAt: null,
-      personalId: "9d4bd5f7-ba8a-4e1c-ad1c-ea9f4857ff03",
-      citizenId: "123123",
-      corporateCode: 80000091,
-      fullNames: [
-        {
-          id: "8e5e8b59-66dc-4c91-9d05-793acb5494d2",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:24:05.824Z",
-          DeletedAt: null,
-          ReferenceID: "9d4bd5f7-ba8a-4e1c-ad1c-ea9f4857ff03",
-          title: "1",
-          firstName: "123123",
-          lastName: "2",
-          types: 101,
-        },
-      ],
-      addresses: [
-        {
-          id: "94618773-edca-43a9-8566-a7c286596ba3",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:24:05.822Z",
-          DeletedAt: null,
-          ReferenceID: "9d4bd5f7-ba8a-4e1c-ad1c-ea9f4857ff03",
-          addressNo: "70/178 ramintra65 yak 2-4",
-          tambon: "1",
-          amphoe: "1",
-          province: "Bangkok",
-          postalCode: "10220",
-          building: "g",
-          floor: "g",
-          soi: "g",
-          road: "g",
-          country: "Thailand",
-          types: 101,
-        },
-      ],
-      passportId: "12345",
-      expiryDate: "2024-10-03T00:00:00Z",
-      nationality: "1",
-      types: 101,
-    },
-  ],
-  AuthorizedPersons: [
-    {
-      id: "b204dec1-911d-4d6d-9309-954c76ebf523",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:25:01.999Z",
-      DeletedAt: null,
-      personalId: "85a72d2d-9429-4009-80e0-660473cfbfa2",
-      corporateCode: 80000091,
-      fullNames: [
-        {
-          id: "c10c955d-8a10-41ec-a91c-2f6ce6c0fc12",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:25:02.006Z",
-          DeletedAt: null,
-          ReferenceID: "85a72d2d-9429-4009-80e0-660473cfbfa2",
-          title: "123123",
-          firstName: "123123",
-          lastName: "Doe",
-          types: 201,
-        },
-      ],
-      addresses: [
-        {
-          id: "c51aafad-ed13-4539-929c-35f6bb474f37",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:25:02.003Z",
-          DeletedAt: null,
-          ReferenceID: "85a72d2d-9429-4009-80e0-660473cfbfa2",
-          addressNo: "70/178 ramintra65 yak 2-4",
-          tambon: "q",
-          amphoe: "4",
-          province: "Bangkok",
-          postalCode: "10220",
-          building: "g",
-          floor: "g",
-          soi: "g",
-          road: "g",
-          country: "Thailand",
-          types: 201,
-        },
-      ],
-      passportId: "1234",
-      expiryDate: "2024-10-03T00:00:00Z",
-      nationality: "3",
-      types: 201,
-    },
-  ],
-  IndividualShareholders: [
-    {
-      id: "bccddf26-845c-467f-9252-15b94ef91fdd",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:24:29.667Z",
-      DeletedAt: null,
-      personalId: "49167d7a-5405-4df2-9802-87c6e05ff458",
-      corporateCode: 80000091,
-      fullNames: [
-        {
-          id: "e51f0154-e27f-4f39-b2d9-d799a222786c",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:24:29.671Z",
-          DeletedAt: null,
-          ReferenceID: "49167d7a-5405-4df2-9802-87c6e05ff458",
-          title: "123123",
-          firstName: "q",
-          lastName: "q",
-          types: 301,
-        },
-      ],
-      passportId: "12123123",
-      expiryDate: "2024-09-23T00:00:00Z",
-      nationality: "3",
-      types: 301,
-      sharePercentage: 1,
-    },
-  ],
-  Attorneys: [
-    {
-      id: "0ce17efe-2b22-4e16-8f7e-620ff7419ac8",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:44:23.43Z",
-      DeletedAt: null,
-      personalId: "5ebb72cb-7a54-4a16-8a69-a3371c485bae",
-      corporateCode: 80000091,
-      fullNames: [
-        {
-          id: "ffb3367c-9630-426d-acf5-0d74e488e228",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:44:23.435Z",
-          DeletedAt: null,
-          ReferenceID: "5ebb72cb-7a54-4a16-8a69-a3371c485bae",
-          title: "q",
-          firstName: "q",
-          lastName: "q",
-          types: 302,
-        },
-      ],
-      addresses: [
-        {
-          id: "cb9df21e-2812-4c16-84e0-789a2033fec7",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:44:23.432Z",
-          DeletedAt: null,
-          ReferenceID: "5ebb72cb-7a54-4a16-8a69-a3371c485bae",
-          addressNo: "70/178 ramintra65 yak 2-4",
-          tambon: "4",
-          amphoe: "3",
-          province: "Bangkok",
-          postalCode: "10220",
-          country: "Thailand",
-          building: "g",
-          floor: "g",
-          soi: "g",
-          road: "g",
-          types: 302,
-        },
-      ],
-      passportId: "12123123",
-      expiryDate: "2024-09-27T00:00:00Z",
-      nationality: "d",
-      telephone: "0884744411",
-      email: "user1@gmail.com",
-      types: 302,
-    },
-  ],
-  Juristics: [
-    {
-      id: "df054d21-c7cf-45fa-a3b6-ed42131ef719",
-      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      CreatedAt: "2024-09-11T05:24:41.226Z",
-      DeletedAt: null,
-      corporateCode: 80000091,
-      juristicName: "getter",
-      registrationNo: "getter",
-      sharePercentage: 1,
-      registeredCountry: "Thailand",
-      addresses: [
-        {
-          id: "7e1b2e3a-9d08-4a3f-9e3a-6aebe5b8f0a6",
-          createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          CreatedAt: "2024-09-11T05:24:41.229Z",
-          DeletedAt: null,
-          ReferenceID: "df054d21-c7cf-45fa-a3b6-ed42131ef719",
-          addressNo: "70/178 ramintra65 yak 2-4",
-          tambon: "1",
-          amphoe: "1",
-          building: "g",
-          floor: "g",
-          soi: "g",
-          road: "g",
-          province: "Bangkok",
-          postalCode: "10220",
-          country: "Thailand",
-          types: 101,
-        },
-      ],
-      telephone: "0884744411",
-      email: "user1@gmail.com",
-      types: 101,
-    },
-  ],
-};
+// const mockCorporateData = {
+//   CorporateCode: 80000091,
+//   Info: {
+//     id: "65932599-23f3-4686-8067-e40e2f930a58",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:10.874Z",
+//     DeletedAt: null,
+//     corporateCode: 80000091,
+//     name: "test",
+//     registrationNo: "getter",
+//     taxId: "123",
+//     dateOfIncorporation: "2024-09-20T00:00:00Z",
+//   },
+//   CorporateCountry: [
+//     {
+//       id: "192a97af-5030-441e-8921-25a54720dde3",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:23:10.877Z",
+//       DeletedAt: null,
+//       corporateCode: 80000091,
+//       isThailand: true,
+//       other: "",
+//       types: 601,
+//     },
+//     {
+//       id: "9980aab7-98ba-413c-8ce3-a57118469baa",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:23:28.304Z",
+//       DeletedAt: null,
+//       corporateCode: 80000091,
+//       isThailand: true,
+//       other: "",
+//       types: 603,
+//     },
+//     {
+//       id: "e9593861-3b81-4bfb-96d8-cf38551c745d",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:23:10.877Z",
+//       DeletedAt: null,
+//       corporateCode: 80000091,
+//       isThailand: true,
+//       other: "",
+//       types: 602,
+//     },
+//   ],
+//   CorporateAddress: [
+//     {
+//       corporateCode: "",
+//       address: [
+//         {
+//           id: "a0edcf67-7d68-4679-8ded-62644f6b1bf8",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:23:10.882Z",
+//           DeletedAt: null,
+//           corporateCode: 80000091,
+//           addressNo: "70/178 ramintra65 yak 2-4",
+//           mooNo: "Google",
+//           tambon: "Google",
+//           amphoe: "Google",
+//           building: "g",
+//           floor: "g",
+//           soi: "g",
+//           road: "g",
+//           province: "Bangkok",
+//           postalCode: "10220",
+//           country: "Thailand",
+//           types: 701,
+//         },
+//       ],
+//       emailAddress: "teste@exemplo.us",
+//       telephone: "0884744411",
+//     },
+//     {
+//       corporateCode: "",
+//       address: [
+//         {
+//           id: "e165d151-75cd-48e4-95b7-b1aeed3f32be",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:23:10.884Z",
+//           DeletedAt: null,
+//           corporateCode: 80000091,
+//           addressNo: "70/178 ramintra65 yak 2-4",
+//           mooNo: "Google",
+//           tambon: "Google",
+//           amphoe: "Google",
+//           province: "Bangkok",
+//           building: "g",
+//           floor: "g",
+//           soi: "g",
+//           road: "g",
+//           postalCode: "10220",
+//           country: "Thailand",
+//           types: 702,
+//         },
+//       ],
+//       emailAddress: "teste@exemplo.us",
+//       telephone: "0884744411",
+//     },
+//   ],
+//   CorporateFinancials: {
+//     id: "84132fda-fa95-406e-bd1a-87bd59b73ea1",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:10.88Z",
+//     DeletedAt: null,
+//     corporateCode: 80000091,
+//     registeredCapital: 100,
+//     revenuePerYear: 100,
+//     netProfitLoss: 100,
+//     shareholderEquity: 100,
+//   },
+//   CorporateTypes: {
+//     id: "f2656a96-c76b-4f1e-bfa1-1ef3b5ed74e9",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:28.292Z",
+//     DeletedAt: null,
+//     corporateCode: 80000091,
+//     isJuristicThailand: true,
+//     isTaxExempt: false,
+//     isNonTaxExempt: true,
+//     isJuristicForeign: false,
+//     isOperatingInThailand: false,
+//     isNonOperatingInThailand: false,
+//     isOther: false,
+//     isPartnership: false,
+//     isGovernmentStateEnterprise: false,
+//     isCoOperative: false,
+//     isTaxExemptCompany: false,
+//   },
+//   BusinessTypes: {
+//     id: "d570a3d6-30de-4aea-a557-ff814fe5ab1a",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:28.296Z",
+//     DeletedAt: null,
+//     corporateCode: 80000091,
+//     isAntiqueTrading: true,
+//     isHotelRestaurant: false,
+//     isArmament: false,
+//     isInsuranceAssurance: false,
+//     isCasinoGambling: false,
+//     isJewelryGoldTrading: false,
+//     isFoundation: false,
+//     isPropertyRealEstate: false,
+//     isMoneyTransfer: false,
+//     isEmploymentAgency: false,
+//     isEntertainment: false,
+//     isTravel: false,
+//     isFinancial: false,
+//     isEducationCenter: false,
+//     isForeignCurrencyExchange: false,
+//     isCryptoRelated: false,
+//     isOtherBusiness: false,
+//     otherBusinessType: "",
+//   },
+//   Banks: [
+//     {
+//       BankId: "e0d209a6-8f3b-4be3-a6f1-2dee6fc07bcb",
+//       id: "e0d209a6-8f3b-4be3-a6f1-2dee6fc07bcb",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:45:00.998Z",
+//       DeletedAt: null,
+//       corporateCode: 80000091,
+//       accountType: "nowtoto",
+//       bankName: "1",
+//       accountNo: "123",
+//       accountLocation: "test1",
+//       swiftCode: "test1",
+//     },
+//   ],
+//   SourceOfIncomes: {
+//     id: "6150d4ac-6d0c-4ea1-897e-e1a488c19e22",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:28.299Z",
+//     DeletedAt: null,
+//     corporateCode: 80000091,
+//     isRevenue: true,
+//     isStock: false,
+//     isDonation: true,
+//     isLoan: false,
+//     isRevenueSelling: false,
+//     isOtherIncome: false,
+//     otherIncome: "",
+//   },
+//   CountrySourceIncomes: [
+//     {
+//       CreatedAt: "0001-01-01T00:00:00Z",
+//       DeletedAt: null,
+//       corporateCode: 0,
+//       corporateCountry: {
+//         id: "9980aab7-98ba-413c-8ce3-a57118469baa",
+//         createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//         CreatedAt: "2024-09-11T05:23:28.304Z",
+//         DeletedAt: null,
+//         corporateCode: 80000091,
+//         isThailand: true,
+//         other: "",
+//         types: 603,
+//       },
+//       otherCountry: "",
+//       investmentObject: "",
+//       isLiquidation: true,
+//       isInvestment: true,
+//       isCashManagement: false,
+//       isliquidation: false,
+//       isOtherInvestment: false,
+//       otherInvestment: "",
+//     },
+//   ],
+//   Contact: [
+//     {
+//       id: "436e68b7-d10c-4b2d-9bf0-79c19e35542e",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:23:42.225Z",
+//       DeletedAt: null,
+//       corporateCode: 80000091,
+//       personalId: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//       fullNames: [
+//         {
+//           id: "6fab3f74-f047-451a-979e-e7553cfc3e7b",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:23:42.228Z",
+//           DeletedAt: null,
+//           contactID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//           title: "123123",
+//           firstName: "123123",
+//           lastName: "1",
+//           types: 401,
+//         },
+//       ],
+//       personalID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//       position: "q",
+//       division: "2",
+//       telephone: "0884744411",
+//       email: "user1@gmail.com",
+//       types: 401,
+//     },
+//   ],
+//   Directors: [
+//     {
+//       id: "59b542f0-32a5-4058-8436-5a8804c5a433",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:24:05.818Z",
+//       DeletedAt: null,
+//       personalId: "9d4bd5f7-ba8a-4e1c-ad1c-ea9f4857ff03",
+//       citizenId: "123123",
+//       corporateCode: 80000091,
+//       fullNames: [
+//         {
+//           id: "8e5e8b59-66dc-4c91-9d05-793acb5494d2",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:24:05.824Z",
+//           DeletedAt: null,
+//           ReferenceID: "9d4bd5f7-ba8a-4e1c-ad1c-ea9f4857ff03",
+//           title: "1",
+//           firstName: "123123",
+//           lastName: "2",
+//           types: 101,
+//         },
+//       ],
+//       addresses: [
+//         {
+//           id: "94618773-edca-43a9-8566-a7c286596ba3",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:24:05.822Z",
+//           DeletedAt: null,
+//           ReferenceID: "9d4bd5f7-ba8a-4e1c-ad1c-ea9f4857ff03",
+//           addressNo: "70/178 ramintra65 yak 2-4",
+//           tambon: "1",
+//           amphoe: "1",
+//           province: "Bangkok",
+//           postalCode: "10220",
+//           building: "g",
+//           floor: "g",
+//           soi: "g",
+//           road: "g",
+//           country: "Thailand",
+//           types: 101,
+//         },
+//       ],
+//       passportId: "12345",
+//       expiryDate: "2024-10-03T00:00:00Z",
+//       nationality: "1",
+//       types: 101,
+//     },
+//   ],
+//   AuthorizedPersons: [
+//     {
+//       id: "b204dec1-911d-4d6d-9309-954c76ebf523",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:25:01.999Z",
+//       DeletedAt: null,
+//       personalId: "85a72d2d-9429-4009-80e0-660473cfbfa2",
+//       corporateCode: 80000091,
+//       fullNames: [
+//         {
+//           id: "c10c955d-8a10-41ec-a91c-2f6ce6c0fc12",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:25:02.006Z",
+//           DeletedAt: null,
+//           ReferenceID: "85a72d2d-9429-4009-80e0-660473cfbfa2",
+//           title: "123123",
+//           firstName: "123123",
+//           lastName: "Doe",
+//           types: 201,
+//         },
+//       ],
+//       addresses: [
+//         {
+//           id: "c51aafad-ed13-4539-929c-35f6bb474f37",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:25:02.003Z",
+//           DeletedAt: null,
+//           ReferenceID: "85a72d2d-9429-4009-80e0-660473cfbfa2",
+//           addressNo: "70/178 ramintra65 yak 2-4",
+//           tambon: "q",
+//           amphoe: "4",
+//           province: "Bangkok",
+//           postalCode: "10220",
+//           building: "g",
+//           floor: "g",
+//           soi: "g",
+//           road: "g",
+//           country: "Thailand",
+//           types: 201,
+//         },
+//       ],
+//       passportId: "1234",
+//       expiryDate: "2024-10-03T00:00:00Z",
+//       nationality: "3",
+//       types: 201,
+//     },
+//   ],
+//   IndividualShareholders: [
+//     {
+//       id: "bccddf26-845c-467f-9252-15b94ef91fdd",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:24:29.667Z",
+//       DeletedAt: null,
+//       personalId: "49167d7a-5405-4df2-9802-87c6e05ff458",
+//       corporateCode: 80000091,
+//       fullNames: [
+//         {
+//           id: "e51f0154-e27f-4f39-b2d9-d799a222786c",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:24:29.671Z",
+//           DeletedAt: null,
+//           ReferenceID: "49167d7a-5405-4df2-9802-87c6e05ff458",
+//           title: "123123",
+//           firstName: "q",
+//           lastName: "q",
+//           types: 301,
+//         },
+//       ],
+//       passportId: "12123123",
+//       expiryDate: "2024-09-23T00:00:00Z",
+//       nationality: "3",
+//       types: 301,
+//       sharePercentage: 1,
+//     },
+//   ],
+//   Attorneys: [
+//     {
+//       id: "0ce17efe-2b22-4e16-8f7e-620ff7419ac8",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:44:23.43Z",
+//       DeletedAt: null,
+//       personalId: "5ebb72cb-7a54-4a16-8a69-a3371c485bae",
+//       corporateCode: 80000091,
+//       fullNames: [
+//         {
+//           id: "ffb3367c-9630-426d-acf5-0d74e488e228",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:44:23.435Z",
+//           DeletedAt: null,
+//           ReferenceID: "5ebb72cb-7a54-4a16-8a69-a3371c485bae",
+//           title: "q",
+//           firstName: "q",
+//           lastName: "q",
+//           types: 302,
+//         },
+//       ],
+//       addresses: [
+//         {
+//           id: "cb9df21e-2812-4c16-84e0-789a2033fec7",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:44:23.432Z",
+//           DeletedAt: null,
+//           ReferenceID: "5ebb72cb-7a54-4a16-8a69-a3371c485bae",
+//           addressNo: "70/178 ramintra65 yak 2-4",
+//           tambon: "4",
+//           amphoe: "3",
+//           province: "Bangkok",
+//           postalCode: "10220",
+//           country: "Thailand",
+//           building: "g",
+//           floor: "g",
+//           soi: "g",
+//           road: "g",
+//           types: 302,
+//         },
+//       ],
+//       passportId: "12123123",
+//       expiryDate: "2024-09-27T00:00:00Z",
+//       nationality: "d",
+//       telephone: "0884744411",
+//       email: "user1@gmail.com",
+//       types: 302,
+//     },
+//   ],
+//   Juristics: [
+//     {
+//       id: "df054d21-c7cf-45fa-a3b6-ed42131ef719",
+//       createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//       CreatedAt: "2024-09-11T05:24:41.226Z",
+//       DeletedAt: null,
+//       corporateCode: 80000091,
+//       juristicName: "getter",
+//       registrationNo: "getter",
+//       sharePercentage: 1,
+//       registeredCountry: "Thailand",
+//       addresses: [
+//         {
+//           id: "7e1b2e3a-9d08-4a3f-9e3a-6aebe5b8f0a6",
+//           createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//           CreatedAt: "2024-09-11T05:24:41.229Z",
+//           DeletedAt: null,
+//           ReferenceID: "df054d21-c7cf-45fa-a3b6-ed42131ef719",
+//           addressNo: "70/178 ramintra65 yak 2-4",
+//           tambon: "1",
+//           amphoe: "1",
+//           building: "g",
+//           floor: "g",
+//           soi: "g",
+//           road: "g",
+//           province: "Bangkok",
+//           postalCode: "10220",
+//           country: "Thailand",
+//           types: 101,
+//         },
+//       ],
+//       telephone: "0884744411",
+//       email: "user1@gmail.com",
+//       types: 101,
+//     },
+//   ],
+// };
 
-const renderWithProviders = (ui: React.ReactElement, { route = "/" } = {}) => {
-  store.dispatch(setCorporateData(mockCorporateData));
-  return {
-    ...render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={[route]}>
-          <Routes>
-            <Route
-              path="create-job/added-corporate-account/:page?"
-              element={ui}
-            />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
-    ),
-    store,
-  };
-};
+// const renderWithProviders = (ui: React.ReactElement, { route = "/" } = {}) => {
+//   store.dispatch(setCorporateData(mockCorporateData));
+//   return {
+//     ...render(
+//       <Provider store={store}>
+//         <MemoryRouter initialEntries={[route]}>
+//           <Routes>
+//             <Route
+//               path="create-job/added-corporate-account/:page?"
+//               element={ui}
+//             />
+//           </Routes>
+//         </MemoryRouter>
+//       </Provider>
+//     ),
+//     store,
+//   };
+// };
 
 const user = {
   id: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
@@ -580,8 +586,8 @@ describe("addedCorporateAccount", () => {
     expect(comercialRegisterationNo).toHaveValue("1234");
     fireEvent.change(taxId, { target: { value: "123456789" } });
     expect(taxId).toHaveValue("123456789");
-    fireEvent.change(dateOfIncorporation, { target: { value: "1988-11-12" } });
-    expect(dateOfIncorporation).toHaveValue("1988-11-12");
+    fireEvent.change(dateOfIncorporation, { target: { value: "2023-01-01" } });
+    expect(dateOfIncorporation).toHaveValue("2023-01-01");
 
     fireEvent.click(registeredCountryThailand);
     expect(registeredCountryThailand).toBeChecked();
@@ -676,14 +682,275 @@ describe("addedCorporateAccount", () => {
   });
 });
 
-describe("createcorporate form2", () => {
+// describe("createcorporate form2", () => {
+//   beforeEach(() => {
+//     jest.clearAllMocks();
+//   });
+//   test("renders PageJuristicType correctly", () => {
+//     renderWithProviders(<CorporateAccountOpenning />, {
+//       route: "/create-job/added-corporate-account/2",
+//     });
+//     expect(screen.getByText(/Juristic Infomations/i)).toBeInTheDocument();
+//   });
+// });
+
+//TCONTACT
+// id: string;
+// createBy: string;
+// CreatedAt: string;
+// DeletedAt: string | null;
+// corporateCode: number;
+// fullNames: TContactFullName[];
+// telephone?: string;
+// email: string;
+// types: number;
+// personalId: string;
+// position: string;
+// division: string;
+// const contactPersonMock = [
+//   {
+//     id: "436e68b7-d10c-4b2d-9bf0-79c19e35542e",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:42.225Z",
+//     DeletedAt: null,
+//     corporateCode: 80000097,
+//     personalId: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//     fullNames: [
+//       {
+//         id: "6fab3f74-f047-451a-979e-e7553cfc3e7b",
+//         createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//         CreatedAt: "2024-09-11T05:23:42.228Z",
+//         DeletedAt: null,
+//         contactID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//         title: "123123",
+//         firstName: "John",
+//         lastName: "Doe",
+//         types: 401,
+//       },
+//     ],
+//     personalID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//     position: "q",
+//     division: "2",
+//     telephone: "0884744411",
+//     email: "user1@gmail.com",
+//     types: 401,
+//   },
+//   {    
+//     id: "436e68b7-d10c-4b2d-9bf0-79c19e35542e",
+//     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//     CreatedAt: "2024-09-11T05:23:42.225Z",
+//     DeletedAt: null,
+//     corporateCode: 80000097,
+//     personalId: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//     fullNames: [
+//       {
+//         id: "6fab3f74-f047-451a-979e-e7553cfc3e7b",
+//         createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+//         CreatedAt: "2024-09-11T05:23:42.228Z",
+//         DeletedAt: null,
+//         contactID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//         title: "123123",
+//         firstName: "Jane",
+//         lastName: "Smith",
+//         types: 401,
+//       },
+//     ],
+//     personalID: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+//     position: "q",
+//     division: "2",
+//     telephone: "0884744411",
+//     email: "user1@gmail.com",
+//     types: 401,
+//   },
+// ];
+
+
+const contactPersonMock = [
+  {
+    personalId: "dac0f95f-4a87-4174-ab4e-d4003795a511",
+    fullNames: [
+      {
+        title: "Mr.",
+        firstName: "John",
+        lastName: "Doe",
+      },
+    ],
+    position: "Manager",
+    division: "HR",
+    email: "john.doe@example.com",
+    telephone: "1234567890",
+  },
+  // {
+  //   personalID: "eac0f95f-4a87-4174-ab4e-d4003795a511",
+  //   fullNames: [
+  //     {
+  //       title: "Mrs.",
+  //       firstName: "Jane",
+  //       lastName: "Smith",
+  //     },
+  //   ],
+  //   position: "Dev",
+  //   division: "Frontend",
+  //   email: "jane.smith@example.com",
+  //   telephone: "0888888888",
+  // },
+];
+
+// const contactPersonMock2 = [
+//   {
+//     personalID: "eac0f95f-4a87-4174-ab4e-d4003795a511",
+//     fullNames: [
+//       {
+//         title: "Mrs.",
+//         firstName: "Jane",
+//         lastName: "Smith",
+//       },
+//     ],
+//     position: "Dev",
+//     division: "Frontend",
+//     email: "jane.smith@example.com",
+//     telephone: "0888888888",
+//   },
+// ];
+
+// const mockedToken =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjEyMmRjLTc3YzctNDlmYy04ZTBkLTg2NWVjYTY1MmI4MCIsImVtYWlsIjoiYjcwODk4NTY5ZWRjYjk5MjdhMDZkZDUxMTBmMWI4ZmUxZDQ2ZTVmOTg1ZTBkOWYyMjI0ZDc3NDg1NzU3ZjFlYSIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDIwMDEsMjAwMiwyMDAzXSwicGVybWlzc2lvbnMiOlsxMDEsMTAyLDEwMywyMDEsMjAyLDIwM10sInJvbGVzIjpbMTEsMTIsMTMsMjEsMjIsMjNdLCJ1c2VySWQiOiIiLCJsb2dpblN0YXR1cyI6IiIsImV4cGlyZXNEYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJFcnJvciI6bnVsbCwiZXhwIjoxNzI2NTQ5NjkyLCJpYXQiOjE3MjY0NjMyOTJ9.Oc4gtZ6WRNcJWz-mcamDSxyUi5pjCig7LU0kJP3qxW0";
+
+jest.mock("@/lib/Cookies", () => ({
+  getCookies: jest.fn(),
+}));
+
+// Mock Axios
+const mockAxios = new MockAdapter(axios);
+
+// Initial State
+const initialState: Partial<RootState> = {
+  contactPerson: {
+    contactPersons: contactPersonMock,
+  },
+};
+// const addContactPersons = (state: Partial<RootState>, newContacts: typeof contactPersonMock) => {
+//   return {
+//     ...state,
+//     contactPerson: {
+//       ...state.contactPerson,
+//       contactPersons: [...(state.contactPerson?.contactPersons || []), ...newContacts],
+//     },
+//   };
+// };
+
+const mockStore = configureStore([]);
+describe('PageContactPerson Component', () => {
+  
+  type MockStore = ReturnType<typeof mockStore>;
+  let store: MockStore;
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    localStorage.setItem("corporateCode", "80000097");
+    store = mockStore(initialState);
   });
-  test("renders PageJuristicType directly", () => {
-    renderWithProviders(<CorporateAccountOpenning />, {
-      route: "/create-job/added-corporate-account/2",
+
+  test('fetches and assigns contact data correctly', async () => {
+    // Mock API Response
+    mockAxios.onPost('/api/v1/corporate/query', { corporateCode: "80000097" }).reply(200, [
+      {
+        Contact: contactPersonMock,
+      },
+    ]);
+    // const stateWithAdditionalContacts = addContactPersons(initialState, [
+    //   {
+    //     personalID: "eac0f95f-4a87-4174-ab4e-d4003795a511",
+    //     fullNames: [
+    //       {
+    //         title: "Mrs.",
+    //         firstName: "Jane",
+    //         lastName: "Smith",
+    //       },
+    //     ],
+    //     position: "Dev",
+    //     division: "Frontend",
+    //     email: "jane.smith@example.com",
+    //     telephone: "0888888888",
+    //   },
+    // ]);
+    // store = mockStore(stateWithAdditionalContacts);
+
+    render(
+      <Provider store={store}>
+        <PageContactPerson />
+      </Provider>
+    );
+
+    // Wait for async operations to complete
+    await waitFor(() => {
+      expect(screen.queryByText((content) => content.includes("There are no records to display"))).not.toBeInTheDocument();
+      const contactTitle = screen.getByText('Mr.');
+      expect(contactTitle).toBeInTheDocument();
+      const contactName = screen.getByText('John');
+      expect(contactName).toBeInTheDocument();
+      const contactSurnameName = screen.getByText('Doe');
+      expect(contactSurnameName).toBeInTheDocument();
+      const contactPosition = screen.getByText('Manager');
+      expect(contactPosition).toBeInTheDocument();
+      const contactDivision = screen.getByText('HR');
+      expect(contactDivision).toBeInTheDocument();
+      const contactEmail = screen.getByText('john.doe@example.com');
+      expect(contactEmail).toBeInTheDocument();
     });
-    expect(screen.getByText(/Juristic Infomations/i)).toBeInTheDocument();
   });
-});
+
+  test('deletes a contact person correctly', async () => {
+    // Mock API Response for deleting a contact
+    mockAxios.onPost('/api/v1/corporate/delete/contact', { personalId: "dac0f95f-4a87-4174-ab4e-d4003795a511" }).reply(200);
+  
+    render(
+      <Provider store={store}>
+        <PageContactPerson />
+      </Provider>
+    );
+  
+    // Wait for async operations to complete
+    await waitFor(() => {
+      const contactTitle = screen.getByText('Mr.');
+      expect(contactTitle).toBeInTheDocument();
+      const contactName = screen.getByText('John');
+      expect(contactName).toBeInTheDocument();
+      const contactSurname = screen.getByText('Doe');
+      expect(contactSurname).toBeInTheDocument();
+    });
+  
+    // Simulate clicking the delete button
+    const deleteButton = screen.getByTestId('delete-button-dac0f95f-4a87-4174-ab4e-d4003795a511');
+    fireEvent.click(deleteButton); 
+    const deleteButtons = screen.getAllByText('Delete');
+    // Log each button element
+    deleteButtons.forEach((button, index) => {
+      console.log(`Button ${index + 1}:`, button);
+    });
+
+    // Wait for the AlertDialog to be in the document
+    await waitFor(() => {
+      expect(screen.getByText('Are you sure?')).toBeInTheDocument();
+    });
+  
+    // Print DOM for debugging
+    // screen.debug();
+  
+    // Simulate confirming the deletion in the alert dialog
+    const confirmButton = screen.getByTestId('confirm-delete-dac0f95f-4a87-4174-ab4e-d4003795a511');
+    await waitFor(() => {
+      expect(confirmButton).toBeInTheDocument();
+    })
+    fireEvent.click(confirmButton);
+  
+    // Wait for async operations to complete
+    await waitFor(() => {
+      expect(screen.queryByText('Mr.')).not.toBeInTheDocument();
+      expect(screen.queryByText('John')).not.toBeInTheDocument();
+      expect(screen.queryByText('Doe')).not.toBeInTheDocument();
+      expect(screen.queryByText('Manager')).not.toBeInTheDocument();
+      expect(screen.queryByText('HR')).not.toBeInTheDocument();
+      expect(screen.queryByText('john.doe@example.com')).not.toBeInTheDocument();
+    });
+  });
+})

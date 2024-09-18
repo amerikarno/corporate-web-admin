@@ -92,19 +92,23 @@ export default function FxExchangeEdit() {
   }
 
   const handleYouSendValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setYouSendValue(parseFloat(e.target.value) || null);
+    const inputValue = e.target.value.replace(/,/g, '');
+    setYouSendValue(parseFloat(inputValue) || null);
   };
 
   const handleExchangeSpreadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExchangeSpread(parseFloat(e.target.value) || null);
+    const inputValue = e.target.value.replace(/,/g, '');
+    setExchangeSpread(parseFloat(inputValue) || null);
   };
 
   const handleOperationSpreadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOperationSpread(parseFloat(e.target.value) || null);
+    const inputValue = e.target.value.replace(/,/g, '');
+    setOperationSpread(parseFloat(inputValue) || null);
   };
 
   const handleExchangeRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExchangeRate(parseFloat(e.target.value) || null);
+    const inputValue = e.target.value.replace(/,/g, '');
+    setExchangeRate(parseFloat(inputValue) || null);
   };
 
   const [selectedCorporateCode, setSelectedCorporateCode] =
@@ -125,6 +129,21 @@ export default function FxExchangeEdit() {
   const [choosedEditData, setChoosedEditData] = useState<TFxExchange>();
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
+  };
+
+  const handleFloatValue = (value: number | null): number => {
+    if (!value) return 0;
+
+    let newValue = value.toString();
+
+    if (!newValue.includes(".")) {
+      newValue += ".00000";
+    } else {
+      const [integerPart, decimalPart] = newValue.split(".");
+      newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
+    }
+
+    return parseFloat(newValue) * 100000;
   };
 
   const fxExchangeData: TFxExchange[] = useSelector<RootState>(
@@ -174,7 +193,14 @@ export default function FxExchangeEdit() {
             index === self.findIndex((t: any) => t.id === order.id)
         );
 
-        dispatch(setFxExchanges(uniqueOrderTrades));
+        const adjustedOrderTrades = uniqueOrderTrades.map((trade: any) => ({
+          ...trade,
+          exchangeRate: trade.exchangeRate / 100000,
+          exchangeSpread: trade.exchangeSpread / 100000,
+          operationSpread: trade.operationSpread / 100000,
+        }));
+  
+        dispatch(setFxExchanges(adjustedOrderTrades));
         // console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
       } else {
         console.log("Failed to fetch orderTrade");
@@ -221,10 +247,10 @@ export default function FxExchangeEdit() {
       name: "Corporate Code",
       selector: (row: TFxExchange) => row.corporateCode || "",
     },
-    {
-      name:"Buy Amount",
-      selector:(row: TFxExchange) => row.buyCurrency || "",
-    },
+    // {
+    //   name:"Buy Amount",
+    //   selector:(row: TFxExchange) => row.buyCurrency || "",
+    // },
     {
       name: "Exchange Pairs",
       selector: (row: TFxExchange) => row.exchange || "",
@@ -262,10 +288,10 @@ export default function FxExchangeEdit() {
 
 
   useEffect(() => {
-    // console.log(exchangeSpread)
-    // console.log(operationSpread)
-    // console.log(exchangeRate)
-    // console.log(youSendValue)
+    console.log(exchangeSpread)
+    console.log(operationSpread)
+    console.log(exchangeRate)
+    console.log(youSendValue)
     if (exchangeSpread !== null && operationSpread !== null && exchangeRate !== null && youSendValue !== null) {
       const sum = youSendValue + exchangeSpread + operationSpread * exchangeRate;
       setExchangeResult(sum);
@@ -286,11 +312,20 @@ export default function FxExchangeEdit() {
     handleSelectPair({0 : firstVariable , 1 : secondVariable});
     setYouSend(firstVariable);
     setRecipientGets(secondVariable);
-    setExchangeSpread(choosedEditData?.exchangeSpread || 0);
-    setOperationSpread(choosedEditData?.operationSpread || 0);
-    setExchangeRate(choosedEditData?.exchangeRate || 0);
-    setYouSendValue(choosedEditData?.buyCurrency || 0);
+
+    // const exchangeSpreadToFloat = Number(choosedEditData?.exchangeSpread ?? 0) / 10000 || 0;
+    // const operationSpreadToFloat = Number(choosedEditData?.operationSpread ?? 0) / 10000 || 0;
+    // const exchangeRateToFloat = Number(choosedEditData?.exchangeRate ?? 0) / 10000 || 0;
+    // const youSendValueToFloat = Number(choosedEditData?.buyCurrency ?? 0) / 10000 || 0;
+    setExchangeSpread(Number(choosedEditData?.exchangeSpread || 0));
+    setOperationSpread(Number(choosedEditData?.operationSpread || 0));
+    setExchangeRate(Number(choosedEditData?.exchangeRate || 0));
+    setYouSendValue(Number(choosedEditData?.buyCurrency || 0));
     reset(orderListDatatoInputField);
+    setValue("exchangeSpread", choosedEditData?.exchangeSpread?.toString() ?? "");
+    setValue("operationSpread", choosedEditData?.operationSpread?.toString() ?? "");
+    setValue("exchangeRate", choosedEditData?.exchangeRate?.toString() ?? "");
+    setValue("buyCurrency", choosedEditData?.buyCurrency?.toString() ?? "");
 
     console.log(choosedEditData)
 
@@ -302,6 +337,7 @@ export default function FxExchangeEdit() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue,
   } = useForm<TFxExchange>({
     resolver: zodResolver(fxExchangeSchema),
   });
@@ -321,9 +357,13 @@ export default function FxExchangeEdit() {
    
     let body: TFxExchange = {
       ...data,
-      exchange:`${youSend}/${recipientGets}`
+      exchange:`${youSend}/${recipientGets}`,
+      exchangeSpread:handleFloatValue(exchangeSpread),
+      operationSpread:handleFloatValue(operationSpread),
+      exchangeRate:handleFloatValue(exchangeRate),
+      buyCurrency:handleFloatValue(youSendValue)
     };
-    console.log(choosedEditData);
+    console.log("choosedEditData ",choosedEditData);
     console.log(body);
 
     try {
@@ -407,6 +447,7 @@ export default function FxExchangeEdit() {
                         label="Exchange Spread"
                         id="exchangeSpread"
                         disabled={isSubmitting}
+                        step="0.00001"
                         inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.exchangeSpread && (
@@ -422,6 +463,7 @@ export default function FxExchangeEdit() {
                         label="Operation Spread"
                         id="operationSpread"
                         disabled={isSubmitting}
+                        step="0.00001"
                         inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.operationSpread && (
@@ -437,6 +479,7 @@ export default function FxExchangeEdit() {
                     label="Exchange Rate"
                     id="exchangeRate"
                     disabled={isSubmitting}
+                    step="0.00001"
                     inputClassName="w-[20rem] md:w-[25rem]"
                     onChange={handleExchangeRateChange}
                 />
@@ -491,11 +534,12 @@ export default function FxExchangeEdit() {
                       ))}
                 </select>
                 <div className="relative w-full">
-                  <input
+                  <Input
                     {...register("buyCurrency")}
                     onChange={handleYouSendValue}
                     type="search"
                     id="search-dropdown"
+                    step="0.00001"
                     className="block p-2.5 w-full z-9 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:outline-none"
                     placeholder="You Send"
                   />
