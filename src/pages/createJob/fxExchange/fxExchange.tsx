@@ -448,6 +448,7 @@ export default function FxExchangeEdit() {
                         id="exchangeSpread"
                         disabled={isSubmitting}
                         step="0.00001"
+                        type="number"
                         inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.exchangeSpread && (
@@ -464,6 +465,7 @@ export default function FxExchangeEdit() {
                         id="operationSpread"
                         disabled={isSubmitting}
                         step="0.00001"
+                        type="number"
                         inputClassName="w-[10rem] md:w-[12rem]"
                     />
                     {errors.operationSpread && (
@@ -480,6 +482,7 @@ export default function FxExchangeEdit() {
                     id="exchangeRate"
                     disabled={isSubmitting}
                     step="0.00001"
+                    type="number"
                     inputClassName="w-[20rem] md:w-[25rem]"
                     onChange={handleExchangeRateChange}
                 />

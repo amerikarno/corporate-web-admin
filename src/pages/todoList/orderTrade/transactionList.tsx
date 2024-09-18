@@ -133,10 +133,10 @@ const TransactionList = () => {
               id: item.id || "",
               corporateCode: item.corporateCode || 0,
               operations: item.operations || "",
-              cryptoAmount: item.cryptoAmount || 0,
-              cryptoPrice: item.cryptoPrice || 0,
+              cryptoAmount: item.cryptoAmount/100000 || 0,
+              cryptoPrice: item.cryptoPrice/100000 || 0,
               currency: item.currency || "",
-              fiatAmount: item.fiatAmount || 0,
+              fiatAmount: item.fiatAmount/100000 || 0,
               pair: item.pair || "",
               transactionStatus: item.transactionStatus,
             };
