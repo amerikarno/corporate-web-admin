@@ -45,7 +45,7 @@ export function FormJuristicShareholders({
       newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
     }
 
-    return Math.round(parseFloat(newValue) * 100);
+    return parseFloat(newValue) * 100;
   };
 
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
