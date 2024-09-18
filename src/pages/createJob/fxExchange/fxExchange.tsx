@@ -143,7 +143,7 @@ export default function FxExchangeEdit() {
       newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
     }
 
-    return parseFloat(newValue) * 100000;
+    return Math.round(parseFloat(newValue) * 100000);
   };
 
   const fxExchangeData: TFxExchange[] = useSelector<RootState>(
@@ -198,6 +198,7 @@ export default function FxExchangeEdit() {
           exchangeRate: trade.exchangeRate / 100000,
           exchangeSpread: trade.exchangeSpread / 100000,
           operationSpread: trade.operationSpread / 100000,
+          buyCurrency: trade.buyCurrency / 100000,
         }));
   
         dispatch(setFxExchanges(adjustedOrderTrades));
@@ -247,10 +248,10 @@ export default function FxExchangeEdit() {
       name: "Corporate Code",
       selector: (row: TFxExchange) => row.corporateCode || "",
     },
-    // {
-    //   name:"Buy Amount",
-    //   selector:(row: TFxExchange) => row.buyCurrency || "",
-    // },
+    {
+      name:"Buy Amount",
+      selector:(row: TFxExchange) => row.buyCurrency || "",
+    },
     {
       name: "Exchange Pairs",
       selector: (row: TFxExchange) => row.exchange || "",
@@ -302,10 +303,11 @@ export default function FxExchangeEdit() {
 
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: undefined,
+      corporateCode: null,
       exchangeRate:undefined,
       exchangeSpread:undefined,
       operationSpread:undefined,
+      buyCurrency: undefined,
     };
     const [firstVariable, secondVariable] = choosedEditData?.exchange?.split('/') || ["THB", "USD"];
     console.log({0 : firstVariable , 1 : secondVariable})
