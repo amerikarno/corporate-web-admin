@@ -43,6 +43,20 @@ export default function BankOrderEdit() {
       setBankRemove(true)
     }
   }
+  const handleFloatValue = (value: number | null): number => {
+    if (!value) return 0;
+
+    let newValue = value.toString();
+
+    if (!newValue.includes(".")) {
+      newValue += ".00000";
+    } else {
+      const [integerPart, decimalPart] = newValue.split(".");
+      newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
+    }
+
+    return Math.round(parseFloat(newValue) * 100000);
+  };
 
   const getStatus = (status?: number) => {
     if (status === -1) {
@@ -104,7 +118,12 @@ export default function BankOrderEdit() {
             index === self.findIndex((t:any) => t.id === order.id)
           );
 
-          dispatch(setBankOrder(uniqueOrderTrades));
+          const adjustedBankOrders = uniqueOrderTrades.map((order:TBankOrder) => ({
+            ...order,
+            orderValue: (Number(order.orderValue) / 100000).toString(),
+          }));
+
+          dispatch(setBankOrder(adjustedBankOrders));
           console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
         } else {
           console.log("Failed to fetch orderTrade");
@@ -194,6 +213,7 @@ export default function BankOrderEdit() {
       ...data,
       operations: buySell,
       id:choosedEditData?.id || "",
+      orderValue: handleFloatValue(Number(data.orderValue)),
     };
     console.log(choosedEditData);
     console.log(body);
@@ -335,6 +355,8 @@ export default function BankOrderEdit() {
                     label="Order Value"
                     id="orderValue"
                     disabled={isSubmitting}
+                    type="number"
+                    step="0.00001"
                   />
                   {errors.orderValue && (
                     <p className="text-red-500 text-sm px-2">

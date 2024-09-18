@@ -139,7 +139,7 @@ const BankTransactionList = () => {
                 bankName: item.bankName,
                 bankAccount: item.bankAccount,
                 operations: item.operations,
-                orderValue: item.orderValue,
+                orderValue: item.orderValue/100000,
                 transactionStatus: item.transactionStatus,
             };
           });

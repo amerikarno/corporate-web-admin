@@ -191,10 +191,10 @@ const FxExchangeTransactionList = () => {
       name: "Corporate Code",
       selector: (row: TTransaction) => row.corporateCode || "",
     },
-    // {
-    //   name: "Buy Amount",
-    //   selector: (row: TTransaction) => row.buyCurrency || "",
-    // },
+    {
+      name: "Buy Amount",
+      selector: (row: TTransaction) => row.buyCurrency || "",
+    },
     {
       name: "Exchange Pairs",
       selector: (row: TTransaction) => row.exchange || "",

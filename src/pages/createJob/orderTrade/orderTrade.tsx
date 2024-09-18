@@ -53,7 +53,7 @@ export default function OrderTradeEdit() {
       newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
     }
 
-    return parseFloat(newValue) * 100000;
+    return Math.round(parseFloat(newValue) * 100000);
   };
 
   const fetchCorporateCodes = async () => {
@@ -101,9 +101,9 @@ export default function OrderTradeEdit() {
 
         const adjustedOrderTrades = uniqueOrderTrades.map((order: TOrderTrade) => ({
           ...order,
-          cryptoAmount: Number(order.cryptoAmount) / 100000,
-          cryptoPrice:  Number(order.cryptoPrice) / 100000,
-          fiatAmount:  Number(order.fiatAmount) / 100000,
+          cryptoAmount: (Number(order.cryptoAmount) / 100000).toString(),
+          cryptoPrice:  (Number(order.cryptoPrice) / 100000).toString(),
+          fiatAmount:  (Number(order.fiatAmount) / 100000).toString(),
         }));
 
         dispatch(setOrderTrades(adjustedOrderTrades));
