@@ -295,7 +295,7 @@ export function FormCorporateInfo({
       newValue = integerPart + "." + (decimalPart + "00").slice(0, 2);
     }
 
-    return parseFloat(newValue) * 100;
+    return Math.round(parseFloat(newValue) * 100);
   };
   const onSubmit = async (data: TCorporateInfoSchema) => {
     const dateData = Date.parse(data.dateofincorporation);
