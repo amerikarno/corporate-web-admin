@@ -15,6 +15,7 @@ import { todoListRoutes } from "./routes/todoListRoute";
 import { enquireRoutes } from "./routes/enquiryRoute";
 import UnAuthorize from "./pages/unAuthorizePage/unAuthorize";
 import { secReportRoutes } from "./routes/secReportsRoute";
+import List from "./pages/apiSample";
 const helmetContext = {};
 
 const container: HTMLElement | null = document.getElementById("root");
@@ -35,6 +36,7 @@ root.render(
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Layout />}>
                 <Route path="unauthorize" element={<UnAuthorize />} />
+                <Route path="test" element={<List />} />
                 <Route index element={<CorporateAccountOpenning />} />
                 {systemManagementRoutes()}
                 {createJobRoutes()}
