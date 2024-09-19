@@ -1,5 +1,11 @@
 // import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
@@ -126,6 +132,8 @@ jest.mock("@/lib/utils", () => ({
 }));
 
 describe("test create corporate", () => {
+  const timoeout = 10000;
+
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
@@ -149,7 +157,7 @@ describe("test create corporate", () => {
     fireEvent.change(juristicName, { target: { value: "Name" } });
     expect(juristicName).toHaveValue("Name");
 
-    const registerNo = screen.getByLabelText("Commercial Registration No.")
+    const registerNo = screen.getByLabelText("Commercial Registration No.");
     expect(registerNo).toBeInTheDocument();
     expect(registerNo).toHaveValue("");
     fireEvent.change(registerNo, { target: { value: "No.123456789" } });
@@ -169,316 +177,363 @@ describe("test create corporate", () => {
     fireEvent.change(dateOfIncorporation, { target: { value: "2023-01-01" } });
     expect(dateOfIncorporation).toHaveValue("2023-01-01");
 
-    // //checkbox input type
-    // const checkboxRegisteredCountry = screen.getByTestId("registeredCountry-Thailand");
-    // expect(checkboxRegisteredCountry).toBeInTheDocument();
-    // expect(checkboxRegisteredCountry).not.toBeChecked();
-    // fireEvent.click(checkboxRegisteredCountry);
-    // expect(checkboxRegisteredCountry).toBeChecked();
+    //checkbox input type
+    const checkboxRegisteredCountry = screen.getByTestId(
+      "registeredCountry-Thailand"
+    );
+    expect(checkboxRegisteredCountry).toBeInTheDocument();
+    expect(checkboxRegisteredCountry).not.toBeChecked();
+    await act(async () => {
+      fireEvent.click(checkboxRegisteredCountry);
+    });
+    expect(checkboxRegisteredCountry).toBeChecked();
 
-    // const checkboxPrimaryCountry = screen.getByTestId("primaryCountry-Thailand");
-    // expect(checkboxPrimaryCountry).toBeInTheDocument();
-    // expect(checkboxPrimaryCountry).not.toBeChecked();
-    // fireEvent.click(checkboxPrimaryCountry);
-    // expect(checkboxPrimaryCountry).toBeChecked();
+    const checkboxPrimaryCountry = screen.getByTestId(
+      "primaryCountry-Thailand"
+    );
+    expect(checkboxPrimaryCountry).toBeInTheDocument();
+    expect(checkboxPrimaryCountry).not.toBeChecked();
+    fireEvent.click(checkboxPrimaryCountry);
+    expect(checkboxPrimaryCountry).toBeChecked();
 
     //registered business address input component
-      //addressNumber
-      const addressNumber = screen.getByTestId("registeredBusiness-addressNo");
-      expect(addressNumber).toBeInTheDocument();
-      expect(addressNumber).toHaveValue("");
-      fireEvent.change(addressNumber, { target: { value: "addressNumber" } });
-      expect(addressNumber).toHaveValue("addressNumber");
+    //addressNumber
+    const addressNumber = screen.getByTestId("registeredBusiness-addressNo");
+    expect(addressNumber).toBeInTheDocument();
+    expect(addressNumber).toHaveValue("");
+    fireEvent.change(addressNumber, { target: { value: "addressNumber" } });
+    expect(addressNumber).toHaveValue("addressNumber");
 
-      //Moo
-      const moo = screen.getByTestId("registeredBusiness-mooNo");
-      expect(moo).toBeInTheDocument();
-      expect(moo).toHaveValue("");
-      fireEvent.change(moo, { target: { value: "Moo" } });
-      expect(moo).toHaveValue("Moo");
+    //Moo
+    const moo = screen.getByTestId("registeredBusiness-mooNo");
+    expect(moo).toBeInTheDocument();
+    expect(moo).toHaveValue("");
+    fireEvent.change(moo, { target: { value: "Moo" } });
+    expect(moo).toHaveValue("Moo");
 
-      //Soi
-      const soi = screen.getByTestId("registeredBusiness-soi");
-      expect(soi).toBeInTheDocument();
-      expect(soi).toHaveValue("");
-      fireEvent.change(soi, { target: { value: "Soi" } });
-      expect(soi).toHaveValue("Soi");
+    //Soi
+    const soi = screen.getByTestId("registeredBusiness-soi");
+    expect(soi).toBeInTheDocument();
+    expect(soi).toHaveValue("");
+    fireEvent.change(soi, { target: { value: "Soi" } });
+    expect(soi).toHaveValue("Soi");
 
-      //Floor
-      const floor = screen.getByTestId("registeredBusiness-floor")
-      expect(floor).toBeInTheDocument();
-      expect(floor).toHaveValue("");
-      fireEvent.change(floor, { target: { value: "Floor" } });
-      expect(floor).toHaveValue("Floor");
+    //Floor
+    const floor = screen.getByTestId("registeredBusiness-floor");
+    expect(floor).toBeInTheDocument();
+    expect(floor).toHaveValue("");
+    fireEvent.change(floor, { target: { value: "Floor" } });
+    expect(floor).toHaveValue("Floor");
 
-      //Building
-      const building = screen.getByTestId("registeredBusiness-building")
-      expect(building).toBeInTheDocument();
-      expect(building).toHaveValue("");
-      fireEvent.change(building, { target: { value: "Building" } });
-      expect(building).toHaveValue("Building");
+    //Building
+    const building = screen.getByTestId("registeredBusiness-building");
+    expect(building).toBeInTheDocument();
+    expect(building).toHaveValue("");
+    fireEvent.change(building, { target: { value: "Building" } });
+    expect(building).toHaveValue("Building");
 
-      //Road
-      const road = screen.getByTestId("registeredBusiness-road")
-      expect(road).toBeInTheDocument();
-      expect(road).toHaveValue("");
-      fireEvent.change(road, { target: { value: "Road" } });
-      expect(road).toHaveValue("Road");
+    //Road
+    const road = screen.getByTestId("registeredBusiness-road");
+    expect(road).toBeInTheDocument();
+    expect(road).toHaveValue("");
+    fireEvent.change(road, { target: { value: "Road" } });
+    expect(road).toHaveValue("Road");
 
-      //Tambon
-      const tambon = screen.getByTestId("registeredBusiness-tambon")
-      expect(tambon).toBeInTheDocument();
-      expect(tambon).toHaveValue("");
-      fireEvent.change(tambon, { target: { value: "Tambon" } });
-      expect(tambon).toHaveValue("Tambon");
+    //Tambon
+    const tambon = screen.getByTestId("registeredBusiness-tambon");
+    expect(tambon).toBeInTheDocument();
+    expect(tambon).toHaveValue("");
+    fireEvent.change(tambon, { target: { value: "Tambon" } });
+    expect(tambon).toHaveValue("Tambon");
 
-      //Amphoe
-      const amphoe = screen.getByTestId("registeredBusiness-amphoe")
-      expect(amphoe).toBeInTheDocument();
-      expect(amphoe).toHaveValue("");
-      fireEvent.change(amphoe, { target: { value: "Amphoe" } });
-      expect(amphoe).toHaveValue("Amphoe");
+    //Amphoe
+    const amphoe = screen.getByTestId("registeredBusiness-amphoe");
+    expect(amphoe).toBeInTheDocument();
+    expect(amphoe).toHaveValue("");
+    fireEvent.change(amphoe, { target: { value: "Amphoe" } });
+    expect(amphoe).toHaveValue("Amphoe");
 
-      //Province
-      const province = screen.getByTestId("registeredBusiness-province")
-      expect(province).toBeInTheDocument();
-      expect(province).toHaveValue("");
-      fireEvent.change(province, { target: { value: "Province" } });
-      expect(province).toHaveValue("Province");
+    //Province
+    const province = screen.getByTestId("registeredBusiness-province");
+    expect(province).toBeInTheDocument();
+    expect(province).toHaveValue("");
+    fireEvent.change(province, { target: { value: "Province" } });
+    expect(province).toHaveValue("Province");
 
-      //PostalCode
-      const postalCode = screen.getByTestId("registeredBusiness-postalCode")
-      expect(postalCode).toBeInTheDocument();
-      expect(postalCode).toHaveValue("");
-      fireEvent.change(postalCode, { target: { value: "Postal Code" } });
-      expect(postalCode).toHaveValue("Postal Code");
+    //PostalCode
+    const postalCode = screen.getByTestId("registeredBusiness-postalCode");
+    expect(postalCode).toBeInTheDocument();
+    expect(postalCode).toHaveValue("");
+    fireEvent.change(postalCode, { target: { value: "Postal Code" } });
+    expect(postalCode).toHaveValue("Postal Code");
 
-      //Country
-      const country = screen.getByTestId("registeredBusiness-country")
-      expect(country).toBeInTheDocument();
-      expect(country).toHaveValue("");
-      fireEvent.change(country, { target: { value: "Country" } });
-      expect(country).toHaveValue("Country");
+    //Country
+    const country = screen.getByTestId("registeredBusiness-country");
+    expect(country).toBeInTheDocument();
+    expect(country).toHaveValue("");
+    fireEvent.change(country, { target: { value: "Country" } });
+    expect(country).toHaveValue("Country");
 
-      //EmailAddress
-      const emailAddress = screen.getByTestId("registeredBusiness-emailAddress")
-      expect(emailAddress).toBeInTheDocument();
-      expect(emailAddress).toHaveValue("");
-      fireEvent.change(emailAddress, { target: { value: "Email Address" } });
-      expect(emailAddress).toHaveValue("Email Address");
+    //EmailAddress
+    const emailAddress = screen.getByTestId("registeredBusiness-emailAddress");
+    expect(emailAddress).toBeInTheDocument();
+    expect(emailAddress).toHaveValue("");
+    fireEvent.change(emailAddress, { target: { value: "Email Address" } });
+    expect(emailAddress).toHaveValue("Email Address");
 
-      //Telephone
-      const telephone = screen.getByTestId("registeredBusiness-telephone")
-      expect(telephone).toBeInTheDocument();
-      expect(telephone).toHaveValue("");
-      fireEvent.change(telephone, { target: { value: "Telephone" } });
-      expect(telephone).toHaveValue("Telephone");
+    //Telephone
+    const telephone = screen.getByTestId("registeredBusiness-telephone");
+    expect(telephone).toBeInTheDocument();
+    expect(telephone).toHaveValue("");
+    fireEvent.change(telephone, { target: { value: "Telephone" } });
+    expect(telephone).toHaveValue("Telephone");
 
     //place incorporate address input component
-      //addressNumber
-      const placeAddressNumber = screen.getByTestId("placeofIncorporation-addressNo");
-      expect(placeAddressNumber).toBeInTheDocument();
-      expect(placeAddressNumber).toHaveValue("");
-      fireEvent.change(placeAddressNumber, { target: { value: "addressNumber" } });
-      expect(placeAddressNumber).toHaveValue("addressNumber");
+    //addressNumber
+    const placeAddressNumber = screen.getByTestId(
+      "placeofIncorporation-addressNo"
+    );
+    expect(placeAddressNumber).toBeInTheDocument();
+    expect(placeAddressNumber).toHaveValue("");
+    fireEvent.change(placeAddressNumber, {
+      target: { value: "addressNumber" },
+    });
+    expect(placeAddressNumber).toHaveValue("addressNumber");
 
-      //Moo
-      const placeMoo = screen.getByTestId("placeofIncorporation-mooNo");
-      expect(placeMoo).toBeInTheDocument();
-      expect(placeMoo).toHaveValue("");
-      fireEvent.change(placeMoo, { target: { value: "Moo" } });
-      expect(placeMoo).toHaveValue("Moo");
+    //Moo
+    const placeMoo = screen.getByTestId("placeofIncorporation-mooNo");
+    expect(placeMoo).toBeInTheDocument();
+    expect(placeMoo).toHaveValue("");
+    fireEvent.change(placeMoo, { target: { value: "Moo" } });
+    expect(placeMoo).toHaveValue("Moo");
 
-      //Soi
-      const placeSoi = screen.getByTestId("placeofIncorporation-soi");
-      expect(placeSoi).toBeInTheDocument();
-      expect(placeSoi).toHaveValue("");
-      fireEvent.change(placeSoi, { target: { value: "Soi" } });
-      expect(placeSoi).toHaveValue("Soi");
+    //Soi
+    const placeSoi = screen.getByTestId("placeofIncorporation-soi");
+    expect(placeSoi).toBeInTheDocument();
+    expect(placeSoi).toHaveValue("");
+    fireEvent.change(placeSoi, { target: { value: "Soi" } });
+    expect(placeSoi).toHaveValue("Soi");
 
-      //Floor
-      const placeFloor = screen.getByTestId("placeofIncorporation-floor")
-      expect(placeFloor).toBeInTheDocument();
-      expect(placeFloor).toHaveValue("");
-      fireEvent.change(placeFloor, { target: { value: "Floor" } });
-      expect(placeFloor).toHaveValue("Floor");
+    //Floor
+    const placeFloor = screen.getByTestId("placeofIncorporation-floor");
+    expect(placeFloor).toBeInTheDocument();
+    expect(placeFloor).toHaveValue("");
+    fireEvent.change(placeFloor, { target: { value: "Floor" } });
+    expect(placeFloor).toHaveValue("Floor");
 
-      //Building
-      const placeBuilding = screen.getByTestId("placeofIncorporation-building")
-      expect(placeBuilding).toBeInTheDocument();
-      expect(placeBuilding).toHaveValue("");
-      fireEvent.change(placeBuilding, { target: { value: "Building" } });
-      expect(placeBuilding).toHaveValue("Building");
+    //Building
+    const placeBuilding = screen.getByTestId("placeofIncorporation-building");
+    expect(placeBuilding).toBeInTheDocument();
+    expect(placeBuilding).toHaveValue("");
+    fireEvent.change(placeBuilding, { target: { value: "Building" } });
+    expect(placeBuilding).toHaveValue("Building");
 
-      //Road
-      const placeRoad = screen.getByTestId("placeofIncorporation-road")
-      expect(placeRoad).toBeInTheDocument();
-      expect(placeRoad).toHaveValue("");
-      fireEvent.change(placeRoad, { target: { value: "Road" } });
-      expect(placeRoad).toHaveValue("Road");
+    //Road
+    const placeRoad = screen.getByTestId("placeofIncorporation-road");
+    expect(placeRoad).toBeInTheDocument();
+    expect(placeRoad).toHaveValue("");
+    fireEvent.change(placeRoad, { target: { value: "Road" } });
+    expect(placeRoad).toHaveValue("Road");
 
-      //Tambon
-      const placeTambon = screen.getByTestId("placeofIncorporation-tambon")
-      expect(placeTambon).toBeInTheDocument();
-      expect(placeTambon).toHaveValue("");
-      fireEvent.change(placeTambon, { target: { value: "Tambon" } });
-      expect(placeTambon).toHaveValue("Tambon");
+    //Tambon
+    const placeTambon = screen.getByTestId("placeofIncorporation-tambon");
+    expect(placeTambon).toBeInTheDocument();
+    expect(placeTambon).toHaveValue("");
+    fireEvent.change(placeTambon, { target: { value: "Tambon" } });
+    expect(placeTambon).toHaveValue("Tambon");
 
-      //Amphoe
-      const placeAmphoe = screen.getByTestId("placeofIncorporation-amphoe")
-      expect(placeAmphoe).toBeInTheDocument();
-      expect(placeAmphoe).toHaveValue("");
-      fireEvent.change(placeAmphoe, { target: { value: "Amphoe" } });
-      expect(placeAmphoe).toHaveValue("Amphoe");
+    //Amphoe
+    const placeAmphoe = screen.getByTestId("placeofIncorporation-amphoe");
+    expect(placeAmphoe).toBeInTheDocument();
+    expect(placeAmphoe).toHaveValue("");
+    fireEvent.change(placeAmphoe, { target: { value: "Amphoe" } });
+    expect(placeAmphoe).toHaveValue("Amphoe");
 
-      //Province
-      const placeProvince = screen.getByTestId("placeofIncorporation-province")
-      expect(placeProvince).toBeInTheDocument();
-      expect(placeProvince).toHaveValue("");
-      fireEvent.change(placeProvince, { target: { value: "Province" } });
-      expect(placeProvince).toHaveValue("Province");
+    //Province
+    const placeProvince = screen.getByTestId("placeofIncorporation-province");
+    expect(placeProvince).toBeInTheDocument();
+    expect(placeProvince).toHaveValue("");
+    fireEvent.change(placeProvince, { target: { value: "Province" } });
+    expect(placeProvince).toHaveValue("Province");
 
-      //PostalCode
-      const placePostalCode = screen.getByTestId("placeofIncorporation-postalCode")
-      expect(placePostalCode).toBeInTheDocument();
-      expect(placePostalCode).toHaveValue("");
-      fireEvent.change(placePostalCode, { target: { value: "Postal Code" } });
-      expect(placePostalCode).toHaveValue("Postal Code");
+    //PostalCode
+    const placePostalCode = screen.getByTestId(
+      "placeofIncorporation-postalCode"
+    );
+    expect(placePostalCode).toBeInTheDocument();
+    expect(placePostalCode).toHaveValue("");
+    fireEvent.change(placePostalCode, { target: { value: "Postal Code" } });
+    expect(placePostalCode).toHaveValue("Postal Code");
 
-      //Country
-      const placeCountry = screen.getByTestId("placeofIncorporation-country")
-      expect(placeCountry).toBeInTheDocument();
-      expect(placeCountry).toHaveValue("");
-      fireEvent.change(placeCountry, { target: { value: "Country" } });
-      expect(placeCountry).toHaveValue("Country");
+    //Country
+    const placeCountry = screen.getByTestId("placeofIncorporation-country");
+    expect(placeCountry).toBeInTheDocument();
+    expect(placeCountry).toHaveValue("");
+    fireEvent.change(placeCountry, { target: { value: "Country" } });
+    expect(placeCountry).toHaveValue("Country");
 
-      //EmailAddress
-      const placeEmailAddress = screen.getByTestId("placeofIncorporation-emailAddress")
-      expect(placeEmailAddress).toBeInTheDocument();
-      expect(placeEmailAddress).toHaveValue("");
-      fireEvent.change(placeEmailAddress, { target: { value: "Email Address" } });
-      expect(placeEmailAddress).toHaveValue("Email Address");
+    //EmailAddress
+    const placeEmailAddress = screen.getByTestId(
+      "placeofIncorporation-emailAddress"
+    );
+    expect(placeEmailAddress).toBeInTheDocument();
+    expect(placeEmailAddress).toHaveValue("");
+    fireEvent.change(placeEmailAddress, { target: { value: "Email Address" } });
+    expect(placeEmailAddress).toHaveValue("Email Address");
 
-      //Telephone
-      const placeTelephone = screen.getByTestId("placeofIncorporation-telephone")
-      expect(placeTelephone).toBeInTheDocument();
-      expect(placeTelephone).toHaveValue("");
-      fireEvent.change(placeTelephone, { target: { value: "Telephone" } });
-      expect(placeTelephone).toHaveValue("Telephone");
-    
+    //Telephone
+    const placeTelephone = screen.getByTestId("placeofIncorporation-telephone");
+    expect(placeTelephone).toBeInTheDocument();
+    expect(placeTelephone).toHaveValue("");
+    fireEvent.change(placeTelephone, { target: { value: "Telephone" } });
+    expect(placeTelephone).toHaveValue("Telephone");
+
     //float input type
     const registeredCapital = screen.getByTestId("registeredCapital");
     expect(registeredCapital).toBeInTheDocument();
-    await waitFor( async ()=>{
-      expect(registeredCapital).toHaveValue("0.00");
-    })
-    await act(async ()=>{
-      fireEvent.change(registeredCapital, { target: { value: "123.45" } });
-    })
-    await waitFor( async ()=>{
-      expect(registeredCapital).toHaveValue("123.45");
-    })
+    await waitFor(
+      async () => {
+        expect(registeredCapital).toHaveValue("0.00");
+      },
+      { timeout: timoeout }
+    );
+    await act(async () => {
+      fireEvent.change(registeredCapital, { target: { value: "12345.67" } });
+    });
+    await waitFor(
+      async () => {
+        expect(registeredCapital).toHaveValue("12,345.67");
+      },
+      { timeout: timoeout }
+    );
 
     const revenuePerYear = screen.getByTestId("revenuePerYear");
+    expect(revenuePerYear).toBeInTheDocument();
 
-    await waitFor( async ()=>{
-      expect(revenuePerYear).toBeInTheDocument();
-    })
-    await act(async ()=>{
-      fireEvent.change(revenuePerYear, { target: { value: "123.45" } });
-    })
-    await waitFor( async ()=>{
-      expect(revenuePerYear).toHaveValue("123.45");
-    })
-    
+    await waitFor(
+      async () => {
+        expect(revenuePerYear).toHaveValue("0.00");
+      },
+      { timeout: timoeout }
+    );
+    await act(async () => {
+      fireEvent.change(revenuePerYear, { target: { value: "12345.67" } });
+    });
+    await waitFor(
+      async () => {
+        expect(revenuePerYear).toHaveValue("12,345.67");
+      },
+      { timeout: timoeout }
+    );
+
     const netProfit = screen.getByTestId("netProFitLoss");
-    await waitFor( async ()=>{
-      expect(netProfit).toBeInTheDocument();
-    })
-    await act(async ()=>{
-      fireEvent.change(netProfit, { target: { value: "123.45" } });
-    })
-    await waitFor( async ()=>{
-      expect(netProfit).toHaveValue("123.45");
-    })
+    expect(netProfit).toBeInTheDocument();
+    await waitFor(
+      async () => {
+        expect(netProfit).toHaveValue("0.00");
+      },
+      { timeout: timoeout }
+    );
+    await act(async () => {
+      fireEvent.change(netProfit, { target: { value: "12345.67" } });
+    });
+    await waitFor(
+      async () => {
+        expect(netProfit).toHaveValue("12,345.67");
+      },
+      { timeout: timoeout }
+    );
 
     const ShareholderEquity = screen.getByTestId("shareholderEquity");
-    await waitFor( async ()=>{
-      expect(ShareholderEquity).toBeInTheDocument();
-    })
-    await act(async ()=>{
-      fireEvent.change(ShareholderEquity, { target: { value: "123.45" } });
-    })
-    await waitFor( async ()=>{
-      expect(ShareholderEquity).toHaveValue("123.45");
-    })
+    expect(ShareholderEquity).toBeInTheDocument();
+    await waitFor(
+      async () => {
+        expect(ShareholderEquity).toHaveValue("0.00");
+      },
+      { timeout: timoeout }
+    );
+    await act(async () => {
+      fireEvent.change(ShareholderEquity, { target: { value: "12345.67" } });
+    });
+    await waitFor(
+      async () => {
+        expect(ShareholderEquity).toHaveValue("12,345.67");
+      },
+      { timeout: timoeout }
+    );
 
-    const submitButton = screen.getByText("Next Form")
+    const submitButton = screen.getByText("Next Form");
     expect(submitButton).toBeInTheDocument();
-    
-    await act(async ()=>{
+
+    await act(async () => {
       fireEvent.click(submitButton);
-    })
+    });
     // Expected form data
-   
+
     const expectedFormData = {
-      data:{
+      data: {
         corporateCode: "0",
         name: "Name",
         registrationNo: "No.123456789",
         taxId: "123",
         dateofincorporation: "2023-01-01T00:00:00.000Z",
-        registeredCapital: "123.45",
-        revenuePerYear: "123.45",
-        netProFitLoss: "123.45",
-        shareholderEquity: "123.45",
-        registeredBusiness:{
-          address: [{
-            addressNo: "addressNumber",
-            mooNo: "Moo",
-            soi: "Soi",
-            floor: "Floor",
-            building: "Building",
-            road: "Road",
-            tambon: "Tambon",
-            amphoe: "Amphoe",
-            province: "Province",
-            postalCode: "Postal Code",
-            country: "Country",
-          }],
+        registeredCapital: 1234567,
+        revenuePerYear: 1234567,
+        netProFitLoss: 1234567,
+        shareholderEquity: 1234567,
+        registeredBusiness: {
+          address: [
+            {
+              addressNo: "addressNumber",
+              mooNo: "Moo",
+              soi: "Soi",
+              floor: "Floor",
+              building: "Building",
+              road: "Road",
+              tambon: "Tambon",
+              amphoe: "Amphoe",
+              province: "Province",
+              postalCode: "Postal Code",
+              country: "Country",
+            },
+          ],
           emailAddress: "Email Address",
           telephone: "Telephone",
         },
         placeofIncorporation: {
-          address:[{
-            addressNo: "addressNumber",
-            mooNo: "Moo",
-            soi: "Soi",
-            floor: "Floor",
-            building: "Building",
-            road: "Road",
-            tambon: "Tambon",
-            amphoe: "Amphoe",
-            province: "Province",
-            postalCode: "Postal Code",
-            country: "Country",
-          }],
+          address: [
+            {
+              addressNo: "addressNumber",
+              mooNo: "Moo",
+              soi: "Soi",
+              floor: "Floor",
+              building: "Building",
+              road: "Road",
+              tambon: "Tambon",
+              amphoe: "Amphoe",
+              province: "Province",
+              postalCode: "Postal Code",
+              country: "Country",
+            },
+          ],
           emailAddress: "Email Address",
           telephone: "Telephone",
         },
-        primary:"",
-        registered:"",
+        primary: "",
+        registered: "",
         isPrimaryCountry: true,
-        isPrimaryOther:false,
-        isRegisteredOther:false,
+        isPrimaryOther: false,
+        isRegisteredOther: false,
         isRegisteredThailand: true,
-      }
+      },
     };
-    await waitFor(() => {
-      const state = store.getState();
-      const corporateState = state.corporateTest;
-    expect(corporateState).toMatchObject(expectedFormData);
-    })
-
+    await waitFor(
+      () => {
+        const state = store.getState();
+        const corporateState = state.corporateTest;
+        expect(corporateState).toMatchObject(expectedFormData);
+      },
+      { timeout: timoeout }
+    );
   }, 20000);
 });

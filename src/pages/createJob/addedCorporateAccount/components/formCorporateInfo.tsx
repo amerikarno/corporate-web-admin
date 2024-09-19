@@ -78,10 +78,10 @@ export function FormCorporateInfo({
         Number(initData.shareholderEquity ?? 0) / 100;
 
       if (!isNaN(registeredCapitalValue)) {
-        console.log(registeredCapitalValue.toFixed(2).toString())
+        console.log(registeredCapitalValue.toFixed(2).toLocaleString());
         setValue(
           "registeredCapital",
-          registeredCapitalValue.toFixed(2).toString()
+          registeredCapitalValue.toFixed(2).toLocaleString()
         );
       }
       if (!isNaN(revenuePerYearValue)) {
@@ -392,10 +392,10 @@ export function FormCorporateInfo({
             },
     };
     await sleep(500);
-    reset();
     console.log(formData);
     onsubmit(formData);
     dispatch(setTestCorporateData(formData));
+    reset();
     setShouldScrollUp(true);
   };
 
@@ -479,7 +479,6 @@ export function FormCorporateInfo({
                   id={`checkbox-${registeredCountryChoices[1]}`}
                   key={registeredCountryChoices[1]}
                   label={registeredCountryChoices[1]}
-
                   checked={
                     registeredCountryPrimaryCountryOperation.isRegisteredOther
                   }
