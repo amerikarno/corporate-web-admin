@@ -60,9 +60,12 @@ export default function UploadFiles({}: TUploadFilesProps) {
     }
   };
   useEffect(() => {
-    if (corporateCode)
+    if(corporateCode)
       fetchedData();
-  }, [corporateCode, dispatch, token]);
+    else{
+      console.log("corporateCode not found")
+    }
+  }, [corporateCode,dispatch,token]);
 
   return (
     <div className="p-4">

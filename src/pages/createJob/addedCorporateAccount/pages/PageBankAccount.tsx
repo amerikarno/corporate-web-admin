@@ -79,6 +79,9 @@ export function PageBankAccount({}: TPageBankAccountProps) {
   useEffect(() => {
     if (corporateCode)
       fetchBankData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   console.log(bankData);

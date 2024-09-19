@@ -60,8 +60,11 @@ export default function UploadFiles({
         console.error("Error fetching upload File data:", error);
       }
     };
-
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found");
+    }
   }, [corporateCode, dispatch, token]);
   return (
     <div className="p-4">

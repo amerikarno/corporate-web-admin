@@ -62,7 +62,7 @@ export function FormIndividualsShareholders({
     tmp.personalId = choosedEditData?.personalId || "";
     tmp.citizenId = dropDownChoosed === "ID" ? curInputText : "",
     tmp.passportId = dropDownChoosed === "Passport" ? curInputText : ""
-
+    tmp.sharePercentage = handleFloatValue(data.sharePercentage);
     return tmp;
   };
 
@@ -76,6 +76,21 @@ export function FormIndividualsShareholders({
   } = useForm<TIndividualsShareholdersSchema>({
     resolver: zodResolver(individualsShareholdersSchema),
   });
+
+  const handleFloatValue = (value: number | null): number => {
+    if (!value) return 0;
+
+    let newValue = value.toString();
+
+    if (!newValue.includes(".")) {
+      newValue += ".00000";
+    } else {
+      const [integerPart, decimalPart] = newValue.split(".");
+      newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
+    }
+
+    return Math.round(parseFloat(newValue) * 100000);
+  };
 
   
   useEffect(() => {
@@ -98,7 +113,7 @@ export function FormIndividualsShareholders({
     ) || {
       fullNames: [{ title: "", firstName: "", lastName: "" }],
       nationality: "",
-      shares: 0,
+      sharePercentage: 0,
       citizenId: "",
       passportId: "",
       expiryDate: "mm/dd/yyyy",
@@ -209,7 +224,7 @@ export function FormIndividualsShareholders({
                   label="Shares"
                   id="Shares"
                   type="number"
-                  step="0.01"
+                  step="0.00001"
                   disabled={isSubmitting}
                 />
                 {errors.sharePercentage && (

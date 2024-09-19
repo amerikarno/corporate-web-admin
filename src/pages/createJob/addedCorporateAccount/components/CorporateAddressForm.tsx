@@ -53,7 +53,7 @@ export function CorporateAddressForm({
                 id={`id-${keyType}.address[0].${fieldName}`}
                 disabled={isSubmitting}
                 type={"text"}
-                data-testid={`${keyType}-${index}`}
+                data-testid={`${keyType}-${fieldName}`}
               />
               {errors && errors[fieldName as keyof TSubAddressSchema] && (
                 <p className="text-red-500">

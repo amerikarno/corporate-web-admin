@@ -63,7 +63,13 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
       if (res.status === 200) {
         const individualshareholder = res.data[0]?.IndividualShareholders || [];
         if (individualshareholder && individualshareholder.length > 0) {
-          dispatch(setIndividualShareholder(individualshareholder));
+          const updateIndividualShareholder = individualshareholder.map(
+            (data: TIndividualShareholderEdit) =>({
+              ...data,
+              sharePercentage: data.sharePercentage/100000
+            })
+          )
+          dispatch(setIndividualShareholder(updateIndividualShareholder));
           console.log(
             "indivudual data fetched successfully.",
             individualshareholder
@@ -80,7 +86,11 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
   };
 
   useEffect(() => {
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   const { handleSubmitShareholders } = useShareholders();

@@ -47,6 +47,8 @@ export function PageContactPerson({
 
   const fetchedData = async () => {
     try {
+      console.log(token)
+      console.log({corporateCode})
       const res = await axios
       .post(
         "/api/v1/corporate/query",
@@ -75,7 +77,11 @@ export function PageContactPerson({
     }
   }
   useEffect(() => {
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   console.log(contactPersonData);
@@ -143,7 +149,7 @@ export function PageContactPerson({
       cell: (row: TContact) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+          <Button variant="outline" className="bg-red-600 text-white" onClick={()=>(console.log("data-testid = ",row.personalId))} data-testid={`delete-button-${row.personalId}`}>Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -154,7 +160,7 @@ export function PageContactPerson({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+            <AlertDialogAction data-testid={`confirm-delete-${row.personalId}`} onClick={()=>handleDelete(row) }>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

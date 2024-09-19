@@ -16,6 +16,7 @@ import { TUser, setUser } from "@/features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { clearAddIndividual } from "@/features/addIndividual/addIndividualSlice";
+import { clearIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -24,11 +25,13 @@ export default function Sidebar() {
     if (pageId === 2001 || pageId === 2002) {
       localStorage.clear();
       dispatch(clearCorporateData());
-      dispatch(clearAddIndividual());
+      dispatch(clearIndividualData());
+      // dispatch(clearAddIndividual());
+      console.log("individual and corporate redux had been cleared!")
     }
   };
   
-  if (user === null || user === undefined) {
+  if (user === null || user === undefined) {                    
     const token = getCookies();
     if (token) {
       const dispatch = useDispatch();

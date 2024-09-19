@@ -81,7 +81,11 @@ export function ListOfDirectors({ }: TListOfDirectorsProps) {
   }
 
   useEffect(() => {
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   const handleDelete = async (data: TDirector) => {

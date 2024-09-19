@@ -72,6 +72,7 @@ export function PageJuristicShareholder({
           .map((juristic: TJuristicEdit) => ({
             ...juristic,
             juristicId: juristic.id,
+            sharePercentage: juristic.sharePercentage/100000,
           }))
           .map(mapDataToTJuristicShareholder)
           .filter((item: any) => item !== null) as TJuristicsShareholders[];
@@ -87,7 +88,11 @@ export function PageJuristicShareholder({
   }
 
   useEffect(() => {
-    fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   const handleDelete = async (data: TJuristicsShareholders) => {

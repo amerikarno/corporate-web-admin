@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import Swal from 'sweetalert2'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,9 +19,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
-import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { clearIndividualData, setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Alert from "@/components/alert/Alert";
 
 export default function IdentityVerification() {
   const navigate = useNavigate();
@@ -53,10 +53,28 @@ export default function IdentityVerification() {
   );
   useEffect(() => {
     const cidValue = localStorage.getItem("cid");
-    fetchIndividualData(cidValue || "");
+    if (cidValue) {
+      fetchIndividualData(cidValue || "");
+    }else{
+      console.log("cid not found");
+    }
   }, [token, dispatch]);
 
 
+  const [alertVisible, setAlertVisible] = useState(false);
+  const handleClose = () => {
+    if(alertType === "success"){
+      setAlertVisible(false);
+      navigate("/create-job/added-individual-account");
+      dispatch(clearIndividualData());
+      localStorage.clear();
+    }
+    setAlertVisible(false);
+  };
+
+  const [alertType,setAlertType] = useState("");
+  const [alertMessage,setAlertMessage] = useState("");
+  
   const handleNdid = async () => {
     let body = {
       ndid:true,
@@ -71,22 +89,14 @@ export default function IdentityVerification() {
          }},)
          if(res.status === 200){
            console.log("update ndid success :",res)
-           Swal.fire({
-             title: "Verification Selected",
-             text:"Thanks for your submission",
-             icon: "success",
-             confirmButtonText: "Go back to changelist",
-             customClass: {
-               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
-             },
-           }).then((result)=>{
-             if(result.isConfirmed){
-               navigate("/create-job/change-individual-account");
-               localStorage.clear();
-             }
-           });
+           setAlertVisible(true);
+           setAlertType("success")
+           setAlertMessage("Thanks for your submission")
          }else{
           console.log("update ndid not success :",res)
+          setAlertVisible(true);
+          setAlertType("error")
+          setAlertMessage("please try again")
          }
       }else{
         const res = await axios.post("/api/v1/individual/ndidthaid",body,
@@ -95,26 +105,21 @@ export default function IdentityVerification() {
          }},)
          if(res.status === 200){
            console.log("save ndid success :",res)
-           Swal.fire({
-             title: "Verification Selected",
-             text:"Thanks for your submission",
-             icon: "success",
-             confirmButtonText: "Go back to changelist",
-             customClass: {
-               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
-             },
-           }).then((result)=>{
-             if(result.isConfirmed){
-               navigate("/create-job/change-individual-account");
-               localStorage.clear();
-             }
-           });
+           setAlertVisible(true);
+           setAlertType("success")
+           setAlertMessage("Thanks for your submission")
          }else{
           console.log("save ndid not success :",res)
+          setAlertVisible(true);
+          setAlertType("error")
+          setAlertMessage("please try again")
          }
       }
     }catch(error){
       console.log("save ndid not success :",error)
+      setAlertVisible(true);
+      setAlertType("error")
+      setAlertMessage("please try again")
     } 
   }
   const handlethaiid = async () => {
@@ -131,22 +136,14 @@ export default function IdentityVerification() {
          }},)
          if(res.status === 200){
            console.log("update thaid success :",res)
-           Swal.fire({
-             title: "Verification Selected",
-             text:"Thanks for your submission",
-             icon: "success",
-             confirmButtonText: "Go back to changelist",
-             customClass: {
-               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
-             },
-           }).then((result)=>{
-             if(result.isConfirmed){
-               navigate("/create-job/change-individual-account");
-               localStorage.clear();
-             }
-           });
+           setAlertVisible(true);
+           setAlertType("success")
+           setAlertMessage("Thanks for your submission")
          }else{
           console.log("update thaid not success :",res)
+          setAlertVisible(true);
+          setAlertType("error")
+          setAlertMessage("please try again")
          }
       }else{
         const res = await axios.post("/api/v1/individual/ndidthaid",body,
@@ -155,30 +152,31 @@ export default function IdentityVerification() {
          }},)
          if(res.status === 200){
            console.log("save thaid success :",res)
-           Swal.fire({
-             title: "Verification Selected",
-             text:"Thanks for your submission",
-             icon: "success",
-             confirmButtonText: "Go back to changelist",
-             customClass: {
-               confirmButton: 'bg-slate-800 text-white hover:bg-slate-700'
-             },
-           }).then((result)=>{
-             if(result.isConfirmed){
-               navigate("/create-job/change-individual-account");
-               localStorage.clear();
-             }
-           });
+           setAlertVisible(true);
+           setAlertType("success")
+           setAlertMessage("Thanks for your submission")
          }else{
           console.log("save thaid not success :",res)
+          setAlertVisible(true);
+          setAlertType("error")
+          setAlertMessage("please try again")
          }
       }
     }catch(error){
       console.log("save ndid not success :",error)
+      setAlertVisible(true);
+      setAlertType("error")
+      setAlertMessage("please try again")
     } 
   }
   return (
     <div className="flex flex-col items-center p-8 pt-16 space-y-8 md:mx-16">
+        {alertVisible && (
+            <Alert
+              type={alertType}
+              onClose={handleClose}
+            />
+          )}
       <div className="flex flex-col items-center text-slate-800">
         <span className="font-bold text-lg md:text-2xl">ท่านสามารถเลือก "ยืนยันตัวตน" ดังนี้</span>
         <span className="text-base md:text-lg">กรุณาเลือกช่องทางการยืนยันตัวตนที่ท่านสะดวกอย่างใดอย่างหนึ่ง</span>

@@ -53,17 +53,23 @@ export function EditCorporateAccount() {
         const corporateCode = localStorage.getItem("corporateCode") || "";
         setCorporateCode(corporateCode);
         console.log(corporateCode);
-        const response = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
-          {
-            headers: {
-              Authorization: `Bearer ${getCookies()}`,
-            },
-          }
-        );
-        console.log(response);
-        dispatch(setCorporateData(response.data[0]));
+
+        if(corporateCode){
+          const response = await axios.post(
+            "/api/v1/corporate/query",
+            { corporateCode: corporateCode },
+            {
+              headers: {
+                Authorization: `Bearer ${getCookies()}`,
+              },
+            }
+          );
+          console.log(response);
+          dispatch(setCorporateData(response.data[0]));
+        }else{
+          dispatch(clearCorporateData());
+          console.log("corporateCode not found")
+        }
       } catch (error) {
         console.error("Error fetching corporate data:", error);
       }

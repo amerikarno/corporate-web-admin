@@ -30,6 +30,7 @@ import { copy } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import { useDispatch } from "react-redux";
 import { CommaInput } from "@/components/ui/cmmaAutoInput";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -77,9 +78,10 @@ export function FormCorporateInfo({
         Number(initData.shareholderEquity ?? 0) / 100;
 
       if (!isNaN(registeredCapitalValue)) {
+        console.log(registeredCapitalValue.toFixed(2).toString())
         setValue(
           "registeredCapital",
-          registeredCapitalValue.toFixed(2).toLocaleString()
+          registeredCapitalValue.toFixed(2).toString()
         );
       }
       if (!isNaN(revenuePerYearValue)) {
@@ -301,7 +303,7 @@ export function FormCorporateInfo({
       newValue = integerPart + "." + (decimalPart + "00").slice(0, 2);
     }
 
-    return parseFloat(newValue) * 100;
+    return Math.round(parseFloat(newValue) * 100);
   };
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
@@ -391,7 +393,9 @@ export function FormCorporateInfo({
     };
     await sleep(500);
     reset();
+    console.log(formData);
     onsubmit(formData);
+    dispatch(setTestCorporateData(formData));
     setShouldScrollUp(true);
   };
 
@@ -602,6 +606,7 @@ export function FormCorporateInfo({
               {...register("registeredCapital")}
               name="registeredCapital"
               disabled={isSubmitting}
+              data-testid="registeredCapital"
             />
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
@@ -613,6 +618,7 @@ export function FormCorporateInfo({
               {...register("revenuePerYear")}
               name="revenuePerYear"
               disabled={isSubmitting}
+              data-testid="revenuePerYear"
             />
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
@@ -624,6 +630,7 @@ export function FormCorporateInfo({
               {...register("netProFitLoss")}
               name="netProFitLoss"
               disabled={isSubmitting}
+              data-testid="netProFitLoss"
             />
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
@@ -635,6 +642,7 @@ export function FormCorporateInfo({
               {...register("shareholderEquity")}
               name="shareholderEquity"
               disabled={isSubmitting}
+              data-testid="shareholderEquity"
             />
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>

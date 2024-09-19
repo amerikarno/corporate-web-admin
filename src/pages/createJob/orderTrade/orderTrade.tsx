@@ -41,6 +41,21 @@ export default function OrderTradeEdit() {
     (state) => state.orderTrade?.orderTrades || []
   ) as TOrderTrade[];
 
+  const handleFloatValue = (value: number | null): number => {
+    if (!value) return 0;
+
+    let newValue = value.toString();
+
+    if (!newValue.includes(".")) {
+      newValue += ".00000";
+    } else {
+      const [integerPart, decimalPart] = newValue.split(".");
+      newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
+    }
+
+    return Math.round(parseFloat(newValue) * 100000);
+  };
+
   const fetchCorporateCodes = async () => {
     try {
       const token = getCookies();
@@ -84,7 +99,14 @@ export default function OrderTradeEdit() {
             index === self.findIndex((t: any) => t.id === order.id)
         );
 
-        dispatch(setOrderTrades(uniqueOrderTrades));
+        const adjustedOrderTrades = uniqueOrderTrades.map((order: TOrderTrade) => ({
+          ...order,
+          cryptoAmount: (Number(order.cryptoAmount) / 100000).toString(),
+          cryptoPrice:  (Number(order.cryptoPrice) / 100000).toString(),
+          fiatAmount:  (Number(order.fiatAmount) / 100000).toString(),
+        }));
+
+        dispatch(setOrderTrades(adjustedOrderTrades));
         // console.log("OrderTrade data fetched successfully.", uniqueOrderTrades);
       } else {
         console.log("Failed to fetch orderTrade");
@@ -223,6 +245,9 @@ export default function OrderTradeEdit() {
       operations: buySell,
       currency: currency,
       id: choosedEditData?.id,
+      cryptoAmount: handleFloatValue(Number(data.cryptoAmount)),
+      fiatAmount: handleFloatValue(Number(data.fiatAmount)),
+      cryptoPrice: handleFloatValue(Number(data.cryptoPrice)),
     };
     console.log(choosedEditData);
     console.log(body);
@@ -354,6 +379,8 @@ export default function OrderTradeEdit() {
                     label="Crypto Amount"
                     id="cryptoAmount"
                     disabled={isSubmitting}
+                    step="0.00001"
+                    type="number"
                   />
                   {errors.cryptoAmount && (
                     <p className="text-red-500 text-sm px-2">
@@ -365,6 +392,8 @@ export default function OrderTradeEdit() {
                     label="Fiat Amount"
                     id="fiatAmount"
                     disabled={isSubmitting}
+                    step="0.00001"
+                    type="number"
                   />
                   {errors.fiatAmount && (
                     <p className="text-red-500 text-sm px-2">
@@ -378,6 +407,8 @@ export default function OrderTradeEdit() {
                     label="Crypto Price"
                     id="cryptoPrice"
                     disabled={isSubmitting}
+                    step="0.00001"
+                    type="number"
                   />
                   {errors.cryptoPrice && (
                     <p className="text-red-500 text-sm px-2">

@@ -33,12 +33,28 @@ export function FormJuristicShareholders({
     //values: juristicShareholders,
   });
 
+  const handleFloatValue = (value: number | null): number => {
+    if (!value) return 0;
+
+    let newValue = value.toString();
+
+    if (!newValue.includes(".")) {
+      newValue += ".00000";
+    } else {
+      const [integerPart, decimalPart] = newValue.split(".");
+      newValue = integerPart + "." + (decimalPart + "00000").slice(0, 5);
+    }
+
+    return Math.round(parseFloat(newValue) * 100000);
+  };
+
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
     await sleep(500);
     const body = {
       ...data,
       corporateCode: corporateCode,
       juristicId: choosedEditData?.juristicId,
+      sharePercentage: handleFloatValue(data.sharePercentage),
     };
     reset();
     clearChoosedEditData();
@@ -130,7 +146,7 @@ export function FormJuristicShareholders({
                   label="Shares"
                   id="Shares"
                   type="number"
-                  step="0.01"
+                  step="0.00001"
                   disabled={isSubmitting}
                   name="sharePercentage"
                   //inputClassName="text-white focus:text-black"

@@ -84,7 +84,11 @@ export function PageAttorney({}: TPageAttorneyProps) {
   };
 
   useEffect(() => {
-    if (corporateCode) fetchedData();
+    if(corporateCode)
+      fetchedData();
+    else{
+      console.log("corporateCode not found")
+    }
   }, []);
 
   const handleDelete = async (data: TAttorney) => {

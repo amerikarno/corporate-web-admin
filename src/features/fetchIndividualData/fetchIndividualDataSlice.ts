@@ -16,8 +16,11 @@ const suitSlice = createSlice({
     setIndividualData: (state, action: PayloadAction<TIndividualData>) => {
       state.individualDatas = action.payload;
     },
+    clearIndividualData: (state) => {
+      state.individualDatas = null;
+    },
   },
 });
 
-export const { setIndividualData } = suitSlice.actions;
+export const { setIndividualData,clearIndividualData } = suitSlice.actions;
 export default suitSlice.reducer;
