@@ -171,7 +171,7 @@ export default function AddIndividualAccount() {
         }
       }
       else{
-        console.log("api : /api/v1/individual/precreate")
+        console.log("api : /api/v1/individual/precreate ",body)
         const res = await axios.post("/api/v1/individual/precreate", body, {
           headers: {
             Authorization: `Bearer ${token}`,
