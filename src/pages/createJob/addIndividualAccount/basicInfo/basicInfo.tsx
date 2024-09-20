@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
 import { TBasicinfoAddress, TBasicInfoBank } from "../type";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -211,6 +212,7 @@ export default function BasicInfo() {
   // },[])
 
   const onSubmit = async (data: TBasicInfo) => {
+    dispatch(setTestCorporateData(data));
     let prebody = {
       ...data,
       registeredAddress: {
@@ -318,6 +320,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Address Number"
                     id="addressNoIDCard"
+                    data-testid="addressNoIDCard"
                     {...register("registeredAddress.homeNumber")}
                     className={
                       "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
@@ -329,6 +332,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Floor"
                     id="floorIDCard"
+                    data-testid="floorIDCard"
                     {...register("registeredAddress.villageNumber")}
                   />
                   {errors.registeredAddress?.villageNumber && (
@@ -344,6 +348,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Moo"
                     id="mooIDCard"
+                    data-testid="mooIDCard"
                     {...register("registeredAddress.villageName")}
                   />
                   {errors.registeredAddress?.villageName && (
@@ -355,6 +360,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Soi"
                     id="soiIDCard"
+                    data-testid="soiIDCard"
                     {...register("registeredAddress.subStreetName")}
                   />
                 </div>
@@ -365,6 +371,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Road"
                     id="roadIDCard"
+                    data-testid="roadIDCard"
                     {...register("registeredAddress.streetName")}
                   />
                 </div>
@@ -373,6 +380,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Tambon"
                     id="tambonIDCard"
+                    data-testid="tambonIDCard"
                     list="tambonIDCardList"
                     {...register("registeredAddress.subDistrictName")}
                   />
@@ -389,6 +397,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Amphoe"
                     id="amphoeIDCard"
+                    data-testid="amphoeIDCard"
                     list="amphoeIDCardList"
                     {...register("registeredAddress.districtName")}
                   />
@@ -403,6 +412,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Province"
                     id="provinceIDCard"
+                    data-testid="provinceIDCard"
                     list="provinceIDCardList"
                     {...register("registeredAddress.provinceName")}
                   />
@@ -419,6 +429,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Postal Code"
                     id="postalCodeIDCard"
+                    data-testid="postalCodeIDCard"
                     list="postalCodeIDCardList"
                     {...register("registeredAddress.zipCode")}
                   />
@@ -433,6 +444,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Country"
                     id="countryIDCard"
+                    data-testid="countryIDCard"
                     list="countriesIDCard"
                     {...register("registeredAddress.countryName")}
                   />
@@ -492,6 +504,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Address Number"
                       id="addressNoHome"
+                      data-testid="addressNoHome"
                       {...register("currentAddress.homeNumber")}
                     />
                   </div>
@@ -500,6 +513,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Floor"
                       id="floorHome"
+                      data-testid="floorHome"
                       {...register("currentAddress.villageNumber")}
                     />
                   </div>
@@ -510,6 +524,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Moo"
                       id="mooHome"
+                      data-testid="mooHome"
                       {...register("currentAddress.villageName")}
                     />
                   </div>
@@ -518,6 +533,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Soi"
                       id="soiHome"
+                      data-testid="soiHome"
                       {...register("currentAddress.subStreetName")}
                     />
                   </div>
@@ -528,6 +544,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Road"
                       id="roadHome"
+                      data-testid="roadHome"
                       {...register("currentAddress.streetName")}
                     />
                   </div>
@@ -536,6 +553,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Tambon"
                       id="tambonHome"
+                      data-testid="tambonHome"
                       list="tambonHomeList"
                       {...register("currentAddress.subDistrictName")}
                     />
@@ -555,6 +573,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Amphoe"
                       id="amphoeHome"
+                      data-testid="amphoeHome"
                       list="amphoeHomeList"
                       {...register("currentAddress.districtName")}
                     />
@@ -569,6 +588,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Province"
                       id="provinceHome"
+                      data-testid="provinceHome"
                       list="provinceHomeList"
                       {...register("currentAddress.provinceName")}
                     />
@@ -585,6 +605,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Postal Code"
                       id="postalCodeHome"
+                      data-testid="postalCodeHome"
                       list="postalCodeHomeList"
                       {...register("currentAddress.zipCode")}
                     />
@@ -599,6 +620,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Country"
                       id="countryHome"
+                      data-testid="countryHome"
                       list="countriesHome"
                       {...register("currentAddress.countryName")}
                     />
@@ -827,6 +849,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Address Number"
                         id="addressNoWork"
+                        data-testid="addressNoWork"
                         {...register("officeAddress.homeNumber")}
                       />
                     </div>
@@ -835,6 +858,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Floor"
                         id="floorWork"
+                        data-testid="floorWork"
                         {...register("officeAddress.villageNumber")}
                       />
                     </div>
@@ -845,6 +869,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Moo"
                         id="mooWork"
+                        data-testid="mooWork"
                         {...register("officeAddress.villageName")}
                       />
                     </div>
@@ -853,6 +878,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Soi"
                         id="soiWork"
+                        data-testid="soiWork"
                         {...register("officeAddress.subStreetName")}
                       />
                     </div>
@@ -863,6 +889,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Road"
                         id="roadWork"
+                        data-testid="roadWork"
                         {...register("officeAddress.streetName")}
                       />
                     </div>
@@ -871,6 +898,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Tambon"
                         id="tambonWork"
+                        data-testid="tambonWork"
                         list="tambonWorkList"
                         {...register("officeAddress.subDistrictName")}
                       />
@@ -890,6 +918,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Amphoe"
                         id="amphoeWork"
+                        data-testid="amphoeWork"
                         list="amphoeWorkList"
                         {...register("officeAddress.districtName")}
                       />
@@ -904,6 +933,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Province"
                         id="provinceWork"
+                        data-testid="provinceWork"
                         list="provinceWorkList"
                         {...register("officeAddress.provinceName")}
                       />
@@ -920,6 +950,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Postal Code"
                         id="postalCodeWork"
+                        data-testid="postalCodeWork"
                         list="postalCodeWorkList"
                         {...register("officeAddress.zipCode")}
                       />
@@ -934,6 +965,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Country"
                         id="countryWork"
+                        data-testid="countryWork"
                         list="countriesWork"
                         {...register("officeAddress.countryName")}
                       />
@@ -1026,7 +1058,7 @@ export default function BasicInfo() {
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
                 >
-                  <option value="">กรุณาเลือกธนาคาร</option>
+                  <option value="" data-testid="firstBankName">กรุณาเลือกธนาคาร</option>
                   {bank.map((status) => (
                     <option key={status.code} value={status.name}>
                       {status.name}
@@ -1038,6 +1070,7 @@ export default function BasicInfo() {
                 <Input
                   type="text"
                   label="ชื่อสาขา"
+                  data-testid="firstBankBranch"
                   id="bankBranch"
                   {...register("firstBankAccount.bankBranchName")}
                 />
@@ -1046,6 +1079,7 @@ export default function BasicInfo() {
                 <Input
                   type="text"
                   label="กรุณาระบุเลขบัญชี"
+                  data-testid="firstBankAccount"
                   id="bankAccount"
                   {...register("firstBankAccount.bankAccountNumber")}
                 />
@@ -1094,7 +1128,7 @@ export default function BasicInfo() {
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
                     >
-                      <option value="">กรุณาเลือกธนาคาร</option>
+                      <option value="" data-testid="secondBankName">กรุณาเลือกธนาคาร</option>
                       {bank.map((status) => (
                         <option key={status.code} value={status.name}>
                           {status.name}
@@ -1106,6 +1140,7 @@ export default function BasicInfo() {
                     <Input
                       type="text"
                       label="ชื่อสาขา"
+                      data-testid="secondBankBranch"
                       id="bankBranchAdditional"
                       {...register("secondBankAccountBody.bankBranchName")}
                     />
@@ -1114,6 +1149,7 @@ export default function BasicInfo() {
                     <Input
                       type="text"
                       label="กรุณาระบุเลขบัญชี"
+                      data-testid="secondBankAccount"
                       id="bankAccountAdditional"
                       {...register("secondBankAccountBody.bankAccountNumber")}
                     />
@@ -1125,7 +1161,7 @@ export default function BasicInfo() {
         </CardContent>
       </Card>
       <div className="absolute right-4 -bottom-[4.5rem]">
-        <Button type="submit">Next Form</Button>
+        <Button type="submit" data-testid="submitButton">Next Form</Button>
       </div>
     </form>
   );

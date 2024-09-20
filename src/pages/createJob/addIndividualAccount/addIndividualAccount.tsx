@@ -150,7 +150,7 @@ export default function AddIndividualAccount() {
   const onSubmit = async (data: TIndividualAccount) => {
     console.log(data)
     let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
-    dispatch(setTestCorporateData(body));
+    dispatch(setTestCorporateData({...body,birthDate: new Date().toISOString()}));
     try {
       const token = getCookies();
       console.log("body to send ",body)

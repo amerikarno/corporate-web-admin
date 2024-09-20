@@ -343,6 +343,7 @@ export default function AddIndividualAccount() {
               <div className="w-1/2">
                 <Input
                   type="date"
+                  data-testid="birthDate"
                   {...register("birthDate")}
                   label="วัน/เดือน/ปี เกิด"
                 />
@@ -408,6 +409,7 @@ export default function AddIndividualAccount() {
                 <input
                   type="checkbox"
                   id="agreement"
+                  data-testid="agreement"
                   {...register("agreement")}
                 />
                 <label htmlFor="agreement" className="text-gray-500">
@@ -421,7 +423,7 @@ export default function AddIndividualAccount() {
               </div>
             </div>
             <div className="absolute right-4 -bottom-[4.5rem]">
-              <Button type="submit">Next Form</Button>
+              <Button type="submit" data-testid="submitButton">Next Form</Button>
             </div>
           </form>
         </CardContent>
