@@ -7,6 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useDispatch } from "react-redux";
 
 type TBankWithID = {
   CorporateCode?:string;
@@ -36,13 +38,14 @@ export function FormBank({ onsubmit, corporateCode ,  choosedEditData,
   } = useForm<TBank>({
     resolver: zodResolver(bankSchema),
   });
-
+  const dispatch = useDispatch();
   const onSubmit = async (data: TBank) => {
     let body: TBankArray = {
       bank: [data],
       CorporateCode: corporateCode,
       BankId: choosedEditData?.BankId,
     };
+    dispatch(setTestCorporateData(body));
     await sleep(500);
     console.log(body);
     reset();

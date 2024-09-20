@@ -15,6 +15,7 @@ import { copy } from "@/lib/utils";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { useEffect, useState } from "react";
 import { mapToForm2Create } from "../libs/utils";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 //import { getFrom2Response, mapToForm2Create } from "../libs/utils";
 
 type TCorporateTypeAndIncomeProps = {
@@ -490,7 +491,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   ) => {
     e.preventDefault();
     // console.log(resFrom2);
-
+    dispatch(setTestCorporateData(resFrom2));
     if (corporateData.CountrySourceIncomes) {
       // console.log("do update");
       await saveJuristicType(resFrom2);

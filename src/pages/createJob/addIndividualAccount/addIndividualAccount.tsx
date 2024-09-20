@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 
 export default function AddIndividualAccount() {
@@ -147,7 +148,9 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
+    console.log(data)
     let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
+    dispatch(setTestCorporateData(body));
     try {
       const token = getCookies();
       console.log("body to send ",body)
@@ -345,6 +348,7 @@ export default function AddIndividualAccount() {
                   type="date"
                   {...register("birthDate")}
                   label="วัน/เดือน/ปี เกิด"
+                  data-testid ="birthDate"
                 />
                 {errors.birthDate && (
                   <span className="text-red-500">
@@ -409,6 +413,7 @@ export default function AddIndividualAccount() {
                   type="checkbox"
                   id="agreement"
                   {...register("agreement")}
+                  data-testid ="agreement"
                 />
                 <label htmlFor="agreement" className="text-gray-500">
                   ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัว
@@ -421,7 +426,7 @@ export default function AddIndividualAccount() {
               </div>
             </div>
             <div className="absolute right-4 -bottom-[4.5rem]">
-              <Button type="submit">Next Form</Button>
+              <Button type="submit" data-testid="submitButton">Next Form</Button>
             </div>
           </form>
         </CardContent>

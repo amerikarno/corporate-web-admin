@@ -29,7 +29,7 @@ import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants2/ini
 import { copy } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import { useDispatch } from "react-redux";
-import { CommaInput } from "@/components/ui/cmmaAutoInput";
+// import { CommaInput } from "@/components/ui/cmmaAutoInput";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TCorporateInfoFormProps = {
@@ -307,6 +307,7 @@ export function FormCorporateInfo({
   };
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
+    console.log(data)
     const dateData = Date.parse(data.dateofincorporation);
     const formData: TCorporateInfo = {
       ...data,
@@ -599,7 +600,7 @@ export function FormCorporateInfo({
 
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold">Financial Information </h1>
-            <CommaInput
+            <Input
               step="0.01"
               id={"Registered Capital"}
               label={"Registered Capital"}
@@ -611,7 +612,7 @@ export function FormCorporateInfo({
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
             )}
-            <CommaInput
+            <Input
               step="0.01"
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
@@ -623,7 +624,7 @@ export function FormCorporateInfo({
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
             )}
-            <CommaInput
+            <Input
               step="0.01"
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
@@ -635,7 +636,7 @@ export function FormCorporateInfo({
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
             )}
-            <CommaInput
+            <Input
               step="0.01"
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}

@@ -13,6 +13,8 @@ import { DirectorAddressForm } from "./directorAddressForm";
 import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
 import { checkFormatIDCard } from "@/lib/utils";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useDispatch } from "react-redux";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
@@ -36,6 +38,8 @@ export function FormIndividualsDirector({
   const [hasDate, setHasDate] = useState<boolean>(
     choosedEditData?.expiryDate ? true : false
   );
+
+  const dispatch = useDispatch();
   const handleDropboxChoice = (choice: string) => {
     console.log(choice);
     setCurInputText("");
@@ -128,8 +132,6 @@ export function FormIndividualsDirector({
   };
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
-    // console.log(curInputText);
-    // console.log(dropDownChoosed);
     if (curInput && valideID()) {
       const formData = validateData(data);
       setCurInputText("");
@@ -149,7 +151,7 @@ export function FormIndividualsDirector({
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
-
+      dispatch(setTestCorporateData(body));
       console.log(body);
       clearChoosedEditData();
       onsubmit(body);
@@ -194,7 +196,7 @@ export function FormIndividualsDirector({
               <div className="w-1/2">
                 <Input
                   {...register("fullNames.0.firstName")}
-                  label="Name"
+                  label="First Name"
                   id="Name"
                   disabled={isSubmitting}
                 />
@@ -292,6 +294,7 @@ export function FormIndividualsDirector({
               {hasDate ? (
                 <div className="w-full md:w-1/2">
                   <Input
+                    data-testid="expiredDate"
                     {...register("expiryDate")}
                     id="Date of Expired"
                     onClick={() => setHasDate(false)}

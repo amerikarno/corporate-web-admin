@@ -14,6 +14,8 @@ import { TContactPerson } from "../constants2/types";
 import { TContact } from "../../constant/type";
 import { mapDataToTContactPerson } from "../libs/utils";
 import { useEffect } from "react";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useDispatch } from "react-redux";
 type TContactPersonArray = {
   contacts: TContactPerson[];
   corporateCode?: string;
@@ -35,7 +37,7 @@ export function FormIndividualsContactPerson({
 }: TContactPersonFormProps) {
 
   console.log(choosedEditData)
-  
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -60,6 +62,7 @@ export function FormIndividualsContactPerson({
 
 
   const onSubmit = async (data: TContactPerson) => {
+    dispatch(setTestCorporateData(data))
     console.log(data)
     let formData: TContactPersonArray = {
       contacts: [{...data,personalId:choosedEditData?.personalId}],
@@ -98,7 +101,7 @@ export function FormIndividualsContactPerson({
               <div className="w-1/2">
                 <Input
                   {...register("fullNames.0.firstName")}
-                  label="Name"
+                  label="First Name"
                   id="Name"
                   disabled={isSubmitting}
                 />
