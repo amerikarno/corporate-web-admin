@@ -36,10 +36,10 @@ export default function Header() {
 
   return (
     <nav className="w-full bg-green-950 fixed top-0 h-16 flex justify-between items-center z-50">
-      <div className="flex w-2/5 justify-start pl-4 sm:pl-0 ml-5 sm:justify-start items-start">
+      <div className="flex w-[270px] justify-start pl-4 ml-5  items-start">
         <div id="logo" className="hidden sm:inline">
-          <img className="w-[100px] " src="./src/assets/logo_ecg-03.png" alt="logo" />
-          {/* <div className="font-bold text-xl headerlogo">Elite Consulting</div> */}
+          {/* <img  src="@/src/assets/logo_ecg-03.png" typeof="image/png"/> */}
+          <div className="font-bold text-xl headerlogo">eliteconsulting</div>
         </div>
         <div id="hamburger-menu" className="md:hidden ">
           <Sheet>
