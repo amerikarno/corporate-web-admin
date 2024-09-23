@@ -1,25 +1,64 @@
 import { Card } from "@/components/ui/card";
 import { TCorporateInfo } from "../constants2/types";
 import { FormCorporateTypeAndIncome } from "../components/formCorporateInfo2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { TCorporateData } from "../../constant/type";
 import { mapDataToTCorporateInfo } from "../libs/utils";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getCookies } from "@/lib/Cookies";
+import { sleep } from "@/lib/utils";
+import { setCurrentCorporateInfo } from "@/features/currentSelectedCorperate/currentCorperrateInfoSlice";
+import axios from "@/api/axios";
 
-type TPageJuristicTypeProps = {
-  currentCorporatesInfo: TCorporateInfo;
-  corporateCode?: string;
-};
-export function PageJuristicType({
-  currentCorporatesInfo,
-  corporateCode,
-}: TPageJuristicTypeProps) {
-  const corporateData: TCorporateData = useSelector<RootState>(
+// type TPageJuristicTypeProps = {
+//   currentCorporatesInfo: TCorporateInfo;
+//   corporateCode?: string;
+// };
+export function PageJuristicType() {
+  const corporateData: TCorporateData = useSelector<RootState, TCorporateData>(
     (state) => state.editCorporate
   ) as TCorporateData;
+
+  const currentCorporatesInfo: TCorporateInfo = useSelector<
+    RootState,
+    TCorporateInfo
+  >((state) => state.currentCorporateInfo);
+  const dispatch = useDispatch();
   // console.log("corporateData", corporateData);
   // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
+  const corporateCode = localStorage.getItem("corporateCode");
+
+  useEffect(() => {
+    const fetchCorpInfo = async () => {
+      try {
+        const queryResponse = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode: corporateCode },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          }
+        );
+        if (queryResponse.status === 200 && queryResponse.data.length > 0) {
+          dispatch(setCurrentCorporateInfo(queryResponse.data[0]));
+          // setCurrentCorporatesInfo(data);
+        } else {
+          alert("Failed to retrieve corporate data after creation.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (corporateCode !== null) {
+      fetchCorpInfo();
+    }
+  }, [dispatch]);
 
   return (
     <>
@@ -55,7 +94,7 @@ export function PageJuristicType({
         </Card>
         <FormCorporateTypeAndIncome
           corporateInfo={currentCorporatesInfo}
-          corporateCode={corporateCode}
+          corporateCode={currentCorporatesInfo.corporateCode}
         />
       </div>
     </>

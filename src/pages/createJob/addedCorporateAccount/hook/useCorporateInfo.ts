@@ -1,71 +1,20 @@
 import { useState } from "react";
 import { TCorporateInfo } from "../constants2/types";
-import { isExpiredToken } from "@/lib/utils";
+import { copy, isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { sleep } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { setCurrentCorporateInfo } from "@/features/currentSelectedCorperate/currentCorperrateInfoSlice";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
-  const [currentCorporatesInfo, setCurrentCorporatesInfo] =
-    useState<TCorporateInfo>({
-      name: "",
-      registrationNo: "",
-      taxId: "",
-      dateofincorporation: "",
-      registeredBusiness: {
-        address: [
-          {
-            addressNo: "",
-            building: "",
-            floor: "",
-            mooNo: "",
-            soi: "",
-            road: "",
-            tambon: "",
-            amphoe: "",
-            province: "",
-            postalCode: "",
-            country: "",
-          },
-        ],
-        emailAddress: "",
-        telephone: "",
-      },
-      placeofIncorporation: {
-        address: [
-          {
-            addressNo: "",
-            building: "",
-            floor: "",
-            mooNo: "",
-            soi: "",
-            road: "",
-            tambon: "",
-            amphoe: "",
-            province: "",
-            postalCode: "",
-            country: "",
-          },
-        ],
-        emailAddress: "",
-        telephone: "",
-      },
-      registeredCapital: 0,
-      revenuePerYear: 0,
-      netProFitLoss: 0,
-      shareholderEquity: 0,
-      registered: "",
-      isRegisteredOther: false,
-      isRegisteredThailand: true,
-      primary: "",
-      isPrimaryCountry: true,
-      isPrimaryOther: false,
-      corporateCode: "",
-    });
+  const currentCorporatesInfo = useSelector<RootState, TCorporateInfo>(
+    (state) => state.currentCorporateInfo
+  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -85,7 +34,7 @@ export function useCorporateInfo() {
   const createCorporateInfo = async (data: TCorporateInfo) => {
     console.log("Input Data:", data);
 
-    const body = {
+    let body = {
       ...data,
       dateofincorporation: new Date(data.dateofincorporation),
     };
@@ -114,8 +63,8 @@ export function useCorporateInfo() {
         createResponse.data.corporateCode.toString()
       );
       const corporateCode = localStorage.getItem("corporateCode") || "";
-      data.corporateCode = corporateCode;
-      console.log("Corporate Data with Code:", data);
+      body.corporateCode = corporateCode;
+      console.log("Corporate Data with Code:", body);
 
       const queryResponse = await axios.post(
         "/api/v1/corporate/query",
@@ -131,7 +80,8 @@ export function useCorporateInfo() {
         dispatch(setCorporateData(queryResponse.data[0]));
 
         setCorporatesInfo((prev) => [...prev, data]);
-        setCurrentCorporatesInfo(data);
+        dispatch(setCurrentCorporateInfo(queryResponse.data[0]));
+        // setCurrentCorporatesInfo(data);
 
         await sleep(500);
         navigate("/create-job/added-corporate-account/2");
@@ -163,9 +113,11 @@ export function useCorporateInfo() {
       });
       if (res.status === 200) {
         console.log(res);
-        data.corporateCode = res.data.CorporateCode;
-        setCorporatesInfo([...corporatesInfo, data]);
-        setCurrentCorporatesInfo(data);
+        let newData = copy(data);
+        newData.corporateCode = res.data.CorporateCode;
+        setCorporatesInfo([...corporatesInfo, newData]);
+        dispatch(setCurrentCorporateInfo(newData));
+        // setCurrentCorporatesInfo(data);
         await sleep(500);
         navigate("/create-job/added-corporate-account/2");
       } else {
@@ -181,7 +133,6 @@ export function useCorporateInfo() {
     corporatesInfo,
     currentCorporatesInfo,
     handleSubmitCorporateInfo,
-    setCurrentCorporatesInfo,
     setCorporatesInfo,
   };
 }

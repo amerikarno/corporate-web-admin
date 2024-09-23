@@ -5,16 +5,19 @@ import { UseSuitTest } from "../hook/useSuitTest";
 import { SuitTableResult } from "../components/suitTableResult";
 import { CheckBox } from "@/components/Checkbox";
 import { TCorporateData } from "../../constant/type";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
-type TPageSuitTestProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
-};
+// type TPageSuitTestProps = {
+//   corporateCode: string;
+//   corporatesInfo?: TCorporateData;
+// };
 
-export function PageSuitTest({
-  corporateCode,
-  corporatesInfo,
-}: TPageSuitTestProps) {
+export function PageSuitTest() {
+  const corporatesInfo = useSelector<RootState, TCorporateData>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
+
   const {
     answerSuiteTest,
     quizSuiteTest,
@@ -26,7 +29,7 @@ export function PageSuitTest({
     opitionalQuiz,
     handelOptionalQuiz,
     isSubmit,
-  } = UseSuitTest(corporateCode);
+  } = UseSuitTest(corporatesInfo.CorporateCode.toString());
 
   if (isLoading) {
     return <div>Loading Suitability Questions...</div>;

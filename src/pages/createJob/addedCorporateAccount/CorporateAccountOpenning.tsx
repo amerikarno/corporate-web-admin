@@ -35,106 +35,83 @@ export default function CorporateAccountOpenning() {
   if (!isAllowedPage(2001)) {
     return <UnAuthorize />;
   }
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [corporateCode, setCorporateCode] = useState("");
+  // const [corporateCode, setCorporateCode] = useState("");
 
-  const corporateData: TCorporateData = useSelector<RootState>(
-    (state) => state.editCorporate
-  ) as TCorporateData;
+  // const corporateData: TCorporateData = useSelector<RootState>(
+  //   (state) => state.editCorporate
+  // ) as TCorporateData;
 
-  const initFormData = mapDataToTCorporateInfo(corporateData);
+  // const initFormData = mapDataToTCorporateInfo(corporateData);
 
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
 
-  const fetchCorporateData = async () => {
-    try {
-      const corporateCode = localStorage.getItem("corporateCode") || "";
-      setCorporateCode(corporateCode);
-      // console.log(corporateCode);
+  // const fetchCorporateData = async () => {
+  //   try {
+  //     const corporateCode = localStorage.getItem("corporateCode") || "";
+  //     setCorporateCode(corporateCode);
+  //     // console.log(corporateCode);
 
-      if (corporateCode) {
-        const response = await axios.post(
-          "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
-          {
-            headers: {
-              Authorization: `Bearer ${getCookies()}`,
-            },
-          }
-        );
-        // console.log(response);
-        dispatch(setCorporateData(response.data[0]));
-      } else {
-        dispatch(clearCorporateData());
-        // console.log("corporateCode not found");
-      }
-    } catch (error) {
-      console.error("Error fetching corporate data:", error);
-    }
-  };
+  //     if (corporateCode) {
+  //       const response = await axios.post(
+  //         "/api/v1/corporate/query",
+  //         { corporateCode: corporateCode },
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${getCookies()}`,
+  //           },
+  //         }
+  //       );
+  //       // console.log(response);
+  //       dispatch(setCorporateData(response.data[0]));
+  //     } else {
+  //       dispatch(clearCorporateData());
+  //       // console.log("corporateCode not found");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching corporate data:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchCorporateData();
-  }, [corporateCode, pageId, dispatch]);
+  // useEffect(() => {
+  //   fetchCorporateData();
+  // }, [corporateCode, pageId, dispatch]);
 
-  // console.log(corporateData);
-  const navigate = useNavigate();
-  const { handleSubmitCorporateInfo, currentCorporatesInfo } =
-    useCorporateInfo();
+  // // console.log(corporateData);
+
+  // const { handleSubmitCorporateInfo, currentCorporatesInfo } =
+  //   useCorporateInfo();
 
   //const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
+
   const mappingPages: TMapPages = {
     1: (
       <PageCorporateInfo
-        corporatesInfo={corporateData}
-        initData={initFormData}
-        handleSubmitCorporateInfo={handleSubmitCorporateInfo}
+      // corporatesInfo={corporateData}
+      // initData={initFormData}
+      // handleSubmitCorporateInfo={handleSubmitCorporateInfo}
       />
     ),
     2: (
       <PageJuristicType
-        currentCorporatesInfo={currentCorporatesInfo}
-        corporateCode={corporateCode}
+      // currentCorporatesInfo={currentCorporatesInfo}
+      // corporateCode={corporateCode}
       />
     ),
-    3: (
-      <PageContactPerson
-      />
-    ),
-    4: (
-      <ListOfDirectors
-      />
-    ),
-    5: (
-      <PageIndividualShareholder
-      />
-    ),
-    6: (
-      <PageJuristicShareholder
-      />
-    ),
-    7: (
-      <PageAuthorizedPerson
-      />
-    ),
-    8: (
-      <PageAttorney
-      />
-    ),
-    9: (
-      <PageBankAccount
-      />
-    ),
-    10: (
-      <UploadFiles
-      />
-    ),
+    3: <PageContactPerson />,
+    4: <ListOfDirectors />,
+    5: <PageIndividualShareholder />,
+    6: <PageJuristicShareholder />,
+    7: <PageAuthorizedPerson />,
+    8: <PageAttorney />,
+    9: <PageBankAccount />,
+    10: <UploadFiles />,
     11: (
       <PageSuitTest
-        corporateCode={corporateCode}
-        corporatesInfo={corporateData}
+      // corporateCode={corporateCode}
+      // corporatesInfo={corporateData}
       />
     ),
   };
