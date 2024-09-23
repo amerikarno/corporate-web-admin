@@ -35,11 +35,11 @@ export default function Header() {
   };
 
   return (
-    <nav className="w-full bg-slate-900 fixed top-0 h-16 flex justify-between items-center z-50">
-      <div className="flex w-[270px] justify-start pl-4 sm:pl-0 sm:justify-center items-center">
+    <nav className="w-full bg-green-950 fixed top-0 h-16 flex justify-between items-center z-50">
+      <div className="flex w-2/5 justify-start pl-4 sm:pl-0 ml-5 sm:justify-start items-start">
         <div id="logo" className="hidden sm:inline">
-          {/* <img src={Logo} alt="logo" /> */}
-          <div className="font-bold text-xl headerlogo">Digital Asset</div>
+          <img className="w-[100px] " src="./src/assets/logo_ecg-03.png" alt="logo" />
+          {/* <div className="font-bold text-xl headerlogo">Elite Consulting</div> */}
         </div>
         <div id="hamburger-menu" className="md:hidden ">
           <Sheet>
@@ -94,6 +94,10 @@ export default function Header() {
           </Sheet>
         </div>
       </div>
+      {/* <div className="font-bold text-xl text-white text-center">
+        <span className="block xl:hidden">ECG</span>
+        <span className="hidden xl:block">ELITE CONSULTING GROUP</span>
+      </div> */}
       <div className="flex text-secondary-backoffice space-x-2 p-4 w-2/5 justify-between">
         <Separator orientation={"vertical"} />
         <DropdownMenu>
