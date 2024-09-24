@@ -181,11 +181,15 @@ export function FormCorporateTypeAndIncome() {
       tmp.CountrySourceIncomes[0].otherInvestment = data.otherInvestment
         ? data.otherInvestment
         : "";
-      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data.isThailand
+      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data
+        .corporateCountry?.isThailand
         ? true
         : false;
-      tmp.CountrySourceIncomes[0].corporateCountry.other = data.otherCountry
-        ? data.otherCountry
+      tmp.CountrySourceIncomes[0].corporateCountry.other = !data
+        .corporateCountry?.isThailand
+        ? data.corporateCountry?.other
+          ? data.corporateCountry?.other
+          : ""
         : "";
     }
     // console.log(tmp);

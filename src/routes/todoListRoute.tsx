@@ -2,7 +2,7 @@ import BlankPage from "@/pages/blankPages/blankPage";
 import TransactionList from "@/pages/todoList/orderTrade/transactionList";
 import TodoCorporateAccountOpenning from "@/pages/todoList/corporateAccountOpening/corporateAccountOpening";
 import TodoIndividualAccount from "@/pages/todoList/addIndividualAccount/ToDoIndividualAccount";
-import { EditCorporateAccount } from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
+import EditCorporateAccount from "@/pages/todoList/corporateAccountOpening/edit/editCorporateAccount";
 import { Route, Outlet } from "react-router-dom";
 import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/EditPageAddIndividualAccount";
 import BankTransactionList from "@/pages/todoList/bankTransactionList/bankTransactionList";
@@ -55,10 +55,10 @@ export const todoListRoutes = () => {
       <Route path="orders-trades" element={<TransactionList />} />
       <Route
         path="cash-deposit-withdraw"
-        element={<BankTransactionList/>}
+        element={<BankTransactionList />}
         // element={<BlankPage name="cash deposit/withdraw transaction is developing"/>}
       />
-      <Route path="fx-exchange" element={<FxExchangeTransactionList/>}/>
+      <Route path="fx-exchange" element={<FxExchangeTransactionList />} />
     </Route>
   );
 };

@@ -7,8 +7,11 @@ import { AxiosError } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSuit, setSuit } from "@/features/suit/suitSlice";
 import { copy, isEmptyObject } from "@/lib/utils";
+import { RootState } from "@/app/store";
+import { TCorporateData } from "../../constant/type";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
-export function UseSuitTest(corporateCode: string) {
+export function useSuitTest() {
   const suitData = useSelector((state: any) => state.suit);
   const dispatch = useDispatch();
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
@@ -20,6 +23,10 @@ export function UseSuitTest(corporateCode: string) {
   const [opitionalQuiz, setOpitionalQuiz] = useState<string[]>(["", ""]);
   const [isSubmit, setIsSubmit] = useState(false);
   const additionalQuiz = useRef<boolean[]>([]);
+  const [isSave, setIsSave] = useState(false);
+  const corporatesInfo = useSelector<RootState, TCorporateData>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
 
   const validate = () => {
     let err: string[] = [];
@@ -43,7 +50,7 @@ export function UseSuitTest(corporateCode: string) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validate()) {
       const additionData = {
         answer: [...answerSuiteTest],
@@ -68,7 +75,7 @@ export function UseSuitTest(corporateCode: string) {
 
       const grade = giveGrade(score);
       const ans = {
-        corporateCode: corporateCode,
+        corporateCode: corporatesInfo.CorporateCode.toString(),
         totalScore: score,
         level: grade,
         investorTypeRisk: mapScore[grade],
@@ -80,20 +87,24 @@ export function UseSuitTest(corporateCode: string) {
       setScore(score);
       setIsSubmit(true);
       dispatch(setSuit(ans));
-      saveSuitTest(ans);
+      await saveSuitTest(ans);
     }
   };
 
   const saveSuitTest = async (ans: any) => {
     console.log(ans);
+    const url = isSave
+      ? "/api/v1/suitetest/result/edit"
+      : "/api/v1/suitetest/result/save";
     try {
-      const res = await axios.post("/api/v1/suitetest/result/edit", ans, {
+      const res = await axios.post(url, ans, {
         headers: { Authorization: `Bearer ${getCookies()}` },
       });
       console.log(ans);
       if (res.status === 200) {
         console.log("request success", res.data);
         dispatch(resetSuit());
+        setIsSave(true);
       } else {
         console.log("save failed");
       }
@@ -122,10 +133,12 @@ export function UseSuitTest(corporateCode: string) {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name } = e.target;
+    console.log(name);
     let tmp = [...opitionalQuiz];
     tmp[index] = name;
     setOpitionalQuiz(tmp);
     additionalQuiz.current[index] = name === "yes" ? true : false;
+    console.log(additionalQuiz.current);
   };
 
   const handleChoice = (
@@ -136,8 +149,8 @@ export function UseSuitTest(corporateCode: string) {
     type?: string
   ) => {
     isSubmit ? setIsSubmit(false) : null;
+    // const hasSelected = answerSuiteTest?.some((list) => list.id === quizId);
     let tmp = copy(answerSuiteTest);
-    console.log();
     if (type === "2") {
       let listChoice = typeTwoAns;
       listChoice[choiceIndex] = e.target.checked ? choiceIndex + 1 : 0;
@@ -149,6 +162,7 @@ export function UseSuitTest(corporateCode: string) {
       };
       setAnswerSuiteTest(tmp);
       setTypeTwoAns(listChoice);
+      // console.log(rm);
     } else {
       tmp[quizIndex] = {
         id: quizId,
@@ -157,6 +171,7 @@ export function UseSuitTest(corporateCode: string) {
         quiz: quizIndex + 1,
       };
       setAnswerSuiteTest(tmp);
+      // console.log(quizIndex + 1, choiceIndex + 1);
     }
     errorCheck(quizId);
   };
@@ -177,8 +192,8 @@ export function UseSuitTest(corporateCode: string) {
             }
           );
           if (res.status == 200) {
-            console.log(res.data[0].SuitTestResult);
             dispatch(setSuit(res.data[0].SuitTestResult));
+            dispatch(setCorporateData(res.data[0]));
             return res.data[0].SuitTestResult;
           }
         } catch (error) {
@@ -221,7 +236,6 @@ export function UseSuitTest(corporateCode: string) {
       const data = await fetchSuitData();
       setIsLoading(false);
 
-      console.log(data);
       if (data && data !== null) {
         let tmpAns = [];
         if (
@@ -238,11 +252,11 @@ export function UseSuitTest(corporateCode: string) {
             };
             tmpAns.push(ans);
           }
-          console.log(tmpAns);
         }
         setAnswerSuiteTest(tmpAns);
 
         let tmpAddition = [];
+        let additional: boolean[] = [];
         if (
           data.suitTestResult.additional !== undefined &&
           data.suitTestResult.additional !== null
@@ -251,13 +265,17 @@ export function UseSuitTest(corporateCode: string) {
             const element = data.suitTestResult.additional[i];
             if (element === undefined || element === null) {
               tmpAddition.push("");
+              additional.push(false);
             } else {
               tmpAddition.push(element === true ? "yes" : "no");
+              additional.push(element === true ? true : false);
             }
           }
         }
         setOpitionalQuiz(tmpAddition);
+        additionalQuiz.current = additional;
         console.log(tmpAddition);
+        console.log(additionalQuiz.current);
       }
     }
   };
@@ -279,5 +297,6 @@ export function UseSuitTest(corporateCode: string) {
     isSubmit,
     fetchSuitData,
     additionalQuiz,
+    corporatesInfo,
   };
 }

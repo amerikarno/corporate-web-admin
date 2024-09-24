@@ -50,7 +50,7 @@ export function useSuitTest() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validate()) {
       const additionData = {
         answer: [...answerSuiteTest],
@@ -87,7 +87,7 @@ export function useSuitTest() {
       setScore(score);
       setIsSubmit(true);
       dispatch(setSuit(ans));
-      saveSuitTest(ans);
+      await saveSuitTest(ans);
     }
   };
 
@@ -133,10 +133,12 @@ export function useSuitTest() {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name } = e.target;
+    console.log(name);
     let tmp = [...opitionalQuiz];
     tmp[index] = name;
     setOpitionalQuiz(tmp);
     additionalQuiz.current[index] = name === "yes" ? true : false;
+    console.log(additionalQuiz.current);
   };
 
   const handleChoice = (
@@ -254,6 +256,7 @@ export function useSuitTest() {
         setAnswerSuiteTest(tmpAns);
 
         let tmpAddition = [];
+        let additional: boolean[] = [];
         if (
           data.suitTestResult.additional !== undefined &&
           data.suitTestResult.additional !== null
@@ -262,13 +265,17 @@ export function useSuitTest() {
             const element = data.suitTestResult.additional[i];
             if (element === undefined || element === null) {
               tmpAddition.push("");
+              additional.push(false);
             } else {
               tmpAddition.push(element === true ? "yes" : "no");
+              additional.push(element === true ? true : false);
             }
           }
         }
         setOpitionalQuiz(tmpAddition);
-        // console.log(tmpAddition);
+        additionalQuiz.current = additional;
+        console.log(tmpAddition);
+        console.log(additionalQuiz.current);
       }
     }
   };
