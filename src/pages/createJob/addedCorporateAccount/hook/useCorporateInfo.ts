@@ -6,15 +6,11 @@ import axios from "@/api/axios";
 import { sleep } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { useDispatch } from "react-redux";
 import { setCurrentCorporateInfo } from "@/features/currentSelectedCorperate/currentCorperrateInfoSlice";
 
 export function useCorporateInfo() {
   const [corporatesInfo, setCorporatesInfo] = useState<TCorporateInfo[]>([]);
-  const currentCorporatesInfo = useSelector<RootState, TCorporateInfo>(
-    (state) => state.currentCorporateInfo
-  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -130,9 +126,6 @@ export function useCorporateInfo() {
   };
 
   return {
-    corporatesInfo,
-    currentCorporatesInfo,
     handleSubmitCorporateInfo,
-    setCorporatesInfo,
   };
 }

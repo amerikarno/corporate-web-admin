@@ -1,7 +1,5 @@
-import { TCorporateInfo } from "../constants2/types";
 import { Card } from "@/components/ui/card";
 import { FormCorporateInfo } from "../components/formCorporateInfo";
-import { TCorporateInfoSchema } from "../constants2/schemas";
 import { TCorporateData } from "../../constant/type";
 import { useEffect } from "react";
 import { getCookies } from "@/lib/Cookies";
@@ -15,18 +13,10 @@ import { useCorporateInfo } from "../hook/useCorporateInfo";
 import { mapDataToTCorporateInfo } from "../libs/utils";
 import { RootState } from "@/app/store";
 
-// type TPageCorporateInfoProps = {
-//   initData?: TCorporateInfoSchema;
-//   corporatesInfo?: TCorporateData;
-//   handleSubmitCorporateInfo: (data: TCorporateInfo) => Promise<void>;
-// };
 export function PageCorporateInfo() {
-  // console.log(corporatesInfo)
-  //   console.log(initData)
   const corporateData: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
-
   const dispatch = useDispatch();
 
   const fetchCorporateData = async () => {

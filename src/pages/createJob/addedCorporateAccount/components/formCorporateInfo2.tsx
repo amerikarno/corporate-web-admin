@@ -15,14 +15,8 @@ import { copy } from "@/lib/utils";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { useEffect, useState } from "react";
 import { mapToForm2Create } from "../libs/utils";
-//import { getFrom2Response, mapToForm2Create } from "../libs/utils";
 
-type TCorporateTypeAndIncomeProps = {
-  corporateInfo?: TCorporateInfo;
-  corporateCode?: string;
-};
-
-export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
+export function FormCorporateTypeAndIncome() {
   const getCheckedLabel = (corpData: TCorporateData) => {
     // console.log(corpData);
     const jrType = corpData?.CorporateTypes;
@@ -83,39 +77,14 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // console.log(resFrom2);
-
-  const fetchCorporateTypeData = async () => {
-    try {
-      const token = getCookies();
-      const corporateCodeString = corporateData.CorporateCode.toString();
-      const res = await axios.post(
-        "/api/v1/corporate/query",
-        { corporateCode: corporateCodeString },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      // console.log("form2 fetch data: ", res);
-      if (res.status === 200) {
-        dispatch(setCorporateData(res.data[0]));
-      }
-    } catch (error) {
-      console.error("Error fetchCorporateTypeData data:", error);
-    }
-  };
-
   useEffect(() => {
-    if (corpData.CorporateCode !== 0) fetchCorporateTypeData();
     setResForm2({
       ...corporateData.BusinessTypes,
       ...corporateData.CorporateTypes,
       ...corporateData.SourceOfIncomes,
       ...corporateData.CountrySourceIncomes?.[0],
     });
-  }, [dispatch, corporateData.CorporateCode, token]);
+  }, [dispatch, corporateData.CorporateCode]);
 
   const setStoreData = (data: CorporateResponse) => {
     let tmp = copy(corporateData);

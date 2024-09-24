@@ -1,33 +1,20 @@
 import { Card } from "@/components/ui/card";
-import { TCorporateInfo } from "../constants2/types";
 import { FormCorporateTypeAndIncome } from "../components/formCorporateInfo2";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { TCorporateData } from "../../constant/type";
 import { mapDataToTCorporateInfo } from "../libs/utils";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getCookies } from "@/lib/Cookies";
-import { sleep } from "@/lib/utils";
-import { setCurrentCorporateInfo } from "@/features/currentSelectedCorperate/currentCorperrateInfoSlice";
 import axios from "@/api/axios";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
-// type TPageJuristicTypeProps = {
-//   currentCorporatesInfo: TCorporateInfo;
-//   corporateCode?: string;
-// };
 export function PageJuristicType() {
   const corporateData: TCorporateData = useSelector<RootState, TCorporateData>(
     (state) => state.editCorporate
   ) as TCorporateData;
 
-  const currentCorporatesInfo: TCorporateInfo = useSelector<
-    RootState,
-    TCorporateInfo
-  >((state) => state.currentCorporateInfo);
   const dispatch = useDispatch();
-  // console.log("corporateData", corporateData);
-  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
   const initFormData = mapDataToTCorporateInfo(corporateData);
   const corporateCode = localStorage.getItem("corporateCode");
 
@@ -45,8 +32,7 @@ export function PageJuristicType() {
           }
         );
         if (queryResponse.status === 200 && queryResponse.data.length > 0) {
-          dispatch(setCurrentCorporateInfo(queryResponse.data[0]));
-          // setCurrentCorporatesInfo(data);
+          dispatch(setCorporateData(queryResponse.data[0]));
         } else {
           alert("Failed to retrieve corporate data after creation.");
         }
@@ -92,10 +78,7 @@ export function PageJuristicType() {
             </div>
           </div>
         </Card>
-        <FormCorporateTypeAndIncome
-          corporateInfo={currentCorporatesInfo}
-          corporateCode={currentCorporatesInfo.corporateCode}
-        />
+        <FormCorporateTypeAndIncome />
       </div>
     </>
   );
