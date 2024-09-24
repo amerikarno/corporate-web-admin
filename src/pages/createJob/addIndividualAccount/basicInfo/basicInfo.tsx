@@ -212,7 +212,6 @@ export default function BasicInfo() {
   // },[])
 
   const onSubmit = async (data: TBasicInfo) => {
-    dispatch(setTestCorporateData(data));
     let prebody = {
       ...data,
       registeredAddress: {
@@ -258,6 +257,7 @@ export default function BasicInfo() {
       pageID: 300,
     };
     console.log(body);
+    dispatch(setTestCorporateData(body));
     try {
       const token = getCookies();
       const registeredAddressFind: TBasicinfoAddress | null =
@@ -646,6 +646,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6 ">
               <div className="flex w-1/2">
                 <select
+                  data-testid="education"
                   {...register("occupation.education")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -653,7 +654,7 @@ export default function BasicInfo() {
                 >
                   <option value="">ระดับการศึกษาสูงสุด</option>
                   {educationTypes.map((status) => (
-                    <option key={status.id} value={status.id}>
+                    <option key={status.id} value={status.id} data-testid={`education-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -661,6 +662,7 @@ export default function BasicInfo() {
               </div>
               <div className="w-1/2">
                 <select
+                  data-testid="sourceOfIncome"
                   {...register("occupation.sourceOfIncome")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -668,7 +670,7 @@ export default function BasicInfo() {
                 >
                   <option value="">แหล่งที่มาของเงินลงทุน</option>
                   {sourceOfIncome.map((status) => (
-                    <option key={status.id} value={status.id}>
+                    <option key={status.id} value={status.id} data-testid={`sourceOfIncome-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -678,6 +680,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
+                  data-testid="currentOccupation"
                   {...register("occupation.currentOccupation")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                     text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -685,7 +688,7 @@ export default function BasicInfo() {
                 >
                   <option value="">อาชีพปัจจุบัน</option>
                   {careerTypes.map((status) => (
-                    <option key={status.id} value={status.id}>
+                    <option key={status.id} value={status.id} data-testid={`currentOccupation-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -731,6 +734,7 @@ export default function BasicInfo() {
               {showBusinessType ? (
                 <div className="w-1/2">
                   <select
+                    data-testid="typeOfBusiness"
                     {...register("occupation.typeOfBusiness")}
                     className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -738,7 +742,7 @@ export default function BasicInfo() {
                   >
                     <option value="">ประเภทธุระกิจ</option>
                     {businessTypes.map((status) => (
-                      <option key={status.id} value={status.id}>
+                      <option key={status.id} value={status.id} data-testid={`typeOfBusiness-${status.name}`}>
                         {status.name}
                       </option>
                     ))}
@@ -780,6 +784,7 @@ export default function BasicInfo() {
               <div className="flex space-x-6">
                 <div className="w-1/2">
                   <select
+                    data-testid="salaryRange"
                     {...register("occupation.salaryRange")}
                     className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -787,7 +792,7 @@ export default function BasicInfo() {
                   >
                     <option value="">รายได้ต่อเดือน</option>
                     {salaryRange.map((status) => (
-                      <option key={status.id} value={status.id}>
+                      <option key={status.id} value={status.id} data-testid={`salaryRange-${status.name}`}>
                         {status.name}
                       </option>
                     ))}
@@ -1053,14 +1058,15 @@ export default function BasicInfo() {
             <div className="space-y-4">
               <div className="flex space-x-4">
                 <select
+                  data-testid="firstBankName"
                   {...register("firstBankAccount.bankName")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
                 >
-                  <option value="" data-testid="firstBankName">กรุณาเลือกธนาคาร</option>
+                  <option value="">กรุณาเลือกธนาคาร</option>
                   {bank.map((status) => (
-                    <option key={status.code} value={status.name}>
+                    <option key={status.code} value={status.name} data-testid={`firstBankName-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -1123,14 +1129,15 @@ export default function BasicInfo() {
                 <div className="space-y-4 pt-4">
                   <div className="flex space-x-4">
                     <select
+                      data-testid="secondBankName"
                       {...register("secondBankAccountBody.bankName")}
                       className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
                     >
-                      <option value="" data-testid="secondBankName">กรุณาเลือกธนาคาร</option>
+                      <option value="">กรุณาเลือกธนาคาร</option>
                       {bank.map((status) => (
-                        <option key={status.code} value={status.name}>
+                        <option key={status.code} value={status.name} data-testid={`secondBankName-${status.name}`}>
                           {status.name}
                         </option>
                       ))}

@@ -16,6 +16,7 @@ import { RootState } from "@/app/store";
 import { bank } from "@/constant/variables";
 import { setBankOrder } from "@/features/bankOrder/bankOrdersSlice";
 import { BsBank2 } from "react-icons/bs";
+import { BiMoneyWithdraw } from "react-icons/bi";
 
 export default function BankOrderEdit() {
   if (!isAllowedPage(2020)) {
@@ -264,6 +265,7 @@ export default function BankOrderEdit() {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
             <Card className="w-2/3 p-4 md:space-y-4 md:p-10  space-y-4">
+            <span className="flex justify-start items-center font-bold md:text-xl py-2 gap-2">Cash Deposit/Withdraw<span><BiMoneyWithdraw /></span></span>
               <div className="flex justify-center ">
                 <div className="w-2/3">
                 <Input

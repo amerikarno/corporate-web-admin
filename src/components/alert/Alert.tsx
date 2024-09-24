@@ -33,7 +33,7 @@ const Alert = ({ type, onClose }: AlertProps) => {
         </div>
         <div className="alert-loader"></div>
         {/* <span className="alert-message">{message}</span> */}
-        <button className="alert-close" onClick={() => { setIsVisible(false); setTimeout(onClose, 500); }}>&times;</button>
+        <button className="alert-close" data-testid="closeAlert" onClick={() => { setIsVisible(false); setTimeout(onClose, 500); }}>&times;</button>
       </div>
     </div>
   );

@@ -492,11 +492,12 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
     e.preventDefault();
     // console.log(resFrom2);
     dispatch(setTestCorporateData(resFrom2));
-    if (corporateData.CountrySourceIncomes) {
-      // console.log("do update");
+    // if (corporateData.CountrySourceIncomes) {
+    if(corporateData.CorporateTypes.corporateCode !== 0){
+      console.log("do update");
       await saveJuristicType(resFrom2);
     } else {
-      // console.log("do create");
+      console.log("do create");
       await createJuristicType(resFrom2, corporateData);
     }
   };
@@ -785,6 +786,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             name="sourceOfIncome"
             checked={resFrom2?.isOtherIncome || false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[33].key)}
+            data-testid="sourceOfIncomeOther"
           />
           {resFrom2?.isOtherIncome && (
             <Input
@@ -855,6 +857,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             name="investmentObjective"
             checked={resFrom2?.isOtherInvestment || false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[39].key)}
+            data-testid="investmentObjectiveOther"
           />
           {resFrom2?.isOtherInvestment && (
             <Input
@@ -863,6 +866,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
               placeholder="Others Please Specific"
               onChange={handleInputOthersOption}
               value={resFrom2?.otherInvestment || ""}
+              data-testid="investmentObjectiveOtherBox"
             />
           )}
         </div>

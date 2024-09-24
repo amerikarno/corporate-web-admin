@@ -65,7 +65,7 @@ export default function IdentityVerification() {
   const handleClose = () => {
     if(alertType === "success"){
       setAlertVisible(false);
-      navigate("/create-job/added-individual-account");
+      navigate("/create-job/change-individual-account");
       dispatch(clearIndividualData());
       localStorage.clear();
     }
@@ -73,7 +73,7 @@ export default function IdentityVerification() {
   };
 
   const [alertType,setAlertType] = useState("");
-  const [alertMessage,setAlertMessage] = useState("");
+  // const [alertMessage,setAlertMessage] = useState("");
   
   const handleNdid = async () => {
     let body = {
@@ -91,12 +91,12 @@ export default function IdentityVerification() {
            console.log("update ndid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("update ndid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }else{
         const res = await axios.post("/api/v1/individual/ndidthaid",body,
@@ -107,19 +107,19 @@ export default function IdentityVerification() {
            console.log("save ndid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("save ndid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }
     }catch(error){
       console.log("save ndid not success :",error)
       setAlertVisible(true);
       setAlertType("error")
-      setAlertMessage("please try again")
+      // setAlertMessage("please try again")
     } 
   }
   const handlethaiid = async () => {
@@ -138,12 +138,12 @@ export default function IdentityVerification() {
            console.log("update thaid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("update thaid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }else{
         const res = await axios.post("/api/v1/individual/ndidthaid",body,
@@ -154,19 +154,19 @@ export default function IdentityVerification() {
            console.log("save thaid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("save thaid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }
     }catch(error){
       console.log("save ndid not success :",error)
       setAlertVisible(true);
       setAlertType("error")
-      setAlertMessage("please try again")
+      // setAlertMessage("please try again")
     } 
   }
   return (
