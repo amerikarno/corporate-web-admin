@@ -1,22 +1,51 @@
 import { Card } from "@/components/ui/card";
 import { FormCorporateTypeAndIncome } from "../components/formCorporateInfo2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { TCorporateData } from "../../constant/type";
 import { mapDataToTCorporateInfo } from "../libs/utils";
-import { useCorporateInfo } from "../hook/useCorporateInfo";
+import { useEffect } from "react";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
-type TPageJuristicTypeProps = {};
-export function PageJuristicType({}: TPageJuristicTypeProps) {
-  const { currentCorporatesInfo } = useCorporateInfo();
-  const corporateCode = localStorage.getItem("corporateCode") || "";
-  const corporateData: TCorporateData = useSelector<RootState>(
+export function PageJuristicType() {
+  const corporateData: TCorporateData = useSelector<RootState, TCorporateData>(
     (state) => state.editCorporate
   ) as TCorporateData;
-  // console.log("corporateData", corporateData);
-  // const [isSecondFormPass, setIsSecondFormPass] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  // console.log(currentCorporatesInfo)
+  const corporateCode = localStorage.getItem("corporateCode");
+
+  useEffect(() => {
+    const fetchCorpInfo = async () => {
+      try {
+        const queryResponse = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode: corporateCode },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          }
+        );
+        if (queryResponse.status === 200 && queryResponse.data.length > 0) {
+          dispatch(setCorporateData(queryResponse.data[0]));
+        } else {
+          alert("Failed to retrieve corporate data after creation.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (corporateCode !== null) {
+      fetchCorpInfo();
+    }
+  }, [dispatch]);
+
   return (
     <>
       <div className="p-4 space-y-8">
@@ -49,10 +78,7 @@ export function PageJuristicType({}: TPageJuristicTypeProps) {
             </div>
           </div>
         </Card>
-        <FormCorporateTypeAndIncome
-          corporateInfo={currentCorporatesInfo}
-          corporateCode={corporateCode}
-        />
+        <FormCorporateTypeAndIncome />
       </div>
     </>
   );

@@ -2,56 +2,23 @@ import { Card } from "@/components/ui/card";
 import { mapKeyLabel } from "../constants/variables";
 import { CheckBox } from "@/components/Checkbox";
 import { Input } from "@/components/ui/input";
-import { TCorporateInfo } from "../constants/types";
 import { Button } from "@/components/ui/button";
 import { RadioCheckBox } from "@/components/ui/Radio";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { CorporateResponse, TCorporateData } from "../../constant/type";
 import { RootState } from "@/app/store";
+import { CorporateResponse, TCorporateData } from "../../constant/type";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useNavigate } from "react-router-dom";
 import { copy } from "@/lib/utils";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { useEffect, useState } from "react";
+import { mapToForm2Create } from "../libs/utils";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
-type TCorporateTypeAndIncomeProps = {
-  corporateInfo?: TCorporateInfo;
-  corporateCode?: string;
-};
-
-export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
-  const corp = useSelector((state: RootState) => state.editCorporate);
-  const dispatch = useDispatch();
-  const token = getCookies();
-  const navigate = useNavigate();
-
-  const getFrom2Response = () => {
-    const corpData = useSelector((state: RootState) => state.editCorporate);
-    // console.log(corpData);
-    const {
-      jrType,
-      buType,
-      srcOfIncome,
-      countrySrcOfIncome,
-      invType,
-      countrySrcOfIncomeTh,
-    } = getCheckedLabel(corpData) || {};
-
-    let res: CorporateResponse = {
-      ...jrType,
-      ...buType,
-      ...srcOfIncome,
-      ...countrySrcOfIncome,
-      ...invType,
-      ...countrySrcOfIncomeTh,
-    };
-    // console.log(JSON.stringify(res, null, 2));
-    return res;
-  };
-
+export function FormCorporateTypeAndIncome() {
   const getCheckedLabel = (corpData: TCorporateData) => {
-    // console.log(JSON.stringify(corpData, null, 2));
+    // console.log(corpData);
     const jrType = corpData?.CorporateTypes;
     const buType = corpData?.BusinessTypes;
     const srcOfIncome = corpData?.SourceOfIncomes;
@@ -72,45 +39,55 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
     };
   };
 
+  const corpData = useSelector((state: RootState) => state.editCorporate);
+  const getFrom2Response = () => {
+    // console.log(corpData);
+    const {
+      jrType,
+      buType,
+      srcOfIncome,
+      countrySrcOfIncome,
+      invType,
+      countrySrcOfIncomeTh,
+    } = getCheckedLabel(corpData) || {};
+
+    let res: CorporateResponse = {
+      ...jrType,
+      ...buType,
+      ...srcOfIncome,
+      ...countrySrcOfIncome,
+      ...invType,
+      ...countrySrcOfIncomeTh,
+    };
+    // console.log(res);
+    // console.log(JSON.stringify(res, null, 2));
+    return res;
+    // } else {
+    //   return juristicType;
+    // }
+  };
   const [resFrom2, setResForm2] = useState<CorporateResponse>(
     getFrom2Response()
   );
-  const corporateCodeString = corp.CorporateCode.toString();
-  const fetchCorporateTypeData = async () => {
-    try {
-      console.log("send form2 req ", { corporateCode: corporateCodeString });
-      const res = await axios.post(
-        "/api/v1/corporate/query",
-        { corporateCode: corporateCodeString },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("form2 fetch data: ", res);
-      if (res.status === 200) {
-        dispatch(setCorporateData(res.data[0]));
-      }
-    } catch (error) {
-      console.error("Error fetchCorporateTypeData data:", error);
-    }
-  };
+
+  const corporateData: TCorporateData = useSelector<RootState>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
+  const token = getCookies();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (corp.CorporateCode !== 0) {
-      fetchCorporateTypeData();
-    }
     setResForm2({
-      ...corp.BusinessTypes,
-      ...corp.CorporateTypes,
-      ...corp.SourceOfIncomes,
-      ...corp.CountrySourceIncomes?.[0],
+      ...corporateData.BusinessTypes,
+      ...corporateData.CorporateTypes,
+      ...corporateData.SourceOfIncomes,
+      ...corporateData.CountrySourceIncomes?.[0],
     });
-  }, [dispatch, corp.CorporateCode, token]);
+  }, [dispatch, corporateData.CorporateCode]);
 
   const setStoreData = (data: CorporateResponse) => {
-    let tmp = copy(corp);
+    let tmp = copy(corporateData);
     // console.log(tmp);
     // console.log(data);
     // console.log(tmp?.CountrySourceIncomes?.[0]);
@@ -204,11 +181,15 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
       tmp.CountrySourceIncomes[0].otherInvestment = data.otherInvestment
         ? data.otherInvestment
         : "";
-      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data.isThailand
+      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data
+        .corporateCountry?.isThailand
         ? true
         : false;
-      tmp.CountrySourceIncomes[0].corporateCountry.other = data.otherCountry
-        ? data.otherCountry
+      tmp.CountrySourceIncomes[0].corporateCountry.other = !data
+        .corporateCountry?.isThailand
+        ? data.corporateCountry?.other
+          ? data.corporateCountry?.other
+          : ""
         : "";
     }
     // console.log(tmp);
@@ -218,6 +199,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
   const saveJuristicType = async (data: CorporateResponse | null) => {
     // console.log(data?.corporateCountry?.isThailand);
+    // console.log(data?.corporateCountry?.other);
     if (data !== null) {
       let body = {
         ...data,
@@ -226,23 +208,26 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         createBy: undefined,
         corporateCountry: undefined,
         deleteBy: undefined,
-        corporateCode: corp.CorporateCode?.toString(),
-        isThailand: data.corporateCountry?.isThailand ? true : false,
+        corporateCode: corporateData.CorporateCode?.toString(),
+        isThailand: data.corporateCountry?.isThailand
+          ? data.corporateCountry?.isThailand
+            ? true
+            : false
+          : false,
         otherCountry: data.corporateCountry?.isThailand
           ? ""
           : data.corporateCountry?.other,
       };
-      // console.log("body", body);
+      // console.log(body.isThailand);
+      // console.log(body.otherCountry);
       try {
-        const token = getCookies();
         const res = await axios.post("/api/v1/corporate/update/type", body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(res);
         if (res.status === 200) {
-          // console.log("request success", res.data);
+          // console.log("update success", res.data);
           setStoreData(data);
           navigate("/todo-list/corporate-account-opening/edit/3");
         } else {
@@ -253,6 +238,40 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
         console.log(error);
         alert(error);
       }
+    }
+  };
+  const createJuristicType = async (
+    data: CorporateResponse,
+    corporateData: any
+  ) => {
+    try {
+      if (data !== null) {
+        let body = mapToForm2Create(data);
+        body = {
+          ...body,
+          corporateCode: corporateData.CorporateCode.toString(),
+          isThailand: data.corporateCountry?.isThailand ? true : false,
+          otherCountry: data.corporateCountry?.other,
+        };
+        // console.log("body: ", body);
+        const token = getCookies();
+        const res = await axios.post("/api/v1/corporate/create/type", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          // console.log("request success", res.data);
+          setStoreData(body);
+          navigate("/create-job/added-corporate-account/3");
+        } else {
+          alert("Invalid Input.");
+          // console.log("create failed");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
     }
   };
 
@@ -428,6 +447,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
 
       case "businessTypeOther":
         if (form2Data && form2Data !== null) {
+          // console.log("value", value);
           form2Data.otherBusinessType = value;
         }
         break;
@@ -443,7 +463,15 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
   ) => {
     e.preventDefault();
     // console.log(resFrom2);
-    await saveJuristicType(resFrom2);
+    dispatch(setTestCorporateData(resFrom2));
+    // if (corporateData.CountrySourceIncomes) {
+    if (corporateData.CorporateTypes.corporateCode !== 0) {
+      console.log("do update");
+      await saveJuristicType(resFrom2);
+    } else {
+      console.log("do create");
+      await createJuristicType(resFrom2, corporateData);
+    }
   };
 
   if (resFrom2 === null) {
@@ -636,7 +664,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             id="22"
             label={mapKeyLabel[22].label}
             name="businessType"
-            checked={resFrom2?.isTravel}
+            checked={resFrom2?.isTravel || false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[22].key)}
           />
           <RadioCheckBox
@@ -730,6 +758,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             name="sourceOfIncome"
             checked={resFrom2?.isOtherIncome || false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[33].key)}
+            data-testid="sourceOfIncomeOther"
           />
           {resFrom2?.isOtherIncome && (
             <Input
@@ -750,21 +779,21 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             id="34"
             label={mapKeyLabel[34].label}
             name="countrySourceOfIncome"
-            checked={resFrom2?.corporateCountry?.isThailand ? true : false}
+            checked={resFrom2?.corporateCountry?.isThailand === true}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[34].key)}
           />
           <RadioCheckBox
             id="35"
             label={mapKeyLabel[35].label}
             name="countrySourceOfIncome"
-            checked={resFrom2?.corporateCountry?.isThailand ? false : true}
+            checked={resFrom2?.corporateCountry?.isThailand === false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[35].key)}
           />
-          {!resFrom2?.corporateCountry?.isThailand && (
+          {resFrom2?.corporateCountry?.isThailand === false && (
             <Input
               className="col-start-2"
               name="countrySourceOfIncomeOther"
-              placeholder="Others Please Specific"
+              placeholder="Others Please Specify"
               onChange={handleInputOthersOption}
               value={resFrom2?.corporateCountry?.other || ""}
             />
@@ -800,6 +829,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
             name="investmentObjective"
             checked={resFrom2?.isOtherInvestment || false}
             onChange={(e) => handleCheckedBox(e, mapKeyLabel[39].key)}
+            data-testid="investmentObjectiveOther"
           />
           {resFrom2?.isOtherInvestment && (
             <Input
@@ -808,6 +838,7 @@ export function FormCorporateTypeAndIncome({}: TCorporateTypeAndIncomeProps) {
               placeholder="Others Please Specific"
               onChange={handleInputOthersOption}
               value={resFrom2?.otherInvestment || ""}
+              data-testid="investmentObjectiveOtherBox"
             />
           )}
         </div>

@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import { mapKeyLabel } from "../constants2/variables";
 import { CheckBox } from "@/components/Checkbox";
 import { Input } from "@/components/ui/input";
-import { TCorporateInfo } from "../constants2/types";
 import { Button } from "@/components/ui/button";
 import { RadioCheckBox } from "@/components/ui/Radio";
 import { useDispatch, useSelector } from "react-redux";
@@ -182,11 +181,15 @@ export function FormCorporateTypeAndIncome() {
       tmp.CountrySourceIncomes[0].otherInvestment = data.otherInvestment
         ? data.otherInvestment
         : "";
-      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data.isThailand
+      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data
+        .corporateCountry?.isThailand
         ? true
         : false;
-      tmp.CountrySourceIncomes[0].corporateCountry.other = data.otherCountry
-        ? data.otherCountry
+      tmp.CountrySourceIncomes[0].corporateCountry.other = !data
+        .corporateCountry?.isThailand
+        ? data.corporateCountry?.other
+          ? data.corporateCountry?.other
+          : ""
         : "";
     }
     // console.log(tmp);
