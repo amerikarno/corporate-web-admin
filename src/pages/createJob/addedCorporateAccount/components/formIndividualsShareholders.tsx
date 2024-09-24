@@ -138,11 +138,11 @@ export function FormIndividualsShareholders({
   };
 
   const onSubmit = async (data: TIndividualsShareholders) => {
-
     console.log(curInput);
     console.log(valideID());
     if (curInput && valideID()) {
       const formData = reformattedData(data);
+      dispatch(setTestCorporateData(formData));
       setCurInputText("");
       setTriggeriderror("");
       setCurInput(false);
@@ -150,7 +150,6 @@ export function FormIndividualsShareholders({
       reset();
       console.log(formData);
       clearChoosedEditData();
-      dispatch(setTestCorporateData(formData));
       onsubmit(formData);
     } else {
       setInitError(true);

@@ -28,7 +28,7 @@ import { FormBank } from "@/pages/createJob/addedCorporateAccount/components/for
 import UploadFiles from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/uploadFiles";
 import * as useUploadFileModule from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/hook/useUploadFile";
 import { PageJuristicType } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicType";
-import { TContact, TCorporateData, TDirector } from "@/pages/createJob/constant/type";
+import { TContact, TCorporateData, TDirector, TIndividualShareholder } from "@/pages/createJob/constant/type";
 import {
   clearCorporateData,
   setCorporateData,
@@ -40,6 +40,8 @@ import { ListOfDirectors } from "@/pages/createJob/addedCorporateAccount/pages/L
 import { clearDirector, setDirectorEdit } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 import axios from "@/api/axios";
 import MockAdapter from "axios-mock-adapter";
+import { PageIndividualShareholder } from "@/pages/createJob/addedCorporateAccount/pages/PageIndividualShareholder";
+import { setIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
 // import { PageSuitTest } from "@/pages/createJob/addedCorporateAccount/pages/PageSuitTest";
 // Mock the module
 // jest.mock(
@@ -2468,11 +2470,206 @@ describe("test create corporate form4 (list of director)", () => {
   }, 20000);
 });
 
+const individualShareholderMock: TIndividualShareholder = {
+  id: "ISH001",
+  createBy: "admin",
+  CreatedAt: "2022-01-01T00:00:00.000Z",
+  DeletedAt: null,
+  personalId: "PID001",
+  corporateCode: 12345,
+  fullNames: [
+    {
+      id: "FN001",
+      createBy: "admin",
+      CreatedAt: "2022-01-01T00:00:00.000Z",
+      DeletedAt: null,
+      ReferenceID: "ISH001",
+      title: "Mr.",
+      firstName: "John",
+      lastName: "Doe",
+      types: 1,
+    },
+  ],
+  citizenId: "CID001",
+  passportId: "PASS001",
+  expiryDate: "2025-01-01T00:00:00.000Z",
+  nationality: "Thai",
+  types: 1,
+  sharePercentage: 30,
+};
+
+
 describe("test create corporate form5 (individual shareholder)", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
   });
+
+  test("test form5 (PageIndividualShareholder) header information", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageIndividualShareholder
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const pageTitle = screen.getByText("Juristic Infomations");
+    expect(pageTitle).toBeInTheDocument();
+
+    const juristicId = screen.getByText("Juristic ID");
+    expect(juristicId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 80000001"));
+    });
+
+    const taxId = screen.getByText("Tax ID");
+    expect(taxId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": TAXID789"));
+    });
+
+    const juristicName = screen.getByText("Juristic Investor Name");
+    expect(juristicName).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": Test Corporate"));
+    });
+
+    const dateIncorporation = screen.getByText("Date Of Incorporation");
+    expect(dateIncorporation).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 2023-10-01"));
+    });
+
+    const commercialNumber = screen.getByText("Commercial Number");
+    expect(commercialNumber).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 123456789"));
+    });
+
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form5 (PageIndividualShareholder) DELETE", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+    store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, corporateCode:individualShareholderMock.corporateCode.toString()}]));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ListOfDirectors
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const titleField = screen.getByLabelText("Title");
+    expect(titleField).toBeInTheDocument();
+    expect(titleField).toHaveValue("");
+
+    const name = screen.getByLabelText("First Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const surname = screen.getByLabelText("Surname");
+    expect(surname).toBeInTheDocument();
+    expect(surname).toHaveValue("");
+
+    const idCard = screen.getByLabelText("Please fill ID");
+    expect(idCard).toBeInTheDocument();
+    expect(idCard).toHaveValue("");
+
+    const nationality = screen.getByLabelText("Nationality");
+    expect(nationality).toBeInTheDocument();
+    expect(nationality).toHaveValue("");
+
+    const addressNumber = screen.getByLabelText("Address Number");
+    expect(addressNumber).toBeInTheDocument();
+
+    const moo = screen.getByLabelText("Moo");
+    expect(moo).toBeInTheDocument();
+
+    const soi = screen.getByLabelText("Soi");
+    expect(soi).toBeInTheDocument();
+
+    const floor = screen.getByLabelText("Floor");
+    expect(floor).toBeInTheDocument();
+
+    const building = screen.getByLabelText("Building");
+    expect(building).toBeInTheDocument();
+
+    const road = screen.getByLabelText("Road");
+    expect(road).toBeInTheDocument();
+
+    const tambon = screen.getByLabelText("Tambon");
+    expect(tambon).toBeInTheDocument();
+    expect(tambon).toHaveValue("");
+
+    const amphoe = screen.getByLabelText("Amphoe");
+    expect(amphoe).toBeInTheDocument();
+    expect(amphoe).toHaveValue("");
+
+    const province = screen.getByLabelText("Province");
+    expect(province).toBeInTheDocument();
+    expect(province).toHaveValue("");
+
+    const postalCode = screen.getByLabelText("PostalCode");
+    expect(postalCode).toBeInTheDocument();
+    expect(postalCode).toHaveValue("");
+
+    const country = screen.getByLabelText("Country");
+    expect(country).toBeInTheDocument();
+    expect(country).toHaveValue("");
+
+    const editButton = screen.getByTestId("editButton-9876543210987");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(titleField).not.toHaveValue("");
+      expect(name).not.toHaveValue("");
+      expect(surname).not.toHaveValue("");
+      expect(idCard).not.toHaveValue("");
+      expect(nationality).not.toHaveValue("");
+      expect(addressNumber).not.toHaveValue("");
+      expect(moo).not.toHaveValue("");
+      expect(soi).not.toHaveValue("");
+      expect(floor).not.toHaveValue("");
+      expect(building).not.toHaveValue("");
+      expect(road).not.toHaveValue("");
+      expect(tambon).not.toHaveValue("");
+      expect(amphoe).not.toHaveValue("");
+      expect(province).not.toHaveValue("");
+      expect(postalCode).not.toHaveValue("");
+      expect(country).not.toHaveValue("");
+    });
+
+    const deleteButton = screen.getByTestId("deleteButton-9876543210987");
+    expect(deleteButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(deleteButton);
+    })
+
+    const confirmDelete = screen.getByTestId("confirmDelete-9876543210987");
+    expect(confirmDelete).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(confirmDelete);
+    })
+
+    store.dispatch(clearDirector());
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();

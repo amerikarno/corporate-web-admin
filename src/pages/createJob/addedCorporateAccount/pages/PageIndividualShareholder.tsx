@@ -149,7 +149,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
     },
     {
       cell: (row: TIndividualShareholderEdit) => (
-        <Button onClick={() => setChoosedEditData(row)} data-testid={`editButton-${row.personalId}`}>Edit</Button>
+        <Button onClick={() => setChoosedEditData(row)} data-testid={`editButton-${row.personalId}`} >Edit</Button>
       ),
       ignoreRowClick: true,
     },
