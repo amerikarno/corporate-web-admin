@@ -141,7 +141,7 @@ export function PageContactPerson({
 
     {
       cell: (row: TContact) => (
-        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+        <Button onClick={() => setChoosedEditData(row)} data-testid={`editButton-${row.personalId}`}>Edit</Button>
       ),
       ignoreRowClick: true,
     },
@@ -149,7 +149,7 @@ export function PageContactPerson({
       cell: (row: TContact) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white" onClick={()=>(console.log("data-testid = ",row.personalId))} data-testid={`delete-button-${row.personalId}`}>Delete</Button>
+          <Button variant="outline" className="bg-red-600 text-white"  data-testid={`deleteButton-${row.personalId}`}>Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -160,7 +160,7 @@ export function PageContactPerson({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction data-testid={`confirm-delete-${row.personalId}`} onClick={()=>handleDelete(row) }>Delete</AlertDialogAction>
+            <AlertDialogAction data-testid={`confirmDelete-${row.personalId}`} onClick={()=>handleDelete(row) }>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

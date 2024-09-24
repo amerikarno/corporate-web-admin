@@ -62,12 +62,12 @@ export function FormIndividualsContactPerson({
 
 
   const onSubmit = async (data: TContactPerson) => {
-    dispatch(setTestCorporateData(data))
     console.log(data)
     let formData: TContactPersonArray = {
       contacts: [{...data,personalId:choosedEditData?.personalId}],
       corporateCode: corporateCode,
     };
+    dispatch(setTestCorporateData(formData))
     await sleep(500);
     reset();
     console.log(formData);

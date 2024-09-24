@@ -149,7 +149,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
     },
     {
       cell: (row: TIndividualShareholderEdit) => (
-        <Button onClick={() => setChoosedEditData(row)}>Edit</Button>
+        <Button onClick={() => setChoosedEditData(row)} data-testid={`editButton-${row.personalId}`}>Edit</Button>
       ),
       ignoreRowClick: true,
     },
@@ -157,7 +157,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
       cell: (row: TIndividualShareholderEdit) => (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" className="bg-red-600 text-white">
+            <Button variant="outline" data-testid={`deleteButton-${row.personalId}`} className="bg-red-600 text-white">
               Delete
             </Button>
           </AlertDialogTrigger>
@@ -171,7 +171,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => handleDelete(row)}>
+              <AlertDialogAction data-testid={`confirmDelete-${row.personalId}`} onClick={() => handleDelete(row)}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>

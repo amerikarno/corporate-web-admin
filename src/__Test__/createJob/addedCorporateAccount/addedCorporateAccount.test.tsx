@@ -28,12 +28,18 @@ import { FormBank } from "@/pages/createJob/addedCorporateAccount/components/for
 import UploadFiles from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/uploadFiles";
 import * as useUploadFileModule from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/hook/useUploadFile";
 import { PageJuristicType } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicType";
-import { TCorporateData } from "@/pages/createJob/constant/type";
+import { TContact, TCorporateData, TDirector } from "@/pages/createJob/constant/type";
 import {
   clearCorporateData,
   setCorporateData,
 } from "@/features/editCorporateData/editCorporateData";
 import { clearTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { PageContactPerson } from "@/pages/createJob/addedCorporateAccount/pages/PageContactPerson";
+import { clearContactPersons, setContactPersons } from "@/features/contactPersonSlice";
+import { ListOfDirectors } from "@/pages/createJob/addedCorporateAccount/pages/ListOfDirectors";
+import { clearDirector, setDirectorEdit } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import axios from "@/api/axios";
+import MockAdapter from "axios-mock-adapter";
 // import { PageSuitTest } from "@/pages/createJob/addedCorporateAccount/pages/PageSuitTest";
 // Mock the module
 // jest.mock(
@@ -149,19 +155,21 @@ jest.mock("@/lib/utils", () => ({
   isExpiredToken: jest.fn().mockReturnValue(false),
 }));
 
+jest.mock("@/lib/Cookies", () => ({
+  getCookies: jest
+    .fn()
+    .mockReturnValue(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjEyMmRjLTc3YzctNDlmYy04ZTBkLTg2NWVjYTY1MmI4MCIsImVtYWlsIjoiYjcwODk4NTY5ZWRjYjk5MjdhMDZkZDUxMTBmMWI4ZmUxZDQ2ZTVmOTg1ZTBkOWYyMjI0ZDc3NDg1NzU3ZjFlYSIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDIwMDEsMjAwMiwyMDAzXSwicGVybWlzc2lvbnMiOlsxMDEsMTAyLDEwMywyMDEsMjAyLDIwM10sInJvbGVzIjpbMTEsMTIsMTMsMjEsMjIsMjNdLCJ1c2VySWQiOiIiLCJsb2dpblN0YXR1cyI6IiIsImV4cGlyZXNEYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJFcnJvciI6bnVsbCwiZXhwIjoxNzI3MTY3MzQyLCJpYXQiOjE3MjcwODA5NDJ9.PWG3vMMN3POr-SWDnO4etQ5D1ZV2mX7D1Fzwsb8sfBg"
+    ),
+}));
+
+const mockAxios = new MockAdapter(axios);
+
 describe("test create corporate form1", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
   });
-
-  jest.mock("@/lib/Cookies", () => ({
-    getCookies: jest
-      .fn()
-      .mockReturnValue(
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjEyMmRjLTc3YzctNDlmYy04ZTBkLTg2NWVjYTY1MmI4MCIsImVtYWlsIjoiYjcwODk4NTY5ZWRjYjk5MjdhMDZkZDUxMTBmMWI4ZmUxZDQ2ZTVmOTg1ZTBkOWYyMjI0ZDc3NDg1NzU3ZjFlYSIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDIwMDEsMjAwMiwyMDAzXSwicGVybWlzc2lvbnMiOlsxMDEsMTAyLDEwMywyMDEsMjAyLDIwM10sInJvbGVzIjpbMTEsMTIsMTMsMjEsMjIsMjNdLCJ1c2VySWQiOiIiLCJsb2dpblN0YXR1cyI6IiIsImV4cGlyZXNEYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJFcnJvciI6bnVsbCwiZXhwIjoxNzI3MTY3MzQyLCJpYXQiOjE3MjcwODA5NDJ9.PWG3vMMN3POr-SWDnO4etQ5D1ZV2mX7D1Fzwsb8sfBg"
-      ),
-  }));
 
   test("test input data(multiple input type)", async () => {
     // const onSubmit = jest.fn();
@@ -1559,27 +1567,275 @@ describe("test create corporate form2", () => {
   }, 20000);
 });
 
+const mockContact: TContact = {
+  id: "contact_12345",
+  createBy: "user_001",
+  CreatedAt: "2023-10-01T12:00:00Z",
+  DeletedAt: null,
+  corporateCode: 123,
+  fullNames: [
+    {
+      id: "name_001",
+      createBy: "user_001",
+      CreatedAt: "2023-10-01T12:00:00Z",
+      DeletedAt: null,
+      contactID: "contact_12345",
+      title: "Mr.",
+      firstName: "John",
+      lastName: "Doe",
+      types: 1
+    }
+  ],
+  telephone: "123-456-7890",
+  email: "john.doe@example.com",
+  types: 2,
+  personalId: "A123456789",
+  position: "Manager",
+  division: "Sales"
+};
+
 describe("test create corporate form3 (contact person)", () => {
+
+  beforeAll(() => {
+    localStorage.setItem('corporateCode', '80000001');
+  })
+  afterAll(() => {
+    localStorage.clear();
+  })
+
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
   });
 
+  test("test form3 (PageContactPERSON) header information", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageContactPerson
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const pageTitle = screen.getByText("Juristic Infomations");
+    expect(pageTitle).toBeInTheDocument();
+
+    const juristicId = screen.getByText("Juristic ID");
+    expect(juristicId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 80000001"));
+    });
+
+    const taxId = screen.getByText("Tax ID");
+    expect(taxId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": TAXID789"));
+    });
+
+    const juristicName = screen.getByText("Juristic Investor Name");
+    expect(juristicName).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": Test Corporate"));
+    });
+
+    const dateIncorporation = screen.getByText("Date Of Incorporation");
+    expect(dateIncorporation).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 2023-10-01"));
+    });
+
+    const commercialNumber = screen.getByText("Commercial Number");
+    expect(commercialNumber).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 123456789"));
+    });
+
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form3 (PageContactPERSON) DELETE", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+    store.dispatch(setContactPersons([mockContact]));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageContactPerson
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const titleField = screen.getByLabelText("Title");
+    expect(titleField).toBeInTheDocument();
+    expect(titleField).toHaveValue("");
+
+    const name = screen.getByLabelText("First Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const surname = screen.getByLabelText("Surname");
+    expect(surname).toBeInTheDocument();
+    expect(surname).toHaveValue("");
+
+    const position = screen.getByLabelText("Position");
+    expect(position).toBeInTheDocument();
+    expect(position).toHaveValue("");
+
+    const division = screen.getByLabelText("Division");
+    expect(division).toBeInTheDocument();
+    expect(division).toHaveValue("");
+
+    const telephone = screen.getByLabelText("Telephone");
+    expect(telephone).toBeInTheDocument();
+    expect(telephone).toHaveValue("");
+
+    const email = screen.getByLabelText("Email");
+    expect(email).toBeInTheDocument();
+    expect(email).toHaveValue("");
+
+    const state = store.getState();
+    const corporateState = state.corporateTest;
+    console.log("Corporate State After Submission:", corporateState);
+
+    const editButton = screen.getByTestId("editButton-A123456789");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(titleField).not.toHaveValue("");
+      expect(name).not.toHaveValue("");
+      expect(surname).not.toHaveValue("");
+      expect(position).not.toHaveValue("");
+      expect(division).not.toHaveValue("");
+      expect(telephone).not.toHaveValue("");
+      expect(email).not.toHaveValue("");
+    });
+
+    const deleteButton = screen.getByTestId("deleteButton-A123456789");
+    expect(deleteButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(deleteButton);
+    })
+
+    const confirmDelete = screen.getByTestId("confirmDelete-A123456789");
+    expect(confirmDelete).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(confirmDelete);
+    })
+
+    store.dispatch(clearContactPersons());
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form3 (PageContactPERSON) EDIT", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+    store.dispatch(setContactPersons([mockContact]));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageContactPerson
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const titleField = screen.getByLabelText("Title");
+    expect(titleField).toBeInTheDocument();
+    expect(titleField).toHaveValue("");
+
+    const name = screen.getByLabelText("First Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const surname = screen.getByLabelText("Surname");
+    expect(surname).toBeInTheDocument();
+    expect(surname).toHaveValue("");
+
+    const position = screen.getByLabelText("Position");
+    expect(position).toBeInTheDocument();
+    expect(position).toHaveValue("");
+
+    const division = screen.getByLabelText("Division");
+    expect(division).toBeInTheDocument();
+    expect(division).toHaveValue("");
+
+    const telephone = screen.getByLabelText("Telephone");
+    expect(telephone).toBeInTheDocument();
+    expect(telephone).toHaveValue("");
+
+    const email = screen.getByLabelText("Email");
+    expect(email).toBeInTheDocument();
+    expect(email).toHaveValue("");
+
+    const state = store.getState();
+    const corporateState = state.corporateTest;
+    console.log("Corporate State After Submission:", corporateState);
+
+    const editButton = screen.getByTestId("editButton-A123456789");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(titleField).not.toHaveValue("");
+      expect(name).not.toHaveValue("");
+      expect(surname).not.toHaveValue("");
+      expect(position).not.toHaveValue("");
+      expect(division).not.toHaveValue("");
+      expect(telephone).not.toHaveValue("");
+      expect(email).not.toHaveValue("");
+    });
+
+    const submitButton = screen.getByText("Save");
+    expect(submitButton).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(submitButton);
+    });
+
+    //Expected form data
+    const expectedFormData = {
+      data: {
+        contacts: [
+          {
+            fullNames: [ { title: 'Mr.', firstName: 'John', lastName: 'Doe' } ],
+            position: 'Manager',
+            division: 'Sales',
+            telephone: '123-456-7890',
+            email: 'john.doe@example.com',
+            personalId: 'A123456789'
+          }
+        ],
+        corporateCode: '80000001'
+      }
+    };
+
+    await waitFor(() => {
+      const state = store.getState();
+      const corporateState = state.corporateTest;
+      console.log("Corporate State After Submission:", corporateState);
+      expect(corporateState).toMatchObject(expectedFormData);
+    });
+
+
+    store.dispatch(clearContactPersons());
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
   test("test input data(multiple input type)", async () => {
-    // const choosedEditData = {
-    //   id: "",
-    //   createBy: "",
-    //   CreatedAt: "",
-    //   DeletedAt: null,
-    //   corporateCode: 0,
-    //   fullNames: [{ title: '', firstName: '', lastName: '' }],
-    //   telephone: '',
-    //   email: '',
-    //   types: 1,
-    //   personalId: '',
-    //   position: '',
-    //   division: ''
-    // }
 
     const mockOnSubmit = jest.fn();
     const mockClearChoosedEditData = jest.fn();
@@ -1642,12 +1898,18 @@ describe("test create corporate form3 (contact person)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [{ title: "Mr", firstName: "John", lastName: "Doe" }],
-        position: "Position",
-        division: "Division",
-        telephone: "0123456789",
-        email: "test@example.com",
-      },
+        contacts: [
+          {
+            fullNames: [ { title: 'Mr', firstName: 'John', lastName: 'Doe' } ],
+            position: 'Position',
+            division: 'Division',
+            telephone: '0123456789',
+            email: 'test@example.com',
+            personalId: undefined
+          }
+        ],
+        corporateCode: '0'
+      }
     };
 
     await waitFor(() => {
@@ -1659,11 +1921,400 @@ describe("test create corporate form3 (contact person)", () => {
   }, 20000);
 });
 
+const mockDirector: TDirector = {
+  id: "dir001",
+  createBy: "admin",
+  CreatedAt: "2023-01-01T00:00:00Z",
+  DeletedAt: null,
+  personalId: "9876543210987",
+  corporateCode: 123456,
+  fullNames: [
+    {
+      id: "name001",
+      createBy: "admin",
+      CreatedAt: "2023-01-01T00:00:00Z",
+      DeletedAt: null,
+      ReferenceID: "dir001",
+      title: "Mr.",
+      firstName: "John",
+      lastName: "Doe",
+      types: 1
+    }
+  ],
+  addresses: [
+    {
+      id: "addr001",
+      createBy: "admin",
+      CreatedAt: "2023-01-01T00:00:00Z",
+      DeletedAt: null,
+      ReferenceID: "dir001",
+      addressNo: "123",
+      building: "ABC Building",
+      floor: "10",
+      mooNo: "2",
+      soi: "Soi 3",
+      road: "Sukhumvit",
+      tambon: "Khlong Toei",
+      amphoe: "Khlong Toei",
+      province: "Bangkok",
+      postalCode: "10110",
+      country: "Thailand",
+      types: 1
+    }
+  ],
+  citizenId: "1103703348990",
+  passportId: "P1234567",
+  expiryDate: "2025-12-31",
+  nationality: "American",
+  types: 1
+};
+
 describe("test create corporate form4 (list of director)", () => {
+
+  beforeAll(() => {
+    localStorage.setItem('corporateCode', '80000001');
+  })
+  afterAll(() => {
+    localStorage.clear();
+  })
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
   });
+  test("test form4 (PageListOfDirector) header information", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ListOfDirectors
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const pageTitle = screen.getByText("Juristic Infomations");
+    expect(pageTitle).toBeInTheDocument();
+
+    const juristicId = screen.getByText("Juristic ID");
+    expect(juristicId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 80000001"));
+    });
+
+    const taxId = screen.getByText("Tax ID");
+    expect(taxId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": TAXID789"));
+    });
+
+    const juristicName = screen.getByText("Juristic Investor Name");
+    expect(juristicName).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": Test Corporate"));
+    });
+
+    const dateIncorporation = screen.getByText("Date Of Incorporation");
+    expect(dateIncorporation).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 2023-10-01"));
+    });
+
+    const commercialNumber = screen.getByText("Commercial Number");
+    expect(commercialNumber).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 123456789"));
+    });
+
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form4 (PageListOfDirector) DELETE", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+    store.dispatch(setDirectorEdit([{...mockDirector,corporateCode:mockDirector.corporateCode.toString()}]));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ListOfDirectors
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const titleField = screen.getByLabelText("Title");
+    expect(titleField).toBeInTheDocument();
+    expect(titleField).toHaveValue("");
+
+    const name = screen.getByLabelText("First Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const surname = screen.getByLabelText("Surname");
+    expect(surname).toBeInTheDocument();
+    expect(surname).toHaveValue("");
+
+    const idCard = screen.getByLabelText("Please fill ID");
+    expect(idCard).toBeInTheDocument();
+    expect(idCard).toHaveValue("");
+
+    const nationality = screen.getByLabelText("Nationality");
+    expect(nationality).toBeInTheDocument();
+    expect(nationality).toHaveValue("");
+
+    const addressNumber = screen.getByLabelText("Address Number");
+    expect(addressNumber).toBeInTheDocument();
+
+    const moo = screen.getByLabelText("Moo");
+    expect(moo).toBeInTheDocument();
+
+    const soi = screen.getByLabelText("Soi");
+    expect(soi).toBeInTheDocument();
+
+    const floor = screen.getByLabelText("Floor");
+    expect(floor).toBeInTheDocument();
+
+    const building = screen.getByLabelText("Building");
+    expect(building).toBeInTheDocument();
+
+    const road = screen.getByLabelText("Road");
+    expect(road).toBeInTheDocument();
+
+    const tambon = screen.getByLabelText("Tambon");
+    expect(tambon).toBeInTheDocument();
+    expect(tambon).toHaveValue("");
+
+    const amphoe = screen.getByLabelText("Amphoe");
+    expect(amphoe).toBeInTheDocument();
+    expect(amphoe).toHaveValue("");
+
+    const province = screen.getByLabelText("Province");
+    expect(province).toBeInTheDocument();
+    expect(province).toHaveValue("");
+
+    const postalCode = screen.getByLabelText("PostalCode");
+    expect(postalCode).toBeInTheDocument();
+    expect(postalCode).toHaveValue("");
+
+    const country = screen.getByLabelText("Country");
+    expect(country).toBeInTheDocument();
+    expect(country).toHaveValue("");
+
+    const editButton = screen.getByTestId("editButton-9876543210987");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(titleField).not.toHaveValue("");
+      expect(name).not.toHaveValue("");
+      expect(surname).not.toHaveValue("");
+      expect(idCard).not.toHaveValue("");
+      expect(nationality).not.toHaveValue("");
+      expect(addressNumber).not.toHaveValue("");
+      expect(moo).not.toHaveValue("");
+      expect(soi).not.toHaveValue("");
+      expect(floor).not.toHaveValue("");
+      expect(building).not.toHaveValue("");
+      expect(road).not.toHaveValue("");
+      expect(tambon).not.toHaveValue("");
+      expect(amphoe).not.toHaveValue("");
+      expect(province).not.toHaveValue("");
+      expect(postalCode).not.toHaveValue("");
+      expect(country).not.toHaveValue("");
+    });
+
+    const deleteButton = screen.getByTestId("deleteButton-9876543210987");
+    expect(deleteButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(deleteButton);
+    })
+
+    const confirmDelete = screen.getByTestId("confirmDelete-9876543210987");
+    expect(confirmDelete).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(confirmDelete);
+    })
+
+    store.dispatch(clearDirector());
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form4 (PageListOfDirector) EDIT", async () => {
+    mockAxios.onPost("/api/v1/personals/update").reply(400, {
+      message: "Some error occurred",
+    });
+
+    window.alert = jest.fn();
+
+    store.dispatch(setCorporateData(mockCorporateData));
+    store.dispatch(setDirectorEdit([{...mockDirector,corporateCode:mockDirector.corporateCode.toString()}]));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <ListOfDirectors
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const titleField = screen.getByLabelText("Title");
+    expect(titleField).toBeInTheDocument();
+    expect(titleField).toHaveValue("");
+
+    const name = screen.getByLabelText("First Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const surname = screen.getByLabelText("Surname");
+    expect(surname).toBeInTheDocument();
+    expect(surname).toHaveValue("");
+
+    const idCard = screen.getByLabelText("Please fill ID");
+    expect(idCard).toBeInTheDocument();
+    expect(idCard).toHaveValue("");
+
+    const nationality = screen.getByLabelText("Nationality");
+    expect(nationality).toBeInTheDocument();
+    expect(nationality).toHaveValue("");
+
+    const addressNumber = screen.getByLabelText("Address Number");
+    expect(addressNumber).toBeInTheDocument();
+
+    const moo = screen.getByLabelText("Moo");
+    expect(moo).toBeInTheDocument();
+
+    const soi = screen.getByLabelText("Soi");
+    expect(soi).toBeInTheDocument();
+
+    const floor = screen.getByLabelText("Floor");
+    expect(floor).toBeInTheDocument();
+
+    const building = screen.getByLabelText("Building");
+    expect(building).toBeInTheDocument();
+
+    const road = screen.getByLabelText("Road");
+    expect(road).toBeInTheDocument();
+
+    const tambon = screen.getByLabelText("Tambon");
+    expect(tambon).toBeInTheDocument();
+    expect(tambon).toHaveValue("");
+
+    const amphoe = screen.getByLabelText("Amphoe");
+    expect(amphoe).toBeInTheDocument();
+    expect(amphoe).toHaveValue("");
+
+    const province = screen.getByLabelText("Province");
+    expect(province).toBeInTheDocument();
+    expect(province).toHaveValue("");
+
+    const postalCode = screen.getByLabelText("PostalCode");
+    expect(postalCode).toBeInTheDocument();
+    expect(postalCode).toHaveValue("");
+
+    const country = screen.getByLabelText("Country");
+    expect(country).toBeInTheDocument();
+    expect(country).toHaveValue("");
+
+    const editButton = screen.getByTestId("editButton-9876543210987");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(titleField).not.toHaveValue("");
+      expect(name).not.toHaveValue("");
+      expect(surname).not.toHaveValue("");
+      expect(idCard).not.toHaveValue("");
+      expect(nationality).not.toHaveValue("");
+      expect(addressNumber).not.toHaveValue("");
+      expect(moo).not.toHaveValue("");
+      expect(soi).not.toHaveValue("");
+      expect(floor).not.toHaveValue("");
+      expect(building).not.toHaveValue("");
+      expect(road).not.toHaveValue("");
+      expect(tambon).not.toHaveValue("");
+      expect(amphoe).not.toHaveValue("");
+      expect(province).not.toHaveValue("");
+      expect(postalCode).not.toHaveValue("");
+      expect(country).not.toHaveValue("");
+    });
+
+    console.log((titleField as HTMLInputElement).value);
+    console.log((name as HTMLInputElement).value);
+    console.log((surname as HTMLInputElement).value);
+    console.log((idCard as HTMLInputElement).value);
+    console.log((nationality as HTMLInputElement).value);
+    console.log((addressNumber as HTMLInputElement).value);
+    console.log((moo as HTMLInputElement).value);
+    console.log((soi as HTMLInputElement).value);
+    console.log((floor as HTMLInputElement).value);
+    console.log((building as HTMLInputElement).value);
+    console.log((road as HTMLInputElement).value);
+    console.log((tambon as HTMLInputElement).value);
+    console.log((amphoe as HTMLInputElement).value);
+    console.log((province as HTMLInputElement).value);
+    console.log((postalCode as HTMLInputElement).value);
+    console.log((country as HTMLInputElement).value);
+
+    const submitButton = screen.getByText("Save");
+    expect(submitButton).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(submitButton);
+    });
+
+    //Expected form data
+    const expectedFormData = {
+      data: {
+        fullNames: [ { title: 'Mr.', firstName: 'John', lastName: 'Doe' } ],
+        citizenId: '1103703348990',
+        passportId: '',
+        expiryDate: '2025-12-31',
+        nationality: 'American',
+        addresses: [
+          {
+            addressNo: '123',
+            mooNo: '2',
+            soi: 'Soi 3',
+            floor: '10',
+            building: 'ABC Building',
+            road: 'Sukhumvit',
+            tambon: 'Khlong Toei',
+            amphoe: 'Khlong Toei',
+            province: 'Bangkok',
+            postalCode: '10110',
+            country: 'Thailand'
+          }
+        ],
+        types: 101,
+        corporateCode: '80000001',
+        personalId: '9876543210987'
+      }
+    };
+
+    await waitFor(() => {
+      const state = store.getState();
+      const corporateState = state.corporateTest;
+      console.log("Corporate State After Submission:", corporateState);
+      expect(corporateState).toMatchObject(expectedFormData);
+    });
+
+    await waitFor(() => {
+      expect(window.alert).toHaveBeenCalledWith("Some error occurred");
+    });
+
+    store.dispatch(clearDirector());
+    store.dispatch(clearCorporateData());
+  }, 20000);
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();

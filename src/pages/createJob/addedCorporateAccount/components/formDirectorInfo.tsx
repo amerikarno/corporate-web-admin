@@ -132,6 +132,8 @@ export function FormIndividualsDirector({
   };
 
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
+    console.log(curInput);
+    console.log(valideID);
     if (curInput && valideID()) {
       const formData = validateData(data);
       setCurInputText("");

@@ -144,6 +144,7 @@ export function ListOfDirectors({}: TListOfDirectorsProps) {
             setChoosedEditData(row);
             console.log(row);
           }}
+          data-testid={`editButton-${row.personalId}`}
         >
           Edit
         </Button>
@@ -154,7 +155,7 @@ export function ListOfDirectors({}: TListOfDirectorsProps) {
       cell: (row: TDirector) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+          <Button variant="outline" className="bg-red-600 text-white" data-testid={`deleteButton-${row.personalId}`}>Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -165,7 +166,7 @@ export function ListOfDirectors({}: TListOfDirectorsProps) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+            <AlertDialogAction onClick={()=>handleDelete(row)} data-testid={`confirmDelete-${row.personalId}`}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
