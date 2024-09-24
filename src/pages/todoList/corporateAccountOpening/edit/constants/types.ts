@@ -126,7 +126,7 @@ export type TAttorney = {
   email?: string;
   personalId?: string;
   types?: number;
-}
+};
 
 export type TAuthorizePerson = {
   corporateCode?: string;
@@ -332,9 +332,10 @@ export type TErrors = {
 
 export type SuitTestResult = {
   corporateCode?: string;
+  accountID?: string;
   totalScore?: number;
   level?: number;
-  invsetorTypeRisk?: string;
+  investorTypeRisk?: string;
   suitTestResult?: SuitTestResultAnswer;
   type?: number;
 };

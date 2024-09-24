@@ -32,7 +32,8 @@ const AzureForm: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-    window.location.href = "http://localhost:1323/api/v1/authen/login/azure";
+    // window.location.href = "http://localhost:1323/api/v1/authen/login/azure";
+    window.location.href = `${window.origin}/api/v1/authen/login/azure`;
   };
 
   // useEffect(() => {

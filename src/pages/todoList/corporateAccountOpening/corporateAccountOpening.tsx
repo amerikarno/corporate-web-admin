@@ -21,6 +21,7 @@ import axios from "@/api/axios";
 type TTodoCorporateAccountOpening = {
   onDataFetched?: (data: any) => void;
 };
+
 export default function TodoCorporateAccountOpenning({
   onDataFetched,
 }: TTodoCorporateAccountOpening) {
@@ -94,7 +95,9 @@ export default function TodoCorporateAccountOpenning({
       dateTo: dateToyyyyMMdd(new Date()),
     };
     await handleSearch(data);
-    if (onDataFetched) onDataFetched(JSON.stringify(data));
+    if (onDataFetched) {
+      onDataFetched(JSON.stringify(data));
+    }
   };
 
   useEffect(() => {

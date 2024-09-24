@@ -18,6 +18,7 @@ import attorneyReducer from "@/features/attorney/attorney";
 import individualDataReducer from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import fxExchangeReducer from "@/features/fxExchange/fxExhangeSlice";
 import corporateTestReducer from "@/features/corporateTest/corporateTestSlice";
+import currentCorporateInfoReducer from "@/features/currentSelectedCorperate/currentCorperrateInfoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ export const store = configureStore({
     individualData: individualDataReducer,
     fxExchange: fxExchangeReducer,
     corporateTest: corporateTestReducer,
+    currentCorporateInfo: currentCorporateInfoReducer,
   },
 });
 

@@ -166,15 +166,15 @@ export function FormCorporateInfo({
   }, [shouldScrollUp]);
 
   useEffect(() => {
-    console.log(corporatesInfo?.CorporateCountry);
+    // console.log(corporatesInfo?.CorporateCountry);
     const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 601
     );
-    console.log(resCorpRegisterCountry);
+    // console.log(resCorpRegisterCountry);
     const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 602
     );
-    console.log(resCorpPrimaryCountry);
+    // console.log(resCorpPrimaryCountry);
     setRegisteredCountryPrimaryCountryOperation({
       ...initCountryData,
       registered: resCorpRegisterCountry?.other || "",
@@ -194,10 +194,10 @@ export function FormCorporateInfo({
     });
   }, [token, dispatch, initData]);
 
-  const [
-    // isPrimaryCountryOfOperationOthers,
-    // setIsPrimaryCountryOfOperationOthers,
-  ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // const [
+  //   // isPrimaryCountryOfOperationOthers,
+  //   // setIsPrimaryCountryOfOperationOthers,
+  // ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
 
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
@@ -226,7 +226,7 @@ export function FormCorporateInfo({
     setRegisteredCountryPrimaryCountryOperation(tmp);
     // form1error ? validateLocal(tmp) : null;
     validateLocal(tmp);
-    console.log(tmp);
+    // console.log(tmp);
   };
   const handlePrimaryCountryOfOperationOthers = (e: any) => {
     const { name, checked } = e.target;
@@ -386,7 +386,7 @@ export function FormCorporateInfo({
     reset();
     onsubmit(formData);
     setShouldScrollUp(true);
-    console.log("formdata : ", formData);
+    // console.log("formdata : ", formData);
   };
 
   return (

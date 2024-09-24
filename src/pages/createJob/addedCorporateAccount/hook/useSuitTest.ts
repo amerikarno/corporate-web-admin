@@ -7,8 +7,11 @@ import { AxiosError } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSuit, setSuit } from "@/features/suit/suitSlice";
 import { copy, isEmptyObject } from "@/lib/utils";
+import { RootState } from "@/app/store";
+import { TCorporateData } from "../../constant/type";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
-export function UseSuitTest(corporateCode: string) {
+export function useSuitTest() {
   const suitData = useSelector((state: any) => state.suit);
   const dispatch = useDispatch();
   const [answerSuiteTest, setAnswerSuiteTest] = useState<TSuitAns[]>([]);
@@ -21,6 +24,9 @@ export function UseSuitTest(corporateCode: string) {
   const [isSubmit, setIsSubmit] = useState(false);
   const additionalQuiz = useRef<boolean[]>([]);
   const [isSave, setIsSave] = useState(false);
+  const corporatesInfo = useSelector<RootState, TCorporateData>(
+    (state) => state.editCorporate
+  ) as TCorporateData;
 
   const validate = () => {
     let err: string[] = [];
@@ -69,7 +75,7 @@ export function UseSuitTest(corporateCode: string) {
 
       const grade = giveGrade(score);
       const ans = {
-        corporateCode: corporateCode,
+        corporateCode: corporatesInfo.CorporateCode.toString(),
         totalScore: score,
         level: grade,
         investorTypeRisk: mapScore[grade],
@@ -184,8 +190,8 @@ export function UseSuitTest(corporateCode: string) {
             }
           );
           if (res.status == 200) {
-            console.log(res.data[0].SuitTestResult);
             dispatch(setSuit(res.data[0].SuitTestResult));
+            dispatch(setCorporateData(res.data[0]));
             return res.data[0].SuitTestResult;
           }
         } catch (error) {
@@ -228,7 +234,6 @@ export function UseSuitTest(corporateCode: string) {
       const data = await fetchSuitData();
       setIsLoading(false);
 
-      console.log(data);
       if (data && data !== null) {
         let tmpAns = [];
         if (
@@ -263,7 +268,7 @@ export function UseSuitTest(corporateCode: string) {
           }
         }
         setOpitionalQuiz(tmpAddition);
-        console.log(tmpAddition);
+        // console.log(tmpAddition);
       }
     }
   };
@@ -285,5 +290,6 @@ export function UseSuitTest(corporateCode: string) {
     isSubmit,
     fetchSuitData,
     additionalQuiz,
+    corporatesInfo,
   };
 }
