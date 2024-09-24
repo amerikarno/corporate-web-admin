@@ -15,6 +15,8 @@ import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { MdCurrencyExchange } from "react-icons/md";
+import { IoReceiptOutline } from "react-icons/io5";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 export default function OrderTradeEdit() {
   if (!isAllowedPage(2005)) {
     return <UnAuthorize />;
@@ -23,7 +25,7 @@ export default function OrderTradeEdit() {
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("buy");
   const [selectedCorporateCode, setSelectedCorporateCode] =
-    useState<string>("");
+    useState<number | null>(null);
   const [selectedTradingPair, setSelectedTradingPair] =
     useState<string>("THB/USDT");
   const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
@@ -180,7 +182,7 @@ export default function OrderTradeEdit() {
 
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: 0,
+      corporateCode: null,
       cryptoAmount: null,
       cryptoPrice: null,
       currency: "",
@@ -213,6 +215,8 @@ export default function OrderTradeEdit() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<TOrderTrade>({
@@ -227,7 +231,7 @@ export default function OrderTradeEdit() {
   const handleCorporateCodeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSelectedCorporateCode(event.target.value);
+    setSelectedCorporateCode(Number(event.target.value) || null);
   };
 
   const handleTradingPairChange = (
@@ -249,6 +253,7 @@ export default function OrderTradeEdit() {
       fiatAmount: handleFloatValue(Number(data.fiatAmount)),
       cryptoPrice: handleFloatValue(Number(data.cryptoPrice)),
     };
+    dispatch(setTestCorporateData(body));
     console.log(choosedEditData);
     console.log(body);
 
@@ -263,7 +268,7 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode("");
+          setSelectedCorporateCode(null);
           console.log("edit successful");
           fetchOrderList();
         } else {
@@ -278,7 +283,7 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode("");
+          setSelectedCorporateCode(null);
           console.log("save successful");
           fetchOrderList();
         } else {
@@ -297,15 +302,18 @@ export default function OrderTradeEdit() {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full flex justify-center">
             <Card className="w-2/3 p-4 md:space-y-4 md:p-10">
+            <span className="flex justify-start items-center font-bold md:text-xl py-2 gap-2">Orders / Trades<span><IoReceiptOutline /></span></span>
               <div className="w-full flex justify-center items-center">
                 <div className="w-2/3">
                   <Input
                     {...register("corporateCode")}
                     label="Corporate Code"
+                    data-testid="Corporate Code"
                     id="corporateCode"
                     disabled={isSubmitting}
-                    value={selectedCorporateCode}
+                    value={selectedCorporateCode !== null ? selectedCorporateCode : ""}
                     onChange={handleCorporateCodeChange}
+                    type="number"
                     list="corporateCodes"
                     autoComplete="off"
                     inputClassName=""
@@ -377,6 +385,7 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("cryptoAmount")}
                     label="Crypto Amount"
+                    data-testid="Crypto Amount"
                     id="cryptoAmount"
                     disabled={isSubmitting}
                     step="0.00001"
@@ -390,6 +399,7 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("fiatAmount")}
                     label="Fiat Amount"
+                    data-testid="Fiat Amount"
                     id="fiatAmount"
                     disabled={isSubmitting}
                     step="0.00001"
@@ -405,6 +415,7 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("cryptoPrice")}
                     label="Crypto Price"
+                    data-testid="Crypto Price"
                     id="cryptoPrice"
                     disabled={isSubmitting}
                     step="0.00001"
@@ -417,7 +428,11 @@ export default function OrderTradeEdit() {
                   )}
                   <select
                     {...register("currency")}
-                    // onChange={handleCurrencyChange}
+                    value={watch("currency")}
+                    onChange={(e) => {
+                      setValue("currency", e.target.value);
+                    }}
+                    data-testid="currency-combobox"
                     className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"

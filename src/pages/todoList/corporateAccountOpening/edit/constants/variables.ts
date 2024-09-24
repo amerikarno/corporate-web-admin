@@ -126,7 +126,7 @@ export const businessTypeKey = [
 ];
 export const businessType = [
   "Antique Trading",
-  "Hotel / Resturant",
+  "Hotel / Restaurant",
   "Armamnet",
   "Insurance / Assurance",
   "Casino / Gambling",
@@ -229,7 +229,7 @@ export const mapKeyLabel: obj[] = [
 
   // business type
   { label: "Antique Trading", key: "isAntiqueTrading" },
-  { label: "Hotel / Resturant", key: "isHotelRestaurant" },
+  { label: "Hotel / Restaurant", key: "isHotelRestaurant" },
   { label: "Armamnet", key: "isArmament" },
   { label: "Insurance / Assurance", key: "isInsuranceAssurance" },
   { label: "Casino / Gambling", key: "isCasinoGambling" },
@@ -279,7 +279,7 @@ export const mapKeys: TMapKeyLabel = {
   isJuristicForeign: "Juristic (Foreign)",
   isOther: "Others",
   isAntiqueTrading: "Antique Trading",
-  isHotelRestaurant: "Hotel / Resturant",
+  isHotelRestaurant: "Hotel / Restaurant",
   isArmament: "Armamnet",
   isInsuranceAssurance: "Insurance / Assurance",
   isCasinoGambling: "Casino / Gambling",

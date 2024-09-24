@@ -13,7 +13,7 @@ export const individualAccountSchema = z.object({
   marriageStatus: z.string().min(1, "marriageStatus cannot be empty"),
   citizenId: z.string().min(1, "idCard cannot be empty"),
   laserCode: z.string().min(1, "laserCode cannot be empty"),
-  agreement: z.boolean(),
+  agreement: z.boolean().optional(),
 });
 
 export type TIndividualAccount = z.infer<typeof individualAccountSchema>;

@@ -126,7 +126,11 @@ export default function UploadFiles({}: TUploadFilesProps) {
           </div>
           {documentType !== null && (
             <div className="space-y-4">
-              <Input type="file" onChange={handleInputChange} />
+              <Input 
+                type="file" 
+                onChange={handleInputChange} 
+                data-testid="inputfile"
+              />
               <Button onClick={() => handleUpload(file, corporateCode)}>
                 Upload
               </Button>

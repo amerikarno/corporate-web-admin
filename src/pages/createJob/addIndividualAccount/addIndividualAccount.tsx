@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 
 export default function AddIndividualAccount() {
@@ -147,7 +148,9 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
+    console.log(data)
     let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
+    dispatch(setTestCorporateData({...body,birthDate: new Date(data.birthDate).toISOString()}));
     try {
       const token = getCookies();
       console.log("body to send ",body)
@@ -215,6 +218,7 @@ export default function AddIndividualAccount() {
                     {...register("thTitle")}
                     onChange={handleTitleChange}
                     value={thTitle}
+                    data-testid="thTitle"
                     className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
                      dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600"
@@ -266,6 +270,7 @@ export default function AddIndividualAccount() {
                     {...register("engTitle")}
                     onChange={handleTitleChange}
                     value={engTitle}
+                    data-testid="enTitle"
                     className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
                      dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600"
@@ -345,6 +350,7 @@ export default function AddIndividualAccount() {
                   type="date"
                   {...register("birthDate")}
                   label="วัน/เดือน/ปี เกิด"
+                  data-testid ="birthDate"
                 />
                 {errors.birthDate && (
                   <span className="text-red-500">
@@ -356,6 +362,7 @@ export default function AddIndividualAccount() {
               <div className="flex  flex-col w-1/2">
                 <select
                   {...register("marriageStatus")}
+                  data-testid ="marriageStatus"
                   className="cursor-pointer border p-3.5 border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full dark:bg-gray-700 dark:border-gray-600
                  dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -409,6 +416,7 @@ export default function AddIndividualAccount() {
                   type="checkbox"
                   id="agreement"
                   {...register("agreement")}
+                  data-testid ="agreement"
                 />
                 <label htmlFor="agreement" className="text-gray-500">
                   ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัว
@@ -421,7 +429,7 @@ export default function AddIndividualAccount() {
               </div>
             </div>
             <div className="absolute right-4 -bottom-[4.5rem]">
-              <Button type="submit">Next Form</Button>
+              <Button type="submit" data-testid="submitButton">Next Form</Button>
             </div>
           </form>
         </CardContent>

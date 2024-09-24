@@ -13,6 +13,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function SuitTestFatca() {
   if (!isAllowedPage(2002)) {
@@ -127,6 +128,7 @@ export default function SuitTestFatca() {
         pageID: 400,
       };
       console.log(body);
+      dispatch(setTestCorporateData(body));
       if(individualData?.SuiteTestResult.suiteTestResult.totalScore){
           console.log("suite test updating...")
           try{

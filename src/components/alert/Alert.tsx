@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Alert.css';
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaRegCircleXmark } from "react-icons/fa6";
@@ -8,8 +8,8 @@ interface AlertProps {
     message?: string;
     onClose: () => void;
 }
-
-const Alert = ({ type, message, onClose }: AlertProps) => {
+// const Alert = ({ type, message, onClose }: AlertProps) => {
+const Alert = ({ type, onClose }: AlertProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const alertClass = `alert alert-${type} ${isVisible ? 'fade-in' : 'fade-out'}`;
 
@@ -33,7 +33,7 @@ const Alert = ({ type, message, onClose }: AlertProps) => {
         </div>
         <div className="alert-loader"></div>
         {/* <span className="alert-message">{message}</span> */}
-        <button className="alert-close" onClick={() => { setIsVisible(false); setTimeout(onClose, 500); }}>&times;</button>
+        <button className="alert-close" data-testid="closeAlert" onClick={() => { setIsVisible(false); setTimeout(onClose, 500); }}>&times;</button>
       </div>
     </div>
   );

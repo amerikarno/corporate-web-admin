@@ -23,6 +23,7 @@ import { clearIndividualData, setIndividualData } from "@/features/fetchIndividu
 import { RootState } from "@/app/store";
 import { useEffect, useState } from "react";
 import Alert from "@/components/alert/Alert";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function IdentityVerification() {
   const navigate = useNavigate();
@@ -72,13 +73,14 @@ export default function IdentityVerification() {
   };
 
   const [alertType,setAlertType] = useState("");
-  const [alertMessage,setAlertMessage] = useState("");
+  // const [alertMessage,setAlertMessage] = useState("");
 
   const handleNdid = async () => {
     let body = {
       ndid:true,
       cid:localStorage.getItem('cid')
     }
+    dispatch(setTestCorporateData(body));
     console.log("ndid choosed : ",body)
     try{
       if(individualData?.thaid || individualData?.ndid){
@@ -90,12 +92,12 @@ export default function IdentityVerification() {
            console.log("update ndid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("update ndid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }else{
         const res = await axios.post("/api/v1/individual/ndidthaid",body,
@@ -106,19 +108,19 @@ export default function IdentityVerification() {
            console.log("save ndid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("save ndid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }
     }catch(error){
       console.log("save ndid not success :",error)
       setAlertVisible(true);
       setAlertType("error")
-      setAlertMessage("please try again")
+      // setAlertMessage("please try again")
     } 
   }
   const handlethaiid = async () => {
@@ -126,6 +128,7 @@ export default function IdentityVerification() {
       thaid:true,
       cid:localStorage.getItem('cid')
     }
+    dispatch(setTestCorporateData(body));
     console.log("thaid choosed : ",body)
     try{
       if(individualData?.thaid || individualData?.ndid){
@@ -137,12 +140,12 @@ export default function IdentityVerification() {
            console.log("update thaid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("update thaid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }else{
         const res = await axios.post("/api/v1/individual/ndidthaid",body,
@@ -153,19 +156,19 @@ export default function IdentityVerification() {
            console.log("save thaid success :",res)
            setAlertVisible(true);
            setAlertType("success")
-           setAlertMessage("Thanks for your submission")
+          //  setAlertMessage("Thanks for your submission")
          }else{
           console.log("save thaid not success :",res)
           setAlertVisible(true);
           setAlertType("error")
-          setAlertMessage("please try again")
+          // setAlertMessage("please try again")
          }
       }
     }catch(error){
       console.log("save ndid not success :",error)
       setAlertVisible(true);
       setAlertType("error")
-      setAlertMessage("please try again")
+      // setAlertMessage("please try again")
     } 
   }
   return (
@@ -174,6 +177,7 @@ export default function IdentityVerification() {
             <Alert
               type={alertType}
               onClose={handleClose}
+              data-testid="alertResponse"
             />
           )}
       <div className="flex flex-col items-center text-slate-800">
@@ -190,10 +194,10 @@ export default function IdentityVerification() {
           <span className="text-sm md:text-base">1. ยืนยันตัวตนและสมัคร NDID กับธนาคารที่ท่านใช้บริการเรียบร้อยแล้วเท่านั้น</span>
           <span className="text-sm md:text-base">2. ทำรายการให้สำเร็จภายใน 1 ชม.</span>
           <span className="p-4 pl-0 md:pl-4 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
-          <div className="absolute bottom-4 left-[43%]">
+          <div  className="absolute bottom-4 left-[43%]">
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="outline" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>
+                  <Button variant="outline" data-testid="ndidButton" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -204,7 +208,7 @@ export default function IdentityVerification() {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleNdid}>ตกลง</AlertDialogAction>
+                    <AlertDialogAction onClick={handleNdid} data-testid="comfirmButton">ตกลง</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -223,7 +227,7 @@ export default function IdentityVerification() {
           <div className="absolute bottom-4 left-[43%]">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="outline" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>
+                <Button variant="outline" data-testid="thaidButton" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -234,7 +238,7 @@ export default function IdentityVerification() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handlethaiid}>ตกลง</AlertDialogAction>
+                  <AlertDialogAction onClick={handlethaiid} data-testid="thaidComfirmButton">ตกลง</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

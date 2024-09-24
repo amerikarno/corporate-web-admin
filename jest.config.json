@@ -14,6 +14,7 @@
     ],
     "moduleNameMapper": {
         "^@/(.*)$": "<rootDir>/src/$1",
-        "\\.(css|less|sass|scss)$": "<rootDir>/src/__Test__/styleMock.js"
+        "\\.(css|less|sass|scss)$": "<rootDir>/src/__Test__/styleMock.js",
+        "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/src/__Test__/fileMock.js"
     }
 }

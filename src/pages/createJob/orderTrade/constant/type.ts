@@ -1,5 +1,5 @@
 export type TOrderTrade = {
-  corporateCode: number;
+  corporateCode: number | null;
   operations?: string;
   cryptoAmount: string | number | null;
   fiatAmount: string | number | null;

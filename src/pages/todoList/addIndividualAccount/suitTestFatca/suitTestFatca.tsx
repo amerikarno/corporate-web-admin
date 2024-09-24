@@ -264,7 +264,7 @@ if you are an American citizen, please complete the FATCA form first.`);
                         </label>
                       </div>
                     ))}
-                    <div className="">
+                    {/* <div className="">
                       <Button
                         className={
                           isButtonDisabled
@@ -283,7 +283,7 @@ if you are an American citizen, please complete the FATCA form first.`);
                           "ถัดไป"
                         )}
                       </Button>
-                    </div>
+                    </div> */}
                   </div>
                 )}
               </div>
