@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import { mapKeyLabel } from "../constants2/variables";
 import { CheckBox } from "@/components/Checkbox";
 import { Input } from "@/components/ui/input";
-import { TCorporateInfo } from "../constants2/types";
 import { Button } from "@/components/ui/button";
 import { RadioCheckBox } from "@/components/ui/Radio";
 import { useDispatch, useSelector } from "react-redux";

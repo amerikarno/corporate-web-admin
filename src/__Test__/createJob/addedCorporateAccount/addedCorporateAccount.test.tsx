@@ -28,7 +28,6 @@ import { FormBank } from "@/pages/createJob/addedCorporateAccount/components/for
 import UploadFiles from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/uploadFiles";
 import * as useUploadFileModule from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/hook/useUploadFile";
 import { PageJuristicType } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicType";
-import { TCorporateInfo } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 import { TCorporateData } from "@/pages/createJob/constant/type";
 import {
   clearCorporateData,
@@ -921,64 +920,6 @@ const mockCorporateData: TCorporateData = {
   ],
 };
 
-const mockCorporateInfo: TCorporateInfo = {
-  corporateCode: "80000001",
-  name: "Test Corporate",
-  registrationNo: "123456789",
-  taxId: "TAXID789",
-  dateofincorporation: "2023-10-01",
-  isRegisteredThailand: true,
-  isPrimaryCountry: true,
-  registered: "Thailand",
-  isRegisteredOther: false,
-  primary: "Thailand",
-  isPrimaryOther: false,
-  registeredBusiness: {
-    address: [
-      {
-        addressNo: "123",
-        building: "Business Building",
-        floor: "4",
-        mooNo: "2",
-        soi: "Main Soi",
-        road: "Business Road",
-        tambon: "Central Tambon",
-        amphoe: "Central Amphoe",
-        province: "Bangkok",
-        postalCode: "10110",
-        country: "Thailand",
-      },
-    ],
-    emailAddress: "contact@business.com",
-    telephone: "+66-123-4567",
-  },
-  placeofIncorporation: {
-    address: [
-      {
-        addressNo: "789",
-        building: "Corporate Tower",
-        floor: "10",
-        mooNo: "5",
-        soi: "Corporate Soi",
-        road: "Corporate Road",
-        tambon: "North Tambon",
-        amphoe: "North Amphoe",
-        province: "Bangkok",
-        postalCode: "10120",
-        country: "Thailand",
-      },
-    ],
-    emailAddress: "info@corporate.com",
-    telephone: "+66-987-6543",
-  },
-  registeredCapital: 1000000,
-  revenuePerYear: 5000000,
-  netProFitLoss: 200000,
-  shareholderEquity: 3000000,
-};
-
-const mockCorporateCode = "80000001";
-
 describe("test create corporate form2", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -992,8 +933,6 @@ describe("test create corporate form2", () => {
       <Provider store={store}>
         <MemoryRouter>
           <PageJuristicType
-            currentCorporatesInfo={mockCorporateInfo}
-            corporateCode={mockCorporateCode}
           />
         </MemoryRouter>
       </Provider>
