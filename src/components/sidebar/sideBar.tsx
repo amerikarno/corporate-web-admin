@@ -44,7 +44,7 @@ export default function Sidebar() {
   }
 
     return (
-      <aside className="w-[270px] bg-slate-900 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
+      <aside className="w-[270px] bg-green-950 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
         <Accordion type="single" collapsible className="p-2">
           {urlConfig.map((item: TUrlConfig, index: number) => {
             return (

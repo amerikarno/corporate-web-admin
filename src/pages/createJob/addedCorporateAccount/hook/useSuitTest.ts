@@ -105,9 +105,9 @@ export function useSuitTest() {
         console.log("request success", res.data);
         dispatch(resetSuit());
         setIsSave(true);
-      } else {
-        console.log("save failed");
+        return;
       }
+      console.log("save failed");
     } catch (error) {
       console.log(error);
     }
