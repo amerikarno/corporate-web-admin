@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import SubSuitTest from "./subSuitTest";
 import KnowLedgeTest from "./knowLedgeTest";
-import { TiTick } from "react-icons/ti";
 import "./suitTestFatca.css";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
@@ -18,7 +17,6 @@ export default function SuitTestFatca() {
   if (!isAllowedPage(2002)) {
     return <UnAuthorize />;
   }
-
 
   const token = getCookies();
   const dispatch = useDispatch();
@@ -48,11 +46,10 @@ export default function SuitTestFatca() {
     const cidValue = localStorage.getItem("cid");
     if (cidValue) {
       fetchIndividualData(cidValue || "");
-    }else{
+    } else {
       console.log("cid not found");
     }
   }, [token, dispatch]);
-
 
   const [fatcaradio, setFatcaRadio] = useState("fatcaradio-2");
   const [knowLedgeTest, setKnowLedgeTest] = useState("knowLedgeTest-2");
@@ -61,53 +58,54 @@ export default function SuitTestFatca() {
     new Array(8).fill(false)
   );
 
-  useEffect(()=>{
-    if(individualData?.SuiteTestResult.isFatca){
-      setFatcaInfo(individualData.SuiteTestResult.fatcaInfo)
+  useEffect(() => {
+    if (individualData?.SuiteTestResult.isFatca) {
+      setFatcaInfo(individualData.SuiteTestResult.fatcaInfo);
       if (Array.isArray(fatcaInfo)) {
-        const initialCheckboxStates = fatcaInfo.map(state => state === 1);
+        const initialCheckboxStates = fatcaInfo.map((state) => state === 1);
         setCheckboxStates(initialCheckboxStates);
       }
-      setFatcaRadio("fatcaradio-1")
-    }else{
-
+      setFatcaRadio("fatcaradio-1");
+    } else {
     }
 
-    if(individualData?.SuiteTestResult.isKnowLedgeDone){
-      setKnowLedgeTest("knowLedgeTest-1")
+    if (individualData?.SuiteTestResult.isKnowLedgeDone) {
+      setKnowLedgeTest("knowLedgeTest-1");
       setKnowLedgeTestSuccess(true);
     }
-  },[individualData])
+  }, [individualData]);
 
   const handleCheckboxChange = (index: number) => {
     const updatedCheckboxStates = [...checkboxStates];
     updatedCheckboxStates[index] = !updatedCheckboxStates[index];
 
     //change from true to 1 and false to 0
-    const numericCheckboxStates = updatedCheckboxStates.map(state => state ? 1 : 0);
-    console.log(numericCheckboxStates)
+    const numericCheckboxStates = updatedCheckboxStates.map((state) =>
+      state ? 1 : 0
+    );
+    console.log(numericCheckboxStates);
     setCheckboxStates(updatedCheckboxStates);
     setFatcaInfo(numericCheckboxStates);
   };
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [knowLedgeTestSuccess, setKnowLedgeTestSuccess] = useState(false);
   const [suitTestSuccess, setSuitTestSuccess] = useState(false);
-  const [suitTestResult,setSuitTestResult] = useState();
+  const [suitTestResult, setSuitTestResult] = useState();
   const navigate = useNavigate();
 
   const handleKnowLedgeTestSuccess = (success: boolean) => {
-        setKnowLedgeTestSuccess(success);
-        console.log('Test Success:', success);
-    };
-  const handleSuitTestSuccess = (success:boolean) =>{
-      setSuitTestSuccess(success)
-      console.log("Suit Test submit button pressed!")
-  }
+    setKnowLedgeTestSuccess(success);
+    console.log("Test Success:", success);
+  };
+  const handleSuitTestSuccess = (success: boolean) => {
+    setSuitTestSuccess(success);
+    console.log("Suit Test submit button pressed!");
+  };
 
-    const handleSuitTestResult = (exam_result : any) =>{
-      console.log(exam_result)
-      setSuitTestResult(exam_result)
-  }
+  const handleSuitTestResult = (exam_result: any) => {
+    console.log(exam_result);
+    setSuitTestResult(exam_result);
+  };
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
   const handleSubmitSuitTestFatca = async () => {
     console.log(isButtonDisabled);
@@ -116,7 +114,8 @@ export default function SuitTestFatca() {
     console.log(fatcaInfo !== "");
     if (
       suitTestSuccess &&
-      (fatcaradio === "fatcaradio-2" || JSON.stringify(fatcaInfo) !== JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0]))
+      (fatcaradio === "fatcaradio-2" ||
+        JSON.stringify(fatcaInfo) !== JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0]))
     ) {
       let body = {
         id: localStorage.getItem("cid"),
@@ -128,46 +127,54 @@ export default function SuitTestFatca() {
         pageID: 400,
       };
       console.log(body);
-      if(individualData?.SuiteTestResult.suiteTestResult.totalScore){
-          console.log("suite test updating...")
-          try{
-            const res = await axios.post("/api/v1/suitetest/result/individual/edit", body,  {
+      if (individualData?.SuiteTestResult.suiteTestResult.totalScore) {
+        console.log("suite test updating...");
+        try {
+          const res = await axios.post(
+            "/api/v1/suitetest/result/individual/edit",
+            body,
+            {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
-            })
-            console.log(res)
-            if (res.status === 200) {
-              console.log("suit test edit success", res.data);
-              navigate("/todo-list/individual-account-opening/edit/4");
-            }else{
-              console.log("suit test edit not success")
             }
-          }catch(error){
-            console.log(error)
+          );
+          console.log(res);
+          if (res.status === 200) {
+            console.log("suit test edit success", res.data);
+            navigate("/todo-list/individual-account-opening/edit/4");
+          } else {
+            console.log("suit test edit not success");
           }
-      }else{
-          console.log("suite test saving...")
-          try{
-            const res = await axios.post("/api/v1/suitetest/result/individual/save", body,  {
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("suite test saving...");
+        try {
+          const res = await axios.post(
+            "/api/v1/suitetest/result/individual/save",
+            body,
+            {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
               },
-            })
-            console.log(res)
-            if (res.status === 200) {
-              console.log("suit test save success", res.data);
-              navigate("/todo-list/individual-account-opening/edit/4");
-            }else{
-              console.log("suit test save not success")
             }
-          }catch(error){
-            console.log(error)
+          );
+          console.log(res);
+          if (res.status === 200) {
+            console.log("suit test save success", res.data);
+            navigate("/todo-list/individual-account-opening/edit/4");
+          } else {
+            console.log("suit test save not success");
           }
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }else {
+    } else {
       alert(`Please complete the suite test,
 if you are an American citizen, please complete the FATCA form first.`);
     }
@@ -197,7 +204,10 @@ if you are an American citizen, please complete the FATCA form first.`);
             </div>
           </div> */}
       </div>
-      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} suitTestResult={handleSuitTestResult}/>
+      <SubSuitTest
+        onSuitTestDone={handleSuitTestSuccess}
+        suitTestResult={handleSuitTestResult}
+      />
       <Card>
         <CardContent>
           <div className="p-4 space-y-4 pr-8 pl-8 flex flex-col">
