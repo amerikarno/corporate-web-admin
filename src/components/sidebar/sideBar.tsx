@@ -15,7 +15,6 @@ import { getCookies } from "@/lib/Cookies";
 import { TUser, setUser } from "@/features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
-import { clearAddIndividual } from "@/features/addIndividual/addIndividualSlice";
 import { clearIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 
 export default function Sidebar() {
@@ -27,11 +26,11 @@ export default function Sidebar() {
       dispatch(clearCorporateData());
       dispatch(clearIndividualData());
       // dispatch(clearAddIndividual());
-      console.log("individual and corporate redux had been cleared!")
+      console.log("individual and corporate redux had been cleared!");
     }
   };
-  
-  if (user === null || user === undefined) {                    
+
+  if (user === null || user === undefined) {
     const token = getCookies();
     if (token) {
       const dispatch = useDispatch();
@@ -43,43 +42,43 @@ export default function Sidebar() {
     }
   }
 
-    return (
-      <aside className="w-[270px] bg-green-950 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
-        <Accordion type="single" collapsible className="p-2">
-          {urlConfig.map((item: TUrlConfig, index: number) => {
-            return (
-              <div key={index}>
-                <AccordionItem
-                  className="px-2 border-none "
-                  value={`item-${index}`}
-                >
-                  {isAllowedPageByRange(item.pages) && (
-                    <AccordionTrigger className="font-bold hover:no-underline text-[#b3b3b3]">
-                      {item.header}
-                    </AccordionTrigger>
-                  )}
-  
-                  {item.children.map((child: TUrlConfigChild, index) => {
-                    return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
-                      <AccordionContent key={index} className="pl-6">
-                        <Link
-                          to={child.href}
-                          className="hover:underline text-[#b3b3b3] flex"
-                          onClick={() => handleClick(child.pageId)}
-                        >
-                          <MoveRight />
-                          &nbsp;<p>{child.label}</p>
-                        </Link>
-                      </AccordionContent>
-                    ) : (
-                      <div key={index}></div>
-                    );
-                  })}
-                </AccordionItem>
-              </div>
-            );
-          })}
-        </Accordion>
-      </aside>
-    );
-  }
+  return (
+    <aside className="w-[270px] bg-green-950 h-screen fixed hidden sm:inline ease bg-primary-backoffice overflow-y-auto">
+      <Accordion type="single" collapsible className="p-2">
+        {urlConfig.map((item: TUrlConfig, index: number) => {
+          return (
+            <div key={index}>
+              <AccordionItem
+                className="px-2 border-none "
+                value={`item-${index}`}
+              >
+                {isAllowedPageByRange(item.pages) && (
+                  <AccordionTrigger className="font-bold hover:no-underline text-[#b3b3b3]">
+                    {item.header}
+                  </AccordionTrigger>
+                )}
+
+                {item.children.map((child: TUrlConfigChild, index) => {
+                  return isAllowedPage(child.pageId) || child.pageId >= 7000 ? (
+                    <AccordionContent key={index} className="pl-6">
+                      <Link
+                        to={child.href}
+                        className="hover:underline text-[#b3b3b3] flex"
+                        onClick={() => handleClick(child.pageId)}
+                      >
+                        <MoveRight />
+                        &nbsp;<p>{child.label}</p>
+                      </Link>
+                    </AccordionContent>
+                  ) : (
+                    <div key={index}></div>
+                  );
+                })}
+              </AccordionItem>
+            </div>
+          );
+        })}
+      </Accordion>
+    </aside>
+  );
+}

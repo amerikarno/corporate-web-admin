@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import "./header.css";
 
-import Logo from "@/assets/logo.svg";
+import Logo from "@/assets/logo_ecg-03.png";
 import { urlConfig } from "@/config/url";
 import { TUrlConfig, TUrlConfigChild } from "@/config/types";
 import { Menu } from "lucide-react";
@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { removeCookies } from "@/lib/Cookies";
 import { useDispatch } from "react-redux";
 import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,8 +39,8 @@ export default function Header() {
     <nav className="w-full bg-green-950 fixed top-0 h-16 flex justify-between items-center z-50">
       <div className="flex w-[270px] justify-start pl-4 ml-5  items-start">
         <div id="logo" className="hidden sm:inline">
-          {/* <img  src="@/src/assets/logo_ecg-03.png" typeof="image/png"/> */}
-          <div className="font-bold text-xl headerlogo">eliteconsulting</div>
+          <img src={Logo} typeof="image/png" className="h-10" />
+          {/* <div className="font-bold text-xl headerlogo">eliteconsulting</div> */}
         </div>
         <div id="hamburger-menu" className="md:hidden ">
           <Sheet>
