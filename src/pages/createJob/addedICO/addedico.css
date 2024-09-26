@@ -1,0 +1,48 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.ico-card{
+    min-width: 300px;
+    padding:2rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: white;
+    /* box-shadow:rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px; */
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.content {
+    flex: 1;
+  }
+  
+
+.horizontal-line-top {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 5px solid #111629;
+}
+
+.horizontal-line-bottom {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 5px solid #111629;
+}
+
+@media (min-width: 768px) {
+    .ico-card{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding:2rem 4rem 4rem 4rem;
+        width: 100%;
+        background: white;
+        /* box-shadow:rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px; */
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    }
+}

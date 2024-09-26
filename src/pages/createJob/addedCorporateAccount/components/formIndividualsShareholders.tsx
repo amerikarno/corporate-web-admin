@@ -6,7 +6,6 @@ import {
   TIndividualsShareholdersSchema,
 } from "../constants2/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sleep } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import Dropbox from "@/components/Dropbox";
@@ -146,7 +145,6 @@ export function FormIndividualsShareholders({
       setCurInputText("");
       setTriggeriderror("");
       setCurInput(false);
-      await sleep(500);
       reset();
       console.log(formData);
       clearChoosedEditData();

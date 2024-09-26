@@ -1,0 +1,181 @@
+import { FaKey } from "react-icons/fa";
+import { TAssetKeyInfo } from "./types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/Input";
+import { FaCirclePlus } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+
+const AddedIcoKeyInfo = () => {
+
+  const fetchedData = useSelector((state: RootState) => state.assetData.data);
+
+  const [keyInfoList, setKeyInfoList] = useState([
+    { name: "Please Select Key" },
+    { name: "Network", type: "selector" },
+    { name: "Precision", type: "text" },
+    { name: "Capital Structure", type: "text" },
+    { name: "Classification", type: "text" },
+    { name: "Product Type", type: "text" },
+    { name: "Creation Time", type: "date" },
+    { name: "Release Time", type: "date" },
+    { name: "Completion Time", type: "date" },
+  ]);
+
+  const keyInformationForSelector = [{ name: "BNB Smart Chain Mainnet" }];
+
+  const [keyValuePairs, setKeyValuePairs] = useState([
+    { key: "", type: "", value: "" },
+  ]);
+
+  useEffect(() => {
+    if (fetchedData?.keyInformation) {
+        const newKeyValuePairs = Object.keys(fetchedData.keyInformation).map(keyHeader => {
+        switch (keyHeader) {
+          case "network":
+            return { key: "Network", type: "selector", value: fetchedData.keyInformation.network };
+          case "precision":
+            return { key: "Precision", type: "text", value: fetchedData.keyInformation.precision };
+          case "capitalStructure":
+            return { key: "Capital Structure", type: "text", value: fetchedData.keyInformation.capitalStructure };
+          case "classification":
+            return { key: "Classification", type: "text", value: fetchedData.keyInformation.classification };
+          case "productType":
+            return { key: "Product Type", type: "text", value: fetchedData.keyInformation.productType };
+          case "creationTime":
+            return { key: "Creation Time", type: "date", value: fetchedData.keyInformation.creationTime.split("T")[0] };
+          case "releaseTime":
+            return { key: "Release Time", type: "date", value: fetchedData.keyInformation.releaseTime.split("T")[0] };
+          case "compleationTime":
+            return { key: "Completion Time", type: "date", value: fetchedData.keyInformation.compleationTime.split("T")[0] };
+          default:
+            return { key: "", type: "", value: "" };
+        }
+      });
+      setKeyValuePairs(newKeyValuePairs);
+    }
+  }, [fetchedData]);
+
+  const handleKeyChange = (index: number, event: any) => {
+    const newKeyValuePairs = [...keyValuePairs];
+    newKeyValuePairs[index].key = event.target.value;
+    const selectedKey = keyInfoList.find((key) => key.name === event.target.value);
+    if (selectedKey) {
+      newKeyValuePairs[index].type = selectedKey.type!;
+      setKeyValuePairs(newKeyValuePairs);
+    }
+  };
+
+  const handleValueChange = (index: number, event: any) => {
+    const newKeyValuePairs = [...keyValuePairs];
+    newKeyValuePairs[index].value = event.target.value;
+    setKeyValuePairs(newKeyValuePairs);
+  };
+
+  const handleAddKey = () => {
+    setKeyValuePairs([...keyValuePairs, { key: "", type: "", value: "" }]);
+  };
+
+  const convertToTAssetKeyInfo = (data: { keyInformation: { key: string, type: string, value: string }[] }): TAssetKeyInfo => {
+    const keyInfo: TAssetKeyInfo['keyInformation'] = {};
+
+    data.keyInformation.forEach((item) => {
+      switch (item.key) {
+        case 'Network':
+          keyInfo.network = item.value;
+          break;
+        case 'Precision':
+          keyInfo.precision = item.value;
+          break;
+        case 'Capital Structure':
+          keyInfo.capitalStructure = item.value;
+          break;
+        case 'Classification':
+          keyInfo.classification = item.value;
+          break;
+        case 'Product Type':
+          keyInfo.productType = item.value;
+          break;
+        case 'Creation Time':
+          keyInfo.creationTime = item.value;
+          break;
+        case 'Release Time':
+          keyInfo.releaseTime = item.value;
+          break;
+        case 'Completion Time':
+          keyInfo.compleationTime = item.value;
+          break;
+        default:
+          break;
+      }
+    });
+
+    return { keyInformation: keyInfo };
+  };
+
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const body = convertToTAssetKeyInfo({ keyInformation: keyValuePairs });
+    console.log(body);
+  };
+
+  return (
+    <div className="flex justify-evenly p-5 md:p-10 md:pb-0">
+      <div className="w-full md:w-3/4">
+        <hr className="horizontal-line-top" />
+        <form className="flex flex-col items-center space-y-24">
+          <div className="ico-card space-y-8">
+            <div className="w-full flex items-center my-5 mb-0 space-x-2">
+                <h1 className="text-lg md:text-xl font-bold">Key Information</h1>
+                <span className="text-xl"><FaKey /></span>
+            </div>
+            {keyValuePairs.map((pair, index) => (
+            <div className="flex w-full items-center relative space-x-4" key={index}>
+                <div className={`absolute -left-8 md:text-3xl cursor-pointer hover:text-4xl transition-all ${index !== keyValuePairs.length - 1 ? 'hidden' : ''}`}>
+                     <FaCirclePlus onClick={handleAddKey} />
+                </div>
+                <select
+                  className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-2 focus:outline-none"
+                  value={pair.key}
+                  onChange={(event) => handleKeyChange(index, event)}
+                >
+                  {keyInfoList.map((key) => (
+                    <option key={key.name} value={key.name}>
+                      {key.name}
+                    </option>
+                  ))}
+                </select>
+                {pair.type === "selector" ? (
+                  <select
+                    className="w-full h-12 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline"
+                    value={pair.value}
+                    onChange={(event) => handleValueChange(index, event)}
+                  >
+                    <option value="">Please Select Information</option>
+                    {keyInformationForSelector.map((status) => (
+                      <option key={status.name} value={status.name}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </select>
+                ) : pair.type === "text" ? (
+                  <Input placeholder="please specify here..." className="w-full h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
+                ) : pair.type === "date" ? (
+                  <Input type="date" className="w-full h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
+                ) : (
+                  <Input value="" className="hidden" disabled={true} />
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="absolute right-5 bottom-8">
+            <Button onClick={handleSubmit}>Next Form</Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AddedIcoKeyInfo;

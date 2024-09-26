@@ -19,6 +19,7 @@ import individualDataReducer from "@/features/fetchIndividualData/fetchIndividua
 import fxExchangeReducer from "@/features/fxExchange/fxExhangeSlice";
 import corporateTestReducer from "@/features/corporateTest/corporateTestSlice";
 import currentCorporateInfoReducer from "@/features/currentSelectedCorperate/currentCorperrateInfoSlice";
+import assetDataReducer from "@/features/addedIcoData/AddedIcoData";
 
 export const store = configureStore({
   reducer: {
@@ -42,6 +43,7 @@ export const store = configureStore({
     fxExchange: fxExchangeReducer,
     corporateTest: corporateTestReducer,
     currentCorporateInfo: currentCorporateInfoReducer,
+    assetData: assetDataReducer
   },
 });
 

@@ -74,6 +74,11 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2002,
       },
       {
+        label: "added ICO",
+        href: "/create-job/added-ico",
+        pageId: 2008,
+      },
+      {
         label: "change corporate account",
         href: "/create-job/change-corporate-account",
         pageId: 2003,
@@ -122,11 +127,6 @@ export const urlConfig: TUrlConfig[] = [
       //   label: "bank gateway",
       //   href: "/create-job/bank-gateway",
       //   pageId: 2007,
-      // },
-      // {
-      //   label: "coin",
-      //   href: "/create-job/coin",
-      //   pageId: 2008,
       // },
       // {
       //   label: "coin listing",

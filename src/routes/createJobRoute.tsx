@@ -9,6 +9,7 @@ import { EditCorporateAccount } from "@/pages/createJob/changeCorporateAccount/e
 import ChangePageAddIndividualAccount from "@/pages/createJob/changeIndividualAccount/ChangePageAddIndividualAccount";
 import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccount/ToDoIndividualAccount";
 import FxExchangeEdit from "@/pages/createJob/fxExchange/fxExchange";
+import PageAddedIco from "@/pages/createJob/addedICO/PageAddedIco";
 export const createJobRoutes = () => {
   return (
     <Route path="create-job" element={<Outlet />}>
@@ -20,6 +21,10 @@ export const createJobRoutes = () => {
       <Route path="added-individual-account" element={<Outlet />}>
         <Route index element={<PageAddIndividualAccount />} />
         <Route path=":page" element={<PageAddIndividualAccount />} />
+      </Route>
+      <Route path="added-ico" element={<Outlet />}>
+        <Route index element={<PageAddedIco />} />
+        <Route path=":page" element={<PageAddedIco />} />
       </Route>
       <Route path="change-corporate-account" element={<Outlet />}>
         <Route index element={<ChangeCorporateAccountOpenning />} />
