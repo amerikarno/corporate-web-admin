@@ -5,14 +5,21 @@ import { Input } from "@/components/Input";
 import { FaBookmark, FaCirclePlus, FaKey } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { RootState } from "@/app/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AiOutlinePlus } from "react-icons/ai";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
 
 
 const AddedIssuance = () => {
 
 
     const fetchedData = useSelector((state: RootState) => state.assetData.data);
+    
+    const dispatch = useDispatch();
+  
+    const icoCode = localStorage.getItem("icoCode")
     
     useEffect(() => {
         if (fetchedData?.issuanceTerms) {
@@ -42,7 +49,7 @@ const AddedIssuance = () => {
         }
     }, [fetchedData]);
 
-  const [keyInfoList, setKeyInfoList] = useState([
+  const keyInfoList =[
     { name: "Please Select Key" },
     { name: "Investment Preriod", type: "text" },
     { name: "Dividend Yeild", type: "text" },
@@ -52,7 +59,7 @@ const AddedIssuance = () => {
     { name: "Leverage", type: "text" },
     { name: "Investment Structure", type: "text" },
     { name: "DIstribution Frequency", type: "text" },
-  ]);
+  ];
 
   const keyInformationForSelector = [{ name: "BNB Smart Chain Mainnet" }];
 
@@ -119,8 +126,34 @@ const AddedIssuance = () => {
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const body = convertToTAssetKeyInfo({ issuanceTerms: keyValuePairs });
+    let body:any = convertToTAssetKeyInfo({ issuanceTerms: keyValuePairs });
+    body = {
+      issuanceTerms : {
+        ...body.issuanceTerms,
+        icoCode:icoCode
+      }
+    }
+    dispatch(setTestCorporateData(body));
     console.log(body);
+
+    if(icoCode){
+      try{
+        const res = await axios.post('/api/v1/ico/issuance/create', {
+          headers: {
+            Authorization: `Bearer ${getCookies()}`,
+          },
+        })
+        if(res.status === 200){
+          console.log("create ico form4 success",res)
+        }else{
+          console.log("create ico form4 fail",res)
+        }
+      }catch(error){
+        console.log("create ico form4 fail",error)
+      }
+    }else{
+      console.log("no ico id")
+    }
   };
 
   return (

@@ -4,13 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/Input";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { FaBookmark } from "react-icons/fa";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
 
 const AddedIcoKeyInfo = () => {
 
   const fetchedData = useSelector((state: RootState) => state.assetData.data);
+
+  const dispatch = useDispatch();
+  
+  const icoCode = localStorage.getItem("icoCode")
 
   const keyInfoList =[
     { name: "Please Select Key" },
@@ -117,9 +124,38 @@ const AddedIcoKeyInfo = () => {
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const body = convertToTAssetKeyInfo({ keyInformation: keyValuePairs });
+    let body:any = convertToTAssetKeyInfo({ keyInformation: keyValuePairs });
+    body = { 
+      keyInformation: {
+        icoCode, 
+        ...body.keyInformation,
+        creationTime: !isNaN(Date.parse(body?.keyInformation?.creationTime)) ? new Date(body?.keyInformation?.creationTime).toISOString() : "",
+        releaseTime: !isNaN(Date.parse(body?.keyInformation?.releaseTime)) ? new Date(body?.keyInformation?.releaseTime).toISOString() : "",
+        compleationTime: !isNaN(Date.parse(body?.keyInformation?.compleationTime)) ? new Date(body?.keyInformation?.compleationTime).toISOString() : "",
+      }
+    };
+    dispatch(setTestCorporateData(body));
     console.log(body);
-  };
+
+    if(icoCode){
+      try{
+        const res = await axios.post('/api/v1/ico/keyInformation/create', {
+          headers: {
+            Authorization: `Bearer ${getCookies()}`,
+          },
+        })
+        if(res.status === 200){
+          console.log("create ico form3 success",res)
+        }else{
+          console.log("create ico form3 fail",res)
+        }
+      }catch(error){
+        console.log("create ico form3 fail",error)
+      }
+    }else{
+      console.log("no ico id")
+    }
+  }
 
   return (
     <div className="flex justify-evenly p-5 md:p-10 md:pb-0">

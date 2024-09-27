@@ -8,10 +8,11 @@ import { FaCircle, FaUpload } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { RiProfileLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 const AddedIcoInfo = () => {
 
@@ -44,7 +45,7 @@ const AddedIcoInfo = () => {
       } = useForm<TAssetInfo>({
         resolver: zodResolver(TAssetInfoSchema),
       });
-
+      const dispatch = useDispatch();
       const [file, setFile] = useState<File | null>(null);
       const [fileURL, setFileURL] = useState<string | null>(null);
       const fileInputRef = useRef<HTMLInputElement>(null);
@@ -78,6 +79,7 @@ const AddedIcoInfo = () => {
                 }
             }
             console.log("form1 ico body :",body)
+            dispatch(setTestCorporateData(body))
             try{
                 const res = await axios.post("/api/v1/ico/asset/create", body, {
                     headers: {
@@ -103,167 +105,8 @@ const AddedIcoInfo = () => {
      };
 
     return (
-        // <div className="flex justify-evenly p-5 md:p-10 md:pb-0">
-        //     <div className="w-full md:w-3/4">
-        //         <hr className="horizontal-line-top" />
-        //         <form className="flex flex-col items-center space-y-24" onSubmit={handleSubmit(onSubmit)}>
-        //             <div className="ico-card space-y-8">
-        //                 <div className="w-full flex items-center my-5 mb-0 space-x-2">
-        //                     <h1 className="text-lg md:text-xl font-bold">Investment Details</h1>
-        //                     <span className="text-xl"><RiProfileLine /></span>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <div onClick={handleDivClick} className="text-sm flex items-center cursor-pointer justify-between px-5 w-full text-white font-bold bg-slate-800 h-full max-h-12 rounded-lg">
-        //                             <span>Upload Profile </span>
-        //                             <div className="text-lg font-white"><FaUpload /></div>
-        //                             <input
-        //                                 type="file"
-        //                                 className="hidden"
-        //                                 onChange={handleFileChange}
-        //                                 ref={fileInputRef}
-        //                             />
-        //                         </div>
-        //                         {
-        //                             file && (
-        //                                 <div className="absolute text-xs">
-        //                                     <span>{file.name}</span>
-        //                                 </div>
-        //                             )
-        //                         }
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("asset.issueBy")}
-        //                             label="Issue By"
-        //                             id="issueBy"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <Input 
-        //                             {...register("asset.name")}
-        //                             label="Company Name"
-        //                             id="assetName"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("asset.description")}
-        //                             label="Description"
-        //                             id="description"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("asset.catagory")}
-        //                             label="Product Catagory"
-        //                             id="catagory"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("asset.return")}
-        //                             label="Expect Return"
-        //                             id="expectReturn"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("asset.region")}
-        //                             label="Region"
-        //                             id="region"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("asset.minimum")}
-        //                             label="Minimum Subscription Limit"
-        //                             id="minimum"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //                 <div className="w-full flex items-center my-5 mb-0 space-x-2">
-        //                     <h1 className="text-lg md:text-xl font-bold">Investment Terms</h1>
-        //                     <span className="text-xl"><GrMoney /></span>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("info.totalIssuance")}
-        //                             label="Total Issuance"
-        //                             id="totalIssuance"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("info.totalAmountRaised")}
-        //                             label="Total Amount Raised"
-        //                             id="totalAmountRaised"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("info.contractInfomation")}
-        //                             label="Contract Infomation"
-        //                             id="contractInfomation"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("info.minimumInvestmentAmount")}
-        //                             label="Minimum Investment Amount"
-        //                             id="minimumInvestmentAmount"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //                 <div className="w-full flex space-x-8">
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("info.minimumInvestmentQuantity")}
-        //                             label="Minimum Investment Quantity"
-        //                             disabled={isSubmitting}
-        //                     />
-        //                     </div>
-        //                     <div className="w-1/2">
-        //                         <Input
-        //                             {...register("info.issueUnitPrice")}
-        //                             label="Issue Unit Price"
-        //                             id="issueUnitPrice"
-        //                             disabled={isSubmitting}
-        //                         />
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //             <div className="absolute right-5 bottom-8">
-        //                 <Button type="submit" disabled={isSubmitting}>
-        //                     {isSubmitting ? "Loading..." : "Next Form"}
-        //                 </Button>
-        //             </div>
-        //         </form>
-        //         {/* <hr className="horizontal-line-bottom" /> */}
-        //     </div>
-        // </div>
-        <div className="overflow-hidden w-full md:h-[110vh] flex flex-col justify-center items-center p-5 md:p-10 md:pb-0 space-y-8 md:space-y-0">
-            <form className="flex flex-col items-center space-y-8 md:space-y-16" onSubmit={handleSubmit(onSubmit)}>
+        <div className="overflow-hidden w-full flex flex-col justify-center md:flex-row p-5 md:p-0 md:pb-0 space-y-8 md:space-y-0">
+            <form className="flex flex-col items-center pt-20 pb-16 space-y-8 md:space-y-16" onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full flex flex-col md:flex-row md:w-4/5 justify-center">
                 <div className="w-full p-8 my-4 md:px-12 md:w-full md:pl-20 mr-auto rounded-2xl rounded-r-none shadow-2xl bg-white">
                     <div className="flex">
@@ -357,6 +200,7 @@ const AddedIcoInfo = () => {
                         <Input
                         {...register("info.minimumInvestmentQuantity")}
                         label="Minimum Investment Quantity"
+                        id="minimumInvestmentQuantity"
                         disabled={isSubmitting}
                         />
                     </div>

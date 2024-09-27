@@ -7,7 +7,7 @@ import { Input } from "@/components/Input";
 import { FaUpload } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { FaCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import {
     AlertDialog,
@@ -22,10 +22,17 @@ import {
   } from "@/components/ui/alert-dialog";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Card } from "@/components/ui/card";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import axios from "@/api/axios";
+import { getCookies } from "@/lib/Cookies";
 
 const AddedIcoCompany = () => {
 
   const fetchedData = useSelector((state: RootState) => state.assetData.data);
+  
+  const dispatch = useDispatch();
+
+  const icoCode = localStorage.getItem("icoCode");
   
   useEffect(()=>{
     if(fetchedData?.companyMembers){
@@ -35,12 +42,15 @@ const AddedIcoCompany = () => {
   const [listOfMembers, setListOfMembers] = useState<TMember[]>([]);
 //   const [listOfMembers, setListOfMembers] = useState<TMember[]>([{id:"",picture:"",firstName:"",midName:"",lastName:"",position:"",history:""}]);
   const [file, setFile] = useState<File | null>(null);
+  const [fileURL, setFileURL] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [choosedEditData, setChoosedEditData] = useState<TMember>();
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange  = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFile(file);
+        const fileURL = URL.createObjectURL(file);
+        setFile(file);
+        setFileURL(fileURL);
     }
   };
 
@@ -83,22 +93,35 @@ useEffect(() => {
   });
 
   const onSubmit = async (data: TCompanyMember) => {
-    if (file) {
-      const fileSizeInMB = file.size / (1024 * 1024);
-      if (fileSizeInMB < 2.0) {
-        const formData = new FormData();
-        formData.append("file", file);
-        const body = {
-          ...data,
-          asset: {
-            ...data.companyMembers,
-            image: formData,
-          },
-        };
-        console.log("form5 ico body :", body);
+    if(icoCode){
+      if((file && (file.size / (1024 * 1024) < 2.0)) || !file){
+              const body = { 
+                companyMembers: {
+                    icoCode,
+                    ...data.companyMembers[0],
+                    picture:fileURL,
+                }
+            }
+          console.log("form5 ico body :", body);
+          dispatch(setTestCorporateData(body));
+          const res = await axios.post("/api/v1/ico/members/create", body, {
+            headers: {
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          })
+          if(res.status === 200){
+            console.log("create ico form5 success",res)
+            setListOfMembers([...listOfMembers, ...data.companyMembers]);
+          }else{
+            console.log("create ico form5 fail",res)
+          }
+      }else{
+        console.log("image size is too big")
       }
+    }else{
+      console.log("no ico id")
     }
-    setListOfMembers([...listOfMembers, ...data.companyMembers]);
+
   };
 
   const handleDelete = async (data: TMember) => {

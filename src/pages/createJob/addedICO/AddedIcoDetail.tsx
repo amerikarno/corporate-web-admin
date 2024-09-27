@@ -4,7 +4,10 @@ import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { RootState } from "@/app/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 
 const AddedIcoDetail = () => {
@@ -16,7 +19,8 @@ const AddedIcoDetail = () => {
   const [businessModel,setBusinessModel] = useState('');
   const [useOfProceeds,setUseOfProceeds] = useState('');
   const [fundraisingMileStone,setFundraisingMileStone] = useState('');
-
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     if (fetchedData) {
       if (fetchedData.details) {
@@ -49,17 +53,38 @@ const AddedIcoDetail = () => {
     setFaqs([...faqs, {answer:'', question: ''}]);
   };
 
+  const icoCode = localStorage.getItem("icoCode");
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const body = {
-      faq:faqs,
-      details:[{
-        companyInformation,
-        businessModel,useOfProceeds,
-        fundraisingMileStone
-      }]
+      faq: faqs.map(faq => ({ ...faq, icoCode })),
+      details: [
+        { icoCode, header: "Company Information", content: companyInformation },
+        { icoCode, header: "Business Model", content: businessModel },
+        { icoCode, header: "Use of Proceeds", content: useOfProceeds },
+        { icoCode, header: "Fundraising Milestone", content: fundraisingMileStone }
+      ]
     };
     console.log(body)
+    dispatch(setTestCorporateData(body))
+    if(icoCode){
+      try{
+        const res = await axios.post('/api/v1/ico/details/create',{
+          headers: {
+            Authorization: `Bearer ${getCookies()}`,
+        },
+        })
+        if(res.status === 200){
+          console.log("create ico form2 success",res)
+        }else{
+          console.log("create ico form2 fail ",res)
+        }
+      }catch(error){
+        console.log("create ico form2 failed", error)
+      }
+    }else{
+      console.log("no ico id")
+    }
   };
   
   return (
@@ -98,6 +123,7 @@ const AddedIcoDetail = () => {
                           <div key={index} className="w-full flex flex-col space-y-2">
                             <label htmlFor={`faq-${index}`} className="font-medium text-gray-900 dark:text-white">Frequently Asked Questions {index+1}</label>
                             <textarea
+                              data-testid={`faq-question-${index+1}`}
                               id={`faq-${index}`}
                               rows={2}
                               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -110,6 +136,7 @@ const AddedIcoDetail = () => {
                               }}
                             />
                             <textarea
+                              data-testid={`faq-answer-${index+1}`}
                               id={`faq-${index}`}
                               rows={2}
                               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -124,7 +151,7 @@ const AddedIcoDetail = () => {
                           </div>
                         ))}
                         <div className="absolute right-[50%] bottom-5 md:text-3xl cursor-pointer hover:text-4xl transition-all">
-                          <FaCirclePlus onClick={handleAddFaq}/>
+                          <FaCirclePlus data-testid="addFaqBtn" onClick={handleAddFaq}/>
                         </div>
                     </div>
                     <div className="absolute right-4 -bottom-[4.5rem]">
