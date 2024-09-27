@@ -1,7 +1,7 @@
 import BlankPage from "@/pages/blankPages/blankPage";
 import CorporateAccountOpenning from "@/pages/createJob/addedCorporateAccount/CorporateAccountOpenning";
 import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrder/bankOrder";
-import OrderTrade from "@/pages/createJob/orderTrade/orderTrade";
+import OrderTrade from "@/pages/createJob/orderTrade/orderTrade2";
 import PageAddIndividualAccount from "@/pages/createJob/addIndividualAccount/PageAddIndividualAccount";
 import { Outlet, Route } from "react-router-dom";
 import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/changeCorporateAccount";

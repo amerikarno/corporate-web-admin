@@ -2,16 +2,17 @@ import { FaKey } from "react-icons/fa";
 import { TAssetKeyInfo } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/Input";
-import { FaCirclePlus } from "react-icons/fa6";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
+import { FaBookmark } from "react-icons/fa";
 
 const AddedIcoKeyInfo = () => {
 
   const fetchedData = useSelector((state: RootState) => state.assetData.data);
 
-  const [keyInfoList, setKeyInfoList] = useState([
+  const keyInfoList =[
     { name: "Please Select Key" },
     { name: "Network", type: "selector" },
     { name: "Precision", type: "text" },
@@ -21,7 +22,7 @@ const AddedIcoKeyInfo = () => {
     { name: "Creation Time", type: "date" },
     { name: "Release Time", type: "date" },
     { name: "Completion Time", type: "date" },
-  ]);
+  ];
 
   const keyInformationForSelector = [{ name: "BNB Smart Chain Mainnet" }];
 
@@ -124,50 +125,57 @@ const AddedIcoKeyInfo = () => {
     <div className="flex justify-evenly p-5 md:p-10 md:pb-0">
       <div className="w-full md:w-3/4">
         <hr className="horizontal-line-top" />
-        <form className="flex flex-col items-center space-y-24">
+        <form className="flex flex-col items-center space-y-4">
           <div className="ico-card space-y-8">
             <div className="w-full flex items-center my-5 mb-0 space-x-2">
                 <h1 className="text-lg md:text-xl font-bold">Key Information</h1>
                 <span className="text-xl"><FaKey /></span>
             </div>
+          </div>
+          <div className="w-full flex flex-col space-y-4">
             {keyValuePairs.map((pair, index) => (
-            <div className="flex w-full items-center relative space-x-4" key={index}>
-                <div className={`absolute -left-8 md:text-3xl cursor-pointer hover:text-4xl transition-all ${index !== keyValuePairs.length - 1 ? 'hidden' : ''}`}>
-                     <FaCirclePlus onClick={handleAddKey} />
-                </div>
-                <select
-                  className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-2 focus:outline-none"
-                  value={pair.key}
-                  onChange={(event) => handleKeyChange(index, event)}
-                >
-                  {keyInfoList.map((key) => (
-                    <option key={key.name} value={key.name}>
-                      {key.name}
-                    </option>
-                  ))}
-                </select>
-                {pair.type === "selector" ? (
-                  <select
-                    className="w-full h-12 bg-gray-200 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline"
-                    value={pair.value}
-                    onChange={(event) => handleValueChange(index, event)}
-                  >
-                    <option value="">Please Select Information</option>
-                    {keyInformationForSelector.map((status) => (
-                      <option key={status.name} value={status.name}>
-                        {status.name}
-                      </option>
+                <div className="ico-dropdown-card items-center relative space-x-4" key={index}>
+                    <div onClick={handleAddKey} className={`rounded-l-sm hover:bg-slate-750 absolute flex justify-center items-center h-28 w-10 left-0 md:-left-10 bg-slate-800 cursor-pointer ${index !== keyValuePairs.length - 1 ? 'hidden' : ''}`}>
+                        <AiOutlinePlus  className="text-white md:text-3xl hover:text-4xl transition-all" />
+                    </div>
+                    <div className={`rounded-r-sm hover:bg-slate-750 absolute flex justify-center items-center h-28 w-10 right-0 bg-slate-800 ${index === keyValuePairs.length - 1 ? 'hidden' : ''}`}>
+                        <FaBookmark  className="text-white md:text-xl transition-all" />
+                    </div>
+                    <select
+                    className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-1/2 py-2.5 px-2 focus:outline-none"
+                    value={pair.key}
+                    onChange={(event) => handleKeyChange(index, event)}
+                    >
+                    {keyInfoList.map((key) => (
+                        <option key={key.name} value={key.name}>
+                        {key.name}
+                        </option>
                     ))}
-                  </select>
-                ) : pair.type === "text" ? (
-                  <Input placeholder="please specify here..." className="w-full h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
-                ) : pair.type === "date" ? (
-                  <Input type="date" className="w-full h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
-                ) : (
-                  <Input value="" className="hidden" disabled={true} />
-                )}
-              </div>
-            ))}
+                    </select>
+                    {pair.type === "selector" ? (
+                    <div className="w-full">
+                        <select
+                        className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline"
+                        value={pair.value}
+                        onChange={(event) => handleValueChange(index, event)}
+                    >
+                        <option value="">Please Select Information</option>
+                        {keyInformationForSelector.map((status) => (
+                        <option key={status.name} value={status.name}>
+                            {status.name}
+                        </option>
+                        ))}
+                    </select>
+                    </div>
+                    ) : pair.type === "text" ? (
+                    <Input placeholder="please specify here..." className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
+                    ) : pair.type === "date" ? (
+                    <Input type="date" className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
+                    ) : (
+                    <Input value="" className="hidden" disabled={true} />
+                    )}
+                </div>
+                ))}
           </div>
           <div className="absolute right-5 bottom-8">
             <Button onClick={handleSubmit}>Next Form</Button>
