@@ -67,7 +67,7 @@ const AddedIcoDetail = () => {
             <div className="w-full md:w-3/4">
                 <hr className="horizontal-line-top" />
                 <form className="flex flex-col items-center space-y-24">
-                    <div className="ico-card space-y-8">
+                    <div className="ico-card space-y-8 rounded-b-[10px]">
                       <div className="w-full flex items-center my-5 mb-0 space-x-2">
                             <h1 className="text-lg md:text-xl font-bold">Company Details</h1>
                             <span className="text-xl"><BiSolidMessageSquareDetail /></span>
@@ -89,7 +89,7 @@ const AddedIcoDetail = () => {
                           <textarea value={fundraisingMileStone} onChange={(e)=>setFundraisingMileStone(e.target.value)} id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your fundraising milestone here..."></textarea>
                         </div>           
                     </div>
-                    <div className="ico-card space-y-8 relative">
+                    <div className="ico-card space-y-8 relative rounded-t-[10px]">
                         <div className="w-full flex items-center my-5 mb-0 space-x-2">
                             <h1 className="text-lg md:text-xl font-bold">Company FAQ</h1>
                             <span className="text-xl"><FaQuestionCircle /></span>
