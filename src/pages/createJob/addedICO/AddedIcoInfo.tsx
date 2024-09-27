@@ -64,7 +64,7 @@ const AddedIcoInfo = () => {
       };;
 
       const onSubmit = async (data: TAssetInfo) => {
-       if(file && (file.size / (1024 * 1024) < 2.0)){
+       if((file && (file.size / (1024 * 1024) < 2.0)) || !file){
             // const formData = new FormData();
             // formData.append("file", file);
             const body = { 
@@ -311,7 +311,7 @@ const AddedIcoInfo = () => {
         </div>
         <div className="w-full flex-col md:w-4/5 justify-center">
             <hr className="horizontal-line-top w-full" />
-            <div className="ico-card space-y-8">
+            <div className="ico-card space-y-8 rounded-b-[10px]">
                 <div className="w-full flex items-center my-5 mb-0 space-x-2">
                     <h1 className="text-lg md:text-xl font-bold">Investment Terms</h1>
                     <span className="text-xl"><RiProfileLine /></span>

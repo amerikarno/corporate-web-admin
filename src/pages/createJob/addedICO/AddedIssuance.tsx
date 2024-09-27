@@ -128,7 +128,7 @@ const AddedIssuance = () => {
       <div className="w-full md:w-3/4">
         <hr className="horizontal-line-top" />
         <form className="flex flex-col items-center space-y-4">
-          <div className="ico-card space-y-8">
+          <div className="ico-card space-y-8 rounded-b-[10px]">
             <div className="w-full flex items-center my-5 mb-0 space-x-2">
                 <h1 className="text-lg md:text-xl font-bold">Issuance Terms</h1>
                 <span className="text-xl"><TbMoneybag /></span>
