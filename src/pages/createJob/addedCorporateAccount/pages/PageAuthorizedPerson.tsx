@@ -127,7 +127,7 @@ export function PageAuthorizedPerson({
     },
     {
       cell: (row: TAuthorizePerson) => (
-        <Button onClick={() => {{setChoosedEditData(row) 
+        <Button data-testid={`editButton-${row.personalId}`} onClick={() => {{setChoosedEditData(row) 
           console.log(row)}}
         }>Edit</Button>
       ),
@@ -137,7 +137,7 @@ export function PageAuthorizedPerson({
       cell: (row: TAuthorizePerson) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+          <Button variant="outline" data-testid={`deleteButton-${row.personalId}`} className="bg-red-600 text-white">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -148,7 +148,7 @@ export function PageAuthorizedPerson({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+            <AlertDialogAction data-testid={`confirmDelete-${row.personalId}`} onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

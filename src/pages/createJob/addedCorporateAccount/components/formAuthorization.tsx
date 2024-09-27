@@ -100,7 +100,6 @@ export function FormAuthorizedPerson({
   };
 
   const onSubmit = async (data: TAuthorizedPersonSchema) => {
-    dispatch(setTestCorporateData(data))
     if (curInput && valideID()) {
       const formData = validateData(data);
       setCurInputText("");
@@ -118,7 +117,6 @@ export function FormAuthorizedPerson({
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
       dispatch(setTestCorporateData(body))
-
       console.log(body);
       await sleep(500);
       reset();

@@ -141,11 +141,11 @@ export function FormIndividualsShareholders({
     console.log(valideID());
     if (curInput && valideID()) {
       const formData = reformattedData(data);
-      dispatch(setTestCorporateData(formData));
       setCurInputText("");
       setTriggeriderror("");
       setCurInput(false);
       reset();
+      dispatch(setTestCorporateData(formData));
       console.log(formData);
       clearChoosedEditData();
       onsubmit(formData);

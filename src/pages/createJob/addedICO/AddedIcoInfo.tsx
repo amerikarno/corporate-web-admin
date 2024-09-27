@@ -8,7 +8,6 @@ import { FaCircle, FaUpload } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { RiProfileLine } from "react-icons/ri";
-import { GrMoney } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { getCookies } from "@/lib/Cookies";
@@ -82,12 +81,16 @@ const AddedIcoInfo = () => {
             try{
                 const res = await axios.post("/api/v1/ico/asset/create", body, {
                     headers: {
-                        "Content-Type": "application/json",
                         Authorization: `Bearer ${getCookies()}`,
                     },
                 })
                 if(res.status === 200){
                     console.log("create ico form1 success",res)
+                    if(res.data){
+                        localStorage.setItem("icoCode", res.data.assetId.toString())
+                    }else{
+                        console.log("create success but didn't get icoCode back!")
+                    }
                 }else{
                     console.log("create ico form1 fail",res)
                 }
@@ -259,7 +262,7 @@ const AddedIcoInfo = () => {
         //         {/* <hr className="horizontal-line-bottom" /> */}
         //     </div>
         // </div>
-        <div className="w-full flex flex-col justify-center items-center p-5 md:p-10 md:pb-0 space-y-8 md:space-y-0">
+        <div className="overflow-hidden w-full md:h-[110vh] flex flex-col justify-center items-center p-5 md:p-10 md:pb-0 space-y-8 md:space-y-0">
             <form className="flex flex-col items-center space-y-8 md:space-y-16" onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full flex flex-col md:flex-row md:w-4/5 justify-center">
                 <div className="w-full p-8 my-4 md:px-12 md:w-full md:pl-20 mr-auto rounded-2xl rounded-r-none shadow-2xl bg-white">
@@ -293,18 +296,18 @@ const AddedIcoInfo = () => {
                         <Input  {...register("asset.minimum")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Minimum Subscription Limit*" />
                     </div>
                 </div>
-                <div className="max-h-[40rem] overflow-hidden flex flex-col justify-between w-full md:w-1/2 px-8 py-12 bg-slate-800 rounded-2xl text-white">
+                <div className="max-h-[40rem] overflow-hidden flex flex-col justify-between w-full min-w-40 md:w-1/2 px-8 py-12 bg-slate-800 rounded-2xl text-white">
                     <div className="flex flex-col space-y-4">
                         <h1 className="font-bold uppercase text-2xl md:text-4xl my-4">Investor Info</h1>
                         <p className="text-gray-400">• Required Fields: "Fields marked with an asterisk (*) are mandatory."</p>
                         <p className="text-gray-400">• Save and Review: "After filling out the form, review the information for any errors before submitting."</p>
                     </div>
-                <div className="flex space-x-2">
-                    <FaCircle className="text-white"/>
-                    <FaCircle className="text-white"/>
-                    <FaCircle className="text-white"/>
+                    <div className="flex space-x-2">
+                        <FaCircle className="text-white"/>
+                        <FaCircle className="text-white"/>
+                        <FaCircle className="text-white"/>
+                    </div>
                 </div>
-            </div>
         </div>
         <div className="w-full flex-col md:w-4/5 justify-center">
             <hr className="horizontal-line-top w-full" />

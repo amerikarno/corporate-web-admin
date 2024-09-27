@@ -76,7 +76,6 @@ export function PageJuristicShareholder({
           }))
           .map(mapDataToTJuristicShareholder)
           .filter((item: any) => item !== null) as TJuristicsShareholders[];
-
         dispatch(setJuristicShareholder(updateJuristic));
         console.log("juristic data fetched successfully.", updateJuristic);
       } else {
@@ -141,6 +140,7 @@ export function PageJuristicShareholder({
           onClick={() => {
             setChoosedEditData(row);
           }}
+          data-testid={`editButton-${row.juristicId}`}
         >
           Edit
         </Button>
@@ -151,7 +151,7 @@ export function PageJuristicShareholder({
       cell: (row: TJuristicsShareholders) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+          <Button variant="outline" data-testid={`deleteButton-${row.juristicId}`} className="bg-red-600 text-white">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -162,7 +162,7 @@ export function PageJuristicShareholder({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+            <AlertDialogAction data-testid={`confirmDelete-${row.juristicId}`} onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

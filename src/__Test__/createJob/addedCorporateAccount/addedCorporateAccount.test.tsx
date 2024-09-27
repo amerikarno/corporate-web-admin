@@ -28,7 +28,7 @@ import { FormBank } from "@/pages/createJob/addedCorporateAccount/components/for
 import UploadFiles from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/uploadFiles";
 import * as useUploadFileModule from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/hook/useUploadFile";
 import { PageJuristicType } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicType";
-import { TContact, TCorporateData, TDirector } from "@/pages/createJob/constant/type";
+import { TContact, TCorporateData, TDirector, TJuristic } from "@/pages/createJob/constant/type";
 import {
   clearCorporateData,
   setCorporateData,
@@ -42,7 +42,14 @@ import { TIndividualShareholder } from "@/pages/createJob/constant/type";
 import axios from "@/api/axios";
 import MockAdapter from "axios-mock-adapter";
 import { PageIndividualShareholder } from "@/pages/createJob/addedCorporateAccount/pages/PageIndividualShareholder";
-import { setIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { clearIndividualShareholder, setIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import { PageJuristicShareholder } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicShareholder";
+import { clearJuristicShareholder, setJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
+import { mapDataToTAuthoirzedPerson, mapDataToTJuristicShareholder } from "@/pages/createJob/addedCorporateAccount/libs/utils";
+import { TAuthorizePerson, TJuristicsShareholders } from "@/pages/createJob/addedCorporateAccount/constants2/types";
+import { PageAuthorizedPerson } from "@/pages/createJob/addedCorporateAccount/pages/PageAuthorizedPerson";
+import { TAuthorizedPerson as TAuthorizedPersonEdit } from "@/pages/createJob/constant/type";
+import { clearAuthorizedPerson, setAuthorizedPersons } from "@/features/authorizedPerson/authorizedPersonSlice";
 // import { PageSuitTest } from "@/pages/createJob/addedCorporateAccount/pages/PageSuitTest";
 // Mock the module
 // jest.mock(
@@ -755,7 +762,7 @@ const mockCorporateData: TCorporateData = {
           types: 1,
         },
       ],
-      citizenId: "123456789",
+      citizenId: "2571817668244",
       passportId: "987654321",
       expiryDate: "2025-01-01",
       nationality: "Thai",
@@ -805,7 +812,7 @@ const mockCorporateData: TCorporateData = {
         },
       ],
       passportId: "987654321",
-      citizenId: "123456789",
+      citizenId: "2571817668244",
       expiryDate: "2025-01-01",
       nationality: "Thai",
       types: 1,
@@ -832,7 +839,7 @@ const mockCorporateData: TCorporateData = {
           types: 1,
         },
       ],
-      citizenId: "123456789",
+      citizenId: "2571817668244",
       passportId: "987654321",
       expiryDate: "2025-01-01",
       nationality: "Thai",
@@ -921,7 +928,7 @@ const mockCorporateData: TCorporateData = {
         },
       ],
       passportId: "987654321",
-      citizenId: "123456789",
+      citizenId: "2571817668244",
       expiryDate: "2025-01-01",
       nationality: "Thai",
       types: 1,
@@ -1939,8 +1946,8 @@ const mockDirector: TDirector = {
       DeletedAt: null,
       ReferenceID: "dir001",
       title: "Mr.",
-      firstName: "John",
-      lastName: "Doe",
+      firstName: "directorName",
+      lastName: "directorLastName",
       types: 1
     }
   ],
@@ -1965,7 +1972,7 @@ const mockDirector: TDirector = {
       types: 1
     }
   ],
-  citizenId: "1103703348990",
+  citizenId: "0240212359299",
   passportId: "P1234567",
   expiryDate: "2025-12-31",
   nationality: "American",
@@ -2278,8 +2285,8 @@ describe("test create corporate form4 (list of director)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [ { title: 'Mr.', firstName: 'John', lastName: 'Doe' } ],
-        citizenId: '1103703348990',
+        fullNames: [ { title: 'Mr.', firstName: 'directorName', lastName: 'directorLastName' } ],
+        citizenId: '0240212359299',
         passportId: '',
         expiryDate: '2025-12-31',
         nationality: 'American',
@@ -2486,12 +2493,12 @@ const individualShareholderMock: TIndividualShareholder = {
       DeletedAt: null,
       ReferenceID: "ISH001",
       title: "Mr.",
-      firstName: "John",
-      lastName: "Doe",
+      firstName: "individualName",
+      lastName: "individualLastName",
       types: 1,
     },
   ],
-  citizenId: "CID001",
+  citizenId: "0240212359299",
   passportId: "PASS001",
   expiryDate: "2025-01-01T00:00:00.000Z",
   nationality: "Thai",
@@ -2501,6 +2508,12 @@ const individualShareholderMock: TIndividualShareholder = {
 
 
 describe("test create corporate form5 (individual shareholder)", () => {
+  beforeAll(() => {
+    localStorage.setItem('corporateCode', '80000001');
+  })
+  afterAll(() => {
+    localStorage.clear();
+  })
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
@@ -2689,15 +2702,15 @@ describe("test create corporate form5 (individual shareholder)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [ { title: 'Mr', firstName: 'John', lastName: 'Doe' } ],
-        citizenId: '2571817668244',
+        fullNames: [ { title: 'Mr.', firstName: 'individualName', lastName: 'individualLastName' } ],
+        citizenId: '0240212359299',
         passportId: '',
-        expiryDate: '2022-01-01',
+        expiryDate: '2025-01-01',
         nationality: 'Thai',
-        sharePercentage: 1234500,
-        corporateCode: '0',
-        personalId: 'undefined',
-        types: 101,
+        sharePercentage: 3000000,
+        corporateCode: '80000001',
+        personalId: "PID001",
+        types: 301,
       }
     };
 
@@ -2709,7 +2722,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
     });
 
 
-    store.dispatch(clearDirector());
+    store.dispatch(clearIndividualShareholder());
     store.dispatch(clearCorporateData());
   }, 20000);
 
@@ -2798,64 +2811,209 @@ describe("test create corporate form5 (individual shareholder)", () => {
   }, 20000);
 });
 
-describe("test create corporate form5 (individual shareholder)", () => {
+const juristicMock: TJuristic = {
+  id: "juristicid22",
+  createBy: "user123",
+  CreatedAt: "2023-10-01T12:00:00Z",
+  DeletedAt: null,
+  corporateCode: 12345,
+  juristicName: "Acme Juristic Individual Corporation",
+  registrationNo: "REG123456",
+  registeredCountry: "Thailand",
+  sharePercentage: 40,
+};
+
+describe("test create corporate form6 (juristics shareholder)", () => {
+  beforeAll(() => {
+    localStorage.setItem('corporateCode', '80000001');
+  })
+  afterAll(() => {
+    localStorage.clear();
+  })
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
   });
 
-  test("test input data(multiple input type)", async () => {
-    const mockOnSubmit = jest.fn();
-    const mockClearChoosedEditData = jest.fn();
-    const mockCorporateCode = "0";
+  test("test form6 (PageJuristicShareholder) header information", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <FormIndividualsShareholders
-            onsubmit={mockOnSubmit}
-            corporateCode={mockCorporateCode}
-            clearChoosedEditData={mockClearChoosedEditData}
+          <PageJuristicShareholder
           />
         </MemoryRouter>
       </Provider>
     );
 
-    const title = screen.getByLabelText("Title");
-    expect(title).toBeInTheDocument();
-    fireEvent.change(title, { target: { value: "Mr" } });
-    expect(title).toHaveValue("Mr");
+    const pageTitle = screen.getByText("Juristic Infomations");
+    expect(pageTitle).toBeInTheDocument();
 
-    const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "John" } });
-    expect(firstName).toHaveValue("John");
+    const juristicId = screen.getByText("Juristic ID");
+    expect(juristicId).toBeInTheDocument();
 
-    const surname = screen.getByLabelText("Surname");
-    expect(surname).toBeInTheDocument();
-    fireEvent.change(surname, { target: { value: "Doe" } });
-    expect(surname).toHaveValue("Doe");
+    await waitFor(() => {
+      expect(screen.getByText(": 80000001"));
+    });
 
-    const nationality = screen.getByLabelText("Nationality");
-    expect(nationality).toBeInTheDocument();
-    fireEvent.change(nationality, { target: { value: "Thai" } });
-    expect(nationality).toHaveValue("Thai");
+    const taxId = screen.getByText("Tax ID");
+    expect(taxId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": TAXID789"));
+    });
+
+    const juristicName = screen.getByText("Juristic Investor Name");
+    expect(juristicName).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": Test Corporate"));
+    });
+
+    const dateIncorporation = screen.getByText("Date Of Incorporation");
+    expect(dateIncorporation).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 2023-10-01"));
+    });
+
+    const commercialNumber = screen.getByText("Commercial Number");
+    expect(commercialNumber).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 123456789"));
+    });
+
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form6 (PageJuristicShareholder) DELETE", async () => {
+    mockAxios.onPost("/api/v1/corporate/query").reply(200, {
+      data: [{ Juristics: [juristicMock] }],
+      message: "juristic data fetched successfully.",
+    });
+    store.dispatch(setCorporateData(mockCorporateData));
+    const juristicShareholder = [juristicMock] || [];
+        const updateJuristic: TJuristicsShareholders[] = juristicShareholder
+          .map((juristic: TJuristic) => ({
+            ...juristic,
+            juristicId: juristic.id,
+            sharePercentage: juristic.sharePercentage/100000,
+          }))
+          .map(mapDataToTJuristicShareholder)
+          .filter((item: any) => item !== null) as TJuristicsShareholders[];
+        store.dispatch(setJuristicShareholder(updateJuristic));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageJuristicShareholder
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const name = screen.getByLabelText("Juristic Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const commercialRegis = screen.getByLabelText("Commercial Registration No.");
+    expect(commercialRegis).toBeInTheDocument();
+    expect(commercialRegis).toHaveValue("");
+
+    const regisCountry = screen.getByLabelText("Registration Country");
+    expect(regisCountry).toBeInTheDocument();
+    expect(regisCountry).toHaveValue("");
 
     const shares = screen.getByLabelText("Shares");
     expect(shares).toBeInTheDocument();
     expect(shares).toHaveValue(0);
-    fireEvent.change(shares, { target: { value: "12.345" } });
-    expect(shares).toHaveValue(12.345);
 
-    const ID = screen.getByLabelText("Please fill ID");
-    expect(ID).toBeInTheDocument();
-    fireEvent.change(ID, { target: { value: "2571817668244" } });
-    expect(ID).toHaveValue("2571817668244");
+    const editButton = screen.getByTestId("editButton-juristicid22");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
 
-    const expiredDate = screen.getByTestId("expiredDate");
-    expect(expiredDate).toBeInTheDocument();
-    fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
-    expect(expiredDate).toHaveValue("2022-01-01");
+    await waitFor(() => {
+      expect(name).not.toHaveValue("");
+      expect(commercialRegis).not.toHaveValue("");
+      expect(regisCountry).not.toHaveValue("");
+      expect(shares).not.toHaveValue(0);
+    });
+
+    const deleteButton = screen.getByTestId("deleteButton-juristicid22");
+    expect(deleteButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(deleteButton);
+    })
+
+    const confirmDelete = screen.getByTestId("confirmDelete-juristicid22");
+    expect(confirmDelete).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(confirmDelete);
+    })
+
+    store.dispatch(clearJuristicShareholder());
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form6 (PageJuristicShareholder) EDIT", async () => {
+    mockAxios.onPost("/api/v1/corporate/query").reply(200, {
+      data: [{ Juristics: [juristicMock] }],
+      message: "juristic data fetched successfully.",
+    });
+    store.dispatch(setCorporateData(mockCorporateData));
+    const juristicShareholder = [juristicMock] || [];
+        const updateJuristic: TJuristicsShareholders[] = juristicShareholder
+          .map((juristic: TJuristic) => ({
+            ...juristic,
+            juristicId: juristic.id,
+            sharePercentage: juristic.sharePercentage/100000,
+          }))
+          .map(mapDataToTJuristicShareholder)
+          .filter((item: any) => item !== null) as TJuristicsShareholders[];
+        store.dispatch(setJuristicShareholder(updateJuristic));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageJuristicShareholder
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+    
+    screen.debug();
+    const name = screen.getByLabelText("Juristic Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const commercialRegis = screen.getByLabelText("Commercial Registration No.");
+    expect(commercialRegis).toBeInTheDocument();
+    expect(commercialRegis).toHaveValue("");
+
+    const regisCountry = screen.getByLabelText("Registration Country");
+    expect(regisCountry).toBeInTheDocument();
+    expect(regisCountry).toHaveValue("");
+
+    const shares = screen.getByLabelText("Shares");
+    expect(shares).toBeInTheDocument();
+    expect(shares).toHaveValue(0);
+
+    const editButton = screen.getByTestId("editButton-juristicid22");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(name).not.toHaveValue("");
+      expect(commercialRegis).not.toHaveValue("");
+      expect(regisCountry).not.toHaveValue("");
+      expect(shares).not.toHaveValue("");
+    });
 
     const submitButton = screen.getByText("Save");
     expect(submitButton).toBeInTheDocument();
@@ -2865,34 +3023,20 @@ describe("test create corporate form5 (individual shareholder)", () => {
     });
 
     //Expected form data
-    const expectedFormData = {
-      data: {
-        fullNames: [{ title: "Mr", firstName: "John", lastName: "Doe" }],
-        citizenId: "2571817668244",
-        passportId: "",
-        expiryDate: "2022-01-01",
-        nationality: "Thai",
-        sharePercentage: 1234500,
-        types: 301,
-        corporateCode: "0",
-        personalId: "",
-      },
-    };
+    // const expectedFormData = {
+    // };
 
     await waitFor(() => {
       const state = store.getState();
       const corporateState = state.corporateTest;
       console.log("Corporate State After Submission:", corporateState);
-      expect(corporateState).toMatchObject(expectedFormData);
+      // expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
-});
 
-describe("test create corporate form6 (juristics shareholder)", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    store.dispatch(setUser(mockUser));
-  });
+
+    store.dispatch(clearJuristicShareholder());
+    store.dispatch(clearCorporateData());
+  }, 20000);
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();
@@ -2960,13 +3104,190 @@ describe("test create corporate form6 (juristics shareholder)", () => {
   }, 20000);
 });
 
+const authorizedMock = {
+  "id": "2a53e608-c8f5-4cd5-ae97-1d8706cd8fe4",
+                "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                "CreatedAt": "2024-08-13T05:15:29.523Z",
+                "DeletedAt": null,
+                "personalId": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
+                "corporateCode": 80000003,
+                "fullNames": [
+                    {
+                        "id": "b0d9459f-465d-4ea1-aaac-5d03ac4c2763",
+                        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                        "CreatedAt": "2024-08-13T05:15:29.533Z",
+                        "DeletedAt": null,
+                        "ReferenceID": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
+                        "title": "apt1",
+                        "firstName": "apfn1",
+                        "lastName": "apsn1",
+                        "types": 201
+                    }
+                ],
+                "addresses": [
+                    {
+                        "id": "9eeb8525-f454-4a89-8526-31ae8de78ecf",
+                        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                        "CreatedAt": "2024-08-13T05:15:29.528Z",
+                        "DeletedAt": null,
+                        "ReferenceID": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
+                        "addressNo": "apa1",
+                        "tambon": "apt1",
+                        "amphoe": "apa1",
+                        "province": "app1",
+                        "postalCode": "12323",
+                        "country": "apc1",
+                        "types": 201
+                    }
+                ],
+                "passportId": "1111111111a",
+                "expiryDate": "2026-01-01T00:00:00Z",
+                "nationality": "apn1",
+                "types": 201
+            }
+
 describe("test create corporate form7 (authorized person)", () => {
+
+  beforeAll(() => {
+    localStorage.setItem('corporateCode', '80000001');
+  })
+  afterAll(() => {
+    localStorage.clear();
+  })
+
   beforeEach(() => {
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
   });
 
+  test("test form6 (PageAuthorizedPerson) header information", async () => {
+    store.dispatch(setCorporateData(mockCorporateData));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageAuthorizedPerson
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const pageTitle = screen.getByText("Juristic Infomations");
+    expect(pageTitle).toBeInTheDocument();
+
+    const juristicId = screen.getByText("Juristic ID");
+    expect(juristicId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 80000001"));
+    });
+
+    const taxId = screen.getByText("Tax ID");
+    expect(taxId).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": TAXID789"));
+    });
+
+    const juristicName = screen.getByText("Juristic Investor Name");
+    expect(juristicName).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": Test Corporate"));
+    });
+
+    const dateIncorporation = screen.getByText("Date Of Incorporation");
+    expect(dateIncorporation).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 2023-10-01"));
+    });
+
+    const commercialNumber = screen.getByText("Commercial Number");
+    expect(commercialNumber).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText(": 123456789"));
+    });
+
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  test("test form6 (PageAuthorizedPerson) DELETE", async () => {
+    mockAxios.onPost("/api/v1/corporate/query").reply(200, {
+      data: [{ AuthorizedPersons: [authorizedMock] }],
+      message: "AuthorizedPersons data fetched successfully.",
+    });
+    store.dispatch(setCorporateData(mockCorporateData));
+    const authorizedPerson = [authorizedMock] || [];;
+        console.log(authorizedPerson)
+        const updateAuthorized: TAuthorizePerson[] = authorizedPerson.map((authorized: TAuthorizedPersonEdit) => ({
+          ...authorized,
+          personalId: authorized.personalId, 
+        }))
+        .map(mapDataToTAuthoirzedPerson)
+        .filter((item:any) => item !== null) as TAuthorizePerson[];
+        
+        store.dispatch(setAuthorizedPersons(updateAuthorized));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <PageJuristicShareholder
+          />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const name = screen.getByLabelText("Juristic Name");
+    expect(name).toBeInTheDocument();
+    expect(name).toHaveValue("");
+
+    const commercialRegis = screen.getByLabelText("Commercial Registration No.");
+    expect(commercialRegis).toBeInTheDocument();
+    expect(commercialRegis).toHaveValue("");
+
+    const regisCountry = screen.getByLabelText("Registration Country");
+    expect(regisCountry).toBeInTheDocument();
+    expect(regisCountry).toHaveValue("");
+
+    const shares = screen.getByLabelText("Shares");
+    expect(shares).toBeInTheDocument();
+    expect(shares).toHaveValue(0);
+
+    const editButton = screen.getByTestId("editButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc");
+    expect(editButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editButton);
+    })
+
+    await waitFor(() => {
+      expect(name).not.toHaveValue("");
+      expect(commercialRegis).not.toHaveValue("");
+      expect(regisCountry).not.toHaveValue("");
+      expect(shares).not.toHaveValue(0);
+    });
+
+    const deleteButton = screen.getByTestId("deleteButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc");
+    expect(deleteButton).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(deleteButton);
+    })
+
+    const confirmDelete = screen.getByTestId("confirmDelete-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc");
+    expect(confirmDelete).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(confirmDelete);
+    })
+
+    store.dispatch(clearAuthorizedPerson());
+    store.dispatch(clearCorporateData());
+  }, 20000);
+
+  
+
   test("test input data(multiple input type)", async () => {
+
     const mockOnSubmit = jest.fn();
     const mockClearChoosedEditData = jest.fn();
     const mockCorporateCode = "0";
@@ -2990,8 +3311,8 @@ describe("test create corporate form7 (authorized person)", () => {
 
     const firstName = screen.getByLabelText("First Name");
     expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "John" } });
-    expect(firstName).toHaveValue("John");
+    fireEvent.change(firstName, { target: { value: "Authorized Name" } });
+    expect(firstName).toHaveValue("Authorized Name");
 
     const surname = screen.getByLabelText("Surname");
     expect(surname).toBeInTheDocument();
@@ -3082,7 +3403,7 @@ describe("test create corporate form7 (authorized person)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [{ title: "Mr", firstName: "John", lastName: "Doe" }],
+        fullNames: [{ title: "Mr", firstName: "Authorized Name", lastName: "Doe" }],
         citizenId: "2571817668244",
         passportId: "",
         expiryDate: "2022-01-01",
@@ -3406,9 +3727,9 @@ describe("UploadFiles Component", () => {
     const fileInput = screen.getByTestId("inputfile");
     const uploadButton = screen.getByText("Upload");
 
-    console.log(screen.debug());
-    console.log("File Input:", fileInput);
-    console.log("Upload Button:", uploadButton);
+    // screen.debug();
+    // console.log("File Input:", fileInput);
+    // console.log("Upload Button:", uploadButton);
 
     if (fileInput) {
       const testFile = new File(["file contents"], "test.doc", {

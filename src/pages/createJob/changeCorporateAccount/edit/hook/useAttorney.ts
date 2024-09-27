@@ -54,7 +54,7 @@ export function useAttorney() {
     }
     } catch (error : any) {
       console.log(error);
-      alert(error.response.data.message);
+      alert(error.response?.data?.message || "An error occurred but can not specify error message");
     }
   };
 
