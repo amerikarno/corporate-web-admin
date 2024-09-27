@@ -89,7 +89,7 @@ const AddedIcoInfo = () => {
                 if(res.status === 200){
                     console.log("create ico form1 success",res)
                     if(res.data){
-                        localStorage.setItem("icoCode", res.data.assetId.toString())
+                        localStorage.setItem("icoCode", res.data.icoCode.toString())
                     }else{
                         console.log("create success but didn't get icoCode back!")
                     }
