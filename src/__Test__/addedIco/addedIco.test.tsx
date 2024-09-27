@@ -65,11 +65,11 @@ describe("test ico form1",()=>{
     fireEvent.change(description, { target: { value: "complement description" } })
     expect(description).toHaveValue("complement description");
 
-    const productCatagory = screen.getByPlaceholderText("Product Catagory*");
-    expect(productCatagory).toBeInTheDocument();
-    expect(productCatagory).toHaveValue("");
-    fireEvent.change(productCatagory, { target: { value: "catagory HoJ" } })
-    expect(productCatagory).toHaveValue("catagory HoJ");
+    const productCategory = screen.getByPlaceholderText("Product Category*");
+    expect(productCategory).toBeInTheDocument();
+    expect(productCategory).toHaveValue("");
+    fireEvent.change(productCategory, { target: { value: "catagory HoJ" } })
+    expect(productCategory).toHaveValue("catagory HoJ");
 
     const expectReturn = screen.getByPlaceholderText("Expect Return*");
     expect(expectReturn).toBeInTheDocument();
@@ -154,11 +154,11 @@ describe("test ico form1",()=>{
     fireEvent.change(description, { target: { value: "complement description" } })
     expect(description).toHaveValue("complement description");
 
-    const productCatagory = screen.getByPlaceholderText("Product Catagory*");
-    expect(productCatagory).toBeInTheDocument();
-    expect(productCatagory).toHaveValue("");
-    fireEvent.change(productCatagory, { target: { value: "catagory HoJ" } })
-    expect(productCatagory).toHaveValue("catagory HoJ");
+    const productCategory = screen.getByPlaceholderText("Product Category*");
+    expect(productCategory).toBeInTheDocument();
+    expect(productCategory).toHaveValue("");
+    fireEvent.change(productCategory, { target: { value: "catagory HoJ" } })
+    expect(productCategory).toHaveValue("catagory HoJ");
 
     const expectReturn = screen.getByPlaceholderText("Expect Return*");
     expect(expectReturn).toBeInTheDocument();
