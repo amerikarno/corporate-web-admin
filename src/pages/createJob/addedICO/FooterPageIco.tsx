@@ -23,7 +23,7 @@ export function FooterPageIco({
       {pageId === 5 ? <div className="flex justify-end px-4">
           <Button
             data-testid="next-button"
-            onClick={() => handlePages("next")}
+            onClick={() => handlePages("Done")}
             className=""
           >
             Done

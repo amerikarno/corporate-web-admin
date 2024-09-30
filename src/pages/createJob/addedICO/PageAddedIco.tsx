@@ -7,7 +7,7 @@ import AddedIcoCompany from "./AddedIcoCompany";
 import "./addedico.css"
 import AddedIssuance from "./AddedIssuance";
 import { useDispatch } from "react-redux";
-import { setAssetData } from "@/features/addedIcoData/AddedIcoData";
+import { clearAssetData, setAssetData } from "@/features/addedIcoData/AddedIcoData";
 import { getCookies } from "@/lib/Cookies";
 import { useEffect } from "react";
 import axios from "@/api/axios";
@@ -21,6 +21,7 @@ type TMapPages = {
   
 const PageAddedIco = () => {
 
+  // localStorage.setItem("icoCode", "1");
 const navigate = useNavigate();
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
@@ -36,6 +37,11 @@ const navigate = useNavigate();
   const handlePages = (type: string) => {
     if (type == "next") {
       navigate(`/create-job/added-ico/${pageId + 1}`);
+    }else if(type == "Done"){
+      navigate(`/create-job/added-ico`);
+      dispatch(clearAssetData());
+      localStorage.clear();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       navigate(`/create-job/added-ico/${pageId - 1}`);
     }

@@ -178,7 +178,7 @@ useEffect(() => {
               if(res.status === 200){
                 console.log("update ico form5 success",res)
                 const updatedMembers = listOfMembers.map(member => 
-                  member.id === choosedEditData.id ? { ...body.companyMembers, picture: body.companyMembers.picture?.toString() } : member
+                  member.id === choosedEditData.id ? { ...body.companyMembers, picture: body.companyMembers.picture?.toString() , id:choosedEditData.id } : member
                 );
                 setListOfMembers(updatedMembers);
                 setChoosedEditData(null);
@@ -346,7 +346,7 @@ useEffect(() => {
         </div>
         </div>
         <div className="w-full p-20">
-        <hr className="horizontal-line-top" />
+            <hr className="horizontal-line-top" />
             <Card >
                 <DataTable
                     title="Member of company"
