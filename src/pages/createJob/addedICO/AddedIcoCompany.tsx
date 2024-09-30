@@ -34,25 +34,60 @@ const AddedIcoCompany = () => {
 
   const icoCode = localStorage.getItem("icoCode");
   
-  useEffect(()=>{
-    if(fetchedData?.companyMembers){
-      setListOfMembers(fetchedData.companyMembers)
+  useEffect(() => {
+    if (fetchedData?.companyMembers) {
+      const updatedMembers = fetchedData.companyMembers.map((member) => ({
+        ...member,
+        icoCode: member.icoCode.toString(),
+      }));
+      setListOfMembers(updatedMembers);
     }
-  },[fetchedData])
+  }, [fetchedData]);
+  
   const [listOfMembers, setListOfMembers] = useState<TMember[]>([]);
 //   const [listOfMembers, setListOfMembers] = useState<TMember[]>([{id:"",picture:"",firstName:"",midName:"",lastName:"",position:"",history:""}]);
-  const [file, setFile] = useState<File | null>(null);
-  const [fileURL, setFileURL] = useState<string | null>(null);
+  const [file, setFile] = useState<Uint8Array | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [choosedEditData, setChoosedEditData] = useState<TMember>();
-  const handleFileChange  = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-        const fileURL = URL.createObjectURL(file);
-        setFile(file);
-        setFileURL(fileURL);
-    }
+  const [choosedEditData, setChoosedEditData] = useState<TMember | null>();
+
+  const readFileDataAsBase64 = (e: React.ChangeEvent<HTMLInputElement>): Promise<string> => {
+    const file = e.target.files?.[0];
+  
+    return new Promise((resolve, reject) => {
+      if (!file) {
+        return reject('No file found');
+      }
+  
+      const reader = new FileReader();
+  
+      reader.onload = (event) => {
+        resolve(event.target?.result as string);
+      };
+  
+      reader.onerror = (err) => {
+        reject(err);
+      };
+  
+      reader.readAsDataURL(file);
+    });
   };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const base64String = await readFileDataAsBase64(event);
+
+      const byteString = atob(base64String.split(',')[1]);
+      const byteArray = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+        byteArray[i] = byteString.charCodeAt(i);
+      }
+
+      setFile(byteArray);
+
+    } catch (error) {
+      console.error('Error reading file as Base64:', error);
+    }
+  }
 
   const handleDivClick = () => {
     if (fileInputRef.current) {
@@ -74,11 +109,25 @@ const AddedIcoCompany = () => {
     }
   }
 
+  const isBase64 = (str: string) => {
+    try {
+      return btoa(atob(str)) === str;
+    } catch (err) {
+      return false;
+    }
+  };
+
 useEffect(() => {
   if (choosedEditData) {
-    if(choosedEditData.picture){
-        //handle file later
-    }
+    
+    if (choosedEditData.picture && isBase64(choosedEditData.picture)) {
+      const decodedPicture = atob(choosedEditData.picture);
+      const pictureArray = new Uint8Array(decodedPicture.length);
+      for (let i = 0; i < decodedPicture.length; i++) {
+      pictureArray[i] = decodedPicture.charCodeAt(i);
+      }
+      setFile(pictureArray);
+  }
     reset(mapChoosedDataToMmeber(choosedEditData));
   }
 }, [choosedEditData]);
@@ -93,27 +142,68 @@ useEffect(() => {
   });
 
   const onSubmit = async (data: TCompanyMember) => {
+
     if(icoCode){
-      if((file && (file.size / (1024 * 1024) < 2.0)) || !file){
+      if ((file && (file.length / (1024 * 1024) < 2.0)) || !file) {
               const body = { 
                 companyMembers: {
-                    icoCode,
                     ...data.companyMembers[0],
-                    picture:fileURL,
+                    icoCode:icoCode.toString(),
+                    picture:file,
+                    id:choosedEditData?.id
                 }
             }
           console.log("form5 ico body :", body);
-          dispatch(setTestCorporateData(body));
-          const res = await axios.post("/api/v1/ico/members/create", body, {
-            headers: {
-              Authorization: `Bearer ${getCookies()}`,
-            },
-          })
-          if(res.status === 200){
-            console.log("create ico form5 success",res)
-            setListOfMembers([...listOfMembers, ...data.companyMembers]);
+          
+          if (file !== null) {
+            const base64String = btoa(String.fromCharCode(...file));
+            dispatch(setTestCorporateData({
+              ...body,
+              companyMembers: {
+                ...body.companyMembers,
+                picture: base64String,
+              },
+            }));
+          } else {
+            dispatch(setTestCorporateData(body));
+          }
+          
+          if(choosedEditData){
+            try{
+              const res = await axios.post("/api/v1/ico/members/update", body, {
+                headers: {
+                  Authorization: `Bearer ${getCookies()}`,
+                },
+              })
+              if(res.status === 200){
+                console.log("update ico form5 success",res)
+                const updatedMembers = listOfMembers.map(member => 
+                  member.id === choosedEditData.id ? { ...body.companyMembers, picture: body.companyMembers.picture?.toString() } : member
+                );
+                setListOfMembers(updatedMembers);
+                setChoosedEditData(null);
+              }else{
+                console.log("update ico form5 fail",res)
+              }
+            }catch(error){
+              console.log("update ico form5 fail",error)
+            }
           }else{
-            console.log("create ico form5 fail",res)
+            try{
+              const res = await axios.post("/api/v1/ico/members/create", body, {
+                headers: {
+                  Authorization: `Bearer ${getCookies()}`,
+                },
+              })
+              if(res.status === 200){
+                console.log("create ico form5 success",res)
+                setListOfMembers([...listOfMembers, ...data.companyMembers]);
+              }else{
+                console.log("create ico form5 fail",res)
+              }
+            }catch(error){
+              console.log("create ico form5 fail",error)
+            }
           }
       }else{
         console.log("image size is too big")
@@ -220,11 +310,12 @@ useEffect(() => {
                             className="hidden"
                             onChange={handleFileChange}
                             ref={fileInputRef}
+                            data-testid="uploadPicture"
                         />
                         </div>
                         {file && (
                         <div className="text-xs mt-2">
-                            <span>{file.name}</span>
+                            <span>File uploaded successfully</span>
                         </div>
                         )}
                     </div>

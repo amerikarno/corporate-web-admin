@@ -1,17 +1,29 @@
 type TDetail = {
     id?: string;
+    createBy?:string;
+    CreatedAt?:string;
+    DeletedAt?:string | null;
+    icoCode:number;
     header: string;
     content: string;
   };
   
   type TFaq = {
     id?: string;
+    icoCode:number;
+    createBy?:string;
+    CreatedAt?:string;
+    DeletedAt?:string | null;
     question: string;
     answer: string;
   };
   
   export type TMember = {
     id?: string;
+    createBy?:string;
+    CreatedAt?:string;
+    DeletedAt?:string | null;
+    icoCode: string;
     picture?: string;
     firstName: string;
     midName: string;
@@ -74,7 +86,7 @@ type TDetail = {
       network?: string;
       precision?: string;
       capitalStructure?: string;
-      classification?: string;
+      classiFication?: string;
       productType?: string;
       creationTime?: string;
       releaseTime?: string;
@@ -83,22 +95,28 @@ type TDetail = {
   }
   
   export interface TAssetData {
-    id?: number;
+    icoCode?: string;
     asset: {
-      id?: string;
+      id:string;
+      icoCode?: number;
+      createBy?:string;
+      CreatedAt?:string;
+      DeletedAt?:string | null;
       title?: string;
       logo?: string;
       issueBy: string;
       image: string;
       name: string;
       description: string;
-      catagory: string;
+      category: string;
       return: string;
       region: string;
       minimum: string;
     };
     info: {
-      id?: string;
+      icoCode?: string;
+      CreatedAt?:string;
+      DeletedAt?:string | null;
       totalIssuance: string;
       totalAmountRaised: string;
       contractInfomation: string;
@@ -107,23 +125,29 @@ type TDetail = {
       issueUnitPrice: string;
     };
     details: TDetail[];
-    documents: string[];
-    images: string[];
-    videos: string[];
+    documents: string[] | null;
+    images: string[] | null;
+    videos: string[] | null;
     faq: TFaq[];
     keyInformation: {
-      id?: string;
+      icoCode:string;
+      createBy?:string;
+      CreatedAt?:string;
+      DeletedAt?:string | null;
       network: string;
       precision: string;
       capitalStructure: string;
-      classification: string;
+      classiFication: string;
       productType: string;
       creationTime: string;
       releaseTime: string;
       compleationTime: string;
     };
     issuanceTerms: {
-      id?: string;
+      createBy?:string;
+      CreatedAt?:string;
+      DeletedAt?:string | null;
+      icoCode:string;
       investmentPeriod: string;
       dividendYield: string;
       grossmargin: string;
@@ -133,5 +157,17 @@ type TDetail = {
       investmentStructure: string;
       distributionFrequency: string;
     };
-    companyMembers: TMember[];
+    companyMembers: {
+      id?: string;
+      createBy?:string;
+      CreatedAt?:string;
+      DeletedAt?:string | null;
+      icoCode: number;
+      picture?: string;
+      firstName: string;
+      midName: string;
+      lastName: string;
+      position: string;
+      history: string;
+    }[];
   }

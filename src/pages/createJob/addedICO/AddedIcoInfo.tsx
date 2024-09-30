@@ -13,25 +13,42 @@ import { RootState } from "@/app/store";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddedIcoInfo = () => {
 
     const fetchedData = useSelector((state: RootState) => state.assetData.data);
+
+    const icoCode = localStorage?.getItem("icoCode") || "";
 
     const mapFetchedToInfo = (fetchedData: TAssetData) => {
         return {
             asset: {
                 ...fetchedData.asset
             },
-            Info:{
+            info:{
                 ...fetchedData.info
             }
         }
     }
+
+    const isBase64 = (str: string) => {
+        try {
+          return btoa(atob(str)) === str;
+        } catch (err) {
+          return false;
+        }
+      };
+
     useEffect(()=>{
         if(fetchedData){
-            if(fetchedData.asset.image){
-                //handle image later
+             if (fetchedData.asset.image && isBase64(fetchedData.asset.image)) {
+                const decodedPicture = atob(fetchedData.asset.image);
+                const pictureArray = new Uint8Array(decodedPicture.length);
+                for (let i = 0; i < decodedPicture.length; i++) {
+                pictureArray[i] = decodedPicture.charCodeAt(i);
+                }
+                setFile(pictureArray);
             }
             reset(mapFetchedToInfo(fetchedData))
         }
@@ -46,15 +63,19 @@ const AddedIcoInfo = () => {
         resolver: zodResolver(TAssetInfoSchema),
       });
       const dispatch = useDispatch();
-      const [file, setFile] = useState<File | null>(null);
-      const [fileURL, setFileURL] = useState<string | null>(null);
+      const navigate = useNavigate();
+      const [file, setFile] = useState<Uint8Array | null>(null);
       const fileInputRef = useRef<HTMLInputElement>(null);
       const handleFileChange  = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const fileURL = URL.createObjectURL(file);
-            setFile(file);
-            setFileURL(fileURL);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const arrayBuffer = reader.result as ArrayBuffer;
+            const bytes = new Uint8Array(arrayBuffer);
+            setFile(bytes);
+          };
+          reader.readAsArrayBuffer(file);
         }
       };
 
@@ -65,39 +86,76 @@ const AddedIcoInfo = () => {
       };;
 
       const onSubmit = async (data: TAssetInfo) => {
-       if((file && (file.size / (1024 * 1024) < 2.0)) || !file){
+        if ((file && (file.length / (1024 * 1024) < 2.0)) || !file) {
             // const formData = new FormData();
             // formData.append("file", file);
             const body = { 
                 ...data,
                 asset: {
                     ...data.asset,
-                    image:fileURL,
+                    icoCode: icoCode,
+                    image:file,
                     logo:"fixed image",
                     title:"Elite Consulting",
-                    // image: formData
+                },
+                info:{
+                    ...data.info,
+                    icoCode: icoCode
                 }
             }
             console.log("form1 ico body :",body)
-            dispatch(setTestCorporateData(body))
-            try{
-                const res = await axios.post("/api/v1/ico/asset/create", body, {
-                    headers: {
-                        Authorization: `Bearer ${getCookies()}`,
-                    },
-                })
-                if(res.status === 200){
-                    console.log("create ico form1 success",res)
-                    if(res.data){
-                        localStorage.setItem("icoCode", res.data.icoCode.toString())
+            
+            if (file !== null) {
+                const base64String = btoa(String.fromCharCode(...file));
+                dispatch(setTestCorporateData({
+                  ...body,
+                  asset: {
+                    ...body.asset,
+                    image: base64String,
+                  },
+                }));
+              } else {
+                dispatch(setTestCorporateData(body));
+              }
+
+            if(icoCode){
+                try{
+                    const res = await axios.post("/api/v1/ico/asset/create", body, {
+                        headers: {
+                            Authorization: `Bearer ${getCookies()}`,
+                        },
+                    })
+                    if(res.status === 200){
+                        console.log("create ico form1 success",res)
+                        if(res.data){
+                            localStorage.setItem("icoCode", res.data.icoCode.toString())
+                            navigate("/create-job/added-ico/2");
+    
+                        }else{
+                            console.log("create success but didn't get icoCode back!")
+                        }
                     }else{
-                        console.log("create success but didn't get icoCode back!")
+                        console.log("create ico form1 fail",res)
                     }
-                }else{
-                    console.log("create ico form1 fail",res)
+                }catch(error){
+                    console.log("create ico form1 failed", error)
                 }
-            }catch(error){
-                console.log("create ico form1 failed", error)
+            }else{
+                try{
+                    const res = await axios.post("/api/v1/ico/asset/update", body, {
+                        headers: {
+                            Authorization: `Bearer ${getCookies()}`,
+                        },
+                    })
+                    if(res.status === 200){
+                        console.log("update ico form1 success",res)
+                            navigate("/create-job/added-ico/2");
+                    }else{
+                        console.log("update ico form1 fail",res)
+                    }
+                }catch(error){
+                    console.log("update ico form1 failed", error)
+                }
             }
         }else{
             console.log("image size is too big")
@@ -122,11 +180,12 @@ const AddedIcoInfo = () => {
                                 className="hidden"
                                 onChange={handleFileChange}
                                 ref={fileInputRef}
+                                data-testid="uploadPicture"
                             />
                             </div>
                             {file && (
                             <div className="text-xs mt-2">
-                                <span>{file.name}</span>
+                                <span>File uploaded successfully</span>
                             </div>
                             )}
                         </div>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const AddedIcoDetail = () => {
@@ -20,6 +21,7 @@ const AddedIcoDetail = () => {
   const [useOfProceeds,setUseOfProceeds] = useState('');
   const [fundraisingMileStone,setFundraisingMileStone] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   useEffect(() => {
     if (fetchedData) {
@@ -68,19 +70,38 @@ const AddedIcoDetail = () => {
     console.log(body)
     dispatch(setTestCorporateData(body))
     if(icoCode){
-      try{
-        const res = await axios.post('/api/v1/ico/details/create',{
-          headers: {
-            Authorization: `Bearer ${getCookies()}`,
-        },
-        })
-        if(res.status === 200){
-          console.log("create ico form2 success",res)
-        }else{
-          console.log("create ico form2 fail ",res)
+      if(fetchedData?.details === null){
+        try{
+          const res = await axios.post('/api/v1/ico/details/create',{
+            headers: {
+              Authorization: `Bearer ${getCookies()}`,
+          },
+          })
+          if(res.status === 200){
+            console.log("create ico form2 success",res)
+            navigate("/create-job/added-ico/3")
+          }else{
+            console.log("create ico form2 fail ",res)
+          }
+        }catch(error){
+          console.log("create ico form2 failed", error)
         }
-      }catch(error){
-        console.log("create ico form2 failed", error)
+      }else{
+        try{
+          const res = await axios.post('/api/v1/ico/details/update',{
+            headers: {
+              Authorization: `Bearer ${getCookies()}`,
+          },
+          })
+          if(res.status === 200){
+            console.log("update ico form2 success",res)
+            navigate("/create-job/added-ico/3")
+          }else{
+            console.log("update ico form2 fail ",res)
+          }
+        }catch(error){
+          console.log("update ico form2 failed", error)
+        }
       }
     }else{
       console.log("no ico id")
@@ -130,8 +151,9 @@ const AddedIcoDetail = () => {
                               placeholder="Write your question here..."
                               value={faq.question}
                               onChange={(e) => {
-                                const newFaqs = [...faqs];
-                                newFaqs[index].question = e.target.value;
+                                const newFaqs = faqs.map((faqItem, faqIndex) =>
+                                  faqIndex === index ? { ...faqItem, question: e.target.value } : faqItem
+                                );
                                 setFaqs(newFaqs);
                               }}
                             />
@@ -143,8 +165,9 @@ const AddedIcoDetail = () => {
                               placeholder="Write your answer here..."
                               value={faq.answer}
                               onChange={(e) => {
-                                const newFaqs = [...faqs];
-                                newFaqs[index].answer = e.target.value;
+                                const newFaqs = faqs.map((faqItem, faqIndex) =>
+                                  faqIndex === index ? { ...faqItem, answer: e.target.value } : faqItem
+                                );
                                 setFaqs(newFaqs);
                               }}
                             />
