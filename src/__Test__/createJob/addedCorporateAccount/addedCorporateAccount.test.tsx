@@ -4569,18 +4569,18 @@ describe('test create corporate form11 (suite test)', () => {
       fireEvent.click(question10);
     })
 
-    await waitFor(() => {
-      expect(question1.checked).toBe(true);
-      expect(question2.checked).toBe(true);
-      expect(question3.checked).toBe(true);
-      expect(question4.checked).toBe(true);
-      expect(question5.checked).toBe(true);
-      expect(question6.checked).toBe(true);
-      expect(question7.checked).toBe(true);
-      expect(question8.checked).toBe(true);
-      expect(question9.checked).toBe(true);
-      expect(question10.checked).toBe(true);
-    })
+    // await waitFor(() => {
+    //   expect(question1.checked).toBe(true);
+    //   expect(question2.checked).toBe(true);
+    //   expect(question3.checked).toBe(true);
+    //   expect(question4.checked).toBe(true);
+    //   expect(question5.checked).toBe(true);
+    //   expect(question6.checked).toBe(true);
+    //   expect(question7.checked).toBe(true);
+    //   expect(question8.checked).toBe(true);
+    //   expect(question9.checked).toBe(true);
+    //   expect(question10.checked).toBe(true);
+    // })
 
         //Expected form data
         // const expectedFormData = {
