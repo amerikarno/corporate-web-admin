@@ -16,7 +16,8 @@ import userEvent from "@testing-library/user-event";
 import AddedIssuance from "@/pages/createJob/addedICO/AddedIssuance";
 import AddedIcoCompany from "@/pages/createJob/addedICO/AddedIcoCompany";
 import { clearAssetData, setAssetData } from "@/features/addedIcoData/AddedIcoData";
-
+import axios from "@/api/axios";
+import MockAdapter from "axios-mock-adapter";
 // import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
 // import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 // import IdentityVerification from "@/pages/createJob/addIndividualAccount/identityVerification/identityVerification";
@@ -34,6 +35,8 @@ jest.mock("@/lib/utils", () => ({
 jest.mock("@/lib/Cookies", () => ({
   getCookies: jest.fn().mockReturnValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjEyMmRjLTc3YzctNDlmYy04ZTBkLTg2NWVjYTY1MmI4MCIsImVtYWlsIjoiYjcwODk4NTY5ZWRjYjk5MjdhMDZkZDUxMTBmMWI4ZmUxZDQ2ZTVmOTg1ZTBkOWYyMjI0ZDc3NDg1NzU3ZjFlYSIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDIwMDEsMjAwMiwyMDAzXSwicGVybWlzc2lvbnMiOlsxMDEsMTAyLDEwMywyMDEsMjAyLDIwM10sInJvbGVzIjpbMTEsMTIsMTMsMjEsMjIsMjNdLCJ1c2VySWQiOiIiLCJsb2dpblN0YXR1cyI6IiIsImV4cGlyZXNEYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJFcnJvciI6bnVsbCwiZXhwIjoxNzI3MTY3MzQyLCJpYXQiOjE3MjcwODA5NDJ9.PWG3vMMN3POr-SWDnO4etQ5D1ZV2mX7D1Fzwsb8sfBg"),
 }));
+
+const mockAxios = new MockAdapter(axios);
 
 const mockedAssetData = {
   "icoCode": "1",
@@ -168,7 +171,7 @@ const mockedAssetData = {
           "CreatedAt": "2024-09-27T12:07:42+07:00",
           "DeletedAt": null,
           "icoCode": 1,
-          "picture": "img.png",
+          "picture": "SGVsbG8sIFdvcmxkIQ==",
           "firstName": "Emily",
           "midName": "C",
           "lastName": "Johnson",
@@ -194,7 +197,7 @@ const mockedAssetData = {
           "CreatedAt": "2024-09-27T12:07:42+07:00",
           "DeletedAt": null,
           "icoCode": 1,
-          "picture": "img.png",
+          "picture": "SGVsbG8sIFdvcmxkIQ==",
           "firstName": "Jane",
           "midName": "B",
           "lastName": "Smith",
@@ -1258,7 +1261,9 @@ beforeEach(() => {
 })
 
 test("test ico form5 create", async ()=>{
-
+  mockAxios.onPost("/api/v1/ico/members/create").reply(200, {
+    message: "create ico form5 success"
+  });
     render(
         <Provider store={store}>
           <MemoryRouter>
@@ -1349,6 +1354,14 @@ test("test ico form5 create", async ()=>{
         </Provider>
     );
 
+    await waitFor(() => {
+      expect(screen.getByTestId("editButton-4334c8cb-7d73-4f04-b2ed-f64b952a36aa")).toBeInTheDocument();
+    })
+    await act(async () => {
+      const firstEditBtn = screen.getByTestId("editButton-4334c8cb-7d73-4f04-b2ed-f64b952a36aa");
+      fireEvent.click(firstEditBtn);
+    })
+
     const nextFormBtn = screen.getByText("Save");
     expect(nextFormBtn).toBeInTheDocument();
     await act(async () => {
@@ -1359,13 +1372,14 @@ test("test ico form5 create", async ()=>{
     const expectedFormData = {
       data: {
         companyMembers: {
+          firstName: 'Emily',
+          midName: 'C',
+          lastName: 'Johnson',
+          position: 'COO',
+          history: 'Emily has a strong background in operations and management.',
           icoCode: '1',
-          firstName: '',
-          midName: '',
-          lastName: '',
-          position: '',
-          history: '',
-          picture: null
+          picture: 'SGVsbG8sIFdvcmxkIQ==',
+          id: '4334c8cb-7d73-4f04-b2ed-f64b952a36aa'
         }
       }
     };
@@ -1380,4 +1394,5 @@ test("test ico form5 create", async ()=>{
     localStorage.clear();
     store.dispatch(clearAssetData());
 })
+
 })

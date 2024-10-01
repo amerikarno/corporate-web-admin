@@ -119,7 +119,6 @@ const AddedIcoCompany = () => {
 
 useEffect(() => {
   if (choosedEditData) {
-    
     if (choosedEditData.picture && isBase64(choosedEditData.picture)) {
       const decodedPicture = atob(choosedEditData.picture);
       const pictureArray = new Uint8Array(decodedPicture.length);
@@ -150,7 +149,7 @@ useEffect(() => {
                     ...data.companyMembers[0],
                     icoCode:icoCode.toString(),
                     picture:file,
-                    id:choosedEditData?.id
+                    memberId:choosedEditData?.memberId
                 }
             }
           console.log("form5 ico body :", body);
@@ -178,7 +177,7 @@ useEffect(() => {
               if(res.status === 200){
                 console.log("update ico form5 success",res)
                 const updatedMembers = listOfMembers.map(member => 
-                  member.id === choosedEditData.id ? { ...body.companyMembers, picture: body.companyMembers.picture?.toString() , id:choosedEditData.id } : member
+                  member.memberId === choosedEditData.memberId ? { ...body.companyMembers, picture: body.companyMembers.picture?.toString() , memberId:res.data.memberId } : member
                 );
                 setListOfMembers(updatedMembers);
                 setChoosedEditData(null);
@@ -197,7 +196,7 @@ useEffect(() => {
               })
               if(res.status === 200){
                 console.log("create ico form5 success",res)
-                setListOfMembers([...listOfMembers, ...data.companyMembers]);
+                setListOfMembers([...listOfMembers, {...data.companyMembers[0], memberId: res.data.memberId[0]}]);
               }else{
                 console.log("create ico form5 fail",res)
               }
@@ -215,7 +214,25 @@ useEffect(() => {
   };
 
   const handleDelete = async (data: TMember) => {
-    console.log(data);
+    try {
+      const token = getCookies();
+      const res = await axios.post(
+        "/api/v1/ico/delete",
+        { memberId: data.memberId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        console.log("delete successful");
+        const updatedMembers = listOfMembers.filter(member => member.memberId !== data.memberId);
+        setListOfMembers(updatedMembers);
+      }
+    } catch (error) {
+      console.log("delete failed", error);
+    }
   };
 
   const columnsMember: TableColumn<TMember>[] = [
@@ -246,6 +263,7 @@ useEffect(() => {
     {
       cell: (row: TMember) => (
         <Button
+          data-testid={`editButton-${row.id}`}
           onClick={() => {
             {
               setChoosedEditData(row);
@@ -288,7 +306,7 @@ useEffect(() => {
   ];
 
   return (
-    <div className="">
+    <div className="flex flex-col items-center">
         <div className="w-full flex flex-col justify-center md:flex-row p-5 md:p-10 md:pb-0 space-y-8 md:space-y-0">
             <div className="w-full md:w-1/2">
                 <form className="flex flex-col items-center space-y-8 md:space-y-24" onSubmit={handleSubmit(onSubmit)}>
@@ -345,9 +363,9 @@ useEffect(() => {
             </div>
         </div>
         </div>
-        <div className="w-full p-20">
+        <div className="min-w-[20rem] w-4/5 p-10">
             <hr className="horizontal-line-top" />
-            <Card >
+            <Card className="">
                 <DataTable
                     title="Member of company"
                     columns={columnsMember}

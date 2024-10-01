@@ -57,6 +57,7 @@ export function SuitQuestionComp({
             <CheckBox
               name={choice.id}
               key={index}
+              data-testid={`checkbox-${quiz.questionNumber}-${index}`}
               id={choice.id}
               label={`${index + 1}. ${choice.answer}`}
               onChange={(e) =>
@@ -69,6 +70,7 @@ export function SuitQuestionComp({
               name={choice.id}
               key={index}
               type="radio"
+              data-testid={`radio-${quiz.questionNumber}-${index}`}
               id={choice.id}
               label={`${index + 1}. ${choice.answer}`}
               onChange={(e) =>

@@ -19,6 +19,7 @@ type TDetail = {
   };
   
   export type TMember = {
+    memberId?: string;
     id?: string;
     createBy?:string;
     CreatedAt?:string;

@@ -10,6 +10,7 @@ import { copy, isEmptyObject } from "@/lib/utils";
 import { RootState } from "@/app/store";
 import { TCorporateData } from "../../constant/type";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export function useSuitTest() {
   const suitData = useSelector((state: any) => state.suit);
@@ -92,6 +93,7 @@ export function useSuitTest() {
   };
 
   const saveSuitTest = async (ans: any) => {
+    dispatch(setTestCorporateData(ans));
     console.log(ans);
     const url = isSave
       ? "/api/v1/suitetest/result/edit"

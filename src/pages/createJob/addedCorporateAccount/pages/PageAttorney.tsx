@@ -149,6 +149,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
     {
       cell: (row: TAttorney) => (
         <Button
+          data-testid={`editButton-${row.personalId}`}
           onClick={() => {
             {
               setChoosedEditData(row);
@@ -165,7 +166,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
       cell: (row: TAttorney) => (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" className="bg-red-600 text-white">
+            <Button variant="outline" data-testid={`deleteButton-${row.personalId}`} className="bg-red-600 text-white">
               Delete
             </Button>
           </AlertDialogTrigger>
@@ -179,7 +180,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => handleDelete(row)}>
+              <AlertDialogAction data-testid={`confirmDelete-${row.personalId}`} onClick={() => handleDelete(row)}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>

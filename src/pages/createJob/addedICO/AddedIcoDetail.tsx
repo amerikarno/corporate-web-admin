@@ -25,7 +25,8 @@ const AddedIcoDetail = () => {
   
   useEffect(() => {
     if (fetchedData) {
-      if (fetchedData.details) {
+      //fetchedData.details !== []
+      if (fetchedData.details && fetchedData.details.length > 0) {
         fetchedData.details.forEach(detail => {
           switch (detail.header) {
             case "Company Information":
@@ -45,7 +46,8 @@ const AddedIcoDetail = () => {
           }
         });
       }
-      if (fetchedData.faq) {
+      //fetchedData.faq !== []
+      if (fetchedData.faq && fetchedData.faq.length > 0) {
         setFaqs(fetchedData.faq);
       }
     }
@@ -70,7 +72,7 @@ const AddedIcoDetail = () => {
     console.log(body)
     dispatch(setTestCorporateData(body))
     if(icoCode){
-      if(fetchedData?.details === null){
+      if(fetchedData?.details && fetchedData?.details.length === 0){
         try{
           const res = await axios.post('/api/v1/ico/details/create',{
             headers: {
