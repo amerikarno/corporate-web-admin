@@ -1,5 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { FormCorporateInfo } from "../components/formCorporateInfo";
 import { RootState } from "@/app/store";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { getCookies } from "@/lib/Cookies";
