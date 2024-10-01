@@ -166,6 +166,7 @@ const mockedAssetData = {
   },
   "companyMembers": [
       {
+          "memberId":"12345",
           "id": "4334c8cb-7d73-4f04-b2ed-f64b952a36aa",
           "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
           "CreatedAt": "2024-09-27T12:07:42+07:00",
@@ -179,6 +180,7 @@ const mockedAssetData = {
           "history": "Emily has a strong background in operations and management."
       },
       {
+          "memberId":"54321",
           "id": "c8850919-a0a6-4f5c-8f2a-12eeb460c06d",
           "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
           "CreatedAt": "2024-09-27T12:07:42+07:00",
@@ -192,6 +194,7 @@ const mockedAssetData = {
           "history": "John has over 20 years of experience in the industry."
       },
       {
+          "memberId":"121231",
           "id": "cc368a9b-cc15-46f2-bb66-132c28a39c53",
           "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
           "CreatedAt": "2024-09-27T12:07:42+07:00",
@@ -1371,16 +1374,34 @@ test("test ico form5 create", async ()=>{
     //  Expected form data
     const expectedFormData = {
       data: {
-        companyMembers: {
-          firstName: 'Emily',
-          midName: 'C',
-          lastName: 'Johnson',
-          position: 'COO',
-          history: 'Emily has a strong background in operations and management.',
-          icoCode: '1',
-          picture: 'SGVsbG8sIFdvcmxkIQ==',
-          id: '4334c8cb-7d73-4f04-b2ed-f64b952a36aa'
-        }
+        companyMembers: [
+          {
+            0: {
+              firstName: 'Emily',
+              midName: 'C',
+              lastName: 'Johnson',
+              position: 'COO',
+              history: 'Emily has a strong background in operations and management.',
+              icoCode: '1',
+              picture: {
+                0: 72,
+                1: 101,
+                2: 108,
+                3: 108,
+                4: 111,
+                5: 44,
+                6: 32,
+                7: 87,
+                8: 111,
+                9: 114,
+                10: 108,
+                11: 100,
+                12: 33
+              },
+              memberId: '12345'
+            }
+          }
+        ]
       }
     };
 

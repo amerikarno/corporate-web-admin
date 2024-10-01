@@ -145,23 +145,22 @@ useEffect(() => {
     if(icoCode){
       if ((file && (file.length / (1024 * 1024) < 2.0)) || !file) {
               const body = { 
-                companyMembers: {
+                companyMembers: [{
                     ...data.companyMembers[0],
                     icoCode:icoCode.toString(),
                     picture:file,
                     memberId:choosedEditData?.memberId
-                }
+                }]
             }
           console.log("form5 ico body :", body);
           
           if (file !== null) {
-            const base64String = btoa(String.fromCharCode(...file));
+            // const base64String = btoa(String.fromCharCode(...file));
             dispatch(setTestCorporateData({
               ...body,
-              companyMembers: {
+              companyMembers: [{
                 ...body.companyMembers,
-                picture: base64String,
-              },
+              }],
             }));
           } else {
             dispatch(setTestCorporateData(body));
@@ -177,7 +176,7 @@ useEffect(() => {
               if(res.status === 200){
                 console.log("update ico form5 success",res)
                 const updatedMembers = listOfMembers.map(member => 
-                  member.memberId === choosedEditData.memberId ? { ...body.companyMembers, picture: body.companyMembers.picture?.toString() , memberId:res.data.memberId } : member
+                  member.memberId === choosedEditData.memberId ? { ...body.companyMembers[0], picture: body.companyMembers[0].picture?.toString() , memberId:res.data.memberId } : member
                 );
                 setListOfMembers(updatedMembers);
                 setChoosedEditData(null);

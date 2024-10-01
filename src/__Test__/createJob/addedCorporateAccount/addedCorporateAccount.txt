@@ -842,6 +842,18 @@ describe("test create corporate form2", () => {
     store.dispatch(setUser(mockUser));
   });
 
+  beforeAll(() => {
+    localStorage.setItem('corporateCode', '80000001');
+  })
+  afterAll(() => {
+    localStorage.clear();
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    store.dispatch(setUser(mockUser));
+  });
+
   test("test Juristic Infomations (Page)", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
 
