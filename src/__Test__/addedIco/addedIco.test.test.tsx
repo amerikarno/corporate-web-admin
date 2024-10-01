@@ -1320,16 +1320,33 @@ test("test ico form5 create", async ()=>{
         //  Expected form data
         const expectedFormData = {
           data: {
-            companyMembers: {
-              icoCode: '1',
-              firstName: 'test firstname',
-              midName: 'test midddle name',
-              lastName: 'test last name',
-              position: 'test position',
-              history: 'test history',
-              //the body is a unit8array format
-              picture: "ZmlsZSBjb250ZW50",
-            }
+            companyMembers: [
+              {
+                0: {
+                  firstName: 'test firstname',
+                  midName: 'test midddle name',
+                  lastName: 'test last name',
+                  position: 'test position',
+                  history: 'test history',
+                  icoCode: '1',
+                  picture:{
+                    0: 102,
+                    1: 105,
+                    2: 108,
+                    3: 101,
+                    4: 32,
+                    5: 99,
+                    6: 111,
+                    7: 110,
+                    8: 116,
+                    9: 101,
+                    10: 110,
+                    11: 116
+                  },
+                  memberId: undefined
+                }
+              }
+            ]
           }
         };
 

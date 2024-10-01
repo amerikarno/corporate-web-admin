@@ -68,7 +68,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
           )
             .map(mapDataToTAttorney)
             .filter((item: any) => item !== null);
-
+          
           dispatch(setAttorney(updateAttorney));
           dispatch(setCorporateData(res.data[0]));
           console.log("Attorney data fetched successfully.", updateAttorney);

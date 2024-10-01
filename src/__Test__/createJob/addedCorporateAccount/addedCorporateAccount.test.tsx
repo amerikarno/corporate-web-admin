@@ -94,27 +94,34 @@ describe("test create corporate form1", () => {
     const juristicName = screen.getByLabelText("Juristic Investor Name");
     expect(juristicName).toBeInTheDocument();
     expect(juristicName).toHaveValue("");
-    fireEvent.change(juristicName, { target: { value: "Name" } });
+    await act(async () => {
+      fireEvent.change(juristicName, { target: { value: "Name" } });
+    });
     expect(juristicName).toHaveValue("Name");
 
     const registerNo = screen.getByLabelText("Commercial Registration No.");
     expect(registerNo).toBeInTheDocument();
     expect(registerNo).toHaveValue("");
-    fireEvent.change(registerNo, { target: { value: "No.123456789" } });
+    await act(async () => {
+      fireEvent.change(registerNo, { target: { value: "No.123456789" } });
+    })
     expect(registerNo).toHaveValue("No.123456789");
 
     //integer input type
     const taxId = screen.getByLabelText("Tax ID");
     expect(taxId).toBeInTheDocument();
     expect(taxId).toHaveValue("");
-    fireEvent.change(taxId, { target: { value: "123" } });
+    await act(async () => {
+      fireEvent.change(taxId, { target: { value: "123" } });
+    })  
     expect(taxId).toHaveValue("123");
-
     //date input type
     const dateOfIncorporation = screen.getByLabelText("Date of Incorporation");
     expect(dateOfIncorporation).toBeInTheDocument();
     expect(dateOfIncorporation).toHaveValue("");
-    fireEvent.change(dateOfIncorporation, { target: { value: "2023-01-01" } });
+    await act(async () => {
+      fireEvent.change(dateOfIncorporation, { target: { value: "2023-01-01" } });
+    })
     expect(dateOfIncorporation).toHaveValue("2023-01-01");
 
     //checkbox input type
@@ -139,91 +146,117 @@ describe("test create corporate form1", () => {
     const addressNumber = screen.getByTestId("registeredBusiness-addressNo");
     expect(addressNumber).toBeInTheDocument();
     expect(addressNumber).toHaveValue("");
-    fireEvent.change(addressNumber, { target: { value: "addressNumber" } });
+    await act(async () => {
+      fireEvent.change(addressNumber, { target: { value: "addressNumber" } });
+    })
     expect(addressNumber).toHaveValue("addressNumber");
 
     //Moo
     const moo = screen.getByTestId("registeredBusiness-mooNo");
     expect(moo).toBeInTheDocument();
     expect(moo).toHaveValue("");
-    fireEvent.change(moo, { target: { value: "Moo" } });
+    await act(async () => {
+      fireEvent.change(moo, { target: { value: "Moo" } });
+    })
     expect(moo).toHaveValue("Moo");
 
     //Soi
     const soi = screen.getByTestId("registeredBusiness-soi");
     expect(soi).toBeInTheDocument();
     expect(soi).toHaveValue("");
-    fireEvent.change(soi, { target: { value: "Soi" } });
+    await act(async () => {
+      fireEvent.change(soi, { target: { value: "Soi" } });
+    })
     expect(soi).toHaveValue("Soi");
 
     //Floor
     const floor = screen.getByTestId("registeredBusiness-floor");
     expect(floor).toBeInTheDocument();
     expect(floor).toHaveValue("");
-    fireEvent.change(floor, { target: { value: "Floor" } });
+    await act(async () => {
+      fireEvent.change(floor, { target: { value: "Floor" } });
+    })
     expect(floor).toHaveValue("Floor");
 
     //Building
     const building = screen.getByTestId("registeredBusiness-building");
     expect(building).toBeInTheDocument();
     expect(building).toHaveValue("");
-    fireEvent.change(building, { target: { value: "Building" } });
+    await act(async () => {
+      fireEvent.change(building, { target: { value: "Building" } });
+    })
     expect(building).toHaveValue("Building");
 
     //Road
     const road = screen.getByTestId("registeredBusiness-road");
     expect(road).toBeInTheDocument();
     expect(road).toHaveValue("");
-    fireEvent.change(road, { target: { value: "Road" } });
+    await act(async () => {
+      fireEvent.change(road, { target: { value: "Road" } });
+    })
     expect(road).toHaveValue("Road");
 
     //Tambon
     const tambon = screen.getByTestId("registeredBusiness-tambon");
     expect(tambon).toBeInTheDocument();
     expect(tambon).toHaveValue("");
-    fireEvent.change(tambon, { target: { value: "Tambon" } });
+    await act(async () => {
+      fireEvent.change(tambon, { target: { value: "Tambon" } });
+    })
     expect(tambon).toHaveValue("Tambon");
 
     //Amphoe
     const amphoe = screen.getByTestId("registeredBusiness-amphoe");
     expect(amphoe).toBeInTheDocument();
     expect(amphoe).toHaveValue("");
-    fireEvent.change(amphoe, { target: { value: "Amphoe" } });
+    await act(async () => {
+      fireEvent.change(amphoe, { target: { value: "Amphoe" } });
+    })
     expect(amphoe).toHaveValue("Amphoe");
 
     //Province
     const province = screen.getByTestId("registeredBusiness-province");
     expect(province).toBeInTheDocument();
     expect(province).toHaveValue("");
-    fireEvent.change(province, { target: { value: "Province" } });
+    await act(async () => {
+      fireEvent.change(province, { target: { value: "Province" } });
+    })
     expect(province).toHaveValue("Province");
 
     //PostalCode
     const postalCode = screen.getByTestId("registeredBusiness-postalCode");
     expect(postalCode).toBeInTheDocument();
     expect(postalCode).toHaveValue("");
-    fireEvent.change(postalCode, { target: { value: "Postal Code" } });
+    await act(async () => {
+      fireEvent.change(postalCode, { target: { value: "Postal Code" } });
+    })
     expect(postalCode).toHaveValue("Postal Code");
 
     //Country
     const country = screen.getByTestId("registeredBusiness-country");
     expect(country).toBeInTheDocument();
     expect(country).toHaveValue("");
-    fireEvent.change(country, { target: { value: "Country" } });
+    await act(async () => {
+      fireEvent.change(country, { target: { value: "Country" } });
+    })
     expect(country).toHaveValue("Country");
 
     //EmailAddress
     const emailAddress = screen.getByTestId("registeredBusiness-emailAddress");
     expect(emailAddress).toBeInTheDocument();
     expect(emailAddress).toHaveValue("");
-    fireEvent.change(emailAddress, { target: { value: "Email Address" } });
+    await act(async () => {
+      fireEvent.change(emailAddress, { target: { value: "Email Address" } });
+    })
     expect(emailAddress).toHaveValue("Email Address");
 
     //Telephone
     const telephone = screen.getByTestId("registeredBusiness-telephone");
     expect(telephone).toBeInTheDocument();
     expect(telephone).toHaveValue("");
-    fireEvent.change(telephone, { target: { value: "Telephone" } });
+    await act(async () => {
+      fireEvent.change(telephone, { target: { value: "Telephone" } });
+    })
     expect(telephone).toHaveValue("Telephone");
 
     //place incorporate address input component
@@ -233,65 +266,83 @@ describe("test create corporate form1", () => {
     );
     expect(placeAddressNumber).toBeInTheDocument();
     expect(placeAddressNumber).toHaveValue("");
-    fireEvent.change(placeAddressNumber, {
-      target: { value: "addressNumber" },
-    });
+    await act(async () => {
+      fireEvent.change(placeAddressNumber, {
+        target: { value: "addressNumber" },
+      });
+    })
     expect(placeAddressNumber).toHaveValue("addressNumber");
 
     //Moo
     const placeMoo = screen.getByTestId("placeofIncorporation-mooNo");
     expect(placeMoo).toBeInTheDocument();
     expect(placeMoo).toHaveValue("");
-    fireEvent.change(placeMoo, { target: { value: "Moo" } });
+    await act(async () => {
+      fireEvent.change(placeMoo, { target: { value: "Moo" } });
+    })
     expect(placeMoo).toHaveValue("Moo");
 
     //Soi
     const placeSoi = screen.getByTestId("placeofIncorporation-soi");
     expect(placeSoi).toBeInTheDocument();
     expect(placeSoi).toHaveValue("");
-    fireEvent.change(placeSoi, { target: { value: "Soi" } });
+    await act(async () => {
+      fireEvent.change(placeSoi, { target: { value: "Soi" } });
+    })
     expect(placeSoi).toHaveValue("Soi");
 
     //Floor
     const placeFloor = screen.getByTestId("placeofIncorporation-floor");
     expect(placeFloor).toBeInTheDocument();
     expect(placeFloor).toHaveValue("");
-    fireEvent.change(placeFloor, { target: { value: "Floor" } });
+    await act(async () => {
+      fireEvent.change(placeFloor, { target: { value: "Floor" } });
+    })
     expect(placeFloor).toHaveValue("Floor");
 
     //Building
     const placeBuilding = screen.getByTestId("placeofIncorporation-building");
     expect(placeBuilding).toBeInTheDocument();
     expect(placeBuilding).toHaveValue("");
-    fireEvent.change(placeBuilding, { target: { value: "Building" } });
+    await act(async () => {
+      fireEvent.change(placeBuilding, { target: { value: "Building" } });
+    })
     expect(placeBuilding).toHaveValue("Building");
 
     //Road
     const placeRoad = screen.getByTestId("placeofIncorporation-road");
     expect(placeRoad).toBeInTheDocument();
     expect(placeRoad).toHaveValue("");
-    fireEvent.change(placeRoad, { target: { value: "Road" } });
+    await act(async () => {
+      fireEvent.change(placeRoad, { target: { value: "Road" } });
+    })
     expect(placeRoad).toHaveValue("Road");
 
     //Tambon
     const placeTambon = screen.getByTestId("placeofIncorporation-tambon");
     expect(placeTambon).toBeInTheDocument();
     expect(placeTambon).toHaveValue("");
-    fireEvent.change(placeTambon, { target: { value: "Tambon" } });
+    await act(async () => {
+      fireEvent.change(placeTambon, { target: { value: "Tambon" } });
+    })
     expect(placeTambon).toHaveValue("Tambon");
 
     //Amphoe
     const placeAmphoe = screen.getByTestId("placeofIncorporation-amphoe");
     expect(placeAmphoe).toBeInTheDocument();
     expect(placeAmphoe).toHaveValue("");
-    fireEvent.change(placeAmphoe, { target: { value: "Amphoe" } });
+    await act(async () => {
+      fireEvent.change(placeAmphoe, { target: { value: "Amphoe" } });
+    })
     expect(placeAmphoe).toHaveValue("Amphoe");
 
     //Province
     const placeProvince = screen.getByTestId("placeofIncorporation-province");
     expect(placeProvince).toBeInTheDocument();
     expect(placeProvince).toHaveValue("");
-    fireEvent.change(placeProvince, { target: { value: "Province" } });
+    await act(async () => {
+      fireEvent.change(placeProvince, { target: { value: "Province" } });
+    })
     expect(placeProvince).toHaveValue("Province");
 
     //PostalCode
@@ -300,14 +351,18 @@ describe("test create corporate form1", () => {
     );
     expect(placePostalCode).toBeInTheDocument();
     expect(placePostalCode).toHaveValue("");
-    fireEvent.change(placePostalCode, { target: { value: "Postal Code" } });
+    await act(async () => {
+      fireEvent.change(placePostalCode, { target: { value: "Postal Code" } });
+    })
     expect(placePostalCode).toHaveValue("Postal Code");
 
     //Country
     const placeCountry = screen.getByTestId("placeofIncorporation-country");
     expect(placeCountry).toBeInTheDocument();
     expect(placeCountry).toHaveValue("");
-    fireEvent.change(placeCountry, { target: { value: "Country" } });
+    await act(async () => {
+      fireEvent.change(placeCountry, { target: { value: "Country" } });
+    })
     expect(placeCountry).toHaveValue("Country");
 
     //EmailAddress
@@ -316,14 +371,18 @@ describe("test create corporate form1", () => {
     );
     expect(placeEmailAddress).toBeInTheDocument();
     expect(placeEmailAddress).toHaveValue("");
-    fireEvent.change(placeEmailAddress, { target: { value: "Email Address" } });
+    await act(async () => {
+      fireEvent.change(placeEmailAddress, { target: { value: "Email Address" } });
+    })
     expect(placeEmailAddress).toHaveValue("Email Address");
 
     //Telephone
     const placeTelephone = screen.getByTestId("placeofIncorporation-telephone");
     expect(placeTelephone).toBeInTheDocument();
     expect(placeTelephone).toHaveValue("");
-    fireEvent.change(placeTelephone, { target: { value: "Telephone" } });
+    await act(async () => {
+      fireEvent.change(placeTelephone, { target: { value: "Telephone" } });
+    })
     expect(placeTelephone).toHaveValue("Telephone");
 
     //float input type
@@ -1072,9 +1131,11 @@ describe("test create corporate form2", () => {
       "Others Please Specific"
     );
     expect(sourceOfIncomeOtherInput).toBeInTheDocument();
-    fireEvent.change(sourceOfIncomeOtherInput, {
-      target: { value: "Thailand" },
-    });
+    await act(async () => {
+      fireEvent.change(sourceOfIncomeOtherInput, {
+        target: { value: "Thailand" },
+      });
+    })
     expect(sourceOfIncomeOtherInput).toHaveValue("Thailand");
 
     //country source of income box
@@ -1090,7 +1151,9 @@ describe("test create corporate form2", () => {
       "Others Please Specify"
     );
     expect(thailandOtherInput).toBeInTheDocument();
-    fireEvent.change(thailandOtherInput, { target: { value: "Thailand" } });
+    await act(async () => {
+      fireEvent.change(thailandOtherInput, { target: { value: "Thailand" } });
+    })
     expect(thailandOtherInput).toHaveValue("Thailand");
 
     //investment objective box
@@ -1106,9 +1169,11 @@ describe("test create corporate form2", () => {
       "investmentObjectiveOtherBox"
     );
     expect(investmentObjectiveOtherInput).toBeInTheDocument();
-    fireEvent.change(investmentObjectiveOtherInput, {
-      target: { value: "Thailand" },
-    });
+    await act(async () => {
+      fireEvent.change(investmentObjectiveOtherInput, {
+        target: { value: "Thailand" },
+      });
+    })
     expect(investmentObjectiveOtherInput).toHaveValue("Thailand");
 
     const submitButton = screen.getByText("Next Form");
@@ -1274,9 +1339,11 @@ describe("test create corporate form2", () => {
       "Others Please Specific"
     );
     expect(sourceOfIncomeOtherInput).toBeInTheDocument();
-    fireEvent.change(sourceOfIncomeOtherInput, {
-      target: { value: "Thailand" },
-    });
+    await act(async () => {
+      fireEvent.change(sourceOfIncomeOtherInput, {
+        target: { value: "Thailand" },
+      });
+    })
     expect(sourceOfIncomeOtherInput).toHaveValue("Thailand");
 
     //country source of income box
@@ -1292,7 +1359,9 @@ describe("test create corporate form2", () => {
       "Others Please Specify"
     );
     expect(thailandOtherInput).toBeInTheDocument();
-    fireEvent.change(thailandOtherInput, { target: { value: "Thailand" } });
+    await act(async () => {
+      fireEvent.change(thailandOtherInput, { target: { value: "Thailand" } });
+    })
     expect(thailandOtherInput).toHaveValue("Thailand");
 
     //investment objective box
@@ -1323,9 +1392,11 @@ describe("test create corporate form2", () => {
       "investmentObjectiveOtherBox"
     );
     expect(investmentObjectiveOtherInput).toBeInTheDocument();
-    fireEvent.change(investmentObjectiveOtherInput, {
-      target: { value: "Thailand" },
-    });
+    await act(async () => {
+      fireEvent.change(investmentObjectiveOtherInput, {
+        target: { value: "Thailand" },
+      });
+    })
     expect(investmentObjectiveOtherInput).toHaveValue("Thailand");
 
     const submitButton = screen.getByText("Next Form");
@@ -1654,8 +1725,10 @@ describe("test create corporate form3 (contact person)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearContactPersons());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearContactPersons());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test form3 (PageContactPERSON) EDIT", async () => {
@@ -1750,9 +1823,10 @@ describe("test create corporate form3 (contact person)", () => {
       expect(corporateState).toMatchObject(expectedFormData);
     });
 
-
-    store.dispatch(clearContactPersons());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearContactPersons());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test input data(multiple input type)", async () => {
@@ -1773,46 +1847,48 @@ describe("test create corporate form3 (contact person)", () => {
       </Provider>
     );
 
-    const title = screen.getByLabelText("Title");
-    expect(title).toBeInTheDocument();
-    fireEvent.change(title, { target: { value: "Mr" } });
-    expect(title).toHaveValue("Mr");
-
-    const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "John" } });
-    expect(firstName).toHaveValue("John");
-
-    const surname = screen.getByLabelText("Surname");
-    expect(surname).toBeInTheDocument();
-    fireEvent.change(surname, { target: { value: "Doe" } });
-    expect(surname).toHaveValue("Doe");
-
-    const position = screen.getByLabelText("Position");
-    expect(position).toBeInTheDocument();
-    fireEvent.change(position, { target: { value: "Position" } });
-    expect(position).toHaveValue("Position");
-
-    const division = screen.getByLabelText("Division");
-    expect(division).toBeInTheDocument();
-    fireEvent.change(division, { target: { value: "Division" } });
-    expect(division).toHaveValue("Division");
-
-    const telephone = screen.getByLabelText("Telephone");
-    expect(telephone).toBeInTheDocument();
-    fireEvent.change(telephone, { target: { value: "0123456789" } });
-    expect(telephone).toHaveValue("0123456789");
-
-    const email = screen.getByLabelText("Email");
-    expect(email).toBeInTheDocument();
-    fireEvent.change(email, { target: { value: "test@example.com" } });
-    expect(email).toHaveValue("test@example.com");
-
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
-
     await act(async () => {
-      fireEvent.click(submitButton);
+      const title = screen.getByLabelText("Title");
+      expect(title).toBeInTheDocument();
+      fireEvent.change(title, { target: { value: "Mr" } });
+      expect(title).toHaveValue("Mr");
+
+      const firstName = screen.getByLabelText("First Name");
+      expect(firstName).toBeInTheDocument();
+      fireEvent.change(firstName, { target: { value: "John" } });
+      expect(firstName).toHaveValue("John");
+
+      const surname = screen.getByLabelText("Surname");
+      expect(surname).toBeInTheDocument();
+      fireEvent.change(surname, { target: { value: "Doe" } });
+      expect(surname).toHaveValue("Doe");
+
+      const position = screen.getByLabelText("Position");
+      expect(position).toBeInTheDocument();
+      fireEvent.change(position, { target: { value: "Position" } });
+      expect(position).toHaveValue("Position");
+
+      const division = screen.getByLabelText("Division");
+      expect(division).toBeInTheDocument();
+      fireEvent.change(division, { target: { value: "Division" } });
+      expect(division).toHaveValue("Division");
+
+      const telephone = screen.getByLabelText("Telephone");
+      expect(telephone).toBeInTheDocument();
+      fireEvent.change(telephone, { target: { value: "0123456789" } });
+      expect(telephone).toHaveValue("0123456789");
+
+      const email = screen.getByLabelText("Email");
+      expect(email).toBeInTheDocument();
+      fireEvent.change(email, { target: { value: "test@example.com" } });
+      expect(email).toHaveValue("test@example.com");
+      
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -2062,8 +2138,10 @@ describe("test create corporate form4 (list of director)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearDirector());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearDirector());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test form4 (PageListOfDirector) EDIT", async () => {
@@ -2232,8 +2310,10 @@ describe("test create corporate form4 (list of director)", () => {
       expect(window.alert).toHaveBeenCalledWith("Some error occurred");
     });
 
-    store.dispatch(clearDirector());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearDirector());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test input data(multiple input type)", async () => {
@@ -2253,101 +2333,103 @@ describe("test create corporate form4 (list of director)", () => {
       </Provider>
     );
 
-    const title = screen.getByLabelText("Title");
-    expect(title).toBeInTheDocument();
-    fireEvent.change(title, { target: { value: "Mr" } });
-    expect(title).toHaveValue("Mr");
+    await act(async () => {
+      const title = screen.getByLabelText("Title");
+      expect(title).toBeInTheDocument();
+      fireEvent.change(title, { target: { value: "Mr" } });
+      expect(title).toHaveValue("Mr");
 
-    const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "John" } });
-    expect(firstName).toHaveValue("John");
+      const firstName = screen.getByLabelText("First Name");
+      expect(firstName).toBeInTheDocument();
+      fireEvent.change(firstName, { target: { value: "John" } });
+      expect(firstName).toHaveValue("John");
 
-    const surname = screen.getByLabelText("Surname");
-    expect(surname).toBeInTheDocument();
-    fireEvent.change(surname, { target: { value: "Doe" } });
-    expect(surname).toHaveValue("Doe");
+      const surname = screen.getByLabelText("Surname");
+      expect(surname).toBeInTheDocument();
+      fireEvent.change(surname, { target: { value: "Doe" } });
+      expect(surname).toHaveValue("Doe");
 
-    const ID = screen.getByLabelText("Please fill ID");
-    expect(ID).toBeInTheDocument();
-    fireEvent.change(ID, { target: { value: "2571817668244" } });
-    expect(ID).toHaveValue("2571817668244");
+      const ID = screen.getByLabelText("Please fill ID");
+      expect(ID).toBeInTheDocument();
+      fireEvent.change(ID, { target: { value: "2571817668244" } });
+      expect(ID).toHaveValue("2571817668244");
 
-    const expiredDate = screen.getByTestId("expiredDate");
-    expect(expiredDate).toBeInTheDocument();
-    fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
-    expect(expiredDate).toHaveValue("2022-01-01");
+      const expiredDate = screen.getByTestId("expiredDate");
+      expect(expiredDate).toBeInTheDocument();
+      fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
+      expect(expiredDate).toHaveValue("2022-01-01");
 
-    const nationality = screen.getByLabelText("Nationality");
-    expect(nationality).toBeInTheDocument();
-    fireEvent.change(nationality, { target: { value: "Thai" } });
-    expect(nationality).toHaveValue("Thai");
+      const nationality = screen.getByLabelText("Nationality");
+      expect(nationality).toBeInTheDocument();
+      fireEvent.change(nationality, { target: { value: "Thai" } });
+      expect(nationality).toHaveValue("Thai");
 
-    const addressNumber = screen.getByLabelText("Address Number");
-    expect(addressNumber).toBeInTheDocument();
-    fireEvent.change(addressNumber, { target: { value: "address number" } });
-    expect(addressNumber).toHaveValue("address number");
+      const addressNumber = screen.getByLabelText("Address Number");
+      expect(addressNumber).toBeInTheDocument();
+      fireEvent.change(addressNumber, { target: { value: "address number" } });
+      expect(addressNumber).toHaveValue("address number");
 
-    const moo = screen.getByLabelText("Moo");
-    expect(moo).toBeInTheDocument();
-    fireEvent.change(moo, { target: { value: "moo" } });
-    expect(moo).toHaveValue("moo");
+      const moo = screen.getByLabelText("Moo");
+      expect(moo).toBeInTheDocument();
+      fireEvent.change(moo, { target: { value: "moo" } });
+      expect(moo).toHaveValue("moo");
 
-    const soi = screen.getByLabelText("Soi");
-    expect(soi).toBeInTheDocument();
-    fireEvent.change(soi, { target: { value: "soi" } });
-    expect(soi).toHaveValue("soi");
+      const soi = screen.getByLabelText("Soi");
+      expect(soi).toBeInTheDocument();
+      fireEvent.change(soi, { target: { value: "soi" } });
+      expect(soi).toHaveValue("soi");
 
-    const floor = screen.getByLabelText("Floor");
-    expect(floor).toBeInTheDocument();
-    fireEvent.change(floor, { target: { value: "floor" } });
-    expect(floor).toHaveValue("floor");
+      const floor = screen.getByLabelText("Floor");
+      expect(floor).toBeInTheDocument();
+      fireEvent.change(floor, { target: { value: "floor" } });
+      expect(floor).toHaveValue("floor");
 
-    const building = screen.getByLabelText("Building");
-    expect(building).toBeInTheDocument();
-    fireEvent.change(building, { target: { value: "building" } });
-    expect(building).toHaveValue("building");
+      const building = screen.getByLabelText("Building");
+      expect(building).toBeInTheDocument();
+      fireEvent.change(building, { target: { value: "building" } });
+      expect(building).toHaveValue("building");
 
-    const road = screen.getByLabelText("Road");
-    expect(road).toBeInTheDocument();
-    fireEvent.change(road, { target: { value: "road" } });
-    expect(road).toHaveValue("road");
+      const road = screen.getByLabelText("Road");
+      expect(road).toBeInTheDocument();
+      fireEvent.change(road, { target: { value: "road" } });
+      expect(road).toHaveValue("road");
 
-    const tambon = screen.getByLabelText("Tambon");
-    expect(tambon).toBeInTheDocument();
-    expect(tambon).toHaveValue("");
-    fireEvent.change(tambon, { target: { value: "tambon" } });
-    expect(tambon).toHaveValue("tambon");
+      const tambon = screen.getByLabelText("Tambon");
+      expect(tambon).toBeInTheDocument();
+      expect(tambon).toHaveValue("");
+      fireEvent.change(tambon, { target: { value: "tambon" } });
+      expect(tambon).toHaveValue("tambon");
 
-    const amphoe = screen.getByLabelText("Amphoe");
-    expect(amphoe).toBeInTheDocument();
-    expect(amphoe).toHaveValue("");
-    fireEvent.change(amphoe, { target: { value: "amphoe" } });
-    expect(amphoe).toHaveValue("amphoe");
+      const amphoe = screen.getByLabelText("Amphoe");
+      expect(amphoe).toBeInTheDocument();
+      expect(amphoe).toHaveValue("");
+      fireEvent.change(amphoe, { target: { value: "amphoe" } });
+      expect(amphoe).toHaveValue("amphoe");
 
-    const province = screen.getByLabelText("Province");
-    expect(province).toBeInTheDocument();
-    expect(province).toHaveValue("");
-    fireEvent.change(province, { target: { value: "province" } });
-    expect(province).toHaveValue("province");
+      const province = screen.getByLabelText("Province");
+      expect(province).toBeInTheDocument();
+      expect(province).toHaveValue("");
+      fireEvent.change(province, { target: { value: "province" } });
+      expect(province).toHaveValue("province");
 
-    const postalCode = screen.getByLabelText("PostalCode");
-    expect(postalCode).toBeInTheDocument();
-    expect(postalCode).toHaveValue("");
-    fireEvent.change(postalCode, { target: { value: "postal code" } });
-    expect(postalCode).toHaveValue("postal code");
+      const postalCode = screen.getByLabelText("PostalCode");
+      expect(postalCode).toBeInTheDocument();
+      expect(postalCode).toHaveValue("");
+      fireEvent.change(postalCode, { target: { value: "postal code" } });
+      expect(postalCode).toHaveValue("postal code");
 
-    const country = screen.getByLabelText("Country");
-    expect(country).toBeInTheDocument();
-    expect(country).toHaveValue("");
-    fireEvent.change(country, { target: { value: "country" } });
-    expect(country).toHaveValue("country");
+      const country = screen.getByLabelText("Country");
+      expect(country).toBeInTheDocument();
+      expect(country).toHaveValue("");
+      fireEvent.change(country, { target: { value: "country" } });
+      expect(country).toHaveValue("country");
 
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    })
 
     await act(async () => {
-      fireEvent.click(submitButton);
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -2546,8 +2628,10 @@ describe("test create corporate form5 (individual shareholder)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearDirector());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearDirector());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test form5 (PageIndividualShareholder) EDIT", async () => {
@@ -2632,8 +2716,10 @@ describe("test create corporate form5 (individual shareholder)", () => {
     });
 
 
-    store.dispatch(clearIndividualShareholder());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearIndividualShareholder());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
 
@@ -2654,47 +2740,49 @@ describe("test create corporate form5 (individual shareholder)", () => {
       </Provider>
     );
 
-    const title = screen.getByLabelText("Title");
-    expect(title).toBeInTheDocument();
-    fireEvent.change(title, { target: { value: "Mr" } });
-    expect(title).toHaveValue("Mr");
+    await act(async () => {
+      const title = screen.getByLabelText("Title");
+      expect(title).toBeInTheDocument();
+      fireEvent.change(title, { target: { value: "Mr" } });
+      expect(title).toHaveValue("Mr");
 
-    const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "John" } });
-    expect(firstName).toHaveValue("John");
+      const firstName = screen.getByLabelText("First Name");
+      expect(firstName).toBeInTheDocument();
+      fireEvent.change(firstName, { target: { value: "John" } });
+      expect(firstName).toHaveValue("John");
 
-    const surname = screen.getByLabelText("Surname");
-    expect(surname).toBeInTheDocument();
-    fireEvent.change(surname, { target: { value: "Doe" } });
-    expect(surname).toHaveValue("Doe");
+      const surname = screen.getByLabelText("Surname");
+      expect(surname).toBeInTheDocument();
+      fireEvent.change(surname, { target: { value: "Doe" } });
+      expect(surname).toHaveValue("Doe");
 
-    const nationality = screen.getByLabelText("Nationality");
-    expect(nationality).toBeInTheDocument();
-    fireEvent.change(nationality, { target: { value: "Thai" } });
-    expect(nationality).toHaveValue("Thai");
+      const nationality = screen.getByLabelText("Nationality");
+      expect(nationality).toBeInTheDocument();
+      fireEvent.change(nationality, { target: { value: "Thai" } });
+      expect(nationality).toHaveValue("Thai");
 
-    const shares = screen.getByLabelText("Shares");
-    expect(shares).toBeInTheDocument();
-    expect(shares).toHaveValue(0);
-    fireEvent.change(shares, { target: { value: "12.345" } });
-    expect(shares).toHaveValue(12.345);
+      const shares = screen.getByLabelText("Shares");
+      expect(shares).toBeInTheDocument();
+      expect(shares).toHaveValue(0);
+      fireEvent.change(shares, { target: { value: "12.345" } });
+      expect(shares).toHaveValue(12.345);
 
-    const ID = screen.getByLabelText("Please fill ID");
-    expect(ID).toBeInTheDocument();
-    fireEvent.change(ID, { target: { value: "2571817668244" } });
-    expect(ID).toHaveValue("2571817668244");
+      const ID = screen.getByLabelText("Please fill ID");
+      expect(ID).toBeInTheDocument();
+      fireEvent.change(ID, { target: { value: "2571817668244" } });
+      expect(ID).toHaveValue("2571817668244");
 
-    const expiredDate = screen.getByTestId("expiredDate");
-    expect(expiredDate).toBeInTheDocument();
-    fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
-    expect(expiredDate).toHaveValue("2022-01-01");
+      const expiredDate = screen.getByTestId("expiredDate");
+      expect(expiredDate).toBeInTheDocument();
+      fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
+      expect(expiredDate).toHaveValue("2022-01-01");
 
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    })
 
     await act(async () => {
-      fireEvent.click(submitButton);
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -2865,8 +2953,10 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearJuristicShareholder());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearJuristicShareholder());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test form6 (PageJuristicShareholder) EDIT", async () => {
@@ -2943,9 +3033,10 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       // expect(corporateState).toMatchObject(expectedFormData);
     });
 
-
-    store.dispatch(clearJuristicShareholder());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearJuristicShareholder());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test input data(multiple input type)", async () => {
@@ -2965,32 +3056,34 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       </Provider>
     );
 
-    const juristicName = screen.getByLabelText("Juristic Name");
-    expect(juristicName).toBeInTheDocument();
-    fireEvent.change(juristicName, { target: { value: "John Doe" } });
-    expect(juristicName).toHaveValue("John Doe");
+    await act(async () => {
+      const juristicName = screen.getByLabelText("Juristic Name");
+      expect(juristicName).toBeInTheDocument();
+      fireEvent.change(juristicName, { target: { value: "John Doe" } });
+      expect(juristicName).toHaveValue("John Doe");
 
-    const RegistrationNo = screen.getByLabelText("Commercial Registration No.");
-    expect(RegistrationNo).toBeInTheDocument();
-    fireEvent.change(RegistrationNo, { target: { value: "2571817668244" } });
-    expect(RegistrationNo).toHaveValue("2571817668244");
+      const RegistrationNo = screen.getByLabelText("Commercial Registration No.");
+      expect(RegistrationNo).toBeInTheDocument();
+      fireEvent.change(RegistrationNo, { target: { value: "2571817668244" } });
+      expect(RegistrationNo).toHaveValue("2571817668244");
 
-    const registrationCountry = screen.getByLabelText("Registration Country");
-    expect(registrationCountry).toBeInTheDocument();
-    fireEvent.change(registrationCountry, { target: { value: "Thailand" } });
-    expect(registrationCountry).toHaveValue("Thailand");
+      const registrationCountry = screen.getByLabelText("Registration Country");
+      expect(registrationCountry).toBeInTheDocument();
+      fireEvent.change(registrationCountry, { target: { value: "Thailand" } });
+      expect(registrationCountry).toHaveValue("Thailand");
 
-    const shares = screen.getByLabelText("Shares");
-    expect(shares).toBeInTheDocument();
-    expect(shares).toHaveValue(0);
-    fireEvent.change(shares, { target: { value: "12.345" } });
-    expect(shares).toHaveValue(12.345);
+      const shares = screen.getByLabelText("Shares");
+      expect(shares).toBeInTheDocument();
+      expect(shares).toHaveValue(0);
+      fireEvent.change(shares, { target: { value: "12.345" } });
+      expect(shares).toHaveValue(12.345);
 
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    })
 
     await act(async () => {
-      fireEvent.click(submitButton);
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -3266,8 +3359,10 @@ describe("test create corporate form7 (authorized person)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearAuthorizedPerson());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearAuthorizedPerson());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   
@@ -3290,100 +3385,103 @@ describe("test create corporate form7 (authorized person)", () => {
       </Provider>
     );
 
-    const title = screen.getByLabelText("Title");
-    expect(title).toBeInTheDocument();
-    fireEvent.change(title, { target: { value: "Mr" } });
-    expect(title).toHaveValue("Mr");
-
-    const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "Authorized Name" } });
-    expect(firstName).toHaveValue("Authorized Name");
-
-    const surname = screen.getByLabelText("Surname");
-    expect(surname).toBeInTheDocument();
-    fireEvent.change(surname, { target: { value: "Doe" } });
-    expect(surname).toHaveValue("Doe");
-
-    const ID = screen.getByLabelText("Please fill ID");
-    expect(ID).toBeInTheDocument();
-    fireEvent.change(ID, { target: { value: "2571817668244" } });
-    expect(ID).toHaveValue("2571817668244");
-
-    const expiredDate = screen.getByTestId("expiredDate");
-    expect(expiredDate).toBeInTheDocument();
-    fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
-    expect(expiredDate).toHaveValue("2022-01-01");
-
-    const nationality = screen.getByLabelText("Nationality");
-    expect(nationality).toBeInTheDocument();
-    fireEvent.change(nationality, { target: { value: "Thai" } });
-    expect(nationality).toHaveValue("Thai");
-
-    const addressNumber = screen.getByLabelText("Address Number");
-    expect(addressNumber).toBeInTheDocument();
-    fireEvent.change(addressNumber, { target: { value: "address number" } });
-    expect(addressNumber).toHaveValue("address number");
-
-    const moo = screen.getByLabelText("Moo");
-    expect(moo).toBeInTheDocument();
-    fireEvent.change(moo, { target: { value: "moo" } });
-    expect(moo).toHaveValue("moo");
-
-    const soi = screen.getByLabelText("Soi");
-    expect(soi).toBeInTheDocument();
-    fireEvent.change(soi, { target: { value: "soi" } });
-    expect(soi).toHaveValue("soi");
-
-    const floor = screen.getByLabelText("Floor");
-    expect(floor).toBeInTheDocument();
-    fireEvent.change(floor, { target: { value: "floor" } });
-    expect(floor).toHaveValue("floor");
-
-    const building = screen.getByLabelText("Building");
-    expect(building).toBeInTheDocument();
-    fireEvent.change(building, { target: { value: "building" } });
-    expect(building).toHaveValue("building");
-
-    const road = screen.getByLabelText("Road");
-    expect(road).toBeInTheDocument();
-    fireEvent.change(road, { target: { value: "road" } });
-    expect(road).toHaveValue("road");
-
-    const tambon = screen.getByLabelText("Tambon");
-    expect(tambon).toBeInTheDocument();
-    expect(tambon).toHaveValue("");
-    fireEvent.change(tambon, { target: { value: "tambon" } });
-    expect(tambon).toHaveValue("tambon");
-
-    const amphoe = screen.getByLabelText("Amphoe");
-    expect(amphoe).toBeInTheDocument();
-    expect(amphoe).toHaveValue("");
-    fireEvent.change(amphoe, { target: { value: "amphoe" } });
-    expect(amphoe).toHaveValue("amphoe");
-
-    const province = screen.getByLabelText("Province");
-    expect(province).toBeInTheDocument();
-    expect(province).toHaveValue("");
-    fireEvent.change(province, { target: { value: "province" } });
-    expect(province).toHaveValue("province");
-
-    const postalCode = screen.getByLabelText("PostalCode");
-    expect(postalCode).toBeInTheDocument();
-    expect(postalCode).toHaveValue("");
-    fireEvent.change(postalCode, { target: { value: "postal code" } });
-    expect(postalCode).toHaveValue("postal code");
-
-    const country = screen.getByLabelText("Country");
-    expect(country).toBeInTheDocument();
-    expect(country).toHaveValue("");
-    fireEvent.change(country, { target: { value: "country" } });
-    expect(country).toHaveValue("country");
-
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
     await act(async () => {
-      fireEvent.click(submitButton);
+      const title = screen.getByLabelText("Title");
+      expect(title).toBeInTheDocument();
+      fireEvent.change(title, { target: { value: "Mr" } });
+      expect(title).toHaveValue("Mr");
+
+      const firstName = screen.getByLabelText("First Name");
+      expect(firstName).toBeInTheDocument();
+      fireEvent.change(firstName, { target: { value: "Authorized Name" } });
+      expect(firstName).toHaveValue("Authorized Name");
+
+      const surname = screen.getByLabelText("Surname");
+      expect(surname).toBeInTheDocument();
+      fireEvent.change(surname, { target: { value: "Doe" } });
+      expect(surname).toHaveValue("Doe");
+
+      const ID = screen.getByLabelText("Please fill ID");
+      expect(ID).toBeInTheDocument();
+      fireEvent.change(ID, { target: { value: "2571817668244" } });
+      expect(ID).toHaveValue("2571817668244");
+
+      const expiredDate = screen.getByTestId("expiredDate");
+      expect(expiredDate).toBeInTheDocument();
+      fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
+      expect(expiredDate).toHaveValue("2022-01-01");
+
+      const nationality = screen.getByLabelText("Nationality");
+      expect(nationality).toBeInTheDocument();
+      fireEvent.change(nationality, { target: { value: "Thai" } });
+      expect(nationality).toHaveValue("Thai");
+
+      const addressNumber = screen.getByLabelText("Address Number");
+      expect(addressNumber).toBeInTheDocument();
+      fireEvent.change(addressNumber, { target: { value: "address number" } });
+      expect(addressNumber).toHaveValue("address number");
+
+      const moo = screen.getByLabelText("Moo");
+      expect(moo).toBeInTheDocument();
+      fireEvent.change(moo, { target: { value: "moo" } });
+      expect(moo).toHaveValue("moo");
+
+      const soi = screen.getByLabelText("Soi");
+      expect(soi).toBeInTheDocument();
+      fireEvent.change(soi, { target: { value: "soi" } });
+      expect(soi).toHaveValue("soi");
+
+      const floor = screen.getByLabelText("Floor");
+      expect(floor).toBeInTheDocument();
+      fireEvent.change(floor, { target: { value: "floor" } });
+      expect(floor).toHaveValue("floor");
+
+      const building = screen.getByLabelText("Building");
+      expect(building).toBeInTheDocument();
+      fireEvent.change(building, { target: { value: "building" } });
+      expect(building).toHaveValue("building");
+
+      const road = screen.getByLabelText("Road");
+      expect(road).toBeInTheDocument();
+      fireEvent.change(road, { target: { value: "road" } });
+      expect(road).toHaveValue("road");
+
+      const tambon = screen.getByLabelText("Tambon");
+      expect(tambon).toBeInTheDocument();
+      expect(tambon).toHaveValue("");
+      fireEvent.change(tambon, { target: { value: "tambon" } });
+      expect(tambon).toHaveValue("tambon");
+
+      const amphoe = screen.getByLabelText("Amphoe");
+      expect(amphoe).toBeInTheDocument();
+      expect(amphoe).toHaveValue("");
+      fireEvent.change(amphoe, { target: { value: "amphoe" } });
+      expect(amphoe).toHaveValue("amphoe");
+
+      const province = screen.getByLabelText("Province");
+      expect(province).toBeInTheDocument();
+      expect(province).toHaveValue("");
+      fireEvent.change(province, { target: { value: "province" } });
+      expect(province).toHaveValue("province");
+
+      const postalCode = screen.getByLabelText("PostalCode");
+      expect(postalCode).toBeInTheDocument();
+      expect(postalCode).toHaveValue("");
+      fireEvent.change(postalCode, { target: { value: "postal code" } });
+      expect(postalCode).toHaveValue("postal code");
+
+      const country = screen.getByLabelText("Country");
+      expect(country).toBeInTheDocument();
+      expect(country).toHaveValue("");
+      fireEvent.change(country, { target: { value: "country" } });
+      expect(country).toHaveValue("country");
+
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    })
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -3679,8 +3777,10 @@ describe("test create corporate form8 (attorney)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearAttorney());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearAttorney());
+      store.dispatch(clearCorporateData());
+    })
   }, 20000);
 
   test("test input data(multiple input type)", async () => {
@@ -3700,100 +3800,103 @@ describe("test create corporate form8 (attorney)", () => {
       </Provider>
     );
 
-    const title = screen.getByLabelText("Title");
-    expect(title).toBeInTheDocument();
-    fireEvent.change(title, { target: { value: "Mr" } });
-    expect(title).toHaveValue("Mr");
-
-    const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();
-    fireEvent.change(firstName, { target: { value: "John" } });
-    expect(firstName).toHaveValue("John");
-
-    const surname = screen.getByLabelText("Surname");
-    expect(surname).toBeInTheDocument();
-    fireEvent.change(surname, { target: { value: "Doe" } });
-    expect(surname).toHaveValue("Doe");
-
-    const ID = screen.getByLabelText("Please fill ID");
-    expect(ID).toBeInTheDocument();
-    fireEvent.change(ID, { target: { value: "2571817668244" } });
-    expect(ID).toHaveValue("2571817668244");
-
-    const expiredDate = screen.getByTestId("expiredDate");
-    expect(expiredDate).toBeInTheDocument();
-    fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
-    expect(expiredDate).toHaveValue("2022-01-01");
-
-    const nationality = screen.getByLabelText("Nationality");
-    expect(nationality).toBeInTheDocument();
-    fireEvent.change(nationality, { target: { value: "Thai" } });
-    expect(nationality).toHaveValue("Thai");
-
-    const addressNumber = screen.getByLabelText("Address Number");
-    expect(addressNumber).toBeInTheDocument();
-    fireEvent.change(addressNumber, { target: { value: "address number" } });
-    expect(addressNumber).toHaveValue("address number");
-
-    const moo = screen.getByLabelText("Moo");
-    expect(moo).toBeInTheDocument();
-    fireEvent.change(moo, { target: { value: "moo" } });
-    expect(moo).toHaveValue("moo");
-
-    const soi = screen.getByLabelText("Soi");
-    expect(soi).toBeInTheDocument();
-    fireEvent.change(soi, { target: { value: "soi" } });
-    expect(soi).toHaveValue("soi");
-
-    const floor = screen.getByLabelText("Floor");
-    expect(floor).toBeInTheDocument();
-    fireEvent.change(floor, { target: { value: "floor" } });
-    expect(floor).toHaveValue("floor");
-
-    const building = screen.getByLabelText("Building");
-    expect(building).toBeInTheDocument();
-    fireEvent.change(building, { target: { value: "building" } });
-    expect(building).toHaveValue("building");
-
-    const road = screen.getByLabelText("Road");
-    expect(road).toBeInTheDocument();
-    fireEvent.change(road, { target: { value: "road" } });
-    expect(road).toHaveValue("road");
-
-    const tambon = screen.getByLabelText("Tambon");
-    expect(tambon).toBeInTheDocument();
-    expect(tambon).toHaveValue("");
-    fireEvent.change(tambon, { target: { value: "tambon" } });
-    expect(tambon).toHaveValue("tambon");
-
-    const amphoe = screen.getByLabelText("Amphoe");
-    expect(amphoe).toBeInTheDocument();
-    expect(amphoe).toHaveValue("");
-    fireEvent.change(amphoe, { target: { value: "amphoe" } });
-    expect(amphoe).toHaveValue("amphoe");
-
-    const province = screen.getByLabelText("Province");
-    expect(province).toBeInTheDocument();
-    expect(province).toHaveValue("");
-    fireEvent.change(province, { target: { value: "province" } });
-    expect(province).toHaveValue("province");
-
-    const postalCode = screen.getByLabelText("PostalCode");
-    expect(postalCode).toBeInTheDocument();
-    expect(postalCode).toHaveValue("");
-    fireEvent.change(postalCode, { target: { value: "postal code" } });
-    expect(postalCode).toHaveValue("postal code");
-
-    const country = screen.getByLabelText("Country");
-    expect(country).toBeInTheDocument();
-    expect(country).toHaveValue("");
-    fireEvent.change(country, { target: { value: "country" } });
-    expect(country).toHaveValue("country");
-
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
     await act(async () => {
-      fireEvent.click(submitButton);
+      const title = screen.getByLabelText("Title");
+      expect(title).toBeInTheDocument();
+      fireEvent.change(title, { target: { value: "Mr" } });
+      expect(title).toHaveValue("Mr");
+
+      const firstName = screen.getByLabelText("First Name");
+      expect(firstName).toBeInTheDocument();
+      fireEvent.change(firstName, { target: { value: "John" } });
+      expect(firstName).toHaveValue("John");
+
+      const surname = screen.getByLabelText("Surname");
+      expect(surname).toBeInTheDocument();
+      fireEvent.change(surname, { target: { value: "Doe" } });
+      expect(surname).toHaveValue("Doe");
+
+      const ID = screen.getByLabelText("Please fill ID");
+      expect(ID).toBeInTheDocument();
+      fireEvent.change(ID, { target: { value: "2571817668244" } });
+      expect(ID).toHaveValue("2571817668244");
+
+      const expiredDate = screen.getByTestId("expiredDate");
+      expect(expiredDate).toBeInTheDocument();
+      fireEvent.change(expiredDate, { target: { value: "2022-01-01" } });
+      expect(expiredDate).toHaveValue("2022-01-01");
+
+      const nationality = screen.getByLabelText("Nationality");
+      expect(nationality).toBeInTheDocument();
+      fireEvent.change(nationality, { target: { value: "Thai" } });
+      expect(nationality).toHaveValue("Thai");
+
+      const addressNumber = screen.getByLabelText("Address Number");
+      expect(addressNumber).toBeInTheDocument();
+      fireEvent.change(addressNumber, { target: { value: "address number" } });
+      expect(addressNumber).toHaveValue("address number");
+
+      const moo = screen.getByLabelText("Moo");
+      expect(moo).toBeInTheDocument();
+      fireEvent.change(moo, { target: { value: "moo" } });
+      expect(moo).toHaveValue("moo");
+
+      const soi = screen.getByLabelText("Soi");
+      expect(soi).toBeInTheDocument();
+      fireEvent.change(soi, { target: { value: "soi" } });
+      expect(soi).toHaveValue("soi");
+
+      const floor = screen.getByLabelText("Floor");
+      expect(floor).toBeInTheDocument();
+      fireEvent.change(floor, { target: { value: "floor" } });
+      expect(floor).toHaveValue("floor");
+
+      const building = screen.getByLabelText("Building");
+      expect(building).toBeInTheDocument();
+      fireEvent.change(building, { target: { value: "building" } });
+      expect(building).toHaveValue("building");
+
+      const road = screen.getByLabelText("Road");
+      expect(road).toBeInTheDocument();
+      fireEvent.change(road, { target: { value: "road" } });
+      expect(road).toHaveValue("road");
+
+      const tambon = screen.getByLabelText("Tambon");
+      expect(tambon).toBeInTheDocument();
+      expect(tambon).toHaveValue("");
+      fireEvent.change(tambon, { target: { value: "tambon" } });
+      expect(tambon).toHaveValue("tambon");
+
+      const amphoe = screen.getByLabelText("Amphoe");
+      expect(amphoe).toBeInTheDocument();
+      expect(amphoe).toHaveValue("");
+      fireEvent.change(amphoe, { target: { value: "amphoe" } });
+      expect(amphoe).toHaveValue("amphoe");
+
+      const province = screen.getByLabelText("Province");
+      expect(province).toBeInTheDocument();
+      expect(province).toHaveValue("");
+      fireEvent.change(province, { target: { value: "province" } });
+      expect(province).toHaveValue("province");
+
+      const postalCode = screen.getByLabelText("PostalCode");
+      expect(postalCode).toBeInTheDocument();
+      expect(postalCode).toHaveValue("");
+      fireEvent.change(postalCode, { target: { value: "postal code" } });
+      expect(postalCode).toHaveValue("postal code");
+
+      const country = screen.getByLabelText("Country");
+      expect(country).toBeInTheDocument();
+      expect(country).toHaveValue("");
+      fireEvent.change(country, { target: { value: "country" } });
+      expect(country).toHaveValue("country");
+
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    })
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -3991,8 +4094,10 @@ describe("test create corporate form9 (bank)", () => {
       fireEvent.click(confirmDelete);
     })
 
-    store.dispatch(clearBank());
-    store.dispatch(clearCorporateData());
+    await act(async () => {
+      store.dispatch(clearBank());
+      store.dispatch(clearCorporateData());
+    });
   }, 20000);
 
   test("test input data(multiple input type)", async () => {
@@ -4012,38 +4117,40 @@ describe("test create corporate form9 (bank)", () => {
       </Provider>
     );
 
-    const accountType = screen.getByLabelText("Account Type");
-    expect(accountType).toBeInTheDocument();
-    fireEvent.change(accountType, { target: { value: "account type" } });
-    expect(accountType).toHaveValue("account type");
+    await act(async () => {
+      const accountType = screen.getByLabelText("Account Type");
+      expect(accountType).toBeInTheDocument();
+      fireEvent.change(accountType, { target: { value: "account type" } });
+      expect(accountType).toHaveValue("account type");
 
-    const bankName = screen.getByLabelText("Bank Name");
-    expect(bankName).toBeInTheDocument();
-    fireEvent.change(bankName, { target: { value: "bank name" } });
-    expect(bankName).toHaveValue("bank name");
+      const bankName = screen.getByLabelText("Bank Name");
+      expect(bankName).toBeInTheDocument();
+      fireEvent.change(bankName, { target: { value: "bank name" } });
+      expect(bankName).toHaveValue("bank name");
 
-    const accountNumber = screen.getByLabelText("Account Number");
-    expect(accountNumber).toBeInTheDocument();
-    fireEvent.change(accountNumber, { target: { value: "123" } });
-    expect(accountNumber).toHaveValue("123");
+      const accountNumber = screen.getByLabelText("Account Number");
+      expect(accountNumber).toBeInTheDocument();
+      fireEvent.change(accountNumber, { target: { value: "123" } });
+      expect(accountNumber).toHaveValue("123");
 
-    const accountLocation = screen.getByLabelText("Account Location");
-    expect(accountLocation).toBeInTheDocument();
-    fireEvent.change(accountLocation, {
-      target: { value: "account location" },
-    });
-    expect(accountLocation).toHaveValue("account location");
+      const accountLocation = screen.getByLabelText("Account Location");
+      expect(accountLocation).toBeInTheDocument();
+      fireEvent.change(accountLocation, {
+        target: { value: "account location" },
+      });
+      expect(accountLocation).toHaveValue("account location");
 
-    const swiftCode = screen.getByLabelText("SWIFT Code");
-    expect(swiftCode).toBeInTheDocument();
-    fireEvent.change(swiftCode, { target: { value: "swift code" } });
-    expect(swiftCode).toHaveValue("swift code");
+      const swiftCode = screen.getByLabelText("SWIFT Code");
+      expect(swiftCode).toBeInTheDocument();
+      fireEvent.change(swiftCode, { target: { value: "swift code" } });
+      expect(swiftCode).toHaveValue("swift code");
 
-    const submitButton = screen.getByText("Save");
-    expect(submitButton).toBeInTheDocument();
+      const submitButton = screen.getByText("Save");
+      expect(submitButton).toBeInTheDocument();
+    })
 
     await act(async () => {
-      fireEvent.click(submitButton);
+      fireEvent.click(screen.getByText("Save"));
     });
 
     //Expected form data
@@ -4088,7 +4195,7 @@ describe("UploadFiles Component", () => {
     localStorage.clear();
   })
 
-  it("handles file upload", () => {
+  test("handles file upload", async() => {
     const handleUpload = jest.fn();
     const handleInputChange = jest.fn((event) => {
       handleUpload(event.target.files[0], "123");
@@ -4132,8 +4239,9 @@ describe("UploadFiles Component", () => {
       const testFile = new File(["file contents"], "test.doc", {
         type: "application/msword",
       });
-      fireEvent.change(fileInput, { target: { files: [testFile] } });
-
+      await act(async () => {
+        fireEvent.change(fileInput, { target: { files: [testFile] } });
+      })
       expect(handleInputChange).toHaveBeenCalledWith(expect.any(Object));
 
       fireEvent.click(uploadButton);
