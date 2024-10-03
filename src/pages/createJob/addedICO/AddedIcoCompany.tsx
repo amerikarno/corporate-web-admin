@@ -174,6 +174,7 @@ useEffect(() => {
                 },
               })
               if(res.status === 200){
+                reset();
                 console.log("update ico form5 success",res)
                 const updatedMembers = listOfMembers.map(member => 
                   member.memberId === choosedEditData.memberId ? { ...body.companyMembers[0], picture: body.companyMembers[0].picture?.toString() , memberId:res.data.memberId } : member
@@ -194,7 +195,8 @@ useEffect(() => {
                 },
               })
               if(res.status === 200){
-                console.log("create ico form5 success",res)
+                reset();
+                console.log("create ico form5 success",res);
                 setListOfMembers([...listOfMembers, {...data.companyMembers[0], memberId: res.data.memberId[0]}]);
               }else{
                 console.log("create ico form5 fail",res)
@@ -225,6 +227,7 @@ useEffect(() => {
         }
       );
       if (res.status === 200) {
+        reset();
         console.log("delete successful");
         const updatedMembers = listOfMembers.filter(member => member.memberId !== data.memberId);
         setListOfMembers(updatedMembers);

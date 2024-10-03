@@ -132,9 +132,9 @@ const AddedIcoKeyInfo = () => {
       keyInformation: {
         icoCode, 
         ...body.keyInformation,
-        creationTime: !isNaN(Date.parse(body?.keyInformation?.creationTime)) ? new Date(body?.keyInformation?.creationTime).toISOString() : "",
-        releaseTime: !isNaN(Date.parse(body?.keyInformation?.releaseTime)) ? new Date(body?.keyInformation?.releaseTime).toISOString() : "",
-        compleationTime: !isNaN(Date.parse(body?.keyInformation?.compleationTime)) ? new Date(body?.keyInformation?.compleationTime).toISOString() : "",
+        creationTime: !isNaN(Date.parse(body?.keyInformation?.creationTime)) ? new Date(body?.keyInformation?.creationTime).toISOString() : undefined,
+        releaseTime: !isNaN(Date.parse(body?.keyInformation?.releaseTime)) ? new Date(body?.keyInformation?.releaseTime).toISOString() : undefined,
+        compleationTime: !isNaN(Date.parse(body?.keyInformation?.compleationTime)) ? new Date(body?.keyInformation?.compleationTime).toISOString() : undefined
       }
     };
     dispatch(setTestCorporateData(body));
