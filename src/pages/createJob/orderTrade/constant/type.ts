@@ -5,7 +5,7 @@ export type TOrderTrade = {
   fiatAmount: string | number | null;
   currency: string;
   cryptoPrice: string | number | null;
-  pair: string;
+  pair?: string;
   id?: string;
   transactionStatus?: number;
 };

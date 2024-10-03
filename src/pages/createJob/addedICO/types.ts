@@ -69,10 +69,10 @@ type TDetail = {
 
   export interface TAssetIssuance {
     issuanceTerms: {
-        id?: string;
+        icoCode?: string;
         investmentPeriod?: string;
         dividendYield?: string;
-        grossmargin?: string;
+        grossMargin?: string;
         equityMultiple?: string;
         profit?: string;
         leverage?: string;
@@ -82,8 +82,8 @@ type TDetail = {
   }
 
   export interface TAssetKeyInfo {
-    keyInformation?: {
-      id?: string;
+      keyInformation?: {
+      icoCode?: string;
       network?: string;
       precision?: string;
       capitalStructure?: string;
@@ -151,7 +151,7 @@ type TDetail = {
       icoCode:string;
       investmentPeriod: string;
       dividendYield: string;
-      grossmargin: string;
+      grossMargin: string;
       equityMultiple: string;
       profit: string;
       leverage: string;

@@ -21,7 +21,6 @@ import MockAdapter from "axios-mock-adapter";
 // import BasicInfo from "@/pages/createJob/addIndividualAccount/basicInfo/basicInfo";
 // import SuitTestFatca from "@/pages/createJob/addIndividualAccount/suitTestFatca/suitTestFatca";
 // import IdentityVerification from "@/pages/createJob/addIndividualAccount/identityVerification/identityVerification";
-// import userEvent from "@testing-library/user-event";
 // import { clearIndividualData, setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 // import axios from "@/api/axios";
 // import MockAdapter from "axios-mock-adapter";
@@ -157,7 +156,7 @@ const mockedAssetData = {
       "icoCode": "1",
       "investmentPeriod": "120 Days",
       "dividendYield": "20.00 %",
-      "grossmargin": "20.00",
+      "grossMargin": "20.00",
       "equityMultiple": "5.00 %",
       "profit": "15.00 %",
       "leverage": "20.00 %",
@@ -218,6 +217,9 @@ describe("test ico form1",()=>{
   })
 
   test("test ico form1 create", async ()=>{
+    mockAxios.onPost("/api/v1/ico/asset/create").reply(200, {
+      message: "create ico form1 success"
+    });
     render(
         <Provider store={store}>
           <MemoryRouter>
@@ -310,6 +312,31 @@ describe("test ico form1",()=>{
     const file = new File(['file content'], 'example.txt', { type: 'text/plain' });
     fireEvent.change(uploadPicture, { target: { files: [file] } });
 
+    const totalAmountRaisedUnit = screen.getByTestId("totalAmountRaisedUnit");
+    expect(totalAmountRaisedUnit).toBeInTheDocument();
+    expect(totalAmountRaisedUnit).toHaveValue("Baht");
+    fireEvent.change(totalAmountRaisedUnit, { target: { value: "Boot" } })
+
+    const totalIssuanceUnit = screen.getByTestId("totalIssuanceUnit");
+    expect(totalIssuanceUnit).toBeInTheDocument();
+    expect(totalIssuanceUnit).toHaveValue("Baht");
+    fireEvent.change(totalIssuanceUnit, { target: { value: "Beet" } })
+
+    const minimumInvestmentAmountUnit = screen.getByTestId("minimumInvestmentAmountUnit");
+    expect(minimumInvestmentAmountUnit).toBeInTheDocument();
+    expect(minimumInvestmentAmountUnit).toHaveValue("Baht");
+    fireEvent.change(minimumInvestmentAmountUnit, { target: { value: "Cup" } })
+
+    const minimumInvestmentQuantityUnit = screen.getByTestId("minimumInvestmentQuantityUnit");
+    expect(minimumInvestmentQuantityUnit).toBeInTheDocument();
+    expect(minimumInvestmentQuantityUnit).toHaveValue("Baht");
+    fireEvent.change(minimumInvestmentQuantityUnit, { target: { value: "Cuqwep" } })
+
+    const issueUnitPriceUnit = screen.getByTestId("issueUnitPriceUnit");
+    expect(issueUnitPriceUnit).toBeInTheDocument();
+    expect(issueUnitPriceUnit).toHaveValue("Baht");
+    fireEvent.change(issueUnitPriceUnit, { target: { value: "Cup" } })
+
     await waitFor(() => {
       const uploadedFile = screen.queryByText('File uploaded successfully');
       expect(uploadedFile).toBeInTheDocument();
@@ -323,29 +350,30 @@ describe("test ico form1",()=>{
 
     //  Expected form data
     const expectedFormData = {
-        data: {
-            asset: {
-              issueBy: 'issue by name',
-              name: 'Digital Asset',
-              description: 'complement description',
-              catagory: 'catagory HoJ',
-              return: '5000',
-              region: 'asia',
-              minimum: '3',
-              //the body is a unit8array format
-              image:"ZmlsZSBjb250ZW50",
-              logo: 'fixed image',
-              title: 'Elite Consulting'
-            },
-            info: {
-              totalIssuance: '5',
-              totalAmountRaised: '100000',
-              contractInfomation: 'contact info',
-              minimumInvestmentAmount: '1000',
-              minimumInvestmentQuantity: '5',
-              issueUnitPrice: '100'
-            }
-          }
+      data: {
+        asset: {
+          issueBy: 'issue by name',
+          name: 'Digital Asset',
+          description: 'complement description',
+          catagory: 'catagory HoJ',
+          return: '5000',
+          region: 'asia',
+          minimum: '3',
+          icoCode: '',
+          image: 'ZmlsZSBjb250ZW50',
+          logo: 'fixed image',
+          title: 'Elite Consulting'
+        },
+        info: {
+          totalIssuance: '5 Beet',
+          totalAmountRaised: '100000 Boot',
+          contractInfomation: 'contact info',
+          minimumInvestmentAmount: '1000 Cup',
+          minimumInvestmentQuantity: '5 Cuqwep',
+          issueUnitPrice: '100 Cup',
+          icoCode: ''
+        }
+      }
     };
 
     await waitFor(() => {
@@ -471,12 +499,12 @@ describe("test ico form1",()=>{
             title: 'Elite Consulting'
           },
           info: {
-            totalIssuance: '5',
-            totalAmountRaised: '100000',
+            totalIssuance: '5 Baht',
+            totalAmountRaised: '100000 Baht',
             contractInfomation: 'contact info',
-            minimumInvestmentAmount: '1000',
-            minimumInvestmentQuantity: '5',
-            issueUnitPrice: '100',
+            minimumInvestmentAmount: '1000 Baht',
+            minimumInvestmentQuantity: '5 Baht',
+            issueUnitPrice: '100 Baht',
             icoCode: '1'
           }
         }
@@ -518,25 +546,25 @@ describe("test ico form1",()=>{
         const expectedFormData = {
           data: {
             asset: {
-              issueBy: 'issue by name',
-              name: 'Digital Asset',
-              description: 'complement description',
-              catagory: 'catagory HoJ',
-              return: '5000',
-              region: 'asia',
-              minimum: '3',
-              icoCode: '1',
-              image: null,
+              title: 'Elite Consulting',
               logo: 'fixed image',
-              title: 'Elite Consulting'
+              issueBy: 'Issue By Digital Asset',
+              image: null,
+              name: 'THGG',
+              description: 'Blockchain Innovations Global (B.I.G.)',
+              catagory: '',
+              return: '18%',
+              region: 'Asia',
+              minimum: '250.00 USD',
+              icoCode: '1'
             },
             info: {
-              totalIssuance: '5',
-              totalAmountRaised: '100000',
-              contractInfomation: 'contact info',
-              minimumInvestmentAmount: '1000',
-              minimumInvestmentQuantity: '5',
-              issueUnitPrice: '100',
+              totalIssuance: '1000.00 DA',
+              totalAmountRaised: '50000.00 USD',
+              contractInfomation: '0xC92Ff5e3A94...89e7e8a5b378b',
+              minimumInvestmentAmount: '1000.00 USD',
+              minimumInvestmentQuantity: '1.00 DA',
+              issueUnitPrice: '100.00 USD',
               icoCode: '1'
             }
           }
@@ -780,7 +808,9 @@ describe("test ico form3",()=>{
     })
 
     test("test ico form3 create", async ()=>{
-
+      mockAxios.onPost("/api/v1/ico/keyInformation/create").reply(200, {
+        message: "create ico form3 success"
+      });
         render(
             <Provider store={store}>
               <MemoryRouter>
@@ -790,140 +820,46 @@ describe("test ico form3",()=>{
         );
 
         expect(screen.getByText("Key Information")).toBeInTheDocument();
-        expect(screen.getByTestId("keyInformation-0")).toBeInTheDocument();
 
-        const dropDownKeyInformationBtn = screen.getByTestId("dropDownKeyInformationBtn-0");
-        expect(dropDownKeyInformationBtn).toBeInTheDocument();
-        
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-0'),
-          screen.getByTestId('Network-0'),
-        )
-        expect(screen.getByTestId('Network-0')).toBeInTheDocument();
-  
-        await waitFor(() => {
-          const inputTypeSelector = screen.getByTestId("inputTypeSelector-0") as HTMLInputElement;
-          expect(inputTypeSelector).toBeInTheDocument();
+        const precisionInput = screen.getByPlaceholderText("Precision*");
+        expect(precisionInput).toBeInTheDocument();
+        expect(precisionInput).toHaveValue("");
+        fireEvent.change(precisionInput, { target: { value: "precision 5" } })
 
-          userEvent.selectOptions(
-            screen.getByTestId('inputTypeSelector-0'),
-            screen.getByTestId('BNB Smart Chain Mainnet-0'),
-          )
-          expect(screen.getByTestId('BNB Smart Chain Mainnet-0')).toBeInTheDocument();
-        });
+        const capitalStructure = screen.getByPlaceholderText("Capital Structure*");
+        expect(capitalStructure).toBeInTheDocument();
+        expect(capitalStructure).toHaveValue("");
+        fireEvent.change(capitalStructure, { target: { value: "capitalStructure 5" } })
 
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-0"));
-        })
+        const productType = screen.getByPlaceholderText("Product Type*");
+        expect(productType).toBeInTheDocument();
+        expect(productType).toHaveValue("");
+        fireEvent.change(productType, { target: { value: "productType 5" } })
+
+        const classification = screen.getByPlaceholderText("Classification*");
+        expect(classification).toBeInTheDocument();
+        expect(classification).toHaveValue("");
+        fireEvent.change(classification, { target: { value: "classification 5" } })
 
         userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-1'),
-          screen.getByTestId('Precision-1'),
+          screen.getByTestId('networkTest'),
+          screen.getByTestId('BNB Smart Chain Mainnet')
         )
 
-        expect(screen.getByTestId('Precision-1')).toBeInTheDocument();
+        const creationTime = screen.getByTestId("Creation Time");
+        expect(creationTime).toBeInTheDocument();
+        expect(creationTime).toHaveValue("");
+        fireEvent.change(creationTime, { target: { value: "2023-01-01" } })
 
-        await waitFor(() => {
-          const inputTypeText = screen.getByTestId("inputTypeText-1") as HTMLInputElement;
-          expect(inputTypeText).toBeInTheDocument();
-          fireEvent.change(inputTypeText, { target: { value: "test" } });
-        });
+        const releaseTime = screen.getByTestId("Release Time");
+        expect(releaseTime).toBeInTheDocument();
+        expect(releaseTime).toHaveValue("");
+        fireEvent.change(releaseTime, { target: { value: "2023-02-01" } })
 
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-1"));
-        })
-
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-2'),
-          screen.getByTestId('Capital Structure-2'),
-        )
-        expect(screen.getByTestId('Capital Structure-2')).toBeInTheDocument();
-
-        await waitFor(() => {
-          const inputTypeText = screen.getByTestId("inputTypeText-2") as HTMLInputElement;
-          expect(inputTypeText).toBeInTheDocument();
-          fireEvent.change(inputTypeText, { target: { value: "test" } });
-        });
-
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-2"));
-        })
-
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-3'),
-          screen.getByTestId('Classification-3'),
-        )
-        expect(screen.getByTestId('Classification-3')).toBeInTheDocument();
-
-        await waitFor(() => {
-          const inputTypeText = screen.getByTestId("inputTypeText-3") as HTMLInputElement;
-          expect(inputTypeText).toBeInTheDocument();
-          fireEvent.change(inputTypeText, { target: { value: "test" } });
-        });
-
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-3"));
-        })
-
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-4'),
-          screen.getByTestId('Product Type-4'),
-        )
-        expect(screen.getByTestId('Product Type-4')).toBeInTheDocument();
-
-        await waitFor(() => {
-          const inputTypeText = screen.getByTestId("inputTypeText-4") as HTMLInputElement;
-          expect(inputTypeText).toBeInTheDocument();
-          fireEvent.change(inputTypeText, { target: { value: "test" } });
-        });
-
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-4"));
-        })
-
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-5'),
-          screen.getByTestId('Creation Time-5'),
-        )
-        expect(screen.getByTestId('Creation Time-5')).toBeInTheDocument();
-
-        await waitFor(() => {
-          const inputTypeDate = screen.getByTestId("inputTypeDate-5") as HTMLInputElement;
-          expect(inputTypeDate).toBeInTheDocument();
-          fireEvent.change(inputTypeDate, { target: { value: "2022-01-01" } });
-        });
-
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-5"));
-        })
-
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-6'),
-          screen.getByTestId('Release Time-6'),
-        )
-        expect(screen.getByTestId('Release Time-6')).toBeInTheDocument();
-
-        await waitFor(() => {
-          const inputTypeDate = screen.getByTestId("inputTypeDate-6") as HTMLInputElement;
-          expect(inputTypeDate).toBeInTheDocument();
-          fireEvent.change(inputTypeDate, { target: { value: "2022-01-01" } });
-        });
-
-        await act(async ()=>{
-          fireEvent.click(screen.getByTestId("addKeyInformationBtn-6"));
-        })
-
-        userEvent.selectOptions(
-          screen.getByTestId('dropDownKeyInformationBtn-7'),
-          screen.getByTestId('Completion Time-7'),
-        )
-        expect(screen.getByTestId('Completion Time-7')).toBeInTheDocument();
-
-        await waitFor(() => {
-          const inputTypeDate = screen.getByTestId("inputTypeDate-7") as HTMLInputElement;
-          expect(inputTypeDate).toBeInTheDocument();
-          fireEvent.change(inputTypeDate, { target: { value: "2022-01-01" } });
-        });
+        const compleationTime = screen.getByTestId("Compleation Time");
+        expect(compleationTime).toBeInTheDocument();
+        expect(compleationTime).toHaveValue("");
+        fireEvent.change(compleationTime, { target: { value: "2023-03-01" } })
 
         const nextFormBtn = screen.getByText("Next Form");
         expect(nextFormBtn).toBeInTheDocument();
@@ -935,15 +871,15 @@ describe("test ico form3",()=>{
     const expectedFormData = {
       data: {
         keyInformation: {
-          icoCode: '1',
-          network: 'BNB Smart Chain Mainnet',
-          precision: 'test',
-          capitalStructure: 'test',
-          classiFication: 'test',
-          productType: 'test',
-          creationTime: '2022-01-01T00:00:00.000Z',
-          releaseTime: '2022-01-01T00:00:00.000Z',
-          compleationTime: '2022-01-01T00:00:00.000Z'
+          precision: 'precision 5',
+          capitalStructure: 'capitalStructure 5',
+          productType: 'productType 5',
+          classiFication: 'classification 5',
+          network: '',
+          creationTime: '2023-01-01T00:00:00.000Z',
+          releaseTime: '2023-02-01T00:00:00.000Z',
+          compleationTime: '2023-03-01T00:00:00.000Z',
+          icoCode: '1'
         }
       }
     };
@@ -957,7 +893,9 @@ describe("test ico form3",()=>{
     })
 
     test("test ico form3 autofill and edit", async ()=>{
-
+      mockAxios.onPost("/api/v1/ico/keyInformation/update").reply(200, {
+        message: "update ico form3 success"
+      });
       localStorage.setItem("icoCode", "1");
       jest.clearAllMocks();
       store.dispatch(setUser(mockUser));
@@ -1022,7 +960,9 @@ describe("test ico form4",()=>{
   })
 
   test("test ico form4 create", async ()=>{
-
+    mockAxios.onPost("/api/v1/ico/issuance/create").reply(200, {
+      message: "create ico form4 success"
+    });
       render(
           <Provider store={store}>
             <MemoryRouter>
@@ -1032,142 +972,76 @@ describe("test ico form4",()=>{
       );
 
       expect(screen.getByText("Issuance Terms")).toBeInTheDocument();
-      expect(screen.getByTestId("issuanceTerms-0")).toBeInTheDocument();
+    
+      const investmentPeriodInput = screen.getByPlaceholderText("Investment Period*");
+      expect(investmentPeriodInput).toBeInTheDocument();
+      expect(investmentPeriodInput).toHaveValue("");
+      fireEvent.change(investmentPeriodInput, { target: { value: "test investmentPeriodInput" } })
 
-      const dropDownIssuanceTermsBtn = screen.getByTestId("dropDownIssuanceTermsBtn-0");
-      expect(dropDownIssuanceTermsBtn).toBeInTheDocument();
-      
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-0'),
-        screen.getByTestId('Investment Period-0'),
-      )
+      const dividendYieldInput = screen.getByPlaceholderText("Dividend Yield*");
+      expect(dividendYieldInput).toBeInTheDocument();
+      expect(dividendYieldInput).toHaveValue("");
+      fireEvent.change(dividendYieldInput, { target: { value: "test dividendYieldInput" } })
 
-      expect(screen.getByTestId('Investment Period-0')).toBeInTheDocument();
+      const grossMarginInput = screen.getByPlaceholderText("Gross Margin*");
+      expect(grossMarginInput).toBeInTheDocument();
+      expect(grossMarginInput).toHaveValue("");
+      fireEvent.change(grossMarginInput, { target: { value: "test grossMarginInput" } })
 
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-0") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
+      const equityMultipleInput = screen.getByPlaceholderText("Equity Multiple*");
+      expect(equityMultipleInput).toBeInTheDocument();
+      expect(equityMultipleInput).toHaveValue("");
+      fireEvent.change(equityMultipleInput, { target: { value: "test equityMultipleInput" } })
 
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-0"));
-      })
-      
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-1'),
-        screen.getByTestId('Dividend Yield-1'),
-      )
+      const profit = screen.getByPlaceholderText("Profit*");
+      expect(profit).toBeInTheDocument();
+      expect(profit).toHaveValue("");
+      fireEvent.change(profit, { target: { value: "test profit" } })
 
-      expect(screen.getByTestId('Dividend Yield-1')).toBeInTheDocument();
+      const leverage = screen.getByPlaceholderText("Leverage*")
+      expect(leverage).toBeInTheDocument();
+      expect(leverage).toHaveValue("");
+      fireEvent.change(leverage, { target: { value: "test leverage" } })
 
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-1") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
+      const investmentStructure = screen.getByPlaceholderText("Investment Structure*");
+      expect(investmentStructure).toBeInTheDocument();
+      expect(investmentStructure).toHaveValue("");
+      fireEvent.change(investmentStructure, { target: { value: "test investmentStructure" } })
 
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-1"));
-      })
+      const distributionFrequency = screen.getByPlaceholderText("Distribution Frequency*");
+      expect(distributionFrequency).toBeInTheDocument();
+      expect(distributionFrequency).toHaveValue("");
+      fireEvent.change(distributionFrequency, { target: { value: "test distributionFrequency" } })
 
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-2'),
-        screen.getByTestId('Gross Margin-2'),
-      )
+      const investmentPeriodUnit = screen.getByTestId("investmentPeriodUnit");
+      expect(investmentPeriodUnit).toBeInTheDocument();
+      expect(investmentPeriodUnit).toHaveValue("Days");
+      fireEvent.change(investmentPeriodUnit, { target: { value: "Weeks" } })
 
-      expect(screen.getByTestId('Gross Margin-2')).toBeInTheDocument();
+      const dividendYieldUnit = screen.getByTestId("dividendYieldUnit");
+      expect(dividendYieldUnit).toBeInTheDocument();
+      expect(dividendYieldUnit).toHaveValue("%");
+      fireEvent.change(dividendYieldUnit, { target: { value: "Dollar" } })
 
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-2") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
+      const grossMarginUnit = screen.getByTestId("grossMarginUnit");
+      expect(grossMarginUnit).toBeInTheDocument();
+      expect(grossMarginUnit).toHaveValue("%");
+      fireEvent.change(grossMarginUnit, { target: { value: "Dollars" } })
 
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-2"));
-      })
+      const equityMultipleUnit = screen.getByTestId("equityMultipleUnit");
+      expect(equityMultipleUnit).toBeInTheDocument();
+      expect(equityMultipleUnit).toHaveValue("%");
+      fireEvent.change(equityMultipleUnit, { target: { value: "Dollarse" } })
 
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-3'),
-        screen.getByTestId('Equity Multiple-3'),
-      )
+      const profitUnit = screen.getByTestId("profitUnit");
+      expect(profitUnit).toBeInTheDocument();
+      expect(profitUnit).toHaveValue("%");
+      fireEvent.change(profitUnit, { target: { value: "Dollarsasda" } })
 
-      expect(screen.getByTestId('Equity Multiple-3')).toBeInTheDocument();
-
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-3") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
-
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-3"));
-      })
-
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-4'),
-        screen.getByTestId('Profit-4'),
-      )
-
-      expect(screen.getByTestId('Profit-4')).toBeInTheDocument();
-
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-4") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
-
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-4"));
-      })
-
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-5'),
-        screen.getByTestId('Leverage-5'),
-      )
-
-      expect(screen.getByTestId('Leverage-5')).toBeInTheDocument();
-
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-5") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
-
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-5"));
-      })
-
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-6'),
-        screen.getByTestId('Investment Structure-6'),
-      )
-
-      expect(screen.getByTestId('Investment Structure-6')).toBeInTheDocument();
-
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-6") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
-
-      await act(async ()=>{
-        fireEvent.click(screen.getByTestId("addIssuanceTermsBtn-6"));
-      })
-
-      userEvent.selectOptions(
-        screen.getByTestId('dropDownIssuanceTermsBtn-7'),
-        screen.getByTestId('Distribution Frequency-7'),
-      )
-
-      expect(screen.getByTestId('Distribution Frequency-7')).toBeInTheDocument();
-
-      await waitFor(() => {
-        const inputTypeText = screen.getByTestId("inputTypeText-7") as HTMLInputElement;
-        expect(inputTypeText).toBeInTheDocument();
-        fireEvent.change(inputTypeText, { target: { value: "test" } });
-      });
+      const leverageUnit = screen.getByTestId("leverageUnit");
+      expect(leverageUnit).toBeInTheDocument();
+      expect(leverageUnit).toHaveValue("%");
+      fireEvent.change(leverageUnit, { target: { value: "Doasdasdllarsasda" } })
 
       const nextFormBtn = screen.getByText("Next Form");
       expect(nextFormBtn).toBeInTheDocument();
@@ -1179,14 +1053,14 @@ describe("test ico form4",()=>{
   const expectedFormData = {
     data: {
       issuanceTerms: {
-        investmentPeriod: 'test',
-        dividendYield: 'test',
-        grossmargin: 'test',
-        equityMultiple: 'test',
-        profit: 'test',
-        leverage: 'test',
-        investmentStructure: 'test',
-        distributionFrequency: 'test',
+        investmentPeriod: 'test investmentPeriodInput Weeks',
+        dividendYield: 'test dividendYieldInput Dollar',
+        grossMargin: 'test grossMarginInput Dollars',
+        equityMultiple: 'test equityMultipleInput Dollarse',
+        profit: 'test profit Dollarsasda',
+        leverage: 'test leverage Doasdasdllarsasda',
+        investmentStructure: 'test investmentStructure',
+        distributionFrequency: 'test distributionFrequency',
         icoCode: '1'
       }
     }
@@ -1201,7 +1075,9 @@ describe("test ico form4",()=>{
   })
 
   test("test ico form4 autofill and edit", async ()=>{
-
+    mockAxios.onPost("/api/v1/ico/issuance/update").reply(200, {
+      message: "update ico form4 success"
+    });
     localStorage.setItem("icoCode", "1");
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
@@ -1227,7 +1103,7 @@ describe("test ico form4",()=>{
         issuanceTerms: {
           investmentPeriod: '120 Days',
           dividendYield: '20.00 %',
-          grossmargin: '20.00',
+          grossMargin: '20.00 %',
           equityMultiple: '5.00 %',
           profit: '15.00 %',
           leverage: '20.00 %',
@@ -1359,8 +1235,10 @@ test("test ico form5 create", async ()=>{
     
   })
 
-  test("test ico form4 autofill and edit", async ()=>{
-
+  test("test ico form5 autofill and edit", async ()=>{
+    mockAxios.onPost("/api/v1/ico/members/create").reply(200, {
+      message: "update ico form5 success"
+    });
     localStorage.setItem("icoCode", "1");
     jest.clearAllMocks();
     store.dispatch(setUser(mockUser));
@@ -1431,6 +1309,43 @@ test("test ico form5 create", async ()=>{
 
     localStorage.clear();
     store.dispatch(clearAssetData());
+})
+
+test("test ico form5 delete", async ()=>{
+  mockAxios.onPost("/api/v1/ico/members/create").reply(200, {
+    message: "Delete Member in ico form5 success"
+  });
+  localStorage.setItem("icoCode", "1");
+  jest.clearAllMocks();
+  store.dispatch(setUser(mockUser));
+  store.dispatch(setAssetData(mockedAssetData));
+
+  render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <AddedIcoCompany/>
+        </MemoryRouter>
+      </Provider>
+  );
+
+  await waitFor(() => {
+    expect(screen.getByTestId("deleteButton-4334c8cb-7d73-4f04-b2ed-f64b952a36aa")).toBeInTheDocument();
+  })
+  await act(async () => {
+    const firstDeleteBtn = screen.getByTestId("deleteButton-4334c8cb-7d73-4f04-b2ed-f64b952a36aa");
+    fireEvent.click(firstDeleteBtn);
+  })
+
+  await waitFor(() => {
+    expect(screen.getByTestId("confirmButton-4334c8cb-7d73-4f04-b2ed-f64b952a36aa")).toBeInTheDocument();
+  })
+  await act(async () => {
+    const confirmBtn = screen.getByTestId("confirmButton-4334c8cb-7d73-4f04-b2ed-f64b952a36aa");
+    fireEvent.click(confirmBtn);
+  })
+
+  localStorage.clear();
+  store.dispatch(clearAssetData());
 })
 
 })

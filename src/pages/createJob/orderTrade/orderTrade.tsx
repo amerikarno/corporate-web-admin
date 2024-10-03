@@ -168,6 +168,7 @@ export default function OrderTradeEdit() {
     {
       cell: (row: TOrderTrade) => (
         <Button
+          data-testid={`editButton-${row.id}`}
           onClick={() => {
             setChoosedEditData(row);
           }}
@@ -189,12 +190,20 @@ export default function OrderTradeEdit() {
       fiatAmount: null,
     };
     reset(orderListDatatoInputField);
+    if(choosedEditData?.corporateCode){
+      setSelectedCorporateCode(choosedEditData?.corporateCode);
+    }
+
+    if(choosedEditData?.pair){
+      setSelectedTradingPair(choosedEditData?.pair);
+    }
+
     if (choosedEditData?.operations === "buy") {
       setBuySell("buy");
     } else if (choosedEditData?.operations === "sell") {
       setBuySell("sell");
       if (choosedEditData) {
-        const cur = choosedEditData.pair.split("/");
+        const cur = choosedEditData.pair!.split("/");
         setSellCurrency(cur[1]);
       }
     } else {
@@ -242,16 +251,19 @@ export default function OrderTradeEdit() {
     setSellCurrency(cur[1]);
   };
 
-  const onSubmit = async (data: TOrderTrade) => {
+  // const onSubmit = async (data: TOrderTrade) => {
+  const onSubmit = async (data: any) => {
     const currency = buySell === "sell" ? sellCurrency : data.currency;
     let body: TOrderTrade = {
       ...data,
+      corporateCode:selectedCorporateCode || null,
       operations: buySell,
       currency: currency,
       id: choosedEditData?.id,
       cryptoAmount: handleFloatValue(Number(data.cryptoAmount)),
       fiatAmount: handleFloatValue(Number(data.fiatAmount)),
       cryptoPrice: handleFloatValue(Number(data.cryptoPrice)),
+      pair:selectedTradingPair,
     };
     dispatch(setTestCorporateData(body));
     console.log(choosedEditData);
@@ -308,7 +320,6 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("corporateCode")}
                     label="Corporate Code"
-                    data-testid="Corporate Code"
                     id="corporateCode"
                     disabled={isSubmitting}
                     value={selectedCorporateCode !== null ? selectedCorporateCode : ""}
@@ -338,6 +349,7 @@ export default function OrderTradeEdit() {
                      {/* <label className="absolute bg-white text-xs rounded-full border-none -top-4">Pairs</label> */}
                       <select
                         id="pair"
+                        data-testid="pairDropdown"
                         {...register("pair")}
                         value={selectedTradingPair}
                         onChange={handleTradingPairChange}
@@ -348,7 +360,7 @@ export default function OrderTradeEdit() {
                           THB/USDT
                         </option>
                         {tradingPair.map((pair, index) => (
-                          <option key={index} value={pair.name}>
+                          <option key={index} data-testid={pair.name} value={pair.name}>
                             {pair.name}
                           </option>
                         ))}
@@ -368,6 +380,7 @@ export default function OrderTradeEdit() {
                     buySell === "buy" ? "bg-slate-800" : "bg-slate-500"
                   }`}
                   onClick={() => handleBuySell("buy")}
+                  data-testid="buySellBtn-buy"
                 >
                   Buy
                 </div>
@@ -376,6 +389,7 @@ export default function OrderTradeEdit() {
                     buySell === "sell" ? "bg-slate-800" : "bg-slate-500"
                   }`}
                   onClick={() => handleBuySell("sell")}
+                  data-testid="buySellBtn-sell"
                 >
                   Sell
                 </div>
@@ -385,7 +399,6 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("cryptoAmount")}
                     label="Crypto Amount"
-                    data-testid="Crypto Amount"
                     id="cryptoAmount"
                     disabled={isSubmitting}
                     step="0.00001"
@@ -399,7 +412,6 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("fiatAmount")}
                     label="Fiat Amount"
-                    data-testid="Fiat Amount"
                     id="fiatAmount"
                     disabled={isSubmitting}
                     step="0.00001"
@@ -415,7 +427,6 @@ export default function OrderTradeEdit() {
                   <Input
                     {...register("cryptoPrice")}
                     label="Crypto Price"
-                    data-testid="Crypto Price"
                     id="cryptoPrice"
                     disabled={isSubmitting}
                     step="0.00001"
@@ -442,12 +453,12 @@ export default function OrderTradeEdit() {
                     <option value="USD">USD</option> */}
                     {buySell === "buy" ? (
                       buyCurrency.map((currency, index) => (
-                        <option key={index} value={currency.name}>
+                        <option key={index} data-testid={`currency-${currency.name}`} value={currency.name}>
                           {currency.name}
                         </option>
                       ))
                     ) : (
-                      <option value={sellCurrency}>{sellCurrency}</option>
+                      <option data-testid="sellCurrency" value={sellCurrency}>{sellCurrency}</option>
                     )}
                   </select>
                   {errors.currency && (

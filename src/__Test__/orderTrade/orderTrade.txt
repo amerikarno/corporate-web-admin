@@ -7,20 +7,202 @@ import { MemoryRouter } from "react-router-dom";
 import "@testing-library/jest-dom";
 import OrderTradeEdit from "@/pages/createJob/orderTrade/orderTrade";
 import userEvent from '@testing-library/user-event';
+import { setOrderTrades } from "@/features/orderTrade/orderTradeSlice";
+import { TOrderTrade } from "@/pages/createJob/orderTrade/constant/type";
+import axios from "@/api/axios";
+import MockAdapter from "axios-mock-adapter";
 
 jest.mock("@/lib/utils", () => ({
-    ...jest.requireActual("@/lib/utils"),
-    isExpiredToken: jest.fn().mockReturnValue(false),
-  }));
+  ...jest.requireActual("@/lib/utils"),
+  isExpiredToken: jest.fn().mockReturnValue(false),
+}));
 
-describe("test create order trade", () => {
+jest.mock("@/lib/Cookies", () => ({
+getCookies: jest.fn().mockReturnValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjEyMmRjLTc3YzctNDlmYy04ZTBkLTg2NWVjYTY1MmI4MCIsImVtYWlsIjoiYjcwODk4NTY5ZWRjYjk5MjdhMDZkZDUxMTBmMWI4ZmUxZDQ2ZTVmOTg1ZTBkOWYyMjI0ZDc3NDg1NzU3ZjFlYSIsImdyb3VwcyI6WzEwMDEsMTAwMiwxMDAzLDIwMDEsMjAwMiwyMDAzXSwicGVybWlzc2lvbnMiOlsxMDEsMTAyLDEwMywyMDEsMjAyLDIwM10sInJvbGVzIjpbMTEsMTIsMTMsMjEsMjIsMjNdLCJ1c2VySWQiOiIiLCJsb2dpblN0YXR1cyI6IiIsImV4cGlyZXNEYXRlIjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJFcnJvciI6bnVsbCwiZXhwIjoxNzI3MTY3MzQyLCJpYXQiOjE3MjcwODA5NDJ9.PWG3vMMN3POr-SWDnO4etQ5D1ZV2mX7D1Fzwsb8sfBg"),
+}));
+
+const mockAxios = new MockAdapter(axios);
+
+const orderTradeMock =
+  [
+    {
+        "id": "0614ff48-c498-4f2b-a70f-c86d639ce4c9",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-18T05:19:40.673Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000001,
+        "cryptoAmount": 112345,
+        "fiatAmount": 100010,
+        "currency": "THB",
+        "cryptoPrice": 110000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "2d767e03-dbd5-4774-aff5-8ef825b5a2f2",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-18T05:20:28.135Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000001,
+        "cryptoAmount": 111112,
+        "fiatAmount": 110,
+        "currency": "THB",
+        "cryptoPrice": 110000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "3b7c40da-723b-46f7-8012-60e769f18064",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-20T07:18:30.022Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000001,
+        "cryptoAmount": 1000000,
+        "fiatAmount": 1000000,
+        "currency": "THB",
+        "cryptoPrice": 1000000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "441e3b29-93c2-4f72-95a5-2657898917e8",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-20T08:47:10.109Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000001,
+        "cryptoAmount": 100000,
+        "fiatAmount": 300000,
+        "currency": "THB",
+        "cryptoPrice": 200000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "46e2a76b-df1a-4197-84ec-ca271c72f213",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-20T08:17:01.019Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 8001,
+        "cryptoAmount": 100000,
+        "fiatAmount": 100000,
+        "currency": "THB",
+        "cryptoPrice": 100000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "52219af4-b083-4d4a-95f7-7b2a221978f1",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-20T08:42:32.227Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000006,
+        "cryptoAmount": 100000,
+        "fiatAmount": 100000,
+        "currency": "THB",
+        "cryptoPrice": 100000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "70870d9e-1bd0-4b82-ae9c-4cece96dd6fb",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-20T08:03:17.852Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000010,
+        "cryptoAmount": 100000,
+        "fiatAmount": 100000,
+        "currency": "THB",
+        "cryptoPrice": 100000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "838b03a4-e41a-4b6b-bbd0-14b3f2ea7259",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-20T08:03:30.146Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000012,
+        "cryptoAmount": 200000,
+        "fiatAmount": 200000,
+        "currency": "USD",
+        "cryptoPrice": 200000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "a69b11cf-39b6-421c-8953-92c2865c38f7",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-10-03T02:36:38.059Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 234,
+        "cryptoAmount": 23400000,
+        "fiatAmount": 23400000,
+        "currency": "THB",
+        "cryptoPrice": 23400000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "f607968e-cfc9-40a3-bee1-fe6bc5ed6ed2",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-18T05:19:59.279Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000001,
+        "cryptoAmount": 112000,
+        "fiatAmount": 123000,
+        "currency": "THB",
+        "cryptoPrice": 134500,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    },
+    {
+        "id": "fbcd5dd8-1b19-49f5-bef0-872e28c91c7d",
+        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+        "CreatedAt": "2024-09-24T05:34:20.727Z",
+        "DeletedAt": null,
+        "operations": "buy",
+        "corporateCode": 80000005,
+        "cryptoAmount": 100000,
+        "fiatAmount": 100000,
+        "currency": "THB",
+        "cryptoPrice": 100000,
+        "pair": "THB/USDT",
+        "transactionStatus": 0,
+        "checkerStatus": false
+    }
+]
+
+
+describe("test order trade", () => {
     beforeEach(() => {
       jest.clearAllMocks();
       store.dispatch(setUser(mockUser));
     });
   
-    test("test input data(multiple input type)", async () => {
-
+    test("test input data(multiple input type) create (buy)", async () => {
+      mockAxios.onPost("/api/v1/transaction/order/create").reply(200, {
+        message: "create successful"
+      });
       render(
         <Provider store={store}>
           <MemoryRouter>
@@ -29,87 +211,232 @@ describe("test create order trade", () => {
         </Provider>
       );
 
-      const corporateCode = screen.getByTestId("Corporate Code") as HTMLInputElement;;
+      const corporateCode = screen.getByLabelText("Corporate Code");
       expect(corporateCode).toBeInTheDocument();
-      fireEvent.change(corporateCode, { target: { value: 80000001 } });
-      expect(corporateCode).toHaveValue(80000001);
+      await act(async () => {
+        fireEvent.change(corporateCode, { target: { value: 80000001 } });
+      })
 
-      const cryptoAmount = screen.getByTestId("Crypto Amount") as HTMLInputElement;;
+      userEvent.selectOptions(
+        screen.getByTestId('pairDropdown'),
+        screen.getByTestId('THB/USDC')
+      )
+
+      const buyButton = screen.getByTestId("buySellBtn-buy");
+      expect(buyButton).toBeInTheDocument();
+      fireEvent.click(buyButton);
+
+      const cryptoAmount = screen.getByLabelText("Crypto Amount");
       expect(cryptoAmount).toBeInTheDocument();
-      expect(cryptoAmount).toHaveValue(null);
-      fireEvent.change(cryptoAmount, { target: { value: 10 } });
-      expect(cryptoAmount).toHaveValue(10);
+      await act(async () => {
+        fireEvent.change(cryptoAmount, { target: { value: 100 } });
+      })
 
-      const cryptoPrice = screen.getByTestId("Crypto Price") as HTMLInputElement;;
+      const cryptoPrice = screen.getByLabelText("Crypto Price");
       expect(cryptoPrice).toBeInTheDocument();
-      expect(cryptoPrice).toHaveValue(null);
-      fireEvent.change(cryptoPrice, { target: { value: 10 } });
-      expect(cryptoPrice).toHaveValue(10);
+      await act(async () => {
+        fireEvent.change(cryptoPrice, { target: { value: 100 } });
+      }) 
 
-      const fiatAmount = screen.getByTestId("Fiat Amount") as HTMLInputElement;;
+      const fiatAmount = screen.getByLabelText("Fiat Amount");
       expect(fiatAmount).toBeInTheDocument();
-      expect(fiatAmount).toHaveValue(null);
-      fireEvent.change(fiatAmount, { target: { value: 10 } });
-      expect(fiatAmount).toHaveValue(10);
+      await act(async () => {
+        fireEvent.change(fiatAmount, { target: { value: 100 } });
+      })
 
       userEvent.selectOptions(
         screen.getByTestId('currency-combobox'),
-        screen.getByRole('option', { name: 'THB' } ),
-      )
-      expect(screen.getByRole('option', { name: 'THB' })).toBeInTheDocument();
-
+        screen.getByText('THB')
+      );
+  
       await waitFor(() => {
-        const currency = screen.getByTestId("currency-combobox") as HTMLInputElement;
-        console.log(currency.value);
-        expect(currency.value).toBe("THB");
+        expect(screen.getByTestId('currency-combobox')).toHaveValue('THB');
       });
-      const submitButton = screen.getByText("Submit")
-      expect(submitButton).toBeInTheDocument();
-      
-      await act(async ()=>{
-        fireEvent.submit(submitButton);
+
+      const submitBtn = screen.getByRole("button", { name: "Submit" });
+      expect(submitBtn).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.click(submitBtn);
       })
 
-      console.log({
-        corporateCode: {
-          value: corporateCode.value,
-          type: typeof corporateCode.value,
-        },
-        cryptoAmount: {
-          value: cryptoAmount.value,
-          type: typeof cryptoAmount.value,
-        },
-        cryptoPrice: {
-          value: cryptoPrice.value,
-          type: typeof cryptoPrice.value,
-        },
-        fiatAmount: {
-          value: fiatAmount.value,
-          type: typeof fiatAmount.value,
-        },
-        currency: {
-          value: (screen.getByTestId("currency-combobox") as HTMLInputElement).value,
-          type: typeof (screen.getByTestId("currency-combobox") as HTMLInputElement).value,
-        },
-      });
-
       // await waitFor(() => {
-      //   // const errorMessage = screen.getByText("Corporate Code is required");
-      //   // const errorMessage = screen.getByText("Expected string, received null");
-      //   expect(errorMessage).toBeInTheDocument();
-      // });
-
+      //   const corporateCodeError = screen.getByText("Corporate Code is required");
+      //   expect(corporateCodeError).toBeInTheDocument();
+      // })
       //Expected form data
-      // const expectedFormData = {
-
-      // };
+      const expectedFormData = {
+        data: {
+          cryptoAmount: 10000000,
+          fiatAmount: 10000000,
+          currency: 'THB',
+          cryptoPrice: 10000000,
+          corporateCode: 80000001,
+          operations: 'buy',
+          id: undefined,
+          pair: 'THB/USDC'
+        }
+      };
 
       await waitFor(() => {
         const state = store.getState();
         const corporateState = state.corporateTest;
         console.log("Corporate State After Submission:", corporateState);
-        // expect(corporateState).toMatchObject(expectedFormData);
+        expect(corporateState).toMatchObject(expectedFormData);
       })
   
     }, 20000);
+
+    test("test input data(multiple input type) create (sell)", async () => {
+      mockAxios.onPost("/api/v1/transaction/order/create").reply(200, {
+        message: "create successful"
+      });
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <OrderTradeEdit/>
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const corporateCode = screen.getByLabelText("Corporate Code");
+      expect(corporateCode).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.change(corporateCode, { target: { value: 80000001 } });
+      })
+
+      userEvent.selectOptions(
+        screen.getByTestId('pairDropdown'),
+        screen.getByTestId('THB/USDC')
+      )
+
+      const sellButton = screen.getByTestId("buySellBtn-sell");
+      expect(sellButton).toBeInTheDocument();
+      fireEvent.click(sellButton);
+
+      const cryptoAmount = screen.getByLabelText("Crypto Amount");
+      expect(cryptoAmount).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.change(cryptoAmount, { target: { value: 100 } });
+      })
+
+      const cryptoPrice = screen.getByLabelText("Crypto Price");
+      expect(cryptoPrice).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.change(cryptoPrice, { target: { value: 100 } });
+      }) 
+
+      const fiatAmount = screen.getByLabelText("Fiat Amount");
+      expect(fiatAmount).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.change(fiatAmount, { target: { value: 100 } });
+      })
+
+      userEvent.selectOptions(
+        screen.getByTestId('currency-combobox'),
+        screen.getByTestId('sellCurrency')
+      );
+  
+      await waitFor(() => {
+        expect(screen.getByTestId('currency-combobox')).toHaveValue('USDC');
+      });
+
+      const submitBtn = screen.getByRole("button", { name: "Submit" });
+      expect(submitBtn).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.click(submitBtn);
+      })
+
+      // await waitFor(() => {
+      //   const corporateCodeError = screen.getByText("Corporate Code is required");
+      //   expect(corporateCodeError).toBeInTheDocument();
+      // })
+      //Expected form data
+      const expectedFormData = {
+        data: {
+          cryptoAmount: 10000000,
+          fiatAmount: 10000000,
+          currency: 'USDC',
+          cryptoPrice: 10000000,
+          corporateCode: 80000001,
+          operations: 'sell',
+          id: undefined,
+          pair: 'THB/USDC'
+        }
+      };
+
+      await waitFor(() => {
+        const state = store.getState();
+        const corporateState = state.corporateTest;
+        console.log("Corporate State After Submission:", corporateState);
+        expect(corporateState).toMatchObject(expectedFormData);
+      })
+  
+    }, 20000);
+
+    test("test input data(multiple input type) update", async () => {
+      mockAxios.onPost("/api/v1/transaction/order/edit").reply(200, {
+        message: "edit successful"
+      });
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <OrderTradeEdit/>
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const orderTrades = orderTradeMock || [];
+
+        const uniqueOrderTrades = orderTrades.filter(
+          (order: any, index: any, self: any) =>
+            index === self.findIndex((t: any) => t.id === order.id)
+        );
+
+        const adjustedOrderTrades = uniqueOrderTrades.map((order: TOrderTrade) => ({
+          ...order,
+          cryptoAmount: (Number(order.cryptoAmount) / 100000).toString(),
+          cryptoPrice:  (Number(order.cryptoPrice) / 100000).toString(),
+          fiatAmount:  (Number(order.fiatAmount) / 100000).toString(),
+        }));
+
+        store.dispatch(setOrderTrades(adjustedOrderTrades));
+
+      await waitFor(() => {
+        const editButton = screen.getByTestId("editButton-0614ff48-c498-4f2b-a70f-c86d639ce4c9");
+        expect(editButton).toBeInTheDocument();
+      })
+
+      await act(async () => {
+        const editButton = screen.getByTestId("editButton-0614ff48-c498-4f2b-a70f-c86d639ce4c9");
+        fireEvent.click(editButton);
+      })
+
+      const submitBtn = screen.getByRole("button", { name: "Submit" });
+      expect(submitBtn).toBeInTheDocument();
+      await act(async () => {
+        fireEvent.click(submitBtn);
+      })
+
+      //Expected form data
+      const expectedFormData = {
+        data: {
+          corporateCode: 80000001,
+          cryptoAmount: 112345,
+          fiatAmount: 100010,
+          currency: 'THB',
+          cryptoPrice: 110000,
+          operations: 'buy',
+          id: '0614ff48-c498-4f2b-a70f-c86d639ce4c9'
+        }
+      };
+
+      await waitFor(() => {
+        const state = store.getState();
+        const corporateState = state.corporateTest;
+        console.log("Corporate State After Submission:", corporateState);
+        expect(corporateState).toMatchObject(expectedFormData);
+      })
+  
+    }, 20000);
+
   });

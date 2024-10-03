@@ -282,7 +282,7 @@ useEffect(() => {
       cell: (row: TMember) => (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" className="bg-red-600 text-white">
+            <Button variant="outline" className="bg-red-600 text-white" data-testid={`deleteButton-${row.id}`}>
               Delete
             </Button>
           </AlertDialogTrigger>
@@ -296,7 +296,7 @@ useEffect(() => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => handleDelete(row)}>
+              <AlertDialogAction onClick={() => handleDelete(row)} data-testid={`confirmButton-${row.id}`}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>
