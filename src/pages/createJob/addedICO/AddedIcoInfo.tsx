@@ -118,7 +118,7 @@ const AddedIcoInfo = () => {
                 dispatch(setTestCorporateData(body));
               }
 
-            if(icoCode){
+            if(!icoCode){
                 try{
                     const res = await axios.post("/api/v1/ico/asset/create", body, {
                         headers: {
