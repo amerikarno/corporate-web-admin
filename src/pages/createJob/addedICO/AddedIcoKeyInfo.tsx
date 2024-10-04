@@ -41,9 +41,9 @@ const {
                 capitalStructure: fetchedData?.keyInformation.capitalStructure,
                 classiFication: fetchedData?.keyInformation.classiFication,
                 productType: fetchedData?.keyInformation.productType,
-                creationTime: fetchedData?.keyInformation.creationTime.split("T")[0],
-                releaseTime: fetchedData?.keyInformation.releaseTime.split("T")[0],
-                compleationTime: fetchedData?.keyInformation.compleationTime.split("T")[0],
+                creationTime: fetchedData?.keyInformation.creationTime ? fetchedData?.keyInformation.creationTime.split("T")[0] : fetchedData?.keyInformation.creationTime,
+                releaseTime: fetchedData?.keyInformation.releaseTime ? fetchedData?.keyInformation.releaseTime.split("T")[0] : fetchedData?.keyInformation.creationTime,
+                compleationTime: fetchedData?.keyInformation.releaseTime ? fetchedData?.keyInformation.compleationTime.split("T")[0] : fetchedData?.keyInformation.creationTime,
             }
         }
         reset(mapFetchedDataToKeyInfo);
