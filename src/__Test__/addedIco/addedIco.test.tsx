@@ -272,15 +272,15 @@ describe("test ico form1",()=>{
 
     const totleIssuance = screen.getByLabelText("Total Issuance");
     expect(totleIssuance).toBeInTheDocument();
-    expect(totleIssuance).toHaveValue("");
-    fireEvent.change(totleIssuance, { target: { value: "5" } })
-    expect(totleIssuance).toHaveValue("5");
+    expect(totleIssuance).toHaveValue(null);
+    fireEvent.change(totleIssuance, { target: { value: 5 } })
+    expect(totleIssuance).toHaveValue(5);
 
     const totalAmountRaised = screen.getByLabelText("Total Amount Raised");
     expect(totalAmountRaised).toBeInTheDocument();
-    expect(totalAmountRaised).toHaveValue("");
-    fireEvent.change(totalAmountRaised, { target: { value: "100000" } })
-    expect(totalAmountRaised).toHaveValue("100000");
+    expect(totalAmountRaised).toHaveValue(null);
+    fireEvent.change(totalAmountRaised, { target: { value: 100000 } })
+    expect(totalAmountRaised).toHaveValue(100000);
 
     const contactInfomation = screen.getByLabelText("Contract Infomation");
     expect(contactInfomation).toBeInTheDocument();
@@ -290,21 +290,21 @@ describe("test ico form1",()=>{
 
     const minimumInvestmentAmount = screen.getByLabelText("Minimum Investment Amount");
     expect(minimumInvestmentAmount).toBeInTheDocument();
-    expect(minimumInvestmentAmount).toHaveValue("");
-    fireEvent.change(minimumInvestmentAmount, { target: { value: "1000" } })
-    expect(minimumInvestmentAmount).toHaveValue("1000");
+    expect(minimumInvestmentAmount).toHaveValue(null);
+    fireEvent.change(minimumInvestmentAmount, { target: { value: 1000 } })
+    expect(minimumInvestmentAmount).toHaveValue(1000);
 
     const minimumInvestmentQuantity = screen.getByLabelText("Minimum Investment Quantity");
     expect(minimumInvestmentQuantity).toBeInTheDocument();
-    expect(minimumInvestmentQuantity).toHaveValue("");
-    fireEvent.change(minimumInvestmentQuantity, { target: { value: "5" } })
-    expect(minimumInvestmentQuantity).toHaveValue("5");
+    expect(minimumInvestmentQuantity).toHaveValue(null);
+    fireEvent.change(minimumInvestmentQuantity, { target: { value: 5 } })
+    expect(minimumInvestmentQuantity).toHaveValue(5);
 
     const issueUnitPrice = screen.getByLabelText("Issue Unit Price");
     expect(issueUnitPrice).toBeInTheDocument();
-    expect(issueUnitPrice).toHaveValue("");
-    fireEvent.change(issueUnitPrice, { target: { value: "100" } })
-    expect(issueUnitPrice).toHaveValue("100");
+    expect(issueUnitPrice).toHaveValue(null);
+    fireEvent.change(issueUnitPrice, { target: { value: 100 } })
+    expect(issueUnitPrice).toHaveValue(100);
 
     const uploadPicture = screen.getByTestId("uploadPicture");
     expect(uploadPicture).toBeInTheDocument();
@@ -319,7 +319,7 @@ describe("test ico form1",()=>{
 
     const totalIssuanceUnit = screen.getByTestId("totalIssuanceUnit");
     expect(totalIssuanceUnit).toBeInTheDocument();
-    expect(totalIssuanceUnit).toHaveValue("Baht");
+    expect(totalIssuanceUnit).toHaveValue("DA");
     fireEvent.change(totalIssuanceUnit, { target: { value: "Beet" } })
 
     const minimumInvestmentAmountUnit = screen.getByTestId("minimumInvestmentAmountUnit");
@@ -329,7 +329,7 @@ describe("test ico form1",()=>{
 
     const minimumInvestmentQuantityUnit = screen.getByTestId("minimumInvestmentQuantityUnit");
     expect(minimumInvestmentQuantityUnit).toBeInTheDocument();
-    expect(minimumInvestmentQuantityUnit).toHaveValue("Baht");
+    expect(minimumInvestmentQuantityUnit).toHaveValue("DA");
     fireEvent.change(minimumInvestmentQuantityUnit, { target: { value: "Cuqwep" } })
 
     const issueUnitPriceUnit = screen.getByTestId("issueUnitPriceUnit");
@@ -442,15 +442,15 @@ describe("test ico form1",()=>{
   
       const totleIssuance = screen.getByLabelText("Total Issuance");
       expect(totleIssuance).toBeInTheDocument();
-      expect(totleIssuance).toHaveValue("");
-      fireEvent.change(totleIssuance, { target: { value: "5" } })
-      expect(totleIssuance).toHaveValue("5");
+      expect(totleIssuance).toHaveValue(null);
+      fireEvent.change(totleIssuance, { target: { value: 5 } })
+      expect(totleIssuance).toHaveValue(5);
   
       const totalAmountRaised = screen.getByLabelText("Total Amount Raised");
       expect(totalAmountRaised).toBeInTheDocument();
-      expect(totalAmountRaised).toHaveValue("");
-      fireEvent.change(totalAmountRaised, { target: { value: "100000" } })
-      expect(totalAmountRaised).toHaveValue("100000");
+      expect(totalAmountRaised).toHaveValue(null);
+      fireEvent.change(totalAmountRaised, { target: { value: 100000 } })
+      expect(totalAmountRaised).toHaveValue(100000);
   
       const contactInfomation = screen.getByLabelText("Contract Infomation");
       expect(contactInfomation).toBeInTheDocument();
@@ -460,21 +460,21 @@ describe("test ico form1",()=>{
   
       const minimumInvestmentAmount = screen.getByLabelText("Minimum Investment Amount");
       expect(minimumInvestmentAmount).toBeInTheDocument();
-      expect(minimumInvestmentAmount).toHaveValue("");
-      fireEvent.change(minimumInvestmentAmount, { target: { value: "1000" } })
-      expect(minimumInvestmentAmount).toHaveValue("1000");
+      expect(minimumInvestmentAmount).toHaveValue(null);
+      fireEvent.change(minimumInvestmentAmount, { target: { value: 1000 } })
+      expect(minimumInvestmentAmount).toHaveValue(1000);
   
       const minimumInvestmentQuantity = screen.getByLabelText("Minimum Investment Quantity");
       expect(minimumInvestmentQuantity).toBeInTheDocument();
-      expect(minimumInvestmentQuantity).toHaveValue("");
-      fireEvent.change(minimumInvestmentQuantity, { target: { value: "5" } })
-      expect(minimumInvestmentQuantity).toHaveValue("5");
+      expect(minimumInvestmentQuantity).toHaveValue(null);
+      fireEvent.change(minimumInvestmentQuantity, { target: { value: 5 } })
+      expect(minimumInvestmentQuantity).toHaveValue(5);
   
       const issueUnitPrice = screen.getByLabelText("Issue Unit Price");
       expect(issueUnitPrice).toBeInTheDocument();
-      expect(issueUnitPrice).toHaveValue("");
-      fireEvent.change(issueUnitPrice, { target: { value: "100" } })
-      expect(issueUnitPrice).toHaveValue("100");
+      expect(issueUnitPrice).toHaveValue(null);
+      fireEvent.change(issueUnitPrice, { target: { value: 100 } })
+      expect(issueUnitPrice).toHaveValue(100);
   
       const nextFormBtn = screen.getByText("Next Form");
       expect(nextFormBtn).toBeInTheDocument();
@@ -499,11 +499,11 @@ describe("test ico form1",()=>{
             title: 'Elite Consulting'
           },
           info: {
-            totalIssuance: '5 Baht',
+            totalIssuance: '5 DA',
             totalAmountRaised: '100000 Baht',
             contractInfomation: 'contact info',
             minimumInvestmentAmount: '1000 Baht',
-            minimumInvestmentQuantity: '5 Baht',
+            minimumInvestmentQuantity: '5 DA',
             issueUnitPrice: '100 Baht',
             icoCode: '1'
           }
@@ -975,33 +975,33 @@ describe("test ico form4",()=>{
     
       const investmentPeriodInput = screen.getByPlaceholderText("Investment Period*");
       expect(investmentPeriodInput).toBeInTheDocument();
-      expect(investmentPeriodInput).toHaveValue("");
-      fireEvent.change(investmentPeriodInput, { target: { value: "test investmentPeriodInput" } })
+      expect(investmentPeriodInput).toHaveValue(null);
+      fireEvent.change(investmentPeriodInput, { target: { value: 5 } })
 
       const dividendYieldInput = screen.getByPlaceholderText("Dividend Yield*");
       expect(dividendYieldInput).toBeInTheDocument();
-      expect(dividendYieldInput).toHaveValue("");
-      fireEvent.change(dividendYieldInput, { target: { value: "test dividendYieldInput" } })
+      expect(dividendYieldInput).toHaveValue(null);
+      fireEvent.change(dividendYieldInput, { target: { value: 500 } })
 
       const grossMarginInput = screen.getByPlaceholderText("Gross Margin*");
       expect(grossMarginInput).toBeInTheDocument();
-      expect(grossMarginInput).toHaveValue("");
-      fireEvent.change(grossMarginInput, { target: { value: "test grossMarginInput" } })
+      expect(grossMarginInput).toHaveValue(null);
+      fireEvent.change(grossMarginInput, { target: { value: 400 } })
 
       const equityMultipleInput = screen.getByPlaceholderText("Equity Multiple*");
       expect(equityMultipleInput).toBeInTheDocument();
-      expect(equityMultipleInput).toHaveValue("");
-      fireEvent.change(equityMultipleInput, { target: { value: "test equityMultipleInput" } })
+      expect(equityMultipleInput).toHaveValue(null);
+      fireEvent.change(equityMultipleInput, { target: { value: 300 } })
 
       const profit = screen.getByPlaceholderText("Profit*");
       expect(profit).toBeInTheDocument();
-      expect(profit).toHaveValue("");
-      fireEvent.change(profit, { target: { value: "test profit" } })
+      expect(profit).toHaveValue(null);
+      fireEvent.change(profit, { target: { value: 200 } })
 
       const leverage = screen.getByPlaceholderText("Leverage*")
       expect(leverage).toBeInTheDocument();
-      expect(leverage).toHaveValue("");
-      fireEvent.change(leverage, { target: { value: "test leverage" } })
+      expect(leverage).toHaveValue(null);
+      fireEvent.change(leverage, { target: { value: 100 } })
 
       const investmentStructure = screen.getByPlaceholderText("Investment Structure*");
       expect(investmentStructure).toBeInTheDocument();
@@ -1053,12 +1053,12 @@ describe("test ico form4",()=>{
   const expectedFormData = {
     data: {
       issuanceTerms: {
-        investmentPeriod: 'test investmentPeriodInput Weeks',
-        dividendYield: 'test dividendYieldInput Dollar',
-        grossMargin: 'test grossMarginInput Dollars',
-        equityMultiple: 'test equityMultipleInput Dollarse',
-        profit: 'test profit Dollarsasda',
-        leverage: 'test leverage Doasdasdllarsasda',
+        investmentPeriod: '5 Weeks',
+        dividendYield: '500 Dollar',
+        grossMargin: '400 Dollars',
+        equityMultiple: '300 Dollarse',
+        profit: '200 Dollarsasda',
+        leverage: '100 Doasdasdllarsasda',
         investmentStructure: 'test investmentStructure',
         distributionFrequency: 'test distributionFrequency',
         icoCode: '1'

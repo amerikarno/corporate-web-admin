@@ -3023,14 +3023,22 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     });
 
     //Expected form data
-    // const expectedFormData = {
-    // };
+    const expectedFormData = {
+      data: {
+        corporateCode: '80000001',
+        juristicName: 'Acme Juristic Individual Corporation',
+        registrationNo: 'REG123456',
+        registeredCountry: 'Thailand',
+        sharePercentage: 40,
+        juristicId: 'juristicid22'
+      }
+    };
 
     await waitFor(() => {
       const state = store.getState();
       const corporateState = state.corporateTest;
       console.log("Corporate State After Submission:", corporateState);
-      // expect(corporateState).toMatchObject(expectedFormData);
+      expect(corporateState).toMatchObject(expectedFormData);
     });
 
     await act(async () => {
