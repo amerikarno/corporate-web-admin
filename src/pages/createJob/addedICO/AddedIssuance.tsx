@@ -150,6 +150,8 @@ const AddedIssuance = () => {
                 <div className="flex space-x-4">
                     <div className="w-4/5">
                         <Input  {...register("issuanceTerms.investmentPeriod")}
+                        type="number"
+                        step="0.01"
                         className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Investment Period*" />
                     </div>
                     <div className="w-1/5">
@@ -166,6 +168,8 @@ const AddedIssuance = () => {
                     <div className="flex space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.dividendYield")}
+                            type="number"
+                            step="0.01"
                             className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Dividend Yield*" />
                         </div>
                         <div className="w-1/5">
@@ -183,6 +187,8 @@ const AddedIssuance = () => {
                     <div className="flex space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.grossMargin")}
+                            type="number"
+                            step="0.01"
                             className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Gross Margin*" />
                         </div>
                         <div className="w-1/5">
@@ -200,6 +206,8 @@ const AddedIssuance = () => {
                     <div className="flex space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.equityMultiple")}
+                            type="number"
+                            step="0.01"
                             className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Equity Multiple*" />
                         </div>
                         <div className="w-1/5">
@@ -217,6 +225,8 @@ const AddedIssuance = () => {
                     <div className="flex space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.profit")}
+                            type="number"
+                            step="0.01"
                             className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Profit*" />
                         </div>
                         <div className="w-1/5">
@@ -234,6 +244,8 @@ const AddedIssuance = () => {
                     <div className="flex space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.leverage")}
+                            type="number"
+                            step="0.01"
                             className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Leverage*" />
                         </div>
                         <div className="w-1/5">

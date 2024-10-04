@@ -96,9 +96,9 @@ const AddedIcoInfo = () => {
       const dispatch = useDispatch();
       const navigate = useNavigate();
       const [totalAmountRaisedUnit,setTotalAmountRaisedUnit] = useState("Baht");
-      const [totalIssuanceUnit,setTotalIssuanceUnit] = useState("Baht");
+      const [totalIssuanceUnit,setTotalIssuanceUnit] = useState("DA");
       const [minimumInvestmentAmountUnit,setMinimumInvestmentAmountUnit] = useState("Baht");
-      const [minimumInvestmentQuantityUnit,setMinimumInvestmentQuantityUnit] = useState("Baht");
+      const [minimumInvestmentQuantityUnit,setMinimumInvestmentQuantityUnit] = useState("DA");
       const [issueUnitPriceUnit,setIssueUnitPriceUnit] = useState("Baht");
       const [file, setFile] = useState<Uint8Array | null>(null);
       const fileInputRef = useRef<HTMLInputElement>(null);
@@ -275,6 +275,8 @@ const AddedIcoInfo = () => {
                         label="Total Amount Raised"
                         id="totalAmountRaised"
                         disabled={isSubmitting}
+                        type="number"
+                        step="0.01"
                         />
                     </div>
                     <div className="w-1/5">
@@ -295,6 +297,8 @@ const AddedIcoInfo = () => {
                             label="Total Issuance"
                             id="totalIssuance"
                             disabled={isSubmitting}
+                            type="number"
+                            step="0.01"
                             />
                         </div>
                         <div className="w-1/5">
@@ -313,6 +317,8 @@ const AddedIcoInfo = () => {
                                     label="Minimum Investment Amount"
                                     id="minimumInvestmentAmount"
                                     disabled={isSubmitting}
+                                    type="number"
+                                    step="0.01"
                                 />
                             </div>
                         <div className="w-1/5">
@@ -333,6 +339,8 @@ const AddedIcoInfo = () => {
                             label="Minimum Investment Quantity"
                             id="minimumInvestmentQuantity"
                             disabled={isSubmitting}
+                            type="number"
+                            step="0.01"
                             />
                         </div>
                         <div className="w-1/5">
@@ -351,6 +359,8 @@ const AddedIcoInfo = () => {
                                     label="Issue Unit Price"
                                     id="issueUnitPrice"
                                     disabled={isSubmitting}
+                                    type="number"
+                                    step="0.01"
                                     />
                             </div>
                             <div className="w-1/5">
