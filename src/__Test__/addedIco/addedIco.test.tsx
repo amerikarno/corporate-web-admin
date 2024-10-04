@@ -823,8 +823,8 @@ describe("test ico form3",()=>{
 
         const precisionInput = screen.getByPlaceholderText("Precision*");
         expect(precisionInput).toBeInTheDocument();
-        expect(precisionInput).toHaveValue("");
-        fireEvent.change(precisionInput, { target: { value: "precision 5" } })
+        expect(precisionInput).toHaveValue(null);
+        fireEvent.change(precisionInput, { target: { value: 5 } })
 
         const capitalStructure = screen.getByPlaceholderText("Capital Structure*");
         expect(capitalStructure).toBeInTheDocument();
@@ -871,7 +871,7 @@ describe("test ico form3",()=>{
     const expectedFormData = {
       data: {
         keyInformation: {
-          precision: 'precision 5',
+          precision: "5",
           capitalStructure: 'capitalStructure 5',
           productType: 'productType 5',
           classiFication: 'classification 5',
