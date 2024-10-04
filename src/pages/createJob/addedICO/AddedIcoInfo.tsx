@@ -137,11 +137,16 @@ const AddedIcoInfo = () => {
                 info:{
                     ...data.info,
                     icoCode: icoCode,
-                    totalIssuance:`${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`,
-                    totalAmountRaised:`${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`,
-                    minimumInvestmentAmount:`${data.info.minimumInvestmentAmount} ${minimumInvestmentAmountUnit ? minimumInvestmentAmountUnit : "Baht"}`,
-                    minimumInvestmentQuantity:`${data.info.minimumInvestmentQuantity} ${minimumInvestmentQuantityUnit ? minimumInvestmentQuantityUnit : "Baht"}`,
-                    issueUnitPrice:`${data.info.issueUnitPrice} ${issueUnitPriceUnit ? issueUnitPriceUnit : "Baht"}`,
+                    totalIssuance:data.info.totalIssuance ? `${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`
+                    : undefined,
+                    totalAmountRaised:data.info.totalAmountRaised ? `${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`
+                    : undefined,
+                    minimumInvestmentAmount:data.info.minimumInvestmentAmount ? `${data.info.minimumInvestmentAmount} ${minimumInvestmentAmountUnit ? minimumInvestmentAmountUnit : "Baht"}`
+                    : undefined,
+                    minimumInvestmentQuantity:data.info.minimumInvestmentQuantity ? `${data.info.minimumInvestmentQuantity} ${minimumInvestmentQuantityUnit ? minimumInvestmentQuantityUnit : "Baht"}`
+                    : undefined,
+                    issueUnitPrice:data.info.issueUnitPrice ? `${data.info.issueUnitPrice} ${issueUnitPriceUnit ? issueUnitPriceUnit : "Baht"}`
+                    : undefined,
                 }
             }
             console.log("form1 ico body :",body)
@@ -170,6 +175,7 @@ const AddedIcoInfo = () => {
                         console.log("create ico form1 success",res)
                         if(res.data){
                             localStorage.setItem("icoCode", res.data.icoCode.toString())
+                            console.log("ico code received :", res.data.icoCode.toString())
                             navigate("/create-job/added-ico/2");
     
                         }else{

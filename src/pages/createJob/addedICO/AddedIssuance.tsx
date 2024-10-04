@@ -86,12 +86,24 @@ const AddedIssuance = () => {
         issuanceTerms:{
             ...data.issuanceTerms,
             icoCode:icoCode,
-            investmentPeriod: `${data.issuanceTerms.investmentPeriod} ${investmentPeriodUnit ? investmentPeriodUnit : "Days"}`,
-            dividendYield: `${data.issuanceTerms.dividendYield} ${dividendYieldUnit ? dividendYieldUnit : "%"}`,
-            grossMargin: `${data.issuanceTerms.grossMargin} ${grossMarginUnit ? grossMarginUnit : "%"}`,
-            equityMultiple: `${data.issuanceTerms.equityMultiple} ${equityMultipleUnit ? equityMultipleUnit : "%"}`,
-            profit: `${data.issuanceTerms.profit} ${profitUnit ? profitUnit : "%"}`,
-            leverage: `${data.issuanceTerms.leverage} ${leverageUnit ? leverageUnit : "%"}`,
+            investmentPeriod: data.issuanceTerms.investmentPeriod 
+            ? `${data.issuanceTerms.investmentPeriod} ${investmentPeriodUnit || "Days"}` 
+            : undefined,
+            dividendYield: data.issuanceTerms.dividendYield 
+            ? `${data.issuanceTerms.dividendYield} ${dividendYieldUnit ? dividendYieldUnit : "%"}`
+            : undefined,
+            grossMargin: data.issuanceTerms.grossMargin 
+            ? `${data.issuanceTerms.grossMargin} ${grossMarginUnit ? grossMarginUnit : "%"}`
+            : undefined,
+            equityMultiple: data.issuanceTerms.equityMultiple
+            ? `${data.issuanceTerms.equityMultiple} ${equityMultipleUnit ? equityMultipleUnit : "%"}`
+            : undefined,
+            profit: data.issuanceTerms.profit 
+            ? `${data.issuanceTerms.profit} ${profitUnit ? profitUnit : "%"}`
+            : undefined,
+            leverage: data.issuanceTerms.leverage
+            ? `${data.issuanceTerms.leverage} ${leverageUnit ? leverageUnit : "%"}`
+            : undefined,
         }
     }
     dispatch(setTestCorporateData(body));
