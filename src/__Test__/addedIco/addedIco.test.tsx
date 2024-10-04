@@ -249,8 +249,8 @@ describe("test ico form1",()=>{
     const productCategory = screen.getByPlaceholderText("Product Category*");
     expect(productCategory).toBeInTheDocument();
     expect(productCategory).toHaveValue("");
-    fireEvent.change(productCategory, { target: { value: "catagory HoJ" } })
-    expect(productCategory).toHaveValue("catagory HoJ");
+    fireEvent.change(productCategory, { target: { value: "category HoJ" } })
+    expect(productCategory).toHaveValue("category HoJ");
 
     const expectReturn = screen.getByPlaceholderText("Expect Return*");
     expect(expectReturn).toBeInTheDocument();
@@ -355,7 +355,7 @@ describe("test ico form1",()=>{
           issueBy: 'issue by name',
           name: 'Digital Asset',
           description: 'complement description',
-          catagory: 'catagory HoJ',
+          category: 'category HoJ',
           return: '5000',
           region: 'asia',
           minimum: '3',
@@ -419,8 +419,8 @@ describe("test ico form1",()=>{
       const productCategory = screen.getByPlaceholderText("Product Category*");
       expect(productCategory).toBeInTheDocument();
       expect(productCategory).toHaveValue("");
-      fireEvent.change(productCategory, { target: { value: "catagory HoJ" } })
-      expect(productCategory).toHaveValue("catagory HoJ");
+      fireEvent.change(productCategory, { target: { value: "category HoJ" } })
+      expect(productCategory).toHaveValue("category HoJ");
   
       const expectReturn = screen.getByPlaceholderText("Expect Return*");
       expect(expectReturn).toBeInTheDocument();
@@ -489,7 +489,7 @@ describe("test ico form1",()=>{
             issueBy: 'issue by name',
             name: 'Digital Asset',
             description: 'complement description',
-            catagory: 'catagory HoJ',
+            category: 'category HoJ',
             return: '5000',
             region: 'asia',
             minimum: '3',
@@ -552,7 +552,7 @@ describe("test ico form1",()=>{
               image: null,
               name: 'THGG',
               description: 'Blockchain Innovations Global (B.I.G.)',
-              catagory: '',
+              category: '',
               return: '18%',
               region: 'Asia',
               minimum: '250.00 USD',

@@ -233,7 +233,7 @@ const AddedIcoInfo = () => {
                         <Input  {...register("asset.issueBy")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Issue By*" />
                         <Input  {...register("asset.name")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Company Name*" />
                         <Input  {...register("asset.description")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Description*" />
-                        <Input  {...register("asset.catagory")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Product Category*" />
+                        <Input  {...register("asset.category")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Product Category*" />
                         <Input  {...register("asset.return")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Expect Return*" />
                         <Input  {...register("asset.region")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Region*" />
                         <Input  {...register("asset.minimum")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Minimum Subscription Limit*" />
