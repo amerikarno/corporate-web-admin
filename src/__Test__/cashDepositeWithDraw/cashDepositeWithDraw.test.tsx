@@ -5,84 +5,147 @@ import axios from "@/api/axios";
 import MockAdapter from "axios-mock-adapter";
 import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-// import userEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrder/bankOrder";
-import { act, fireEvent,render,screen, } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 jest.mock("@/lib/utils", () => ({
-    ...jest.requireActual("@/lib/utils"),
-    isExpiredToken: jest.fn().mockReturnValue(false),
+  ...jest.requireActual("@/lib/utils"),
+  isAllowedPage: jest.fn().mockReturnValue(true),
 }));
 
 const mockAxios = new MockAdapter(axios);
 
-describe("test ico form1",()=>{
+describe("BankOrderEdit Component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    store.dispatch(setUser(mockUser));
+  });
 
-    beforeEach(() => {
-      jest.clearAllMocks();
-      store.dispatch(setUser(mockUser));
-    })
+  test("renders the component", async () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <BankOrderEdit />
+        </MemoryRouter>
+      </Provider>
+    );
 
-    test("test ico form1 create", async ()=>{
-        mockAxios.onPost("/api/v1/ico/asset/create").reply(200, {
-          message: "create ico form1 success"
-        });
-        render(
-            <Provider store={store}>
-              <MemoryRouter>
-                <BankOrderEdit/>
-              </MemoryRouter>
-            </Provider>
-        );
-        
-        const corporateCode = screen.getByLabelText("Corporate Code");
-        expect(corporateCode).toBeInTheDocument();
-        await act(async () => {
-          fireEvent.change(corporateCode, { target: { value: 80000001 } });
-        })
+    expect(screen.getByText("Cash Deposit/Withdraw")).toBeInTheDocument();
+  });
 
-        // userEvent.selectOptions(
-        //   screen.getByTestId('bankName'),
-        //   screen.getByTestId('004')
-        // )
+  test("handles form input and submission", async () => {
+    mockAxios.onGet("/api/v1/transaction/bank/get/individual").reply(200, []);
+    mockAxios.onPost("/api/v1/corporate/query/all").reply(200, [
+      { CorporateCode: 80000001 },
+    ]);
+    mockAxios.onPost("/api/v1/transaction/bank/create").reply(200, {
+      message: "create bank order success",
+    });
 
-        // await waitFor(() => {
-        //     expect(screen.getByTestId('bankName')).toHaveValue("ธนาคารกสิกรไทย จำกัด (มหาชน)");
-        // });
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <BankOrderEdit />
+        </MemoryRouter>
+      </Provider>
+    );
 
-        // const bankId = screen.getByLabelText("Bank Account ID");
-        // expect(bankId).toBeInTheDocument();
-        // await act(async () => {
-        //   fireEvent.change(bankId, { target: { value: 753285427852 } });
-        // })
+    await waitFor(() => {
+      expect(screen.getByLabelText("Corporate Code")).toBeInTheDocument();
+    });
 
-        // const withDraw = screen.getByText("Withdraw");
-        // await act(async () => {
-        //   fireEvent.click(withDraw);
-        // })
+    const corporateCode = screen.getByLabelText("Corporate Code");
+    await act(async () => {
+      fireEvent.change(corporateCode, { target: { value: 80000001 } });
+    });
 
-        // const orderValue = screen.getByLabelText("Order Value");
-        // expect(orderValue).toBeInTheDocument();
-        // await act(async () => {
-        //     fireEvent.change(orderValue, { target: { value: "1000" } });
-        // })
+    userEvent.selectOptions(
+      screen.getByTestId('bankName'),
+      screen.getByTestId('ธนาคารกรุงไทย จำกัด (มหาชน)')
+    );
 
-        // const submitFormBtn = screen.getByText("Submit");
-        // expect(submitFormBtn).toBeInTheDocument();
-        // await act(async () => {
-        //   fireEvent.click(submitFormBtn);
-        // })
-    
-        // //  Expected form data
-        // // const expectedFormData = {
-        // // };
-    
-        // await waitFor(() => {
-        //     const state = store.getState();
-        //     const corporateState = state.corporateTest;
-        //     console.log("Corporate State After Submission:", corporateState);
-        //     // expect(corporateState).toMatchObject(expectedFormData);
-        //   });
-         })
-})
+    await waitFor(() => {
+      expect(screen.getByTestId('bankName')).toHaveValue("ธนาคารกรุงไทย จำกัด (มหาชน)");
+    });
+
+    const bankId = screen.getByLabelText("Bank Account ID");
+    await act(async () => {
+      fireEvent.change(bankId, { target: { value: 753285427852 } });
+    });
+
+    await waitFor(() => {
+      expect(bankId).toHaveValue("753285427852");
+    });
+
+    const withDraw = screen.getByText("Withdraw");
+    await act(async () => {
+      fireEvent.click(withDraw);
+    });
+
+    const orderValue = screen.getByLabelText("Order Value");
+    await act(async () => {
+      fireEvent.change(orderValue, { target: { value: 1000 } });
+    });
+
+    await waitFor(() => {
+      expect(orderValue).toHaveValue(1000);
+    });
+
+    const submitFormBtn = screen.getByText("Submit");
+    await act(async () => {
+      fireEvent.click(submitFormBtn);
+    });
+
+    await waitFor(() => {
+      const state = store.getState();
+      const corporateState = state.corporateTest;
+      expect(corporateState).toMatchObject({
+        accountId: "80000001",
+        bankName: "ธนาคารกรุงไทย จำกัด (มหาชน)",
+        bankAccount: "753285427852",
+        orderValue: 100000000,
+        operations: "withdraw",
+        id: "",
+      });
+    });
+  });
+
+  test("handles unauthorized page", async () => {
+    jest.mock("@/lib/utils", () => ({
+      ...jest.requireActual("@/lib/utils"),
+      isAllowedPage: jest.fn().mockReturnValue(false),
+    }));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <BankOrderEdit />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(screen.getByText("Unauthorized")).toBeInTheDocument();
+  });
+
+  test("handles fetch errors", async () => {
+    mockAxios.onGet("/api/v1/transaction/bank/get/individual").reply(500);
+    mockAxios.onPost("/api/v1/corporate/query/all").reply(500);
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <BankOrderEdit />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Corporate Code")).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText("Failed to fetch corporate codes")).toBeInTheDocument();
+    expect(screen.queryByText("Failed to fetch orderTrade")).toBeInTheDocument();
+  });
+});

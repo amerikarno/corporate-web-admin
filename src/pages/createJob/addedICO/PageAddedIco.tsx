@@ -12,6 +12,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useEffect } from "react";
 import axios from "@/api/axios";
 import { TAssetData } from "./types";
+// import AddedIcoInfoDemo from "./AddedIcoInfoDemo";
 type TPage = {
     page?: string;
 };

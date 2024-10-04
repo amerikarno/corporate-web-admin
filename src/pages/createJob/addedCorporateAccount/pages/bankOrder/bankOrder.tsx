@@ -211,8 +211,9 @@ export default function BankOrderEdit() {
   }, [reset]);
 
   // const onSubmit = async (data: TBankOrder) => {
-  const onSubmit = async (data: any) => {
-    let body: TBankOrder = {
+  const onSubmit = async (data:any) => {
+    console.log(data)
+    let body = {
       ...data,
       operations: buySell,
       id:choosedEditData?.id || "",
