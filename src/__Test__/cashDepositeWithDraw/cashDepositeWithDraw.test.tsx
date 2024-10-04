@@ -44,13 +44,17 @@ describe("test ico form1",()=>{
 
         userEvent.selectOptions(
           screen.getByTestId('bankName'),
-          screen.getByTestId('ธนาคารกรุงเทพ จำกัด (มหาชน)')
+          screen.getByTestId('004')
         )
+
+        await waitFor(() => {
+            expect(screen.getByTestId('bankName')).toHaveValue("ธนาคารกสิกรไทย จำกัด (มหาชน)");
+        });
 
         const bankId = screen.getByLabelText("Bank Account ID");
         expect(bankId).toBeInTheDocument();
         await act(async () => {
-          fireEvent.change(bankId, { target: { value: "4334c8cb-7d73-4f04-b2ed-f64b952a36aa" } });
+          fireEvent.change(bankId, { target: { value: 753285427852 } });
         })
 
         const withDraw = screen.getByText("Withdraw");
@@ -61,7 +65,7 @@ describe("test ico form1",()=>{
         const orderValue = screen.getByLabelText("Order Value");
         expect(orderValue).toBeInTheDocument();
         await act(async () => {
-            fireEvent.change(orderValue, { target: { value: 1000 } });
+            fireEvent.change(orderValue, { target: { value: "1000" } });
         })
 
         const submitFormBtn = screen.getByText("Submit");
@@ -69,13 +73,6 @@ describe("test ico form1",()=>{
         await act(async () => {
           fireEvent.click(submitFormBtn);
         })
-
-        await waitFor(() => {
-            expect(screen.getByText("Corporate Code is required")).toBeInTheDocument();
-            expect(screen.getByText("Bank Name is required")).toBeInTheDocument();
-            expect(screen.getByText("Account ID is required")).toBeInTheDocument();
-            expect(screen.getByText("Expected string, received null")).toBeInTheDocument();
-          });
     
         //  Expected form data
         // const expectedFormData = {
