@@ -42,7 +42,7 @@ type TDetail = {
       image?: string;
       name: string;
       description: string;
-      catagory: string;
+      category: string;
       return: string;
       region: string;
       minimum: string;

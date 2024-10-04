@@ -132,7 +132,7 @@ const {
             </div>
             <div className="w-full grid grid-cols-2 grid-rows-4 gap-8">
                 <div className="">
-                    <Input  {...register("keyInformation.precision")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Precision*" />
+                    <Input  {...register("keyInformation.precision")} type="number" step="0.01" className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Precision*" />
                 </div>
                 <div className="">
                     <Input  {...register("keyInformation.capitalStructure")} 
