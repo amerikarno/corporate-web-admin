@@ -2,19 +2,27 @@ import { TbMoneybag } from "react-icons/tb";
 import { TAssetIssuance } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/Input";
-import { FaBookmark} from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlinePlus } from "react-icons/ai";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 
 const AddedIssuance = () => {
 
+    const {
+        register,
+        handleSubmit,
+        formState: {isSubmitting},
+        reset,
+        setValue,
+        } = useForm<TAssetIssuance>({
+        // resolver: zodResolver(TAssetInfoSchema),
+    });
 
     const fetchedData = useSelector((state: RootState) => state.assetData.data);
     
@@ -24,117 +32,79 @@ const AddedIssuance = () => {
     const icoCode = localStorage.getItem("icoCode")
     
     useEffect(() => {
-        if (fetchedData?.issuanceTerms) {
-            const newKeyValuePairs = Object.keys(fetchedData.issuanceTerms).map(keyHeader => {
-            switch (keyHeader) {
-              case "investmentPeriod":
-                return { key: "Investment Period", type: "text", value: fetchedData.issuanceTerms.investmentPeriod };
-              case "dividendYield":
-                return { key: "Dividend Yield", type: "text", value: fetchedData.issuanceTerms.dividendYield };
-              case "grossmargin":
-                return { key: "Gross Margin", type: "text", value: fetchedData.issuanceTerms.grossmargin };
-              case "equityMultiple":
-                return { key: "Equity Multiple", type: "text", value: fetchedData.issuanceTerms.equityMultiple };
-              case "profit":
-                return { key: "Profit", type: "text", value: fetchedData.issuanceTerms.profit };
-              case "leverage":
-                return { key: "Leverage", type: "text", value: fetchedData.issuanceTerms.leverage};
-              case "investmentStructure":
-                return { key: "Investment Structure", type: "text", value: fetchedData.issuanceTerms.investmentStructure};
-              case "distributionFrequency":
-                return { key: "Distribution Frequency", type: "text", value: fetchedData.issuanceTerms.distributionFrequency};
-              default:
-                return null;
+        if(fetchedData?.issuanceTerms){
+            const mapFetchedDataToIssuance = {
+                issuanceTerms:{
+                    investmentPeriod: fetchedData?.issuanceTerms.investmentPeriod,
+                    dividendYield: fetchedData?.issuanceTerms.dividendYield,
+                    grossMargin: fetchedData?.issuanceTerms.grossMargin,
+                    equityMultiple: fetchedData?.issuanceTerms.equityMultiple,
+                    profit: fetchedData?.issuanceTerms.profit,
+                    leverage: fetchedData?.issuanceTerms.leverage,
+                    investmentStructure: fetchedData?.issuanceTerms.investmentStructure,
+                    distributionFrequency: fetchedData?.issuanceTerms.distributionFrequency
+                }
             }
-          }).filter(item => item !== null);
-  
-          setKeyValuePairs(newKeyValuePairs as { key: string; type: string; value: string }[]);
+            reset(mapFetchedDataToIssuance);
+            if(fetchedData?.issuanceTerms.investmentPeriod){
+                setValue("issuanceTerms.investmentPeriod", fetchedData?.issuanceTerms.investmentPeriod.split(" ")[0]);
+                setInvestmentPeriodUnit(fetchedData?.issuanceTerms.investmentPeriod.split(" ")[1]);
+            }
+            if(fetchedData?.issuanceTerms.dividendYield){
+                setValue("issuanceTerms.dividendYield", fetchedData?.issuanceTerms.dividendYield.split(" ")[0]);
+                setDividendYieldUnit(fetchedData?.issuanceTerms.dividendYield.split(" ")[1]);
+            }
+            if(fetchedData?.issuanceTerms.grossMargin){
+                setValue("issuanceTerms.grossMargin", fetchedData?.issuanceTerms.grossMargin.split(" ")[0]);
+                setGrossMarginUnit(fetchedData?.issuanceTerms.grossMargin.split(" ")[1]);
+            }
+            if(fetchedData?.issuanceTerms.equityMultiple){
+                setValue("issuanceTerms.equityMultiple", fetchedData?.issuanceTerms.equityMultiple.split(" ")[0]);
+                setEquityMultipleUnit(fetchedData?.issuanceTerms.equityMultiple.split(" ")[1]);
+            }
+            if(fetchedData?.issuanceTerms.profit){
+                setValue("issuanceTerms.profit", fetchedData?.issuanceTerms.profit.split(" ")[0]);
+                setProfitUnit(fetchedData?.issuanceTerms.profit.split(" ")[1]);
+            }
+            if(fetchedData?.issuanceTerms.leverage){
+                setValue("issuanceTerms.leverage", fetchedData?.issuanceTerms.leverage.split(" ")[0]);
+                setLeverageUnit(fetchedData?.issuanceTerms.leverage.split(" ")[1]);
+            }
         }
     }, [fetchedData]);
 
-  const keyInfoList =[
-    { name: "Please Select Key" },
-    { name: "Investment Period", type: "text" },
-    { name: "Dividend Yield", type: "text" },
-    { name: "Gross Margin", type: "text" },
-    { name: "Equity Multiple", type: "text" },
-    { name: "Profit", type: "text" },
-    { name: "Leverage", type: "text" },
-    { name: "Investment Structure", type: "text" },
-    { name: "Distribution Frequency", type: "text" },
-  ];
+  const [investmentPeriodUnit, setInvestmentPeriodUnit] = useState("Days");
+  const [dividendYieldUnit, setDividendYieldUnit] = useState("%");
+  const [grossMarginUnit, setGrossMarginUnit] = useState("%");
+  const [equityMultipleUnit, setEquityMultipleUnit] = useState("%");
+  const [profitUnit, setProfitUnit] = useState("%");
+  const [leverageUnit, setLeverageUnit] = useState("%");
 
-  const keyInformationForSelector = [{ name: "BNB Smart Chain Mainnet" }];
+  const onSubmit = async (data: TAssetIssuance) => {
 
-  const [keyValuePairs, setKeyValuePairs] = useState([
-    { key: "", type: "", value: "" },
-  ]);
-
-  const handleKeyChange = (index: number, event: any) => {
-    const newKeyValuePairs = [...keyValuePairs];
-    newKeyValuePairs[index].key = event.target.value;
-    const selectedKey = keyInfoList.find((key) => key.name === event.target.value);
-    if (selectedKey) {
-      newKeyValuePairs[index].type = selectedKey.type!;
-      setKeyValuePairs(newKeyValuePairs);
-    }
-  };
-
-  const handleValueChange = (index: number, event: any) => {
-    const newKeyValuePairs = [...keyValuePairs];
-    newKeyValuePairs[index].value = event.target.value;
-    setKeyValuePairs(newKeyValuePairs);
-  };
-
-  const handleAddKey = () => {
-    setKeyValuePairs([...keyValuePairs, { key: "", type: "", value: "" }]);
-  };
-
-  const convertToTAssetKeyInfo = (data: { issuanceTerms: { key: string, type: string, value: string }[] }): TAssetIssuance => {
-    const IssuanceKey: TAssetIssuance['issuanceTerms'] = {};
-
-    data.issuanceTerms.forEach((item) => {
-      switch (item.key) {
-        case 'Investment Period':
-            IssuanceKey.investmentPeriod = item.value;
-          break;
-        case 'Dividend Yield':
-            IssuanceKey.dividendYield = item.value;
-          break;
-        case 'Gross Margin':
-            IssuanceKey.grossmargin = item.value;
-          break;
-        case 'Equity Multiple':
-            IssuanceKey.equityMultiple = item.value;
-          break;
-        case 'Profit':
-            IssuanceKey.profit = item.value;
-          break;
-        case 'Leverage':
-            IssuanceKey.leverage = item.value;
-          break;
-        case 'Investment Structure':
-            IssuanceKey.investmentStructure = item.value;
-          break;
-        case 'Distribution Frequency':
-            IssuanceKey.distributionFrequency = item.value;
-          break;
-        default:
-          break;
-      }
-    });
-
-    return { issuanceTerms: IssuanceKey };
-  };
-
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    let body:any = convertToTAssetKeyInfo({ issuanceTerms: keyValuePairs });
-    body = {
-      issuanceTerms : {
-        ...body.issuanceTerms,
-        icoCode:icoCode
-      }
+    const body = {
+        issuanceTerms:{
+            ...data.issuanceTerms,
+            icoCode:icoCode,
+            investmentPeriod: data.issuanceTerms.investmentPeriod 
+            ? `${data.issuanceTerms.investmentPeriod} ${investmentPeriodUnit || "Days"}` 
+            : undefined,
+            dividendYield: data.issuanceTerms.dividendYield 
+            ? `${data.issuanceTerms.dividendYield} ${dividendYieldUnit ? dividendYieldUnit : "%"}`
+            : undefined,
+            grossMargin: data.issuanceTerms.grossMargin 
+            ? `${data.issuanceTerms.grossMargin} ${grossMarginUnit ? grossMarginUnit : "%"}`
+            : undefined,
+            equityMultiple: data.issuanceTerms.equityMultiple
+            ? `${data.issuanceTerms.equityMultiple} ${equityMultipleUnit ? equityMultipleUnit : "%"}`
+            : undefined,
+            profit: data.issuanceTerms.profit 
+            ? `${data.issuanceTerms.profit} ${profitUnit ? profitUnit : "%"}`
+            : undefined,
+            leverage: data.issuanceTerms.leverage
+            ? `${data.issuanceTerms.leverage} ${leverageUnit ? leverageUnit : "%"}`
+            : undefined,
+        }
     }
     dispatch(setTestCorporateData(body));
     console.log(body);
@@ -182,62 +152,139 @@ const AddedIssuance = () => {
     <div className="flex justify-evenly p-5 md:p-10 md:pb-0">
       <div className="w-full md:w-3/4">
         <hr className="horizontal-line-top" />
-        <form className="flex flex-col items-center space-y-4">
+        <form className="flex flex-col items-center space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="ico-card space-y-8 rounded-b-[10px]">
             <div className="w-full flex items-center my-5 mb-0 space-x-2">
                 <h1 className="text-lg md:text-xl font-bold">Issuance Terms</h1>
                 <span className="text-xl"><TbMoneybag /></span>
             </div>
-          </div>
-          <div className="w-full flex flex-col space-y-4">
-            {keyValuePairs.map((pair, index) => (
-                <div data-testid={`issuanceTerms-${index}`} className="ico-dropdown-card items-center relative space-x-4" key={index}>
-                    <div data-testid={`addIssuanceTermsBtn-${index}`} onClick={handleAddKey} className={`rounded-l-sm hover:bg-slate-750 absolute flex justify-center items-center h-28 w-10 left-0 md:-left-10 bg-slate-800 cursor-pointer ${index !== keyValuePairs.length - 1 ? 'hidden' : ''}`}>
-                        <AiOutlinePlus  className="text-white md:text-3xl hover:text-4xl transition-all" />
+            <div className="w-full grid grid-cols-2 grid-rows-4 gap-8">
+                <div className="flex space-x-4">
+                    <div className="w-4/5">
+                        <Input  {...register("issuanceTerms.investmentPeriod")}
+                        type="number"
+                        step="0.01"
+                        className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Investment Period*" />
                     </div>
-                    <div data-testid={`markIssuanceTermsBtn-${index}`} className={`rounded-r-sm hover:bg-slate-750 absolute flex justify-center items-center h-28 w-10 right-0 bg-slate-800 ${index === keyValuePairs.length - 1 ? 'hidden' : ''}`}>
-                        <FaBookmark  className="text-white md:text-xl transition-all" />
+                    <div className="w-1/5">
+                        <Input
+                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                            label="Unit"
+                            value={investmentPeriodUnit}
+                            onChange={(e) => setInvestmentPeriodUnit(e.target.value)}
+                            data-testid="investmentPeriodUnit"
+                        />
                     </div>
-                    <select
-                    data-testid={`dropDownIssuanceTermsBtn-${index}`}
-                    className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-1/2 py-2.5 px-2 focus:outline-none"
-                    value={pair.key}
-                    onChange={(event) => handleKeyChange(index, event)}
-                    >
-                    {keyInfoList.map((key) => (
-                        <option data-testid={`${key.name}-${index}`} key={key.name} value={key.name}>
-                        {key.name}
-                        </option>
-                    ))}
-                    </select>
-                    {pair.type === "selector" ? (
-                    <div className="w-full">
-                        <select
-                        data-testid={`inputTypeSelector-${index}`}
-                        className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline"
-                        value={pair.value}
-                        onChange={(event) => handleValueChange(index, event)}
-                    >
-                        <option value="">Please Select Information</option>
-                        {keyInformationForSelector.map((status) => (
-                        <option data-testid={`${status.name}-${index}`} key={status.name} value={status.name}>
-                            {status.name}
-                        </option>
-                        ))}
-                    </select>
-                    </div>
-                    ) : pair.type === "text" ? (
-                    <Input data-testid={`inputTypeText-${index}`} placeholder="please specify here..." className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
-                    ) : pair.type === "date" ? (
-                    <Input data-testid={`inputTypeDate-${index}`} type="date" className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
-                    ) : (
-                    <Input value="" className="hidden" disabled={true} />
-                    )}
                 </div>
-                ))}
+                <div className="">
+                    <div className="flex space-x-4">
+                        <div className="w-4/5">
+                            <Input  {...register("issuanceTerms.dividendYield")}
+                            type="number"
+                            step="0.01"
+                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Dividend Yield*" />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                label="Unit"
+                                value={dividendYieldUnit}
+                                onChange={(e) => setDividendYieldUnit(e.target.value)}
+                                data-testid="dividendYieldUnit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="">
+                    <div className="flex space-x-4">
+                        <div className="w-4/5">
+                            <Input  {...register("issuanceTerms.grossMargin")}
+                            type="number"
+                            step="0.01"
+                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Gross Margin*" />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                label="Unit"
+                                value={grossMarginUnit}
+                                onChange={(e) => setGrossMarginUnit(e.target.value)}
+                                data-testid="grossMarginUnit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="">
+                    <div className="flex space-x-4">
+                        <div className="w-4/5">
+                            <Input  {...register("issuanceTerms.equityMultiple")}
+                            type="number"
+                            step="0.01"
+                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Equity Multiple*" />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                label="Unit"
+                                value={equityMultipleUnit}
+                                onChange={(e) => setEquityMultipleUnit(e.target.value)}
+                                data-testid="equityMultipleUnit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="">
+                    <div className="flex space-x-4">
+                        <div className="w-4/5">
+                            <Input  {...register("issuanceTerms.profit")}
+                            type="number"
+                            step="0.01"
+                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Profit*" />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                label="Unit"
+                                value={profitUnit}
+                                onChange={(e) => setProfitUnit(e.target.value)}
+                                data-testid="profitUnit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="">
+                    <div className="flex space-x-4">
+                        <div className="w-4/5">
+                            <Input  {...register("issuanceTerms.leverage")}
+                            type="number"
+                            step="0.01"
+                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Leverage*" />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                label="Unit"
+                                value={leverageUnit}
+                                onChange={(e) => setLeverageUnit(e.target.value)}
+                                data-testid="leverageUnit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="">
+                    <Input  {...register("issuanceTerms.investmentStructure")} 
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Investment Structure*" />
+                </div>
+                <div className="">
+                    <Input  {...register("issuanceTerms.distributionFrequency")} 
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Distribution Frequency*" />
+                </div>
+           </div>
           </div>
           <div className="absolute right-5 bottom-8">
-            <Button onClick={handleSubmit}>Next Form</Button>
+            <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Next Form"}
+            </Button>
           </div>
         </form>
       </div>

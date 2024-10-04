@@ -37,10 +37,10 @@ export function useUploadFile() {
           // formData.append("fileTypes", file.type);
           formData.append("docType", documentType.value);
           formData.append("corporateCode", corporateCode);
-
+          console.log("uploading...")
           try {
             const response = await axios.post(
-              "/api/v1/corporate/document/upload",
+              "/api/v1/corporate/document/openaccount/upload",
               formData,
               {
                 headers: {

@@ -51,6 +51,36 @@ const AddedIcoInfo = () => {
                 setFile(pictureArray);
             }
             reset(mapFetchedToInfo(fetchedData))
+            if(fetchedData.info.totalAmountRaised){
+                const value = fetchedData.info.totalAmountRaised.split(" ")[0];
+                const unit = fetchedData.info.totalAmountRaised.split(" ")[1];
+                setValue("info.totalAmountRaised",value);
+                setTotalAmountRaisedUnit(unit);
+            }
+            if(fetchedData.info.totalIssuance){
+                const value = fetchedData.info.totalIssuance.split(" ")[0];
+                const unit = fetchedData.info.totalIssuance.split(" ")[1];
+                setValue("info.totalIssuance",value);
+                setTotalIssuanceUnit(unit);
+            }
+            if(fetchedData.info.minimumInvestmentAmount){
+                const value = fetchedData.info.minimumInvestmentAmount.split(" ")[0];
+                const unit = fetchedData.info.minimumInvestmentAmount.split(" ")[1];
+                setValue("info.minimumInvestmentAmount",value);
+                setMinimumInvestmentAmountUnit(unit);
+            }
+            if(fetchedData.info.minimumInvestmentQuantity){
+                const value = fetchedData.info.minimumInvestmentQuantity.split(" ")[0];
+                const unit = fetchedData.info.minimumInvestmentQuantity.split(" ")[1];
+                setValue("info.minimumInvestmentQuantity",value);
+                setMinimumInvestmentQuantityUnit(unit);
+            }
+            if(fetchedData.info.issueUnitPrice){
+                const value = fetchedData.info.issueUnitPrice.split(" ")[0];
+                const unit = fetchedData.info.issueUnitPrice.split(" ")[1];
+                setValue("info.issueUnitPrice",value);
+                setIssueUnitPriceUnit(unit);
+            }
         }
     },[fetchedData])
 
@@ -59,11 +89,17 @@ const AddedIcoInfo = () => {
         handleSubmit,
         formState: {isSubmitting},
         reset,
+        setValue,
       } = useForm<TAssetInfo>({
         resolver: zodResolver(TAssetInfoSchema),
       });
       const dispatch = useDispatch();
       const navigate = useNavigate();
+      const [totalAmountRaisedUnit,setTotalAmountRaisedUnit] = useState("Baht");
+      const [totalIssuanceUnit,setTotalIssuanceUnit] = useState("DA");
+      const [minimumInvestmentAmountUnit,setMinimumInvestmentAmountUnit] = useState("Baht");
+      const [minimumInvestmentQuantityUnit,setMinimumInvestmentQuantityUnit] = useState("DA");
+      const [issueUnitPriceUnit,setIssueUnitPriceUnit] = useState("Baht");
       const [file, setFile] = useState<Uint8Array | null>(null);
       const fileInputRef = useRef<HTMLInputElement>(null);
       const handleFileChange  = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +136,17 @@ const AddedIcoInfo = () => {
                 },
                 info:{
                     ...data.info,
-                    icoCode: icoCode
+                    icoCode: icoCode,
+                    totalIssuance:data.info.totalIssuance ? `${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`
+                    : undefined,
+                    totalAmountRaised:data.info.totalAmountRaised ? `${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`
+                    : undefined,
+                    minimumInvestmentAmount:data.info.minimumInvestmentAmount ? `${data.info.minimumInvestmentAmount} ${minimumInvestmentAmountUnit ? minimumInvestmentAmountUnit : "Baht"}`
+                    : undefined,
+                    minimumInvestmentQuantity:data.info.minimumInvestmentQuantity ? `${data.info.minimumInvestmentQuantity} ${minimumInvestmentQuantityUnit ? minimumInvestmentQuantityUnit : "Baht"}`
+                    : undefined,
+                    issueUnitPrice:data.info.issueUnitPrice ? `${data.info.issueUnitPrice} ${issueUnitPriceUnit ? issueUnitPriceUnit : "Baht"}`
+                    : undefined,
                 }
             }
             console.log("form1 ico body :",body)
@@ -112,13 +158,13 @@ const AddedIcoInfo = () => {
                   asset: {
                     ...body.asset,
                     image: base64String,
-                  },
+                  }
                 }));
               } else {
                 dispatch(setTestCorporateData(body));
               }
 
-            if(icoCode){
+            if(!icoCode){
                 try{
                     const res = await axios.post("/api/v1/ico/asset/create", body, {
                         headers: {
@@ -129,6 +175,7 @@ const AddedIcoInfo = () => {
                         console.log("create ico form1 success",res)
                         if(res.data){
                             localStorage.setItem("icoCode", res.data.icoCode.toString())
+                            console.log("ico code received :", res.data.icoCode.toString())
                             navigate("/create-job/added-ico/2");
     
                         }else{
@@ -192,7 +239,7 @@ const AddedIcoInfo = () => {
                         <Input  {...register("asset.issueBy")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Issue By*" />
                         <Input  {...register("asset.name")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Company Name*" />
                         <Input  {...register("asset.description")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Description*" />
-                        <Input  {...register("asset.catagory")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Product Category*" />
+                        <Input  {...register("asset.category")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Product Category*" />
                         <Input  {...register("asset.return")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Expect Return*" />
                         <Input  {...register("asset.region")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Region*" />
                         <Input  {...register("asset.minimum")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Minimum Subscription Limit*" />
@@ -221,56 +268,116 @@ const AddedIcoInfo = () => {
                 <div className="w-full flex space-x-8">
                     <div className="w-1/2">
                         <Input
-                        {...register("info.totalIssuance")}
-                        label="Total Issuance"
-                        id="totalIssuance"
-                        disabled={isSubmitting}
-                        />
-                    </div>
-                <div className="w-1/2">
-                        <Input
-                        {...register("info.totalAmountRaised")}
-                        label="Total Amount Raised"
-                        id="totalAmountRaised"
-                        disabled={isSubmitting}
-                        />
-                </div>
-                </div>
-                <div className="w-full flex space-x-8">
-                    <div className="w-1/2">
-                        <Input
                         {...register("info.contractInfomation")}
                         label="Contract Infomation"
                         id="contractInfomation"
                         disabled={isSubmitting}
                         />
                     </div>
-                    <div className="w-1/2">
+                <div className="w-1/2 flex space-x-4">
+                    <div className="w-4/5">
                         <Input
-                            {...register("info.minimumInvestmentAmount")}
-                            label="Minimum Investment Amount"
-                            id="minimumInvestmentAmount"
-                            disabled={isSubmitting}
+                        {...register("info.totalAmountRaised")}
+                        label="Total Amount Raised"
+                        id="totalAmountRaised"
+                        disabled={isSubmitting}
+                        type="number"
+                        step="0.01"
+                        />
+                    </div>
+                    <div className="w-1/5">
+                        <Input
+                        label="Unit"
+                        value={totalAmountRaisedUnit}
+                        onChange={(e) => setTotalAmountRaisedUnit(e.target.value)}
+                        data-testid="totalAmountRaisedUnit"
                         />
                     </div>
                 </div>
+                </div>
                 <div className="w-full flex space-x-8">
-                    <div className="w-1/2">
-                        <Input
-                        {...register("info.minimumInvestmentQuantity")}
-                        label="Minimum Investment Quantity"
-                        id="minimumInvestmentQuantity"
-                        disabled={isSubmitting}
-                        />
-                    </div>
-                    <div className="w-1/2">
-                        <Input
-                            {...register("info.issueUnitPrice")}
-                            label="Issue Unit Price"
-                            id="issueUnitPrice"
+                    <div className="w-1/2 flex space-x-4">
+                        <div className="w-4/5">
+                            <Input
+                            {...register("info.totalIssuance")}
+                            label="Total Issuance"
+                            id="totalIssuance"
                             disabled={isSubmitting}
+                            type="number"
+                            step="0.01"
                             />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                            label="Unit"
+                            value={totalIssuanceUnit}
+                            onChange={(e) => setTotalIssuanceUnit(e.target.value)}
+                            data-testid="totalIssuanceUnit"
+                            />
+                        </div>
                     </div>
+                    <div className="w-1/2 flex space-x-4">
+                            <div className="w-4/5">
+                                <Input
+                                    {...register("info.minimumInvestmentAmount")}
+                                    label="Minimum Investment Amount"
+                                    id="minimumInvestmentAmount"
+                                    disabled={isSubmitting}
+                                    type="number"
+                                    step="0.01"
+                                />
+                            </div>
+                        <div className="w-1/5">
+                            <Input
+                            label="Unit"
+                            value={minimumInvestmentAmountUnit}
+                            onChange={(e) => setMinimumInvestmentAmountUnit(e.target.value)}
+                            data-testid="minimumInvestmentAmountUnit"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="w-full flex space-x-8">
+                    <div className="w-1/2 flex space-x-4">
+                        <div className="w-4/5">
+                            <Input
+                            {...register("info.minimumInvestmentQuantity")}
+                            label="Minimum Investment Quantity"
+                            id="minimumInvestmentQuantity"
+                            disabled={isSubmitting}
+                            type="number"
+                            step="0.01"
+                            />
+                        </div>
+                        <div className="w-1/5">
+                            <Input
+                            label="Unit"
+                            value={minimumInvestmentQuantityUnit}
+                            onChange={(e) => setMinimumInvestmentQuantityUnit(e.target.value)}
+                            data-testid="minimumInvestmentQuantityUnit"
+                            />
+                        </div>
+                    </div>
+                        <div className="w-1/2 flex space-x-4">
+                            <div className="w-4/5">
+                                <Input
+                                    {...register("info.issueUnitPrice")}
+                                    label="Issue Unit Price"
+                                    id="issueUnitPrice"
+                                    disabled={isSubmitting}
+                                    type="number"
+                                    step="0.01"
+                                    />
+                            </div>
+                            <div className="w-1/5">
+                                <Input
+                                label="Unit"
+                                value={issueUnitPriceUnit}
+                                onChange={(e) => setIssueUnitPriceUnit(e.target.value)}
+                                data-testid="issueUnitPriceUnit"
+                                />
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
