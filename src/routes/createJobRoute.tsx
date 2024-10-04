@@ -10,6 +10,8 @@ import ChangePageAddIndividualAccount from "@/pages/createJob/changeIndividualAc
 import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccount/ToDoIndividualAccount";
 import FxExchangeEdit from "@/pages/createJob/fxExchange/fxExchange";
 import PageAddedIco from "@/pages/createJob/addedICO/PageAddedIco";
+import ChangeIcoAccount from "@/pages/createJob/changeIcoAccount/ChangeAddedIcoSearch";
+import ChangePageAddedIco from "@/pages/createJob/changeIcoAccount/PageChangeAddedIco";
 export const createJobRoutes = () => {
   return (
     <Route path="create-job" element={<Outlet />}>
@@ -40,10 +42,13 @@ export const createJobRoutes = () => {
           <Route path=":page" element={<ChangePageAddIndividualAccount />} />
         </Route>
       </Route>
-      <Route
-        path="change-individual-account"
-        element={<BlankPage name="change individual account" />}
-      />
+      <Route path="change-ico" element={<Outlet />}>
+          <Route index element={<ChangeIcoAccount />} />
+          <Route path="edit" element={<Outlet />}>
+            <Route index element={<ChangePageAddedIco />} />
+            <Route path=":page" element={<ChangePageAddedIco />} />
+          </Route>
+      </Route>
       <Route
         path="bank-deposite-withdraw"
         element={<BlankPage name="Bank deposite/withdraw" />}

@@ -89,6 +89,11 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2004,
       },
       {
+        label: "change ico account",
+        href: "/create-job/change-ico",
+        pageId: 2009,
+      },
+      {
         label: "orders/trades",
         href: "/create-job/orders-trades",
         pageId: 2005,

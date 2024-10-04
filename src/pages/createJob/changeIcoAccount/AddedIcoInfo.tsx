@@ -170,7 +170,7 @@ const AddedIcoInfo = () => {
                         console.log("create ico form1 success",res)
                         if(res.data){
                             localStorage.setItem("icoCode", res.data.icoCode.toString())
-                            navigate("/create-job/change-ico/2");
+                            navigate("/create-job/change-ico/edit/2");
     
                         }else{
                             console.log("create success but didn't get icoCode back!")
@@ -190,7 +190,7 @@ const AddedIcoInfo = () => {
                     })
                     if(res.status === 200){
                         console.log("update ico form1 success",res)
-                            navigate("/create-job/change-ico/2");
+                            navigate("/create-job/change-ico/edit/2");
                     }else{
                         console.log("update ico form1 fail",res)
                     }

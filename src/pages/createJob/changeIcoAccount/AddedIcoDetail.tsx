@@ -81,7 +81,7 @@ const AddedIcoDetail = () => {
           })
           if(res.status === 200){
             console.log("create ico form2 success",res)
-            navigate("/create-job/change-ico/3")
+            navigate("/create-job/change-ico/edit/3")
           }else{
             console.log("create ico form2 fail ",res)
           }
@@ -97,7 +97,7 @@ const AddedIcoDetail = () => {
           })
           if(res.status === 200){
             console.log("update ico form2 success",res)
-            navigate("/create-job/change-ico/3")
+            navigate("/create-job/change-ico/edit/3")
           }else{
             console.log("update ico form2 fail ",res)
           }
