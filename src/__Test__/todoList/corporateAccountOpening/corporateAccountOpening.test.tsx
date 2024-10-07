@@ -9,6 +9,7 @@ import { mockUser } from "@/__Test__/utils";
 import { useAccountOpening } from "@/pages/todoList/corporateAccountOpening/hook/useAccountOpening";
 import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
 import { act } from "react";
+import { isAllowedPage } from "@/lib/utils";
 
 // Mock the module
 jest.mock(
@@ -240,4 +241,42 @@ describe("test todo corporate", () => {
     expect(dateto).toHaveValue("2024-09-09");
     expect(id).toHaveValue("80000001");
   }, 20000);
+
+  test("test click edit corporate", async () => {
+    store.dispatch(setUser(mockUser));
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <TodoCorporateAccountOpenning />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const editBtn = screen.getByTestId("editButton-80000001");
+    expect(editBtn).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(editBtn);
+    });
+
+  }, 20000);
+
+  test('renders UnAuthorize if not allowed', () => {
+    
+    jest.mock('@/lib/utils', () => ({
+      isAllowedPage: jest.fn(),
+    }));
+    (isAllowedPage as jest.Mock).mockReturnValue(false);
+  
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <TodoCorporateAccountOpenning />
+        </MemoryRouter>
+      </Provider>
+    );
+  
+    // Check if UnAuthorize component is rendered
+    expect(screen.getByText("You're UnAuthorize.")).toBeInTheDocument();
+  });
 });

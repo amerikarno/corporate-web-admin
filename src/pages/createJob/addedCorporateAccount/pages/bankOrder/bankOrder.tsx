@@ -163,6 +163,7 @@ export default function BankOrderEdit() {
     {
       cell: (row: TBankOrder) => (
         <Button
+          data-testid={`editButton-${row.id}`}
           onClick={() => {
             setChoosedEditData(row);
           }}
@@ -210,10 +211,8 @@ export default function BankOrderEdit() {
     fetchCorporateCodes();
   }, [reset]);
 
-  // const onSubmit = async (data: TBankOrder) => {
-  const onSubmit = async (data:any) => {
-    console.log(data)
-    let body = {
+  const onSubmit = async (data: TBankOrder) => {
+    let body: TBankOrder = {
       ...data,
       operations: buySell,
       id:choosedEditData?.id || "",
@@ -297,8 +296,8 @@ export default function BankOrderEdit() {
                 <div className="w-2/3 ">
                   <div className="relative">
                     <select
-                      data-testid="bankName"
                       {...register("bankName")}
+                      data-testid="bankName"
                       onChange={handleBankChange}
                       className="h-12 cursor-pointer bg-slate-700 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
                         >
