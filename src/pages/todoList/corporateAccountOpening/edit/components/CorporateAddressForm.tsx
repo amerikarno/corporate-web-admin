@@ -55,6 +55,7 @@ export function CorporateAddressForm({
                 //required={isOptional(fieldName)}
                 disabled={isSubmitting}
                 type={"text"}
+                data-testid={`${keyType}-${fieldName}`}
               />
               {/* </SideLabelInput> */}
               {errors && errors[fieldName as keyof TSubAddressSchema] && (
@@ -75,6 +76,7 @@ export function CorporateAddressForm({
           id={`id-${keyType}.emailAddress`}
           disabled={isSubmitting}
           type="text"
+          data-testid={`${keyType}-emailAddress`}
         />
       </div>
 
@@ -87,6 +89,7 @@ export function CorporateAddressForm({
           id={`id-${keyType}.telephone`}
           disabled={isSubmitting}
           type="text"
+          data-testid={`${keyType}-telephone`}
         />
       </div>
     </>

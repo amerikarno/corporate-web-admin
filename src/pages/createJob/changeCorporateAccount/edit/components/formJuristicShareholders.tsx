@@ -99,7 +99,7 @@ export function FormJuristicShareholders({
               <div className="w-1/2">
                 <Input
                   {...register("juristicName")}
-                  label="Juristic-Name"
+                  label="Juristic Name"
                   id="Juristic-Name"
                   name="juristicName"
                   disabled={isSubmitting}

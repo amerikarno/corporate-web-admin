@@ -10,6 +10,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TJuristicsShareholdersFormProps = {
   onsubmit: (data: TJuristicsShareholders) => void;
@@ -48,6 +50,7 @@ export function FormJuristicShareholders({
     return Math.round(parseFloat(newValue) * 100000);
   };
 
+  const dispatch = useDispatch();
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
     await sleep(500);
     const body = {
@@ -56,6 +59,8 @@ export function FormJuristicShareholders({
       juristicId: choosedEditData?.juristicId,
       sharePercentage: handleFloatValue(data.sharePercentage),
     };
+
+    dispatch(setTestCorporateData(body));
     reset();
     clearChoosedEditData();
     onsubmit(body);
@@ -88,7 +93,7 @@ export function FormJuristicShareholders({
               <div className="w-1/2">
                 <Input
                   {...register("juristicName")}
-                  label="Juristic-Name"
+                  label="Juristic Name"
                   id="Juristic-Name"
                   name="juristicName"
                   disabled={isSubmitting}

@@ -98,7 +98,7 @@ export function FormIndividualsContactPerson({
               <div className="w-1/2">
                 <Input
                   {...register("fullNames.0.firstName")}
-                  label="Name"
+                  label="First Name"
                   id="Name"
                   disabled={isSubmitting}
                 />
