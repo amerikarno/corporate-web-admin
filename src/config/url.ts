@@ -221,6 +221,11 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3002,
       },
       {
+        label:"account approval",
+        href: "/todo-list/account-approval",
+        pageId:3006
+      },
+      {
         label: "orders/trades",
         href: "/todo-list/orders-trades",
         pageId: 3003,

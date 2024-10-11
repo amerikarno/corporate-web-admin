@@ -13,13 +13,13 @@ const EditButtonCell = ({ row }: { row: TCorporateData }) => {
     console.log(row);
     dispatch(setCorporateData(row));
     localStorage.setItem('corporateCode', row.CorporateCode.toString());
-    navigate("/create-job/change-corporate-account/edit/1", {
+    navigate("/todo-list/corporate-account-opening/edit/1", {
       state: row,
     });
   };
 
   return (
-    <Pencil className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
+    <Pencil data-testid={`editButton-${row.CorporateCode}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
   );
 };
 

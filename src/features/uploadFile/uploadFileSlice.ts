@@ -20,7 +20,7 @@ const uploadFileSlice = createSlice({
       state.files.push(action.payload);
     },
     deleteFile(state, action: PayloadAction<TDocuments>) {
-      state.files = state.files.filter(file => file !== action.payload);
+      state.files = state.files.filter(file => file.id !== action.payload.id);
     },
   },
 });

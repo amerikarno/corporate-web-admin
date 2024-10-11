@@ -24,6 +24,7 @@ export function useContactPerson() {
       console.log("sending data to update : ", data);
       if (data.contacts[0].personalId) {
         //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
+        console.log("Updating contact person");
         const res = await axios.post("/api/v1/corporate/update/contact", data, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -43,6 +44,7 @@ export function useContactPerson() {
         }
       } else {
         //ถ้าส่งไปแบบไม่มี personalId แปลว่าเป้นการเพิ่มใหม่
+        console.log("Creating new contact person");
         const res = await axios.post("/api/v1/corporate/create/contact", data, {
           headers: { Authorization: `Bearer ${token}` },
         });

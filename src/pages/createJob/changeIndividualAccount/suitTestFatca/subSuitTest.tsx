@@ -385,6 +385,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
                       <input
                         type="checkbox"
                         name={`question-${questionIndex}`}
+                        data-testid={`question-${questionIndex}-choice-${choiceIndex}`}
                         id={`question-${questionIndex}-choice-${choiceIndex}`}
                         value={choice}
                         checked={
@@ -426,6 +427,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
                                 type="radio"
                                 name={`question-${questionIndex}`}
                                 id={`question-${questionIndex}-choice-${choiceIndex}`}
+                                data-testid={`question-${questionIndex}-choice-${choiceIndex}`}
                                 value={choice}
                                 checked={answers[questionIndex].answer === choice}
                                 onChange={() => handleOptionChange(questionIndex, choice, choiceIndex)}
@@ -446,7 +448,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
               Done
             </Button>
           )} */}
-          <Button type="button" className="w-1/8" onClick={handleSubmit}>
+          <Button type="button" className="w-1/8" onClick={handleSubmit} data-testid="DoneButton">
               Done
             </Button>
         </div>

@@ -7,6 +7,7 @@ import { Route, Outlet } from "react-router-dom";
 import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/EditPageAddIndividualAccount";
 import BankTransactionList from "@/pages/todoList/bankTransactionList/bankTransactionList";
 import FxExchangeTransactionList from "@/pages/todoList/fxExchange/fxExchangeTransaction";
+import AccountApproval from "@/pages/todoList/accountApproval/AccountApproval";
 
 export const todoListRoutes = () => {
   return (
@@ -43,6 +44,7 @@ export const todoListRoutes = () => {
       />
       <Route path="lock-unlock" element={<BlankPage name="Lock Unlock" />} />
       <Route path="deposit-cash" element={<BlankPage name="Deposit Cash" />} />
+      <Route path="account-approval" element={<AccountApproval />} />
       <Route
         path="withdraw-cash"
         element={<BlankPage name="Withdraw Cash" />}

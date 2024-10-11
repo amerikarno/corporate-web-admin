@@ -1,0 +1,42 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 999;
+}
+
+.overlay.visible {
+    visibility: visible; 
+    opacity: 1; 
+}
+
+.popup {
+    margin: 180px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    animation: popupFadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes popupFadeIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .reasonbox{
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  }

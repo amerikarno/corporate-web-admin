@@ -328,7 +328,7 @@ type AnswersType = {
                 </div>
             </div>
             <div className="mx-16 mt-16">
-                <div className="text-xl font-bold text-slate-800">แบบประเมินความเหมาะสมในการลงทุน</div>
+                <div className="text-xl font-bold text-slate-800" data-testid="knowLedgeTestTitle">แบบประเมินความเหมาะสมในการลงทุน</div>
             </div>
             <Card>
                 <CardContent>

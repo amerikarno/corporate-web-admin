@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { RootState } from "@/app/store";
 import { TBasicinfoAddress, TBasicInfoBank } from "../type";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -256,6 +257,7 @@ export default function BasicInfo() {
       pageID: 300,
     };
     console.log(body);
+    dispatch(setTestCorporateData(body));
     try {
       const token = getCookies();
       const registeredAddressFind: TBasicinfoAddress | null =
@@ -318,6 +320,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Address Number"
                     id="addressNoIDCard"
+                    data-testid="addressNoIDCard"
                     {...register("registeredAddress.homeNumber")}
                     className={
                       "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
@@ -329,6 +332,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Floor"
                     id="floorIDCard"
+                    data-testid="floorIDCard"
                     {...register("registeredAddress.villageNumber")}
                   />
                   {errors.registeredAddress?.villageNumber && (
@@ -344,6 +348,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Moo"
                     id="mooIDCard"
+                    data-testid="mooIDCard"
                     {...register("registeredAddress.villageName")}
                   />
                   {errors.registeredAddress?.villageName && (
@@ -355,6 +360,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Soi"
                     id="soiIDCard"
+                    data-testid="soiIDCard"
                     {...register("registeredAddress.subStreetName")}
                   />
                 </div>
@@ -365,6 +371,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Road"
                     id="roadIDCard"
+                    data-testid="roadIDCard"
                     {...register("registeredAddress.streetName")}
                   />
                 </div>
@@ -373,6 +380,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Tambon"
                     id="tambonIDCard"
+                    data-testid="tambonIDCard"
                     list="tambonIDCardList"
                     {...register("registeredAddress.subDistrictName")}
                   />
@@ -389,6 +397,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Amphoe"
                     id="amphoeIDCard"
+                    data-testid="amphoeIDCard"
                     list="amphoeIDCardList"
                     {...register("registeredAddress.districtName")}
                   />
@@ -403,6 +412,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Province"
                     id="provinceIDCard"
+                    data-testid="provinceIDCard"
                     list="provinceIDCardList"
                     {...register("registeredAddress.provinceName")}
                   />
@@ -419,6 +429,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Postal Code"
                     id="postalCodeIDCard"
+                    data-testid="postalCodeIDCard"
                     list="postalCodeIDCardList"
                     {...register("registeredAddress.zipCode")}
                   />
@@ -433,6 +444,7 @@ export default function BasicInfo() {
                     type="text"
                     label="Country"
                     id="countryIDCard"
+                    data-testid="countryIDCard"
                     list="countriesIDCard"
                     {...register("registeredAddress.countryName")}
                   />
@@ -492,6 +504,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Address Number"
                       id="addressNoHome"
+                      data-testid="addressNoHome"
                       {...register("currentAddress.homeNumber")}
                     />
                   </div>
@@ -500,6 +513,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Floor"
                       id="floorHome"
+                      data-testid="floorHome"
                       {...register("currentAddress.villageNumber")}
                     />
                   </div>
@@ -510,6 +524,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Moo"
                       id="mooHome"
+                      data-testid="mooHome"
                       {...register("currentAddress.villageName")}
                     />
                   </div>
@@ -518,6 +533,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Soi"
                       id="soiHome"
+                      data-testid="soiHome"
                       {...register("currentAddress.subStreetName")}
                     />
                   </div>
@@ -528,6 +544,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Road"
                       id="roadHome"
+                      data-testid="roadHome"
                       {...register("currentAddress.streetName")}
                     />
                   </div>
@@ -536,6 +553,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Tambon"
                       id="tambonHome"
+                      data-testid="tambonHome"
                       list="tambonHomeList"
                       {...register("currentAddress.subDistrictName")}
                     />
@@ -555,6 +573,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Amphoe"
                       id="amphoeHome"
+                      data-testid="amphoeHome"
                       list="amphoeHomeList"
                       {...register("currentAddress.districtName")}
                     />
@@ -569,6 +588,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Province"
                       id="provinceHome"
+                      data-testid="provinceHome"
                       list="provinceHomeList"
                       {...register("currentAddress.provinceName")}
                     />
@@ -585,6 +605,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Postal Code"
                       id="postalCodeHome"
+                      data-testid="postalCodeHome"
                       list="postalCodeHomeList"
                       {...register("currentAddress.zipCode")}
                     />
@@ -599,6 +620,7 @@ export default function BasicInfo() {
                       type="text"
                       label="Country"
                       id="countryHome"
+                      data-testid="countryHome"
                       list="countriesHome"
                       {...register("currentAddress.countryName")}
                     />
@@ -624,6 +646,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6 ">
               <div className="flex w-1/2">
                 <select
+                  data-testid="education"
                   {...register("occupation.education")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -631,7 +654,7 @@ export default function BasicInfo() {
                 >
                   <option value="">ระดับการศึกษาสูงสุด</option>
                   {educationTypes.map((status) => (
-                    <option key={status.id} value={status.id}>
+                    <option key={status.id} value={status.id} data-testid={`education-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -639,6 +662,7 @@ export default function BasicInfo() {
               </div>
               <div className="w-1/2">
                 <select
+                  data-testid="sourceOfIncome"
                   {...register("occupation.sourceOfIncome")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                 text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -646,7 +670,7 @@ export default function BasicInfo() {
                 >
                   <option value="">แหล่งที่มาของเงินลงทุน</option>
                   {sourceOfIncome.map((status) => (
-                    <option key={status.id} value={status.id}>
+                    <option key={status.id} value={status.id} data-testid={`sourceOfIncome-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -656,6 +680,7 @@ export default function BasicInfo() {
             <div className="flex space-x-6">
               <div className="w-1/2">
                 <select
+                  data-testid="currentOccupation"
                   {...register("occupation.currentOccupation")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                     text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -663,7 +688,7 @@ export default function BasicInfo() {
                 >
                   <option value="">อาชีพปัจจุบัน</option>
                   {careerTypes.map((status) => (
-                    <option key={status.id} value={status.id}>
+                    <option key={status.id} value={status.id} data-testid={`currentOccupation-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -709,6 +734,7 @@ export default function BasicInfo() {
               {showBusinessType ? (
                 <div className="w-1/2">
                   <select
+                    data-testid="typeOfBusiness"
                     {...register("occupation.typeOfBusiness")}
                     className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -716,7 +742,7 @@ export default function BasicInfo() {
                   >
                     <option value="">ประเภทธุระกิจ</option>
                     {businessTypes.map((status) => (
-                      <option key={status.id} value={status.id}>
+                      <option key={status.id} value={status.id} data-testid={`typeOfBusiness-${status.name}`}>
                         {status.name}
                       </option>
                     ))}
@@ -758,6 +784,7 @@ export default function BasicInfo() {
               <div className="flex space-x-6">
                 <div className="w-1/2">
                   <select
+                    data-testid="salaryRange"
                     {...register("occupation.salaryRange")}
                     className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                         text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -765,7 +792,7 @@ export default function BasicInfo() {
                   >
                     <option value="">รายได้ต่อเดือน</option>
                     {salaryRange.map((status) => (
-                      <option key={status.id} value={status.id}>
+                      <option key={status.id} value={status.id} data-testid={`salaryRange-${status.name}`}>
                         {status.name}
                       </option>
                     ))}
@@ -827,6 +854,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Address Number"
                         id="addressNoWork"
+                        data-testid="addressNoWork"
                         {...register("officeAddress.homeNumber")}
                       />
                     </div>
@@ -835,6 +863,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Floor"
                         id="floorWork"
+                        data-testid="floorWork"
                         {...register("officeAddress.villageNumber")}
                       />
                     </div>
@@ -845,6 +874,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Moo"
                         id="mooWork"
+                        data-testid="mooWork"
                         {...register("officeAddress.villageName")}
                       />
                     </div>
@@ -853,6 +883,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Soi"
                         id="soiWork"
+                        data-testid="soiWork"
                         {...register("officeAddress.subStreetName")}
                       />
                     </div>
@@ -863,6 +894,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Road"
                         id="roadWork"
+                        data-testid="roadWork"
                         {...register("officeAddress.streetName")}
                       />
                     </div>
@@ -871,6 +903,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Tambon"
                         id="tambonWork"
+                        data-testid="tambonWork"
                         list="tambonWorkList"
                         {...register("officeAddress.subDistrictName")}
                       />
@@ -890,6 +923,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Amphoe"
                         id="amphoeWork"
+                        data-testid="amphoeWork"
                         list="amphoeWorkList"
                         {...register("officeAddress.districtName")}
                       />
@@ -904,6 +938,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Province"
                         id="provinceWork"
+                        data-testid="provinceWork"
                         list="provinceWorkList"
                         {...register("officeAddress.provinceName")}
                       />
@@ -920,6 +955,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Postal Code"
                         id="postalCodeWork"
+                        data-testid="postalCodeWork"
                         list="postalCodeWorkList"
                         {...register("officeAddress.zipCode")}
                       />
@@ -934,6 +970,7 @@ export default function BasicInfo() {
                         type="text"
                         label="Country"
                         id="countryWork"
+                        data-testid="countryWork"
                         list="countriesWork"
                         {...register("officeAddress.countryName")}
                       />
@@ -1021,6 +1058,7 @@ export default function BasicInfo() {
             <div className="space-y-4">
               <div className="flex space-x-4">
                 <select
+                  data-testid="firstBankName"
                   {...register("firstBankAccount.bankName")}
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -1028,7 +1066,7 @@ export default function BasicInfo() {
                 >
                   <option value="">กรุณาเลือกธนาคาร</option>
                   {bank.map((status) => (
-                    <option key={status.code} value={status.name}>
+                    <option key={status.code} value={status.name} data-testid={`firstBankName-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -1038,6 +1076,7 @@ export default function BasicInfo() {
                 <Input
                   type="text"
                   label="ชื่อสาขา"
+                  data-testid="firstBankBranch"
                   id="bankBranch"
                   {...register("firstBankAccount.bankBranchName")}
                 />
@@ -1046,6 +1085,7 @@ export default function BasicInfo() {
                 <Input
                   type="text"
                   label="กรุณาระบุเลขบัญชี"
+                  data-testid="firstBankAccount"
                   id="bankAccount"
                   {...register("firstBankAccount.bankAccountNumber")}
                 />
@@ -1089,6 +1129,7 @@ export default function BasicInfo() {
                 <div className="space-y-4 pt-4">
                   <div className="flex space-x-4">
                     <select
+                      data-testid="secondBankName"
                       {...register("secondBankAccountBody.bankName")}
                       className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
@@ -1096,7 +1137,7 @@ export default function BasicInfo() {
                     >
                       <option value="">กรุณาเลือกธนาคาร</option>
                       {bank.map((status) => (
-                        <option key={status.code} value={status.name}>
+                        <option key={status.code} value={status.name} data-testid={`secondBankName-${status.name}`}>
                           {status.name}
                         </option>
                       ))}
@@ -1106,6 +1147,7 @@ export default function BasicInfo() {
                     <Input
                       type="text"
                       label="ชื่อสาขา"
+                      data-testid="secondBankBranch"
                       id="bankBranchAdditional"
                       {...register("secondBankAccountBody.bankBranchName")}
                     />
@@ -1114,6 +1156,7 @@ export default function BasicInfo() {
                     <Input
                       type="text"
                       label="กรุณาระบุเลขบัญชี"
+                      data-testid="secondBankAccount"
                       id="bankAccountAdditional"
                       {...register("secondBankAccountBody.bankAccountNumber")}
                     />
@@ -1125,7 +1168,7 @@ export default function BasicInfo() {
         </CardContent>
       </Card>
       <div className="absolute right-4 -bottom-[4.5rem]">
-        <Button type="submit">Next Form</Button>
+        <Button type="submit" data-testid="submitButton">Next Form</Button>
       </div>
     </form>
   );

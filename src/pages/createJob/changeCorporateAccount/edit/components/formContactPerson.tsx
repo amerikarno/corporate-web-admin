@@ -14,6 +14,8 @@ import { TContactPerson } from "../constants/types";
 import { TContact } from "../../constant/type";
 import { mapDataToTContactPerson } from "../libs/utils";
 import { useEffect } from "react";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useDispatch } from "react-redux";
 type TContactPersonArray = {
   contacts: TContactPerson[];
   corporateCode?: string;
@@ -26,7 +28,6 @@ type TContactPersonFormProps = {
   choosedEditData?: TContact | null;
   clearChoosedEditData: () => void;
 };
-
 export function FormIndividualsContactPerson({
   onsubmit,
   corporateCode,
@@ -44,7 +45,7 @@ export function FormIndividualsContactPerson({
   } = useForm<TIndividualsContactPersonSchema>({
     resolver: zodResolver(individualsContactPersonSchema),
   });
-
+  const dispatch = useDispatch();
   useEffect(() => {
       const contactPersonData = mapDataToTContactPerson(choosedEditData || null) || {
         fullNames: [{ title: '', firstName: '', lastName: '' }],
@@ -65,6 +66,7 @@ export function FormIndividualsContactPerson({
       contacts: [{...data,personalId:choosedEditData?.personalId}],
       corporateCode: corporateCode,
     };
+    dispatch(setTestCorporateData(formData));
     await sleep(500);
     reset();
     console.log(formData);

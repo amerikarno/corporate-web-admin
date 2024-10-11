@@ -13,6 +13,8 @@ import Dropbox from "@/components/Dropbox";
 import { AddressFormAuthorizedPerson } from "./addressFormAuthorizedPerson";
 import { Button } from "@/components/ui/button";
 import { checkFormatIDCard } from "@/lib/utils";
+import { useDispatch } from "react-redux";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
@@ -35,7 +37,7 @@ export function FormAuthorizedPerson({
     choosedEditData?.expiryDate ? true : false
   );
 
-
+  const dispatch = useDispatch();
   const handleChange = (e: any) => {
     setCurInputText(e.target.value);
     setInitError(false);
@@ -103,8 +105,7 @@ export function FormAuthorizedPerson({
       setCurInputText("");
       setTriggeriderror("");
       setCurInput(false);
-      await sleep(500);
-      reset();
+
       let body: TAuthorizePerson = {
         ...formData,
         types: 201,
@@ -115,7 +116,10 @@ export function FormAuthorizedPerson({
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
+      dispatch(setTestCorporateData(body))
       console.log(body);
+      await sleep(500);
+      reset();
       clearChoosedEditData();
       onsubmit(body);
     } else {
@@ -275,6 +279,7 @@ export function FormAuthorizedPerson({
                     {...register("expiryDate")}
                     id="Date of Expired"
                     onClick={() => setHasDate(false)}
+                    data-testid="expiredDate"
                   />
                   {errors.expiryDate && (
                     <p className="text-red-500 text-sm px-2">

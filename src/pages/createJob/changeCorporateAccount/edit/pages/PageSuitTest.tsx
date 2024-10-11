@@ -1,20 +1,11 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SuitQuestionComp } from "../components/suitQuestion";
 import { Button } from "@/components/ui/button";
-import { UseSuitTest } from "../hook/useSuitTest";
+import { useSuitTest } from "../hook/useSuitTest";
 import { SuitTableResult } from "../components/suitTableResult";
 import { CheckBox } from "@/components/Checkbox";
-import { TCorporateData } from "../../constant/type";
 
-type TPageSuitTestProps = {
-  corporateCode: string;
-  corporatesInfo?: TCorporateData;
-};
-
-export function PageSuitTest({
-  corporateCode,
-  corporatesInfo,
-}: TPageSuitTestProps) {
+export function PageSuitTest() {
   const {
     answerSuiteTest,
     quizSuiteTest,
@@ -26,7 +17,8 @@ export function PageSuitTest({
     opitionalQuiz,
     handelOptionalQuiz,
     isSubmit,
-  } = UseSuitTest(corporateCode);
+    corporatesInfo,
+  } = useSuitTest();
 
   if (isLoading) {
     return <div>Loading Suitability Questions...</div>;
@@ -75,6 +67,7 @@ export function PageSuitTest({
           </div>
         </div>
       </Card>
+
       <Card>
         <CardHeader>
           <div className="flex flex-row space-x-6 items-end">
@@ -114,6 +107,7 @@ export function PageSuitTest({
                   id="11-1"
                   label="No"
                   name="no"
+                  data-testid="checkbox-11-1"
                   checked={isAdditionChecked(0, "no")}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
@@ -121,6 +115,7 @@ export function PageSuitTest({
                   id="11-2"
                   label="Yes"
                   name="yes"
+                  data-testid="checkbox-11-2"
                   checked={isAdditionChecked(0, "yes")}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
@@ -137,6 +132,7 @@ export function PageSuitTest({
                   id="12-1"
                   label="No"
                   name="no"
+                  data-testid="checkbox-12-1"
                   checked={isAdditionChecked(1, "no")}
                   onChange={(e) => handelOptionalQuiz(1, e)}
                 />
@@ -144,6 +140,7 @@ export function PageSuitTest({
                   id="12-2"
                   label="Yes"
                   name="yes"
+                  data-testid="checkbox-12-2"
                   checked={isAdditionChecked(1, "yes")}
                   onChange={(e) => handelOptionalQuiz(1, e)}
                 />
