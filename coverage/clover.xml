@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1728957609629" clover="3.2.0">
-  <project timestamp="1728957609629" name="All files">
+<coverage generated="1728964366905" clover="3.2.0">
+  <project timestamp="1728964366905" name="All files">
     <metrics statements="10254" coveredstatements="7431" conditionals="6156" coveredconditionals="3088" methods="2072" coveredmethods="1641" elements="18482" coveredelements="12160" complexity="0" loc="10254" ncloc="10254" packages="91" files="210" classes="210"/>
     <package name="__Test__">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -22,7 +22,7 @@
       <file name="axios.tsx" path="C:\Users\NanonBuaphet\corporate-web-admin\src\api\axios.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="23" type="stmt"/>
-        <line num="8" count="23" type="stmt"/>
+        <line num="5" count="23" type="stmt"/>
         <line num="11" count="23" type="stmt"/>
         <line num="17" count="23" type="stmt"/>
       </file>
@@ -7727,7 +7727,7 @@
         <line num="18" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="21" count="24" type="cond" truecount="0" falsecount="1"/>
+        <line num="21" count="23" type="cond" truecount="0" falsecount="1"/>
         <line num="22" count="0" type="stmt"/>
         <line num="25" count="23" type="stmt"/>
         <line num="26" count="23" type="stmt"/>

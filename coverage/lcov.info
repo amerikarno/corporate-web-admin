@@ -33,7 +33,7 @@ SF:src\api\axios.tsx
 FNF:0
 FNH:0
 DA:1,23
-DA:8,23
+DA:5,23
 DA:11,23
 DA:17,23
 LF:4
@@ -1249,7 +1249,7 @@ FNDA:18,(anonymous_8)
 FNDA:18,lastDigitCheck
 FNDA:18,checkFormatIDCard
 FNDA:0,(anonymous_11)
-FNDA:177,(anonymous_12)
+FNDA:176,(anonymous_12)
 FNDA:255,(anonymous_13)
 FNDA:0,(anonymous_14)
 FNDA:0,(anonymous_15)
@@ -15373,7 +15373,7 @@ BRDA:502,55,1,0
 BRDA:526,56,0,1
 BRDA:526,56,1,22
 BRDA:592,57,0,23
-BRDA:592,57,1,18
+BRDA:592,57,1,16
 BRDA:626,58,0,72
 BRDA:626,58,1,1
 BRF:117
@@ -15429,7 +15429,7 @@ FN:484,(anonymous_34)
 FN:500,oo_cm
 FNF:35
 FNH:30
-FNDA:24,OrderTradeEdit
+FNDA:23,OrderTradeEdit
 FNDA:3,(anonymous_2)
 FNDA:30,(anonymous_3)
 FNDA:9,(anonymous_4)
@@ -15482,7 +15482,7 @@ DA:17,1
 DA:18,1
 DA:19,1
 DA:20,1
-DA:21,24
+DA:21,23
 DA:22,0
 DA:25,23
 DA:26,23
