@@ -137,11 +137,16 @@ const AddedIcoInfo = () => {
                 info:{
                     ...data.info,
                     icoCode: icoCode,
-                    totalIssuance:`${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`,
-                    totalAmountRaised:`${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`,
-                    minimumInvestmentAmount:`${data.info.minimumInvestmentAmount} ${minimumInvestmentAmountUnit ? minimumInvestmentAmountUnit : "Baht"}`,
-                    minimumInvestmentQuantity:`${data.info.minimumInvestmentQuantity} ${minimumInvestmentQuantityUnit ? minimumInvestmentQuantityUnit : "Baht"}`,
-                    issueUnitPrice:`${data.info.issueUnitPrice} ${issueUnitPriceUnit ? issueUnitPriceUnit : "Baht"}`,
+                    totalIssuance:data.info.totalIssuance ? `${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`
+                    : undefined,
+                    totalAmountRaised:data.info.totalAmountRaised ? `${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`
+                    : undefined,
+                    minimumInvestmentAmount:data.info.minimumInvestmentAmount ? `${data.info.minimumInvestmentAmount} ${minimumInvestmentAmountUnit ? minimumInvestmentAmountUnit : "Baht"}`
+                    : undefined,
+                    minimumInvestmentQuantity:data.info.minimumInvestmentQuantity ? `${data.info.minimumInvestmentQuantity} ${minimumInvestmentQuantityUnit ? minimumInvestmentQuantityUnit : "Baht"}`
+                    : undefined,
+                    issueUnitPrice:data.info.issueUnitPrice ? `${data.info.issueUnitPrice} ${issueUnitPriceUnit ? issueUnitPriceUnit : "Baht"}`
+                    : undefined,
                 }
             }
             console.log("form1 ico body :",body)
@@ -170,6 +175,7 @@ const AddedIcoInfo = () => {
                         console.log("create ico form1 success",res)
                         if(res.data){
                             localStorage.setItem("icoCode", res.data.icoCode.toString())
+                            console.log("ico code received :", res.data.icoCode.toString())
                             navigate("/create-job/change-ico/edit/2");
     
                         }else{
@@ -209,9 +215,9 @@ const AddedIcoInfo = () => {
             <div className="w-full flex flex-col md:flex-row md:w-4/5 justify-center">
                 <div className="w-full p-8 my-4 md:px-12 md:w-full md:pl-20 mr-auto rounded-2xl rounded-r-none shadow-2xl bg-white">
                     <div className="flex">
-                    <h1 className="font-bold uppercase text-2xl md:text-5xl">Investment<br />Information</h1>
+                    <h1 className="font-bold uppercase text-2xl md:text-5xl m-4">Investment<br />Information</h1>
                     </div>
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mt-5">
                         <div className="min-h-12 ">
                             <div onClick={handleDivClick} className="text-sm flex items-center cursor-pointer justify-between px-5 w-full text-white font-bold bg-slate-800 h-full max-h-12 rounded-lg">
                             <span>Upload profile</span>
@@ -230,13 +236,13 @@ const AddedIcoInfo = () => {
                             </div>
                             )}
                         </div>
-                        <Input  {...register("asset.issueBy")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Issue By*" />
-                        <Input  {...register("asset.name")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Company Name*" />
-                        <Input  {...register("asset.description")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Description*" />
-                        <Input  {...register("asset.category")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Product Category*" />
-                        <Input  {...register("asset.return")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Expect Return*" />
-                        <Input  {...register("asset.region")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Region*" />
-                        <Input  {...register("asset.minimum")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Minimum Subscription Limit*" />
+                        <Input  {...register("asset.issueBy")}  label="Issue By*" id="issueBy"/>
+                        <Input  {...register("asset.name")}  label="Company Name*" id="companyName" />
+                        <Input  {...register("asset.description")}  label="Description*" id="description"/>
+                        <Input  {...register("asset.category")}  label="Product Category*" id="productCategory"/>
+                        <Input  {...register("asset.return")}  label="Expect Return*" id="expectReturn"/>
+                        <Input  {...register("asset.region")}  label="Region*" id="region"/>
+                        <Input  {...register("asset.minimum")}  label="Minimum Subscription Limit*" id="minimumSubscriptionLimit"/>
                     </div>
                 </div>
                 <div className="max-h-[40rem] overflow-hidden flex flex-col justify-between w-full min-w-40 md:w-1/2 px-8 py-12 bg-slate-800 rounded-2xl text-white">

@@ -316,35 +316,33 @@ useEffect(() => {
                     <div className="flex">
                     <h1 className="font-bold uppercase text-2xl md:text-5xl">Company<br />Member</h1>
                     </div>
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
-                    <Input {...register("companyMembers.0.firstName")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="First Name*" />
-                    <Input {...register("companyMembers.0.midName")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Middle Name*" />
-                    <Input {...register("companyMembers.0.lastName")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Last Name*" />
-                    <Input {...register("companyMembers.0.position")} className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Position*" />
-                    <div className="min-h-12 col-span-1 md:col-span-2">
-                        <div onClick={handleDivClick} className="text-sm flex items-center cursor-pointer justify-between px-5 w-full text-white font-bold bg-slate-800 h-full max-h-12 rounded-lg">
-                        <span>Upload picture</span>
-                        <div className="text-lg font-white"><FaUpload /></div>
-                        <input
-                            type="file"
-                            className="hidden"
-                            onChange={handleFileChange}
-                            ref={fileInputRef}
-                            data-testid="uploadPicture"
-                        />
-                        </div>
-                        {file && (
-                        <div className="text-xs mt-2">
-                            <span>File uploaded successfully</span>
-                        </div>
-                        )}
-                    </div>
-                    </div>
-                    <div className="my-4">
-                    <textarea placeholder="History*" {...register("companyMembers.0.history")} className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 my-5">
+                      <Input {...register("companyMembers.0.firstName")} label="First Name*" id="firstname" />
+                      <Input {...register("companyMembers.0.midName")} label="Middle Name*" id="middlename" />
+                      <Input {...register("companyMembers.0.lastName")}  label="Last Name*" id="lastname" />
+                      <Input {...register("companyMembers.0.position")} label="Position*" id="position" />
+                      <div className="min-h-12">
+                          <div onClick={handleDivClick} className="text-sm flex items-center cursor-pointer justify-between px-5 w-full text-white font-bold bg-slate-800 h-full max-h-12 rounded-lg" data-testid="uploadPicture">
+                          <span>Upload picture</span>
+                          <div className="text-lg font-white"><FaUpload /></div>
+                          <input
+                              type="file"
+                              className="hidden"
+                              onChange={handleFileChange}
+                              ref={fileInputRef}
+                              data-testid="uploadPicture"
+                          />
+                          </div>
+                          {file && (
+                          <div className="text-xs mt-2">
+                              <span>File uploaded successfully</span>
+                          </div>
+                          )}
+                      </div>
+                      <Input label="History*" id="history" {...register("companyMembers.0.history")}/>
                     </div>
                     <div className="flex justify-center">
-                    <Button type="submit" className="px-16 min-h-12" disabled={isSubmitting}>
+                    <Button type="submit" className="px-16 mt-4 min-h-12" disabled={isSubmitting}>
                         {isSubmitting ? "Loading..." : "Save"}
                     </Button>
                     </div>

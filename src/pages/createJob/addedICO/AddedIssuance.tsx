@@ -158,17 +158,18 @@ const AddedIssuance = () => {
                 <h1 className="text-lg md:text-xl font-bold">Issuance Terms</h1>
                 <span className="text-xl"><TbMoneybag /></span>
             </div>
-            <div className="w-full grid grid-cols-2 grid-rows-4 gap-8">
-                <div className="flex space-x-4">
+            <div className="w-full grid grid-cols-2 grid-rows-4 gap-7">
+                <div className="flex items-center space-x-4">
                     <div className="w-4/5">
                         <Input  {...register("issuanceTerms.investmentPeriod")}
                         type="number"
                         step="0.01"
-                        className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Investment Period*" />
+                        label="Investment Period*"
+                        id="investmentPeriod" />
                     </div>
                     <div className="w-1/5">
                         <Input
-                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                            className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                             label="Unit"
                             value={investmentPeriodUnit}
                             onChange={(e) => setInvestmentPeriodUnit(e.target.value)}
@@ -177,16 +178,17 @@ const AddedIssuance = () => {
                     </div>
                 </div>
                 <div className="">
-                    <div className="flex space-x-4">
+                    <div className="flex items-center space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.dividendYield")}
                             type="number"
                             step="0.01"
-                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Dividend Yield*" />
+                            label="Dividend Yield*"
+                            id="dividendYield" />
                         </div>
                         <div className="w-1/5">
                             <Input
-                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                 label="Unit"
                                 value={dividendYieldUnit}
                                 onChange={(e) => setDividendYieldUnit(e.target.value)}
@@ -196,16 +198,17 @@ const AddedIssuance = () => {
                     </div>
                 </div>
                 <div className="">
-                    <div className="flex space-x-4">
+                    <div className="flex items-center space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.grossMargin")}
                             type="number"
                             step="0.01"
-                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Gross Margin*" />
+                            label="Gross Margin*"
+                            id="grossMargin" />
                         </div>
                         <div className="w-1/5">
                             <Input
-                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                 label="Unit"
                                 value={grossMarginUnit}
                                 onChange={(e) => setGrossMarginUnit(e.target.value)}
@@ -215,16 +218,17 @@ const AddedIssuance = () => {
                     </div>
                 </div>
                 <div className="">
-                    <div className="flex space-x-4">
+                    <div className="flex items-center space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.equityMultiple")}
                             type="number"
                             step="0.01"
-                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Equity Multiple*" />
+                            label="Equity Multiple*"
+                            id="equityMultiple" />
                         </div>
                         <div className="w-1/5">
                             <Input
-                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                 label="Unit"
                                 value={equityMultipleUnit}
                                 onChange={(e) => setEquityMultipleUnit(e.target.value)}
@@ -234,16 +238,17 @@ const AddedIssuance = () => {
                     </div>
                 </div>
                 <div className="">
-                    <div className="flex space-x-4">
+                    <div className="flex items-center space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.profit")}
                             type="number"
                             step="0.01"
-                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Profit*" />
+                            label="Profit*"
+                            id="profit" />
                         </div>
                         <div className="w-1/5">
                             <Input
-                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                 label="Unit"
                                 value={profitUnit}
                                 onChange={(e) => setProfitUnit(e.target.value)}
@@ -253,16 +258,17 @@ const AddedIssuance = () => {
                     </div>
                 </div>
                 <div className="">
-                    <div className="flex space-x-4">
+                    <div className="flex items-center space-x-4">
                         <div className="w-4/5">
                             <Input  {...register("issuanceTerms.leverage")}
                             type="number"
                             step="0.01"
-                            className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Leverage*" />
+                            label="Leverage*"
+                            id="leverage" />
                         </div>
                         <div className="w-1/5">
                             <Input
-                                className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                 label="Unit"
                                 value={leverageUnit}
                                 onChange={(e) => setLeverageUnit(e.target.value)}
@@ -273,11 +279,11 @@ const AddedIssuance = () => {
                 </div>
                 <div className="">
                     <Input  {...register("issuanceTerms.investmentStructure")} 
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Investment Structure*" />
+                    label="Investment Structure*" id="investmentStructure" />
                 </div>
                 <div className="">
                     <Input  {...register("issuanceTerms.distributionFrequency")} 
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Distribution Frequency*" />
+                    label="Distribution Frequency*" id="distributionFrequency" />
                 </div>
            </div>
           </div>
