@@ -11,29 +11,51 @@ import axios from '@/api/axios';
 import { getCookies } from '@/lib/Cookies';
 // import { Button } from '@/components/ui/button';
 import { FaSearch } from "react-icons/fa";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from '@/components/ui/button';
 
 interface IcoInfo {
   icoCode: string;
 }
 
 const ToDoAddedIcoSearch = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const EditButtonCell = ({ row }: { row: TAssetData }) => {
-    const handleEditClick = () => {
-      console.log(row);
-      dispatch(setAssetData(row));
-      localStorage.setItem('icoCode', row.icoCode!.toString());
-      navigate("/todo-list/added-ico/edit/1", {
-        state: row,
-      });
-    };
+  // const EditButtonCell = ({ row }: { row: TAssetData }) => {
+  //   const handleEditClick = () => {
+  //     console.log(row);
+  //     dispatch(setAssetData(row));
+  //     localStorage.setItem('icoCode', row.icoCode!.toString());
+  //     navigate("/todo-list/added-ico/edit/1", {
+  //       state: row,
+  //     });
+  //   };
 
-    return (
-      <Pencil className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
-    );
+  //   return (
+  //     <Pencil className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
+  //   );
+  // };
+
+  const handleApproveClick = (row: TAssetData) => {
+    console.log(row);
   };
+
+  const customStyles = {
+    rows: {
+      style: {
+        minHeight: '60px', 
+      },
+    },
+  }
 
   const [icoCodeInput,setIcoCodeInput] = useState('');
   const [icoCodeList, setIcoCodeList] = useState<IcoInfo[]>([]);
@@ -43,22 +65,45 @@ const ToDoAddedIcoSearch = () => {
     {
       name: "ICO Code",
       selector: (row: TAssetData) => row.icoCode || "",
+      maxWidth: '120px'
+    },
+    {
+      name: "Symbol",
+      selector: (row: TAssetData) => row.asset.name || "",
+      maxWidth: '150px'
     },
     {
       name: "Company Name",
-      selector: (row: TAssetData) => row.asset.name || "",
-    },
-    {
-      name: "Description",
       selector: (row: TAssetData) => row.asset.description || "",
+      maxWidth: '300px'
     },
     {
       name: "Issue By",
       selector: (row: TAssetData) => row.asset.issueBy || "",
     },
     {
-      name: "",
-      cell: (row: TAssetData) => <EditButtonCell row={row} />,
+      cell: (row: TAssetData) => (
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="bg-[#002f18] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white">Approve</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              <div className="flex flex-col">
+                <span>{`Symbol : ${row.asset.name}`}</span>
+                <span>{`Issue By : ${row.asset.issueBy}`}</span>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={()=>handleApproveClick(row)}>Approve</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      ),
       ignoreRowClick: true,
     },
   ];
@@ -110,7 +155,7 @@ const ToDoAddedIcoSearch = () => {
   return (
     <div className="pt-8 px-4 space-y-4 h-screen">
       <Card >
-        <div className="flex items-center w-full space-x-4 p-4 px-8 bg-[#002f18] text-white rounded-md">
+        <div className="flex items-center w-full space-x-4 p-4 px-8 bg-[#002f18]  text-white rounded-md">
             <div className="font-bold">
                 Search by ICO code
             </div>
@@ -140,7 +185,7 @@ const ToDoAddedIcoSearch = () => {
           <CardTitle>ICO Account Information</CardTitle>
         </CardHeader>
         <CardContent className="overflow-x-auto max-h-[45rem]">
-          <DataTable columns={ColumnsIcoSearch} data={icoAccountList} />
+          <DataTable columns={ColumnsIcoSearch} data={icoAccountList} customStyles={customStyles}/>
         </CardContent>
       </Card>
     </div>

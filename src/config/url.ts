@@ -74,7 +74,7 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2002,
       },
       {
-        label: "added ICO",
+        label: "added ico",
         href: "/create-job/added-ico",
         pageId: 2008,
       },
@@ -221,7 +221,7 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3002,
       },
       {
-        label: "edit ico account",
+        label: "ico approval",
         href: "/todo-list/added-ico",
         pageId: 3007,
       },
