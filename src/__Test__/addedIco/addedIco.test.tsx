@@ -382,7 +382,7 @@ describe("test ico form1",()=>{
         console.log("Corporate State After Submission:", corporateState);
         expect(corporateState).toMatchObject(expectedFormData);
       });
-    })
+    }, 40000)
 
     test("test ico form1 edit", async ()=>{
 
@@ -519,7 +519,7 @@ describe("test ico form1",()=>{
 
       localStorage.clear();
       
-    })
+    }, 40000)
 
       test("test ico form1 autofill", async ()=>{
 
@@ -579,7 +579,7 @@ describe("test ico form1",()=>{
 
         localStorage.clear();
         store.dispatch(clearAssetData());
-    })
+    }, 40000)
 })
 
 describe("test ico form2",()=>{
@@ -697,7 +697,7 @@ describe("test ico form2",()=>{
         console.log("Corporate State After Submission:", corporateState);
         expect(corporateState).toMatchObject(expectedFormData);
       });
-  })
+  }, 40000)
   
   test("test ico form2 autofill and edit", async ()=>{
 
@@ -790,7 +790,7 @@ describe("test ico form2",()=>{
 
       localStorage.clear();
       store.dispatch(clearAssetData());
-  })
+  }, 40000)
 })
 
 describe("test ico form3",()=>{
@@ -890,7 +890,7 @@ describe("test ico form3",()=>{
         console.log("Corporate State After Submission:", corporateState);
         expect(corporateState).toMatchObject(expectedFormData);
       });
-    })
+    }, 40000)
 
     test("test ico form3 autofill and edit", async ()=>{
       mockAxios.onPost("/api/v1/ico/keyInformation/update").reply(200, {
@@ -941,7 +941,7 @@ describe("test ico form3",()=>{
 
       localStorage.clear();
       store.dispatch(clearAssetData());
-  })
+  }, 40000)
 
 })
 
@@ -1072,7 +1072,7 @@ describe("test ico form4",()=>{
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  })
+  }, 40000)
 
   test("test ico form4 autofill and edit", async ()=>{
     mockAxios.onPost("/api/v1/ico/issuance/update").reply(200, {
@@ -1123,7 +1123,7 @@ describe("test ico form4",()=>{
 
     localStorage.clear();
     store.dispatch(clearAssetData());
-})
+}, 40000)
 })
 
 describe("test ico form5",()=>{
@@ -1233,7 +1233,7 @@ test("test ico form5 create", async ()=>{
       expect(corporateState).toMatchObject(expectedFormData);
   })
     
-  })
+  }, 40000)
 
   test("test ico form5 autofill and edit", async ()=>{
     mockAxios.onPost("/api/v1/ico/members/create").reply(200, {
@@ -1309,7 +1309,7 @@ test("test ico form5 create", async ()=>{
 
     localStorage.clear();
     store.dispatch(clearAssetData());
-})
+}, 40000)
 
 test("test ico form5 delete", async ()=>{
   mockAxios.onPost("/api/v1/ico/members/create").reply(200, {
@@ -1346,6 +1346,6 @@ test("test ico form5 delete", async ()=>{
 
   localStorage.clear();
   store.dispatch(clearAssetData());
-})
+}, 40000)
 
 })

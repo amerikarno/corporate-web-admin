@@ -13,6 +13,8 @@ import { dateToyyyyMMdd } from "@/lib/utils";
 import { useToDoIndividualAccount } from "./useToDoIndividualAccount";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { store } from "@/app/store";
 
 export default function ChangeTodoIndividualAccount() {
   //   if (!isAllowedPage(3001)) {
@@ -98,6 +100,7 @@ export default function ChangeTodoIndividualAccount() {
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
+    store.dispatch(setTestCorporateData(data));
     await handleSearch(data);
   };
 
@@ -137,6 +140,7 @@ export default function ChangeTodoIndividualAccount() {
           >
             <SideLabelInput title="Individual ID">
               <Input
+                data-testid="accountId"
                 {...register("AccountID")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
@@ -157,6 +161,7 @@ export default function ChangeTodoIndividualAccount() {
             <div className="col-start-1">
               <SideLabelInput title="Date From">
                 <Input
+                  data-testid="dateFrom"
                   type="date"
                   {...register("dateFrom")}
                   onChange={handleDisableCode}
@@ -171,6 +176,7 @@ export default function ChangeTodoIndividualAccount() {
             </div>
             <SideLabelInput title="Date To">
               <Input
+                data-testid="dateTo"
                 type="date"
                 {...register("dateTo")}
                 onChange={handleDisableCode}
@@ -183,7 +189,7 @@ export default function ChangeTodoIndividualAccount() {
               )}
             </SideLabelInput>
             <div className="col-start-2 flex justify-end">
-              <Button type="submit">
+              <Button type="submit" data-testid="searchBtn">
                 {isSubmitting ? "Search..." : "Search"}
               </Button>
             </div>

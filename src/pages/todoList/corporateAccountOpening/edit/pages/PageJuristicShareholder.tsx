@@ -143,6 +143,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
           onClick={() => {
             setChoosedEditData(row);
           }}
+          data-testid={`editButton-${row.juristicId}`}
         >
           Edit
         </Button>
@@ -153,7 +154,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
       cell: (row: TJuristicsShareholders) => (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" className="bg-red-600 text-white">
+            <Button variant="outline" data-testid={`deleteButton-${row.juristicId}`} className="bg-red-600 text-white">
               Delete
             </Button>
           </AlertDialogTrigger>
@@ -167,7 +168,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => handleDelete(row)}>
+              <AlertDialogAction data-testid={`confirmDelete-${row.juristicId}`} onClick={() => handleDelete(row)}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>

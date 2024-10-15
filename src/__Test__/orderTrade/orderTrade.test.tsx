@@ -263,6 +263,7 @@ describe("test order trade", () => {
       //   const corporateCodeError = screen.getByText("Corporate Code is required");
       //   expect(corporateCodeError).toBeInTheDocument();
       // })
+      
       //Expected form data
       const expectedFormData = {
         data: {

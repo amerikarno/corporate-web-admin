@@ -135,6 +135,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
     {
       cell: (row: TBankWithID) => (
         <Button
+          data-testid={`editButton-${row.BankId}`}
           onClick={() => {
             setChoosedEditData(row);
             console.log(row);
@@ -149,7 +150,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
       cell: (row: TBankWithID) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+          <Button variant="outline" data-testid={`deleteButton-${row.BankId}`} className="bg-red-600 text-white">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -160,7 +161,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+            <AlertDialogAction data-testid={`confirmDelete-${row.BankId}`} onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

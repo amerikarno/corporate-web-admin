@@ -7,6 +7,9 @@ import { Route, Outlet } from "react-router-dom";
 import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/EditPageAddIndividualAccount";
 import BankTransactionList from "@/pages/todoList/bankTransactionList/bankTransactionList";
 import FxExchangeTransactionList from "@/pages/todoList/fxExchange/fxExchangeTransaction";
+import AccountApproval from "@/pages/todoList/accountApproval/AccountApproval";
+import ToDoAddedIcoSearch from "@/pages/todoList/toDoIcoAccount/ToDoAddedIcoSearch";
+import ToDoPageAddedIco from "@/pages/todoList/toDoIcoAccount/PageToDoAddedIco";
 
 export const todoListRoutes = () => {
   return (
@@ -26,6 +29,13 @@ export const todoListRoutes = () => {
           <Route path=":page" element={<EditPageAddIndividualAccount />} />
         </Route>
       </Route>
+      <Route path="added-ico" element={<Outlet />}>
+        <Route index element={<ToDoAddedIcoSearch />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<ToDoPageAddedIco />} />
+          <Route path=":page" element={<ToDoPageAddedIco />} />
+        </Route>
+      </Route>
       <Route
         path="whitelist-bank"
         element={<BlankPage name="Whitelist (Bank)" />}
@@ -43,6 +53,7 @@ export const todoListRoutes = () => {
       />
       <Route path="lock-unlock" element={<BlankPage name="Lock Unlock" />} />
       <Route path="deposit-cash" element={<BlankPage name="Deposit Cash" />} />
+      <Route path="account-approval" element={<AccountApproval />} />
       <Route
         path="withdraw-cash"
         element={<BlankPage name="Withdraw Cash" />}

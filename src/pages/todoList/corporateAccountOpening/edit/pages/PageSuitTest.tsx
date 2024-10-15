@@ -107,6 +107,7 @@ export function PageSuitTest() {
                   id="11-1"
                   label="No"
                   name="no"
+                  data-testid="checkbox-11-1"
                   checked={isAdditionChecked(0, "no")}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
@@ -114,6 +115,7 @@ export function PageSuitTest() {
                   id="11-2"
                   label="Yes"
                   name="yes"
+                  data-testid="checkbox-11-2"
                   checked={isAdditionChecked(0, "yes")}
                   onChange={(e) => handelOptionalQuiz(0, e)}
                 />
@@ -130,6 +132,7 @@ export function PageSuitTest() {
                   id="12-1"
                   label="No"
                   name="no"
+                  data-testid="checkbox-12-1"
                   checked={isAdditionChecked(1, "no")}
                   onChange={(e) => handelOptionalQuiz(1, e)}
                 />
@@ -137,6 +140,7 @@ export function PageSuitTest() {
                   id="12-2"
                   label="Yes"
                   name="yes"
+                  data-testid="checkbox-12-2"
                   checked={isAdditionChecked(1, "yes")}
                   onChange={(e) => handelOptionalQuiz(1, e)}
                 />

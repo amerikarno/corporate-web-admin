@@ -1,3 +1,5 @@
+import { SuitTestResult } from "../edit/constants/types";
+
 export type TCorporateAccountOpeningInfo = {
   corporateCode: string;
   // corporateName: string;
@@ -317,6 +319,7 @@ export type TCorporateData = {
   Banks: TBank[];
   Documents?: TDocuments[];
   Attorneys?: TAttorney[] | null;
+  SuitTestResult?: SuitTestResult | null;
 };
 
 export type TMapPages = {

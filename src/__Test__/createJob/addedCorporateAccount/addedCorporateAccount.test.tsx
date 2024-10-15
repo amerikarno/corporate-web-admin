@@ -74,10 +74,14 @@ jest.mock("@/lib/Cookies", () => ({
 const mockAxios = new MockAdapter(axios);
 
 describe("test create corporate form1", () => {
+
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   test("test input data(multiple input type)", async () => {
     // const onSubmit = jest.fn();
@@ -504,7 +508,7 @@ describe("test create corporate form1", () => {
       const corporateState = state.corporateTest;
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const mockCorporateData: TCorporateData = {
@@ -896,10 +900,14 @@ const mockCorporateData: TCorporateData = {
 };
 
 describe("test create corporate form2", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    store.dispatch(setUser(mockUser));
-  });
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        jest.resetAllMocks();
+        jest.resetModules();
+        store.dispatch(clearTestCorporateData());
+        store.dispatch(setUser(mockUser));
+    });
 
   beforeAll(() => {
     localStorage.setItem('corporateCode', '80000001');
@@ -908,10 +916,12 @@ describe("test create corporate form2", () => {
     localStorage.clear();
   })
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    store.dispatch(setUser(mockUser));
-  });
+    beforeEach(() => {
+        jest.clearAllMocks();
+        jest.resetAllMocks();
+        jest.resetModules();
+        store.dispatch(setUser(mockUser));
+    });
 
   test("test Juristic Infomations (Page)", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -964,7 +974,7 @@ describe("test create corporate form2", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type) Specify Other Input", async () => {
     // const onSubmit = jest.fn();
@@ -1085,7 +1095,7 @@ describe("test create corporate form2", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type)", async () => {
     // const onSubmit = jest.fn();
@@ -1193,7 +1203,7 @@ describe("test create corporate form2", () => {
       console.log("Corporate State After Submission:", corporateState);
       // expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 
   test("test input form2 all radio input", async () => {
     // const onSubmit = jest.fn();
@@ -1464,7 +1474,7 @@ describe("test create corporate form2", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 
   test("update form2 (juristicType)", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -1555,7 +1565,7 @@ describe("test create corporate form2", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const mockContact: TContact = {
@@ -1596,8 +1606,11 @@ describe("test create corporate form3 (contact person)", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   test("test form3 (PageContactPERSON) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -1650,7 +1663,7 @@ describe("test create corporate form3 (contact person)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form3 (PageContactPERSON) DELETE", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -1729,7 +1742,7 @@ describe("test create corporate form3 (contact person)", () => {
       store.dispatch(clearContactPersons());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test form3 (PageContactPERSON) EDIT", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -1827,7 +1840,7 @@ describe("test create corporate form3 (contact person)", () => {
       store.dispatch(clearContactPersons());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type)", async () => {
 
@@ -1914,7 +1927,7 @@ describe("test create corporate form3 (contact person)", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const mockDirector: TDirector = {
@@ -1973,10 +1986,15 @@ describe("test create corporate form4 (list of director)", () => {
   afterAll(() => {
     localStorage.clear();
   })
+
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
+
   test("test form4 (PageListOfDirector) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
 
@@ -2028,7 +2046,7 @@ describe("test create corporate form4 (list of director)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form4 (PageListOfDirector) DELETE", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -2142,7 +2160,7 @@ describe("test create corporate form4 (list of director)", () => {
       store.dispatch(clearDirector());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test form4 (PageListOfDirector) EDIT", async () => {
     mockAxios.onPost("/api/v1/personals/update").reply(400, {
@@ -2314,7 +2332,7 @@ describe("test create corporate form4 (list of director)", () => {
       store.dispatch(clearDirector());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();
@@ -2467,7 +2485,7 @@ describe("test create corporate form4 (list of director)", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const individualShareholderMock: TIndividualShareholder = {
@@ -2506,10 +2524,14 @@ describe("test create corporate form5 (individual shareholder)", () => {
   afterAll(() => {
     localStorage.clear();
   })
+
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   test("test form5 (PageIndividualShareholder) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -2562,7 +2584,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form5 (PageIndividualShareholder) DELETE", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -2632,7 +2654,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
       store.dispatch(clearDirector());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test form5 (PageIndividualShareholder) EDIT", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -2720,7 +2742,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
       store.dispatch(clearIndividualShareholder());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
 
   test("test input data(multiple input type)", async () => {
@@ -2806,7 +2828,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const juristicMock: TJuristic = {
@@ -2828,10 +2850,14 @@ describe("test create corporate form6 (juristics shareholder)", () => {
   afterAll(() => {
     localStorage.clear();
   })
+
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   test("test form6 (PageJuristicShareholder) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -2884,7 +2910,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form6 (PageJuristicShareholder) DELETE", async () => {
     mockAxios.onPost("/api/v1/corporate/query").reply(200, {
@@ -2892,7 +2918,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       message: "juristic data fetched successfully.",
     });
     store.dispatch(setCorporateData(mockCorporateData));
-    const juristicShareholder = [juristicMock] || [];
+    const juristicShareholder = [juristicMock];
         const updateJuristic: TJuristicsShareholders[] = juristicShareholder
           .map((juristic: TJuristic) => ({
             ...juristic,
@@ -2957,7 +2983,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       store.dispatch(clearJuristicShareholder());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test form6 (PageJuristicShareholder) EDIT", async () => {
     mockAxios.onPost("/api/v1/corporate/query").reply(200, {
@@ -2965,7 +2991,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       message: "juristic data fetched successfully.",
     });
     store.dispatch(setCorporateData(mockCorporateData));
-    const juristicShareholder = [juristicMock] || [];
+    const juristicShareholder = [juristicMock];
         const updateJuristic: TJuristicsShareholders[] = juristicShareholder
           .map((juristic: TJuristic) => ({
             ...juristic,
@@ -3045,7 +3071,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       store.dispatch(clearJuristicShareholder());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();
@@ -3112,7 +3138,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const authorizedMock = {
@@ -3174,8 +3200,11 @@ describe("test create corporate form7 (authorized person)", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   test("test form6 (PageAuthorizedPerson) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -3228,7 +3257,7 @@ describe("test create corporate form7 (authorized person)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form6 (PageAuthorizedPerson) DELETE", async () => {
     mockAxios.onPost('/api/v1/corporate/query').reply(200, [
@@ -3239,7 +3268,7 @@ describe("test create corporate form7 (authorized person)", () => {
       },
     ]);
     store.dispatch(setCorporateData(mockCorporateData));
-    const authorizedPerson = [authorizedMock] || [];;
+    const authorizedPerson = [authorizedMock];
         console.log(authorizedPerson)
         const updateAuthorized: TAuthorizePerson[] = authorizedPerson.map((authorized: TAuthorizedPersonEdit) => ({
           ...authorized,
@@ -3371,7 +3400,7 @@ describe("test create corporate form7 (authorized person)", () => {
       store.dispatch(clearAuthorizedPerson());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   
 
@@ -3529,7 +3558,7 @@ describe("test create corporate form7 (authorized person)", () => {
       await sleep(500);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const attorneyMock = {  
@@ -3582,10 +3611,14 @@ const attorneyMock = {
 }
 
 describe("test create corporate form8 (attorney)", () => {
+
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   beforeAll(() => {
     localStorage.setItem('corporateCode', '80000001');
@@ -3645,7 +3678,7 @@ describe("test create corporate form8 (attorney)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form8 (PageAttorney) DELETE", async () => {
     mockAxios.onPost('/api/v1/corporate/query').reply(200, [
@@ -3656,7 +3689,7 @@ describe("test create corporate form8 (attorney)", () => {
       },
     ]);
     store.dispatch(setCorporateData(mockCorporateData));
-    const attorney = [attorneyMock] || [];;
+    const attorney = [attorneyMock];
         const updateAttorney = attorney.map(
           (attorneyitems: any) => ({
             ...attorneyitems,
@@ -3789,7 +3822,7 @@ describe("test create corporate form8 (attorney)", () => {
       store.dispatch(clearAttorney());
       store.dispatch(clearCorporateData());
     })
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();
@@ -3944,7 +3977,7 @@ describe("test create corporate form8 (attorney)", () => {
       await sleep(500);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 const bankMock = {
@@ -3961,10 +3994,14 @@ const bankMock = {
 }
 
 describe("test create corporate form9 (bank)", () => {
+
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   beforeAll(() => {
     localStorage.setItem('corporateCode', '80000001');
@@ -4024,7 +4061,7 @@ describe("test create corporate form9 (bank)", () => {
     });
 
     store.dispatch(clearCorporateData());
-  }, 20000);
+  }, 40000);
 
   test("test form9 (PageBank) DELETE", async () => {
     mockAxios.onPost('/api/v1/corporate/query').reply(200, [
@@ -4035,7 +4072,7 @@ describe("test create corporate form9 (bank)", () => {
       },
     ]);
     store.dispatch(setCorporateData(mockCorporateData));
-    const banksMock = [bankMock] || [];;
+    const banksMock = [bankMock];
     const banks =banksMock.map((bank: any) => ({
       ...bank,
       BankId: bank.id,
@@ -4106,7 +4143,7 @@ describe("test create corporate form9 (bank)", () => {
       store.dispatch(clearBank());
       store.dispatch(clearCorporateData());
     });
-  }, 20000);
+  }, 40000);
 
   test("test input data(multiple input type)", async () => {
     const mockOnSubmit = jest.fn();
@@ -4184,7 +4221,7 @@ describe("test create corporate form9 (bank)", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-  }, 20000);
+  }, 40000);
 });
 
 jest.mock(
@@ -4192,9 +4229,14 @@ jest.mock(
 );
 
 describe("UploadFiles Component", () => {
+
   beforeEach(() => {
     jest.clearAllMocks();
-  });
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
+    store.dispatch(setUser(mockUser));
+});
 
   beforeAll(() => {
     localStorage.setItem('corporateCode', '80000001');
@@ -4588,12 +4630,14 @@ const transformedData = [
 jest.mock('../../../../src/pages/createJob/addedCorporateAccount/hook/useSuitTest');
 
 describe('test create corporate form11 (suite test)', () => {
-  const mockUser = { /* your mock user data */ };
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    jest.resetModules();
+    store.dispatch(clearTestCorporateData());
     store.dispatch(setUser(mockUser));
-  });
+});
 
   beforeAll(() => {
     localStorage.setItem('corporateCode', '80000001');

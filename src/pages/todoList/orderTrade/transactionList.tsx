@@ -6,9 +6,10 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { TTransaction } from "./constant/type";
 import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { RootState, store } from "@/app/store";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 const TransactionList = () => {
   if (!isAllowedPage(3003)) {
@@ -70,7 +71,7 @@ const TransactionList = () => {
       .filter((data) => data.ReviewStatus !== undefined);
 
     console.log(dataToSend);
-
+    store.dispatch(setTestCorporateData(dataToSend));
     try {
       const response = await axios.post(
         "/api/v1/transaction/order/review",
@@ -219,6 +220,7 @@ const TransactionList = () => {
       name: "Approve",
       cell: (row: TTransaction) => (
         <input
+          data-testid={`approve-${row.id}`}
           type="checkbox"
           checked={checkboxStatus[row.id]?.checkerStatus === true}
           onChange={(e) =>
@@ -234,6 +236,7 @@ const TransactionList = () => {
       name: "Reject",
       cell: (row: TTransaction) => (
         <input
+          data-testid={`reject-${row.id}`}
           type="checkbox"
           checked={checkboxStatus[row.id]?.checkerStatus === false}
           onChange={(e) =>

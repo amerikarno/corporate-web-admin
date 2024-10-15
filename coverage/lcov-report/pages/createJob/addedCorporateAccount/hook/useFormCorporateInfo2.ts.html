@@ -1,0 +1,1441 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for pages/createJob/addedCorporateAccount/hook/useFormCorporateInfo2.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">pages/createJob/addedCorporateAccount/hook</a> useFormCorporateInfo2.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">36.25% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>87/240</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">8.58% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>14/163</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">90% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>9/10</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">34.33% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>80/233</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a>
+<a name='L321'></a><a href='#L321'>321</a>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a>
+<a name='L337'></a><a href='#L337'>337</a>
+<a name='L338'></a><a href='#L338'>338</a>
+<a name='L339'></a><a href='#L339'>339</a>
+<a name='L340'></a><a href='#L340'>340</a>
+<a name='L341'></a><a href='#L341'>341</a>
+<a name='L342'></a><a href='#L342'>342</a>
+<a name='L343'></a><a href='#L343'>343</a>
+<a name='L344'></a><a href='#L344'>344</a>
+<a name='L345'></a><a href='#L345'>345</a>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a>
+<a name='L359'></a><a href='#L359'>359</a>
+<a name='L360'></a><a href='#L360'>360</a>
+<a name='L361'></a><a href='#L361'>361</a>
+<a name='L362'></a><a href='#L362'>362</a>
+<a name='L363'></a><a href='#L363'>363</a>
+<a name='L364'></a><a href='#L364'>364</a>
+<a name='L365'></a><a href='#L365'>365</a>
+<a name='L366'></a><a href='#L366'>366</a>
+<a name='L367'></a><a href='#L367'>367</a>
+<a name='L368'></a><a href='#L368'>368</a>
+<a name='L369'></a><a href='#L369'>369</a>
+<a name='L370'></a><a href='#L370'>370</a>
+<a name='L371'></a><a href='#L371'>371</a>
+<a name='L372'></a><a href='#L372'>372</a>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a>
+<a name='L375'></a><a href='#L375'>375</a>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a>
+<a name='L385'></a><a href='#L385'>385</a>
+<a name='L386'></a><a href='#L386'>386</a>
+<a name='L387'></a><a href='#L387'>387</a>
+<a name='L388'></a><a href='#L388'>388</a>
+<a name='L389'></a><a href='#L389'>389</a>
+<a name='L390'></a><a href='#L390'>390</a>
+<a name='L391'></a><a href='#L391'>391</a>
+<a name='L392'></a><a href='#L392'>392</a>
+<a name='L393'></a><a href='#L393'>393</a>
+<a name='L394'></a><a href='#L394'>394</a>
+<a name='L395'></a><a href='#L395'>395</a>
+<a name='L396'></a><a href='#L396'>396</a>
+<a name='L397'></a><a href='#L397'>397</a>
+<a name='L398'></a><a href='#L398'>398</a>
+<a name='L399'></a><a href='#L399'>399</a>
+<a name='L400'></a><a href='#L400'>400</a>
+<a name='L401'></a><a href='#L401'>401</a>
+<a name='L402'></a><a href='#L402'>402</a>
+<a name='L403'></a><a href='#L403'>403</a>
+<a name='L404'></a><a href='#L404'>404</a>
+<a name='L405'></a><a href='#L405'>405</a>
+<a name='L406'></a><a href='#L406'>406</a>
+<a name='L407'></a><a href='#L407'>407</a>
+<a name='L408'></a><a href='#L408'>408</a>
+<a name='L409'></a><a href='#L409'>409</a>
+<a name='L410'></a><a href='#L410'>410</a>
+<a name='L411'></a><a href='#L411'>411</a>
+<a name='L412'></a><a href='#L412'>412</a>
+<a name='L413'></a><a href='#L413'>413</a>
+<a name='L414'></a><a href='#L414'>414</a>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a>
+<a name='L419'></a><a href='#L419'>419</a>
+<a name='L420'></a><a href='#L420'>420</a>
+<a name='L421'></a><a href='#L421'>421</a>
+<a name='L422'></a><a href='#L422'>422</a>
+<a name='L423'></a><a href='#L423'>423</a>
+<a name='L424'></a><a href='#L424'>424</a>
+<a name='L425'></a><a href='#L425'>425</a>
+<a name='L426'></a><a href='#L426'>426</a>
+<a name='L427'></a><a href='#L427'>427</a>
+<a name='L428'></a><a href='#L428'>428</a>
+<a name='L429'></a><a href='#L429'>429</a>
+<a name='L430'></a><a href='#L430'>430</a>
+<a name='L431'></a><a href='#L431'>431</a>
+<a name='L432'></a><a href='#L432'>432</a>
+<a name='L433'></a><a href='#L433'>433</a>
+<a name='L434'></a><a href='#L434'>434</a>
+<a name='L435'></a><a href='#L435'>435</a>
+<a name='L436'></a><a href='#L436'>436</a>
+<a name='L437'></a><a href='#L437'>437</a>
+<a name='L438'></a><a href='#L438'>438</a>
+<a name='L439'></a><a href='#L439'>439</a>
+<a name='L440'></a><a href='#L440'>440</a>
+<a name='L441'></a><a href='#L441'>441</a>
+<a name='L442'></a><a href='#L442'>442</a>
+<a name='L443'></a><a href='#L443'>443</a>
+<a name='L444'></a><a href='#L444'>444</a>
+<a name='L445'></a><a href='#L445'>445</a>
+<a name='L446'></a><a href='#L446'>446</a>
+<a name='L447'></a><a href='#L447'>447</a>
+<a name='L448'></a><a href='#L448'>448</a>
+<a name='L449'></a><a href='#L449'>449</a>
+<a name='L450'></a><a href='#L450'>450</a>
+<a name='L451'></a><a href='#L451'>451</a>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span></td><td class="text"><pre class="prettyprint lang-js">import { copy } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { getCookies } from "@/lib/Cookies";
+import axios from "@/api/axios";
+import { useNavigate } from "react-router-dom";
+import { CorporateResponse } from "../../constant/type";
+import { getFrom2Response, mapToForm2Create } from "../libs/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+&nbsp;
+export function useFormCorporateInfo2() {
+  const navigate = useNavigate();
+&nbsp;
+  const [resFrom2, setResForm2] = useState&lt;CorporateResponse&gt;(
+    getFrom2Response()
+  );
+  const dispatch = useDispatch();
+  const corp = useSelector((state: RootState) =&gt; state.editCorporate);
+  useEffect(() =&gt; {
+    const fetchCorporateTypeData = async () =&gt; {
+      try {
+        const token = getCookies();
+        const corporateCodeString = corp.CorporateCode.toString();
+        const res = await axios.post(
+          "/api/v1/corporate/query",
+          { corporateCode: corporateCodeString },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_34_8_34_46_4`,"form2 fetch data: ", res));</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (res.status === 200) {</span>
+<span class="cstat-no" title="statement not covered" >          dispatch(setCorporateData(res.data[0]));</span>
+        }
+      } catch (error) {
+        /* eslint-disable */console.error(...oo_tx(`3241214134_39_8_39_66_11`,"Error fetchCorporateTypeData data:", error));
+      }
+    };
+&nbsp;
+    fetchCorporateTypeData();
+  }, [dispatch, corp.CorporateCode]);
+  
+  /* eslint-disable */console.log(...oo_oo(`3241214134_46_2_46_19_4`,corp))
+  
+  const setStoreData = <span class="fstat-no" title="function not covered" >(d</span>ata: CorporateResponse) =&gt; {
+    let tmp = <span class="cstat-no" title="statement not covered" >copy(corp);</span>
+    /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_50_4_50_20_4`,tmp));</span>
+    /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_51_4_51_21_4`,data))</span>
+    /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_52_4_52_47_4`,tmp?.CountrySourceIncomes?.[0]))</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (tmp.CorporateTypes) {</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isJuristicThailand = data.isJuristicThailand</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isTaxExempt = data.isTaxExempt ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isNonTaxExempt = data.isNonTaxExempt ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isJuristicForeign = data.isJuristicForeign</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isOperatingInThailand = data.isOperatingInThailand</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isNonOperatingInThailand =</span>
+        data.isNonOperatingInThailand ? true : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isOther = data.isOther ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isPartnership = data.isPartnership ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isGovernmentStateEnterprise =</span>
+        data.isGovernmentStateEnterprise ? true : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isCoOperative = data.isCoOperative ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CorporateTypes.isTaxExemptCompany = data.isTaxExemptCompany</span>
+        ? true
+        : false;
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (tmp.BusinessTypes) {</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isAntiqueTrading = data.isAntiqueTrading ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isHotelRestaurant = data.isHotelRestaurant</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isArmament = data.isArmament ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isInsuranceAssurance = data.isInsuranceAssurance</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isCasinoGambling = data.isCasinoGambling ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isJewelryGoldTrading = data.isJewelryGoldTrading</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isFoundation = data.isFoundation ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isPropertyRealEstate = data.isPropertyRealEstate</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isMoneyTransfer = data.isMoneyTransfer ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isEmploymentAgency = data.isEmploymentAgency</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isEntertainment = data.isEntertainment ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isTravel = data.isTravel ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isFinancial = data.isFinancial ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isEducationCenter = data.isEducationCenter</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isForeignCurrencyExchange =</span>
+        data.isForeignCurrencyExchange ? true : false;
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isCryptoRelated = data.isCryptoRelated ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.isOtherBusiness = data.isOtherBusiness ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.BusinessTypes.otherBusinessType = data.otherBusinessType</span>
+        ? data.otherBusinessType
+        : "";
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (tmp.SourceOfIncomes) {</span>
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.isRevenue = data.isRevenue ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.isStock = data.isStock ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.isDonation = data.isDonation ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.isLoan = data.isLoan ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.isRevenueSelling = data.isRevenueSelling</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.isOtherIncome = data.isOtherIncome ? true : false;</span>
+<span class="cstat-no" title="statement not covered" >      tmp.SourceOfIncomes.otherIncome = data.otherIncome</span>
+        ? data.otherIncome
+        : "";
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (tmp.CountrySourceIncomes) {</span>
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].isCashManagement = data.isCashManagement</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].isInvestment = data.isInvestment</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].isLiquidation = data.isLiquidation</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].isOtherInvestment = data.isOtherInvestment</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].otherInvestment = data.otherInvestment</span>
+        ? data.otherInvestment
+        : "";
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].corporateCountry.isThailand = data.isThailand</span>
+        ? true
+        : false;
+<span class="cstat-no" title="statement not covered" >      tmp.CountrySourceIncomes[0].corporateCountry.other = data.otherCountry</span>
+        ? data.otherCountry
+        : "";
+    }
+    /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_150_4_150_20_4`,tmp))</span>
+<span class="cstat-no" title="statement not covered" >    dispatch(setCorporateData(tmp));</span>
+<span class="cstat-no" title="statement not covered" >    setResForm2(data);</span>
+  };
+&nbsp;
+&nbsp;
+  const saveJuristicType = async (data: CorporateResponse | null) =&gt; {
+    /* eslint-disable */console.log(...oo_oo(`3241214134_157_4_157_51_4`,data?.corporateCountry?.isThailand))
+    /* eslint-disable */console.log(...oo_oo(`3241214134_158_4_158_46_4`,data?.corporateCountry?.other))
+    if (data !== null) {
+      let body = {
+        ...data,
+        CreatedAt: undefined,
+        DeletedAt: undefined,
+        createBy: undefined,
+        corporateCountry: undefined,
+        deleteBy: undefined,
+        corporateCode: corp.CorporateCode?.toString(),
+        isThailand: data.corporateCountry?.isThailand  ? (<span class="branch-0 cbranch-no" title="branch not covered" >data.corporateCountry?.isThailand ? true : false)</span> : false,
+        otherCountry: data.corporateCountry?.isThailand ? <span class="branch-0 cbranch-no" title="branch not covered" >"" </span>: data.corporateCountry?.other,
+      };
+      /* eslint-disable */console.log(...oo_oo(`3241214134_171_6_171_34_4`,body.isThailand))
+      /* eslint-disable */console.log(...oo_oo(`3241214134_172_6_172_36_4`,body.otherCountry))
+      try {
+        const token = getCookies();
+        const res = await axios.post("/api/v1/corporate/update/type", body, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+<span class="cstat-no" title="statement not covered" >        if (res.status === 200) {</span>
+          /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_181_10_181_49_4`,"update success", res.data));</span>
+<span class="cstat-no" title="statement not covered" >          setStoreData(data);</span>
+<span class="cstat-no" title="statement not covered" >          navigate("/create-job/added-corporate-account/3");</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          alert("Invalid Input.");</span>
+          /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_186_10_186_36_4`,"save failed"));</span>
+        }
+      } catch (error) {
+        /* eslint-disable */console.log(...oo_oo(`3241214134_189_8_189_26_4`,error));
+        alert(error);
+      }
+    }
+  };
+&nbsp;
+  const createJuristicType = async (data: CorporateResponse , corporateData:any) =&gt; {
+    
+    try {
+      if (data !== null) {
+        let body = mapToForm2Create(data)
+        body={
+          ...body,
+          corporateCode: corporateData.CorporateCode.toString(),
+          isThailand: data.corporateCountry?.isThailand ? <span class="branch-0 cbranch-no" title="branch not covered" >true </span>: false,
+          otherCountry: data.corporateCountry?.other,
+        }
+        /* eslint-disable */console.log(...oo_oo(`3241214134_206_8_206_34_4`,"body: ",body))
+      const token = getCookies();
+      const res = await axios.post("/api/v1/corporate/create/type", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+<span class="cstat-no" title="statement not covered" >      if (res.status === 200) {</span>
+        /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_214_8_214_48_4`,"request success", res.data));</span>
+<span class="cstat-no" title="statement not covered" >        setStoreData(body)</span>
+<span class="cstat-no" title="statement not covered" >        navigate("/create-job/added-corporate-account/3");</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        alert("Invalid Input.");</span>
+        /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_219_8_219_36_4`,"create failed"));</span>
+      }
+    }    } catch (error) {
+      /* eslint-disable */console.log(...oo_oo(`3241214134_222_6_222_24_4`,error));
+      alert(error);
+    }
+  };
+&nbsp;
+  // const handleFormPassChange = (status: boolean) =&gt; {
+  //   setIsSecondFormPass(status);
+  // };
+&nbsp;
+  const handleCheckedBox = (
+    e: React.ChangeEvent&lt;HTMLInputElement&gt;,
+    key: string
+  ) =&gt; {
+    const { name, checked } = e.target;
+&nbsp;
+    switch (name) {
+<span class="branch-0 cbranch-no" title="branch not covered" >      case "juristicInfo":</span>
+        let jrType = <span class="cstat-no" title="statement not covered" >copy(resFrom2);</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (jrType &amp;&amp; jrType !== null) {</span>
+<span class="cstat-no" title="statement not covered" >          if (</span>
+            key === "isJuristicThailand" ||
+            key === "isJuristicForeign" ||
+            key === "isOther"
+          ) {
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicForeign = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOther = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isPartnership = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isGovernmentStateEnterprise = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isCoOperative = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExemptCompany = false;</span>
+          } else <span class="cstat-no" title="statement not covered" >if (key === "isTaxExempt" || key === "isNonTaxExempt") {</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicThailand = true;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicForeign = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOther = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isPartnership = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isGovernmentStateEnterprise = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isCoOperative = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExemptCompany = false;</span>
+          } else <span class="cstat-no" title="statement not covered" >if (</span>
+            key === "isOperatingInThailand" ||
+            key === "isNonOperatingInThailand"
+          ) {
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicForeign = true;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOther = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isPartnership = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isGovernmentStateEnterprise = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isCoOperative = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExemptCompany = false;</span>
+          } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>if (</span>
+            key === "isPartnership" ||
+            key === "isGovernmentStateEnterprise" ||
+            key === "isCoOperative" ||
+            key === "isTaxExemptCompany"
+          ) {
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonTaxExempt = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isJuristicForeign = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isNonOperatingInThailand = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isOther = true;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isPartnership = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isGovernmentStateEnterprise = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isCoOperative = false;</span>
+<span class="cstat-no" title="statement not covered" >            jrType.isTaxExemptCompany = false;</span>
+          }
+&nbsp;
+          (<span class="cstat-no" title="statement not covered" >jrType[key as keyof typeof jrType] as boolean) = checked;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        setResForm2({ ...jrType });</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case "businessType":
+        let buType = copy(resFrom2);
+        if (buType &amp;&amp; buType !== null) {
+          buType.isAntiqueTrading = false;
+          buType.isHotelRestaurant = false;
+          buType.isArmament = false;
+          buType.isInsuranceAssurance = false;
+          buType.isCasinoGambling = false;
+          buType.isJewelryGoldTrading = false;
+          buType.isFoundation = false;
+          buType.isPropertyRealEstate = false;
+          buType.isMoneyTransfer = false;
+          buType.isEmploymentAgency = false;
+          buType.isEntertainment = false;
+          buType.isTravel = false;
+          buType.isFinancial = false;
+          buType.isEducationCenter = false;
+          buType.isForeignCurrencyExchange = false;
+          buType.isCryptoRelated = false;
+          buType.isOtherBusiness = false;
+&nbsp;
+          (buType[key as keyof typeof buType] as boolean) = checked;
+        }
+        setResForm2({ ...buType });
+&nbsp;
+        break;
+&nbsp;
+<span class="branch-2 cbranch-no" title="branch not covered" >      case "sourceOfIncome":</span>
+        let srcIncome = <span class="cstat-no" title="statement not covered" >copy(resFrom2);</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (srcIncome &amp;&amp; srcIncome !== null) {</span>
+          (<span class="cstat-no" title="statement not covered" >srcIncome[key as keyof typeof srcIncome] as boolean) = checked;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        setResForm2({ ...srcIncome });</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+<span class="branch-3 cbranch-no" title="branch not covered" >        case "countrySourceOfIncome":</span>
+          let countrySrcIncome = <span class="cstat-no" title="statement not covered" >copy(resFrom2);</span>
+          
+<span class="cstat-no" title="statement not covered" >          <span class="missing-if-branch" title="if path not taken" >I</span>if (!countrySrcIncome.corporateCountry) {</span>
+<span class="cstat-no" title="statement not covered" >            countrySrcIncome.corporateCountry = {};</span>
+          }
+        
+<span class="cstat-no" title="statement not covered" >          if (key === "isThailand") {</span>
+<span class="cstat-no" title="statement not covered" >            countrySrcIncome.corporateCountry.isThailand = checked;</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            countrySrcIncome.corporateCountry.isThailand = !checked;</span>
+          }
+        
+<span class="cstat-no" title="statement not covered" >          setResForm2({ ...countrySrcIncome });</span>
+<span class="cstat-no" title="statement not covered" >          break;</span>
+        
+&nbsp;
+<span class="branch-4 cbranch-no" title="branch not covered" >      case "investmentObjective":</span>
+        let invObj = <span class="cstat-no" title="statement not covered" >copy(resFrom2);</span>
+        /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3241214134_363_8_363_39_4`,key, name, checked));</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (invObj &amp;&amp; invObj !== null) {</span>
+          // invObj.isLiquidation = false;
+          // invObj.isInvestment = false;
+          // invObj.isCashManagement = false;
+          // invObj.isOtherInvestment = false;
+          (<span class="cstat-no" title="statement not covered" >invObj[key as keyof typeof invObj] as boolean) = checked;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        setResForm2({ ...invObj });</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+<span class="branch-5 cbranch-no" title="branch not covered" >      default:</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  };
+&nbsp;
+  const handleInputOthersOption = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const { name, value } = e.target;
+    let form2Data = copy(resFrom2);
+    switch (name) {
+<span class="branch-0 cbranch-no" title="branch not covered" >      case "countrySourceOfIncomeOther":</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (form2Data &amp;&amp; form2Data.corporateCountry) {</span>
+<span class="cstat-no" title="statement not covered" >          form2Data.corporateCountry.other = value;</span>
+<span class="cstat-no" title="statement not covered" >          setResForm2({ ...form2Data });</span>
+        }
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+      case "sourceOfIncomeOther":
+        if (form2Data &amp;&amp; form2Data !== null) {
+          form2Data.otherIncome = value;
+        }
+        break;
+&nbsp;
+<span class="branch-2 cbranch-no" title="branch not covered" >      case "investmentObjectiveOther":</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (form2Data &amp;&amp; form2Data !== null) {</span>
+<span class="cstat-no" title="statement not covered" >          form2Data.otherInvestment = value;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+<span class="branch-3 cbranch-no" title="branch not covered" >      case "businessTypeOther":</span>
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (form2Data &amp;&amp; form2Data !== null) {</span>
+<span class="cstat-no" title="statement not covered" >          form2Data.otherBusinessType = value;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        break;</span>
+&nbsp;
+<span class="branch-4 cbranch-no" title="branch not covered" >      default:</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+    setResForm2({ ...form2Data });
+  };
+&nbsp;
+  return {
+    // corporateTypeAndIncome,
+    // isBusinessTypeOthers,
+    // isSourceOfIncomeOthers,
+    // isCountrySourceOfIncomeOthers,
+    // isInvestmentObjectiveOthers,
+    // errors,
+    // juristicAllType,
+    // juristicAllOtherType,
+    // isSecondFormPass,
+    // handleCheck,
+    // handleSubSelected,
+    // handeleBusinessType,
+    // handeleCountrySourceOfIncome,
+    // handeleInvestmentObjective,
+    // handeleSourceOfIncome,
+    // handleInputOthers,
+    // handleFormPassChange,
+    // getError,
+    // disableBusinessType,
+    // disableCountrySourceOfIncome,
+    // disableInvestmentObjective,
+    // isDiabledJuristicType,
+    // isDisableSubSelected,
+    // validateForm,
+    saveJuristicType,
+    createJuristicType,
+    // isCheckedByKeyValue,
+    resFrom2,
+    handleCheckedBox,
+    handleInputOthersOption,
+  };
+}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+/* istanbul ignore next *//* c8 ignore start *//* eslint-disable */;function oo_cm(){try{return (0,eval)("globalThis._console_ninja") || <span class="branch-1 cbranch-no" title="branch not covered" >(0,eval)("/* https://github.com/wallabyjs/console-ninja#how-does-it-work */'use strict';var _0x58f275=_0x4c52;(function(_0x36a892,_0x2469fc){var _0x2bad80=_0x4c52,_0x1dfdd5=_0x36a892();while(!![]){try{var _0x592d83=-parseInt(_0x2bad80(0x17d))/0x1+-parseInt(_0x2bad80(0x15e))/0x2*(parseInt(_0x2bad80(0x120))/0x3)+parseInt(_0x2bad80(0x1a1))/0x4+-parseInt(_0x2bad80(0xfa))/0x5+-parseInt(_0x2bad80(0xc9))/0x6+parseInt(_0x2bad80(0x183))/0x7+parseInt(_0x2bad80(0x13a))/0x8*(parseInt(_0x2bad80(0x17f))/0x9);if(_0x592d83===_0x2469fc)break;else _0x1dfdd5['push'](_0x1dfdd5['shift']());}catch(_0x12e88e){_0x1dfdd5['push'](_0x1dfdd5['shift']());}}}(_0x30b1,0x20c1d));var K=Object[_0x58f275(0x142)],Q=Object[_0x58f275(0x17a)],G=Object[_0x58f275(0x193)],ee=Object[_0x58f275(0xc1)],te=Object[_0x58f275(0x1a5)],ne=Object[_0x58f275(0x19b)][_0x58f275(0x155)],re=(_0x187ebe,_0xaa79de,_0x581c0b,_0x24c7fe)=&gt;{var _0x41267c=_0x58f275;if(_0xaa79de&amp;&amp;typeof _0xaa79de==_0x41267c(0xd3)||typeof _0xaa79de==_0x41267c(0xd5)){for(let _0x22ac74 of ee(_0xaa79de))!ne[_0x41267c(0x197)](_0x187ebe,_0x22ac74)&amp;&amp;_0x22ac74!==_0x581c0b&amp;&amp;Q(_0x187ebe,_0x22ac74,{'get':()=&gt;_0xaa79de[_0x22ac74],'enumerable':!(_0x24c7fe=G(_0xaa79de,_0x22ac74))||_0x24c7fe[_0x41267c(0x18a)]});}return _0x187ebe;},V=(_0x5cb132,_0x436dd9,_0x727d9)=&gt;(_0x727d9=_0x5cb132!=null?K(te(_0x5cb132)):{},re(_0x436dd9||!_0x5cb132||!_0x5cb132[_0x58f275(0x152)]?Q(_0x727d9,_0x58f275(0x11e),{'value':_0x5cb132,'enumerable':!0x0}):_0x727d9,_0x5cb132)),Z=class{constructor(_0x211735,_0x110b24,_0x3c0975,_0x2b944e,_0x97bb36,_0x58f146){var _0x4f5901=_0x58f275,_0x28dc92,_0x4bec3a,_0x4e5230,_0x2bf893;this[_0x4f5901(0xed)]=_0x211735,this[_0x4f5901(0x179)]=_0x110b24,this['port']=_0x3c0975,this[_0x4f5901(0x103)]=_0x2b944e,this[_0x4f5901(0x114)]=_0x97bb36,this[_0x4f5901(0x171)]=_0x58f146,this[_0x4f5901(0xe2)]=!0x0,this['_allowedToConnectOnSend']=!0x0,this[_0x4f5901(0xb3)]=!0x1,this[_0x4f5901(0x134)]=!0x1,this['_inNextEdge']=((_0x4bec3a=(_0x28dc92=_0x211735[_0x4f5901(0x19c)])==null?void 0x0:_0x28dc92[_0x4f5901(0x13b)])==null?void 0x0:_0x4bec3a[_0x4f5901(0xf0)])===_0x4f5901(0x188),this['_inBrowser']=!((_0x2bf893=(_0x4e5230=this[_0x4f5901(0xed)][_0x4f5901(0x19c)])==null?void 0x0:_0x4e5230['versions'])!=null&amp;&amp;_0x2bf893[_0x4f5901(0x112)])&amp;&amp;!this['_inNextEdge'],this[_0x4f5901(0xca)]=null,this[_0x4f5901(0x1a0)]=0x0,this[_0x4f5901(0xf3)]=0x14,this[_0x4f5901(0x16f)]=_0x4f5901(0x10f),this['_sendErrorMessage']=(this[_0x4f5901(0xbe)]?_0x4f5901(0x153):'Console\\x20Ninja\\x20failed\\x20to\\x20send\\x20logs,\\x20restarting\\x20the\\x20process\\x20may\\x20help;\\x20also\\x20see\\x20')+this[_0x4f5901(0x16f)];}async[_0x58f275(0xdb)](){var _0x3a9501=_0x58f275,_0x5eda2d,_0x21f5aa;if(this[_0x3a9501(0xca)])return this[_0x3a9501(0xca)];let _0x1b6afa;if(this['_inBrowser']||this[_0x3a9501(0x12a)])_0x1b6afa=this[_0x3a9501(0xed)]['WebSocket'];else{if((_0x5eda2d=this[_0x3a9501(0xed)][_0x3a9501(0x19c)])!=null&amp;&amp;_0x5eda2d['_WebSocket'])_0x1b6afa=(_0x21f5aa=this[_0x3a9501(0xed)][_0x3a9501(0x19c)])==null?void 0x0:_0x21f5aa[_0x3a9501(0x167)];else try{let _0xecfe2a=await import(_0x3a9501(0x10a));_0x1b6afa=(await import((await import(_0x3a9501(0x118)))[_0x3a9501(0x1aa)](_0xecfe2a[_0x3a9501(0x1a6)](this[_0x3a9501(0x103)],_0x3a9501(0xe4)))[_0x3a9501(0x18d)]()))[_0x3a9501(0x11e)];}catch{try{_0x1b6afa=require(require(_0x3a9501(0x10a))[_0x3a9501(0x1a6)](this[_0x3a9501(0x103)],'ws'));}catch{throw new Error(_0x3a9501(0x111));}}}return this[_0x3a9501(0xca)]=_0x1b6afa,_0x1b6afa;}[_0x58f275(0xf4)](){var _0x45d5c3=_0x58f275;this[_0x45d5c3(0x134)]||this[_0x45d5c3(0xb3)]||this['_connectAttemptCount']&gt;=this[_0x45d5c3(0xf3)]||(this['_allowedToConnectOnSend']=!0x1,this[_0x45d5c3(0x134)]=!0x0,this[_0x45d5c3(0x1a0)]++,this[_0x45d5c3(0x164)]=new Promise((_0x4a68cd,_0x2a646b)=&gt;{var _0x2ca5c3=_0x45d5c3;this['getWebSocketClass']()[_0x2ca5c3(0x140)](_0x3bfb27=&gt;{var _0x39b2a2=_0x2ca5c3;let _0x1e6c70=new _0x3bfb27(_0x39b2a2(0xe7)+(!this[_0x39b2a2(0xbe)]&amp;&amp;this[_0x39b2a2(0x114)]?_0x39b2a2(0xdc):this['host'])+':'+this['port']);_0x1e6c70[_0x39b2a2(0x16d)]=()=&gt;{var _0x4da1fb=_0x39b2a2;this[_0x4da1fb(0xe2)]=!0x1,this[_0x4da1fb(0x117)](_0x1e6c70),this[_0x4da1fb(0x102)](),_0x2a646b(new Error(_0x4da1fb(0x135)));},_0x1e6c70[_0x39b2a2(0x154)]=()=&gt;{var _0x2449d5=_0x39b2a2;this[_0x2449d5(0xbe)]||_0x1e6c70['_socket']&amp;&amp;_0x1e6c70[_0x2449d5(0xc6)]['unref']&amp;&amp;_0x1e6c70[_0x2449d5(0xc6)]['unref'](),_0x4a68cd(_0x1e6c70);},_0x1e6c70[_0x39b2a2(0xe5)]=()=&gt;{var _0x52a7b6=_0x39b2a2;this[_0x52a7b6(0x175)]=!0x0,this['_disposeWebsocket'](_0x1e6c70),this[_0x52a7b6(0x102)]();},_0x1e6c70['onmessage']=_0x5c691a=&gt;{var _0x4fa9a0=_0x39b2a2;try{if(!(_0x5c691a!=null&amp;&amp;_0x5c691a['data'])||!this[_0x4fa9a0(0x171)])return;let _0x3b6171=JSON['parse'](_0x5c691a[_0x4fa9a0(0x14f)]);this[_0x4fa9a0(0x171)](_0x3b6171['method'],_0x3b6171['args'],this[_0x4fa9a0(0xed)],this[_0x4fa9a0(0xbe)]);}catch{}};})['then'](_0x44229e=&gt;(this['_connected']=!0x0,this[_0x2ca5c3(0x134)]=!0x1,this[_0x2ca5c3(0x175)]=!0x1,this['_allowedToSend']=!0x0,this[_0x2ca5c3(0x1a0)]=0x0,_0x44229e))[_0x2ca5c3(0x159)](_0xaf2735=&gt;(this['_connected']=!0x1,this[_0x2ca5c3(0x134)]=!0x1,console[_0x2ca5c3(0x14a)](_0x2ca5c3(0xf9)+this[_0x2ca5c3(0x16f)]),_0x2a646b(new Error(_0x2ca5c3(0x166)+(_0xaf2735&amp;&amp;_0xaf2735[_0x2ca5c3(0xf2)])))));}));}[_0x58f275(0x117)](_0x3ef58e){var _0x10fd8f=_0x58f275;this['_connected']=!0x1,this['_connecting']=!0x1;try{_0x3ef58e[_0x10fd8f(0xe5)]=null,_0x3ef58e[_0x10fd8f(0x16d)]=null,_0x3ef58e[_0x10fd8f(0x154)]=null;}catch{}try{_0x3ef58e[_0x10fd8f(0x182)]&lt;0x2&amp;&amp;_0x3ef58e[_0x10fd8f(0x123)]();}catch{}}[_0x58f275(0x102)](){var _0x3ab39e=_0x58f275;clearTimeout(this['_reconnectTimeout']),!(this[_0x3ab39e(0x1a0)]&gt;=this[_0x3ab39e(0xf3)])&amp;&amp;(this['_reconnectTimeout']=setTimeout(()=&gt;{var _0x330eeb=_0x3ab39e,_0x259c54;this[_0x330eeb(0xb3)]||this[_0x330eeb(0x134)]||(this[_0x330eeb(0xf4)](),(_0x259c54=this[_0x330eeb(0x164)])==null||_0x259c54['catch'](()=&gt;this[_0x330eeb(0x102)]()));},0x1f4),this['_reconnectTimeout'][_0x3ab39e(0x11d)]&amp;&amp;this[_0x3ab39e(0x110)][_0x3ab39e(0x11d)]());}async[_0x58f275(0xfd)](_0x12d421){var _0x3e7600=_0x58f275;try{if(!this[_0x3e7600(0xe2)])return;this[_0x3e7600(0x175)]&amp;&amp;this[_0x3e7600(0xf4)](),(await this[_0x3e7600(0x164)])[_0x3e7600(0xfd)](JSON[_0x3e7600(0x16a)](_0x12d421));}catch(_0x18e3fa){console[_0x3e7600(0x14a)](this['_sendErrorMessage']+':\\x20'+(_0x18e3fa&amp;&amp;_0x18e3fa[_0x3e7600(0xf2)])),this['_allowedToSend']=!0x1,this[_0x3e7600(0x102)]();}}};function q(_0xf9846f,_0xd93ea,_0x5aca8c,_0x1f937b,_0x8af779,_0x562efe,_0x11edab,_0x38b3c7=ie){var _0x31e919=_0x58f275;let _0x5b2e2e=_0x5aca8c[_0x31e919(0xb7)](',')[_0x31e919(0x11a)](_0x6486aa=&gt;{var _0x289071=_0x31e919,_0x39e15d,_0x4ef46d,_0x58b4f3,_0x56185a;try{if(!_0xf9846f[_0x289071(0xe3)]){let _0x5738e6=((_0x4ef46d=(_0x39e15d=_0xf9846f['process'])==null?void 0x0:_0x39e15d[_0x289071(0x15c)])==null?void 0x0:_0x4ef46d[_0x289071(0x112)])||((_0x56185a=(_0x58b4f3=_0xf9846f['process'])==null?void 0x0:_0x58b4f3[_0x289071(0x13b)])==null?void 0x0:_0x56185a[_0x289071(0xf0)])===_0x289071(0x188);(_0x8af779===_0x289071(0x12d)||_0x8af779==='remix'||_0x8af779==='astro'||_0x8af779===_0x289071(0xb2))&amp;&amp;(_0x8af779+=_0x5738e6?_0x289071(0xcf):_0x289071(0x168)),_0xf9846f['_console_ninja_session']={'id':+new Date(),'tool':_0x8af779},_0x11edab&amp;&amp;_0x8af779&amp;&amp;!_0x5738e6&amp;&amp;console[_0x289071(0x101)](_0x289071(0x15b)+(_0x8af779[_0x289071(0x10e)](0x0)[_0x289071(0xbb)]()+_0x8af779[_0x289071(0x185)](0x1))+',',_0x289071(0x145),_0x289071(0xf7));}let _0x48a9b7=new Z(_0xf9846f,_0xd93ea,_0x6486aa,_0x1f937b,_0x562efe,_0x38b3c7);return _0x48a9b7[_0x289071(0xfd)][_0x289071(0x144)](_0x48a9b7);}catch(_0x3c4c84){return console['warn'](_0x289071(0x187),_0x3c4c84&amp;&amp;_0x3c4c84[_0x289071(0xf2)]),()=&gt;{};}});return _0x271eb5=&gt;_0x5b2e2e['forEach'](_0x4e9303=&gt;_0x4e9303(_0x271eb5));}function ie(_0x52824f,_0x3aeb49,_0x414560,_0x457b09){var _0x59b182=_0x58f275;_0x457b09&amp;&amp;_0x52824f===_0x59b182(0xfe)&amp;&amp;_0x414560[_0x59b182(0xd1)][_0x59b182(0xfe)]();}function B(_0x3a3cbf){var _0x1c3307=_0x58f275,_0x15d2c5,_0x43d01e;let _0x37a477=function(_0x3d8098,_0x34276b){return _0x34276b-_0x3d8098;},_0x3ddf08;if(_0x3a3cbf[_0x1c3307(0x138)])_0x3ddf08=function(){var _0x253e8e=_0x1c3307;return _0x3a3cbf[_0x253e8e(0x138)][_0x253e8e(0x116)]();};else{if(_0x3a3cbf[_0x1c3307(0x19c)]&amp;&amp;_0x3a3cbf[_0x1c3307(0x19c)][_0x1c3307(0x12b)]&amp;&amp;((_0x43d01e=(_0x15d2c5=_0x3a3cbf[_0x1c3307(0x19c)])==null?void 0x0:_0x15d2c5[_0x1c3307(0x13b)])==null?void 0x0:_0x43d01e[_0x1c3307(0xf0)])!==_0x1c3307(0x188))_0x3ddf08=function(){var _0xf969d7=_0x1c3307;return _0x3a3cbf['process'][_0xf969d7(0x12b)]();},_0x37a477=function(_0x12c35f,_0x11fb80){return 0x3e8*(_0x11fb80[0x0]-_0x12c35f[0x0])+(_0x11fb80[0x1]-_0x12c35f[0x1])/0xf4240;};else try{let {performance:_0x1fe8af}=require(_0x1c3307(0x170));_0x3ddf08=function(){var _0x32d958=_0x1c3307;return _0x1fe8af[_0x32d958(0x116)]();};}catch{_0x3ddf08=function(){return+new Date();};}}return{'elapsed':_0x37a477,'timeStamp':_0x3ddf08,'now':()=&gt;Date[_0x1c3307(0x116)]()};}function H(_0x76557e,_0x2564bb,_0x1612e1){var _0x59814e=_0x58f275,_0x356dab,_0x557202,_0xbaf8e5,_0x1357f4,_0x453e33;if(_0x76557e[_0x59814e(0x121)]!==void 0x0)return _0x76557e['_consoleNinjaAllowedToStart'];let _0x36281e=((_0x557202=(_0x356dab=_0x76557e['process'])==null?void 0x0:_0x356dab[_0x59814e(0x15c)])==null?void 0x0:_0x557202['node'])||((_0x1357f4=(_0xbaf8e5=_0x76557e['process'])==null?void 0x0:_0xbaf8e5[_0x59814e(0x13b)])==null?void 0x0:_0x1357f4[_0x59814e(0xf0)])===_0x59814e(0x188);function _0x28976d(_0x3e53a8){var _0x2376bd=_0x59814e;if(_0x3e53a8[_0x2376bd(0x14c)]('/')&amp;&amp;_0x3e53a8[_0x2376bd(0x127)]('/')){let _0x50fc37=new RegExp(_0x3e53a8[_0x2376bd(0x17b)](0x1,-0x1));return _0x55cade=&gt;_0x50fc37['test'](_0x55cade);}else{if(_0x3e53a8[_0x2376bd(0xd2)]('*')||_0x3e53a8[_0x2376bd(0xd2)]('?')){let _0x125a89=new RegExp('^'+_0x3e53a8[_0x2376bd(0x10c)](/\\./g,String[_0x2376bd(0x158)](0x5c)+'.')[_0x2376bd(0x10c)](/\\*/g,'.*')[_0x2376bd(0x10c)](/\\?/g,'.')+String[_0x2376bd(0x158)](0x24));return _0xa9f409=&gt;_0x125a89['test'](_0xa9f409);}else return _0x4d3dae=&gt;_0x4d3dae===_0x3e53a8;}}let _0x3a0d46=_0x2564bb['map'](_0x28976d);return _0x76557e['_consoleNinjaAllowedToStart']=_0x36281e||!_0x2564bb,!_0x76557e[_0x59814e(0x121)]&amp;&amp;((_0x453e33=_0x76557e[_0x59814e(0xd1)])==null?void 0x0:_0x453e33[_0x59814e(0x128)])&amp;&amp;(_0x76557e[_0x59814e(0x121)]=_0x3a0d46['some'](_0x53fe02=&gt;_0x53fe02(_0x76557e[_0x59814e(0xd1)][_0x59814e(0x128)]))),_0x76557e[_0x59814e(0x121)];}function X(_0x3fa8d6,_0x3ff97c,_0x325313,_0x23087f){var _0x1245ae=_0x58f275;_0x3fa8d6=_0x3fa8d6,_0x3ff97c=_0x3ff97c,_0x325313=_0x325313,_0x23087f=_0x23087f;let _0x4bb4ae=B(_0x3fa8d6),_0x5d545a=_0x4bb4ae[_0x1245ae(0xdf)],_0x350e5e=_0x4bb4ae['timeStamp'];class _0x453c36{constructor(){var _0x152d38=_0x1245ae;this[_0x152d38(0x132)]=/^(?!(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)$)[_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*$/,this['_numberRegExp']=/^(0|[1-9][0-9]*)$/,this['_quotedRegExp']=/'([^\\\\']|\\\\')*'/,this[_0x152d38(0x136)]=_0x3fa8d6['undefined'],this[_0x152d38(0x18e)]=_0x3fa8d6['HTMLAllCollection'],this['_getOwnPropertyDescriptor']=Object[_0x152d38(0x193)],this[_0x152d38(0x18c)]=Object[_0x152d38(0xc1)],this[_0x152d38(0xce)]=_0x3fa8d6[_0x152d38(0xea)],this[_0x152d38(0x11b)]=RegExp[_0x152d38(0x19b)][_0x152d38(0x18d)],this['_dateToString']=Date[_0x152d38(0x19b)][_0x152d38(0x18d)];}[_0x1245ae(0x173)](_0x2dbeeb,_0x16cca8,_0x415a04,_0x24d788){var _0x4e96c4=_0x1245ae,_0x15a594=this,_0x1fa04d=_0x415a04[_0x4e96c4(0xbf)];function _0x41f444(_0x3eebfb,_0x1312c3,_0x3b254b){var _0x5510f5=_0x4e96c4;_0x1312c3[_0x5510f5(0xee)]=_0x5510f5(0xc8),_0x1312c3['error']=_0x3eebfb[_0x5510f5(0xf2)],_0x19b37e=_0x3b254b[_0x5510f5(0x112)][_0x5510f5(0x18b)],_0x3b254b['node'][_0x5510f5(0x18b)]=_0x1312c3,_0x15a594['_treeNodePropertiesBeforeFullValue'](_0x1312c3,_0x3b254b);}try{_0x415a04[_0x4e96c4(0xb4)]++,_0x415a04[_0x4e96c4(0xbf)]&amp;&amp;_0x415a04[_0x4e96c4(0x13c)][_0x4e96c4(0xc3)](_0x16cca8);var _0x421cf7,_0x5abfbc,_0x972c7f,_0x249fd4,_0x5f4310=[],_0x1cda99=[],_0x1e0e6e,_0x130cbc=this[_0x4e96c4(0x17e)](_0x16cca8),_0x28ba26=_0x130cbc===_0x4e96c4(0x191),_0x40f2cf=!0x1,_0x1dafe3=_0x130cbc==='function',_0x57938a=this[_0x4e96c4(0xf1)](_0x130cbc),_0x40740a=this['_isPrimitiveWrapperType'](_0x130cbc),_0x5bf5bb=_0x57938a||_0x40740a,_0x281a4a={},_0x33e796=0x0,_0x1c9ff9=!0x1,_0x19b37e,_0x282cd8=/^(([1-9]{1}[0-9]*)|0)$/;if(_0x415a04[_0x4e96c4(0x13d)]){if(_0x28ba26){if(_0x5abfbc=_0x16cca8[_0x4e96c4(0x143)],_0x5abfbc&gt;_0x415a04[_0x4e96c4(0xde)]){for(_0x972c7f=0x0,_0x249fd4=_0x415a04['elements'],_0x421cf7=_0x972c7f;_0x421cf7&lt;_0x249fd4;_0x421cf7++)_0x1cda99[_0x4e96c4(0xc3)](_0x15a594[_0x4e96c4(0xe0)](_0x5f4310,_0x16cca8,_0x130cbc,_0x421cf7,_0x415a04));_0x2dbeeb[_0x4e96c4(0xe9)]=!0x0;}else{for(_0x972c7f=0x0,_0x249fd4=_0x5abfbc,_0x421cf7=_0x972c7f;_0x421cf7&lt;_0x249fd4;_0x421cf7++)_0x1cda99[_0x4e96c4(0xc3)](_0x15a594[_0x4e96c4(0xe0)](_0x5f4310,_0x16cca8,_0x130cbc,_0x421cf7,_0x415a04));}_0x415a04[_0x4e96c4(0xc2)]+=_0x1cda99[_0x4e96c4(0x143)];}if(!(_0x130cbc===_0x4e96c4(0x100)||_0x130cbc===_0x4e96c4(0x115))&amp;&amp;!_0x57938a&amp;&amp;_0x130cbc!==_0x4e96c4(0xb9)&amp;&amp;_0x130cbc!==_0x4e96c4(0x1a7)&amp;&amp;_0x130cbc!=='bigint'){var _0x166213=_0x24d788[_0x4e96c4(0x1a9)]||_0x415a04['props'];if(this[_0x4e96c4(0xbd)](_0x16cca8)?(_0x421cf7=0x0,_0x16cca8[_0x4e96c4(0x15f)](function(_0x96891f){var _0x370a8b=_0x4e96c4;if(_0x33e796++,_0x415a04[_0x370a8b(0xc2)]++,_0x33e796&gt;_0x166213){_0x1c9ff9=!0x0;return;}if(!_0x415a04['isExpressionToEvaluate']&amp;&amp;_0x415a04[_0x370a8b(0xbf)]&amp;&amp;_0x415a04[_0x370a8b(0xc2)]&gt;_0x415a04[_0x370a8b(0x162)]){_0x1c9ff9=!0x0;return;}_0x1cda99[_0x370a8b(0xc3)](_0x15a594[_0x370a8b(0xe0)](_0x5f4310,_0x16cca8,_0x370a8b(0x195),_0x421cf7++,_0x415a04,function(_0x3e372b){return function(){return _0x3e372b;};}(_0x96891f)));})):this[_0x4e96c4(0x198)](_0x16cca8)&amp;&amp;_0x16cca8['forEach'](function(_0x3d62e3,_0x543061){var _0x5f3e12=_0x4e96c4;if(_0x33e796++,_0x415a04['autoExpandPropertyCount']++,_0x33e796&gt;_0x166213){_0x1c9ff9=!0x0;return;}if(!_0x415a04['isExpressionToEvaluate']&amp;&amp;_0x415a04[_0x5f3e12(0xbf)]&amp;&amp;_0x415a04[_0x5f3e12(0xc2)]&gt;_0x415a04[_0x5f3e12(0x162)]){_0x1c9ff9=!0x0;return;}var _0x2188f1=_0x543061[_0x5f3e12(0x18d)]();_0x2188f1[_0x5f3e12(0x143)]&gt;0x64&amp;&amp;(_0x2188f1=_0x2188f1[_0x5f3e12(0x17b)](0x0,0x64)+_0x5f3e12(0x15a)),_0x1cda99['push'](_0x15a594[_0x5f3e12(0xe0)](_0x5f4310,_0x16cca8,'Map',_0x2188f1,_0x415a04,function(_0x3dd93a){return function(){return _0x3dd93a;};}(_0x3d62e3)));}),!_0x40f2cf){try{for(_0x1e0e6e in _0x16cca8)if(!(_0x28ba26&amp;&amp;_0x282cd8[_0x4e96c4(0x196)](_0x1e0e6e))&amp;&amp;!this[_0x4e96c4(0xb6)](_0x16cca8,_0x1e0e6e,_0x415a04)){if(_0x33e796++,_0x415a04[_0x4e96c4(0xc2)]++,_0x33e796&gt;_0x166213){_0x1c9ff9=!0x0;break;}if(!_0x415a04[_0x4e96c4(0xff)]&amp;&amp;_0x415a04[_0x4e96c4(0xbf)]&amp;&amp;_0x415a04[_0x4e96c4(0xc2)]&gt;_0x415a04[_0x4e96c4(0x162)]){_0x1c9ff9=!0x0;break;}_0x1cda99[_0x4e96c4(0xc3)](_0x15a594[_0x4e96c4(0x12f)](_0x5f4310,_0x281a4a,_0x16cca8,_0x130cbc,_0x1e0e6e,_0x415a04));}}catch{}if(_0x281a4a[_0x4e96c4(0xd0)]=!0x0,_0x1dafe3&amp;&amp;(_0x281a4a[_0x4e96c4(0x19d)]=!0x0),!_0x1c9ff9){var _0x31be14=[][_0x4e96c4(0x19f)](this[_0x4e96c4(0x18c)](_0x16cca8))[_0x4e96c4(0x19f)](this['_getOwnPropertySymbols'](_0x16cca8));for(_0x421cf7=0x0,_0x5abfbc=_0x31be14['length'];_0x421cf7&lt;_0x5abfbc;_0x421cf7++)if(_0x1e0e6e=_0x31be14[_0x421cf7],!(_0x28ba26&amp;&amp;_0x282cd8[_0x4e96c4(0x196)](_0x1e0e6e[_0x4e96c4(0x18d)]()))&amp;&amp;!this[_0x4e96c4(0xb6)](_0x16cca8,_0x1e0e6e,_0x415a04)&amp;&amp;!_0x281a4a[_0x4e96c4(0x19e)+_0x1e0e6e[_0x4e96c4(0x18d)]()]){if(_0x33e796++,_0x415a04[_0x4e96c4(0xc2)]++,_0x33e796&gt;_0x166213){_0x1c9ff9=!0x0;break;}if(!_0x415a04[_0x4e96c4(0xff)]&amp;&amp;_0x415a04['autoExpand']&amp;&amp;_0x415a04['autoExpandPropertyCount']&gt;_0x415a04[_0x4e96c4(0x162)]){_0x1c9ff9=!0x0;break;}_0x1cda99['push'](_0x15a594[_0x4e96c4(0x12f)](_0x5f4310,_0x281a4a,_0x16cca8,_0x130cbc,_0x1e0e6e,_0x415a04));}}}}}if(_0x2dbeeb[_0x4e96c4(0xee)]=_0x130cbc,_0x5bf5bb?(_0x2dbeeb[_0x4e96c4(0x15d)]=_0x16cca8[_0x4e96c4(0x184)](),this[_0x4e96c4(0x10b)](_0x130cbc,_0x2dbeeb,_0x415a04,_0x24d788)):_0x130cbc==='date'?_0x2dbeeb[_0x4e96c4(0x15d)]=this[_0x4e96c4(0xcc)][_0x4e96c4(0x197)](_0x16cca8):_0x130cbc===_0x4e96c4(0x107)?_0x2dbeeb[_0x4e96c4(0x15d)]=_0x16cca8[_0x4e96c4(0x18d)]():_0x130cbc==='RegExp'?_0x2dbeeb[_0x4e96c4(0x15d)]=this[_0x4e96c4(0x11b)]['call'](_0x16cca8):_0x130cbc===_0x4e96c4(0xfb)&amp;&amp;this[_0x4e96c4(0xce)]?_0x2dbeeb['value']=this[_0x4e96c4(0xce)][_0x4e96c4(0x19b)][_0x4e96c4(0x18d)][_0x4e96c4(0x197)](_0x16cca8):!_0x415a04[_0x4e96c4(0x13d)]&amp;&amp;!(_0x130cbc==='null'||_0x130cbc===_0x4e96c4(0x115))&amp;&amp;(delete _0x2dbeeb[_0x4e96c4(0x15d)],_0x2dbeeb[_0x4e96c4(0x147)]=!0x0),_0x1c9ff9&amp;&amp;(_0x2dbeeb[_0x4e96c4(0xec)]=!0x0),_0x19b37e=_0x415a04[_0x4e96c4(0x112)][_0x4e96c4(0x18b)],_0x415a04[_0x4e96c4(0x112)]['current']=_0x2dbeeb,this[_0x4e96c4(0x18f)](_0x2dbeeb,_0x415a04),_0x1cda99[_0x4e96c4(0x143)]){for(_0x421cf7=0x0,_0x5abfbc=_0x1cda99[_0x4e96c4(0x143)];_0x421cf7&lt;_0x5abfbc;_0x421cf7++)_0x1cda99[_0x421cf7](_0x421cf7);}_0x5f4310[_0x4e96c4(0x143)]&amp;&amp;(_0x2dbeeb[_0x4e96c4(0x1a9)]=_0x5f4310);}catch(_0x2cd203){_0x41f444(_0x2cd203,_0x2dbeeb,_0x415a04);}return this[_0x4e96c4(0x109)](_0x16cca8,_0x2dbeeb),this[_0x4e96c4(0x12e)](_0x2dbeeb,_0x415a04),_0x415a04[_0x4e96c4(0x112)]['current']=_0x19b37e,_0x415a04['level']--,_0x415a04['autoExpand']=_0x1fa04d,_0x415a04['autoExpand']&amp;&amp;_0x415a04[_0x4e96c4(0x13c)][_0x4e96c4(0x1ac)](),_0x2dbeeb;}['_getOwnPropertySymbols'](_0x306c44){var _0x901939=_0x1245ae;return Object[_0x901939(0x190)]?Object['getOwnPropertySymbols'](_0x306c44):[];}[_0x1245ae(0xbd)](_0x365b69){var _0x54098a=_0x1245ae;return!!(_0x365b69&amp;&amp;_0x3fa8d6[_0x54098a(0x195)]&amp;&amp;this[_0x54098a(0x141)](_0x365b69)===_0x54098a(0x165)&amp;&amp;_0x365b69[_0x54098a(0x15f)]);}[_0x1245ae(0xb6)](_0x495c2e,_0x50cb6f,_0x149849){var _0x7068ee=_0x1245ae;return _0x149849['noFunctions']?typeof _0x495c2e[_0x50cb6f]==_0x7068ee(0xd5):!0x1;}['_type'](_0x1ab953){var _0x480ece=_0x1245ae,_0x2c8a58='';return _0x2c8a58=typeof _0x1ab953,_0x2c8a58===_0x480ece(0xd3)?this['_objectToString'](_0x1ab953)===_0x480ece(0x13e)?_0x2c8a58=_0x480ece(0x191):this[_0x480ece(0x141)](_0x1ab953)===_0x480ece(0x161)?_0x2c8a58=_0x480ece(0x163):this[_0x480ece(0x141)](_0x1ab953)===_0x480ece(0x11f)?_0x2c8a58=_0x480ece(0x107):_0x1ab953===null?_0x2c8a58=_0x480ece(0x100):_0x1ab953[_0x480ece(0xc4)]&amp;&amp;(_0x2c8a58=_0x1ab953[_0x480ece(0xc4)][_0x480ece(0x157)]||_0x2c8a58):_0x2c8a58==='undefined'&amp;&amp;this[_0x480ece(0x18e)]&amp;&amp;_0x1ab953 instanceof this[_0x480ece(0x18e)]&amp;&amp;(_0x2c8a58=_0x480ece(0x106)),_0x2c8a58;}[_0x1245ae(0x141)](_0x1251db){var _0x1ba073=_0x1245ae;return Object['prototype'][_0x1ba073(0x18d)][_0x1ba073(0x197)](_0x1251db);}[_0x1245ae(0xf1)](_0x159062){var _0x172936=_0x1245ae;return _0x159062===_0x172936(0x194)||_0x159062===_0x172936(0x11c)||_0x159062==='number';}[_0x1245ae(0x139)](_0x1c50dd){var _0x27e318=_0x1245ae;return _0x1c50dd===_0x27e318(0x146)||_0x1c50dd===_0x27e318(0xb9)||_0x1c50dd==='Number';}['_addProperty'](_0x5cf123,_0x1ed50f,_0x422f1b,_0x53a5a8,_0x4238d5,_0x5ebc08){var _0x28e716=this;return function(_0x13dff4){var _0x4997ec=_0x4c52,_0xa81c8b=_0x4238d5[_0x4997ec(0x112)][_0x4997ec(0x18b)],_0x8660bd=_0x4238d5[_0x4997ec(0x112)][_0x4997ec(0x160)],_0x56abc7=_0x4238d5[_0x4997ec(0x112)]['parent'];_0x4238d5[_0x4997ec(0x112)][_0x4997ec(0x1ab)]=_0xa81c8b,_0x4238d5[_0x4997ec(0x112)][_0x4997ec(0x160)]=typeof _0x53a5a8=='number'?_0x53a5a8:_0x13dff4,_0x5cf123['push'](_0x28e716['_property'](_0x1ed50f,_0x422f1b,_0x53a5a8,_0x4238d5,_0x5ebc08)),_0x4238d5[_0x4997ec(0x112)]['parent']=_0x56abc7,_0x4238d5['node'][_0x4997ec(0x160)]=_0x8660bd;};}[_0x1245ae(0x12f)](_0x36c02f,_0x2394f7,_0x466877,_0x443e3d,_0x78c22a,_0x52703d,_0x336d33){var _0x3643dc=_0x1245ae,_0x224a6f=this;return _0x2394f7[_0x3643dc(0x19e)+_0x78c22a[_0x3643dc(0x18d)]()]=!0x0,function(_0x571589){var _0x132727=_0x3643dc,_0x30e151=_0x52703d['node']['current'],_0x2d6663=_0x52703d['node'][_0x132727(0x160)],_0x28ca5c=_0x52703d[_0x132727(0x112)][_0x132727(0x1ab)];_0x52703d[_0x132727(0x112)]['parent']=_0x30e151,_0x52703d['node'][_0x132727(0x160)]=_0x571589,_0x36c02f[_0x132727(0xc3)](_0x224a6f['_property'](_0x466877,_0x443e3d,_0x78c22a,_0x52703d,_0x336d33)),_0x52703d[_0x132727(0x112)][_0x132727(0x1ab)]=_0x28ca5c,_0x52703d[_0x132727(0x112)][_0x132727(0x160)]=_0x2d6663;};}[_0x1245ae(0xc5)](_0x3bf872,_0xbf8df3,_0x94a3e6,_0x1d04ab,_0xf6cc8c){var _0x30d095=_0x1245ae,_0x2672d8=this;_0xf6cc8c||(_0xf6cc8c=function(_0x43cdea,_0x22917b){return _0x43cdea[_0x22917b];});var _0x4f0ea3=_0x94a3e6[_0x30d095(0x18d)](),_0x287c9b=_0x1d04ab[_0x30d095(0x124)]||{},_0x337045=_0x1d04ab[_0x30d095(0x13d)],_0x501a5c=_0x1d04ab[_0x30d095(0xff)];try{var _0x156bb9=this[_0x30d095(0x198)](_0x3bf872),_0x36a323=_0x4f0ea3;_0x156bb9&amp;&amp;_0x36a323[0x0]==='\\x27'&amp;&amp;(_0x36a323=_0x36a323['substr'](0x1,_0x36a323['length']-0x2));var _0x48100c=_0x1d04ab['expressionsToEvaluate']=_0x287c9b['_p_'+_0x36a323];_0x48100c&amp;&amp;(_0x1d04ab[_0x30d095(0x13d)]=_0x1d04ab[_0x30d095(0x13d)]+0x1),_0x1d04ab[_0x30d095(0xff)]=!!_0x48100c;var _0x870521=typeof _0x94a3e6==_0x30d095(0xfb),_0x4728d9={'name':_0x870521||_0x156bb9?_0x4f0ea3:this[_0x30d095(0x149)](_0x4f0ea3)};if(_0x870521&amp;&amp;(_0x4728d9[_0x30d095(0xfb)]=!0x0),!(_0xbf8df3==='array'||_0xbf8df3===_0x30d095(0x172))){var _0x4b6da6=this[_0x30d095(0xd6)](_0x3bf872,_0x94a3e6);if(_0x4b6da6&amp;&amp;(_0x4b6da6[_0x30d095(0x151)]&amp;&amp;(_0x4728d9['setter']=!0x0),_0x4b6da6['get']&amp;&amp;!_0x48100c&amp;&amp;!_0x1d04ab[_0x30d095(0x133)]))return _0x4728d9[_0x30d095(0xcd)]=!0x0,this[_0x30d095(0x176)](_0x4728d9,_0x1d04ab),_0x4728d9;}var _0x4c543c;try{_0x4c543c=_0xf6cc8c(_0x3bf872,_0x94a3e6);}catch(_0x423cba){return _0x4728d9={'name':_0x4f0ea3,'type':_0x30d095(0xc8),'error':_0x423cba[_0x30d095(0xf2)]},this[_0x30d095(0x176)](_0x4728d9,_0x1d04ab),_0x4728d9;}var _0x540238=this[_0x30d095(0x17e)](_0x4c543c),_0x4eac97=this[_0x30d095(0xf1)](_0x540238);if(_0x4728d9[_0x30d095(0xee)]=_0x540238,_0x4eac97)this[_0x30d095(0x176)](_0x4728d9,_0x1d04ab,_0x4c543c,function(){var _0x2229cf=_0x30d095;_0x4728d9[_0x2229cf(0x15d)]=_0x4c543c[_0x2229cf(0x184)](),!_0x48100c&amp;&amp;_0x2672d8[_0x2229cf(0x10b)](_0x540238,_0x4728d9,_0x1d04ab,{});});else{var _0x58876d=_0x1d04ab[_0x30d095(0xbf)]&amp;&amp;_0x1d04ab[_0x30d095(0xb4)]&lt;_0x1d04ab[_0x30d095(0x113)]&amp;&amp;_0x1d04ab[_0x30d095(0x13c)][_0x30d095(0xe8)](_0x4c543c)&lt;0x0&amp;&amp;_0x540238!==_0x30d095(0xd5)&amp;&amp;_0x1d04ab['autoExpandPropertyCount']&lt;_0x1d04ab[_0x30d095(0x162)];_0x58876d||_0x1d04ab[_0x30d095(0xb4)]&lt;_0x337045||_0x48100c?(this[_0x30d095(0x173)](_0x4728d9,_0x4c543c,_0x1d04ab,_0x48100c||{}),this[_0x30d095(0x109)](_0x4c543c,_0x4728d9)):this[_0x30d095(0x176)](_0x4728d9,_0x1d04ab,_0x4c543c,function(){var _0x2b5a30=_0x30d095;_0x540238===_0x2b5a30(0x100)||_0x540238===_0x2b5a30(0x115)||(delete _0x4728d9['value'],_0x4728d9[_0x2b5a30(0x147)]=!0x0);});}return _0x4728d9;}finally{_0x1d04ab[_0x30d095(0x124)]=_0x287c9b,_0x1d04ab[_0x30d095(0x13d)]=_0x337045,_0x1d04ab['isExpressionToEvaluate']=_0x501a5c;}}[_0x1245ae(0x10b)](_0x411891,_0x4bd73a,_0x2c870e,_0x169e01){var _0x42ba94=_0x1245ae,_0x22dae6=_0x169e01[_0x42ba94(0x169)]||_0x2c870e[_0x42ba94(0x169)];if((_0x411891===_0x42ba94(0x11c)||_0x411891===_0x42ba94(0xb9))&amp;&amp;_0x4bd73a[_0x42ba94(0x15d)]){let _0x5270b2=_0x4bd73a['value']['length'];_0x2c870e['allStrLength']+=_0x5270b2,_0x2c870e[_0x42ba94(0x108)]&gt;_0x2c870e['totalStrLength']?(_0x4bd73a['capped']='',delete _0x4bd73a[_0x42ba94(0x15d)]):_0x5270b2&gt;_0x22dae6&amp;&amp;(_0x4bd73a[_0x42ba94(0x147)]=_0x4bd73a[_0x42ba94(0x15d)]['substr'](0x0,_0x22dae6),delete _0x4bd73a[_0x42ba94(0x15d)]);}}[_0x1245ae(0x198)](_0x315861){var _0x457e12=_0x1245ae;return!!(_0x315861&amp;&amp;_0x3fa8d6['Map']&amp;&amp;this[_0x457e12(0x141)](_0x315861)===_0x457e12(0x119)&amp;&amp;_0x315861[_0x457e12(0x15f)]);}[_0x1245ae(0x149)](_0x306d69){var _0x113832=_0x1245ae;if(_0x306d69['match'](/^\\d+$/))return _0x306d69;var _0x51f3c3;try{_0x51f3c3=JSON[_0x113832(0x16a)](''+_0x306d69);}catch{_0x51f3c3='\\x22'+this[_0x113832(0x141)](_0x306d69)+'\\x22';}return _0x51f3c3[_0x113832(0xb5)](/^\"([a-zA-Z_][a-zA-Z_0-9]*)\"$/)?_0x51f3c3=_0x51f3c3[_0x113832(0x185)](0x1,_0x51f3c3[_0x113832(0x143)]-0x2):_0x51f3c3=_0x51f3c3[_0x113832(0x10c)](/'/g,'\\x5c\\x27')[_0x113832(0x10c)](/\\\\\"/g,'\\x22')[_0x113832(0x10c)](/(^\"|\"$)/g,'\\x27'),_0x51f3c3;}[_0x1245ae(0x176)](_0x5b0853,_0x41a12d,_0x1eb802,_0x2e6ea4){var _0x56f049=_0x1245ae;this[_0x56f049(0x18f)](_0x5b0853,_0x41a12d),_0x2e6ea4&amp;&amp;_0x2e6ea4(),this[_0x56f049(0x109)](_0x1eb802,_0x5b0853),this['_treeNodePropertiesAfterFullValue'](_0x5b0853,_0x41a12d);}['_treeNodePropertiesBeforeFullValue'](_0x39b0a9,_0x3802b3){var _0x332f59=_0x1245ae;this[_0x332f59(0x177)](_0x39b0a9,_0x3802b3),this[_0x332f59(0x148)](_0x39b0a9,_0x3802b3),this[_0x332f59(0x180)](_0x39b0a9,_0x3802b3),this[_0x332f59(0x17c)](_0x39b0a9,_0x3802b3);}[_0x1245ae(0x177)](_0x4441eb,_0x397672){}[_0x1245ae(0x148)](_0x1007ab,_0xae51b8){}[_0x1245ae(0x16c)](_0x31e97d,_0x43bc59){}[_0x1245ae(0x1a4)](_0xb2a903){var _0x5145e1=_0x1245ae;return _0xb2a903===this[_0x5145e1(0x136)];}['_treeNodePropertiesAfterFullValue'](_0x299745,_0x74eced){var _0x87a7c3=_0x1245ae;this[_0x87a7c3(0x16c)](_0x299745,_0x74eced),this[_0x87a7c3(0xc0)](_0x299745),_0x74eced[_0x87a7c3(0x178)]&amp;&amp;this[_0x87a7c3(0x186)](_0x299745),this[_0x87a7c3(0xc7)](_0x299745,_0x74eced),this['_addLoadNode'](_0x299745,_0x74eced),this['_cleanNode'](_0x299745);}[_0x1245ae(0x109)](_0x1a17ac,_0x34c0e6){var _0x2c116b=_0x1245ae;let _0x1778a8;try{_0x3fa8d6[_0x2c116b(0x199)]&amp;&amp;(_0x1778a8=_0x3fa8d6['console'][_0x2c116b(0xeb)],_0x3fa8d6[_0x2c116b(0x199)]['error']=function(){}),_0x1a17ac&amp;&amp;typeof _0x1a17ac[_0x2c116b(0x143)]==_0x2c116b(0x129)&amp;&amp;(_0x34c0e6[_0x2c116b(0x143)]=_0x1a17ac[_0x2c116b(0x143)]);}catch{}finally{_0x1778a8&amp;&amp;(_0x3fa8d6[_0x2c116b(0x199)][_0x2c116b(0xeb)]=_0x1778a8);}if(_0x34c0e6[_0x2c116b(0xee)]===_0x2c116b(0x129)||_0x34c0e6['type']===_0x2c116b(0x105)){if(isNaN(_0x34c0e6['value']))_0x34c0e6[_0x2c116b(0xe6)]=!0x0,delete _0x34c0e6[_0x2c116b(0x15d)];else switch(_0x34c0e6[_0x2c116b(0x15d)]){case Number[_0x2c116b(0x137)]:_0x34c0e6[_0x2c116b(0xcb)]=!0x0,delete _0x34c0e6[_0x2c116b(0x15d)];break;case Number[_0x2c116b(0x189)]:_0x34c0e6[_0x2c116b(0x192)]=!0x0,delete _0x34c0e6['value'];break;case 0x0:this[_0x2c116b(0x16b)](_0x34c0e6[_0x2c116b(0x15d)])&amp;&amp;(_0x34c0e6[_0x2c116b(0x156)]=!0x0);break;}}else _0x34c0e6[_0x2c116b(0xee)]==='function'&amp;&amp;typeof _0x1a17ac[_0x2c116b(0x157)]=='string'&amp;&amp;_0x1a17ac[_0x2c116b(0x157)]&amp;&amp;_0x34c0e6[_0x2c116b(0x157)]&amp;&amp;_0x1a17ac['name']!==_0x34c0e6[_0x2c116b(0x157)]&amp;&amp;(_0x34c0e6['funcName']=_0x1a17ac[_0x2c116b(0x157)]);}[_0x1245ae(0x16b)](_0x4f1a24){var _0x2cd68a=_0x1245ae;return 0x1/_0x4f1a24===Number[_0x2cd68a(0x189)];}['_sortProps'](_0x730f10){var _0x2e8393=_0x1245ae;!_0x730f10[_0x2e8393(0x1a9)]||!_0x730f10[_0x2e8393(0x1a9)][_0x2e8393(0x143)]||_0x730f10[_0x2e8393(0xee)]===_0x2e8393(0x191)||_0x730f10['type']===_0x2e8393(0xb8)||_0x730f10[_0x2e8393(0xee)]===_0x2e8393(0x195)||_0x730f10[_0x2e8393(0x1a9)][_0x2e8393(0x19a)](function(_0x362120,_0x3f32a0){var _0x5b03d1=_0x2e8393,_0x58f6b0=_0x362120[_0x5b03d1(0x157)][_0x5b03d1(0xd4)](),_0x495031=_0x3f32a0['name']['toLowerCase']();return _0x58f6b0&lt;_0x495031?-0x1:_0x58f6b0&gt;_0x495031?0x1:0x0;});}[_0x1245ae(0xc7)](_0x5e288b,_0x96ee68){var _0xb2d896=_0x1245ae;if(!(_0x96ee68[_0xb2d896(0x1a8)]||!_0x5e288b[_0xb2d896(0x1a9)]||!_0x5e288b[_0xb2d896(0x1a9)][_0xb2d896(0x143)])){for(var _0x544148=[],_0x39a807=[],_0x309566=0x0,_0x108139=_0x5e288b[_0xb2d896(0x1a9)][_0xb2d896(0x143)];_0x309566&lt;_0x108139;_0x309566++){var _0x29adfe=_0x5e288b[_0xb2d896(0x1a9)][_0x309566];_0x29adfe[_0xb2d896(0xee)]==='function'?_0x544148[_0xb2d896(0xc3)](_0x29adfe):_0x39a807['push'](_0x29adfe);}if(!(!_0x39a807[_0xb2d896(0x143)]||_0x544148[_0xb2d896(0x143)]&lt;=0x1)){_0x5e288b[_0xb2d896(0x1a9)]=_0x39a807;var _0x47382e={'functionsNode':!0x0,'props':_0x544148};this[_0xb2d896(0x177)](_0x47382e,_0x96ee68),this[_0xb2d896(0x16c)](_0x47382e,_0x96ee68),this['_setNodeExpandableState'](_0x47382e),this['_setNodePermissions'](_0x47382e,_0x96ee68),_0x47382e['id']+='\\x20f',_0x5e288b[_0xb2d896(0x1a9)][_0xb2d896(0xf6)](_0x47382e);}}}['_addLoadNode'](_0x564a54,_0x329004){}[_0x1245ae(0xc0)](_0x51fb5c){}[_0x1245ae(0x125)](_0x4e63fd){var _0xedae47=_0x1245ae;return Array[_0xedae47(0x131)](_0x4e63fd)||typeof _0x4e63fd=='object'&amp;&amp;this[_0xedae47(0x141)](_0x4e63fd)===_0xedae47(0x13e);}[_0x1245ae(0x17c)](_0x3c3934,_0x49f585){}[_0x1245ae(0xf5)](_0x262dd2){var _0x1487f1=_0x1245ae;delete _0x262dd2['_hasSymbolPropertyOnItsPath'],delete _0x262dd2[_0x1487f1(0xba)],delete _0x262dd2[_0x1487f1(0x122)];}[_0x1245ae(0x180)](_0x1c40d1,_0x4b05b1){}}let _0x531b8a=new _0x453c36(),_0x1467a={'props':0x64,'elements':0x64,'strLength':0x400*0x32,'totalStrLength':0x400*0x32,'autoExpandLimit':0x1388,'autoExpandMaxDepth':0xa},_0xd59d0f={'props':0x5,'elements':0x5,'strLength':0x100,'totalStrLength':0x100*0x3,'autoExpandLimit':0x1e,'autoExpandMaxDepth':0x2};function _0x3452af(_0x109888,_0x55180b,_0x90c722,_0x235030,_0x50a375,_0x3d16ad){var _0x1864c8=_0x1245ae;let _0x393370,_0x37798c;try{_0x37798c=_0x350e5e(),_0x393370=_0x325313[_0x55180b],!_0x393370||_0x37798c-_0x393370['ts']&gt;0x1f4&amp;&amp;_0x393370[_0x1864c8(0x181)]&amp;&amp;_0x393370['time']/_0x393370[_0x1864c8(0x181)]&lt;0x64?(_0x325313[_0x55180b]=_0x393370={'count':0x0,'time':0x0,'ts':_0x37798c},_0x325313['hits']={}):_0x37798c-_0x325313['hits']['ts']&gt;0x32&amp;&amp;_0x325313[_0x1864c8(0x174)][_0x1864c8(0x181)]&amp;&amp;_0x325313[_0x1864c8(0x174)]['time']/_0x325313['hits']['count']&lt;0x64&amp;&amp;(_0x325313[_0x1864c8(0x174)]={});let _0x145d01=[],_0x3271b7=_0x393370[_0x1864c8(0x1a2)]||_0x325313[_0x1864c8(0x174)]['reduceLimits']?_0xd59d0f:_0x1467a,_0x4dca1c=_0x246e8a=&gt;{var _0x457dbb=_0x1864c8;let _0x1e4e0d={};return _0x1e4e0d[_0x457dbb(0x1a9)]=_0x246e8a[_0x457dbb(0x1a9)],_0x1e4e0d[_0x457dbb(0xde)]=_0x246e8a[_0x457dbb(0xde)],_0x1e4e0d['strLength']=_0x246e8a[_0x457dbb(0x169)],_0x1e4e0d[_0x457dbb(0x130)]=_0x246e8a['totalStrLength'],_0x1e4e0d['autoExpandLimit']=_0x246e8a[_0x457dbb(0x162)],_0x1e4e0d['autoExpandMaxDepth']=_0x246e8a[_0x457dbb(0x113)],_0x1e4e0d[_0x457dbb(0x178)]=!0x1,_0x1e4e0d[_0x457dbb(0x1a8)]=!_0x3ff97c,_0x1e4e0d['depth']=0x1,_0x1e4e0d['level']=0x0,_0x1e4e0d[_0x457dbb(0x126)]=_0x457dbb(0xb1),_0x1e4e0d['rootExpression']=_0x457dbb(0x16e),_0x1e4e0d[_0x457dbb(0xbf)]=!0x0,_0x1e4e0d['autoExpandPreviousObjects']=[],_0x1e4e0d['autoExpandPropertyCount']=0x0,_0x1e4e0d[_0x457dbb(0x133)]=!0x0,_0x1e4e0d[_0x457dbb(0x108)]=0x0,_0x1e4e0d[_0x457dbb(0x112)]={'current':void 0x0,'parent':void 0x0,'index':0x0},_0x1e4e0d;};for(var _0x5d93ae=0x0;_0x5d93ae&lt;_0x50a375['length'];_0x5d93ae++)_0x145d01[_0x1864c8(0xc3)](_0x531b8a[_0x1864c8(0x173)]({'timeNode':_0x109888==='time'||void 0x0},_0x50a375[_0x5d93ae],_0x4dca1c(_0x3271b7),{}));if(_0x109888===_0x1864c8(0x13f)||_0x109888===_0x1864c8(0xeb)){let _0x56084f=Error[_0x1864c8(0x104)];try{Error[_0x1864c8(0x104)]=0x1/0x0,_0x145d01['push'](_0x531b8a[_0x1864c8(0x173)]({'stackNode':!0x0},new Error()[_0x1864c8(0x12c)],_0x4dca1c(_0x3271b7),{'strLength':0x1/0x0}));}finally{Error[_0x1864c8(0x104)]=_0x56084f;}}return{'method':'log','version':_0x23087f,'args':[{'ts':_0x90c722,'session':_0x235030,'args':_0x145d01,'id':_0x55180b,'context':_0x3d16ad}]};}catch(_0xb15dbb){return{'method':_0x1864c8(0x101),'version':_0x23087f,'args':[{'ts':_0x90c722,'session':_0x235030,'args':[{'type':_0x1864c8(0xc8),'error':_0xb15dbb&amp;&amp;_0xb15dbb['message']}],'id':_0x55180b,'context':_0x3d16ad}]};}finally{try{if(_0x393370&amp;&amp;_0x37798c){let _0x3f28de=_0x350e5e();_0x393370['count']++,_0x393370[_0x1864c8(0x150)]+=_0x5d545a(_0x37798c,_0x3f28de),_0x393370['ts']=_0x3f28de,_0x325313[_0x1864c8(0x174)]['count']++,_0x325313[_0x1864c8(0x174)][_0x1864c8(0x150)]+=_0x5d545a(_0x37798c,_0x3f28de),_0x325313[_0x1864c8(0x174)]['ts']=_0x3f28de,(_0x393370[_0x1864c8(0x181)]&gt;0x32||_0x393370[_0x1864c8(0x150)]&gt;0x64)&amp;&amp;(_0x393370[_0x1864c8(0x1a2)]=!0x0),(_0x325313[_0x1864c8(0x174)][_0x1864c8(0x181)]&gt;0x3e8||_0x325313[_0x1864c8(0x174)][_0x1864c8(0x150)]&gt;0x12c)&amp;&amp;(_0x325313[_0x1864c8(0x174)][_0x1864c8(0x1a2)]=!0x0);}}catch{}}}return _0x3452af;}((_0x17801c,_0x1a8d96,_0x165142,_0x5c08c5,_0x1d0b72,_0x5e4dff,_0x3a721c,_0xa9f035,_0x43e733,_0x23b040,_0x2bac26)=&gt;{var _0x43ac6c=_0x58f275;if(_0x17801c[_0x43ac6c(0xdd)])return _0x17801c[_0x43ac6c(0xdd)];if(!H(_0x17801c,_0xa9f035,_0x1d0b72))return _0x17801c[_0x43ac6c(0xdd)]={'consoleLog':()=&gt;{},'consoleTrace':()=&gt;{},'consoleTime':()=&gt;{},'consoleTimeEnd':()=&gt;{},'autoLog':()=&gt;{},'autoLogMany':()=&gt;{},'autoTraceMany':()=&gt;{},'coverage':()=&gt;{},'autoTrace':()=&gt;{},'autoTime':()=&gt;{},'autoTimeEnd':()=&gt;{}},_0x17801c[_0x43ac6c(0xdd)];let _0x21db52=B(_0x17801c),_0x44744b=_0x21db52[_0x43ac6c(0xdf)],_0x23b429=_0x21db52['timeStamp'],_0x1c5d7a=_0x21db52[_0x43ac6c(0x116)],_0x413a5e={'hits':{},'ts':{}},_0x21a83a=X(_0x17801c,_0x43e733,_0x413a5e,_0x5e4dff),_0x178ab1=_0xe46a8d=&gt;{_0x413a5e['ts'][_0xe46a8d]=_0x23b429();},_0x44574f=(_0x2979bf,_0x7056f4)=&gt;{var _0x199843=_0x43ac6c;let _0x2161f9=_0x413a5e['ts'][_0x7056f4];if(delete _0x413a5e['ts'][_0x7056f4],_0x2161f9){let _0x2b83fb=_0x44744b(_0x2161f9,_0x23b429());_0x59f514(_0x21a83a(_0x199843(0x150),_0x2979bf,_0x1c5d7a(),_0x437372,[_0x2b83fb],_0x7056f4));}},_0xb2b3ba=_0x31e76a=&gt;{var _0x1df5a6=_0x43ac6c,_0xfd764d;return _0x1d0b72==='next.js'&amp;&amp;_0x17801c[_0x1df5a6(0x10d)]&amp;&amp;((_0xfd764d=_0x31e76a==null?void 0x0:_0x31e76a[_0x1df5a6(0xe1)])==null?void 0x0:_0xfd764d[_0x1df5a6(0x143)])&amp;&amp;(_0x31e76a['args'][0x0][_0x1df5a6(0x10d)]=_0x17801c[_0x1df5a6(0x10d)]),_0x31e76a;};_0x17801c['_console_ninja']={'consoleLog':(_0x453105,_0x357f87)=&gt;{var _0x35346d=_0x43ac6c;_0x17801c[_0x35346d(0x199)][_0x35346d(0x101)][_0x35346d(0x157)]!==_0x35346d(0xbc)&amp;&amp;_0x59f514(_0x21a83a(_0x35346d(0x101),_0x453105,_0x1c5d7a(),_0x437372,_0x357f87));},'consoleTrace':(_0x5913a2,_0x158753)=&gt;{var _0x226418=_0x43ac6c,_0xc46817,_0x3460a4;_0x17801c[_0x226418(0x199)][_0x226418(0x101)][_0x226418(0x157)]!==_0x226418(0x14e)&amp;&amp;((_0x3460a4=(_0xc46817=_0x17801c[_0x226418(0x19c)])==null?void 0x0:_0xc46817[_0x226418(0x15c)])!=null&amp;&amp;_0x3460a4[_0x226418(0x112)]&amp;&amp;(_0x17801c['_ninjaIgnoreNextError']=!0x0),_0x59f514(_0xb2b3ba(_0x21a83a(_0x226418(0x13f),_0x5913a2,_0x1c5d7a(),_0x437372,_0x158753))));},'consoleError':(_0x199e56,_0x184fbe)=&gt;{var _0x307486=_0x43ac6c;_0x17801c[_0x307486(0xd9)]=!0x0,_0x59f514(_0xb2b3ba(_0x21a83a(_0x307486(0xeb),_0x199e56,_0x1c5d7a(),_0x437372,_0x184fbe)));},'consoleTime':_0x352499=&gt;{_0x178ab1(_0x352499);},'consoleTimeEnd':(_0x456231,_0x2a32d0)=&gt;{_0x44574f(_0x2a32d0,_0x456231);},'autoLog':(_0x16b472,_0x3a6e27)=&gt;{var _0x219e30=_0x43ac6c;_0x59f514(_0x21a83a(_0x219e30(0x101),_0x3a6e27,_0x1c5d7a(),_0x437372,[_0x16b472]));},'autoLogMany':(_0x59af3,_0x55537a)=&gt;{var _0x422afb=_0x43ac6c;_0x59f514(_0x21a83a(_0x422afb(0x101),_0x59af3,_0x1c5d7a(),_0x437372,_0x55537a));},'autoTrace':(_0x538dfb,_0x4fdafa)=&gt;{var _0x4eab50=_0x43ac6c;_0x59f514(_0xb2b3ba(_0x21a83a(_0x4eab50(0x13f),_0x4fdafa,_0x1c5d7a(),_0x437372,[_0x538dfb])));},'autoTraceMany':(_0x2ac5b5,_0x1c6a76)=&gt;{var _0x1e8fca=_0x43ac6c;_0x59f514(_0xb2b3ba(_0x21a83a(_0x1e8fca(0x13f),_0x2ac5b5,_0x1c5d7a(),_0x437372,_0x1c6a76)));},'autoTime':(_0x19c633,_0x3c242c,_0x28d9c3)=&gt;{_0x178ab1(_0x28d9c3);},'autoTimeEnd':(_0x2c4383,_0x8acfe9,_0xe242b3)=&gt;{_0x44574f(_0x8acfe9,_0xe242b3);},'coverage':_0x170206=&gt;{var _0x3664c0=_0x43ac6c;_0x59f514({'method':_0x3664c0(0xd8),'version':_0x5e4dff,'args':[{'id':_0x170206}]});}};let _0x59f514=q(_0x17801c,_0x1a8d96,_0x165142,_0x5c08c5,_0x1d0b72,_0x23b040,_0x2bac26),_0x437372=_0x17801c[_0x43ac6c(0xe3)];return _0x17801c['_console_ninja'];})(globalThis,_0x58f275(0x14d),_0x58f275(0xef),_0x58f275(0xd7),_0x58f275(0x1a3),'1.0.0',_0x58f275(0xda),_0x58f275(0x14b),'',_0x58f275(0xfc),_0x58f275(0xf8));function _0x4c52(_0x100bf2,_0x2e244c){var _0x30b194=_0x30b1();return _0x4c52=function(_0x4c521b,_0x1b6625){_0x4c521b=_0x4c521b-0xb1;var _0x2c0d21=_0x30b194[_0x4c521b];return _0x2c0d21;},_0x4c52(_0x100bf2,_0x2e244c);}function _0x30b1(){var _0x6cb17=['match','_blacklistedProperty','split','Map','String','_hasSetOnItsPath','toUpperCase','disabledLog','_isSet','_inBrowser','autoExpand','_setNodeExpandableState','getOwnPropertyNames','autoExpandPropertyCount','push','constructor','_property','_socket','_addFunctionsNode','unknown','781512wIjlmK','_WebSocketClass','positiveInfinity','_dateToString','getter','_Symbol','\\x20server','_p_length','location','includes','object','toLowerCase','function','_getOwnPropertyDescriptor',\"c:\\\\Users\\\\NanonBuaphet\\\\.vscode\\\\extensions\\\\wallabyjs.console-ninja-1.0.362\\\\node_modules\",'coverage','_ninjaIgnoreNextError','1728371412062','getWebSocketClass','gateway.docker.internal','_console_ninja','elements','elapsed','_addProperty','args','_allowedToSend','_console_ninja_session','ws/index.js','onclose','nan','ws://','indexOf','cappedElements','Symbol','error','cappedProps','global','type','61313','NEXT_RUNTIME','_isPrimitiveType','message','_maxConnectAttemptCount','_connectToHostNow','_cleanNode','unshift','see\\x20https://tinyurl.com/2vt8jxzw\\x20for\\x20more\\x20info.','1','logger\\x20failed\\x20to\\x20connect\\x20to\\x20host,\\x20see\\x20','209445uiwKcD','symbol','','send','reload','isExpressionToEvaluate','null','log','_attemptToReconnectShortly','nodeModules','stackTraceLimit','Number','HTMLAllCollection','bigint','allStrLength','_additionalMetadata','path','_capIfString','replace','origin','charAt','https://tinyurl.com/37x8b79t','_reconnectTimeout','failed\\x20to\\x20find\\x20and\\x20load\\x20WebSocket','node','autoExpandMaxDepth','dockerizedApp','undefined','now','_disposeWebsocket','url','[object\\x20Map]','map','_regExpToString','string','unref','default','[object\\x20BigInt]','3VimnBo','_consoleNinjaAllowedToStart','_hasMapOnItsPath','close','expressionsToEvaluate','_isArray','expId','endsWith','hostname','number','_inNextEdge','hrtime','stack','next.js','_treeNodePropertiesAfterFullValue','_addObjectProperty','totalStrLength','isArray','_keyStrRegExp','resolveGetters','_connecting','logger\\x20websocket\\x20error','_undefined','POSITIVE_INFINITY','performance','_isPrimitiveWrapperType','415816ewHAAe','env','autoExpandPreviousObjects','depth','[object\\x20Array]','trace','then','_objectToString','create','length','bind','background:\\x20rgb(30,30,30);\\x20color:\\x20rgb(255,213,92)','Boolean','capped','_setNodeQueryPath','_propertyName','warn',[\"localhost\",\"127.0.0.1\",\"example.cypress.io\",\"FDANB2124-0167\",\"172.26.32.61\"],'startsWith','127.0.0.1','disabledTrace','data','time','set','__es'+'Module','Console\\x20Ninja\\x20failed\\x20to\\x20send\\x20logs,\\x20refreshing\\x20the\\x20page\\x20may\\x20help;\\x20also\\x20see\\x20','onopen','hasOwnProperty','negativeZero','name','fromCharCode','catch','...','%c\\x20Console\\x20Ninja\\x20extension\\x20is\\x20connected\\x20to\\x20','versions','value','51658ZXTwHP','forEach','index','[object\\x20Date]','autoExpandLimit','date','_ws','[object\\x20Set]','failed\\x20to\\x20connect\\x20to\\x20host:\\x20','_WebSocket','\\x20browser','strLength','stringify','_isNegativeZero','_setNodeLabel','onerror','root_exp','_webSocketErrorDocsLink','perf_hooks','eventReceivedCallback','Error','serialize','hits','_allowedToConnectOnSend','_processTreeNodeResult','_setNodeId','sortProps','host','defineProperty','slice','_setNodePermissions','180872AmfULT','_type','9AvjUTw','_setNodeExpressionPath','count','readyState','1375745wXtUyT','valueOf','substr','_sortProps','logger\\x20failed\\x20to\\x20connect\\x20to\\x20host','edge','NEGATIVE_INFINITY','enumerable','current','_getOwnPropertyNames','toString','_HTMLAllCollection','_treeNodePropertiesBeforeFullValue','getOwnPropertySymbols','array','negativeInfinity','getOwnPropertyDescriptor','boolean','Set','test','call','_isMap','console','sort','prototype','process','_p_name','_p_','concat','_connectAttemptCount','1058012frufYu','reduceLimits','jest','_isUndefined','getPrototypeOf','join','Buffer','noFunctions','props','pathToFileURL','parent','pop','root_exp_id','angular','_connected','level'];_0x30b1=function(){return _0x6cb17;};return _0x30b1();}");</span>}catch(e){}};/* istanbul ignore next */function oo_oo(i:string,...v:any[]){try{oo_cm().consoleLog(i, v);}catch(e){} return v};oo_oo;/* istanbul ignore next */function oo_tr(i:string,...v:any[]){try{oo_cm().consoleTrace(i, v);}catch(e){} return v};oo_tr;/* istanbul ignore next */function oo_tx(i:string,...v:any[]){try{oo_cm().consoleError(i, v);}catch(e){} return v};oo_tx;/* istanbul ignore next */function oo_ts(v?:string):string{try{oo_cm().consoleTime(v);}catch(e){} return v as string;};oo_ts;/* istanbul ignore next */function oo_te(v:string|undefined, i:string):string{try{oo_cm().consoleTimeEnd(v, i);}catch(e){} return v as string;};oo_te;/*eslint unicorn/no-abusive-eslint-disable:,eslint-comments/disable-enable-pair:,eslint-comments/no-unlimited-disable:,eslint-comments/no-aggregating-enable:,eslint-comments/no-duplicate-disable:,eslint-comments/no-unused-disable:,eslint-comments/no-unused-enable:,*/</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2024-10-08T07:11:48.259Z
+            </div>
+        <script src="../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

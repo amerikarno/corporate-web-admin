@@ -19,7 +19,7 @@ type TMapPages = {
     [key: number]: JSX.Element;
 }
   
-const PageAddedIco = () => {
+const ChangePageAddedIco = () => {
 
 const navigate = useNavigate();
   const { page } = useParams<TPage>();
@@ -35,14 +35,14 @@ const navigate = useNavigate();
 
   const handlePages = (type: string) => {
     if (type == "next") {
-      navigate(`/create-job/change-ico/${pageId + 1}`);
+      navigate(`/create-job/change-ico/edit/${pageId + 1}`);
     }else if(type == "Done"){
-      navigate(`/create-job/change-ico-search`);
+      navigate(`/create-job/change-ico`);
       dispatch(clearAssetData());
       localStorage.clear();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      navigate(`/create-job/change-ico/${pageId - 1}`);
+      navigate(`/create-job/change-ico/edit/${pageId - 1}`);
     }
   };
 
@@ -262,4 +262,4 @@ const navigate = useNavigate();
   );
 }
 
-export default PageAddedIco
+export default ChangePageAddedIco

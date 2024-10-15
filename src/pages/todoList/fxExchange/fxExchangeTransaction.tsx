@@ -4,6 +4,8 @@ import { getCookies } from "@/lib/Cookies";
 import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Button } from "@/components/ui/button";
+import { store } from "@/app/store";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TTransaction = {
   id: string;
@@ -71,7 +73,7 @@ const FxExchangeTransactionList = () => {
       .filter((data) => data.ReviewStatus !== undefined);
 
     console.log(dataToSend);
-
+    store.dispatch(setTestCorporateData(dataToSend));
     try {
       const response = await axios.post(
         "/api/v1/transaction/exchange/review",
@@ -182,7 +184,7 @@ const FxExchangeTransactionList = () => {
     }
   };
 
-  const columnsContactPerson: TableColumn<TTransaction>[] = [
+  const columnsTransaction: TableColumn<TTransaction>[] = [
     {
       name: "Transaction ID",
       selector: (row: TTransaction) => row.id || "",
@@ -219,6 +221,7 @@ const FxExchangeTransactionList = () => {
       name: "Approve",
       cell: (row: TTransaction) => (
         <input
+          data-testid={`approve-${row.id}`}
           type="checkbox"
           checked={checkboxStatus[row.id]?.checkerStatus === true}
           onChange={(e) =>
@@ -234,6 +237,7 @@ const FxExchangeTransactionList = () => {
       name: "Reject",
       cell: (row: TTransaction) => (
         <input
+          data-testid={`reject-${row.id}`}
           type="checkbox"
           checked={checkboxStatus[row.id]?.checkerStatus === false}
           onChange={(e) =>
@@ -252,7 +256,7 @@ const FxExchangeTransactionList = () => {
       <Card>
         <DataTable
           title="List of FX Exchange"
-          columns={columnsContactPerson}
+          columns={columnsTransaction}
           data={listOfTransaction}
           clearSelectedRows
         />
