@@ -15,7 +15,7 @@ import {
 import "./header.css";
 
 // import Logo from "@/assets/logo_ecg-03.png";
-import Logo from "@/assets/images/header/logo.png";
+// import Logo from "@/assets/images/header/logo.png";
 import { urlConfig } from "@/config/url";
 import { TUrlConfig, TUrlConfigChild } from "@/config/types";
 import { Menu } from "lucide-react";
