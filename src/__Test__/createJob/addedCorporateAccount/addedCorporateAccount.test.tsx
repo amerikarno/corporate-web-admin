@@ -28,28 +28,56 @@ import { FormBank } from "@/pages/createJob/addedCorporateAccount/components/for
 import UploadFiles from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/uploadFiles";
 import * as useUploadFileModule from "@/pages/createJob/addedCorporateAccount/pages/uploadFiles/hook/useUploadFile";
 import { PageJuristicType } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicType";
-import {TContact, TCorporateData, TDirector, TJuristic } from "@/pages/createJob/constant/type";
+import {
+  TContact,
+  TCorporateData,
+  TDirector,
+  TJuristic,
+} from "@/pages/createJob/constant/type";
 import {
   clearCorporateData,
   setCorporateData,
 } from "@/features/editCorporateData/editCorporateData";
 import { clearTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 import { PageContactPerson } from "@/pages/createJob/addedCorporateAccount/pages/PageContactPerson";
-import { clearContactPersons, setContactPersons } from "@/features/contactPersonSlice";
+import {
+  clearContactPersons,
+  setContactPersons,
+} from "@/features/contactPersonSlice";
 import { ListOfDirectors } from "@/pages/createJob/addedCorporateAccount/pages/ListOfDirectors";
-import { clearDirector, setDirectorEdit } from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
+import {
+  clearDirector,
+  setDirectorEdit,
+} from "@/features/ListOfDirectorSlice/listOfDirectorSlice";
 import { TIndividualShareholder } from "@/pages/createJob/constant/type";
 import axios from "@/api/axios";
 import MockAdapter from "axios-mock-adapter";
 import { PageIndividualShareholder } from "@/pages/createJob/addedCorporateAccount/pages/PageIndividualShareholder";
-import { clearIndividualShareholder, setIndividualShareholder } from "@/features/individualShareholder/individualShareholderSlice";
+import {
+  clearIndividualShareholder,
+  setIndividualShareholder,
+} from "@/features/individualShareholder/individualShareholderSlice";
 import { PageJuristicShareholder } from "@/pages/createJob/addedCorporateAccount/pages/PageJuristicShareholder";
-import { clearJuristicShareholder, setJuristicShareholder } from "@/features/juristicShareholderSlice/juristicShareholderSlice";
-import { mapDataToTAttorney, mapDataToTAuthoirzedPerson, mapDataToTBank, mapDataToTJuristicShareholder } from "@/pages/createJob/addedCorporateAccount/libs/utils";
-import { TAuthorizePerson, TJuristicsShareholders } from "@/pages/createJob/addedCorporateAccount/constants2/types";
+import {
+  clearJuristicShareholder,
+  setJuristicShareholder,
+} from "@/features/juristicShareholderSlice/juristicShareholderSlice";
+import {
+  mapDataToTAttorney,
+  mapDataToTAuthoirzedPerson,
+  mapDataToTBank,
+  mapDataToTJuristicShareholder,
+} from "@/pages/createJob/addedCorporateAccount/libs/utils";
+import {
+  TAuthorizePerson,
+  TJuristicsShareholders,
+} from "@/pages/createJob/addedCorporateAccount/constants2/types";
 import { PageAuthorizedPerson } from "@/pages/createJob/addedCorporateAccount/pages/PageAuthorizedPerson";
 import { TAuthorizedPerson as TAuthorizedPersonEdit } from "@/pages/createJob/constant/type";
-import { clearAuthorizedPerson, setAuthorizedPersons } from "@/features/authorizedPerson/authorizedPersonSlice";
+import {
+  clearAuthorizedPerson,
+  setAuthorizedPersons,
+} from "@/features/authorizedPerson/authorizedPersonSlice";
 import { PageAttorney } from "@/pages/createJob/addedCorporateAccount/pages/PageAttorney";
 import { clearAttorney, setAttorney } from "@/features/attorney/attorney";
 import { PageBankAccount } from "@/pages/createJob/addedCorporateAccount/pages/PageBankAccount";
@@ -108,7 +136,7 @@ describe("test create corporate form1", () => {
     expect(registerNo).toHaveValue("");
     await act(async () => {
       fireEvent.change(registerNo, { target: { value: "No.123456789" } });
-    })
+    });
     expect(registerNo).toHaveValue("No.123456789");
 
     //integer input type
@@ -117,15 +145,17 @@ describe("test create corporate form1", () => {
     expect(taxId).toHaveValue("");
     await act(async () => {
       fireEvent.change(taxId, { target: { value: "123" } });
-    })  
+    });
     expect(taxId).toHaveValue("123");
     //date input type
     const dateOfIncorporation = screen.getByLabelText("Date of Incorporation");
     expect(dateOfIncorporation).toBeInTheDocument();
     expect(dateOfIncorporation).toHaveValue("");
     await act(async () => {
-      fireEvent.change(dateOfIncorporation, { target: { value: "2023-01-01" } });
-    })
+      fireEvent.change(dateOfIncorporation, {
+        target: { value: "2023-01-01" },
+      });
+    });
     expect(dateOfIncorporation).toHaveValue("2023-01-01");
 
     //checkbox input type
@@ -152,7 +182,7 @@ describe("test create corporate form1", () => {
     expect(addressNumber).toHaveValue("");
     await act(async () => {
       fireEvent.change(addressNumber, { target: { value: "addressNumber" } });
-    })
+    });
     expect(addressNumber).toHaveValue("addressNumber");
 
     //Moo
@@ -161,7 +191,7 @@ describe("test create corporate form1", () => {
     expect(moo).toHaveValue("");
     await act(async () => {
       fireEvent.change(moo, { target: { value: "Moo" } });
-    })
+    });
     expect(moo).toHaveValue("Moo");
 
     //Soi
@@ -170,7 +200,7 @@ describe("test create corporate form1", () => {
     expect(soi).toHaveValue("");
     await act(async () => {
       fireEvent.change(soi, { target: { value: "Soi" } });
-    })
+    });
     expect(soi).toHaveValue("Soi");
 
     //Floor
@@ -179,7 +209,7 @@ describe("test create corporate form1", () => {
     expect(floor).toHaveValue("");
     await act(async () => {
       fireEvent.change(floor, { target: { value: "Floor" } });
-    })
+    });
     expect(floor).toHaveValue("Floor");
 
     //Building
@@ -188,7 +218,7 @@ describe("test create corporate form1", () => {
     expect(building).toHaveValue("");
     await act(async () => {
       fireEvent.change(building, { target: { value: "Building" } });
-    })
+    });
     expect(building).toHaveValue("Building");
 
     //Road
@@ -197,7 +227,7 @@ describe("test create corporate form1", () => {
     expect(road).toHaveValue("");
     await act(async () => {
       fireEvent.change(road, { target: { value: "Road" } });
-    })
+    });
     expect(road).toHaveValue("Road");
 
     //Tambon
@@ -206,7 +236,7 @@ describe("test create corporate form1", () => {
     expect(tambon).toHaveValue("");
     await act(async () => {
       fireEvent.change(tambon, { target: { value: "Tambon" } });
-    })
+    });
     expect(tambon).toHaveValue("Tambon");
 
     //Amphoe
@@ -215,7 +245,7 @@ describe("test create corporate form1", () => {
     expect(amphoe).toHaveValue("");
     await act(async () => {
       fireEvent.change(amphoe, { target: { value: "Amphoe" } });
-    })
+    });
     expect(amphoe).toHaveValue("Amphoe");
 
     //Province
@@ -224,7 +254,7 @@ describe("test create corporate form1", () => {
     expect(province).toHaveValue("");
     await act(async () => {
       fireEvent.change(province, { target: { value: "Province" } });
-    })
+    });
     expect(province).toHaveValue("Province");
 
     //PostalCode
@@ -233,7 +263,7 @@ describe("test create corporate form1", () => {
     expect(postalCode).toHaveValue("");
     await act(async () => {
       fireEvent.change(postalCode, { target: { value: "Postal Code" } });
-    })
+    });
     expect(postalCode).toHaveValue("Postal Code");
 
     //Country
@@ -242,7 +272,7 @@ describe("test create corporate form1", () => {
     expect(country).toHaveValue("");
     await act(async () => {
       fireEvent.change(country, { target: { value: "Country" } });
-    })
+    });
     expect(country).toHaveValue("Country");
 
     //EmailAddress
@@ -251,7 +281,7 @@ describe("test create corporate form1", () => {
     expect(emailAddress).toHaveValue("");
     await act(async () => {
       fireEvent.change(emailAddress, { target: { value: "Email Address" } });
-    })
+    });
     expect(emailAddress).toHaveValue("Email Address");
 
     //Telephone
@@ -260,7 +290,7 @@ describe("test create corporate form1", () => {
     expect(telephone).toHaveValue("");
     await act(async () => {
       fireEvent.change(telephone, { target: { value: "Telephone" } });
-    })
+    });
     expect(telephone).toHaveValue("Telephone");
 
     //place incorporate address input component
@@ -274,7 +304,7 @@ describe("test create corporate form1", () => {
       fireEvent.change(placeAddressNumber, {
         target: { value: "addressNumber" },
       });
-    })
+    });
     expect(placeAddressNumber).toHaveValue("addressNumber");
 
     //Moo
@@ -283,7 +313,7 @@ describe("test create corporate form1", () => {
     expect(placeMoo).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeMoo, { target: { value: "Moo" } });
-    })
+    });
     expect(placeMoo).toHaveValue("Moo");
 
     //Soi
@@ -292,7 +322,7 @@ describe("test create corporate form1", () => {
     expect(placeSoi).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeSoi, { target: { value: "Soi" } });
-    })
+    });
     expect(placeSoi).toHaveValue("Soi");
 
     //Floor
@@ -301,7 +331,7 @@ describe("test create corporate form1", () => {
     expect(placeFloor).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeFloor, { target: { value: "Floor" } });
-    })
+    });
     expect(placeFloor).toHaveValue("Floor");
 
     //Building
@@ -310,7 +340,7 @@ describe("test create corporate form1", () => {
     expect(placeBuilding).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeBuilding, { target: { value: "Building" } });
-    })
+    });
     expect(placeBuilding).toHaveValue("Building");
 
     //Road
@@ -319,7 +349,7 @@ describe("test create corporate form1", () => {
     expect(placeRoad).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeRoad, { target: { value: "Road" } });
-    })
+    });
     expect(placeRoad).toHaveValue("Road");
 
     //Tambon
@@ -328,7 +358,7 @@ describe("test create corporate form1", () => {
     expect(placeTambon).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeTambon, { target: { value: "Tambon" } });
-    })
+    });
     expect(placeTambon).toHaveValue("Tambon");
 
     //Amphoe
@@ -337,7 +367,7 @@ describe("test create corporate form1", () => {
     expect(placeAmphoe).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeAmphoe, { target: { value: "Amphoe" } });
-    })
+    });
     expect(placeAmphoe).toHaveValue("Amphoe");
 
     //Province
@@ -346,7 +376,7 @@ describe("test create corporate form1", () => {
     expect(placeProvince).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeProvince, { target: { value: "Province" } });
-    })
+    });
     expect(placeProvince).toHaveValue("Province");
 
     //PostalCode
@@ -357,7 +387,7 @@ describe("test create corporate form1", () => {
     expect(placePostalCode).toHaveValue("");
     await act(async () => {
       fireEvent.change(placePostalCode, { target: { value: "Postal Code" } });
-    })
+    });
     expect(placePostalCode).toHaveValue("Postal Code");
 
     //Country
@@ -366,7 +396,7 @@ describe("test create corporate form1", () => {
     expect(placeCountry).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeCountry, { target: { value: "Country" } });
-    })
+    });
     expect(placeCountry).toHaveValue("Country");
 
     //EmailAddress
@@ -376,8 +406,10 @@ describe("test create corporate form1", () => {
     expect(placeEmailAddress).toBeInTheDocument();
     expect(placeEmailAddress).toHaveValue("");
     await act(async () => {
-      fireEvent.change(placeEmailAddress, { target: { value: "Email Address" } });
-    })
+      fireEvent.change(placeEmailAddress, {
+        target: { value: "Email Address" },
+      });
+    });
     expect(placeEmailAddress).toHaveValue("Email Address");
 
     //Telephone
@@ -386,7 +418,7 @@ describe("test create corporate form1", () => {
     expect(placeTelephone).toHaveValue("");
     await act(async () => {
       fireEvent.change(placeTelephone, { target: { value: "Telephone" } });
-    })
+    });
     expect(placeTelephone).toHaveValue("Telephone");
 
     //float input type
@@ -910,11 +942,11 @@ describe("test create corporate form2", () => {
     });
 
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
-  })
+  });
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -929,8 +961,7 @@ describe("test create corporate form2", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageJuristicType
-          />
+          <PageJuristicType />
         </MemoryRouter>
       </Provider>
     );
@@ -1145,7 +1176,7 @@ describe("test create corporate form2", () => {
       fireEvent.change(sourceOfIncomeOtherInput, {
         target: { value: "Thailand" },
       });
-    })
+    });
     expect(sourceOfIncomeOtherInput).toHaveValue("Thailand");
 
     //country source of income box
@@ -1163,7 +1194,7 @@ describe("test create corporate form2", () => {
     expect(thailandOtherInput).toBeInTheDocument();
     await act(async () => {
       fireEvent.change(thailandOtherInput, { target: { value: "Thailand" } });
-    })
+    });
     expect(thailandOtherInput).toHaveValue("Thailand");
 
     //investment objective box
@@ -1183,7 +1214,7 @@ describe("test create corporate form2", () => {
       fireEvent.change(investmentObjectiveOtherInput, {
         target: { value: "Thailand" },
       });
-    })
+    });
     expect(investmentObjectiveOtherInput).toHaveValue("Thailand");
 
     const submitButton = screen.getByText("Next Form");
@@ -1353,7 +1384,7 @@ describe("test create corporate form2", () => {
       fireEvent.change(sourceOfIncomeOtherInput, {
         target: { value: "Thailand" },
       });
-    })
+    });
     expect(sourceOfIncomeOtherInput).toHaveValue("Thailand");
 
     //country source of income box
@@ -1371,7 +1402,7 @@ describe("test create corporate form2", () => {
     expect(thailandOtherInput).toBeInTheDocument();
     await act(async () => {
       fireEvent.change(thailandOtherInput, { target: { value: "Thailand" } });
-    })
+    });
     expect(thailandOtherInput).toHaveValue("Thailand");
 
     //investment objective box
@@ -1406,7 +1437,7 @@ describe("test create corporate form2", () => {
       fireEvent.change(investmentObjectiveOtherInput, {
         target: { value: "Thailand" },
       });
-    })
+    });
     expect(investmentObjectiveOtherInput).toHaveValue("Thailand");
 
     const submitButton = screen.getByText("Next Form");
@@ -1584,25 +1615,24 @@ const mockContact: TContact = {
       title: "Mr.",
       firstName: "John",
       lastName: "Doe",
-      types: 1
-    }
+      types: 1,
+    },
   ],
   telephone: "123-456-7890",
   email: "john.doe@example.com",
   types: 2,
   personalId: "A123456789",
   position: "Manager",
-  division: "Sales"
+  division: "Sales",
 };
 
 describe("test create corporate form3 (contact person)", () => {
-
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
-  })
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -1618,8 +1648,7 @@ describe("test create corporate form3 (contact person)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageContactPerson
-          />
+          <PageContactPerson />
         </MemoryRouter>
       </Provider>
     );
@@ -1672,8 +1701,7 @@ describe("test create corporate form3 (contact person)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageContactPerson
-          />
+          <PageContactPerson />
         </MemoryRouter>
       </Provider>
     );
@@ -1714,7 +1742,7 @@ describe("test create corporate form3 (contact person)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(titleField).not.toHaveValue("");
@@ -1730,13 +1758,13 @@ describe("test create corporate form3 (contact person)", () => {
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
     const confirmDelete = screen.getByTestId("confirmDelete-A123456789");
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearContactPersons());
@@ -1751,8 +1779,7 @@ describe("test create corporate form3 (contact person)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageContactPerson
-          />
+          <PageContactPerson />
         </MemoryRouter>
       </Provider>
     );
@@ -1793,7 +1820,7 @@ describe("test create corporate form3 (contact person)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(titleField).not.toHaveValue("");
@@ -1817,16 +1844,16 @@ describe("test create corporate form3 (contact person)", () => {
       data: {
         contacts: [
           {
-            fullNames: [ { title: 'Mr.', firstName: 'John', lastName: 'Doe' } ],
-            position: 'Manager',
-            division: 'Sales',
-            telephone: '123-456-7890',
-            email: 'john.doe@example.com',
-            personalId: 'A123456789'
-          }
+            fullNames: [{ title: "Mr.", firstName: "John", lastName: "Doe" }],
+            position: "Manager",
+            division: "Sales",
+            telephone: "123-456-7890",
+            email: "john.doe@example.com",
+            personalId: "A123456789",
+          },
         ],
-        corporateCode: '80000001'
-      }
+        corporateCode: "80000001",
+      },
     };
 
     await waitFor(() => {
@@ -1843,7 +1870,6 @@ describe("test create corporate form3 (contact person)", () => {
   }, 40000);
 
   test("test input data(multiple input type)", async () => {
-
     const mockOnSubmit = jest.fn();
     const mockClearChoosedEditData = jest.fn();
     const mockCorporateCode = "0";
@@ -1895,10 +1921,9 @@ describe("test create corporate form3 (contact person)", () => {
       expect(email).toBeInTheDocument();
       fireEvent.change(email, { target: { value: "test@example.com" } });
       expect(email).toHaveValue("test@example.com");
-      
+
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    
     });
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -1909,16 +1934,16 @@ describe("test create corporate form3 (contact person)", () => {
       data: {
         contacts: [
           {
-            fullNames: [ { title: 'Mr', firstName: 'John', lastName: 'Doe' } ],
-            position: 'Position',
-            division: 'Division',
-            telephone: '0123456789',
-            email: 'test@example.com',
-            personalId: undefined
-          }
+            fullNames: [{ title: "Mr", firstName: "John", lastName: "Doe" }],
+            position: "Position",
+            division: "Division",
+            telephone: "0123456789",
+            email: "test@example.com",
+            personalId: undefined,
+          },
         ],
-        corporateCode: '0'
-      }
+        corporateCode: "0",
+      },
     };
 
     await waitFor(() => {
@@ -1947,8 +1972,8 @@ const mockDirector: TDirector = {
       title: "Mr.",
       firstName: "directorName",
       lastName: "directorLastName",
-      types: 1
-    }
+      types: 1,
+    },
   ],
   addresses: [
     {
@@ -1968,21 +1993,20 @@ const mockDirector: TDirector = {
       province: "Bangkok",
       postalCode: "10110",
       country: "Thailand",
-      types: 1
-    }
+      types: 1,
+    },
   ],
   citizenId: "0240212359299",
   passportId: "P1234567",
   expiryDate: "2025-12-31",
   nationality: "American",
-  types: 1
+  types: 1,
 };
 
 describe("test create corporate form4 (list of director)", () => {
-
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
   })
@@ -2001,8 +2025,7 @@ describe("test create corporate form4 (list of director)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ListOfDirectors
-          />
+          <ListOfDirectors />
         </MemoryRouter>
       </Provider>
     );
@@ -2050,13 +2073,19 @@ describe("test create corporate form4 (list of director)", () => {
 
   test("test form4 (PageListOfDirector) DELETE", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
-    store.dispatch(setDirectorEdit([{...mockDirector,corporateCode:mockDirector.corporateCode.toString()}]));
+    store.dispatch(
+      setDirectorEdit([
+        {
+          ...mockDirector,
+          corporateCode: mockDirector.corporateCode.toString(),
+        },
+      ])
+    );
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ListOfDirectors
-          />
+          <ListOfDirectors />
         </MemoryRouter>
       </Provider>
     );
@@ -2123,7 +2152,7 @@ describe("test create corporate form4 (list of director)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(titleField).not.toHaveValue("");
@@ -2148,13 +2177,13 @@ describe("test create corporate form4 (list of director)", () => {
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
     const confirmDelete = screen.getByTestId("confirmDelete-9876543210987");
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearDirector());
@@ -2170,13 +2199,19 @@ describe("test create corporate form4 (list of director)", () => {
     window.alert = jest.fn();
 
     store.dispatch(setCorporateData(mockCorporateData));
-    store.dispatch(setDirectorEdit([{...mockDirector,corporateCode:mockDirector.corporateCode.toString()}]));
+    store.dispatch(
+      setDirectorEdit([
+        {
+          ...mockDirector,
+          corporateCode: mockDirector.corporateCode.toString(),
+        },
+      ])
+    );
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ListOfDirectors
-          />
+          <ListOfDirectors />
         </MemoryRouter>
       </Provider>
     );
@@ -2243,7 +2278,7 @@ describe("test create corporate form4 (list of director)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(titleField).not.toHaveValue("");
@@ -2291,30 +2326,36 @@ describe("test create corporate form4 (list of director)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [ { title: 'Mr.', firstName: 'directorName', lastName: 'directorLastName' } ],
-        citizenId: '0240212359299',
-        passportId: '',
-        expiryDate: '2025-12-31',
-        nationality: 'American',
+        fullNames: [
+          {
+            title: "Mr.",
+            firstName: "directorName",
+            lastName: "directorLastName",
+          },
+        ],
+        citizenId: "0240212359299",
+        passportId: "",
+        expiryDate: "2025-12-31",
+        nationality: "American",
         addresses: [
           {
-            addressNo: '123',
-            mooNo: '2',
-            soi: 'Soi 3',
-            floor: '10',
-            building: 'ABC Building',
-            road: 'Sukhumvit',
-            tambon: 'Khlong Toei',
-            amphoe: 'Khlong Toei',
-            province: 'Bangkok',
-            postalCode: '10110',
-            country: 'Thailand'
-          }
+            addressNo: "123",
+            mooNo: "2",
+            soi: "Soi 3",
+            floor: "10",
+            building: "ABC Building",
+            road: "Sukhumvit",
+            tambon: "Khlong Toei",
+            amphoe: "Khlong Toei",
+            province: "Bangkok",
+            postalCode: "10110",
+            country: "Thailand",
+          },
         ],
         types: 101,
-        corporateCode: '80000001',
-        personalId: '9876543210987'
-      }
+        corporateCode: "80000001",
+        personalId: "9876543210987",
+      },
     };
 
     await waitFor(() => {
@@ -2444,7 +2485,7 @@ describe("test create corporate form4 (list of director)", () => {
 
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    })
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -2516,11 +2557,10 @@ const individualShareholderMock: TIndividualShareholder = {
   sharePercentage: 30,
 };
 
-
 describe("test create corporate form5 (individual shareholder)", () => {
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
   })
@@ -2539,8 +2579,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageIndividualShareholder
-          />
+          <PageIndividualShareholder />
         </MemoryRouter>
       </Provider>
     );
@@ -2588,13 +2627,20 @@ describe("test create corporate form5 (individual shareholder)", () => {
 
   test("test form5 (PageIndividualShareholder) DELETE", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
-    store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, corporateCode:individualShareholderMock.corporateCode.toString()}]));
+    store.dispatch(
+      setIndividualShareholder([
+        {
+          ...individualShareholderMock,
+          expiryDate: individualShareholderMock.expiryDate as string,
+          corporateCode: individualShareholderMock.corporateCode.toString(),
+        },
+      ])
+    );
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageIndividualShareholder
-          />
+          <PageIndividualShareholder />
         </MemoryRouter>
       </Provider>
     );
@@ -2627,7 +2673,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(titleField).not.toHaveValue("");
@@ -2642,13 +2688,13 @@ describe("test create corporate form5 (individual shareholder)", () => {
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
     const confirmDelete = screen.getByTestId("confirmDelete-PID001");
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearDirector());
@@ -2658,13 +2704,20 @@ describe("test create corporate form5 (individual shareholder)", () => {
 
   test("test form5 (PageIndividualShareholder) EDIT", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
-    store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, corporateCode:individualShareholderMock.corporateCode.toString()}]));
+    store.dispatch(
+      setIndividualShareholder([
+        {
+          ...individualShareholderMock,
+          expiryDate: individualShareholderMock.expiryDate as string,
+          corporateCode: individualShareholderMock.corporateCode.toString(),
+        },
+      ])
+    );
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageIndividualShareholder
-          />
+          <PageIndividualShareholder />
         </MemoryRouter>
       </Provider>
     );
@@ -2697,7 +2750,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(titleField).not.toHaveValue("");
@@ -2718,16 +2771,22 @@ describe("test create corporate form5 (individual shareholder)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [ { title: 'Mr.', firstName: 'individualName', lastName: 'individualLastName' } ],
-        citizenId: '0240212359299',
-        passportId: '',
-        expiryDate: '2025-01-01',
-        nationality: 'Thai',
+        fullNames: [
+          {
+            title: "Mr.",
+            firstName: "individualName",
+            lastName: "individualLastName",
+          },
+        ],
+        citizenId: "0240212359299",
+        passportId: "",
+        expiryDate: "2025-01-01",
+        nationality: "Thai",
         sharePercentage: 3000000,
-        corporateCode: '80000001',
+        corporateCode: "80000001",
         personalId: "PID001",
         types: 301,
-      }
+      },
     };
 
     await waitFor(() => {
@@ -2736,7 +2795,6 @@ describe("test create corporate form5 (individual shareholder)", () => {
       console.log("Corporate State After Submission:", corporateState);
       expect(corporateState).toMatchObject(expectedFormData);
     });
-
 
     await act(async () => {
       store.dispatch(clearIndividualShareholder());
@@ -2801,7 +2859,7 @@ describe("test create corporate form5 (individual shareholder)", () => {
 
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    })
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -2845,8 +2903,8 @@ const juristicMock: TJuristic = {
 
 describe("test create corporate form6 (juristics shareholder)", () => {
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
   })
@@ -2865,8 +2923,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageJuristicShareholder
-          />
+          <PageJuristicShareholder />
         </MemoryRouter>
       </Provider>
     );
@@ -2932,8 +2989,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageJuristicShareholder
-          />
+          <PageJuristicShareholder />
         </MemoryRouter>
       </Provider>
     );
@@ -2942,7 +2998,9 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     expect(name).toBeInTheDocument();
     expect(name).toHaveValue("");
 
-    const commercialRegis = screen.getByLabelText("Commercial Registration No.");
+    const commercialRegis = screen.getByLabelText(
+      "Commercial Registration No."
+    );
     expect(commercialRegis).toBeInTheDocument();
     expect(commercialRegis).toHaveValue("");
 
@@ -2958,7 +3016,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(name).not.toHaveValue("");
@@ -2971,13 +3029,13 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
     const confirmDelete = screen.getByTestId("confirmDelete-juristicid22");
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearJuristicShareholder());
@@ -3005,18 +3063,19 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageJuristicShareholder
-          />
+          <PageJuristicShareholder />
         </MemoryRouter>
       </Provider>
     );
-    
+
     screen.debug();
     const name = screen.getByLabelText("Juristic Name");
     expect(name).toBeInTheDocument();
     expect(name).toHaveValue("");
 
-    const commercialRegis = screen.getByLabelText("Commercial Registration No.");
+    const commercialRegis = screen.getByLabelText(
+      "Commercial Registration No."
+    );
     expect(commercialRegis).toBeInTheDocument();
     expect(commercialRegis).toHaveValue("");
 
@@ -3032,7 +3091,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     expect(editButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editButton);
-    })
+    });
 
     await waitFor(() => {
       expect(name).not.toHaveValue("");
@@ -3051,13 +3110,13 @@ describe("test create corporate form6 (juristics shareholder)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        corporateCode: '80000001',
-        juristicName: 'Acme Juristic Individual Corporation',
-        registrationNo: 'REG123456',
-        registeredCountry: 'Thailand',
+        corporateCode: "80000001",
+        juristicName: "Acme Juristic Individual Corporation",
+        registrationNo: "REG123456",
+        registeredCountry: "Thailand",
         sharePercentage: 40,
-        juristicId: 'juristicid22'
-      }
+        juristicId: "juristicid22",
+      },
     };
 
     await waitFor(() => {
@@ -3096,7 +3155,9 @@ describe("test create corporate form6 (juristics shareholder)", () => {
       fireEvent.change(juristicName, { target: { value: "John Doe" } });
       expect(juristicName).toHaveValue("John Doe");
 
-      const RegistrationNo = screen.getByLabelText("Commercial Registration No.");
+      const RegistrationNo = screen.getByLabelText(
+        "Commercial Registration No."
+      );
       expect(RegistrationNo).toBeInTheDocument();
       fireEvent.change(RegistrationNo, { target: { value: "2571817668244" } });
       expect(RegistrationNo).toHaveValue("2571817668244");
@@ -3114,7 +3175,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
 
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    })
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -3142,61 +3203,60 @@ describe("test create corporate form6 (juristics shareholder)", () => {
 });
 
 const authorizedMock = {
-  "id": "2a53e608-c8f5-4cd5-ae97-1d8706cd8fe4",
-                "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                "CreatedAt": "2024-08-13T05:15:29.523Z",
-                "DeletedAt": null,
-                "personalId": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
-                "corporateCode": 80000003,
-                "fullNames": [
-                    {
-                        "id": "b0d9459f-465d-4ea1-aaac-5d03ac4c2763",
-                        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                        "CreatedAt": "2024-08-13T05:15:29.533Z",
-                        "DeletedAt": null,
-                        "ReferenceID": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
-                        "title": "apt1",
-                        "firstName": "apfn1",
-                        "lastName": "apsn1",
-                        "types": 201
-                    }
-                ],
-                "addresses": [
-                    {
-                        "id": "9eeb8525-f454-4a89-8526-31ae8de78ecf",
-                        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                        "CreatedAt": "2024-08-13T05:15:29.528Z",
-                        "DeletedAt": null,
-                        "ReferenceID": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
-                        "addressNo": "apa1",
-                        "tambon": "apt1",
-                        "amphoe": "apa1",
-                        "province": "app1",
-                        "postalCode": "12323",
-                        "country": "apc1",
-                        "mooNo":"moo number",
-                        "soi":"soi app",
-                        "floor":"24floor",
-                        "building":"building app",
-                        "road":"raminta road",
-                        "types": 201
-                    }
-                ],
-                "citizenId":"2571817668244",
-                "passportId": "1111111111a",
-                "expiryDate": "2026-01-01T00:00:00Z",
-                "nationality": "apn1",
-                "types": 201
-            }
+  id: "2a53e608-c8f5-4cd5-ae97-1d8706cd8fe4",
+  createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+  CreatedAt: "2024-08-13T05:15:29.523Z",
+  DeletedAt: null,
+  personalId: "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
+  corporateCode: 80000003,
+  fullNames: [
+    {
+      id: "b0d9459f-465d-4ea1-aaac-5d03ac4c2763",
+      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+      CreatedAt: "2024-08-13T05:15:29.533Z",
+      DeletedAt: null,
+      ReferenceID: "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
+      title: "apt1",
+      firstName: "apfn1",
+      lastName: "apsn1",
+      types: 201,
+    },
+  ],
+  addresses: [
+    {
+      id: "9eeb8525-f454-4a89-8526-31ae8de78ecf",
+      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+      CreatedAt: "2024-08-13T05:15:29.528Z",
+      DeletedAt: null,
+      ReferenceID: "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
+      addressNo: "apa1",
+      tambon: "apt1",
+      amphoe: "apa1",
+      province: "app1",
+      postalCode: "12323",
+      country: "apc1",
+      mooNo: "moo number",
+      soi: "soi app",
+      floor: "24floor",
+      building: "building app",
+      road: "raminta road",
+      types: 201,
+    },
+  ],
+  citizenId: "2571817668244",
+  passportId: "1111111111a",
+  expiryDate: "2026-01-01T00:00:00Z",
+  nationality: "apn1",
+  types: 201,
+};
 
 describe("test create corporate form7 (authorized person)", () => {
-
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
-  })
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -3212,8 +3272,7 @@ describe("test create corporate form7 (authorized person)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageAuthorizedPerson
-          />
+          <PageAuthorizedPerson />
         </MemoryRouter>
       </Provider>
     );
@@ -3260,11 +3319,9 @@ describe("test create corporate form7 (authorized person)", () => {
   }, 40000);
 
   test("test form6 (PageAuthorizedPerson) DELETE", async () => {
-    mockAxios.onPost('/api/v1/corporate/query').reply(200, [
+    mockAxios.onPost("/api/v1/corporate/query").reply(200, [
       {
-        AuthorizedPersons: [
-          authorizedMock
-        ],
+        AuthorizedPersons: [authorizedMock],
       },
     ]);
     store.dispatch(setCorporateData(mockCorporateData));
@@ -3282,8 +3339,7 @@ describe("test create corporate form7 (authorized person)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageAuthorizedPerson
-          />
+          <PageAuthorizedPerson />
         </MemoryRouter>
       </Provider>
     );
@@ -3293,7 +3349,7 @@ describe("test create corporate form7 (authorized person)", () => {
     expect(title).toHaveValue("");
 
     const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();;
+    expect(firstName).toBeInTheDocument();
     expect(firstName).toHaveValue("");
 
     const surName = screen.getByLabelText("Surname");
@@ -3357,12 +3413,16 @@ describe("test create corporate form7 (authorized person)", () => {
     expect(country).toHaveValue("");
 
     await waitFor(() => {
-      const editButton = screen.getByTestId("editButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc");
+      const editButton = screen.getByTestId(
+        "editButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc"
+      );
       expect(editButton).toBeInTheDocument();
-    })
+    });
     await act(async () => {
-      fireEvent.click(screen.getByTestId("editButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc"));
-    })
+      fireEvent.click(
+        screen.getByTestId("editButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc")
+      );
+    });
 
     await waitFor(() => {
       expect(title).not.toHaveValue("");
@@ -3384,17 +3444,21 @@ describe("test create corporate form7 (authorized person)", () => {
       expect(country).not.toHaveValue("");
     });
 
-    const deleteButton = screen.getByTestId("deleteButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc");
+    const deleteButton = screen.getByTestId(
+      "deleteButton-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc"
+    );
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
-    const confirmDelete = screen.getByTestId("confirmDelete-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc");
+    const confirmDelete = screen.getByTestId(
+      "confirmDelete-3c2dfdb5-a140-4ef5-89d5-1326cbf632bc"
+    );
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearAuthorizedPerson());
@@ -3405,7 +3469,6 @@ describe("test create corporate form7 (authorized person)", () => {
   
 
   test("test input data(multiple input type)", async () => {
-
     const mockOnSubmit = jest.fn();
     const mockClearChoosedEditData = jest.fn();
     const mockCorporateCode = "0";
@@ -3515,7 +3578,7 @@ describe("test create corporate form7 (authorized person)", () => {
 
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    })
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -3524,7 +3587,9 @@ describe("test create corporate form7 (authorized person)", () => {
     //Expected form data
     const expectedFormData = {
       data: {
-        fullNames: [{ title: "Mr", firstName: "Authorized Name", lastName: "Doe" }],
+        fullNames: [
+          { title: "Mr", firstName: "Authorized Name", lastName: "Doe" },
+        ],
         citizenId: "2571817668244",
         passportId: "",
         expiryDate: "2022-01-01",
@@ -3561,54 +3626,54 @@ describe("test create corporate form7 (authorized person)", () => {
   }, 40000);
 });
 
-const attorneyMock = {  
-                "id": "140fd838-923d-44f0-bdee-0c6b8181fcb3",
-                "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                "CreatedAt": "2024-09-12T04:00:13.134Z",
-                "DeletedAt": null,
-                "personalId": "394d06e0-3281-4bb3-b8c1-782749105236",
-                "corporateCode": 80000044,
-                "fullNames": [
-                    {
-                        "id": "5d1ecbef-9041-4e19-9df7-70aa1b340d42",
-                        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                        "CreatedAt": "2024-09-12T04:00:13.135Z",
-                        "DeletedAt": null,
-                        "ReferenceID": "394d06e0-3281-4bb3-b8c1-782749105236",
-                        "title": "123123",
-                        "firstName": "1",
-                        "lastName": "1",
-                        "types": 302
-                    }
-                ],
-                "addresses": [
-                    {
-                        "id": "db732a63-13e7-446b-8714-aad416fb9949",
-                        "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                        "CreatedAt": "2024-09-12T04:00:13.134Z",
-                        "DeletedAt": null,
-                        "ReferenceID": "394d06e0-3281-4bb3-b8c1-782749105236",
-                        "addressNo": "70/178 ramintra65 yak 2-4",
-                        "tambon": "1",
-                        "amphoe": "1",
-                        "province": "Bangkok",
-                        "postalCode": "10220",
-                        "country": "Thailand",
-                        "mooNo":"moo number",
-                        "soi":"soi app",
-                        "floor":"24floor",
-                        "building":"building app",
-                        "road":"raminta road",
-                        "types": 302
-                    }
-                ],
-                "passportId": "123",
-                "expiryDate": "2024-09-24T00:00:00Z",
-                "nationality": "1",
-                "telephone": "0884744411",
-                "email": "1",
-                "types": 302
-}
+const attorneyMock = {
+  id: "140fd838-923d-44f0-bdee-0c6b8181fcb3",
+  createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+  CreatedAt: "2024-09-12T04:00:13.134Z",
+  DeletedAt: null,
+  personalId: "394d06e0-3281-4bb3-b8c1-782749105236",
+  corporateCode: 80000044,
+  fullNames: [
+    {
+      id: "5d1ecbef-9041-4e19-9df7-70aa1b340d42",
+      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+      CreatedAt: "2024-09-12T04:00:13.135Z",
+      DeletedAt: null,
+      ReferenceID: "394d06e0-3281-4bb3-b8c1-782749105236",
+      title: "123123",
+      firstName: "1",
+      lastName: "1",
+      types: 302,
+    },
+  ],
+  addresses: [
+    {
+      id: "db732a63-13e7-446b-8714-aad416fb9949",
+      createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+      CreatedAt: "2024-09-12T04:00:13.134Z",
+      DeletedAt: null,
+      ReferenceID: "394d06e0-3281-4bb3-b8c1-782749105236",
+      addressNo: "70/178 ramintra65 yak 2-4",
+      tambon: "1",
+      amphoe: "1",
+      province: "Bangkok",
+      postalCode: "10220",
+      country: "Thailand",
+      mooNo: "moo number",
+      soi: "soi app",
+      floor: "24floor",
+      building: "building app",
+      road: "raminta road",
+      types: 302,
+    },
+  ],
+  passportId: "123",
+  expiryDate: "2024-09-24T00:00:00Z",
+  nationality: "1",
+  telephone: "0884744411",
+  email: "1",
+  types: 302,
+};
 
 describe("test create corporate form8 (attorney)", () => {
 
@@ -3621,11 +3686,11 @@ describe("test create corporate form8 (attorney)", () => {
 });
 
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
-  })
+  });
 
   test("test form8 (PageAttorney) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -3633,8 +3698,7 @@ describe("test create corporate form8 (attorney)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageAttorney
-          />
+          <PageAttorney />
         </MemoryRouter>
       </Provider>
     );
@@ -3681,11 +3745,9 @@ describe("test create corporate form8 (attorney)", () => {
   }, 40000);
 
   test("test form8 (PageAttorney) DELETE", async () => {
-    mockAxios.onPost('/api/v1/corporate/query').reply(200, [
+    mockAxios.onPost("/api/v1/corporate/query").reply(200, [
       {
-        Attorneys: [
-          attorneyMock
-        ],
+        Attorneys: [attorneyMock],
       },
     ]);
     store.dispatch(setCorporateData(mockCorporateData));
@@ -3699,13 +3761,12 @@ describe("test create corporate form8 (attorney)", () => {
           .map(mapDataToTAttorney)
           .filter((item: any) => item !== null);
 
-        store.dispatch(setAttorney(updateAttorney));
-        console.log(updateAttorney)
+    store.dispatch(setAttorney(updateAttorney));
+    console.log(updateAttorney);
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageAttorney
-          />
+          <PageAttorney />
         </MemoryRouter>
       </Provider>
     );
@@ -3715,7 +3776,7 @@ describe("test create corporate form8 (attorney)", () => {
     expect(title).toHaveValue("");
 
     const firstName = screen.getByLabelText("First Name");
-    expect(firstName).toBeInTheDocument();;
+    expect(firstName).toBeInTheDocument();
     expect(firstName).toHaveValue("");
 
     const surName = screen.getByLabelText("Surname");
@@ -3779,12 +3840,16 @@ describe("test create corporate form8 (attorney)", () => {
     expect(country).toHaveValue("");
 
     await waitFor(() => {
-      const editButton = screen.getByTestId("editButton-394d06e0-3281-4bb3-b8c1-782749105236");
+      const editButton = screen.getByTestId(
+        "editButton-394d06e0-3281-4bb3-b8c1-782749105236"
+      );
       expect(editButton).toBeInTheDocument();
-    })
+    });
     await act(async () => {
-      fireEvent.click(screen.getByTestId("editButton-394d06e0-3281-4bb3-b8c1-782749105236"));
-    })
+      fireEvent.click(
+        screen.getByTestId("editButton-394d06e0-3281-4bb3-b8c1-782749105236")
+      );
+    });
 
     await waitFor(() => {
       expect(title).not.toHaveValue("");
@@ -3806,17 +3871,21 @@ describe("test create corporate form8 (attorney)", () => {
       expect(country).not.toHaveValue("");
     });
 
-    const deleteButton = screen.getByTestId("deleteButton-394d06e0-3281-4bb3-b8c1-782749105236");
+    const deleteButton = screen.getByTestId(
+      "deleteButton-394d06e0-3281-4bb3-b8c1-782749105236"
+    );
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
-    const confirmDelete = screen.getByTestId("confirmDelete-394d06e0-3281-4bb3-b8c1-782749105236");
+    const confirmDelete = screen.getByTestId(
+      "confirmDelete-394d06e0-3281-4bb3-b8c1-782749105236"
+    );
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearAttorney());
@@ -3934,7 +4003,7 @@ describe("test create corporate form8 (attorney)", () => {
 
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    })
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -3981,17 +4050,17 @@ describe("test create corporate form8 (attorney)", () => {
 });
 
 const bankMock = {
-  "id": "db71eec9-195f-4cd8-8ce6-d66505360cab",
-  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-  "CreatedAt": "2024-09-12T02:09:44.974Z",
-  "DeletedAt": null,
-  "corporateCode": 80000044,
-  "accountType": "12",
-  "bankName": "2",
-  "accountNo": "2",
-  "accountLocation": "2",
-  "swiftCode": "2"
-}
+  id: "db71eec9-195f-4cd8-8ce6-d66505360cab",
+  createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+  CreatedAt: "2024-09-12T02:09:44.974Z",
+  DeletedAt: null,
+  corporateCode: 80000044,
+  accountType: "12",
+  bankName: "2",
+  accountNo: "2",
+  accountLocation: "2",
+  swiftCode: "2",
+};
 
 describe("test create corporate form9 (bank)", () => {
 
@@ -4004,11 +4073,11 @@ describe("test create corporate form9 (bank)", () => {
 });
 
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
-  })
+  });
 
   test("test form9 (PageBank) header information", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
@@ -4016,8 +4085,7 @@ describe("test create corporate form9 (bank)", () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageBankAccount
-          />
+          <PageBankAccount />
         </MemoryRouter>
       </Provider>
     );
@@ -4064,11 +4132,9 @@ describe("test create corporate form9 (bank)", () => {
   }, 40000);
 
   test("test form9 (PageBank) DELETE", async () => {
-    mockAxios.onPost('/api/v1/corporate/query').reply(200, [
+    mockAxios.onPost("/api/v1/corporate/query").reply(200, [
       {
-        Banks: [
-          bankMock
-        ],
+        Banks: [bankMock],
       },
     ]);
     store.dispatch(setCorporateData(mockCorporateData));
@@ -4081,12 +4147,11 @@ describe("test create corporate form9 (bank)", () => {
       .filter((item: any) => item !== null);
 
     store.dispatch(setBank(banks));
-    console.log(banks)
+    console.log(banks);
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <PageBankAccount
-          />
+          <PageBankAccount />
         </MemoryRouter>
       </Provider>
     );
@@ -4112,12 +4177,16 @@ describe("test create corporate form9 (bank)", () => {
     expect(swiftCode).toHaveValue("");
 
     await waitFor(() => {
-      const editButton = screen.getByTestId("editButton-db71eec9-195f-4cd8-8ce6-d66505360cab");
+      const editButton = screen.getByTestId(
+        "editButton-db71eec9-195f-4cd8-8ce6-d66505360cab"
+      );
       expect(editButton).toBeInTheDocument();
-    })
+    });
     await act(async () => {
-      fireEvent.click(screen.getByTestId("editButton-db71eec9-195f-4cd8-8ce6-d66505360cab"));
-    })
+      fireEvent.click(
+        screen.getByTestId("editButton-db71eec9-195f-4cd8-8ce6-d66505360cab")
+      );
+    });
 
     await waitFor(() => {
       expect(accountType).not.toHaveValue("");
@@ -4127,17 +4196,21 @@ describe("test create corporate form9 (bank)", () => {
       expect(swiftCode).not.toHaveValue("");
     });
 
-    const deleteButton = screen.getByTestId("deleteButton-db71eec9-195f-4cd8-8ce6-d66505360cab");
+    const deleteButton = screen.getByTestId(
+      "deleteButton-db71eec9-195f-4cd8-8ce6-d66505360cab"
+    );
     expect(deleteButton).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(deleteButton);
-    })
+    });
 
-    const confirmDelete = screen.getByTestId("confirmDelete-db71eec9-195f-4cd8-8ce6-d66505360cab");
+    const confirmDelete = screen.getByTestId(
+      "confirmDelete-db71eec9-195f-4cd8-8ce6-d66505360cab"
+    );
     expect(confirmDelete).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(confirmDelete);
-    })
+    });
 
     await act(async () => {
       store.dispatch(clearBank());
@@ -4192,7 +4265,7 @@ describe("test create corporate form9 (bank)", () => {
 
       const submitButton = screen.getByText("Save");
       expect(submitButton).toBeInTheDocument();
-    })
+    });
 
     await act(async () => {
       fireEvent.click(screen.getByText("Save"));
@@ -4239,13 +4312,13 @@ describe("UploadFiles Component", () => {
 });
 
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
-  })
+    localStorage.setItem("corporateCode", "80000001");
+  });
   afterAll(() => {
     localStorage.clear();
-  })
+  });
 
-  test("handles file upload", async() => {
+  test("handles file upload", async () => {
     const handleUpload = jest.fn();
     const handleInputChange = jest.fn((event) => {
       handleUpload(event.target.files[0], "123");
@@ -4291,7 +4364,7 @@ describe("UploadFiles Component", () => {
       });
       await act(async () => {
         fireEvent.change(fileInput, { target: { files: [testFile] } });
-      })
+      });
       expect(handleInputChange).toHaveBeenCalledWith(expect.any(Object));
 
       fireEvent.click(uploadButton);
@@ -4306,328 +4379,349 @@ describe("UploadFiles Component", () => {
 
 const transformedData = [
   {
-      "id": "a8bd6293-0d66-4b0a-8415-40b4de67b763",
-      "questionNumber": 1,
-      "question": "Your prior investment experience in securities. (Securities: Treasury bills, bond, Bill of Exchange, Stocks, Debenture,  Structure note, Mutual Fund Units)",
-      "choices": [
-          {
-              "id": "5a54778e-47a9-48b6-b8e2-e1679b87ce04",
-              "questionId": "a8bd6293-0d66-4b0a-8415-40b4de67b763",
-              "answer": "Less than 1 year",
-              "score": 1
-          },
-          {
-              "id": "92f2c072-4d4f-458f-aa59-4b3e515bcda7",
-              "questionId": "a8bd6293-0d66-4b0a-8415-40b4de67b763",
-              "answer": "6-10 years",
-              "score": 3
-          },
-          {
-              "id": "ab11afb8-64a5-4d29-8812-8583c571317d",
-              "questionId": "a8bd6293-0d66-4b0a-8415-40b4de67b763",
-              "answer": "1-5 years",
-              "score": 2
-          },
-          {
-              "id": "d38dae98-2b36-4cf8-ac0a-6f97a3f52cba",
-              "questionId": "a8bd6293-0d66-4b0a-8415-40b4de67b763",
-              "answer": "More than 10 years",
-              "score": 4
-          }
-      ],
-      "types": "1"
+    id: "a8bd6293-0d66-4b0a-8415-40b4de67b763",
+    questionNumber: 1,
+    question:
+      "Your prior investment experience in securities. (Securities: Treasury bills, bond, Bill of Exchange, Stocks, Debenture,  Structure note, Mutual Fund Units)",
+    choices: [
+      {
+        id: "5a54778e-47a9-48b6-b8e2-e1679b87ce04",
+        questionId: "a8bd6293-0d66-4b0a-8415-40b4de67b763",
+        answer: "Less than 1 year",
+        score: 1,
+      },
+      {
+        id: "92f2c072-4d4f-458f-aa59-4b3e515bcda7",
+        questionId: "a8bd6293-0d66-4b0a-8415-40b4de67b763",
+        answer: "6-10 years",
+        score: 3,
+      },
+      {
+        id: "ab11afb8-64a5-4d29-8812-8583c571317d",
+        questionId: "a8bd6293-0d66-4b0a-8415-40b4de67b763",
+        answer: "1-5 years",
+        score: 2,
+      },
+      {
+        id: "d38dae98-2b36-4cf8-ac0a-6f97a3f52cba",
+        questionId: "a8bd6293-0d66-4b0a-8415-40b4de67b763",
+        answer: "More than 10 years",
+        score: 4,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
-      "questionNumber": 2,
-      "question": "What is the proportion of your expenses compare to your revenue?",
-      "choices": [
-          {
-              "id": "4f40b046-712a-406f-afc8-fde53323494c",
-              "questionId": "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
-              "answer": "Between 50% and 75% of the revenue",
-              "score": 2
-          },
-          {
-              "id": "590a265b-2994-4569-aa52-f06430a30419",
-              "questionId": "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
-              "answer": "25% to less than 50% of the revenue",
-              "score": 3
-          },
-          {
-              "id": "895709ec-7865-4a5a-ad39-b303ea498bf2",
-              "questionId": "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
-              "answer": "Less than 25% of the revenue",
-              "score": 4
-          },
-          {
-              "id": "c14526c2-6427-4e63-9a9c-3643bcf24a07",
-              "questionId": "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
-              "answer": "More than75% of the revenue",
-              "score": 1
-          }
-      ],
-      "types": "1"
+    id: "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
+    questionNumber: 2,
+    question:
+      "What is the proportion of your expenses compare to your revenue?",
+    choices: [
+      {
+        id: "4f40b046-712a-406f-afc8-fde53323494c",
+        questionId: "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
+        answer: "Between 50% and 75% of the revenue",
+        score: 2,
+      },
+      {
+        id: "590a265b-2994-4569-aa52-f06430a30419",
+        questionId: "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
+        answer: "25% to less than 50% of the revenue",
+        score: 3,
+      },
+      {
+        id: "895709ec-7865-4a5a-ad39-b303ea498bf2",
+        questionId: "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
+        answer: "Less than 25% of the revenue",
+        score: 4,
+      },
+      {
+        id: "c14526c2-6427-4e63-9a9c-3643bcf24a07",
+        questionId: "a3f322fa-b464-4110-8fd0-0a8e9e0acf74",
+        answer: "More than75% of the revenue",
+        score: 1,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "4670ebd5-6335-491c-a4c3-0c990052a4d9",
-      "questionNumber": 3,
-      "question": "What is your current financial status?",
-      "choices": [
-          {
-              "id": "11e7d574-6723-4a78-b5f5-51a623cb9100",
-              "questionId": "4670ebd5-6335-491c-a4c3-0c990052a4d9",
-              "answer": "Almost no liabilities or no liabilities",
-              "score": 4
-          },
-          {
-              "id": "3c29ed01-073d-4463-b789-bdd439f87a5d",
-              "questionId": "4670ebd5-6335-491c-a4c3-0c990052a4d9",
-              "answer": "Assets equal liabilities",
-              "score": 2
-          },
-          {
-              "id": "8a298265-064a-4bb5-9c00-b718a4405fda",
-              "questionId": "4670ebd5-6335-491c-a4c3-0c990052a4d9",
-              "answer": "More assets than liabilities",
-              "score": 3
-          },
-          {
-              "id": "e07a38b4-f568-4968-b3ef-7f125d6445f5",
-              "questionId": "4670ebd5-6335-491c-a4c3-0c990052a4d9",
-              "answer": "Less assets than liabilities",
-              "score": 1
-          }
-      ],
-      "types": "1"
+    id: "4670ebd5-6335-491c-a4c3-0c990052a4d9",
+    questionNumber: 3,
+    question: "What is your current financial status?",
+    choices: [
+      {
+        id: "11e7d574-6723-4a78-b5f5-51a623cb9100",
+        questionId: "4670ebd5-6335-491c-a4c3-0c990052a4d9",
+        answer: "Almost no liabilities or no liabilities",
+        score: 4,
+      },
+      {
+        id: "3c29ed01-073d-4463-b789-bdd439f87a5d",
+        questionId: "4670ebd5-6335-491c-a4c3-0c990052a4d9",
+        answer: "Assets equal liabilities",
+        score: 2,
+      },
+      {
+        id: "8a298265-064a-4bb5-9c00-b718a4405fda",
+        questionId: "4670ebd5-6335-491c-a4c3-0c990052a4d9",
+        answer: "More assets than liabilities",
+        score: 3,
+      },
+      {
+        id: "e07a38b4-f568-4968-b3ef-7f125d6445f5",
+        questionId: "4670ebd5-6335-491c-a4c3-0c990052a4d9",
+        answer: "Less assets than liabilities",
+        score: 1,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
-      "questionNumber": 4,
-      "question": "Do you have any investment experience or knowledge in the following types of investment products? (You can choose more than 1 item)",
-      "choices": [
-          {
-              "id": "3709624d-66e1-4916-aec6-ad42e29e805c",
-              "questionId": "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
-              "answer": "Debentures or Mutual Funds",
-              "score": 3
-          },
-          {
-              "id": "72920558-7eaa-4f9a-a116-c38d4df78853",
-              "questionId": "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
-              "answer": "Common Stocks or Mutual Funds or other high-risk assets",
-              "score": 4
-          },
-          {
-              "id": "97f49274-bf00-4d89-afde-baff69241dd2",
-              "questionId": "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
-              "answer": "Bank Deposits",
-              "score": 1
-          },
-          {
-              "id": "a859517e-8ddd-4ae7-844b-095b72a81ed0",
-              "questionId": "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
-              "answer": "Government Bond or Government Bond Funds",
-              "score": 2
-          }
-      ],
-      "types": "2"
+    id: "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
+    questionNumber: 4,
+    question:
+      "Do you have any investment experience or knowledge in the following types of investment products? (You can choose more than 1 item)",
+    choices: [
+      {
+        id: "3709624d-66e1-4916-aec6-ad42e29e805c",
+        questionId: "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
+        answer: "Debentures or Mutual Funds",
+        score: 3,
+      },
+      {
+        id: "72920558-7eaa-4f9a-a116-c38d4df78853",
+        questionId: "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
+        answer: "Common Stocks or Mutual Funds or other high-risk assets",
+        score: 4,
+      },
+      {
+        id: "97f49274-bf00-4d89-afde-baff69241dd2",
+        questionId: "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
+        answer: "Bank Deposits",
+        score: 1,
+      },
+      {
+        id: "a859517e-8ddd-4ae7-844b-095b72a81ed0",
+        questionId: "f6e87bd7-bd67-4906-86f2-05e78e8a84ba",
+        answer: "Government Bond or Government Bond Funds",
+        score: 2,
+      },
+    ],
+    types: "2",
   },
   {
-      "id": "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
-      "questionNumber": 5,
-      "question": "What is your investment period target?",
-      "choices": [
-          {
-              "id": "4df426ef-26fb-4580-81c1-22bb117eab2c",
-              "questionId": "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
-              "answer": "3 to 5 years",
-              "score": 3
-          },
-          {
-              "id": "54bcfdd8-19a7-421a-97f4-f0894cc43b52",
-              "questionId": "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
-              "answer": "1 to less than 3 years",
-              "score": 2
-          },
-          {
-              "id": "b9c750d5-ecf9-4f7c-b94c-62c2f1e8befa",
-              "questionId": "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
-              "answer": "More than 5 years",
-              "score": 4
-          },
-          {
-              "id": "fac88488-aeb4-40f2-919c-06e9342c200a",
-              "questionId": "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
-              "answer": "Less than 1 year",
-              "score": 1
-          }
-      ],
-      "types": "1"
+    id: "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
+    questionNumber: 5,
+    question: "What is your investment period target?",
+    choices: [
+      {
+        id: "4df426ef-26fb-4580-81c1-22bb117eab2c",
+        questionId: "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
+        answer: "3 to 5 years",
+        score: 3,
+      },
+      {
+        id: "54bcfdd8-19a7-421a-97f4-f0894cc43b52",
+        questionId: "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
+        answer: "1 to less than 3 years",
+        score: 2,
+      },
+      {
+        id: "b9c750d5-ecf9-4f7c-b94c-62c2f1e8befa",
+        questionId: "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
+        answer: "More than 5 years",
+        score: 4,
+      },
+      {
+        id: "fac88488-aeb4-40f2-919c-06e9342c200a",
+        questionId: "422e911e-6b2e-4d3b-9bb7-41b6ea98c838",
+        answer: "Less than 1 year",
+        score: 1,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "b3217c7f-3905-4205-9301-fa81684db06f",
-      "questionNumber": 6,
-      "question": "What is your risk tolerance?",
-      "choices": [
-          {
-              "id": "26b06772-8cd8-482b-a101-32c83b713952",
-              "questionId": "b3217c7f-3905-4205-9301-fa81684db06f",
-              "answer": "Focus on opportunity in preserving original investment safely and receiving small consistent return",
-              "score": 1
-          },
-          {
-              "id": "7c4d5ee1-c34d-41a4-9cee-108d1ecc88af",
-              "questionId": "b3217c7f-3905-4205-9301-fa81684db06f",
-              "answer": "Focus on the highest long-term return but may take risk of losing most of the original investment",
-              "score": 4
-          },
-          {
-              "id": "c0f7758a-b036-4233-b579-4d46fc1e3d65",
-              "questionId": "b3217c7f-3905-4205-9301-fa81684db06f",
-              "answer": "Focus on opportunity in receiving consistent return but may take risk of losing some original investment ",
-              "score": 2
-          },
-          {
-              "id": "f2c844a6-f0fd-4d38-b56c-47f13771e5d7",
-              "questionId": "b3217c7f-3905-4205-9301-fa81684db06f",
-              "answer": "Focus on opportunity in receiving higher return but may take risk of losing more original investment",
-              "score": 3
-          }
-      ],
-      "types": "1"
+    id: "b3217c7f-3905-4205-9301-fa81684db06f",
+    questionNumber: 6,
+    question: "What is your risk tolerance?",
+    choices: [
+      {
+        id: "26b06772-8cd8-482b-a101-32c83b713952",
+        questionId: "b3217c7f-3905-4205-9301-fa81684db06f",
+        answer:
+          "Focus on opportunity in preserving original investment safely and receiving small consistent return",
+        score: 1,
+      },
+      {
+        id: "7c4d5ee1-c34d-41a4-9cee-108d1ecc88af",
+        questionId: "b3217c7f-3905-4205-9301-fa81684db06f",
+        answer:
+          "Focus on the highest long-term return but may take risk of losing most of the original investment",
+        score: 4,
+      },
+      {
+        id: "c0f7758a-b036-4233-b579-4d46fc1e3d65",
+        questionId: "b3217c7f-3905-4205-9301-fa81684db06f",
+        answer:
+          "Focus on opportunity in receiving consistent return but may take risk of losing some original investment ",
+        score: 2,
+      },
+      {
+        id: "f2c844a6-f0fd-4d38-b56c-47f13771e5d7",
+        questionId: "b3217c7f-3905-4205-9301-fa81684db06f",
+        answer:
+          "Focus on opportunity in receiving higher return but may take risk of losing more original investment",
+        score: 3,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
-      "questionNumber": 7,
-      "question": "When considering sample picture below showing the potential returns of different investment portfolio, which investment portfolio are you most willing to invest in?",
-      "choices": [
-          {
-              "id": "18ac6cd0-0fb7-4688-998d-4345a5ff55e1",
-              "questionId": "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
-              "answer": "Investment portfolio 1 (has chance to receive 2.5% return without any loss)",
-              "score": 1
-          },
-          {
-              "id": "62ea66e3-d098-4f10-8ef2-b92d95a37cfc",
-              "questionId": "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
-              "answer": "Investment portfolio 3 (has chance to receive 15% highest return but may lose up to 5%)",
-              "score": 3
-          },
-          {
-              "id": "673b9986-0531-4073-aed7-3d142325de7c",
-              "questionId": "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
-              "answer": "Investment portfolio 2 (has chance to receive 7% highest return but may lose up to 1%)",
-              "score": 2
-          },
-          {
-              "id": "b767f232-1f66-4801-8e52-052203314d74",
-              "questionId": "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
-              "answer": "Investment portfolio 4 (has chance to receive 25% highest return but may lose up to 15%)",
-              "score": 4
-          }
-      ],
-      "types": "1"
+    id: "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
+    questionNumber: 7,
+    question:
+      "When considering sample picture below showing the potential returns of different investment portfolio, which investment portfolio are you most willing to invest in?",
+    choices: [
+      {
+        id: "18ac6cd0-0fb7-4688-998d-4345a5ff55e1",
+        questionId: "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
+        answer:
+          "Investment portfolio 1 (has chance to receive 2.5% return without any loss)",
+        score: 1,
+      },
+      {
+        id: "62ea66e3-d098-4f10-8ef2-b92d95a37cfc",
+        questionId: "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
+        answer:
+          "Investment portfolio 3 (has chance to receive 15% highest return but may lose up to 5%)",
+        score: 3,
+      },
+      {
+        id: "673b9986-0531-4073-aed7-3d142325de7c",
+        questionId: "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
+        answer:
+          "Investment portfolio 2 (has chance to receive 7% highest return but may lose up to 1%)",
+        score: 2,
+      },
+      {
+        id: "b767f232-1f66-4801-8e52-052203314d74",
+        questionId: "5e8a98fb-2f96-4433-8cfb-00be9068b26c",
+        answer:
+          "Investment portfolio 4 (has chance to receive 25% highest return but may lose up to 15%)",
+        score: 4,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "15375a59-3660-44d7-bbba-50094e9b5fcb",
-      "questionNumber": 8,
-      "question": "If you invest in assets that have chances to receive high return but also have chances to receive high loss, how would you feel?",
-      "choices": [
-          {
-              "id": "6fcefbbb-a68b-4571-b32d-075e17b48032",
-              "questionId": "15375a59-3660-44d7-bbba-50094e9b5fcb",
-              "answer": "Not concerned about the large potential loss and expect that the return may increase",
-              "score": 4
-          },
-          {
-              "id": "70ed3435-bbc5-4e4b-bf81-25e878fe9d1a",
-              "questionId": "15375a59-3660-44d7-bbba-50094e9b5fcb",
-              "answer": "Understand and accept the fluctuations",
-              "score": 3
-          },
-          {
-              "id": "75773edc-323d-45f7-976d-7d0e4831a066",
-              "questionId": "15375a59-3660-44d7-bbba-50094e9b5fcb",
-              "answer": "Worried and afraid of loss",
-              "score": 1
-          },
-          {
-              "id": "993389ed-6b23-436a-a4a5-910475eff2b6",
-              "questionId": "15375a59-3660-44d7-bbba-50094e9b5fcb",
-              "answer": "Uneasy but somehow understand",
-              "score": 2
-          }
-      ],
-      "types": "1"
+    id: "15375a59-3660-44d7-bbba-50094e9b5fcb",
+    questionNumber: 8,
+    question:
+      "If you invest in assets that have chances to receive high return but also have chances to receive high loss, how would you feel?",
+    choices: [
+      {
+        id: "6fcefbbb-a68b-4571-b32d-075e17b48032",
+        questionId: "15375a59-3660-44d7-bbba-50094e9b5fcb",
+        answer:
+          "Not concerned about the large potential loss and expect that the return may increase",
+        score: 4,
+      },
+      {
+        id: "70ed3435-bbc5-4e4b-bf81-25e878fe9d1a",
+        questionId: "15375a59-3660-44d7-bbba-50094e9b5fcb",
+        answer: "Understand and accept the fluctuations",
+        score: 3,
+      },
+      {
+        id: "75773edc-323d-45f7-976d-7d0e4831a066",
+        questionId: "15375a59-3660-44d7-bbba-50094e9b5fcb",
+        answer: "Worried and afraid of loss",
+        score: 1,
+      },
+      {
+        id: "993389ed-6b23-436a-a4a5-910475eff2b6",
+        questionId: "15375a59-3660-44d7-bbba-50094e9b5fcb",
+        answer: "Uneasy but somehow understand",
+        score: 2,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
-      "questionNumber": 9,
-      "question": "In which proportion will you be anxious or unacceptable when the value of your investment has decreased?",
-      "choices": [
-          {
-              "id": "16b72008-5fb9-4be1-9fca-1db05aa13d7d",
-              "questionId": "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
-              "answer": "More than 5%-10%",
-              "score": 2
-          },
-          {
-              "id": "7374a7b2-467c-493b-9ca0-199ecc07a2a3",
-              "questionId": "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
-              "answer": "5% or less",
-              "score": 1
-          },
-          {
-              "id": "8372a72d-eae0-41b2-bd1d-e28ac5b2455c",
-              "questionId": "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
-              "answer": "More than 10%-20%",
-              "score": 3
-          },
-          {
-              "id": "87ac4188-8343-4325-b415-0efd382b5438",
-              "questionId": "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
-              "answer": "More than 20%",
-              "score": 4
-          }
-      ],
-      "types": "1"
+    id: "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
+    questionNumber: 9,
+    question:
+      "In which proportion will you be anxious or unacceptable when the value of your investment has decreased?",
+    choices: [
+      {
+        id: "16b72008-5fb9-4be1-9fca-1db05aa13d7d",
+        questionId: "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
+        answer: "More than 5%-10%",
+        score: 2,
+      },
+      {
+        id: "7374a7b2-467c-493b-9ca0-199ecc07a2a3",
+        questionId: "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
+        answer: "5% or less",
+        score: 1,
+      },
+      {
+        id: "8372a72d-eae0-41b2-bd1d-e28ac5b2455c",
+        questionId: "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
+        answer: "More than 10%-20%",
+        score: 3,
+      },
+      {
+        id: "87ac4188-8343-4325-b415-0efd382b5438",
+        questionId: "6eb3e155-c0ca-4b10-8a40-30d1234ac6be",
+        answer: "More than 20%",
+        score: 4,
+      },
+    ],
+    types: "1",
   },
   {
-      "id": "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
-      "questionNumber": 10,
-      "question": "Last year, you invest 100,000 Baht. This year, the value of your investment decreased to 85,000 Baht. What will you do?",
-      "choices": [
-          {
-              "id": "09dd5e55-e539-407c-8e99-4c0e20e5e4ad",
-              "questionId": "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
-              "answer": "Panic and want to sell the remaining investment",
-              "score": 1
-          },
-          {
-              "id": "0e07cf3a-d9fb-4cef-a3a0-495c241b2177",
-              "questionId": "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
-              "answer": "Worried and will change some investment into less risky assets",
-              "score": 2
-          },
-          {
-              "id": "34f2628e-7fc6-4fa0-827b-3be507cdcb04",
-              "questionId": "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
-              "answer": "Continue holding the investment and wait until the investment rebounds",
-              "score": 3
-          },
-          {
-              "id": "ef8d8624-7e15-4d45-b81d-1e4f54687091",
-              "questionId": "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
-              "answer": "Remain confident since it is long-term investment and will invest more to average cost",
-              "score": 4
-          }
-      ],
-      "types": "1"
-  }
-]
+    id: "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
+    questionNumber: 10,
+    question:
+      "Last year, you invest 100,000 Baht. This year, the value of your investment decreased to 85,000 Baht. What will you do?",
+    choices: [
+      {
+        id: "09dd5e55-e539-407c-8e99-4c0e20e5e4ad",
+        questionId: "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
+        answer: "Panic and want to sell the remaining investment",
+        score: 1,
+      },
+      {
+        id: "0e07cf3a-d9fb-4cef-a3a0-495c241b2177",
+        questionId: "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
+        answer:
+          "Worried and will change some investment into less risky assets",
+        score: 2,
+      },
+      {
+        id: "34f2628e-7fc6-4fa0-827b-3be507cdcb04",
+        questionId: "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
+        answer:
+          "Continue holding the investment and wait until the investment rebounds",
+        score: 3,
+      },
+      {
+        id: "ef8d8624-7e15-4d45-b81d-1e4f54687091",
+        questionId: "90bc9754-4b99-4ed9-97e0-f55d886ecaa7",
+        answer:
+          "Remain confident since it is long-term investment and will invest more to average cost",
+        score: 4,
+      },
+    ],
+    types: "1",
+  },
+];
 
-jest.mock('../../../../src/pages/createJob/addedCorporateAccount/hook/useSuitTest');
+jest.mock(
+  "../../../../src/pages/createJob/addedCorporateAccount/hook/useSuitTest"
+);
 
 describe('test create corporate form11 (suite test)', () => {
 
@@ -4640,14 +4734,14 @@ describe('test create corporate form11 (suite test)', () => {
 });
 
   beforeAll(() => {
-    localStorage.setItem('corporateCode', '80000001');
+    localStorage.setItem("corporateCode", "80000001");
   });
 
   afterAll(() => {
     localStorage.clear();
   });
 
-  test('renders the PageSuitTest component with mocked data', async () => {
+  test("renders the PageSuitTest component with mocked data", async () => {
     const mockUseSuitTest = {
       answerSuiteTest: [],
       quizSuiteTest: transformedData,
@@ -4656,18 +4750,18 @@ describe('test create corporate form11 (suite test)', () => {
       handleSubmit: jest.fn(),
       errors: [],
       score: 0,
-      opitionalQuiz: ['', ''],
+      opitionalQuiz: ["", ""],
       handelOptionalQuiz: jest.fn(),
       isSubmit: false,
       fetchSuitData: jest.fn(),
       additionalQuiz: { current: [] },
       corporatesInfo: {
-        CorporateCode: '12345',
+        CorporateCode: "12345",
         Info: {
-          name: 'Test Corp',
-          registrationNo: '67890',
-          taxId: '11111',
-          dateOfIncorporation: '2021-01-01T00:00:00Z',
+          name: "Test Corp",
+          registrationNo: "67890",
+          taxId: "11111",
+          dateOfIncorporation: "2021-01-01T00:00:00Z",
         },
       },
     };
@@ -4683,39 +4777,87 @@ describe('test create corporate form11 (suite test)', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Suitabily Test :')).toBeInTheDocument();
-      expect(screen.getByText('Selected Your Best Matched Answer')).toBeInTheDocument();
-      expect(screen.getByText('1. Your prior investment experience in securities. (Securities: Treasury bills, bond, Bill of Exchange, Stocks, Debenture, Structure note, Mutual Fund Units)')).toBeInTheDocument();
-      expect(screen.getByText('2. What is the proportion of your expenses compare to your revenue?')).toBeInTheDocument();
-      expect(screen.getByText('3. What is your current financial status?')).toBeInTheDocument();
-      expect(screen.getByText('4. Do you have any investment experience or knowledge in the following types of investment products? (You can choose more than 1 item)')).toBeInTheDocument();
-      expect(screen.getByText('5. What is your investment period target?')).toBeInTheDocument();
-      expect(screen.getByText('6. What is your risk tolerance?')).toBeInTheDocument();
-      expect(screen.getByText('7. When considering sample picture below showing the potential returns of different investment portfolio, which investment portfolio are you most willing to invest in?')).toBeInTheDocument();
-      expect(screen.getByText('8. If you invest in assets that have chances to receive high return but also have chances to receive high loss, how would you feel?')).toBeInTheDocument();
-      expect(screen.getByText('9. In which proportion will you be anxious or unacceptable when the value of your investment has decreased?')).toBeInTheDocument();
-      expect(screen.getByText('10. Last year, you invest 100,000 Baht. This year, the value of your investment decreased to 85,000 Baht. What will you do?')).toBeInTheDocument();
-      expect(screen.getByText('Questions 11-12 are used as additional information for guidance (Scores will NOT be counted)')).toBeInTheDocument();
-      expect(screen.getByText('11. Successful derivatives and structure notes investment has high return. On the other hand, investors can lose all of their investment and must increase more capital. Are you able to accept this?')).toBeInTheDocument();
-      expect(screen.getByText('12. In addition to investment risk, are you able to accept foreign exchange rate risk?')).toBeInTheDocument();
+      expect(screen.getByText("Suitabily Test :")).toBeInTheDocument();
+      expect(
+        screen.getByText("Selected Your Best Matched Answer")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "1. Your prior investment experience in securities. (Securities: Treasury bills, bond, Bill of Exchange, Stocks, Debenture, Structure note, Mutual Fund Units)"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "2. What is the proportion of your expenses compare to your revenue?"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("3. What is your current financial status?")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "4. Do you have any investment experience or knowledge in the following types of investment products? (You can choose more than 1 item)"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("5. What is your investment period target?")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("6. What is your risk tolerance?")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "7. When considering sample picture below showing the potential returns of different investment portfolio, which investment portfolio are you most willing to invest in?"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "8. If you invest in assets that have chances to receive high return but also have chances to receive high loss, how would you feel?"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "9. In which proportion will you be anxious or unacceptable when the value of your investment has decreased?"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "10. Last year, you invest 100,000 Baht. This year, the value of your investment decreased to 85,000 Baht. What will you do?"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Questions 11-12 are used as additional information for guidance (Scores will NOT be counted)"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "11. Successful derivatives and structure notes investment has high return. On the other hand, investors can lose all of their investment and must increase more capital. Are you able to accept this?"
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "12. In addition to investment risk, are you able to accept foreign exchange rate risk?"
+        )
+      ).toBeInTheDocument();
     });
 
     await act(async () => {
       fireEvent.click(screen.getByTestId("checkbox-11-1"));
       fireEvent.click(screen.getByTestId("checkbox-12-1"));
       fireEvent.click(screen.getByRole("button", { name: "Submit" }));
-    })
+    });
 
-    const question1 = screen.getByTestId('radio-1-1') as HTMLInputElement;
-    const question2 = screen.getByTestId('radio-2-1') as HTMLInputElement;
-    const question3 = screen.getByTestId('radio-3-1') as HTMLInputElement;
-    const question4 = screen.getByTestId('checkbox-4-1') as HTMLInputElement;
-    const question5 = screen.getByTestId('radio-5-1') as HTMLInputElement;
-    const question6 = screen.getByTestId('radio-6-1') as HTMLInputElement;
-    const question7 = screen.getByTestId('radio-7-1') as HTMLInputElement;
-    const question8 = screen.getByTestId('radio-8-1') as HTMLInputElement;
-    const question9 = screen.getByTestId('radio-9-1') as HTMLInputElement;
-    const question10 = screen.getByTestId('radio-10-1') as HTMLInputElement;
+    const question1 = screen.getByTestId("radio-1-1") as HTMLInputElement;
+    const question2 = screen.getByTestId("radio-2-1") as HTMLInputElement;
+    const question3 = screen.getByTestId("radio-3-1") as HTMLInputElement;
+    const question4 = screen.getByTestId("checkbox-4-1") as HTMLInputElement;
+    const question5 = screen.getByTestId("radio-5-1") as HTMLInputElement;
+    const question6 = screen.getByTestId("radio-6-1") as HTMLInputElement;
+    const question7 = screen.getByTestId("radio-7-1") as HTMLInputElement;
+    const question8 = screen.getByTestId("radio-8-1") as HTMLInputElement;
+    const question9 = screen.getByTestId("radio-9-1") as HTMLInputElement;
+    const question10 = screen.getByTestId("radio-10-1") as HTMLInputElement;
 
     expect(question1.checked).toBe(false);
     expect(question2.checked).toBe(false);
@@ -4739,7 +4881,7 @@ describe('test create corporate form11 (suite test)', () => {
       fireEvent.click(question8);
       fireEvent.click(question9);
       fireEvent.click(question10);
-    })
+    });
 
     // await waitFor(() => {
     //   expect(question1.checked).toBe(true);
@@ -4754,16 +4896,15 @@ describe('test create corporate form11 (suite test)', () => {
     //   expect(question10.checked).toBe(true);
     // })
 
-        //Expected form data
-        // const expectedFormData = {
-        // };
-    
-        await waitFor(async () => {
-          const state = store.getState();
-          const corporateState = state.corporateTest;
-          console.log("Corporate State After Submission:", corporateState);
-          // expect(corporateState).toMatchObject(expectedFormData);
-        });
+    //Expected form data
+    // const expectedFormData = {
+    // };
 
+    await waitFor(async () => {
+      const state = store.getState();
+      const corporateState = state.corporateTest;
+      console.log("Corporate State After Submission:", corporateState);
+      // expect(corporateState).toMatchObject(expectedFormData);
+    });
   });
 });
