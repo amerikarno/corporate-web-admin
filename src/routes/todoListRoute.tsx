@@ -8,6 +8,8 @@ import EditPageAddIndividualAccount from "@/pages/todoList/addIndividualAccount/
 import BankTransactionList from "@/pages/todoList/bankTransactionList/bankTransactionList";
 import FxExchangeTransactionList from "@/pages/todoList/fxExchange/fxExchangeTransaction";
 import AccountApproval from "@/pages/todoList/accountApproval/AccountApproval";
+import ToDoAddedIcoSearch from "@/pages/todoList/toDoIcoAccount/ToDoAddedIcoSearch";
+import ToDoPageAddedIco from "@/pages/todoList/toDoIcoAccount/PageToDoAddedIco";
 
 export const todoListRoutes = () => {
   return (
@@ -25,6 +27,13 @@ export const todoListRoutes = () => {
         <Route path="edit" element={<Outlet />}>
           <Route index element={<EditPageAddIndividualAccount />} />
           <Route path=":page" element={<EditPageAddIndividualAccount />} />
+        </Route>
+      </Route>
+      <Route path="added-ico" element={<Outlet />}>
+        <Route index element={<ToDoAddedIcoSearch />} />
+        <Route path="edit" element={<Outlet />}>
+          <Route index element={<ToDoPageAddedIco />} />
+          <Route path=":page" element={<ToDoPageAddedIco />} />
         </Route>
       </Route>
       <Route

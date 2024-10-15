@@ -9,7 +9,7 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { act, fireEvent,render,screen, waitFor, } from "@testing-library/react";
 import FxExchangeEdit from "@/pages/createJob/fxExchange/fxExchange";
-// import { setFxExchanges } from "@/features/fxExchange/fxExhangeSlice";
+import { setFxExchanges } from "@/features/fxExchange/fxExhangeSlice";
 
 jest.mock("@/lib/utils", () => ({
     ...jest.requireActual("@/lib/utils"),
@@ -604,16 +604,16 @@ const mockAxios = new MockAdapter(axios);
           target: { value: 80000001 }
         });
         fireEvent.change(screen.getByTestId("exchangeRateInput"), {
-          target: { value: 30.00 }
+          target: { value: "30.00" }
         });
         fireEvent.change(screen.getByTestId("exchangeSpreadInput"), {
-          target: { value: 0.10 }
+          target: { value: "0.10" }
         });
         fireEvent.change(screen.getByTestId("operationSpreadInput"), {
-          target: { value: 0.05 }
+          target: { value: "0.05" }
         });
         fireEvent.change(screen.getByTestId("buyCurrencyInput"), {
-          target: { value: 1000 }
+          target: { value: "1000" }
         });
       });
 
@@ -629,154 +629,92 @@ const mockAxios = new MockAdapter(axios);
         fireEvent.submit(screen.getByText("Submit"));
       });
 
-      screen.debug(undefined, Infinity);
+      const expectedFormData = {
+        data: {
+            exchange: 'THB/USD',
+            exchangeSpread: 10000,
+            operationSpread: 5000,
+            exchangeRate: 3000000,
+            buyCurrency: 100000000
+          }
+      }
 
       await waitFor(() => {
         const state = store.getState();
         const corporateState = state.corporateTest;
         console.log("Corporate State After Submission:", corporateState);
-        // expect(corporateState).toMatchObject(expectedFormData);
+        expect(corporateState).toMatchObject(expectedFormData);
     });
 
     }, 40000)
+    
 
-    test("handles form submission", async () => {
-        mockAxios.onPost("/api/v1/transaction/exchange/create").reply(200, {
-            message: "save successful"
-          });
-    
-          mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
-              corporateListMock
-          })
-    
-          mockAxios.onPost("/api/v1/transaction/exchange/get/corporate").reply(200, {
-            mockFxExhange
+    test("test fxExchange edit", async ()=>{
+        mockAxios.onPost("/api/v1/transaction/exchange/edit").reply(200, {
+          message: "edit fxExchange success"
+        });
+  
+        mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
+            data: corporateListMock
         })
-        render(
-          <Provider store={store}>
-            <MemoryRouter>
-              <FxExchangeEdit />
-            </MemoryRouter>
-          </Provider>
+  
+        mockAxios.onGet("/api/v1/transaction/exchange/get/corporate").reply(200, {
+          data: mockFxExhange
+      })
+
+      const orderTrades = mockFxExhange || [];
+
+        const uniqueOrderTrades = orderTrades.filter(
+          (order: any, index: any, self: any) =>
+            index === self.findIndex((t: any) => t.id === order.id)
         );
 
+        const adjustedOrderTrades = uniqueOrderTrades.map((trade: any) => ({
+          ...trade,
+          exchangeRate: trade.exchangeRate / 100000,
+          exchangeSpread: trade.exchangeSpread / 100000,
+          operationSpread: trade.operationSpread / 100000,
+          buyCurrency: trade.buyCurrency / 100000,
+        }));
+  
+        store.dispatch(setFxExchanges(adjustedOrderTrades));
+  
+          render(
+            <Provider store={store}>
+              <MemoryRouter>
+                <FxExchangeEdit />
+              </MemoryRouter>
+            </Provider>
+          );
+  
+        const editButton = screen.getByTestId("editButton-b3b1b1b0-a4d6-46c6-ab62-f4e4d1321f2c");
+        expect(editButton).toBeInTheDocument();
+        await act(async () => {
+          fireEvent.click(editButton);
+        })
+
+        await act(async () => {
+          fireEvent.submit(screen.getByText("Submit"));
+        });
+
+        const expectedFormData = {
+            data: {
+                corporateCode: 80000005,
+                exchangeRate: 12312300,
+                exchangeSpread: 12312300,
+                operationSpread: 12312300,
+                id: 'b3b1b1b0-a4d6-46c6-ab62-f4e4d1321f2c',
+                transactionStatus: 0,
+                exchange: 'THB/USD',
+                buyCurrency: 12300000
+              }
+          }
         await waitFor(() => {
-            expect(screen.getByTestId("corporateCodeInput")).toHaveValue(null);
-            expect(screen.getByTestId("exchangeRateInput")).toHaveValue(null);
-            expect(screen.getByTestId("exchangeSpreadInput")).toHaveValue(null);
-            expect(screen.getByTestId("operationSpreadInput")).toHaveValue(null);
-            expect(screen.getByTestId("buyCurrencyInput")).toHaveValue(null);
-        });
-
-        fireEvent.change(screen.getByTestId("corporateCodeInput"), {
-          target: { value: 80000001 },
-        });
-        fireEvent.change(screen.getByTestId("exchangeRateInput"), {
-          target: { value: 30.00 },
-        });
-        fireEvent.change(screen.getByTestId("exchangeSpreadInput"), {
-          target: { value: 0.10 },
-        });
-        fireEvent.change(screen.getByTestId("operationSpreadInput"), {
-          target: { value: 0.05 },
-        });
-        fireEvent.change(screen.getByTestId("buyCurrencyInput"), {
-          target: { value: 1000 },
-        });
-
-        await waitFor(() => {
-            expect(screen.getByTestId("corporateCodeInput")).toHaveValue(80000001);
-            expect(screen.getByTestId("exchangeRateInput")).toHaveValue(30);
-            expect(screen.getByTestId("exchangeSpreadInput")).toHaveValue(0.1);
-            expect(screen.getByTestId("operationSpreadInput")).toHaveValue(0.05);
-            expect(screen.getByTestId("buyCurrencyInput")).toHaveValue(1000);
-        });
-    
-        fireEvent.click(screen.getByText("Submit"));
-
-        await waitFor(() => {
-            const state = store.getState();
-            const corporateState = state.corporateTest;
-            console.log("Corporate State After Submission:", corporateState);
-            // expect(corporateState).toMatchObject(expectedFormData);
-        });
-
-        // await waitFor(() => {
-        //     expect(screen.getByText("please fill this field first")).toBeInTheDocument();
-        // })
-
-        await waitFor(() => {
-            expect(consoleSpy).toHaveBeenCalledWith("save successful");
-        });
-      },40000);
-    
-
-    // test("test fxExchange edit", async ()=>{
-    //     mockAxios.onPost("/api/v1/transaction/exchange/edit").reply(200, {
-    //       message: "edit fxExchange success"
-    //     });
-  
-    //     mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
-    //         data: corporateListMock
-    //     })
-  
-    //     mockAxios.onGet("/api/v1/transaction/exchange/get/corporate").reply(200, {
-    //       data: mockFxExhange
-    //   })
-
-    //   const orderTrades = mockFxExhange || [];
-
-    //     const uniqueOrderTrades = orderTrades.filter(
-    //       (order: any, index: any, self: any) =>
-    //         index === self.findIndex((t: any) => t.id === order.id)
-    //     );
-
-    //     const adjustedOrderTrades = uniqueOrderTrades.map((trade: any) => ({
-    //       ...trade,
-    //       exchangeRate: trade.exchangeRate / 100000,
-    //       exchangeSpread: trade.exchangeSpread / 100000,
-    //       operationSpread: trade.operationSpread / 100000,
-    //       buyCurrency: trade.buyCurrency / 100000,
-    //     }));
-  
-    //     store.dispatch(setFxExchanges(adjustedOrderTrades));
-  
-    //       render(
-    //         <Provider store={store}>
-    //           <MemoryRouter>
-    //             <FxExchangeEdit />
-    //           </MemoryRouter>
-    //         </Provider>
-    //       );
-  
-    //     const editButton = screen.getByTestId("editButton-b3b1b1b0-a4d6-46c6-ab62-f4e4d1321f2c");
-    //     expect(editButton).toBeInTheDocument();
-    //     await act(async () => {
-    //       fireEvent.click(editButton);
-    //     })
-
-    //     await act(async () => {
-    //       fireEvent.submit(screen.getByText("Submit"));
-    //     });
-
-    //     const expectedFormData = {
-    //         data: {
-    //             corporateCode: 80000005,
-    //             exchangeRate: 12312300,
-    //             exchangeSpread: 12312300,
-    //             operationSpread: 12312300,
-    //             id: 'b3b1b1b0-a4d6-46c6-ab62-f4e4d1321f2c',
-    //             transactionStatus: 0,
-    //             exchange: 'THB/USD',
-    //             buyCurrency: 12300000
-    //           }
-    //       }
-    //     await waitFor(() => {
-    //       const state = store.getState();
-    //       const corporateState = state.corporateTest;
-    //       console.log("Corporate State After Submission:", corporateState);
-    //       expect(corporateState).toMatchObject(expectedFormData);
-    //   });
-    // }, 40000)
+          const state = store.getState();
+          const corporateState = state.corporateTest;
+          console.log("Corporate State After Submission:", corporateState);
+          expect(corporateState).toMatchObject(expectedFormData);
+      });
+    }, 40000)
 
 })

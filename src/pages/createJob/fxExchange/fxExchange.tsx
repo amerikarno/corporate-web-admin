@@ -317,7 +317,7 @@ export default function FxExchangeEdit() {
     handleSelectPair({0 : firstVariable , 1 : secondVariable});
     setYouSend(firstVariable);
     setRecipientGets(secondVariable);
-
+    setSelectedCorporateCode(choosedEditData?.corporateCode?.toString() || "");
     // const exchangeSpreadToFloat = Number(choosedEditData?.exchangeSpread ?? 0) / 10000 || 0;
     // const operationSpreadToFloat = Number(choosedEditData?.operationSpread ?? 0) / 10000 || 0;
     // const exchangeRateToFloat = Number(choosedEditData?.exchangeRate ?? 0) / 10000 || 0;
@@ -362,6 +362,9 @@ export default function FxExchangeEdit() {
 
     let body: TFxExchange = {
       ...data,
+      id: choosedEditData?.id,
+      corporateCode: Number(selectedCorporateCode),
+      transactionStatus: choosedEditData?.transactionStatus,
       exchange:`${youSend}/${recipientGets}`,
       exchangeSpread:handleFloatValue(exchangeSpread),
       operationSpread:handleFloatValue(operationSpread),
@@ -426,6 +429,7 @@ export default function FxExchangeEdit() {
                     label="Corporate Code"
                     id="corporateCode"
                     type="number"
+                    data-testid="corporateCodeInput"
                     disabled={isSubmitting}
                     onChange={handleCorporateCodeChange}
                     list="corporateCodes"
@@ -451,6 +455,7 @@ export default function FxExchangeEdit() {
                         {...register("exchangeSpread")}
                         onChange={handleExchangeSpreadChange}
                         label="Exchange Spread"
+                        data-testid="exchangeSpreadInput"
                         id="exchangeSpread"
                         disabled={isSubmitting}
                         step="0.00001"
@@ -469,6 +474,7 @@ export default function FxExchangeEdit() {
                         onChange={handleOperationSpreadChange}
                         label="Operation Spread"
                         id="operationSpread"
+                        data-testid="operationSpreadInput"
                         disabled={isSubmitting}
                         step="0.00001"
                         type="number"
@@ -487,6 +493,7 @@ export default function FxExchangeEdit() {
                     label="Exchange Rate"
                     id="exchangeRate"
                     disabled={isSubmitting}
+                    data-testid="exchangeRateInput"
                     step="0.00001"
                     type="number"
                     inputClassName="w-[20rem] md:w-[25rem]"
@@ -546,6 +553,7 @@ export default function FxExchangeEdit() {
                 <div className="relative w-full">
                   <Input
                     {...register("buyCurrency")}
+                    data-testid="buyCurrencyInput"
                     onChange={handleYouSendValue}
                     type="number"
                     id="search-dropdown"

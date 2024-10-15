@@ -93,11 +93,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/change-ico",
         pageId: 2009,
       },
-      {
-        label: "orders/trades",
-        href: "/create-job/orders-trades",
-        pageId: 2005,
-      },
+      // {
+      //   label: "orders/trades",
+      //   href: "/create-job/orders-trades",
+      //   pageId: 2005,
+      // },
       {
         label: "cash deposite/withdraw",
         href: "/create-job/cash-deposit-withdraw",
@@ -221,15 +221,20 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3002,
       },
       {
+        label: "added Ico",
+        href: "/todo-list/added-ico",
+        pageId: 3007,
+      },
+      {
         label:"account approval",
         href: "/todo-list/account-approval",
         pageId:3006
       },
-      {
-        label: "orders/trades",
-        href: "/todo-list/orders-trades",
-        pageId: 3003,
-      },
+      // {
+      //   label: "orders/trades",
+      //   href: "/todo-list/orders-trades",
+      //   pageId: 3003,
+      // },
       {
         label: "cash deposite/withdraw",
         href: "/todo-list/cash-deposit-withdraw",
@@ -245,11 +250,6 @@ export const urlConfig: TUrlConfig[] = [
       //   label: "individual account opening",
       //   href: "/todo-list/individual-account-opening",
       //   pageId: 3002,
-      // },
-      // {
-      //   label: "whitelist(bank)",
-      //   href: "/todo-list/whitelist-bank",
-      //   pageId: 3003,
       // },
       // {
       //   label: "change info",

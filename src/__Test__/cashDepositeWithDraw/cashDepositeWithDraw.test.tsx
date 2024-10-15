@@ -112,6 +112,87 @@ describe("test cash deposite withdraw", () => {
       jest.clearAllMocks();
       store.dispatch(setUser(mockUser));
   });
+
+  
+  test("Create a new bank order", async () => {
+    mockAxios.onPost("/api/v1/transaction/bank/create").reply(200, {
+      message: "create bank order success",
+    });
+
+    mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
+      message: "edit bank order success",
+      data: [],
+    });
+
+    mockAxios.onGet("/api/v1/transaction/bank/get/individual").reply(200, {
+      message: "edit bank order success",
+      data: mockedCashDesositeWithdraw,
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <BankOrderEdit />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    // Select Corporate Code
+    const corporateCode = screen.getByLabelText("Corporate Code");
+    expect(corporateCode).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.change(corporateCode, { target: { value: "80000001" } });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Corporate Code")).toHaveValue("80000001");
+    });
+
+    // Select Bank Name
+    userEvent.selectOptions(
+      screen.getByTestId("bankName"),
+      screen.getByTestId("ธนาคารกสิกรไทย จำกัด (มหาชน)")
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("bankName")).toHaveValue(
+        "ธนาคารกสิกรไทย จำกัด (มหาชน)"
+      );
+    });
+
+    // Input Bank Account ID
+    const bankId = screen.getByLabelText("Bank Account ID");
+    expect(bankId).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.change(bankId, { target: { value: "753285427852" } });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Bank Account ID")).toHaveValue(
+        "753285427852"
+      );
+    });
+
+    // Input Order Value
+    const orderValue = screen.getByLabelText("Order Value");
+    expect(orderValue).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.change(orderValue, { target: { value: "1000" } });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Order Value")).toHaveValue(1000);
+    });
+
+    // Submit the form
+    const submitFormBtn = screen.getByText("Submit");
+    expect(submitFormBtn).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(submitFormBtn);
+    });
+
+  });
+
   test("test cash deposite withdraw edit", async () => {
       mockAxios.onPost("/api/v1/transaction/bank/create").reply(200, {
           message: "create bank order success",
@@ -233,4 +314,125 @@ describe("test cash deposite withdraw", () => {
           expect(corporateState).toMatchObject(expectedFormData);
       });
   });
+
+  test("test cash deposite withdraw edit false", async () => {
+
+    mockAxios.onPost("/api/v1/transaction/bank/edit").reply(400, {
+      message: "edit bank order failed",
+  });
+  mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
+    message: "edit bank order success",
+    data:{}
+});
+mockAxios.onPost("/api/v1/transaction/bank/get/individual").reply(200, {
+  message: "edit bank order success",
+  data:mockedCashDesositeWithdraw
+});
+
+    const orderTrades = mockedCashDesositeWithdraw || [];
+
+        const uniqueOrderTrades = orderTrades.filter((order:any, index:any, self:any) =>
+          index === self.findIndex((t:any) => t.id === order.id)
+        );
+
+        const adjustedBankOrders = uniqueOrderTrades.map((order:TBankOrder) => ({
+          ...order,
+          orderValue: (Number(order.orderValue) / 100000).toString(),
+        }));
+
+        store.dispatch(setBankOrder(adjustedBankOrders));
+        console.log( adjustedBankOrders[0]);
+    render(
+        <Provider store={store}>
+            <MemoryRouter>
+                <BankOrderEdit />
+            </MemoryRouter>
+        </Provider>
+    );
+
+    
+    const corporateCode = screen.getByLabelText("Corporate Code");
+    expect(corporateCode).toBeInTheDocument();
+    await act(async () => {
+        fireEvent.change(corporateCode, { target: { value: 80000001 } });
+    });
+
+    await waitFor(() => {
+        expect(screen.getByLabelText("Corporate Code")).toHaveValue("80000001");
+    });
+
+    userEvent.selectOptions(
+        screen.getByTestId('bankName'),
+        screen.getByTestId('ธนาคารกสิกรไทย จำกัด (มหาชน)')
+    );
+
+    await waitFor(() => {
+        expect(screen.getByTestId('bankName')).toHaveValue("ธนาคารกสิกรไทย จำกัด (มหาชน)");
+    });
+
+    const bankId = screen.getByLabelText("Bank Account ID");
+    expect(bankId).toBeInTheDocument();
+    await act(async () => {
+        fireEvent.change(bankId, { target: { value: "753285427852" } });
+    });
+
+    await waitFor(() => {
+        expect(screen.getByLabelText("Bank Account ID")).toHaveValue("753285427852");
+    });
+
+    const orderValue = screen.getByLabelText("Order Value");
+    expect(orderValue).toBeInTheDocument();
+    await act(async () => {
+        fireEvent.change(orderValue, { target: { value: "1000" } });
+    });
+
+    await waitFor(() => {
+        expect(screen.getByLabelText("Order Value")).toHaveValue(1000);
+    });
+
+    await waitFor(() => {
+        expect(screen.getByTestId("editButton-0f153a84-13cc-40e1-a5fa-eb3faf0564d6")).toBeInTheDocument();
+    })
+
+    await act(async () => {
+        fireEvent.click(screen.getByTestId("editButton-0f153a84-13cc-40e1-a5fa-eb3faf0564d6"));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Corporate Code")).toHaveValue("80000010");
+      expect(screen.getByTestId('bankName')).toHaveValue("ธนาคารซูมิโตโม มิตซุย แบงกิ้ง คอร์ปอเรชั่น");
+      expect(screen.getByLabelText("Bank Account ID")).toHaveValue("1");
+      expect(screen.getByLabelText("Order Value")).toHaveValue(123456.123);
+    })
+
+    await act(async () => {
+        fireEvent.click(screen.getByText("Withdraw"));
+    })
+
+    const submitFormBtn = screen.getByText("Submit");
+    expect(submitFormBtn).toBeInTheDocument();
+    await act(async () => {
+        fireEvent.click(submitFormBtn);
+    });
+
+    const expectedFormData = {
+      data: {
+        bankName: 'ธนาคารซูมิโตโม มิตซุย แบงกิ้ง คอร์ปอเรชั่น',
+        bankAccount: '1',
+        orderValue: 12345612300,
+        accountId: 80000010,
+        operations: 'withdraw',
+        id: '0f153a84-13cc-40e1-a5fa-eb3faf0564d6'
+      },
+    };
+
+    await waitFor(() => {
+        const state = store.getState();
+        const corporateState = state.corporateTest;
+        console.log("Corporate State After Submission:", corporateState);
+        // Ensure the corporateState contains the expected values
+        expect(corporateState).toMatchObject(expectedFormData);
+    });
+});
+
 });
