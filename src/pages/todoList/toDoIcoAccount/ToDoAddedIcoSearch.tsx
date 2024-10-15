@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { TAssetData } from './types';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setAssetData } from '@/features/addedIcoData/AddedIcoData';
-import { Pencil } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/Input';
 import axios from '@/api/axios';
 import { getCookies } from '@/lib/Cookies';
-// import { Button } from '@/components/ui/button';
 import { FaSearch } from "react-icons/fa";
 import {
   AlertDialog,
@@ -29,21 +24,6 @@ interface IcoInfo {
 }
 
 const ToDoAddedIcoSearch = () => {
-
-  // const EditButtonCell = ({ row }: { row: TAssetData }) => {
-  //   const handleEditClick = () => {
-  //     console.log(row);
-  //     dispatch(setAssetData(row));
-  //     localStorage.setItem('icoCode', row.icoCode!.toString());
-  //     navigate("/todo-list/added-ico/edit/1", {
-  //       state: row,
-  //     });
-  //   };
-
-  //   return (
-  //     <Pencil className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
-  //   );
-  // };
 
   const handleApproveClick = (row: TAssetData) => {
     console.log(row);

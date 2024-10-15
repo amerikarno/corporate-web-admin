@@ -322,7 +322,7 @@ useEffect(() => {
                       <Input {...register("companyMembers.0.lastName")}  label="Last Name*" id="lastname" />
                       <Input {...register("companyMembers.0.position")} label="Position*" id="position" />
                       <div className="min-h-12">
-                          <div onClick={handleDivClick} className="text-sm flex items-center cursor-pointer justify-between px-5 w-full text-white font-bold bg-slate-800 h-full max-h-12 rounded-lg" data-testid="uploadPicture">
+                          <div onClick={handleDivClick} className="text-sm flex items-center cursor-pointer justify-between px-5 w-full text-white font-bold bg-slate-800 h-full max-h-12 rounded-lg">
                           <span>Upload picture</span>
                           <div className="text-lg font-white"><FaUpload /></div>
                           <input

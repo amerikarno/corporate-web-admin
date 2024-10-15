@@ -228,43 +228,43 @@ describe("test ico form1",()=>{
         </Provider>
     );
 
-    const issueBy = screen.getByPlaceholderText("Issue By*");
+    const issueBy = screen.getByLabelText("Issue By*");
     expect(issueBy).toBeInTheDocument();
     expect(issueBy).toHaveValue("");
     fireEvent.change(issueBy, { target: { value: "issue by name" } })
     expect(issueBy).toHaveValue("issue by name");
 
-    const companyName = screen.getByPlaceholderText("Company Name*");
+    const companyName = screen.getByLabelText("Company Name*");
     expect(companyName).toBeInTheDocument();
     expect(companyName).toHaveValue("");
     fireEvent.change(companyName, { target: { value: "Digital Asset" } })
     expect(companyName).toHaveValue("Digital Asset");
 
-    const description = screen.getByPlaceholderText("Description*");
+    const description = screen.getByLabelText("Description*");
     expect(description).toBeInTheDocument();
     expect(description).toHaveValue("");
     fireEvent.change(description, { target: { value: "complement description" } })
     expect(description).toHaveValue("complement description");
 
-    const productCategory = screen.getByPlaceholderText("Product Category*");
+    const productCategory = screen.getByLabelText("Product Category*");
     expect(productCategory).toBeInTheDocument();
     expect(productCategory).toHaveValue("");
     fireEvent.change(productCategory, { target: { value: "category HoJ" } })
     expect(productCategory).toHaveValue("category HoJ");
 
-    const expectReturn = screen.getByPlaceholderText("Expect Return*");
+    const expectReturn = screen.getByLabelText("Expect Return*");
     expect(expectReturn).toBeInTheDocument();
     expect(expectReturn).toHaveValue("");
     fireEvent.change(expectReturn, { target: { value: "5000" } })
     expect(expectReturn).toHaveValue("5000");
 
-    const region = screen.getByPlaceholderText("Region*");
+    const region = screen.getByLabelText("Region*");
     expect(region).toBeInTheDocument();
     expect(region).toHaveValue("");
     fireEvent.change(region, { target: { value: "asia" } })
     expect(region).toHaveValue("asia");
 
-    const subscription = screen.getByPlaceholderText("Minimum Subscription Limit*");
+    const subscription = screen.getByLabelText("Minimum Subscription Limit*");
     expect(subscription).toBeInTheDocument();
     expect(subscription).toHaveValue("");
     fireEvent.change(subscription, { target: { value: "3" } })
@@ -398,43 +398,43 @@ describe("test ico form1",()=>{
           </Provider>
       );
   
-      const issueBy = screen.getByPlaceholderText("Issue By*");
+      const issueBy = screen.getByLabelText("Issue By*");
       expect(issueBy).toBeInTheDocument();
       expect(issueBy).toHaveValue("");
       fireEvent.change(issueBy, { target: { value: "issue by name" } })
       expect(issueBy).toHaveValue("issue by name");
   
-      const companyName = screen.getByPlaceholderText("Company Name*");
+      const companyName = screen.getByLabelText("Company Name*");
       expect(companyName).toBeInTheDocument();
       expect(companyName).toHaveValue("");
       fireEvent.change(companyName, { target: { value: "Digital Asset" } })
       expect(companyName).toHaveValue("Digital Asset");
   
-      const description = screen.getByPlaceholderText("Description*");
+      const description = screen.getByLabelText("Description*");
       expect(description).toBeInTheDocument();
       expect(description).toHaveValue("");
       fireEvent.change(description, { target: { value: "complement description" } })
       expect(description).toHaveValue("complement description");
   
-      const productCategory = screen.getByPlaceholderText("Product Category*");
+      const productCategory = screen.getByLabelText("Product Category*");
       expect(productCategory).toBeInTheDocument();
       expect(productCategory).toHaveValue("");
       fireEvent.change(productCategory, { target: { value: "category HoJ" } })
       expect(productCategory).toHaveValue("category HoJ");
   
-      const expectReturn = screen.getByPlaceholderText("Expect Return*");
+      const expectReturn = screen.getByLabelText("Expect Return*");
       expect(expectReturn).toBeInTheDocument();
       expect(expectReturn).toHaveValue("");
       fireEvent.change(expectReturn, { target: { value: "5000" } })
       expect(expectReturn).toHaveValue("5000");
   
-      const region = screen.getByPlaceholderText("Region*");
+      const region = screen.getByLabelText("Region*");
       expect(region).toBeInTheDocument();
       expect(region).toHaveValue("");
       fireEvent.change(region, { target: { value: "asia" } })
       expect(region).toHaveValue("asia");
   
-      const subscription = screen.getByPlaceholderText("Minimum Subscription Limit*");
+      const subscription = screen.getByLabelText("Minimum Subscription Limit*");
       expect(subscription).toBeInTheDocument();
       expect(subscription).toHaveValue("");
       fireEvent.change(subscription, { target: { value: "3" } })
@@ -821,22 +821,22 @@ describe("test ico form3",()=>{
 
         expect(screen.getByText("Key Information")).toBeInTheDocument();
 
-        const precisionInput = screen.getByPlaceholderText("Precision*");
+        const precisionInput = screen.getByLabelText("Precision*");
         expect(precisionInput).toBeInTheDocument();
         expect(precisionInput).toHaveValue(null);
         fireEvent.change(precisionInput, { target: { value: 5 } })
 
-        const capitalStructure = screen.getByPlaceholderText("Capital Structure*");
+        const capitalStructure = screen.getByLabelText("Capital Structure*");
         expect(capitalStructure).toBeInTheDocument();
         expect(capitalStructure).toHaveValue("");
         fireEvent.change(capitalStructure, { target: { value: "capitalStructure 5" } })
 
-        const productType = screen.getByPlaceholderText("Product Type*");
+        const productType = screen.getByLabelText("Product Type*");
         expect(productType).toBeInTheDocument();
         expect(productType).toHaveValue("");
         fireEvent.change(productType, { target: { value: "productType 5" } })
 
-        const classification = screen.getByPlaceholderText("Classification*");
+        const classification = screen.getByLabelText("Classification*");
         expect(classification).toBeInTheDocument();
         expect(classification).toHaveValue("");
         fireEvent.change(classification, { target: { value: "classification 5" } })
@@ -973,42 +973,42 @@ describe("test ico form4",()=>{
 
       expect(screen.getByText("Issuance Terms")).toBeInTheDocument();
     
-      const investmentPeriodInput = screen.getByPlaceholderText("Investment Period*");
+      const investmentPeriodInput = screen.getByLabelText("Investment Period*");
       expect(investmentPeriodInput).toBeInTheDocument();
       expect(investmentPeriodInput).toHaveValue(null);
       fireEvent.change(investmentPeriodInput, { target: { value: 5 } })
 
-      const dividendYieldInput = screen.getByPlaceholderText("Dividend Yield*");
+      const dividendYieldInput = screen.getByLabelText("Dividend Yield*");
       expect(dividendYieldInput).toBeInTheDocument();
       expect(dividendYieldInput).toHaveValue(null);
       fireEvent.change(dividendYieldInput, { target: { value: 500 } })
 
-      const grossMarginInput = screen.getByPlaceholderText("Gross Margin*");
+      const grossMarginInput = screen.getByLabelText("Gross Margin*");
       expect(grossMarginInput).toBeInTheDocument();
       expect(grossMarginInput).toHaveValue(null);
       fireEvent.change(grossMarginInput, { target: { value: 400 } })
 
-      const equityMultipleInput = screen.getByPlaceholderText("Equity Multiple*");
+      const equityMultipleInput = screen.getByLabelText("Equity Multiple*");
       expect(equityMultipleInput).toBeInTheDocument();
       expect(equityMultipleInput).toHaveValue(null);
       fireEvent.change(equityMultipleInput, { target: { value: 300 } })
 
-      const profit = screen.getByPlaceholderText("Profit*");
+      const profit = screen.getByLabelText("Profit*");
       expect(profit).toBeInTheDocument();
       expect(profit).toHaveValue(null);
       fireEvent.change(profit, { target: { value: 200 } })
 
-      const leverage = screen.getByPlaceholderText("Leverage*")
+      const leverage = screen.getByLabelText("Leverage*")
       expect(leverage).toBeInTheDocument();
       expect(leverage).toHaveValue(null);
       fireEvent.change(leverage, { target: { value: 100 } })
 
-      const investmentStructure = screen.getByPlaceholderText("Investment Structure*");
+      const investmentStructure = screen.getByLabelText("Investment Structure*");
       expect(investmentStructure).toBeInTheDocument();
       expect(investmentStructure).toHaveValue("");
       fireEvent.change(investmentStructure, { target: { value: "test investmentStructure" } })
 
-      const distributionFrequency = screen.getByPlaceholderText("Distribution Frequency*");
+      const distributionFrequency = screen.getByLabelText("Distribution Frequency*");
       expect(distributionFrequency).toBeInTheDocument();
       expect(distributionFrequency).toHaveValue("");
       fireEvent.change(distributionFrequency, { target: { value: "test distributionFrequency" } })
@@ -1151,27 +1151,27 @@ test("test ico form5 create", async ()=>{
         </Provider>
     );
 
-    const firstName = screen.getByPlaceholderText("First Name*");
+    const firstName = screen.getByLabelText("First Name*");
     expect(firstName).toBeInTheDocument();
     fireEvent.change(firstName, { target: { value: "test firstname" } });
     expect(firstName).toHaveValue("test firstname");
 
-    const middleName = screen.getByPlaceholderText("Middle Name*");
+    const middleName = screen.getByLabelText("Middle Name*");
     expect(middleName).toBeInTheDocument();
     fireEvent.change(middleName, { target: { value: "test midddle name" } });
     expect(middleName).toHaveValue("test midddle name");
 
-    const lastName = screen.getByPlaceholderText("Last Name*");
+    const lastName = screen.getByLabelText("Last Name*");
     expect(lastName).toBeInTheDocument();
     fireEvent.change(lastName, { target: { value: "test last name" } });
     expect(lastName).toHaveValue("test last name");
 
-    const position = screen.getByPlaceholderText("Position*");
+    const position = screen.getByLabelText("Position*");
     expect(position).toBeInTheDocument();
     fireEvent.change(position, { target: { value: "test position" } });
     expect(position).toHaveValue("test position");
 
-    const history = screen.getByPlaceholderText("History*");
+    const history = screen.getByLabelText("History*");
     expect(history).toBeInTheDocument();
     fireEvent.change(history, { target: { value: "test history" } });
     expect(history).toHaveValue("test history");
