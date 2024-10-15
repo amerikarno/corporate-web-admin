@@ -221,7 +221,7 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3002,
       },
       {
-        label: "added Ico",
+        label: "edit ico account",
         href: "/todo-list/added-ico",
         pageId: 3007,
       },
