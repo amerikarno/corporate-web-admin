@@ -43,14 +43,17 @@ const ChangeAddedIcoSearch = () => {
     {
       name: "ICO Code",
       selector: (row: TAssetData) => row.icoCode || "",
+      maxWidth: '120px'
+    },
+    {
+      name: "Symbol",
+      selector: (row: TAssetData) => row.asset.name || "",
+      maxWidth: '150px'
     },
     {
       name: "Company Name",
-      selector: (row: TAssetData) => row.asset.name || "",
-    },
-    {
-      name: "Description",
       selector: (row: TAssetData) => row.asset.description || "",
+      maxWidth: '300px'
     },
     {
       name: "Issue By",

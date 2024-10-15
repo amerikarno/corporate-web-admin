@@ -130,21 +130,21 @@ const {
                 <h1 className="text-lg md:text-xl font-bold">Key Information</h1>
                 <span className="text-xl"><FaKey /></span>
             </div>
-            <div className="w-full grid grid-cols-2 grid-rows-4 gap-8">
+            <div className="w-full grid grid-cols-2 grid-rows-4 gap-5">
                 <div className="">
-                    <Input  {...register("keyInformation.precision")} type="number" step="0.01" className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Precision*" />
+                    <Input  {...register("keyInformation.precision")} type="number" step="0.01" label="Precision*" id="precision"/>
                 </div>
                 <div className="">
                     <Input  {...register("keyInformation.capitalStructure")} 
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Capital Structure*" />
+                      label="Capital Structure*" id="capitalStructure" />
                 </div>
                 <div className="">
                     <Input  {...register("keyInformation.productType")} 
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Product Type*" />
+                    label="Product Type*" id="productType"/>
                 </div>
                 <div className="">
                     <Input  {...register("keyInformation.classiFication")} 
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" placeholder="Classification*" />
+                    label="Classification*" id="classiFication"/>
                 </div>
                 <div className="">
                     <select
