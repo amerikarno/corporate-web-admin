@@ -149,7 +149,7 @@ useEffect(() => {
                     ...data.companyMembers[0],
                     icoCode:icoCode.toString(),
                     picture:file,
-                    memberId:choosedEditData?.memberId
+                    memberId:choosedEditData?.id
                 }]
             }
           console.log("form5 ico body :", body);
@@ -177,7 +177,7 @@ useEffect(() => {
                 reset();
                 console.log("update ico form5 success",res)
                 const updatedMembers = listOfMembers.map(member => 
-                  member.memberId === choosedEditData.memberId ? { ...body.companyMembers[0], picture: body.companyMembers[0].picture?.toString() , memberId:res.data.memberId } : member
+                  member.memberId === choosedEditData.memberId ? { ...body.companyMembers[0], picture: body.companyMembers[0].picture?.toString() , memberId:res.data.memberId[0] } : member
                 );
                 setListOfMembers(updatedMembers);
                 setChoosedEditData(null);
@@ -217,8 +217,9 @@ useEffect(() => {
   const handleDelete = async (data: TMember) => {
     try {
       const token = getCookies();
+      console.log(data)
       const res = await axios.post(
-        "/api/v1/ico/delete",
+        "/api/v1/ico/members/delete",
         { memberId: data.memberId },
         {
           headers: {
