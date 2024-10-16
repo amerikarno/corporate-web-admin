@@ -13,6 +13,7 @@ type TBody = {
   corporateCode: string;
 };
 export function useAccountOpening() {
+
   const [searchResult, setSearchResult] = useState<TCorporateData[]>();
 
   const handleSearch = async (data: TCorporateAccountOpening) => {

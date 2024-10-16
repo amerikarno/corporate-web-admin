@@ -59,37 +59,37 @@ export const urlConfig: TUrlConfig[] = [
     ],
   },
   {
-    header: "Create Job",
+    header: "Customer Management",
     icon: "icon",
     pages: [2000, 2023],
     children: [
       {
-        label: "added corporate account",
+        label: "corporate account",
         href: "/create-job/added-corporate-account",
         pageId: 2001,
       },
       {
-        label: "added individual account",
+        label: "individual account",
         href: "/create-job/added-individual-account",
         pageId: 2002,
       },
       {
-        label: "added ico",
+        label: "ICO campaign portal",
         href: "/create-job/added-ico",
         pageId: 2008,
       },
       {
-        label: "change corporate account",
+        label: "edit corporate account",
         href: "/create-job/change-corporate-account",
         pageId: 2003,
       },
       {
-        label: "change individual account",
+        label: "edit individual account",
         href: "/create-job/change-individual-account",
         pageId: 2004,
       },
       {
-        label: "change ico account",
+        label: "edit ICO campaign portal",
         href: "/create-job/change-ico",
         pageId: 2009,
       },
@@ -103,11 +103,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/cash-deposit-withdraw",
         pageId: 2006,
       },
-      {
-        label: "fx exchange",
-        href: "/create-job/fx-exchange",
-        pageId: 2007,
-      },
+      // {
+      //   label: "fx exchange",
+      //   href: "/create-job/fx-exchange",
+      //   pageId: 2007,
+      // },
       // {
       //   label: "special edd",
       //   href: "/create-job/special-edd",
@@ -201,12 +201,12 @@ export const urlConfig: TUrlConfig[] = [
     ],
   },
   {
-    header: "TO DO List",
+    header: "Approval",
     icon: "icon",
     pages: [3000, 3016],
     children: [
       {
-        label: "corporate account opening",
+        label: "corporate account",
         href: "/todo-list/corporate-account-opening",
         pageId: 3001,
       },
@@ -216,20 +216,20 @@ export const urlConfig: TUrlConfig[] = [
       //   pageId: 3002,
       // },
       {
-        label: "individual account opening",
+        label: "individual account",
         href: "/todo-list/individual-account-opening",
         pageId: 3002,
       },
       {
-        label: "ico approval",
+        label: "ICO compaign portal",
         href: "/todo-list/added-ico",
         pageId: 3007,
       },
-      {
-        label:"account approval",
-        href: "/todo-list/account-approval",
-        pageId:3006
-      },
+      // {
+      //   label:"account approval",
+      //   href: "/todo-list/account-approval",
+      //   pageId:3006
+      // },
       // {
       //   label: "orders/trades",
       //   href: "/todo-list/orders-trades",
@@ -240,11 +240,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/cash-deposit-withdraw",
         pageId: 3004,
       },
-      {
-        label:"fx exchange",
-        href: "/todo-list/fx-exchange",
-        pageId:3005
-      },
+      // {
+      //   label:"fx exchange",
+      //   href: "/todo-list/fx-exchange",
+      //   pageId:3005
+      // },
 
       // {
       //   label: "individual account opening",
@@ -340,11 +340,11 @@ export const urlConfig: TUrlConfig[] = [
       // },
     ],
   },
-  {
-    header: "Reports",
-    icon: "icon",
-    pages: [5000, 5038],
-    children: [
+  // {
+  //   header: "Reports",
+  //   icon: "icon",
+    // pages: [5000, 5038],
+    // children: [
       // {
       //   label: "Customer Proxy Wallet (Deposit)",
       //   href: "/reports/customer-proxy-wallet-deposit",
@@ -530,17 +530,22 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/reports/da-deposit",
       //   pageId: 5037,
       // },
-    ],
-  },
+    // ],
+  // },
   {
-    header: "SEC Reports",
+    header: "Reports",
     icon: "icon",
     pages: [6000, 6002],
     children: [
       {
-        label: "reports",
-        href: "/sec-reports/reports",
+        label: "SEC Reports",
+        href: "reports/sec-reports",
         pageId: 6001,
+      },
+      {
+        label: "NC Reports",
+        href: "reports/nc-reports",
+        pageId: 6002,
       },
     ],
   },

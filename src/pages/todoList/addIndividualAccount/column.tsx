@@ -1,27 +1,21 @@
 import { TableColumn } from "react-data-table-component";
 import { TIndividualData } from "./type";
-import { Pencil } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button";
 
-const EditButtonCell = ({ row }: { row: TIndividualData }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleEditClick = () => {
+  const handleApproveClick = (row: TIndividualData) => {
     console.log(row);
-    dispatch(setIndividualData(row));
-    localStorage.setItem('cid', row.id.toString());
-    navigate("/todo-list/individual-account-opening/edit/1", {
-      state: row,
-    });
   };
-
-  return (
-    <Pencil data-testid={`editButton-${row.id}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
-  );
-};
 
 export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
   {
@@ -37,8 +31,29 @@ export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
     selector: (row: TIndividualData) => row.email || "",
   },
   {
-    name: "",
-    cell: (row: TIndividualData) => <EditButtonCell row={row} />,
+    cell: (row: TIndividualData) => (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline" className="bg-[#002f18] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white">Approve</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            <div className="flex flex-col">
+              <span>{`Individualc ID : ${row.id}`}</span>
+              <span>{`Individual Name : ${row.thName}`}</span>
+              <span>{`Individual Email : ${row.email}`}</span>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={()=>handleApproveClick(row)}>Approve</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    ),
     ignoreRowClick: true,
   },
 ];

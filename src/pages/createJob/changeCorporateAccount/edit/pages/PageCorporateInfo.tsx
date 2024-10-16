@@ -57,7 +57,7 @@ export function PageCorporateInfo() {
         <Card className="p-4">
           <p className="text-xl font-bold">Instructions</p>
           <div className="pt-4">
-            In order to access the services offered by Ico COMPANY
+            In order to access the services offered by ICO COMPANY
             LIMITED, you will need to complete and submit this account opening
             application form, due diligence questionnaire and declaration for
             accredited/institutional investors.
