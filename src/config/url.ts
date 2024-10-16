@@ -533,14 +533,19 @@ export const urlConfig: TUrlConfig[] = [
     ],
   },
   {
-    header: "SEC Reports",
+    header: "Reports",
     icon: "icon",
     pages: [6000, 6002],
     children: [
       {
-        label: "reports",
-        href: "/sec-reports/reports",
+        label: "SEC Reports",
+        href: "reports/sec-reports",
         pageId: 6001,
+      },
+      {
+        label: "NC Reports",
+        href: "reports/nc-reports",
+        pageId: 6002,
       },
     ],
   },
