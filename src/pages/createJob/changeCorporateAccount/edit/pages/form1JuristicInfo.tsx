@@ -75,7 +75,7 @@ export function Form1JuristicInfo() {
       <Card className="p-4">
         <p className="text-xl font-bold">Instructions</p>
         <div className="pt-4">
-          In order to access the services offered by Finansia Ico COMPANY
+          In order to access the services offered by Ico COMPANY
           LIMITED, you will need to complete and submit this account opening
           application form, due diligence questionnaire and declaration for
           accredited/institutional investors.
