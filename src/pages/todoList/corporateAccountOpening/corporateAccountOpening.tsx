@@ -29,6 +29,14 @@ export default function TodoCorporateAccountOpenning({
     return <UnAuthorize />;
   }
 
+  const customStyles = {
+    rows: {
+      style: {
+        minHeight: '60px', 
+      },
+    },
+  }
+
   const prev7Days = new Date();
   prev7Days.setDate(prev7Days.getDate() - 7);
 
@@ -201,7 +209,7 @@ export default function TodoCorporateAccountOpenning({
           <CardTitle>Corporates Infomations</CardTitle>
         </CardHeader>
         <CardContent className="overflow-x-auto h-[360px]">
-          <DataTable columns={columnsCorporateInfo} data={corporateData} />
+          <DataTable columns={columnsCorporateInfo} data={corporateData} customStyles={customStyles}/>
         </CardContent>
       </Card>
     </div>
