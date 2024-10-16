@@ -74,7 +74,7 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2002,
       },
       {
-        label: "ICO campaign portal",
+        label: "ICO campaign",
         href: "/create-job/added-ico",
         pageId: 2008,
       },
@@ -89,7 +89,7 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2004,
       },
       {
-        label: "edit ICO campaign portal",
+        label: "edit ICO campaign",
         href: "/create-job/change-ico",
         pageId: 2009,
       },
@@ -221,7 +221,7 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 3002,
       },
       {
-        label: "ICO compaign portal",
+        label: "ICO compaign",
         href: "/todo-list/added-ico",
         pageId: 3007,
       },
