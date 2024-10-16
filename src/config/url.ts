@@ -542,11 +542,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "reports/sec-reports",
         pageId: 6001,
       },
-      {
-        label: "NC Reports",
-        href: "reports/nc-reports",
-        pageId: 6002,
-      },
+      // {
+      //   label: "NC Reports",
+      //   href: "reports/nc-reports",
+      //   pageId: 6002,
+      // },
     ],
   },
 ];
