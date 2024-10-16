@@ -1,26 +1,20 @@
 import { TableColumn } from "react-data-table-component";
 import { TCorporateData } from "../constant/type";
-import { Pencil } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button";
 
-const EditButtonCell = ({ row }: { row: TCorporateData }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleEditClick = () => {
-    console.log(row);
-    dispatch(setCorporateData(row));
-    localStorage.setItem('corporateCode', row.CorporateCode.toString());
-    navigate("/todo-list/corporate-account-opening/edit/1", {
-      state: row,
-    });
-  };
-
-  return (
-    <Pencil data-testid={`editButton-${row.CorporateCode}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
-  );
+const handleApproveClick = (row: TCorporateData) => {
+  console.log(row);
 };
 
 export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
@@ -33,8 +27,28 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
     selector: (row: TCorporateData) => row.Info?.name || "",
   },
   {
-    name: "",
-    cell: (row: TCorporateData) => <EditButtonCell row={row} />,
+    cell: (row: TCorporateData) => (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline" className="bg-[#002f18] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white">Approve</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            <div className="flex flex-col">
+              <span>{`Juristic ID : ${row.CorporateCode}`}</span>
+              <span>{`Juristic Name : ${row.Info.name}`}</span>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={()=>handleApproveClick(row)}>Approve</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    ),
     ignoreRowClick: true,
   },
 ];
