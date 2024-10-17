@@ -7,8 +7,10 @@ import { PrimaryCountryOfOperationChoices, registeredCountryChoices } from '@/pa
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { mapDataToTCorporateInfo } from './utils';
+import { columnsAttorney, columnsAuthorizePerson, columnsJuristicShareHolders, columnsListOfDirectors, columnsShareHolders, mapDataToTCorporateInfo, transformAuthorizedPersons, transformDirectorsToExpectedType, transformJuristicsToShareholders } from './utils';
 import { subAddressSchema } from '@/pages/createJob/changeCorporateAccount/edit/constants/schemas';
+import DataTable from 'react-data-table-component';
+import { columnsContactPerson } from './utils';
 
 const LandingPageCorporate = () => {
 
@@ -77,7 +79,7 @@ const LandingPageCorporate = () => {
       }
     }, []);
   return (
-    <div className="p-8 flex justify-center">
+    <div className="p-8 flex flex-col space-y-8">
       <Card className="w-full">
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold pb-4">
@@ -318,6 +320,52 @@ const LandingPageCorporate = () => {
             />
           </div>
       </Card>
+      <Card>
+        <DataTable
+            title="Contact Person"
+            columns={columnsContactPerson}
+            data={corporateData.Contact || []}
+            clearSelectedRows
+            />
+      </Card>
+      <Card>
+          <DataTable
+            title="List of Directors"
+            columns={columnsListOfDirectors}
+            data={transformDirectorsToExpectedType(corporateData.Directors)}
+            clearSelectedRows
+          />
+      </Card>
+      <Card>
+          <DataTable
+            title="List of Shareholders holding from 25% of shares"
+            columns={columnsShareHolders}
+            data={corporateData.IndividualShareholders || []}
+            clearSelectedRows
+          />
+      </Card>
+      <Card>
+          <DataTable
+            title="Juristics shareholders of juristic's owner"
+            columns={columnsJuristicShareHolders}
+            data={transformJuristicsToShareholders(corporateData.Juristics)}
+            clearSelectedRows
+          />
+      </Card>
+      <Card>
+          <DataTable
+            title="Authorized person of Juristic Investor for traction"
+            columns={columnsAuthorizePerson}
+            data={transformAuthorizedPersons(corporateData.AuthorizedPersons)}
+          />
+      </Card>
+      <Card>
+          <DataTable
+            title="List of Attorney"
+            columns={columnsAttorney}
+            data={corporateData.Attorneys || []}
+          />
+        </Card>
     </div>
   )
 }

@@ -1,8 +1,10 @@
-import { TCorporateSubAddress } from "@/pages/createJob/changeCorporateAccount/constant/type";
+import { TAuthorizedPerson, TContact, TCorporateSubAddress, TIndividualShareholder, TJuristic } from "@/pages/createJob/changeCorporateAccount/constant/type";
 import { TCorporateInfoSchema } from "@/pages/createJob/changeCorporateAccount/edit/constants/schemas";
+import { TAttorney, TAuthorizePerson, TDirector, TJuristicsShareholders } from "@/pages/createJob/changeCorporateAccount/edit/constants/types";
 import { findAddress } from "@/pages/createJob/changeCorporateAccount/edit/libs/utils";
 import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
-
+import { TableColumn } from "react-data-table-component";
+import { TAttorney as TAttorneyEdit } from "@/pages/createJob/constant/type";
 
 export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData => {
     let resRegisterCountry = findAddress(data, 701);
@@ -89,6 +91,212 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
     };
     return result;
   };
+  export const columnsListOfDirectors: TableColumn<TDirector>[] = [
+    {
+      name: "Title",
+      selector: (row) => row.fullNames[0]?.title || "",
+    },
+    {
+      name: "Firstname",
+      selector: (row) => row.fullNames[0]?.firstName || "",
+    },
+    {
+      name: "Lastname",
+      selector: (row) => row.fullNames[0]?.lastName || "",
+    },
+    {
+      name: "CitizenID",
+      selector: (row) => row.citizenId || "",
+    },
+    {
+      name: "PassportID",
+      selector: (row) => row.passportId || "",
+    },
+    {
+      name: "Nationality",
+      selector: (row) => row.nationality || "",
+    }]
+    import {TDirector as TFetchedDirector} from '@/pages/todoList/corporateAccountOpening/constant/type';
+    export const transformDirectorsToExpectedType = (directors : TFetchedDirector[] | null): TDirector[] => {
+        if (!directors) return [];
+        
+        return directors.map(director => {
+          return {
+            ...director,
+            corporateCode: String(director.corporateCode),
+          } 
+        });
+      };
+
+      export const transformJuristicsToShareholders = (juristics: TJuristic[] | null): TJuristicsShareholders[] => {
+        if (!juristics) return [];
+        
+        return juristics.map(juristic => {
+          return {
+            ...juristic,
+            corporateCode: String(juristic.corporateCode), 
+          } as TJuristicsShareholders; 
+        });
+      };
+
+      export const transformAuthorizedPersons = (authorizedPersons: TAuthorizedPerson[] | null): TAuthorizePerson[] => {
+        if (!authorizedPersons) return [];
+        
+        return authorizedPersons.map(person => {
+          return {
+            ...person,
+            corporateCode: String(person.corporateCode), 
+          } as TAuthorizePerson; 
+        });
+      };
+
+      export const transformAttorneysToExpectedType = (attorneys:TAttorneyEdit [] | null): TAttorney[] => {
+        if (!attorneys) return [];
+        
+        return attorneys.map(attorney => {
+          return {
+            ...attorney,
+            corporateCode: String(attorney.corporateCode), 
+          };
+        });
+      };
+
+      export const columnsShareHolders: TableColumn<TIndividualShareholder>[] = [
+        {
+          name: "Title",
+          selector: (row) => row.fullNames?.[0]?.title || "",
+        },
+        {
+          name: "Firstname",
+          selector: (row) => row.fullNames?.[0]?.firstName || "",
+        },
+        {
+          name: "Lastname",
+          selector: (row) => row.fullNames?.[0]?.lastName || "",
+        },
+        {
+          name: "CitizenID",
+          selector: (row) => row.citizenId || "",
+        },
+        {
+          name: "PassportID",
+          selector: (row) => row.passportId || "",
+        },
+        {
+          name: "Nationality",
+          selector: (row) => row.nationality || "",
+        },
+        {
+          name: "Share Percentage",
+          selector: (row) => row.sharePercentage?.toString() || "",
+        }]
+        export const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
+            {
+              name: "Title",
+              selector: (row: TAuthorizePerson) => row.fullNames[0].title || "",
+            },
+            {
+              name: "Firstname",
+              selector: (row: TAuthorizePerson) => row.fullNames[0].firstName || "",
+            },
+            {
+              name: "Lastname",
+              selector: (row: TAuthorizePerson) => row.fullNames[0].lastName || "",
+            },
+            {
+              name: "CitizenID",
+              selector: (row: TAuthorizePerson) => row.citizenId || "",
+            },
+            {
+              name: "PassportID",
+              selector: (row: TAuthorizePerson) => row.passportId || "",
+            },
+            {
+              name: "Nationality",
+              selector: (row: TAuthorizePerson) => row.nationality || "",
+            }]
+  export const columnsContactPerson: TableColumn<TContact>[] = [
+    {
+      name: "Title",
+      selector: (row: TContact) => row.fullNames?.[0]?.title || "",
+    },
+    {
+      name: "Firstname",
+      selector: (row: TContact) => row.fullNames?.[0]?.firstName || "",
+    },
+    {
+      name: "Lastname",
+      selector: (row: TContact) => row.fullNames?.[0]?.lastName || "",
+    },
+    {
+      name: "Position",
+      selector: (row: TContact) => row.position || "",
+    },
+    {
+      name: "Division",
+      selector: (row: TContact) => row.division || "",
+    },
+    {
+      name: "Email",
+      selector: (row: TContact) => row.email || "",
+    },
+    {
+      name: "Phone Number",
+      selector: (row: TContact) => row.telephone || "",
+    }
+  ];
+
+  export const columnsJuristicShareHolders: TableColumn<TJuristicsShareholders>[] = [
+    {
+      name: "Name",
+      selector: (row) => row.juristicName || "",
+    },
+    {
+      name: "RegistrationNo",
+      selector: (row: TJuristicsShareholders) => row.registrationNo || "",
+    },
+    {
+      name: "Registered Country",
+      selector: (row: TJuristicsShareholders) => row.registeredCountry || "",
+    },
+    {
+      name: "Share Percentage",
+      selector: (row: TJuristicsShareholders) => row.sharePercentage || "",
+    }]
+
+    export const columnsAttorney: TableColumn<TAttorney>[] = [
+        {
+          name: "Title",
+          selector: (row: TAttorney) => row.fullNames[0].title || "",
+        },
+        {
+          name: "Firstname",
+          selector: (row: TAttorney) => row.fullNames[0].firstName || "",
+        },
+        {
+          name: "Lastname",
+          selector: (row: TAttorney) => row.fullNames[0].lastName || "",
+        },
+        {
+          name: "CitizenID",
+          selector: (row: TAttorney) => row.citizenId || "",
+        },
+        {
+          name: "PassportID",
+          selector: (row: TAttorney) => row.passportId || "",
+        },
+        {
+          name: "Nationality",
+          selector: (row: TAttorney) => row.nationality || "",
+        },
+        {
+          name: "Telephone",
+          selector: (row: TAttorney) => row.telephone || "",
+        },
+        {
+          name: "Email",
+          selector: (row: TAttorney) => row.email || "",
+        }]
 
 export const mockedCorporateData : TCorporateData[] = [{
     "CorporateCode": 80000009,
@@ -374,53 +582,7 @@ export const mockedCorporateData : TCorporateData[] = [{
     }
   ],
   "citizenId": "3596428240378",
-  "passportId": "123456789", // Add this property
-  "expiryDate": "2025-12-19T17:00:00Z",
-  "nationality": "Thai",
-  "types": 101
-},{
-  "id": "37398905-30ff-46a1-998d-58086abae550",
-  "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-  "CreatedAt": "2024-08-21T07:52:23.503Z",
-  "DeletedAt": null,
-  "personalId": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-  "corporateCode": 80000009,
-  "fullNames": [
-    {
-      "id": "a90589a6-3b12-4998-9d0c-7eb9bde806f4",
-      "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-      "CreatedAt": "2024-08-21T07:52:23.509Z",
-      "DeletedAt": null,
-      "ReferenceID": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-      "title": "Mr.",
-      "firstName": "Test Contact",
-      "lastName": "Person",
-      "types": 101
-    }
-  ],
-  "addresses": [
-    {
-      "id": "c378789f-dd25-4687-9d9d-6ae1b953c7cc",
-      "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-      "CreatedAt": "2024-08-21T07:52:23.506Z",
-      "DeletedAt": null,
-      "ReferenceID": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-      "addressNo": "123",
-      "mooNo": "-",
-      "building": "Tisco Tower",
-      "floor": "16",
-      "soi": "4",
-      "road": "North Sathorn",
-      "tambon": "Siom",
-      "amphoe": "Bangrak",
-      "province": "Bangkok",
-      "postalCode": "10500",
-      "country": "Thailand",
-      "types": 101
-    }
-  ],
-  "citizenId": "3596428240378",
-  "passportId": "123456789", // Add this property
+  "passportId": "123456789", 
   "expiryDate": "2025-12-19T17:00:00Z",
   "nationality": "Thai",
   "types": 101
@@ -467,13 +629,55 @@ export const mockedCorporateData : TCorporateData[] = [{
                 }
             ],
             "citizenId": "1710892138523",
-            "passportId": "123456789", // Add this property
+            "passportId": "123456789", 
             "expiryDate": "2025-11-10T17:00:00Z",
             "nationality": "Thai",
             "types": 101
         }
     ],
-    "AuthorizedPersons": null,
+    "AuthorizedPersons": [
+        {
+            "id": "b8729929-d07d-49d3-b064-e35cbf813286",
+            "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+            "CreatedAt": "2024-08-26T09:15:29.436Z",
+            "DeletedAt": null,
+            "personalId": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
+            "corporateCode": 80000014,
+            "fullNames": [
+                {
+                    "id": "07f5a3d3-1937-4ca7-ac79-a3069d58b909",
+                    "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                    "CreatedAt": "2024-08-26T09:15:29.442Z",
+                    "DeletedAt": null,
+                    "ReferenceID": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
+                    "title": "aa",
+                    "firstName": "a",
+                    "lastName": "s",
+                    "types": 201
+                }
+            ],
+            "addresses": [
+                {
+                    "id": "6eaa81a5-fd62-4f6e-b5fd-12bdcd8b782e",
+                    "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                    "CreatedAt": "2024-08-26T09:15:29.439Z",
+                    "DeletedAt": null,
+                    "ReferenceID": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
+                    "addressNo": "2121",
+                    "tambon": "3",
+                    "amphoe": "44",
+                    "province": "11",
+                    "postalCode": "555",
+                    "country": "45",
+                    "types": 201
+                }
+            ],
+            "citizenId": "1234567890121",
+            "expiryDate": "2024-09-04T00:00:00Z",
+            "nationality": "11",
+            "types": 201
+        }
+    ],
     "IndividualShareholders": [
         {
             "id": "c18a2970-54e0-4bbf-bc33-bda2ca10d9b3",
