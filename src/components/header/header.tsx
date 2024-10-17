@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import "./header.css";
 
-import Logo from "@/assets/logo_ecg-03.png";
+// import Logo from "@/assets/logo_ecg-03.png";
+// import Logo from "@/assets/images/header/logo.png";
 import { urlConfig } from "@/config/url";
 import { TUrlConfig, TUrlConfigChild } from "@/config/types";
 import { Menu } from "lucide-react";
@@ -39,8 +40,8 @@ export default function Header() {
     <nav className="w-full bg-green-950 fixed top-0 h-16 flex justify-between items-center z-50">
       <div className="flex w-[270px] justify-start pl-4 ml-5  items-start">
         <div id="logo" className="hidden sm:inline">
-          <img src={Logo} typeof="image/png" className="h-10" />
-          {/* <div className="font-bold text-xl headerlogo">eliteconsulting</div> */}
+          {/* <img src={Logo} typeof="image/png" className="h-16" /> */}
+          {/* <div className="font-bold text-xl headerlogo">blank</div> */}
         </div>
         <div id="hamburger-menu" className="md:hidden ">
           <Sheet>
@@ -52,7 +53,7 @@ export default function Header() {
               className="bg-none w-[270px] bg-primary-backoffice"
             >
               <div id="logo" className="flex justify-center items-center">
-                <img src={Logo} alt="logo" />
+                {/* <img src={Logo} alt="logo" /> */}
               </div>
               <div className="flex flex-col justify-between">
                 <Accordion

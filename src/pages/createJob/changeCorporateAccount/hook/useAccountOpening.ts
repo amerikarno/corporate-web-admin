@@ -13,7 +13,7 @@ type TBody = {
   corporateCode: string;
 };
 export function useAccountOpening() {
-  const [searchResult, setSearchResult] = useState<TCorporateData>();
+  const [searchResult, setSearchResult] = useState<TCorporateData[]>();
 
   const handleSearch = async (data: TCorporateAccountOpening) => {
     const { dateFrom, dateTo } = data;
@@ -25,7 +25,7 @@ export function useAccountOpening() {
       dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
     };
 
-    console.log(body);
+    // console.log(body);
     if (
       body.corporateCode === "" &&
       body.dateFrom === null &&
@@ -43,7 +43,7 @@ export function useAccountOpening() {
           }
         );
         setSearchResult(res.data);
-        console.log(res);
+        // console.log(res);
         return res.data;
       } catch (error) {
         console.log(error);
@@ -52,16 +52,16 @@ export function useAccountOpening() {
       }
     } else {
       try {
-        console.log(body);
-        let formatBody
-        if(body.corporateCode){
+        // console.log(body);
+        let formatBody;
+        if (body.corporateCode) {
           formatBody = {
-            corporateCode: body.corporateCode
-          }
-        }else{
-          formatBody = body
+            corporateCode: body.corporateCode,
+          };
+        } else {
+          formatBody = body;
         }
-        console.log("formatBody:",formatBody);
+        // console.log("formatBody:", formatBody);
         const res = await axios.post("/api/v1/corporate/query", formatBody, {
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export function useAccountOpening() {
           },
         });
         setSearchResult(res.data);
-        console.log(res);
+        // console.log(res);
         return res.data;
       } catch (error) {
         console.log(error);

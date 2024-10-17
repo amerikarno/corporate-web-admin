@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { RootState, store } from "@/app/store";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TTransaction ={
     id: string;
@@ -74,7 +75,7 @@ const BankTransactionList = () => {
       .filter((data) => data.ReviewStatus !== undefined);
 
     console.log(dataToSend);
-
+    store.dispatch(setTestCorporateData(dataToSend));
     try {
       const response = await axios.post(
         "/api/v1/transaction/bank/review",
@@ -213,6 +214,7 @@ const BankTransactionList = () => {
       name: "Approve",
       cell: (row: TTransaction) => (
         <input
+          data-testid={`approve-${row.id}`}
           type="checkbox"
           checked={checkboxStatus[row.id]?.checkerStatus === true}
           onChange={(e) =>
@@ -228,6 +230,7 @@ const BankTransactionList = () => {
       name: "Reject",
       cell: (row: TTransaction) => (
         <input
+          data-testid={`reject-${row.id}`}
           type="checkbox"
           checked={checkboxStatus[row.id]?.checkerStatus === false}
           onChange={(e) =>

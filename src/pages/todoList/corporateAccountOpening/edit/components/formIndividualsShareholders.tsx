@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { checkFormatIDCard } from "@/lib/utils";
 import { TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
 import { mapDataToTIndividualShareholder } from "../libs/utils";
+import { useDispatch } from "react-redux";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
@@ -132,7 +134,7 @@ export function FormIndividualsShareholders({
     if (dropDownChoosed === "Passport") return true;
     return false;
   };
-
+  const dispatch = useDispatch();
   const onSubmit = async (data: TIndividualsShareholders) => {
     console.log(curInput);
     console.log(valideID());
@@ -144,6 +146,7 @@ export function FormIndividualsShareholders({
       await sleep(500);
       reset();
       console.log(formData);
+      dispatch(setTestCorporateData(formData));
       clearChoosedEditData();
       onsubmit(formData);
     } else {
@@ -308,6 +311,7 @@ export function FormIndividualsShareholders({
                     {...register("expiryDate")}
                     id="Date of Expired"
                     onClick={() => setHasDate(false)}
+                    data-testid="expiredDate"
                   />
                   {errors.expiryDate && (
                     <p className="text-red-500 text-sm px-2">

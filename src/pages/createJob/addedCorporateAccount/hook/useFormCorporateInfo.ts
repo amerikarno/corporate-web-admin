@@ -186,5 +186,9 @@ export function useFormCorporateInfo(corporatesInfo?: TCorporateData) {
     registeredCountryPrimaryCountryOperation,
     validateForm,
     handleInputOthers,
+    validateLocal,
+    handleErrors,
+    handleInputRegisteredCountryOthers,
+    handleInputPrimaryCountryOfOperationOthers
   };
 }

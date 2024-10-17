@@ -2,18 +2,26 @@ import { FaKey } from "react-icons/fa";
 import { TAssetKeyInfo } from "./types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/Input";
-import { AiOutlinePlus } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { FaBookmark } from "react-icons/fa";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+// import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddedIcoKeyInfo = () => {
 
+const {
+    register,
+    handleSubmit,
+    formState: {isSubmitting},
+    reset,
+    } = useForm<TAssetKeyInfo>({
+    // resolver: zodResolver(TAssetInfoSchema),
+});
   const fetchedData = useSelector((state: RootState) => state.assetData.data);
 
   const dispatch = useDispatch();
@@ -21,123 +29,56 @@ const AddedIcoKeyInfo = () => {
   
   const icoCode = localStorage.getItem("icoCode")
 
-  const keyInfoList =[
-    { name: "Please Select Key" },
-    { name: "Network", type: "selector" },
-    { name: "Precision", type: "text" },
-    { name: "Capital Structure", type: "text" },
-    { name: "Classification", type: "text" },
-    { name: "Product Type", type: "text" },
-    { name: "Creation Time", type: "date" },
-    { name: "Release Time", type: "date" },
-    { name: "Completion Time", type: "date" },
-  ];
-
   const keyInformationForSelector = [{ name: "BNB Smart Chain Mainnet" }];
 
-  const [keyValuePairs, setKeyValuePairs] = useState([
-    { key: "", type: "", value: "" },
-  ]);
-
   useEffect(() => {
+    console.log(fetchedData)
     if (fetchedData?.keyInformation) {
-      const newKeyValuePairs = Object.keys(fetchedData.keyInformation).map(keyHeader => {
-        switch (keyHeader) {
-          case "network":
-            return { key: "Network", type: "selector", value: fetchedData.keyInformation.network };
-          case "precision":
-            return { key: "Precision", type: "text", value: fetchedData.keyInformation.precision };
-          case "capitalStructure":
-            return { key: "Capital Structure", type: "text", value: fetchedData.keyInformation.capitalStructure };
-          case "classiFication":
-            return { key: "Classification", type: "text", value: fetchedData.keyInformation.classiFication };
-          case "productType":
-            return { key: "Product Type", type: "text", value: fetchedData.keyInformation.productType };
-          case "creationTime":
-            return { key: "Creation Time", type: "date", value: fetchedData.keyInformation.creationTime.split("T")[0] };
-          case "releaseTime":
-            return { key: "Release Time", type: "date", value: fetchedData.keyInformation.releaseTime.split("T")[0] };
-          case "compleationTime":
-            return { key: "Completion Time", type: "date", value: fetchedData.keyInformation.compleationTime.split("T")[0] };
-          default:
-            return null;
+        const mapFetchedDataToKeyInfo = {
+            keyInformation:{
+                network: fetchedData?.keyInformation.network,
+                precision: fetchedData?.keyInformation.precision,
+                capitalStructure: fetchedData?.keyInformation.capitalStructure,
+                classiFication: fetchedData?.keyInformation.classiFication,
+                productType: fetchedData?.keyInformation.productType,
+                creationTime: fetchedData?.keyInformation.creationTime ? fetchedData?.keyInformation.creationTime.split("T")[0] : fetchedData?.keyInformation.creationTime,
+                releaseTime: fetchedData?.keyInformation.releaseTime ? fetchedData?.keyInformation.releaseTime.split("T")[0] : fetchedData?.keyInformation.creationTime,
+                compleationTime: fetchedData?.keyInformation.releaseTime ? fetchedData?.keyInformation.compleationTime.split("T")[0] : fetchedData?.keyInformation.creationTime,
+            }
         }
-      }).filter(item => item !== null);
-  
-      setKeyValuePairs(newKeyValuePairs as { key: string; type: string; value: string }[]);
+        reset(mapFetchedDataToKeyInfo);
     }
   }, [fetchedData]);
 
-  const handleKeyChange = (index: number, event: any) => {
-    const newKeyValuePairs = [...keyValuePairs];
-    newKeyValuePairs[index].key = event.target.value;
-    const selectedKey = keyInfoList.find((key) => key.name === event.target.value);
-    if (selectedKey) {
-      newKeyValuePairs[index].type = selectedKey.type!;
-      setKeyValuePairs(newKeyValuePairs);
-    }
-  };
-
-  const handleValueChange = (index: number, event: any) => {
-    const newKeyValuePairs = [...keyValuePairs];
-    newKeyValuePairs[index].value = event.target.value;
-    setKeyValuePairs(newKeyValuePairs);
-  };
-
-  const handleAddKey = () => {
-    setKeyValuePairs([...keyValuePairs, { key: "", type: "", value: "" }]);
-  };
-
-  const convertToTAssetKeyInfo = (data: { keyInformation: { key: string, type: string, value: string }[] }): TAssetKeyInfo => {
-    const keyInfo: TAssetKeyInfo['keyInformation'] = {};
-
-    data.keyInformation.forEach((item) => {
-      switch (item.key) {
-        case 'Network':
-          keyInfo.network = item.value;
-          break;
-        case 'Precision':
-          keyInfo.precision = item.value;
-          break;
-        case 'Capital Structure':
-          keyInfo.capitalStructure = item.value;
-          break;
-        case 'Classification':
-          keyInfo.classiFication = item.value;
-          break;
-        case 'Product Type':
-          keyInfo.productType = item.value;
-          break;
-        case 'Creation Time':
-          keyInfo.creationTime = item.value;
-          break;
-        case 'Release Time':
-          keyInfo.releaseTime = item.value;
-          break;
-        case 'Completion Time':
-          keyInfo.compleationTime = item.value;
-          break;
-        default:
-          break;
-      }
-    });
-
-    return { keyInformation: keyInfo };
-  };
-
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    let body:any = convertToTAssetKeyInfo({ keyInformation: keyValuePairs });
-    body = { 
-      keyInformation: {
-        icoCode, 
-        ...body.keyInformation,
-        creationTime: !isNaN(Date.parse(body?.keyInformation?.creationTime)) ? new Date(body?.keyInformation?.creationTime).toISOString() : "",
-        releaseTime: !isNaN(Date.parse(body?.keyInformation?.releaseTime)) ? new Date(body?.keyInformation?.releaseTime).toISOString() : "",
-        compleationTime: !isNaN(Date.parse(body?.keyInformation?.compleationTime)) ? new Date(body?.keyInformation?.compleationTime).toISOString() : "",
-      }
+  const onSubmit = async (data:TAssetKeyInfo) => {
+    const body = {
+        keyInformation:{
+            ...data.keyInformation,
+            icoCode: icoCode,
+            creationTime: data?.keyInformation?.creationTime
+            ? new Date(data.keyInformation.creationTime)
+            : undefined,
+            releaseTime: data?.keyInformation?.releaseTime
+            ? new Date(data.keyInformation.releaseTime)
+            : undefined,
+            compleationTime: data?.keyInformation?.compleationTime
+            ? new Date(data.keyInformation.compleationTime)
+            : undefined,
+        }
     };
-    dispatch(setTestCorporateData(body));
+    dispatch(setTestCorporateData({keyInformation:{
+        ...data.keyInformation,
+        icoCode: icoCode,
+        creationTime: data?.keyInformation?.creationTime
+        ? new Date(data.keyInformation.creationTime).toISOString()
+        : undefined,
+        releaseTime: data?.keyInformation?.releaseTime
+        ? new Date(data.keyInformation.releaseTime).toISOString()
+        : undefined,
+        compleationTime: data?.keyInformation?.compleationTime
+        ? new Date(data.keyInformation.compleationTime).toISOString()
+        : undefined,
+    }}));
     console.log(body);
 
     if(icoCode){
@@ -183,62 +124,65 @@ const AddedIcoKeyInfo = () => {
     <div className="flex justify-evenly p-5 md:p-10 md:pb-0">
       <div className="w-full md:w-3/4">
         <hr className="horizontal-line-top" />
-        <form className="flex flex-col items-center space-y-4">
+        <form className="flex flex-col items-center space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="ico-card space-y-8 rounded-b-[10px]">
             <div className="w-full flex items-center my-5 mb-0 space-x-2">
                 <h1 className="text-lg md:text-xl font-bold">Key Information</h1>
                 <span className="text-xl"><FaKey /></span>
             </div>
-          </div>
-          <div className="w-full flex flex-col space-y-4">
-            {keyValuePairs.map((pair, index) => (
-                <div data-testid={`keyInformation-${index}`} className="ico-dropdown-card items-center relative space-x-4" key={index}>
-                    <div data-testid={`addKeyInformationBtn-${index}`} onClick={handleAddKey} className={`rounded-l-sm hover:bg-slate-750 absolute flex justify-center items-center h-28 w-10 left-0 md:-left-10 bg-slate-800 cursor-pointer ${index !== keyValuePairs.length - 1 ? 'hidden' : ''}`}>
-                        <AiOutlinePlus  className="text-white md:text-3xl hover:text-4xl transition-all" />
-                    </div>
-                    <div data-testid={`markKeyInformationBtn-${index}`} className={`rounded-r-sm hover:bg-slate-750 absolute flex justify-center items-center h-28 w-10 right-0 bg-slate-800 ${index === keyValuePairs.length - 1 ? 'hidden' : ''}`}>
-                        <FaBookmark  className="text-white md:text-xl transition-all" />
-                    </div>
-                    <select
-                    data-testid={`dropDownKeyInformationBtn-${index}`}
-                    className="h-12 cursor-pointer bg-slate-800 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-1/2 py-2.5 px-2 focus:outline-none"
-                    value={pair.key}
-                    onChange={(event) => handleKeyChange(index, event)}
-                    >
-                    {keyInfoList.map((key) => (
-                        <option data-testid={`${key.name}-${index}`} key={key.name} value={key.name}>
-                        {key.name}
-                        </option>
-                    ))}
-                    </select>
-                    {pair.type === "selector" ? (
-                    <div className="w-full">
-                        <select
-                        data-testid={`inputTypeSelector-${index}`}
-                        className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline"
-                        value={pair.value}
-                        onChange={(event) => handleValueChange(index, event)}
-                    >
-                        <option value="">Please Select Information</option>
-                        {keyInformationForSelector.map((status) => (
-                        <option data-testid={`${status.name}-${index}`} key={status.name} value={status.name}>
-                            {status.name}
-                        </option>
-                        ))}
-                    </select>
-                    </div>
-                    ) : pair.type === "text" ? (
-                    <Input data-testid={`inputTypeText-${index}`} placeholder="please specify here..." className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
-                    ) : pair.type === "date" ? (
-                    <Input data-testid={`inputTypeDate-${index}`} type="date" className="w-1/2 h-12 pl-4 bg-gray-200 px-2 text-gray-900 rounded-lg focus:outline-none focus:shadow-outline" value={pair.value || ""} onChange={(event) => handleValueChange(index, event)} />
-                    ) : (
-                    <Input value="" className="hidden" disabled={true} />
-                    )}
+            <div className="w-full grid grid-cols-2 grid-rows-4 gap-5">
+                <div className="">
+                    <Input  {...register("keyInformation.precision")} type="number" step="0.01" label="Precision*" id="precision"/>
                 </div>
-                ))}
+                <div className="">
+                    <Input  {...register("keyInformation.capitalStructure")} 
+                      label="Capital Structure*" id="capitalStructure" />
+                </div>
+                <div className="">
+                    <Input  {...register("keyInformation.productType")} 
+                    label="Product Type*" id="productType"/>
+                </div>
+                <div className="">
+                    <Input  {...register("keyInformation.classiFication")} 
+                    label="Classification*" id="classiFication"/>
+                </div>
+                <div className="">
+                    <select
+                        {...register("keyInformation.network")}
+                        data-testid="networkTest"
+                        className="w-full h-full bg-[#002f18] text-white px-2 rounded-lg focus:outline-none focus:shadow-outline"
+                    >
+                    <option value="">Please Select Network Information</option>
+                        {keyInformationForSelector.map((status) => (
+                    <option key={status.name} data-testid={status.name} value={status.name}>
+                        {status.name}
+                    </option>))}
+                    </select>
+                </div>
+                <div className="">
+                    <Input  {...register("keyInformation.creationTime")} 
+                    label="Creation Time"
+                    data-testid="Creation Time"
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" type="date" placeholder="Creation Time*" />
+                </div>
+                <div className="">
+                    <Input  {...register("keyInformation.releaseTime")} 
+                    label="Release Time"
+                    data-testid="Release Time"
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" type="date" placeholder="Release Time*" />
+                </div>
+                <div className="">
+                    <Input  {...register("keyInformation.compleationTime")} 
+                    label="Compleation Time"
+                    data-testid="Compleation Time"
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" type="date" placeholder="Compleation Time*" />
+                </div>
+           </div>
           </div>
           <div className="absolute right-5 bottom-8">
-            <Button onClick={handleSubmit}>Next Form</Button>
+            <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Next Form"}
+            </Button>
           </div>
         </form>
       </div>

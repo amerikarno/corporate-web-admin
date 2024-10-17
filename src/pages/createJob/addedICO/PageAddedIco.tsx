@@ -12,6 +12,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useEffect } from "react";
 import axios from "@/api/axios";
 import { TAssetData } from "./types";
+// import AddedIcoInfoDemo from "./AddedIcoInfoDemo";
 type TPage = {
     page?: string;
 };
@@ -21,7 +22,6 @@ type TMapPages = {
   
 const PageAddedIco = () => {
 
-  // localStorage.setItem("icoCode", "1");
 const navigate = useNavigate();
   const { page } = useParams<TPage>();
   let pageId = page ? Number(page) : 1;
@@ -167,9 +167,9 @@ const navigate = useNavigate();
 //         "CreatedAt": "0001-01-01T00:00:00Z",
 //         "DeletedAt": null,
 //         "icoCode": "1",
-//         "investmentPeriod": "120 Days",
+//         "investmentPeriod": "120 yays",
 //         "dividendYield": "20.00 %",
-//         "grossmargin": "20.00",
+//         "grossMargin": "20.00",
 //         "equityMultiple": "5.00 %",
 //         "profit": "15.00 %",
 //         "leverage": "20.00 %",
@@ -218,6 +218,7 @@ const navigate = useNavigate();
 //         }
 //     ]
 // };
+// dispatch(setAssetData(mockedData));
 
   const icoCode = localStorage.getItem("icoCode");
   const fetchData = async () => {

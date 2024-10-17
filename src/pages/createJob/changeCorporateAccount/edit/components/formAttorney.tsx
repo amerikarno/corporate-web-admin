@@ -13,6 +13,8 @@ import Dropbox from "@/components/Dropbox";
 import { AddressFormAttorney } from "./addressFormAttorney";
 import { Button } from "@/components/ui/button";
 import { checkFormatIDCard } from "@/lib/utils";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useDispatch } from "react-redux";
 
 type TAttorneyFormProps = {
   onsubmit: (data: TAttorney) => void;
@@ -95,7 +97,7 @@ export function FormAttorney({
     if (dropDownChoosed === "Passport") return true;
     return false;
   };
-
+  const dispatch = useDispatch();
   const onSubmit = async (data: TAttorneySchema) => {
     if (curInput && valideID()) {
       const formData = validateData(data);
@@ -117,6 +119,7 @@ export function FormAttorney({
         telephone:data.telephone,
         email:data.email,
       };
+      dispatch(setTestCorporateData(body));
       console.log(body);
       clearChoosedEditData();
       onsubmit(body);
@@ -279,6 +282,7 @@ export function FormAttorney({
                     {...register("expiryDate")}
                     id="Date of Expired"
                     onClick={() => setHasDate(false)}
+                    data-testid="expiredDate"
                   />
                   {errors.expiryDate && (
                     <p className="text-red-500 text-sm px-2">

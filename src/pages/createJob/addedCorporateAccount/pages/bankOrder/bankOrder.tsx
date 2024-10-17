@@ -17,6 +17,7 @@ import { bank } from "@/constant/variables";
 import { setBankOrder } from "@/features/bankOrder/bankOrdersSlice";
 import { BsBank2 } from "react-icons/bs";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function BankOrderEdit() {
   if (!isAllowedPage(2020)) {
@@ -162,6 +163,7 @@ export default function BankOrderEdit() {
     {
       cell: (row: TBankOrder) => (
         <Button
+          data-testid={`editButton-${row.id}`}
           onClick={() => {
             setChoosedEditData(row);
           }}
@@ -218,6 +220,7 @@ export default function BankOrderEdit() {
     };
     console.log(choosedEditData);
     console.log(body);
+    dispatch(setTestCorporateData(body));
     try {
       const token = getCookies();
       if (body.id && body.id !== "") {
@@ -294,12 +297,13 @@ export default function BankOrderEdit() {
                   <div className="relative">
                     <select
                       {...register("bankName")}
+                      data-testid="bankName"
                       onChange={handleBankChange}
                       className="h-12 cursor-pointer bg-slate-700 focus:ring-gray-200 hover:bg-slate-900 border border-slate-800 text-white text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none appearance-none"
                         >
                       <option value="">Select Bank</option>
                       {bank.map((status) => (
-                        <option key={status.code} value={status.name}>
+                        <option key={status.code} data-testid={status.name} value={status.name}>
                           {status.name}
                         </option>
                       ))}

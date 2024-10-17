@@ -13,6 +13,8 @@ import { DirectorAddressForm } from "./directorAddressForm";
 import { useEffect, useState } from "react";
 import Dropbox from "@/components/Dropbox";
 import { checkFormatIDCard } from "@/lib/utils";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { useDispatch } from "react-redux";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
@@ -126,7 +128,7 @@ export function FormIndividualsDirector({
     if (dropDownChoosed === "Passport") return true;
     return false;
   };
-
+  const dispatch = useDispatch();
   const onSubmit = async (data: TIndividualsDirectorSchema) => {
     // console.log(curInputText);
     // console.log(dropDownChoosed);
@@ -149,6 +151,8 @@ export function FormIndividualsDirector({
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
       };
+
+      dispatch(setTestCorporateData(body));
 
       console.log(body);
       clearChoosedEditData();
@@ -194,7 +198,7 @@ export function FormIndividualsDirector({
               <div className="w-1/2">
                 <Input
                   {...register("fullNames.0.firstName")}
-                  label="Name"
+                  label="First Name"
                   id="Name"
                   disabled={isSubmitting}
                 />
@@ -295,6 +299,7 @@ export function FormIndividualsDirector({
                     {...register("expiryDate")}
                     id="Date of Expired"
                     onClick={() => setHasDate(false)}
+                    data-testid="expiredDate"
                   />
                   {errors.expiryDate && (
                     <p className="text-red-500 text-sm px-2">

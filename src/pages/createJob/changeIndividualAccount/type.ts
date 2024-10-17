@@ -43,7 +43,7 @@ export type TBasicinfoAddress = {
 
 export type TBasicInfoBank = {
   CreatedAt?: string;
-  DeletedAt?: string;
+  DeletedAt?: string | null;
   id: string;
   bankName: string;
   bankBranchName: string;
@@ -52,8 +52,10 @@ export type TBasicInfoBank = {
 };
 
 export type TIndividualData = {
+  createBy?: string;
   CreatedAt?: string;
-  DeletedAt?: string;
+  DeletedAt?: string | null;
+  agreement?: boolean;
   id: number;
   thTitle: string;
   thName: string;

@@ -74,7 +74,7 @@ const AddedIcoDetail = () => {
     if(icoCode){
       if(fetchedData?.details && fetchedData?.details.length === 0){
         try{
-          const res = await axios.post('/api/v1/ico/details/create',{
+          const res = await axios.post('/api/v1/ico/details/create',body,{
             headers: {
               Authorization: `Bearer ${getCookies()}`,
           },
@@ -90,7 +90,7 @@ const AddedIcoDetail = () => {
         }
       }else{
         try{
-          const res = await axios.post('/api/v1/ico/details/update',{
+          const res = await axios.post('/api/v1/ico/details/update',body,{
             headers: {
               Authorization: `Bearer ${getCookies()}`,
           },

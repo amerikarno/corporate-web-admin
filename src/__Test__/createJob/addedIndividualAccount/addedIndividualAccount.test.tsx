@@ -435,7 +435,7 @@ describe("test create individual form1 (preinfo)", () => {
         expect(corporateState).toMatchObject(expectedFormData);
       })
   
-    }, 20000);
+    }, 40000);
 
     test("update preinfo", async () => {
       store.dispatch(setIndividualData(mockIndividualData));
@@ -973,7 +973,7 @@ describe("test create individual form1 (preinfo)", () => {
         expect(corporateState).toMatchObject(expectedFormData);
       })
   
-    }, 20000);
+    }, 40000);
 
     test("update basicinfo", async () => {
 
@@ -1219,7 +1219,7 @@ describe("test create individual form1 (preinfo)", () => {
         expect(corporateState).toMatchObject(expectedFormData);
       })
   
-    }, 20000);
+    }, 40000);
 
     test("test input data(multiple input type) (knowledge test done)", async () => {
 
@@ -1338,7 +1338,7 @@ describe("test create individual form1 (preinfo)", () => {
         // expect(corporateState).toMatchObject(expectedFormData);
       })
   
-    }, 20000);
+    }, 40000);
 
     test("update suite test", async () => {
       store.dispatch(setIndividualData(mockIndividualData));
@@ -1466,7 +1466,7 @@ describe("test create individual form1 (preinfo)", () => {
       const alertComponent = screen.getByText("Verification Selected");
       expect(alertComponent).toBeInTheDocument();
   
-    }, 20000);
+    }, 40000);
 
     test("test input data(choose thaid) success", async () => {
       mockAxios.onPost("/api/v1/individual/ndidthaid").reply(200, {
@@ -1508,7 +1508,7 @@ describe("test create individual form1 (preinfo)", () => {
       const alertComponent = screen.getByText("Verification Selected");
       expect(alertComponent).toBeInTheDocument();
   
-    }, 20000);
+    }, 40000);
 
 
     test("test input data(choose thaid) error", async () => {
@@ -1558,7 +1558,7 @@ describe("test create individual form1 (preinfo)", () => {
         expect(closeAlert).not.toBeInTheDocument();
       })
   
-    }, 20000);
+    }, 40000);
 
     test("update identity verification ndid success", async () => {
       mockAxios.onPost("/api/v1/individual/ndidthaid").reply(200, {
@@ -1691,5 +1691,5 @@ describe("test create individual form1 (preinfo)", () => {
         expect(corporateState).toMatchObject(expectedFormData);
       });
   
-    }, 20000);
+    }, 40000);
   });

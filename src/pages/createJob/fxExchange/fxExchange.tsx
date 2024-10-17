@@ -8,8 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { isAllowedPage } from "@/lib/utils";
-import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+// import { isAllowedPage } from "@/lib/utils";
+// import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { setFxExchanges } from "@/features/fxExchange/fxExhangeSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,11 +18,12 @@ import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { SiExpertsexchange } from "react-icons/si";
 // import { FaMoneyBillWave } from "react-icons/fa6";
 import "./scrollbar.css";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function FxExchangeEdit() {
-  if (!isAllowedPage(2005)) {
-    return <UnAuthorize />;
-  }
+  // if (!isAllowedPage(2005)) {
+  //   return <UnAuthorize />;
+  // }
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent) => {
@@ -81,6 +82,7 @@ export default function FxExchangeEdit() {
     setSelectedPair(`${pair[0]} / ${pair[1]}`);
     setIsDropdownOpen(false);
   };
+
 
   const handleRecipientGets = (e: React.ChangeEvent<HTMLSelectElement>) =>{
     setRecipientGets(e.target.value)
@@ -279,6 +281,7 @@ export default function FxExchangeEdit() {
             setChoosedEditData(row);
           }}
           disabled={row.transactionStatus === 1 || row.transactionStatus === 2}
+          data-testid={`editButton-${row.id}`}
         >
           Edit
         </Button>
@@ -314,7 +317,7 @@ export default function FxExchangeEdit() {
     handleSelectPair({0 : firstVariable , 1 : secondVariable});
     setYouSend(firstVariable);
     setRecipientGets(secondVariable);
-
+    setSelectedCorporateCode(choosedEditData?.corporateCode?.toString() || "");
     // const exchangeSpreadToFloat = Number(choosedEditData?.exchangeSpread ?? 0) / 10000 || 0;
     // const operationSpreadToFloat = Number(choosedEditData?.operationSpread ?? 0) / 10000 || 0;
     // const exchangeRateToFloat = Number(choosedEditData?.exchangeRate ?? 0) / 10000 || 0;
@@ -356,9 +359,12 @@ export default function FxExchangeEdit() {
   };
 
   const onSubmit = async (data: TFxExchange) => {
-   
+
     let body: TFxExchange = {
       ...data,
+      id: choosedEditData?.id,
+      corporateCode: Number(selectedCorporateCode),
+      transactionStatus: choosedEditData?.transactionStatus,
       exchange:`${youSend}/${recipientGets}`,
       exchangeSpread:handleFloatValue(exchangeSpread),
       operationSpread:handleFloatValue(operationSpread),
@@ -367,7 +373,7 @@ export default function FxExchangeEdit() {
     };
     console.log("choosedEditData ",choosedEditData);
     console.log(body);
-
+    dispatch(setTestCorporateData(body));
     try {
       const token = getCookies();
       if (body.id) {
@@ -422,6 +428,8 @@ export default function FxExchangeEdit() {
                     {...register("corporateCode")}
                     label="Corporate Code"
                     id="corporateCode"
+                    type="number"
+                    data-testid="corporateCodeInput"
                     disabled={isSubmitting}
                     onChange={handleCorporateCodeChange}
                     list="corporateCodes"
@@ -447,6 +455,7 @@ export default function FxExchangeEdit() {
                         {...register("exchangeSpread")}
                         onChange={handleExchangeSpreadChange}
                         label="Exchange Spread"
+                        data-testid="exchangeSpreadInput"
                         id="exchangeSpread"
                         disabled={isSubmitting}
                         step="0.00001"
@@ -465,6 +474,7 @@ export default function FxExchangeEdit() {
                         onChange={handleOperationSpreadChange}
                         label="Operation Spread"
                         id="operationSpread"
+                        data-testid="operationSpreadInput"
                         disabled={isSubmitting}
                         step="0.00001"
                         type="number"
@@ -483,6 +493,7 @@ export default function FxExchangeEdit() {
                     label="Exchange Rate"
                     id="exchangeRate"
                     disabled={isSubmitting}
+                    data-testid="exchangeRateInput"
                     step="0.00001"
                     type="number"
                     inputClassName="w-[20rem] md:w-[25rem]"
@@ -502,6 +513,7 @@ export default function FxExchangeEdit() {
                 <button 
                   id="dropdownDefaultButton" 
                   data-dropdown-toggle="dropdown" 
+                  data-testid="pairDropdown"
                   className="text-white bg-slate-800 w-full hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center items-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800" 
                   type="button"
                   onClick={handleDropdownToggle}
@@ -514,7 +526,7 @@ export default function FxExchangeEdit() {
                 <div id="dropdown" className={`z-10 ${isDropdownOpen ? '' : 'hidden'} absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}>
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 max-h-28 overflow-auto custom-scrollbar" aria-labelledby="dropdownDefaultButton">
                       {currencyPairs.map((pair, index) => (
-                        <li key={index} onClick={() => handleSelectPair(pair)}>
+                        <li data-testid={`pair-${pair[0]}-${pair[1]}`} key={index} onClick={() => handleSelectPair(pair)}>
                           <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
                             {pair[0]} / {pair[1]}
                           </a>
@@ -541,8 +553,9 @@ export default function FxExchangeEdit() {
                 <div className="relative w-full">
                   <Input
                     {...register("buyCurrency")}
+                    data-testid="buyCurrencyInput"
                     onChange={handleYouSendValue}
-                    type="search"
+                    type="number"
                     id="search-dropdown"
                     step="0.00001"
                     className="block p-2.5 w-full z-9 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:outline-none"

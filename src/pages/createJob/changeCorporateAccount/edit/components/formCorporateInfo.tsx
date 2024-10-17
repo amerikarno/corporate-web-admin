@@ -30,6 +30,7 @@ import { getCookies } from "@/lib/Cookies";
 import { emptyRegisteredCountryPrimaryCountryOperation } from "../constants/initialData";
 import { useDispatch } from "react-redux";
 import { CommaInput } from "@/components/ui/cmmaAutoInput";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TCorporateInfoFormProps = {
   onsubmit: (data: TCorporateInfo) => void;
@@ -166,15 +167,15 @@ export function FormCorporateInfo({
   }, [shouldScrollUp]);
 
   useEffect(() => {
-    console.log(corporatesInfo?.CorporateCountry);
+    // console.log(corporatesInfo?.CorporateCountry);
     const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 601
     );
-    console.log(resCorpRegisterCountry);
+    // console.log(resCorpRegisterCountry);
     const resCorpPrimaryCountry = corporatesInfo?.CorporateCountry.find(
       (item) => item.types === 602
     );
-    console.log(resCorpPrimaryCountry);
+    // console.log(resCorpPrimaryCountry);
     setRegisteredCountryPrimaryCountryOperation({
       ...initCountryData,
       registered: resCorpRegisterCountry?.other || "",
@@ -194,10 +195,10 @@ export function FormCorporateInfo({
     });
   }, [token, dispatch, initData]);
 
-  const [
-    // isPrimaryCountryOfOperationOthers,
-    // setIsPrimaryCountryOfOperationOthers,
-  ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
+  // const [
+  //   // isPrimaryCountryOfOperationOthers,
+  //   // setIsPrimaryCountryOfOperationOthers,
+  // ] = useState<boolean>(resCorpPrimaryCountry?.isThailand ? false : true);
 
   const handleRegisteredCountryOthers = (e: any) => {
     const { name, checked } = e.target;
@@ -226,7 +227,7 @@ export function FormCorporateInfo({
     setRegisteredCountryPrimaryCountryOperation(tmp);
     // form1error ? validateLocal(tmp) : null;
     validateLocal(tmp);
-    console.log(tmp);
+    // console.log(tmp);
   };
   const handlePrimaryCountryOfOperationOthers = (e: any) => {
     const { name, checked } = e.target;
@@ -382,11 +383,12 @@ export function FormCorporateInfo({
               telephone: data.placeofIncorporation.telephone ?? "",
             },
     };
+    dispatch(setTestCorporateData(formData));
     await sleep(500);
     reset();
     onsubmit(formData);
     setShouldScrollUp(true);
-    console.log("formdata : ", formData);
+    // console.log("formdata : ", formData);
   };
 
   return (
@@ -452,6 +454,7 @@ export function FormCorporateInfo({
                 <h1 className="font-bold pb-4">Registered Country</h1>
                 <div></div>
                 <CheckBox
+                  data-testid={`registeredCountry-${registeredCountryChoices[0]}`}
                   id={`checkbox-${registeredCountryChoices[0]}`}
                   key={registeredCountryChoices[0]}
                   label={registeredCountryChoices[0]}
@@ -464,6 +467,7 @@ export function FormCorporateInfo({
                   name={registeredCountryChoices[0]}
                 />
                 <CheckBox
+                  data-testid={`registeredCountry-${registeredCountryChoices[1]}`}
                   id={`checkbox-${registeredCountryChoices[1]}`}
                   key={registeredCountryChoices[1]}
                   label={registeredCountryChoices[1]}
@@ -483,6 +487,7 @@ export function FormCorporateInfo({
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "registered")}
                     defaultValue={resCorpRegisterCountry?.other}
+                    data-testid={`registeredCountry-otherInput`}
                   />
                 </div>
               )}
@@ -492,6 +497,7 @@ export function FormCorporateInfo({
                 <h1 className="font-bold pb-4">Primary Country of Operation</h1>
                 <div></div>
                 <CheckBox
+                  data-testid={`primaryCountry-${PrimaryCountryOfOperationChoices[0]}`}
                   id={`checkbox2-${PrimaryCountryOfOperationChoices[0]}`}
                   key={PrimaryCountryOfOperationChoices[0]}
                   label={PrimaryCountryOfOperationChoices[0]}
@@ -504,6 +510,7 @@ export function FormCorporateInfo({
                   name={PrimaryCountryOfOperationChoices[0]}
                 />
                 <CheckBox
+                  data-testid={`primaryCountry-${PrimaryCountryOfOperationChoices[1]}`}
                   id={`checkbox2-${PrimaryCountryOfOperationChoices[1]}`}
                   key={PrimaryCountryOfOperationChoices[1]}
                   label={PrimaryCountryOfOperationChoices[1]}
@@ -519,6 +526,7 @@ export function FormCorporateInfo({
               {registeredCountryPrimaryCountryOperation.isPrimaryOther && (
                 <div className="flex justify-end px-4 py-2">
                   <OtherInput
+                    data-testid={`primaryCountry-otherInput`}
                     className="w-1/2"
                     placeholder="Please Specify"
                     onChange={(e) => handleInputOthers(e, "primary")}
@@ -588,6 +596,7 @@ export function FormCorporateInfo({
               {...register("registeredCapital")}
               name="registeredCapital"
               disabled={isSubmitting}
+              data-testid="registeredCapital"
             />
             {errors.registeredCapital && (
               <p className="text-red-500">{errors.registeredCapital.message}</p>
@@ -599,6 +608,7 @@ export function FormCorporateInfo({
               {...register("revenuePerYear")}
               name="revenuePerYear"
               disabled={isSubmitting}
+              data-testid="revenuePerYear"
             />
             {errors.revenuePerYear && (
               <p className="text-red-500">{errors.revenuePerYear.message}</p>
@@ -610,6 +620,7 @@ export function FormCorporateInfo({
               {...register("netProFitLoss")}
               name="netProFitLoss"
               disabled={isSubmitting}
+              data-testid="netProFitLoss"
             />
             {errors.netProFitLoss && (
               <p className="text-red-500">{errors.netProFitLoss.message}</p>
@@ -621,6 +632,7 @@ export function FormCorporateInfo({
               {...register("shareholderEquity")}
               name="shareholderEquity"
               disabled={isSubmitting}
+              data-testid="shareholderEquity"
             />
             {errors.shareholderEquity && (
               <p className="text-red-500">{errors.shareholderEquity.message}</p>

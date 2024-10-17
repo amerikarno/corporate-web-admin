@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import DataTable, { TableColumn } from "react-data-table-component";
+import DataTable, {TableColumn } from "react-data-table-component";
+import { useNavigate } from "react-router-dom";
 
 type TReportData = {
   id: number;
@@ -15,58 +16,84 @@ export default function Reports() {
     return <UnAuthorize />;
   }
 
+  const customStyles = {
+    rows: {
+        style: {
+            minHeight: '60px', 
+        },
+    },
+    headCells: {
+        style: {
+        },
+    },
+    cells: {
+        style: {
+          
+        },
+    },
+};
+
+  const navigate = useNavigate();
+  const handleViewClick = (row: TReportData) => {
+    console.log(row);
+    navigate(`/reports/sec-reports/${row.type}`);
+  }
+
   const columnsReports: TableColumn<TReportData>[] = [
     {
       name: "ID",
       selector: (row: TReportData) => row.id.toString() || "",
       width: "75px",
+      style: { maxWidth: "75px" },
     },
     {
       name: "Type",
       selector: (row: TReportData) => row.type || "",
-      maxWidth: "150px",
+      width: "150px",
+      style: { maxWidth: "150px" },
     },
     {
       name: "Document",
       selector: (row: TReportData) => row.name || "",
+      width:"100px",
+      style: { maxWidth: "1000px" },
       wrap: true,
     },
-    {
-      name: "Created At",
-      selector: (row: TReportData) => row.createdAt || "",
-      maxWidth: "150px",
-    },
+    // {
+    //   name: "Created At",
+    //   selector: (row: TReportData) => row.createdAt || "",
+    //   width:"250px",
+    //   style: { maxWidth: "250px" },
+    // },
     {
       name: "",
-      cell: (row: TReportData) => (
+      cell: (row : TReportData) => (
         <Button
-          disabled
-          onClick={() => {
-            console.log(row);
-          }}
+          className="bg-[#082c1c] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white hover:text-black"
+          onClick={() => handleViewClick(row)}
         >
           View
         </Button>
       ),
       ignoreRowClick: true,
-      maxWidth: "150px",
+      style: { maxWidth: "150px" },
     },
-    {
-      name: "",
-      cell: (row: TReportData) => (
-        <p
-          className="hover:cursor-pointer text-blue-600"
-          onClick={() => {
-            console.log(row);
-            handleDownloadFile();
-          }}
-        >
-          Download
-        </p>
-      ),
-      ignoreRowClick: true,
-      maxWidth: "150px",
-    },
+    // {
+    //   name: "",
+    //   cell: (row: TReportData) => (
+    //     <p
+    //       className="hover:cursor-pointer text-blue-600"
+    //       onClick={() => {
+    //         console.log(row);
+    //         handleDownloadFile();
+    //       }}
+    //     >
+    //       Download
+    //     </p>
+    //   ),
+    //   ignoreRowClick: true,
+    //   style: { maxWidth: "150px" },
+    // },
   ];
 
   const data: TReportData[] = [
@@ -132,26 +159,27 @@ export default function Reports() {
     },
   ];
 
-  const handleDownloadFile = async () => {
-    // try {
-    //   const res = await axios.get("");
-    //   console.log(res);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log("download file");
-  };
+  // const handleDownloadFile = async () => {
+  //   // try {
+  //   //   const res = await axios.get("");
+  //   //   console.log(res);
+  //   // } catch (error) {
+  //   //   console.log(error);
+  //   // }
+  //   console.log("download file");
+  // };
 
   return (
     <Card className="border-none shadow-none">
       <CardHeader>
-        <CardTitle>Reports</CardTitle>
+        <CardTitle>SEC Reports</CardTitle>
       </CardHeader>
       <CardContent className="overflow-x-auto">
         <DataTable
           className="border-b border-gray-300"
           columns={columnsReports}
           data={data}
+          customStyles={customStyles}
         />
       </CardContent>
     </Card>

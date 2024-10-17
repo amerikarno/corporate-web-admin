@@ -104,7 +104,7 @@ const Welcome = () => {
       </Card>
     </>
     // <div className="flex flex-col">
-    //   <p>Welcome to  Digital Asset Admin page</p>
+    //   <p>Welcome to ICO Admin page</p>
     //   <p>Edit by karn</p>
     //   <p>10.0</p>
     //   <div className="flex flex-col w-full p-4 space-y-5">

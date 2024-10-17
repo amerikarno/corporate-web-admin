@@ -43,7 +43,7 @@ export type TBasicinfoAddress = {
 
 export type TBasicInfoBank = {
   CreatedAt?: string;
-  DeletedAt?: string;
+  DeletedAt?: string | null;
   id: string;
   bankName: string;
   bankBranchName: string;

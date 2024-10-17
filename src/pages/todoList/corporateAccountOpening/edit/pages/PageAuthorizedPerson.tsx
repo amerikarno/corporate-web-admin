@@ -34,7 +34,6 @@ export function PageAuthorizedPerson({
 }: TPageAuthorizedPersonProps) {
   const { handleSubmitAuthorize} =useAuthorizePerson();
   const dispatch = useDispatch();
-  const corporatesInfo = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   const authorizedPersonData: TAuthorizePerson[] = useSelector<RootState>((state) => state.authorizedPerson?.authorizedPersons || []) as TAuthorizePerson[];
   console.log(authorizedPersonData)
   const token = getCookies();
@@ -42,7 +41,9 @@ export function PageAuthorizedPerson({
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
+  const corporatesInfo = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   const corporateCode = localStorage.getItem("corporateCode") || "";
+
   const fetchedData = async () => {
     try{
       const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
@@ -124,10 +125,9 @@ export function PageAuthorizedPerson({
       name: "Nationality",
       selector: (row: TAuthorizePerson) => row.nationality || "",
     },
-
     {
       cell: (row: TAuthorizePerson) => (
-        <Button onClick={() => {{setChoosedEditData(row) 
+        <Button data-testid={`editButton-${row.personalId}`} onClick={() => {{setChoosedEditData(row) 
           console.log(row)}}
         }>Edit</Button>
       ),
@@ -137,7 +137,7 @@ export function PageAuthorizedPerson({
       cell: (row: TAuthorizePerson) => (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="bg-red-600 text-white">Delete</Button>
+          <Button variant="outline" data-testid={`deleteButton-${row.personalId}`} className="bg-red-600 text-white">Delete</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -148,7 +148,7 @@ export function PageAuthorizedPerson({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
+            <AlertDialogAction data-testid={`confirmDelete-${row.personalId}`} onClick={()=>handleDelete(row)}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

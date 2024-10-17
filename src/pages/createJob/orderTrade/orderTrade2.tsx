@@ -194,7 +194,7 @@ export default function OrderTradeEdit() {
     } else if (choosedEditData?.operations === "sell") {
       setBuySell("sell");
       if (choosedEditData) {
-        const cur = choosedEditData.pair.split("/");
+        const cur = choosedEditData.pair!.split("/");
         setSellCurrency(cur[1]);
       }
     } else {
