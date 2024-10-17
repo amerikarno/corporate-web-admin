@@ -308,6 +308,11 @@ export const urlConfig: TUrlConfig[] = [
     icon: "icon",
     pages: [4000, 4007],
     children: [
+      {
+        label: "corporate account",
+        href: "/enquiry/corporate",
+        pageId: 4001,
+      },
       // {
       //   label: "deposit/withdraw list",
       //   href: "/enquiry/deposit-withdraw-list",

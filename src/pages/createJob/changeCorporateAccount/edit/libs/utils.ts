@@ -65,7 +65,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       (item) => item.types === 601
     );
     let resCorpPrimaryCountry = data.CorporateCountry.find(
-      (item) => item.types === 601
+      (item) => item.types === 602
     );
 
     // const timeStamp = Date.parse(data.Info.dateOfIncorporation);

@@ -144,11 +144,24 @@ useEffect(() => {
       const decodedPicture = atob(choosedEditData.picture);
       const pictureArray = new Uint8Array(decodedPicture.length);
       for (let i = 0; i < decodedPicture.length; i++) {
-      pictureArray[i] = decodedPicture.charCodeAt(i);
+        pictureArray[i] = decodedPicture.charCodeAt(i);
       }
       setFile(pictureArray);
   }
     reset(mapChoosedDataToMmeber(choosedEditData));
+  }else{
+    reset({
+      companyMembers: [{
+        firstName: "",
+        midName: "",
+        lastName: "",
+        position: "",
+        history: "",
+        picture: undefined,
+        icoCode: "",
+        memberId: ""
+      }]
+    });
   }
 }, [choosedEditData]);
 
