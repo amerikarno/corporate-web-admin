@@ -873,7 +873,7 @@ const mockCorporateData: TCorporateData = {
       id: "1",
       filePath: "/documents/doc1.pdf",
       corporateCode: 80000001,
-      docType: "Registration",
+      docTypes: "Registration",
       fileName: "registration.pdf",
       fileTypes: "PDF",
     },

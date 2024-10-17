@@ -5,7 +5,7 @@ const mockFile: TDocuments = {
     id: "1",
     filePath: "/path/to/document1.pdf",
     corporateCode: 12345,
-    docType: "PDF",
+    docTypes: "PDF",
     fileName: "document1.pdf",
     fileTypes: "application/pdf",
   };
@@ -14,7 +14,7 @@ const mockFile: TDocuments = {
     id: "2",
     filePath: "/path/to/document2.pdf",
     corporateCode: 12345,
-    docType: "PDF",
+    docTypes: "PDF",
     fileName: "document2.pdf",
     fileTypes: "application/pdf",
   };

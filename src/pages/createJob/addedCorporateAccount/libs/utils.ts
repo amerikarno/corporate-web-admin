@@ -668,7 +668,7 @@ export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
       id: data?.id || "",
       filePath: data?.filePath || "",
       corporateCode: data?.corporateCode || 0,
-      docType: data?.docType || "",
+      docTypes: data?.docTypes || "",
       fileName: data?.fileName || "",
       fileTypes: data?.fileTypes || "",
     };

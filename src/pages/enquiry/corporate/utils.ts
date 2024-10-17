@@ -1,6 +1,5 @@
 import { TAuthorizedPerson, TContact, TCorporateSubAddress, TIndividualShareholder, TJuristic } from "@/pages/createJob/changeCorporateAccount/constant/type";
-import { TCorporateInfoSchema } from "@/pages/createJob/changeCorporateAccount/edit/constants/schemas";
-import { TAttorney, TAuthorizePerson, TDirector, TJuristicsShareholders } from "@/pages/createJob/changeCorporateAccount/edit/constants/types";
+import { TAttorney, TAuthorizePerson, TBank, TDirector, TJuristicsShareholders } from "@/pages/createJob/changeCorporateAccount/edit/constants/types";
 import { findAddress } from "@/pages/createJob/changeCorporateAccount/edit/libs/utils";
 import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
 import { TableColumn } from "react-data-table-component";
@@ -215,6 +214,33 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
               name: "Nationality",
               selector: (row: TAuthorizePerson) => row.nationality || "",
             }]
+            type TBankWithID = {
+              CorporateCode?: string;
+              bank: TBank[];
+              BankId?: string;
+            };
+  export const columnsBank: TableColumn<TBankWithID>[] = [
+    {
+      name: "AccountType",
+      selector: (row) => row.bank?.[0].accountType || "",
+    },
+    {
+      name: "BankName",
+      selector: (row) => row.bank?.[0].bankName || "",
+    },
+    {
+      name: "AccountNo",
+      selector: (row) => row.bank?.[0].accountNo || "",
+    },
+    {
+      name: "AccountLocation",
+      selector: (row) => row.bank?.[0].accountLocation || "",
+    },
+    {
+      name: "SwiftCode",
+      selector: (row) => row.bank?.[0].swiftCode || "",
+    }]
+
   export const columnsContactPerson: TableColumn<TContact>[] = [
     {
       name: "Title",
@@ -328,8 +354,8 @@ export const mockedCorporateData : TCorporateData[] = [{
             "CreatedAt": "2024-08-21T06:46:29.637Z",
             "DeletedAt": null,
             "corporateCode": 80000009,
-            "isThailand": true,
-            "other": "",
+            "isThailand": false,
+            "other": "test2",
             "types": 602
         },
         {
@@ -338,8 +364,8 @@ export const mockedCorporateData : TCorporateData[] = [{
             "CreatedAt": "2024-08-21T06:49:06.23Z",
             "DeletedAt": null,
             "corporateCode": 80000009,
-            "isThailand": true,
-            "other": "",
+            "isThailand": false,
+            "other": "source of income other mocked",
             "types": 603
         }
     ],
@@ -706,7 +732,51 @@ export const mockedCorporateData : TCorporateData[] = [{
             "sharePercentage": 99
         }
     ],
-    "Attorneys": null,
+    "Attorneys": [
+      {
+          "id": "140fd838-923d-44f0-bdee-0c6b8181fcb3",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-09-12T04:00:13.134Z",
+          "DeletedAt": null,
+          "personalId": "394d06e0-3281-4bb3-b8c1-782749105236",
+          "corporateCode": 80000044,
+          "fullNames": [
+              {
+                  "id": "5d1ecbef-9041-4e19-9df7-70aa1b340d42",
+                  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                  "CreatedAt": "2024-09-12T04:00:13.135Z",
+                  "DeletedAt": null,
+                  "ReferenceID": "394d06e0-3281-4bb3-b8c1-782749105236",
+                  "title": "123123",
+                  "firstName": "1",
+                  "lastName": "1",
+                  "types": 302
+              }
+          ],
+          "addresses": [
+              {
+                  "id": "db732a63-13e7-446b-8714-aad416fb9949",
+                  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+                  "CreatedAt": "2024-09-12T04:00:13.134Z",
+                  "DeletedAt": null,
+                  "ReferenceID": "394d06e0-3281-4bb3-b8c1-782749105236",
+                  "addressNo": "70/178 ramintra65 yak 2-4",
+                  "tambon": "1",
+                  "amphoe": "1",
+                  "province": "Bangkok",
+                  "postalCode": "10220",
+                  "country": "Thailand",
+                  "types": 302
+              }
+          ],
+          "passportId": "123",
+          "expiryDate": "2024-09-24T00:00:00Z",
+          "nationality": "1",
+          "telephone": "0884744411",
+          "email": "1",
+          "types": 302
+      }
+  ],
     "Juristics": [
         {
             "id": "304404f1-dd0f-4666-9fbd-1e911d3cd073",
@@ -720,7 +790,118 @@ export const mockedCorporateData : TCorporateData[] = [{
             "sharePercentage": 50
         }
     ],
-    "Banks": [],
-    "Documents": [],
-    "SuitTestResult": null
+    "Banks": [
+      {
+          "id": "db71eec9-195f-4cd8-8ce6-d66505360cab",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-09-12T02:09:44.974Z",
+          "DeletedAt": null,
+          "corporateCode": 80000044,
+          "accountType": "12",
+          "bankName": "2",
+          "accountNo": "2",
+          "accountLocation": "2",
+          "swiftCode": "2",
+          "BankId": "2",
+      }
+  ],
+    "Documents": [
+      {
+          "id": "03715454-0713-43ef-9b8d-5570c877fc6d",
+          "docTypes": "id",
+          "corporateCode": 80000010,
+          "fileName": "test.png",
+          "fileTypes": "image/png",
+          "filePath": "uploads/80000044/id/Screenshot 2024-07-30 101633.png"
+      },
+      {
+        "id": "03733454-0713-43ef-9b8d-5570c877fc6d",
+        "docTypes": "id",
+        "corporateCode": 80000045,
+        "fileName": "window.png",
+        "fileTypes": "image/png",
+        "filePath": "uploads/80000044/id/Screenshot 2024-07-30 101633.png"
+    }
+  ],
+   "SuitTestResult": {
+            "corporateCode": "80000091",
+            "accountID": "",
+            "totalScore": 22,
+            "level": 3,
+            "investorTypeRisk": "Moderate to High",
+            "suitTestResult": {
+                "answer": [
+                    {
+                        "id": "61253f9f-70b3-4d94-8e5e-53854c12dccc",
+                        "ans": 1,
+                        "type": 1,
+                        "quiz": 1
+                    },
+                    {
+                        "id": "1464dba8-b5be-4a4d-b018-b9d1057686c0",
+                        "ans": 1,
+                        "type": 1,
+                        "quiz": 2
+                    },
+                    {
+                        "id": "6ac5283c-ddc5-4349-b5ba-46e1ae81368b",
+                        "ans": 3,
+                        "type": 1,
+                        "quiz": 3
+                    },
+                    {
+                        "id": "764e2271-99ce-4be1-9b41-7ff74756d25c",
+                        "ans": [
+                            1,
+                            0,
+                            3,
+                            0
+                        ],
+                        "type": 2,
+                        "quiz": 4
+                    },
+                    {
+                        "id": "bcefd020-9e5d-4fcf-ae08-465c062d5e68",
+                        "ans": 1,
+                        "type": 1,
+                        "quiz": 5
+                    },
+                    {
+                        "id": "28ca0197-07f5-46ed-80a0-ad0dddbb1066",
+                        "ans": 4,
+                        "type": 1,
+                        "quiz": 6
+                    },
+                    {
+                        "id": "9d5e8ecb-1547-48da-af9b-9bda6ec12042",
+                        "ans": 2,
+                        "type": 1,
+                        "quiz": 7
+                    },
+                    {
+                        "id": "80c7fa3f-a6d4-45be-bce5-83d5bb02f111",
+                        "ans": 2,
+                        "type": 1,
+                        "quiz": 8
+                    },
+                    {
+                        "id": "f6fd2ce6-3725-4da7-b417-67f674932c3d",
+                        "ans": 2,
+                        "type": 1,
+                        "quiz": 9
+                    },
+                    {
+                        "id": "11f44330-ca44-4904-9f3d-109f9fb61e65",
+                        "ans": 3,
+                        "type": 1,
+                        "quiz": 10
+                    }
+                ],
+                "additional": [
+                    true,
+                    true
+                ]
+            },
+            "type": 0
+        }
 }]

@@ -35,7 +35,7 @@ export function useUploadFile() {
           formData.append("file", file);
           // formData.append("flieName", file.name);
           // formData.append("fileTypes", file.type);
-          formData.append("docType", documentType.value);
+          formData.append("docTypes", documentType.value);
           formData.append("corporateCode", corporateCode);
           console.log("uploading...")
           try {
@@ -53,7 +53,7 @@ export function useUploadFile() {
               console.log("File uploaded successfully", response.data);
               let fileinfo={
                 corporateCode:Number(corporateCode),
-                docType:documentType.value,
+                docTypes:documentType.value,
                 fileName:file.name,
                 fileTypes:file.type,
               }

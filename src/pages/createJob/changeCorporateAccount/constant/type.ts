@@ -296,7 +296,7 @@ export type TDocuments = {
   id?: string;
   filePath?: string;
   corporateCode: number;
-  docType: string;
+  docTypes: string;
   fileName: string;
   fileTypes: string;
 };
