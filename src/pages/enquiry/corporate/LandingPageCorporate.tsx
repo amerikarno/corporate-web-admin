@@ -125,6 +125,39 @@ const LandingPageCorporate = () => {
     
   return (
     <div className="p-8 flex flex-col space-y-8">
+        <Card className=" p-4 space-y-6">
+          <h1 className="text-xl font-bold">Juristic Infomations</h1>
+          <div className="flex">
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic ID</h1>
+                <h1 className="">: {corporateData?.CorporateCode ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Juristic Investor Name</h1>
+                <h1 className="">: {corporateData?.Info.name ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Commercial Number</h1>
+                <h1 className="">
+                  : {corporateData?.Info.registrationNo ?? ""}
+                </h1>
+              </div>
+            </div>
+            <div className="w-1/2 space-y-4">
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Tax ID</h1>
+                <h1 className="">: {corporateData?.Info.taxId ?? ""}</h1>
+              </div>
+              <div className="flex flex-row gap-4">
+                <h1 className="font-bold">Date Of Incorporation</h1>
+                <h1 className="">
+                  : {corporateData?.Info.dateOfIncorporation.split("T")[0]}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </Card>
       <Card className="w-full">
           <div className="p-4 space-y-4">
             <h1 className="col-span-4 font-bold pb-4">

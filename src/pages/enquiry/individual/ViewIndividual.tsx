@@ -1,108 +1,74 @@
+
 import { SideLabelInput } from "@/components/SideLabelInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { TCorporateData } from "@/pages/createJob/changeCorporateAccount/constant/type";
-import {
-  corporateAccountOpeningSchema,
-  TCorporateAccountOpening} from "../../createJob/changeCorporateAccount/constant/schema";
+import { TIndividualData } from "@/pages/createJob/changeIndividualAccount/type";
+import { searchIndividualSchema, TSearchIndividualSchema } from "@/pages/createJob/changeIndividualAccount/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { dateToyyyyMMdd, isAllowedPage, yyyyMMddToDate } from "@/lib/utils";
-import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
+import { dateToyyyyMMdd, yyyyMMddToDate } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import React from 'react'
-import { mockedCorporateData } from "./utils";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { store } from "@/app/store";
+import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCorporateData as setCorporateData2 } from "@/features/editCorporateData/editCorporateData";
+import { mockedIndividualeData } from "./utils";
+
 
 type TBody = {
-  dateFrom: Date | null;
-  dateTo: Date | null;
-  corporateCode: string;
-}
-
-const ViewCorporate = () => {
-
-  const navigate = useNavigate();
-
+    dateFrom: Date | null;
+    dateTo: Date | null;
+    AccountID: string;
+  };
+export default function ViewIndividual() {
+  //   if (!isAllowedPage(3001)) {
+  //     return <UnAuthorize />;
+  //   }
   const dispatch = useDispatch();
-
-  const handleViewClick = (row: TCorporateData) => {
-    dispatch(setCorporateData2(row));
-    navigate("/enquiry/corporate/view");
+  const navigate = useNavigate();
+  const handleViewClick = (row: TIndividualData) => {
+    dispatch(setIndividualData(row));
+    navigate("/enquiry/individual/view");
     window.scrollTo(0, 0);
   }
 
-  const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
+  const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
     {
-      name: "Juristic ID",
-      selector: (row: TCorporateData) => row.CorporateCode || "",
+      name: "Individualc ID",
+      selector: (row: TIndividualData) => row.id || "",
     },
     {
-      name: "Juristic Name",
-      selector: (row: TCorporateData) => row.Info?.name || "",
+      name: "Individual Name",
+      selector: (row: TIndividualData) => row.thName || "",
     },
     {
-      name: "",
-      cell: (row) => (
-          <Button
-          className="bg-[#082c1c] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white hover:text-black"
-          onClick={() => {
-              handleViewClick(row);
-          }}
-          >
-          View
-          </Button>
-      ),
-      ignoreRowClick: true,
-      },
+      name: "Individual Email",
+      selector: (row: TIndividualData) => row.email || "",
+    },
+    {
+        name: "",
+        cell: (row) => (
+            <Button
+            className="bg-[#082c1c] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white hover:text-black"
+            onClick={() => {
+                handleViewClick(row);
+            }}
+            >
+            View
+            </Button>
+        ),
+        ignoreRowClick: true,
+        },
   ];
 
-  const customStyles = {
-    rows: {
-        style: {
-            minHeight: '60px', 
-        },
-    },
-    headCells: {
-        style: {
-        },
-    },
-    cells: {
-        style: {
-          
-        },
-    },
-};
+  const [searchResult, setSearchResult] = useState<TIndividualData>();
 
-  if (!isAllowedPage(3001)) {
-    return <UnAuthorize />;
-  }
-
-  const prev7Days = new Date();
-  prev7Days.setDate(prev7Days.getDate() - 7);
-
-  const {
-    register,
-    handleSubmit,
-    // reset,
-    formState: { errors, isSubmitting },
-  } = useForm<TCorporateAccountOpening>({
-    resolver: zodResolver(corporateAccountOpeningSchema),
-    defaultValues: {
-      dateFrom: dateToyyyyMMdd(prev7Days),
-      dateTo: dateToyyyyMMdd(new Date()),
-    },
-  });
-
-  const [searchResult, setSearchResult] = useState<TCorporateData[]>();
-
-  const handleSearch = async (data: TCorporateAccountOpening) => {
+  const handleSearch = async (data: TSearchIndividualSchema) => {
     const { dateFrom, dateTo } = data;
 
     // Set invalid dates to null
@@ -111,16 +77,16 @@ const ViewCorporate = () => {
       dateFrom: dateFrom ? yyyyMMddToDate(dateFrom) : null,
       dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
     };
-
-    // console.log(body);
+    
+    console.log(body);
     if (
-      body.corporateCode === "" &&
+      body.AccountID === "" &&
       body.dateFrom === null &&
       body.dateTo === null
     ) {
       try {
         const res = await axios.post(
-          "/api/v1/corporate/query/all",
+          "/api/v1/individual/list",
           {},
           {
             headers: {
@@ -130,7 +96,7 @@ const ViewCorporate = () => {
           }
         );
         setSearchResult(res.data);
-        // console.log(res);
+        console.log(res);
         return res.data;
       } catch (error) {
         console.log(error);
@@ -139,24 +105,24 @@ const ViewCorporate = () => {
       }
     } else {
       try {
-        // console.log(body);
-        let formatBody;
-        if (body.corporateCode) {
+        console.log(body);
+        let formatBody
+        if(body.AccountID){
           formatBody = {
-            corporateCode: body.corporateCode,
-          };
-        } else {
-          formatBody = body;
+            accountID: body.AccountID
+          }
+        }else{
+          formatBody = body
         }
-        // console.log("formatBody:", formatBody);
-        const res = await axios.post("/api/v1/corporate/query", formatBody, {
+        console.log("formatBody:",formatBody);
+        const res = await axios.post("/api/v1/individual/list", formatBody, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getCookies()}`,
           },
         });
         setSearchResult(res.data);
-        // console.log(res);
+        console.log(res);
         return res.data;
       } catch (error) {
         console.log(error);
@@ -168,13 +134,31 @@ const ViewCorporate = () => {
       }
     }
   };
-  const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
+
+  const prev7Days = new Date();
+  prev7Days.setDate(prev7Days.getDate() - 7);
+
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TSearchIndividualSchema>({
+    resolver: zodResolver(searchIndividualSchema),
+    defaultValues: {
+      dateFrom: dateToyyyyMMdd(prev7Days),
+      // dateFrom: dateToyyyyMMdd(new Date()),
+      dateTo: dateToyyyyMMdd(new Date()),
+    },
+  });
+
+  const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-    { corporateCode: number }[]
-  >([]);
-  
+    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
+      { corporateCode: number }[]
+    >([]);
+
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
       setDisableDate(true);
@@ -182,45 +166,58 @@ const ViewCorporate = () => {
       setDisableDate(false);
     }
   };
-  const fetchCorporateCodes = async () => {
-    try {
-      const token = getCookies();
+    const fetchCorporateCodes = async () => {
+      try {
+        const token = getCookies();
 
-      const res = await axios.post(
-        "/api/v1/corporate/query/all",
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+        const res = await axios.post(
+          "/api/v1/individual/list/all",
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          console.log(res);
+          const corporateCodes = res.data.map((item: any) => ({
+            corporateCode: item.id,
+          }));
+          setFetchedCorporateCodes(corporateCodes);
+
+          // const dateFrom = new Date();
+          // dateFrom.setDate(dateFrom.getDate() + 7);
+          // const data: TCorporateAccountOpening = {
+          //   corporateCode: "",
+          //   // dateFrom: dateToyyyyMMdd(dateFrom),
+          //   // dateTo: dateToyyyyMMdd(dateFrom),
+          //   dateFrom: dateToyyyyMMdd(new Date()),
+          //   dateTo: dateToyyyyMMdd(new Date()),
+          // };
+          // await handleSearch(data);
+        } else {
+          console.log("Failed to fetch corporate codes");
         }
-      );
-      if (res.status === 200) {
-        // console.log(res);
-        const corporateCodes = res.data.map((item: any) => ({
-          corporateCode: item.CorporateCode,
-        }));
-        setFetchedCorporateCodes(corporateCodes);
+      } catch (error) {
+        console.log("Error fetching corporate codes:", error);
       }
-    } catch (error) {
-      console.log("Error fetching corporate codes:", error);
-    }
-  };
+    };
 
   const initData = async () => {
-    await fetchCorporateCodes();
-    const data: TCorporateAccountOpening = {
-      corporateCode: "",
+    // await fetchCorporateCodes();
+    const data: TSearchIndividualSchema = {
+      AccountID: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
+    store.dispatch(setTestCorporateData(data));
     await handleSearch(data);
-
   };
 
   useEffect(() => {
-    // fetchCorporateCodes();
+    fetchCorporateCodes();
     // console.log("all-corporate Code", mockedCorporateCodes);
     initData();
   }, []);
@@ -233,18 +230,15 @@ const ViewCorporate = () => {
     }
   };
 
-  const onSubmit = async (data: TCorporateAccountOpening) => {
-    // console.log(data);
+  const onSubmit = async (data: TSearchIndividualSchema) => {
+    console.log(data);
     await handleSearch(data);
     //reset();
   };
 
   useEffect(() => {
     if (searchResult) {
-      // setCorporateData(
-      //   Array.isArray(searchResult) ? searchResult : [searchResult]
-      // );
-      setCorporateData(searchResult);
+      setFetchData(Array.isArray(searchResult) ? searchResult : [searchResult]);
     }
   }, [searchResult]);
 
@@ -256,17 +250,17 @@ const ViewCorporate = () => {
             className="grid grid-cols-2 gap-4 pt-4"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <SideLabelInput title="Juristic ID">
+            <SideLabelInput title="Individual ID">
               <Input
-                data-testid="juristicId"
-                {...register("corporateCode")}
+                data-testid="accountId"
+                {...register("AccountID")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.corporateCode?.message}</p>
+                <p className="text-red-500">{errors.AccountID?.message}</p>
               )}
               <datalist id="juristicId">
                 {mockedCorporateCodes.map((code, index) => (
@@ -317,13 +311,12 @@ const ViewCorporate = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Corporates Infomations</CardTitle>
+          <CardTitle>Individual Account Infomations</CardTitle>
         </CardHeader>
-        <CardContent className="overflow-x-auto h-[38rem]">
-          <DataTable customStyles={customStyles} columns={columnsCorporateInfo} data={mockedCorporateData} />
+        <CardContent className="overflow-x-auto h-[360px]">
+          <DataTable columns={ColumnsOfIndividualSearch} data={mockedIndividualeData} />
         </CardContent>
       </Card>
     </div>
   );
 }
-export default ViewCorporate

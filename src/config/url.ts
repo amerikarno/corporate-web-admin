@@ -309,9 +309,19 @@ export const urlConfig: TUrlConfig[] = [
     pages: [4000, 4007],
     children: [
       {
+        label: "individual account",
+        href: "/enquiry/individual",
+        pageId: 4002,
+      },
+      {
         label: "corporate account",
         href: "/enquiry/corporate",
         pageId: 4001,
+      },
+      {
+        label: "ICO  campaign",
+        href: "/enquiry/ico-campaign",
+        pageId: 4003,
       },
       // {
       //   label: "deposit/withdraw list",
