@@ -4,8 +4,8 @@ import BankOrderEdit from "@/pages/createJob/addedCorporateAccount/pages/bankOrd
 import OrderTrade from "@/pages/createJob/orderTrade/orderTrade";
 import PageAddIndividualAccount from "@/pages/createJob/addIndividualAccount/PageAddIndividualAccount";
 import { Outlet, Route } from "react-router-dom";
-import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/ChangeCorporateAccountOpenning";
-import EditCorporateAccount from "@/pages/createJob/changeCorporateAccount/edit/editCorporateAccount"
+import ChangeCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/ChangeCorproateAccountOpening";
+import EditCorporateAccount from "@/pages/createJob/changeCorporateAccount/CorporateAccountOpenning"
 import ChangePageAddIndividualAccount from "@/pages/createJob/changeIndividualAccount/ChangePageAddIndividualAccount";
 import ChangeTodoIndividualAccount from "@/pages/createJob/changeIndividualAccount/ToDoIndividualAccount";
 import FxExchangeEdit from "@/pages/createJob/fxExchange/fxExchange";

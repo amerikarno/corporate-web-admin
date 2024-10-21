@@ -27,7 +27,7 @@ export const columnsCorporateInfo = [
   },
   {
     name: "Date of Incorporation",
-    selector: (row: TCorporateInfo) => row.dateofincorporation.toLocaleString(),
+    selector: (row: TCorporateInfo) => row.dateOfIncorporation.toLocaleString(),
   },
   {
     name: "Registered Country",

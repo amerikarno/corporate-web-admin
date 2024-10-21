@@ -484,7 +484,7 @@ describe("test create corporate form1", () => {
         name: "Name",
         registrationNo: "No.123456789",
         taxId: "123",
-        dateofincorporation: "2023-01-01T00:00:00.000Z",
+        dateOfIncorporation: "2023-01-01T00:00:00.000Z",
         registeredCapital: 12345,
         revenuePerYear: 12345,
         netProFitLoss: 12345,

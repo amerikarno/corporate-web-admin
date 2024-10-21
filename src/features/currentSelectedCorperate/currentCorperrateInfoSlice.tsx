@@ -5,7 +5,7 @@ const initialState: TCorporateInfo = {
   name: "",
   registrationNo: "",
   taxId: "",
-  dateofincorporation: "",
+  dateOfIncorporation: "",
   registeredBusiness: {
     address: [
       {

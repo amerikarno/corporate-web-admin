@@ -2,10 +2,10 @@ import { SideLabelInput } from "@/components/SideLabelInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { TCorporateData } from "@/pages/createJob/changeCorporateAccount/constant/type";
+import { TCorporateData } from "@/pages/createJob/changeCorporateAccount/constants2/types";
 import {
   corporateAccountOpeningSchema,
-  TCorporateAccountOpening} from "../../createJob/changeCorporateAccount/constant/schema";
+  TCorporateAccountOpening} from "../../createJob/changeCorporateAccount/constants2/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";

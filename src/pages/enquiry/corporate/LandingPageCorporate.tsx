@@ -2,19 +2,19 @@ import { RootState } from '@/app/store';
 import { CheckBox } from '@/components/Checkbox';
 import { Input } from '@/components/Input';
 import { Card } from '@/components/ui/card';
-import { CorporateResponse, TCorporateData, TDocuments } from '@/pages/createJob/changeCorporateAccount/constant/type';
-import { mapKeyLabel, PrimaryCountryOfOperationChoices, registeredCountryChoices } from '@/pages/createJob/changeCorporateAccount/edit/constants/variables';
+import { CorporateResponse, TCorporateData, TDocuments } from '@/pages/createJob/changeCorporateAccount/constants2/types';
+import { mapKeyLabel, PrimaryCountryOfOperationChoices, registeredCountryChoices } from '@/pages/createJob/changeCorporateAccount/constants2/variables';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { columnsAttorney, columnsAuthorizePerson, columnsBank, columnsJuristicShareHolders, columnsListOfDirectors, columnsShareHolders, mapDataToTCorporateInfo, transformAttorneysToExpectedType, transformAuthorizedPersons, transformDirectorsToExpectedType, transformJuristicsToShareholders } from './utils';
-import { subAddressSchema } from '@/pages/createJob/changeCorporateAccount/edit/constants/schemas';
+import { subAddressSchema } from '@/pages/createJob/changeCorporateAccount/constants2/schemas';
 import DataTable from 'react-data-table-component';
 import { columnsContactPerson } from './utils';
-import { getCheckedLabel, mapToUploadFile } from '@/pages/createJob/changeCorporateAccount/edit/libs/utils';
+import { getCheckedLabel, mapToUploadFile } from '@/pages/createJob/changeCorporateAccount/libs/utils';
 import { setFiles } from '@/features/uploadFile/uploadFileSlice';
 import DocumentBox from '@/components/ui/BoxOfUploaded';
-import { SuitTableResult } from '@/pages/createJob/changeCorporateAccount/edit/components/suitTableResult';
+import { SuitTableResult } from '@/pages/createJob/changeCorporateAccount/components/suitTableResult';
 import { RadioCheckBox } from '@/components/ui/Radio';
 
 const LandingPageCorporate = () => {

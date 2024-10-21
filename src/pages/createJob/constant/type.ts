@@ -1,4 +1,4 @@
-import { SuitTestResult } from "../changeCorporateAccount/edit/constants/types";
+import { SuitTestResult } from "../changeCorporateAccount/constants2/types";
 
 export type TCorporateAccountOpeningInfo = {
   registerId: string;
@@ -7,6 +7,33 @@ export type TCorporateAccountOpeningInfo = {
   dateFrom: Date;
   dateTo: Date;
 };
+
+export type TSubAddress = {
+  addressNo: string;
+  building?: string;
+  floor?: string;
+  mooNo?: string;
+  soi?: string;
+  road?: string;
+  tambon: string;
+  amphoe: string;
+  province: string;
+  postalCode: string;
+  country: string;
+  //type?: number;
+};
+
+export type TRegisterBusinessAddress = {
+  address: TSubAddress[];
+  emailAddress?: string;
+  telephone?: string;
+};
+export type TPlaceIncorporateAddress = {
+  address: TSubAddress[];
+  emailAddress?: string;
+  telephone?: string;
+};
+
 
 export type TCorporateInfo = {
   id: string;
@@ -18,6 +45,14 @@ export type TCorporateInfo = {
   registrationNo: string;
   taxId: string;
   dateOfIncorporation: string;
+  isRegisteredThailand?: boolean;
+  isPrimaryCountry?: boolean;
+  registered: string;
+  isRegisteredOther?: boolean;
+  primary: string;
+  isPrimaryOther?: boolean;
+  registeredBusiness: TRegisterBusinessAddress;
+  placeofIncorporation: TPlaceIncorporateAddress;
 };
 
 export type TCorporateCountry = {
@@ -58,19 +93,19 @@ export type TCorporateSubAddress = {
 };
 
 export type TAttorney = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  personalId: string;
-  registerId: string;
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  personalId?: string;
+  registerId?: string;
   fullNames: TFullName[];
   addresses: TAddress[];
   passportId?: string;
   citizenId?: string;
   expiryDate: string;
   nationality: string;
-  types: number;
+  types?: number;
   telephone: string;
   email: string;
 };
@@ -189,15 +224,15 @@ export type TContactFullName = {
 };
 
 export type TFullName = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  ReferenceID: string;
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  ReferenceID?: string;
   title: string;
   firstName: string;
   lastName: string;
-  types: number;
+  types?: number;
 };
 
 export type TAddress = {
@@ -221,12 +256,12 @@ export type TAddress = {
 };
 
 export type TDirector = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  personalId: string;
-  registerId: string;
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  personalId?: string;
+  registerId?: string;
   fullNames: TFullName[];
   addresses: TAddress[];
   citizenId?: string;
@@ -277,15 +312,15 @@ export type TJuristic = {
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
-  sharePercentage: number;
+  sharePercentage: number | null;
 };
 
 export type TBank = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  registerId: string;
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  registerId?: string;
   accountType: string;
   bankName: string;
   accountNo: string;
@@ -329,7 +364,7 @@ export type TMapPages = {
 };
 
 export type CorporateResponse = {
-  id?: string;
+  id: string;
   createBy?: string;
   CreatedAt?: string;
   DeletedAt?: null | string;

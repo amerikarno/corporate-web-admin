@@ -32,7 +32,7 @@ export function useCorporateInfo() {
 
     let body = {
       ...data,
-      dateofincorporation: new Date(data.dateofincorporation),
+      dateOfIncorporation: new Date(data.dateOfIncorporation),
     };
     console.log("Request Body:", body);
 
@@ -98,7 +98,7 @@ export function useCorporateInfo() {
     console.log(data);
     let body = {
       ...data,
-      dateofincorporation: new Date(data.dateofincorporation),
+      dateOfIncorporation: new Date(data.dateOfIncorporation),
       registerId: data.registerId,
     };
     console.log("body", body);

@@ -1676,7 +1676,7 @@ export function FormCorporateInfo({
 <span class="cstat-no" title="statement not covered" >    return Math.round(parseFloat(newValue) * 100);</span>
   };
   const onSubmit = <span class="fstat-no" title="function not covered" >async </span>(data: TCorporateInfoSchema) =&gt; {
-    const dateData = <span class="cstat-no" title="statement not covered" >Date.parse(data.dateofincorporation);</span>
+    const dateData = <span class="cstat-no" title="statement not covered" >Date.parse(data.dateOfIncorporation);</span>
     const formData: TCorporateInfo = <span class="cstat-no" title="statement not covered" >{</span>
       ...data,
       registeredCapital: formatFinancialValue(data.registeredCapital),
@@ -1684,7 +1684,7 @@ export function FormCorporateInfo({
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
       registerId: corporatesInfo?.registerId.toString(),
-      dateofincorporation: new Date(dateData).toISOString(),
+      dateOfIncorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
         registeredCountryPrimaryCountryOperation.isRegisteredOther,
@@ -1813,14 +1813,14 @@ export function FormCorporateInfo({
             &lt;Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
-              {...register("dateofincorporation")}
-              name="dateofincorporation"
+              {...register("dateOfIncorporation")}
+              name="dateOfIncorporation"
               type="date"
               disabled={isSubmitting}
             /&gt;
-            {errors.dateofincorporation &amp;&amp; (
+            {errors.dateOfIncorporation &amp;&amp; (
 <span class="branch-1 cbranch-no" title="branch not covered" >              &lt;p className="text-red-500"&gt;</span>
-                {errors.dateofincorporation.message}
+                {errors.dateOfIncorporation.message}
               &lt;/p&gt;
             )}
           &lt;/div&gt;

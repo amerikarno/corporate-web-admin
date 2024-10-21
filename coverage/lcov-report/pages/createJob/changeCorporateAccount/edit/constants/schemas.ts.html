@@ -839,7 +839,7 @@ export const corporateInfoSchema = z.object({
     .string()
     .min(1, "taxId cannot be empty")
     .regex(/^\d+$/, "taxId must be a numbers"),
-  dateofincorporation: z.string().min(1, "date cannot be empty"),
+  dateOfIncorporation: z.string().min(1, "date cannot be empty"),
   registered: z.string().optional(),
   primary: z.string().optional(),
   registeredBusiness: registerBusinessAddressSchema,

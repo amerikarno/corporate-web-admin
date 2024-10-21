@@ -71,7 +71,7 @@ export const findAddress = (data: TCorporateData, type: number) => {
 //         name: data.name ?? "",
 //         registrationNo: data.registrationNo ?? "",
 //         taxId: data.taxId ?? "",
-//         dateOfIncorporation: data.dateofincorporation.split("T")[0],
+//         dateOfIncorporation: data.dateOfIncorporation.split("T")[0],
 //       },
 //       CorporateCountry: [
 //         {
@@ -183,9 +183,9 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       name: data.Info.name,
       registrationNo: data.Info.registrationNo,
       taxId: data.Info.taxId,
-      dateofincorporation: data.Info.dateOfIncorporation.split("T")[0],
-      // dateofincorporation: dt,
-      // dateofincorporation: new Date(timeStamp),
+      dateOfIncorporation: data.Info.dateOfIncorporation.split("T")[0],
+      // dateOfIncorporation: dt,
+      // dateOfIncorporation: new Date(timeStamp),
       registered: resCorpRegisterCountry?.other || "",
       primary: resCorpPrimaryCountry?.other || "",
       registeredBusiness: {

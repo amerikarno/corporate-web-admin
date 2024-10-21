@@ -13,6 +13,18 @@ const initialState: TCorporateData = {
     registrationNo: "",
     taxId: "",
     dateOfIncorporation: "",
+    registered: "", // Add this property
+    primary: "", // Add this property
+    registeredBusiness: {
+      address: [], // Add this property with appropriate type
+      emailAddress: "", // Add this property
+      telephone: "" // Add this property
+    },
+    placeofIncorporation: {
+      address: [], // Add this property with appropriate type
+      emailAddress: "", // Add this property
+      telephone: "" // Add this property
+    }
   },
   CorporateCountry: [],
   CorporateAddress: [],

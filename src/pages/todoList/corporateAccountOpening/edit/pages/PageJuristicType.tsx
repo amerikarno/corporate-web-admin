@@ -73,7 +73,7 @@ export function PageJuristicType() {
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {initFormData?.dateofincorporation}</h1>
+                <h1 className="">: {initFormData?.dateOfIncorporation}</h1>
               </div>
             </div>
           </div>

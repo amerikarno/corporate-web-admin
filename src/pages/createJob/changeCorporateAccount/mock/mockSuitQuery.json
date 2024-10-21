@@ -1,0 +1,80 @@
+{
+    "registerId": "80000022",
+    "totalScore": 18,
+    "level": 2,
+    "invsetorTypeRisk": "Moderate to Low",
+    "suitTestResult": {
+        "answer": [
+            {
+                "id": "cd7bc545-b28f-4fd8-b156-c1336fe3c2b0",
+                "ans": 1,
+                "type": 1,
+                "quiz": 1
+            },
+            {
+                "id": "7c807c2f-4bfa-438d-b44a-cfff8a81ac2b",
+                "ans": 4,
+                "type": 1,
+                "quiz": 2
+            },
+            {
+                "id": "b52326a2-8c77-4be9-8a17-5f901f04f767",
+                "ans": 1,
+                "type": 1,
+                "quiz": 3
+            },
+            {
+                "id": "d3d13ec1-ff5e-4177-88dc-341d24c49d68",
+                "ans": [
+                    0,
+                    2,
+                    3,
+                    0
+                ],
+                "type": 2,
+                "quiz": 4
+            },
+            {
+                "id": "695451aa-b95b-412b-8f6f-9ab322df4d52",
+                "ans": 1,
+                "type": 1,
+                "quiz": 5
+            },
+            {
+                "id": "ff6c0cb1-2952-40e1-a759-a624fa0495c4",
+                "ans": 3,
+                "type": 1,
+                "quiz": 6
+            },
+            {
+                "id": "cb59f6ca-4904-4c2a-9869-e9c4c0dc4afe",
+                "ans": 1,
+                "type": 1,
+                "quiz": 7
+            },
+            {
+                "id": "ee411a9b-8012-42be-903f-1a080f369daf",
+                "ans": 2,
+                "type": 1,
+                "quiz": 8
+            },
+            {
+                "id": "47710e6d-4341-40e3-b699-ba4d98cbb81c",
+                "ans": 1,
+                "type": 1,
+                "quiz": 9
+            },
+            {
+                "id": "59dbea36-94e7-4f67-b728-0a9de7f1cc22",
+                "ans": 1,
+                "type": 1,
+                "quiz": 10
+            }
+        ],
+        "additional": [
+            null,
+            false
+        ]
+    },
+    "type": 80000000
+}

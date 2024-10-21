@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { TCorporateAccountOpening } from "../constant/schema";
-import { TCorporateData } from "../constant/type";
+import { TCorporateAccountOpening } from "../constants2/schemas";
+import { TCorporateData } from "../constants2/types";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { yyyyMMddToDate } from "@/lib/utils";

@@ -58,19 +58,19 @@ export type TCorporateSubAddress = {
 };
 
 export type TAttorney = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  personalId: string;
-  registerId: string;
-  fullNames?: TFullName[];
-  addresses?: TAddress[];
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  personalId?: string;
+  registerId?: string;
+  fullNames: TFullName[];
+  addresses: TAddress[];
   passportId?: string;
   citizenId?: string;
   expiryDate: string;
   nationality: string;
-  types: number;
+  types?: number;
   telephone: string;
   email: string;
 };
@@ -167,7 +167,7 @@ export type TContact = {
   CreatedAt: string;
   DeletedAt: string | null;
   registerId: string;
-  fullNames?: TContactFullName[];
+  fullNames: TContactFullName[];
   telephone?: string;
   email: string;
   types: number;
@@ -189,15 +189,15 @@ export type TContactFullName = {
 };
 
 export type TFullName = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  ReferenceID: string;
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  ReferenceID?: string;
   title: string;
   firstName: string;
   lastName: string;
-  types: number;
+  types?: number;
 };
 
 export type TAddress = {
@@ -221,14 +221,14 @@ export type TAddress = {
 };
 
 export type TDirector = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  personalId: string;
-  registerId: string;
-  fullNames?: TFullName[];
-  addresses?: TAddress[];
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  personalId?: string;
+  registerId?: string;
+  fullNames: TFullName[];
+  addresses: TAddress[];
   citizenId?: string;
   passportId?: string;
   expiryDate: string;
@@ -243,8 +243,8 @@ export type TAuthorizedPerson = {
   DeletedAt: string | null;
   personalId: string;
   registerId: string;
-  fullNames?: TFullName[];
-  addresses?: TAddress[];
+  fullNames: TFullName[];
+  addresses: TAddress[];
   passportId?: string;
   citizenId?: string;
   expiryDate: string;
@@ -259,13 +259,13 @@ export type TIndividualShareholder = {
   DeletedAt: string | null;
   personalId: string;
   registerId: string;
-  fullNames?: TFullName[];
+  fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
   expiryDate: string;
   nationality: string;
   types: number;
-  sharePercentage: number;
+  sharePercentage: number | null;
 };
 
 export type TJuristic = {
@@ -277,15 +277,15 @@ export type TJuristic = {
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
-  sharePercentage: number;
+  sharePercentage: number | null;
 };
 
 export type TBank = {
-  id: string;
-  createBy: string;
-  CreatedAt: string;
-  DeletedAt: string | null;
-  registerId: string;
+  id?: string;
+  createBy?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  registerId?: string;
   accountType: string;
   bankName: string;
   accountNo: string;

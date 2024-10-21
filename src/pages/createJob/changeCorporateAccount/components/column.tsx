@@ -1,5 +1,5 @@
 import { TableColumn } from "react-data-table-component";
-import { TCorporateData } from "../constant/type";
+import { TCorporateData } from "../constants2/types";
 import { Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

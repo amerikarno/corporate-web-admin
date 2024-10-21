@@ -1,6 +1,6 @@
-import { TAuthorizedPerson, TContact, TCorporateSubAddress, TIndividualShareholder, TJuristic } from "@/pages/createJob/changeCorporateAccount/constant/type";
-import { TAttorney, TAuthorizePerson, TBank, TDirector, TJuristicsShareholders } from "@/pages/createJob/changeCorporateAccount/edit/constants/types";
-import { findAddress } from "@/pages/createJob/changeCorporateAccount/edit/libs/utils";
+import { TAuthorizedPerson, TContact, TCorporateSubAddress, TIndividualShareholder, TJuristic } from "@/pages/createJob/changeCorporateAccount/constants2/types";
+import { TAttorney, TAuthorizePerson, TBank, TDirector, TJuristicsShareholders } from "@/pages/createJob/changeCorporateAccount/constants2/types";
+import { findAddress } from "@/pages/createJob/changeCorporateAccount/libs/utils";
 import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
 import { TableColumn } from "react-data-table-component";
 import { TAttorney as TAttorneyEdit } from "@/pages/createJob/constant/type";
@@ -24,7 +24,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
           createBy: resCorpRegisterCountry?.createBy || "",
           CreatedAt: resCorpRegisterCountry?.CreatedAt || "",
           DeletedAt: resCorpRegisterCountry?.DeletedAt || "",
-          registerId: resCorpRegisterCountry?.registerId || 0,
+          registerId: resCorpRegisterCountry?.registerId || "",
           types: resCorpRegisterCountry?.types || 0,
           other: resCorpRegisterCountry?.other || ""
         },
@@ -34,7 +34,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
           createBy: resCorpPrimaryCountry?.createBy || "",
           CreatedAt: resCorpPrimaryCountry?.CreatedAt || "",
           DeletedAt: resCorpPrimaryCountry?.DeletedAt || "",
-          registerId: resCorpPrimaryCountry?.registerId || 0,
+          registerId: resCorpPrimaryCountry?.registerId || "",
           types: resCorpPrimaryCountry?.types || 0,
           other: resCorpPrimaryCountry?.other || ""
         }
@@ -155,7 +155,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
         return attorneys.map(attorney => {
           return {
             ...attorney,
-            registerId: String(attorney.registerId), 
+            registerId: attorney.registerId, 
           };
         });
       };
@@ -324,584 +324,616 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
           selector: (row: TAttorney) => row.email || "",
         }]
 
-export const mockedCorporateData : TCorporateData[] = [{
-    "registerId": 80000009,
-    "Info": {
-        "id": "fbc3283c-ca57-4421-887d-ecfac813eb20",
-        "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-        "CreatedAt": "2024-08-21T06:46:29.634Z",
-        "DeletedAt": null,
-        "registerId": 80000009,
-        "name": "Test Company",
-        "registrationNo": "11200000",
-        "taxId": "1234567890",
-        "dateOfIncorporation": "2023-11-10T17:00:00Z"
-    },
-    "CorporateCountry": [
-        {
-            "id": "255ad789-6d4b-4ae1-ab81-2e18f5396570",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T06:46:29.637Z",
-            "DeletedAt": null,
-            "registerId": 80000009,
-            "isThailand": true,
-            "other": "",
-            "types": 601
-        },
-        {
-            "id": "a912283b-60f6-42dc-b3c8-8d74030553d5",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T06:46:29.637Z",
-            "DeletedAt": null,
-            "registerId": 80000009,
-            "isThailand": false,
-            "other": "test2",
-            "types": 602
-        },
-        {
-            "id": "c8cc9f03-962e-4d4a-8524-189844678a04",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T06:49:06.23Z",
-            "DeletedAt": null,
-            "registerId": 80000009,
-            "isThailand": false,
-            "other": "source of income other mocked",
-            "types": 603
-        }
-    ],
-    "CorporateAddress": [
-        {
-            "address": [
-                {
-                    "id": "d6f3a8fa-f7d9-42d5-9a85-85a48b5e297a",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T06:46:29.642Z",
-                    "DeletedAt": null,
-                    "registerId": 80000009,
-                    "addressNo": "123",
-                    "mooNo": "-",
-                    "building": "Tisco Tower",
-                    "floor": "16",
-                    "soi": "4",
-                    "road": "North Sathorn",
-                    "tambon": "Silom",
-                    "amphoe": "Bangrak",
-                    "province": "Bangkok",
-                    "postalCode": "10500",
-                    "country": "Thailand",
-                    "types": 701
-                }
-            ],
-            "emailAddress": "sansanee_bae@hotmail.com",
-            "telephone": "0896789092"
-        },
-        {
-            "address": [
-                {
-                    "id": "f0d2f314-e3fb-4df0-b182-1bbf0e9bde06",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T06:46:29.644Z",
-                    "DeletedAt": null,
-                    "registerId": 80000009,
-                    "addressNo": "1234",
-                    "building": "Tisco Tower1",
-                    "floor": "16+1",
-                    "soi": "4+1",
-                    "road": "North Sathorn1",
-                    "tambon": "Silom1",
-                    "amphoe": "Bangrak1",
-                    "province": "Bangkok1",
-                    "postalCode": "10501",
-                    "country": "Thailand",
-                    "mooNo": "mooNo", // Add this property
-                    "types": 702
-                  }
-            ],
-            "emailAddress": "sansanee_bae@hotmail.com",
-            "telephone": "0896789092"
-        }
-    ],
-    "CorporateFinancials": {
-        "id": "e61cdd53-5325-4b0f-aa58-6fbc051a72c2",
-        "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-        "CreatedAt": "2024-08-21T06:46:29.639Z",
-        "DeletedAt": null,
-        "registerId": 80000009,
-        "registeredCapital": 10000000,
-        "revenuePerYear": 3600000,
-        "netProfitLoss": 1200000,
-        "shareholderEquity": 11200000
-    },
-    "CorporateTypes": {
-        "id": "68ff8715-67e4-47e6-abe0-2565b51bcf28",
-        "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-        "CreatedAt": "2024-08-21T06:49:06.219Z",
-        "DeletedAt": null,
-        "registerId": 80000009,
-        "isJuristicThailand": true,
-        "isTaxExempt": true,
-        "isNonTaxExempt": false,
-        "isJuristicForeign": false,
-        "isOperatingInThailand": false,
-        "isNonOperatingInThailand": false,
-        "isOther": false,
-        "isPartnership": false,
-        "isGovernmentStateEnterprise": false,
-        "isCoOperative": false,
-        "isTaxExemptCompany": false
-    },
-    "BusinessTypes": {
-        "id": "ca94d4eb-19a6-40dc-9ee9-5be5f5d8f23e",
-        "CreatedAt": "2024-08-21T06:49:06.222Z",
-        "DeletedAt": null,
-        "registerId": 80000009,
-        "isAntiqueTrading": false,
-        "isHotelRestaurant": false,
-        "isArmament": false,
-        "isInsuranceAssurance": false,
-        "isCasinoGambling": false,
-        "isJewelryGoldTrading": false,
-        "isFoundation": false,
-        "isPropertyRealEstate": false,
-        "isMoneyTransfer": false,
-        "isEmploymentAgency": false,
-        "isEntertainment": false,
-        "isTravel": false,
-        "isFinancial": false,
-        "isEducationCenter": false,
-        "isForeignCurrencyExchange": false,
-        "isCryptoRelated": false,
-        "isOtherBusiness": true,
-        "otherBusinessType": "Retails Store"
-    },
-    "SourceOfIncomes": {
-        "id": "221807c9-8d7b-4519-9cc1-2abd91cedb38",
-        "CreatedAt": "2024-08-21T06:49:06.225Z",
-        "DeletedAt": null,
-        "registerId": 80000009,
-        "isRevenue": true,
-        "isStock": false,
-        "isDonation": false,
-        "isLoan": false,
-        "isRevenueSelling": false,
-        "isOtherIncome": true,
-        "otherIncome": "Interest Rate"
-    },
-    "CountrySourceIncomes": [
-        {
-            "CreatedAt": "0001-01-01T00:00:00Z",
-            "DeletedAt": null,
-            "corporateCountry": {
-                "id": "c8cc9f03-962e-4d4a-8524-189844678a04",
-                "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                "CreatedAt": "2024-08-21T06:49:06.23Z",
-                "DeletedAt": null,
-                "registerId": 80000009,
-                "isThailand": true,
-                "other": "",
-                "types": 603
-            },
-            "otherCountry": "",
-            "investmentObject": "",
-            "isLiquidation": false,
-            "isLiquidation": true,
-            "isInvestment": false,
-            "isCashManagement": false,
-            "isOtherInvestment": false,
-            "otherInvestment": ""
-        }
-    ],
-    "Contact": [
-        {
-            "id": "2ea613bb-337e-4138-81e0-f897ce69eb7e",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T06:50:57.157Z",
-            "DeletedAt": null,
-            "registerId": 80000009,
-            "fullNames": [
-                {
-                    "id": "7146f867-0f17-4b1d-a5b4-f98be0666dc6",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T06:50:57.16Z",
-                    "DeletedAt": null,
-                    "contactID": "c4ab91bf-b2cc-4c14-887b-c90cfe907aad",
-                    "title": "Mr.",
-                    "firstName": "Test Contract",
-                    "lastName": "Person",
-                    "types": 401
-                }
-            ],
-            "personalId": "c4ab91bf-b2cc-4c14-887b-c90cfe907aad",
-            "position": "Committee",
-            "division": "Management",
-            "telephone": "081123456789",
-            "email": "Nook_Nook@hotmail.com",
-            "types": 401
-        },
-        {
-            "id": "7feb13c2-fa15-41b2-a4ad-0263d7f145a1",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T06:52:19.636Z",
-            "DeletedAt": null,
-            "registerId": 80000009,
-            "fullNames": [
-                {
-                    "id": "7c204aa3-e35a-4142-b106-5ec5bd725665",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T06:52:19.638Z",
-                    "DeletedAt": null,
-                    "contactID": "3e55c24d-921f-4698-ae66-15a2798551b0",
-                    "title": "Miss",
-                    "firstName": "Test Contact2",
-                    "lastName": "Person2",
-                    "types": 401
-                }
-            ],
-            "personalId": "3e55c24d-921f-4698-ae66-15a2798551b0",
-            "position": "Committee2",
-            "division": "Management2",
-            "telephone": "082123456789",
-            "email": "Nook_2@hotmail.com",
-            "types": 401
-        }
-    ],
-    "Directors": [
-{
-  "id": "37398905-30ff-46a1-998d-58086abae550",
-  "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-  "CreatedAt": "2024-08-21T07:52:23.503Z",
-  "DeletedAt": null,
-  "personalId": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-  "registerId": 80000009,
-  "fullNames": [
-    {
-      "id": "a90589a6-3b12-4998-9d0c-7eb9bde806f4",
-      "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-      "CreatedAt": "2024-08-21T07:52:23.509Z",
-      "DeletedAt": null,
-      "ReferenceID": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-      "title": "Mr.",
-      "firstName": "Test Contact",
-      "lastName": "Person",
-      "types": 101
-    }
-  ],
-  "addresses": [
-    {
-      "id": "c378789f-dd25-4687-9d9d-6ae1b953c7cc",
-      "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-      "CreatedAt": "2024-08-21T07:52:23.506Z",
-      "DeletedAt": null,
-      "ReferenceID": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-      "addressNo": "123",
-      "mooNo": "-",
-      "building": "Tisco Tower",
-      "floor": "16",
-      "soi": "4",
-      "road": "North Sathorn",
-      "tambon": "Siom",
-      "amphoe": "Bangrak",
-      "province": "Bangkok",
-      "postalCode": "10500",
-      "country": "Thailand",
-      "types": 101
-    }
-  ],
-  "citizenId": "3596428240378",
-  "passportId": "123456789", 
-  "expiryDate": "2025-12-19T17:00:00Z",
-  "nationality": "Thai",
-  "types": 101
-},
-        {
-            "id": "e1721ec1-82bb-4aa9-bed6-0f834dcf77f8",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T08:03:57.539Z",
-            "DeletedAt": null,
-            "personalId": "585c3e4e-d1f5-494b-a0df-b60b3c331fa1",
-            "registerId": 80000009,
-            "fullNames": [
-                {
-                    "id": "e7eee781-84be-4f07-a448-dabd58f2d5cc",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T08:03:57.544Z",
-                    "DeletedAt": null,
-                    "ReferenceID": "585c3e4e-d1f5-494b-a0df-b60b3c331fa1",
-                    "title": "Miss",
-                    "firstName": "Test",
-                    "lastName": "Director1",
-                    "types": 101
-                }
-            ],
-            "addresses": [
-                {
-                    "id": "90202453-4358-43fc-a3a8-e5065418c721",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T08:03:57.542Z",
-                    "DeletedAt": null,
-                    "ReferenceID": "585c3e4e-d1f5-494b-a0df-b60b3c331fa1",
-                    "addressNo": "565",
-                    "mooNo": "*",
-                    "building": "Tisco Tower2",
-                    "floor": "16+1",
-                    "soi": "4+1",
-                    "road": "Silom1",
-                    "tambon": "Silom",
-                    "amphoe": "Bangrak",
-                    "province": "bangkok1",
-                    "postalCode": "10501",
-                    "country": "Thailand",
-                    "types": 101
-                }
-            ],
-            "citizenId": "1710892138523",
-            "passportId": "123456789", 
-            "expiryDate": "2025-11-10T17:00:00Z",
-            "nationality": "Thai",
-            "types": 101
-        }
-    ],
-    "AuthorizedPersons": [
-        {
-            "id": "b8729929-d07d-49d3-b064-e35cbf813286",
-            "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-            "CreatedAt": "2024-08-26T09:15:29.436Z",
-            "DeletedAt": null,
-            "personalId": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
-            "registerId": 80000014,
-            "fullNames": [
-                {
-                    "id": "07f5a3d3-1937-4ca7-ac79-a3069d58b909",
-                    "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                    "CreatedAt": "2024-08-26T09:15:29.442Z",
-                    "DeletedAt": null,
-                    "ReferenceID": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
-                    "title": "aa",
-                    "firstName": "a",
-                    "lastName": "s",
-                    "types": 201
-                }
-            ],
-            "addresses": [
-                {
-                    "id": "6eaa81a5-fd62-4f6e-b5fd-12bdcd8b782e",
-                    "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                    "CreatedAt": "2024-08-26T09:15:29.439Z",
-                    "DeletedAt": null,
-                    "ReferenceID": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
-                    "addressNo": "2121",
-                    "tambon": "3",
-                    "amphoe": "44",
-                    "province": "11",
-                    "postalCode": "555",
-                    "country": "45",
-                    "types": 201
-                }
-            ],
-            "citizenId": "1234567890121",
-            "expiryDate": "2024-09-04T00:00:00Z",
-            "nationality": "11",
-            "types": 201
-        }
-    ],
-    "IndividualShareholders": [
-        {
-            "id": "c18a2970-54e0-4bbf-bc33-bda2ca10d9b3",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T08:09:01.66Z",
-            "DeletedAt": null,
-            "personalId": "a5e62927-287b-42a0-93fb-b536f4f5b0a2",
-            "registerId": 80000009,
-            "fullNames": [
-                {
-                    "id": "c21ada9c-d7e6-47dc-a9c4-556f3db15d71",
-                    "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-                    "CreatedAt": "2024-08-21T08:09:01.664Z",
-                    "DeletedAt": null,
-                    "ReferenceID": "a5e62927-287b-42a0-93fb-b536f4f5b0a2",
-                    "title": "Mr.",
-                    "firstName": "Test Shareholder",
-                    "lastName": "Owner",
-                    "types": 301
-                }
-            ],
-            "citizenId": "4763769751236",
-            "expiryDate": "2025-11-24T17:00:00Z",
-            "nationality": "Thai",
-            "types": 301,
-            "sharePercentage": 99
-        }
-    ],
-    "Attorneys": [
-      {
-          "id": "140fd838-923d-44f0-bdee-0c6b8181fcb3",
-          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          "CreatedAt": "2024-09-12T04:00:13.134Z",
+export const mockedCorporateData : TCorporateData[] = [
+  {
+      "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+      "Info": {
+          "id": "298c57e5-5ca8-45bb-81c3-9227c95c4d53",
+          "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+          "CreatedAt": "2024-10-21T08:35:39.09+07:00",
           "DeletedAt": null,
-          "personalId": "394d06e0-3281-4bb3-b8c1-782749105236",
-          "registerId": 80000044,
-          "fullNames": [
-              {
-                  "id": "5d1ecbef-9041-4e19-9df7-70aa1b340d42",
-                  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                  "CreatedAt": "2024-09-12T04:00:13.135Z",
-                  "DeletedAt": null,
-                  "ReferenceID": "394d06e0-3281-4bb3-b8c1-782749105236",
-                  "title": "123123",
-                  "firstName": "1",
-                  "lastName": "1",
-                  "types": 302
-              }
-          ],
-          "addresses": [
-              {
-                  "id": "db732a63-13e7-446b-8714-aad416fb9949",
-                  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-                  "CreatedAt": "2024-09-12T04:00:13.134Z",
-                  "DeletedAt": null,
-                  "ReferenceID": "394d06e0-3281-4bb3-b8c1-782749105236",
-                  "addressNo": "70/178 ramintra65 yak 2-4",
-                  "tambon": "1",
-                  "amphoe": "1",
-                  "province": "Bangkok",
-                  "postalCode": "10220",
-                  "country": "Thailand",
-                  "types": 302
-              }
-          ],
-          "passportId": "123",
-          "expiryDate": "2024-09-24T00:00:00Z",
-          "nationality": "1",
-          "telephone": "0884744411",
-          "email": "1",
-          "types": 302
-      }
-  ],
-    "Juristics": [
-        {
-            "id": "304404f1-dd0f-4666-9fbd-1e911d3cd073",
-            "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
-            "CreatedAt": "2024-08-21T08:12:16.355Z",
-            "DeletedAt": null,
-            "registerId": 80000009,
-            "juristicName": "Nook Company",
-            "registrationNo": "1234567852145",
-            "registeredCountry": "Thailand",
-            "sharePercentage": 50
-        }
-    ],
-    "Banks": [
-      {
-          "id": "db71eec9-195f-4cd8-8ce6-d66505360cab",
-          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-          "CreatedAt": "2024-09-12T02:09:44.974Z",
-          "DeletedAt": null,
-          "registerId": 80000044,
-          "accountType": "12",
-          "bankName": "2",
-          "accountNo": "2",
-          "accountLocation": "2",
-          "swiftCode": "2",
-          "BankId": "2",
-      }
-  ],
-    "Documents": [
-      {
-          "id": "03715454-0713-43ef-9b8d-5570c877fc6d",
-          "docTypes": "id",
-          "registerId": 80000010,
-          "fileName": "test.png",
-          "fileTypes": "image/png",
-          "filePath": "uploads/80000044/id/Screenshot 2024-07-30 101633.png"
+          "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+          "name": "sssABC Co.ltd",
+          "registrationNo": "1234567",
+          "taxId": "1234567890",
+          "dateOfIncorporation": "2013-03-06T08:55:42+07:00"
       },
-      {
-        "id": "03733454-0713-43ef-9b8d-5570c877fc6d",
-        "docTypes": "id",
-        "registerId": 80000045,
-        "fileName": "window.png",
-        "fileTypes": "image/png",
-        "filePath": "uploads/80000044/id/Screenshot 2024-07-30 101633.png"
-    }
-  ],
-   "SuitTestResult": {
-            "registerId": "80000091",
-            "accountID": "",
-            "totalScore": 22,
-            "level": 3,
-            "investorTypeRisk": "Moderate to High",
-            "suitTestResult": {
-                "answer": [
-                    {
-                        "id": "61253f9f-70b3-4d94-8e5e-53854c12dccc",
-                        "ans": 1,
-                        "type": 1,
-                        "quiz": 1
-                    },
-                    {
-                        "id": "1464dba8-b5be-4a4d-b018-b9d1057686c0",
-                        "ans": 1,
-                        "type": 1,
-                        "quiz": 2
-                    },
-                    {
-                        "id": "6ac5283c-ddc5-4349-b5ba-46e1ae81368b",
-                        "ans": 3,
-                        "type": 1,
-                        "quiz": 3
-                    },
-                    {
-                        "id": "764e2271-99ce-4be1-9b41-7ff74756d25c",
-                        "ans": [
-                            1,
-                            0,
-                            3,
-                            0
-                        ],
-                        "type": 2,
-                        "quiz": 4
-                    },
-                    {
-                        "id": "bcefd020-9e5d-4fcf-ae08-465c062d5e68",
-                        "ans": 1,
-                        "type": 1,
-                        "quiz": 5
-                    },
-                    {
-                        "id": "28ca0197-07f5-46ed-80a0-ad0dddbb1066",
-                        "ans": 4,
-                        "type": 1,
-                        "quiz": 6
-                    },
-                    {
-                        "id": "9d5e8ecb-1547-48da-af9b-9bda6ec12042",
-                        "ans": 2,
-                        "type": 1,
-                        "quiz": 7
-                    },
-                    {
-                        "id": "80c7fa3f-a6d4-45be-bce5-83d5bb02f111",
-                        "ans": 2,
-                        "type": 1,
-                        "quiz": 8
-                    },
-                    {
-                        "id": "f6fd2ce6-3725-4da7-b417-67f674932c3d",
-                        "ans": 2,
-                        "type": 1,
-                        "quiz": 9
-                    },
-                    {
-                        "id": "11f44330-ca44-4904-9f3d-109f9fb61e65",
-                        "ans": 3,
-                        "type": 1,
-                        "quiz": 10
-                    }
-                ],
-                "additional": [
-                    true,
-                    true
-                ]
-            },
-            "type": 0
-        }
-}]
+      "CorporateCountry": [
+          {
+              "id": "18d40301-c290-4c51-a5bf-d332efb58709",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T08:37:41.229+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "isThailand": true,
+              "other": "",
+              "types": 603
+          },
+          {
+              "id": "939554a4-eab9-4692-a8d9-a2072a0f1425",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T08:35:39.138+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "isThailand": true,
+              "other": "dfdasgdgh",
+              "types": 602
+          },
+          {
+              "id": "bb40f1c9-8024-4efd-8eef-7dc295af253b",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T08:35:39.138+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "isThailand": true,
+              "other": "12314556",
+              "types": 601
+          }
+      ],
+      "CorporateAddress": [
+          {
+              "address": [
+                  {
+                      "id": "74da55b0-2852-417b-ba4f-573338c715ef",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T08:35:39.27+07:00",
+                      "DeletedAt": null,
+                      "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+                      "addressNo": "123",
+                      "mooNo": "4",
+                      "building": "tisco",
+                      "floor": "16",
+                      "soi": "14",
+                      "road": "sirom",
+                      "tambon": "sirom",
+                      "amphoe": "sirom",
+                      "province": "bangkok",
+                      "postalCode": "10100",
+                      "country": "thailand",
+                      "types": 702
+                  }
+              ],
+              "emailAddress": "aaaaaa@ooooo.com",
+              "telephone": "0912341511"
+          },
+          {
+              "address": [
+                  {
+                      "id": "d9d8ce36-2766-4a24-9dff-eb70650509c8",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T08:35:39.218+07:00",
+                      "DeletedAt": null,
+                      "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+                      "addressNo": "123",
+                      "mooNo": "4",
+                      "building": "tisco",
+                      "floor": "16",
+                      "soi": "14",
+                      "road": "sirom",
+                      "tambon": "sirom",
+                      "amphoe": "sirom",
+                      "province": "bangkok",
+                      "postalCode": "10100",
+                      "country": "thailand",
+                      "types": 701
+                  }
+              ],
+              "emailAddress": "aaaaaa@ooooo.com",
+              "telephone": "0912341511"
+          }
+      ],
+      "CorporateFinancials": {
+          "id": "b33fa323-edf9-42c6-bc02-780abbd9b843",
+          "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+          "CreatedAt": "2024-10-21T08:35:39.17+07:00",
+          "DeletedAt": null,
+          "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+          "registeredCapital": 12346,
+          "revenuePerYear": 123456,
+          "netProfitLoss": 123456,
+          "shareholderEquity": 123456
+      },
+      "CorporateTypes": {
+          "id": "80f48d6c-a3d0-49c5-a73e-f59f1158c803",
+          "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+          "CreatedAt": "2024-10-21T08:37:41.144+07:00",
+          "DeletedAt": null,
+          "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+          "isJuristicThailand": true,
+          "isTaxExempt": false,
+          "isNonTaxExempt": true,
+          "isJuristicForeign": false,
+          "isOperatingInThailand": false,
+          "isNonOperatingInThailand": false,
+          "isOther": false,
+          "isPartnership": false,
+          "isGovernmentStateEnterprise": false,
+          "isCoOperative": false,
+          "isTaxExemptCompany": false
+      },
+      "BusinessTypes": {
+          "id": "d25389f8-9369-4c7c-9c7d-818057c0bb7c",
+          "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+          "CreatedAt": "2024-10-21T08:37:41.172+07:00",
+          "DeletedAt": null,
+          "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+          "isAntiqueTrading": false,
+          "isHotelRestaurant": false,
+          "isArmament": false,
+          "isInsuranceAssurance": false,
+          "isCasinoGambling": true,
+          "isJewelryGoldTrading": false,
+          "isFoundation": false,
+          "isPropertyRealEstate": false,
+          "isMoneyTransfer": false,
+          "isEmploymentAgency": false,
+          "isEntertainment": false,
+          "isTravel": false,
+          "isFinancial": false,
+          "isEducationCenter": false,
+          "isForeignCurrencyExchange": false,
+          "isCryptoRelated": false,
+          "isOtherBusiness": false,
+          "otherBusinessType": ""
+      },
+      "SourceOfIncomes": {
+          "id": "4c49ba18-b729-4922-a5b0-cd9ff1c179f9",
+          "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+          "CreatedAt": "2024-10-21T08:37:41.198+07:00",
+          "DeletedAt": null,
+          "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+          "isRevenue": true,
+          "isStock": false,
+          "isDonation": true,
+          "isLoan": false,
+          "isRevenueSelling": false,
+          "isOtherIncome": false,
+          "otherIncome": ""
+      },
+      "CountrySourceIncomes": [
+          {
+              "CreatedAt": "0001-01-01T00:00:00Z",
+              "DeletedAt": null,
+              "registerId": "",
+              "corporateCountry": {
+                  "id": "18d40301-c290-4c51-a5bf-d332efb58709",
+                  "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                  "CreatedAt": "2024-10-21T08:37:41.229+07:00",
+                  "DeletedAt": null,
+                  "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+                  "isThailand": true,
+                  "other": "",
+                  "types": 603
+              },
+              "otherCountry": "",
+              "investmentObject": "",
+              "isLiquidation": true,
+              "isInvestment": false,
+              "isCashManagement": false,
+              "isOtherInvestment": false,
+              "otherInvestment": ""
+          }
+      ],
+      "Contact": [
+          {
+              "id": "20f2d70b-47a9-40b1-9c8a-00f24c0bd435",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:25:10.695+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "a233fa19-cafa-41ec-8312-69b95ed51cc3",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:25:10.703+07:00",
+                      "DeletedAt": null,
+                      "contactID": "c75a46fb-1126-4812-8934-303ad992f3c4",
+                      "title": "Mr.",
+                      "firstName": "Moss",
+                      "lastName": "Ssoom",
+                      "types": 401
+                  }
+              ],
+              "personalId": "c75a46fb-1126-4812-8934-303ad992f3c4",
+              "position": "CEO",
+              "division": "ABC",
+              "telephone": "01234456778",
+              "email": "MMM@123.gmail.con",
+              "types": 401
+          },
+          {
+              "id": "465d6410-3a2d-460a-8636-fc75c1e9b66c",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:37:44.067+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "6f505f77-cc8d-4574-a46d-de246cd6ff7f",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:37:44.073+07:00",
+                      "DeletedAt": null,
+                      "contactID": "ce5adab8-6e82-4680-bd7b-37f2fc571fd3",
+                      "title": "Mr.",
+                      "firstName": "Moss",
+                      "lastName": "Ssoom",
+                      "types": 401
+                  }
+              ],
+              "personalId": "ce5adab8-6e82-4680-bd7b-37f2fc571fd3",
+              "position": "CEO",
+              "division": "ABC",
+              "telephone": "01234456778",
+              "email": "MMM@123.gmail.con",
+              "types": 401
+          },
+          {
+              "id": "febe4819-0e54-4592-9c63-9e38c375e7bf",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T08:37:13.935+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "cda11517-cae6-474e-b05d-6ad72982e9cf",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T08:37:13.938+07:00",
+                      "DeletedAt": null,
+                      "contactID": "baa7c9c2-4a02-4a8e-bb9c-1ceaa3d3eadc",
+                      "title": "Mr.",
+                      "firstName": "Moss",
+                      "lastName": "Ssoom",
+                      "types": 401
+                  }
+              ],
+              "personalId": "baa7c9c2-4a02-4a8e-bb9c-1ceaa3d3eadc",
+              "position": "CEO",
+              "division": "ABC",
+              "telephone": "01234456778",
+              "email": "MMM@123.gmail.con",
+              "types": 401
+          }
+      ],
+      "Directors": [
+          {
+              "id": "3ef3a6be-a248-419d-a75f-ca9904f601ea",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:05:43.152+07:00",
+              "DeletedAt": null,
+              "personalId": "fa9dfbda-7f55-4a89-99a3-2374da455e00",
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "0e8153af-417e-4644-8180-726b6224e7ec",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:43.172+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "fa9dfbda-7f55-4a89-99a3-2374da455e00",
+                      "title": "Mr",
+                      "firstName": "Johnfforreal",
+                      "lastName": "Doefdd",
+                      "types": 101
+                  },
+                  {
+                      "id": "d65b3d22-fa21-45b3-ae6a-832841a42fee",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:43.172+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "fa9dfbda-7f55-4a89-99a3-2374da455e00",
+                      "title": "Mr",
+                      "firstName": "JohnMore",
+                      "lastName": "Doefd",
+                      "types": 101
+                  }
+              ],
+              "addresses": [
+                  {
+                      "id": "a9b30c64-3a86-40ec-b42b-f5b4148f1202",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:43.162+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "fa9dfbda-7f55-4a89-99a3-2374da455e00",
+                      "addressNo": "123",
+                      "mooNo": "1",
+                      "soi": "Sukhumvit",
+                      "road": "Somewhere",
+                      "tambon": "Tam",
+                      "amphoe": "Klong",
+                      "province": "Bangkok",
+                      "postalCode": "10120",
+                      "country": "Thailand",
+                      "types": 101
+                  },
+                  {
+                      "id": "d730ac5e-4c00-460c-8f48-b2412c09c614",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:43.162+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "fa9dfbda-7f55-4a89-99a3-2374da455e00",
+                      "addressNo": "2423",
+                      "tambon": "Tam",
+                      "amphoe": "Chan",
+                      "province": "Bangkok",
+                      "postalCode": "10520",
+                      "country": "Thailand",
+                      "types": 101
+                  }
+              ],
+              "passportId": "3993693",
+              "expiryDate": "2025-01-01T07:00:00+07:00",
+              "nationality": "Thai",
+              "types": 101
+          }
+      ],
+      "AuthorizedPersons": [
+          {
+              "id": "ca167b9d-1e25-46ae-9400-94ae243320b7",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:05:50.399+07:00",
+              "DeletedAt": null,
+              "personalId": "bde0db45-1b2a-46d8-85df-e2939e91ad93",
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "1cfec602-cdc7-41a0-9e08-8ca6774499fe",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:50.408+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "bde0db45-1b2a-46d8-85df-e2939e91ad93",
+                      "title": "Mr",
+                      "firstName": "Johnfforreal",
+                      "lastName": "Doefdd",
+                      "types": 201
+                  },
+                  {
+                      "id": "ff391b74-6deb-40cb-8395-499f0923801a",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:50.408+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "bde0db45-1b2a-46d8-85df-e2939e91ad93",
+                      "title": "Mr",
+                      "firstName": "JohnMore",
+                      "lastName": "Doefd",
+                      "types": 201
+                  }
+              ],
+              "addresses": [
+                  {
+                      "id": "087c1e69-ed11-47a0-88e1-d94585067303",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:50.403+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "bde0db45-1b2a-46d8-85df-e2939e91ad93",
+                      "addressNo": "2423",
+                      "tambon": "Tam",
+                      "amphoe": "Chan",
+                      "province": "Bangkok",
+                      "postalCode": "10520",
+                      "country": "Thailand",
+                      "types": 201
+                  },
+                  {
+                      "id": "aa2fd25a-cc6a-4d34-80db-eef57a25eaab",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:50.403+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "bde0db45-1b2a-46d8-85df-e2939e91ad93",
+                      "addressNo": "123",
+                      "mooNo": "1",
+                      "soi": "Sukhumvit",
+                      "road": "Somewhere",
+                      "tambon": "Tam",
+                      "amphoe": "Klong",
+                      "province": "Bangkok",
+                      "postalCode": "10120",
+                      "country": "Thailand",
+                      "types": 201
+                  }
+              ],
+              "citizenId": "12345676",
+              "expiryDate": "2025-01-01T07:00:00+07:00",
+              "nationality": "Thai",
+              "types": 201
+          }
+      ],
+      "IndividualShareholders": [
+          {
+              "id": "562bd51d-1575-4d13-a03a-1a253ea6fbba",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:05:57.657+07:00",
+              "DeletedAt": null,
+              "personalId": "9f11cf94-5bf6-4619-a210-56822a3945b7",
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "e102cbb9-2285-4ced-ac0b-cbf762083bf8",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:57.662+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "9f11cf94-5bf6-4619-a210-56822a3945b7",
+                      "title": "Mr",
+                      "firstName": "Money",
+                      "lastName": "Cash",
+                      "types": 301
+                  },
+                  {
+                      "id": "eeebda0a-72ec-41c1-8af4-2f6767ed0b2d",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:05:57.662+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "9f11cf94-5bf6-4619-a210-56822a3945b7",
+                      "title": "Mr",
+                      "firstName": "Dollar",
+                      "lastName": "Burger",
+                      "types": 301
+                  }
+              ],
+              "passportId": "1248068655",
+              "expiryDate": "2025-01-01T07:00:00+07:00",
+              "nationality": "Thai",
+              "types": 301,
+              "sharePercentage": 28
+          }
+      ],
+      "Attorneys": [
+          {
+              "id": "495cd875-abd4-4572-8c31-b933e221667f",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:06:07.054+07:00",
+              "DeletedAt": null,
+              "personalId": "815131c0-4685-489d-a941-f2c12bbbdc35",
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "fullNames": [
+                  {
+                      "id": "6c2c3147-b1de-4f29-b739-802f1feeabd9",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:06:07.062+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "815131c0-4685-489d-a941-f2c12bbbdc35",
+                      "title": "attorney-title",
+                      "firstName": "attorney-name",
+                      "lastName": "attorney-surname",
+                      "types": 302
+                  }
+              ],
+              "addresses": [
+                  {
+                      "id": "b1df6deb-5b9a-4eb1-90db-de2574377090",
+                      "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+                      "CreatedAt": "2024-10-21T09:06:07.057+07:00",
+                      "DeletedAt": null,
+                      "ReferenceID": "815131c0-4685-489d-a941-f2c12bbbdc35",
+                      "addressNo": "70/178 ramintra65 yak 2-4",
+                      "mooNo": "address",
+                      "building": "address",
+                      "floor": "address",
+                      "soi": "address",
+                      "road": "address",
+                      "tambon": "address",
+                      "amphoe": "address",
+                      "province": "Bangkok",
+                      "postalCode": "10220",
+                      "country": "Thailand",
+                      "types": 302
+                  }
+              ],
+              "passportId": "12345",
+              "expiryDate": "2024-09-26T07:00:00+07:00",
+              "nationality": "attorney-nation",
+              "telephone": "0884744411",
+              "email": "test@example.us",
+              "types": 302
+          }
+      ],
+      "Juristics": [
+          {
+              "id": "95073f67-7c94-4232-bae4-8d719689c2c1",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T08:51:16.838+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "juristicName": "Real Corporation",
+              "registrationNo": "REG123456",
+              "registeredCountry": "Thailand",
+              "sharePercentage": 75
+          }
+      ],
+      "Banks": [
+          {
+              "id": "0e29fbff-5a77-4b26-8ca5-0aee07e16ecd",
+              "createBy": "ee082cb5-00ae-4c54-a184-4738f562bc92",
+              "CreatedAt": "2024-10-21T09:10:32.367+07:00",
+              "DeletedAt": null,
+              "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
+              "accountType": "savings",
+              "bankName": "Bank G",
+              "accountNo": "5566778899",
+              "accountLocation": "Udon Thani",
+              "swiftCode": "UDO12345"
+          }
+      ],
+      "Documents": [],
+      "SuitTestResult": {
+          "CreatedAt": "0001-01-01T00:00:00Z",
+          "DeletedAt": null,
+          "registerId": "",
+          "totalScore": 12,
+          "level": 1,
+          "investorTypeRisk": "Low",
+          "suitTestResult": {
+              "answer": [
+                  {
+                      "id": "cd7bc545-b28f-4fd8-b156-c1336fe3c2b0",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 0
+                  },
+                  {
+                      "id": "7c807c2f-4bfa-438d-b44a-cfff8a81ac2b",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 1
+                  },
+                  {
+                      "id": "b52326a2-8c77-4be9-8a17-5f901f04f767",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 2
+                  },
+                  {
+                      "id": "d3d13ec1-ff5e-4177-88dc-341d24c49d68",
+                      "ans": [
+                          0,
+                          2,
+                          3,
+                          0
+                      ],
+                      "type": 2,
+                      "quiz": 3
+                  },
+                  {
+                      "id": "695451aa-b95b-412b-8f6f-9ab322df4d52",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 4
+                  },
+                  {
+                      "id": "ff6c0cb1-2952-40e1-a759-a624fa0495c4",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 5
+                  },
+                  {
+                      "id": "cb59f6ca-4904-4c2a-9869-e9c4c0dc4afe",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 6
+                  },
+                  {
+                      "id": "ee411a9b-8012-42be-903f-1a080f369daf",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 7
+                  },
+                  {
+                      "id": "47710e6d-4341-40e3-b699-ba4d98cbb81c",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 8
+                  },
+                  {
+                      "id": "59dbea36-94e7-4f67-b728-0a9de7f1cc22",
+                      "ans": 1,
+                      "type": 1,
+                      "quiz": 9
+                  }
+              ],
+              "additional": [
+                  true,
+                  true
+              ]
+          },
+          "type": 0
+      }
+  }
+]
