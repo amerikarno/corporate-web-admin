@@ -15,11 +15,11 @@ interface Answer {
 }
 
 type SubSuitTestProps = {
-  suitTestResult: (result: any) => void;
-  onSuitTestDone: (done: boolean) => void;
+  suiteTestResult: (result: any) => void;
+  onSuiteTestDone: (done: boolean) => void;
 };
 
-export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTestProps) {
+export default function SubSuitTest({ onSuiteTestDone,suiteTestResult }: SubSuitTestProps) {
   const questions = [
     {
       question: "ท่านมีภาระค่าใช้จ่ายประจำดือนเป็นสัดส่วนเท่าใดของรายได้",
@@ -108,12 +108,12 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
   ];
   const token = getCookies();
   const dispatch = useDispatch();
-  const fetchIndividualData = async (AccountID: string) => {
+  const fetchIndividualData = async (registerId: string) => {
     try {
-      console.log(AccountID);
+      console.log(registerId);
       const res = await axios.post(
         "/api/v1/individual/list",
-        { AccountID },
+        { registerId },
         {
           headers: {
             "Content-Type": "application/json",
@@ -131,8 +131,8 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
     (state: RootState) => state.individualData.individualDatas
   );
 
-  const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suitTestResult.answer;
-  const fetchedData = Object.keys(fetchSuitTestResult || []).map(key => fetchSuitTestResult?.[key].ans);
+  const fetchSuiteTestResult = individualData?.SuiteTestResult.suiteTestResult.suiteTestResult.answer;
+  const fetchedData = Object.keys(fetchSuiteTestResult || []).map(key => fetchSuiteTestResult?.[key].ans);
   console.log(fetchedData);
   // const fetchedData = [[0, 0, 0, 0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0]];
 
@@ -174,18 +174,18 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
 
 
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
-    if (cidValue) {
-      fetchIndividualData(cidValue || "");
+    const registerIdValue = localStorage.getItem("registerId");
+    if (registerIdValue) {
+      fetchIndividualData(registerIdValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
 
   useEffect(() => {
     if (individualData) {
-      const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suitTestResult.answer;
-      const fetchedData = Object.keys(fetchSuitTestResult || []).map(key => fetchSuitTestResult?.[key].ans);
+      const fetchSuiteTestResult = individualData?.SuiteTestResult.suiteTestResult.suiteTestResult.answer;
+      const fetchedData = Object.keys(fetchSuiteTestResult || []).map(key => fetchSuiteTestResult?.[key].ans);
       console.log(fetchedData);
 
       const initialAnswers = questions.map((_, index) => {
@@ -236,7 +236,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
   // );
   const [totalScore, setTotalScore] = useState(0);
   const [investorType, setInvestorType] = useState("");
-  const [suitTestDone, setSuitTestDone] = useState(false);
+  const [suiteTestDone, setSuiteTestDone] = useState(false);
 
   const handleOptionChange = (
     questionIndex: number,
@@ -305,7 +305,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
     }
   };
 
-  const mapTosuitTestResult = (score:number)=>{
+  const mapTosuiteTestResult = (score:number)=>{
     const index = score - 1;
     let resList = [0,0,0,0];
     resList[index] = 1;
@@ -323,8 +323,8 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
       scoreCalculator = scoreCalculator + ans.score;
       return ans.answer !== "";
     });
-    setSuitTestDone(allAnswered);
-    onSuitTestDone(allAnswered);
+    setSuiteTestDone(allAnswered);
+    onSuiteTestDone(allAnswered);
     let investorTypeTemp;
     if (scoreCalculator < 15) {
       setInvestorType("เสี่ยงตํ่า");
@@ -349,22 +349,22 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
     // console.log(answers)
     // console.log(allAnswered)
     // console.log(totalScore)
-    // console.log(suitTestDone)
+    // console.log(suiteTestDone)
     if (allAnswered) {
-      const suitTestCalculate = answers.map((item: any) => ({
+      const suiteTestCalculate = answers.map((item: any) => ({
         // id: item.questionIndex,
-        ans: item.questionIndex === 2 ? item.answer : mapTosuitTestResult(item.score),
+        ans: item.questionIndex === 2 ? item.answer : mapTosuiteTestResult(item.score),
         // type: item.questionIndex === 2 ? 2 : 1,
         // quiz: 1,
       }));
       let body = {
-        cid: localStorage.getItem("cid"),
+        registerId: localStorage.getItem("registerId"),
         investorTypeRisk: investorTypeTemp,
         level: giveGrade(scoreCalculator),
         totalScore: scoreCalculator,
-        suitTestResult: { answer: { ...suitTestCalculate } },
+        suiteTestResult: { answer: { ...suiteTestCalculate } },
       };
-      suitTestResult(body)
+      suiteTestResult(body)
       console.log(body);
     }
   };
@@ -443,7 +443,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
             </Card> 
         ))}
         <div className="flex justify-center">
-          {/* {!suitTestDone && (
+          {/* {!suiteTestDone && (
             <Button type="button" className="w-1/8" onClick={handleSubmit}>
               Done
             </Button>
@@ -452,7 +452,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
               Done
             </Button>
         </div>
-        {suitTestDone && (
+        {suiteTestDone && (
           <div className="md:relative flex md:flex-row flex-col w-full m-8">
             <div className="flex md:w-1/4 flex-col items-center space-y-4 border-t-4 md:border-l-4 md:border-t-0 p-4 pt-4">
               <div className="">

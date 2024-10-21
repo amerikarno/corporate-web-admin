@@ -56,7 +56,7 @@ export function FormCorporateInfo({
 
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
   const [placeIncorporateValue, setPlaceIncorporateValue] = useState<string>(
-    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : "place-radio-1"
+    corporatesInfo?.registerId ? "place-radio-2" : "place-radio-1"
   );
 
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
@@ -315,7 +315,7 @@ export function FormCorporateInfo({
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      corporateCode: corporatesInfo?.CorporateCode.toString(),
+      registerId: corporatesInfo?.registerId,
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
@@ -604,6 +604,7 @@ export function FormCorporateInfo({
               id={"Registered Capital"}
               label={"Registered Capital"}
               {...register("registeredCapital")}
+              type="number"
               name="registeredCapital"
               disabled={isSubmitting}
               data-testid="registeredCapital"
@@ -616,6 +617,7 @@ export function FormCorporateInfo({
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
+              type="number"
               name="revenuePerYear"
               disabled={isSubmitting}
               data-testid="revenuePerYear"
@@ -628,6 +630,7 @@ export function FormCorporateInfo({
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
+              type="number"
               name="netProFitLoss"
               disabled={isSubmitting}
               data-testid="netProFitLoss"
@@ -640,6 +643,7 @@ export function FormCorporateInfo({
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
+              type="number"
               name="shareholderEquity"
               disabled={isSubmitting}
               data-testid="shareholderEquity"

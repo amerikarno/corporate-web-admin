@@ -12,21 +12,21 @@ const EditButtonCell = ({ row }: { row: TCorporateData }) => {
   const handleEditClick = () => {
     console.log(row);
     dispatch(setCorporateData(row));
-    localStorage.setItem('corporateCode', row.CorporateCode.toString());
+    localStorage.setItem('registerId', row.registerId.toString());
     navigate("/todo-list/corporate-account-opening/edit/1", {
       state: row,
     });
   };
 
   return (
-    <Pencil data-testid={`editButton-${row.CorporateCode}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
+    <Pencil data-testid={`editButton-${row.registerId}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
   );
 };
 
 export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
   {
     name: "Juristic ID",
-    selector: (row: TCorporateData) => row.CorporateCode || "",
+    selector: (row: TCorporateData) => row.registerId || "",
   },
   {
     name: "Juristic Name",

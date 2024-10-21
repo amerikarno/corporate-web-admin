@@ -11,7 +11,7 @@ import reducer, {
   
   const mockJuristicShareholder: TJuristicsShareholders = {
     juristicId: "juristic1",
-    corporateCode: "123456",
+    registerId: "123456",
     juristicName: "Example Juristic",
     registrationNo: "REG123",
     registeredCountry: "USA",
@@ -20,7 +20,7 @@ import reducer, {
   
   const updatedJuristicShareholder: TJuristicsShareholders = {
     juristicId: "juristic1",
-    corporateCode: "123456",
+    registerId: "123456",
     juristicName: "Updated Juristic",
     registrationNo: "REG123",
     registeredCountry: "USA",

@@ -22,12 +22,12 @@ export default function SuitTestFatca() {
 
   const token = getCookies();
   const dispatch = useDispatch();
-  const fetchIndividualData = async (AccountID: string) => {
+  const fetchIndividualData = async (registerId: string) => {
     try {
-      console.log(AccountID);
+      console.log(registerId);
       const res = await axios.post(
         "/api/v1/individual/list",
-        { AccountID },
+        { registerId },
         {
           headers: {
             "Content-Type": "application/json",
@@ -45,11 +45,11 @@ export default function SuitTestFatca() {
     (state: RootState) => state.individualData.individualDatas
   );
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
-    if (cidValue) {
-      fetchIndividualData(cidValue || "");
+    const registerIdValue = localStorage.getItem("registerId");
+    if (registerIdValue) {
+      fetchIndividualData(registerIdValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
 
@@ -91,41 +91,40 @@ export default function SuitTestFatca() {
   };
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [knowLedgeTestSuccess, setKnowLedgeTestSuccess] = useState(false);
-  const [suitTestSuccess, setSuitTestSuccess] = useState(false);
-  const [suitTestResult,setSuitTestResult] = useState();
+  const [suiteTestSuccess, setSuiteTestSuccess] = useState(false);
+  const [suiteTestResult,setSuiteTestResult] = useState();
   const navigate = useNavigate();
 
   const handleKnowLedgeTestSuccess = (success: boolean) => {
         setKnowLedgeTestSuccess(success);
         console.log('Test Success:', success);
     };
-  const handleSuitTestSuccess = (success:boolean) =>{
-      setSuitTestSuccess(success)
+  const handleSuiteTestSuccess = (success:boolean) =>{
+      setSuiteTestSuccess(success)
       console.log("Suit Test submit button pressed!")
   }
 
-    const handleSuitTestResult = (exam_result : any) =>{
+    const handleSuiteTestResult = (exam_result : any) =>{
       console.log(exam_result)
-      setSuitTestResult(exam_result)
+      setSuiteTestResult(exam_result)
   }
   //fatcaradio === "fatcaradio-2" แปลว่าไม่ใช่อเมริกา
-  const handleSubmitSuitTestFatca = async () => {
+  const handleSubmitSuiteTestFatca = async () => {
     console.log(isButtonDisabled);
-    console.log(suitTestSuccess);
+    console.log(suiteTestSuccess);
     console.log(fatcaradio === "fatcaradio-2");
     console.log(fatcaInfo !== "");
     if (
-      suitTestSuccess &&
+      suiteTestSuccess &&
       (fatcaradio === "fatcaradio-2" ||  JSON.stringify(fatcaInfo) !== JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0]))
     ) {
       let body = {
-        id: localStorage.getItem("cid"),
-        suiteTestResult: suitTestResult,
+        registerId: localStorage.getItem("registerId"),
+        suiteTestResult: suiteTestResult,
         isFatca: fatcaradio === "fatcaradio-1",
         fatcaInfo: fatcaInfo === "" ? [] : fatcaInfo,
         isKnowLedgeDone: knowLedgeTestSuccess,
         knowLedgeTestResult: knowLedgeTestSuccess ? 15 : 0,
-        pageID: 400,
       };
       console.log(body);
       dispatch(setTestCorporateData(body));
@@ -198,7 +197,7 @@ if you are an American citizen, please complete the FATCA form first.`);
             </div>
           </div> */}
       </div>
-      <SubSuitTest onSuitTestDone={handleSuitTestSuccess} suitTestResult={handleSuitTestResult}/>
+      <SubSuitTest onSuiteTestDone={handleSuiteTestSuccess} suiteTestResult={handleSuiteTestResult}/>
       <Card>
         <CardContent>
           <div className="p-4 space-y-4 pr-8 pl-8 flex flex-col">
@@ -338,7 +337,7 @@ if you are an American citizen, please complete the FATCA form first.`);
         </CardContent>
       </Card>
       <div className="absolute right-4 -bottom-[4.5rem]">
-        <Button onClick={handleSubmitSuitTestFatca}>Next Form</Button>
+        <Button onClick={handleSubmitSuiteTestFatca}>Next Form</Button>
       </div>
       <div>
         {/* {suitTestSuccess ? <div>Suit Test Completed Successfully!</div> : <div>Suit Test Not Completed</div>}

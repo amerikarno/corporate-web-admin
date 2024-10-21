@@ -18,13 +18,13 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 
 type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TAuthorizePerson | null;
   clearChoosedEditData: () => void;
 };
 export function FormAuthorizedPerson({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TAuthorizePersonFormProps) {
@@ -33,9 +33,6 @@ export function FormAuthorizedPerson({
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
-  const [hasDate, setHasDate] = useState<boolean>(
-    choosedEditData?.expiryDate ? true : false
-  );
 
   const dispatch = useDispatch();
   const handleChange = (e: any) => {
@@ -111,7 +108,7 @@ export function FormAuthorizedPerson({
         types: 201,
         addresses: data.addresses,
         fullNames: data.fullNames,
-        corporateCode: corporateCode,
+        registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
@@ -136,7 +133,6 @@ export function FormAuthorizedPerson({
       }],
       passportId:'',
       citizenId: '',
-      expiryDate: "mm/dd/yyyy",
       nationality:'',
       addresses: [
         { addressNo: "",
@@ -154,7 +150,6 @@ export function FormAuthorizedPerson({
       ],
     }
     reset(authorizedPersonData);
-    setHasDate(true);
   }, [choosedEditData, reset]);
 
   return (
@@ -273,21 +268,6 @@ export function FormAuthorizedPerson({
               )}
             </div>
           </div>
-          {hasDate ? (
-                <div className="w-full md:w-1/2">
-                  <Input
-                    {...register("expiryDate")}
-                    id="Date of Expired"
-                    onClick={() => setHasDate(false)}
-                    data-testid="expiredDate"
-                  />
-                  {errors.expiryDate && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.expiryDate.message}
-                    </p>
-                  )}
-                </div>
-              ) : (
                 <div className="w-full md:w-1/2">
                   <Input
                     {...register("expiryDate")}
@@ -302,7 +282,6 @@ export function FormAuthorizedPerson({
                     </p>
                   )}
                 </div>
-              )}
         </div>
 
         <div className="flex flex-row space-x-0 md:space-x-4">

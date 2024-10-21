@@ -11,24 +11,24 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 import { useDispatch } from "react-redux";
 
 type TBankWithID = {
-  CorporateCode?:string;
+  registerId?:string;
   bank : TBank[];
   BankId?: string;
 }
 
 type TBankFormProps = {
   onsubmit: (data: TBankArray) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TBankWithID | null;
   clearChoosedEditData: () => void;
 };
 
 type TBankArray = {
   bank: TBank[];
-  CorporateCode?: string;
+  registerId?: string;
   BankId?:string;
 };
-export function FormBank({ onsubmit, corporateCode ,  choosedEditData,
+export function FormBank({ onsubmit, registerId ,  choosedEditData,
   clearChoosedEditData,}: TBankFormProps) {
   const {
     register,
@@ -42,7 +42,7 @@ export function FormBank({ onsubmit, corporateCode ,  choosedEditData,
   const onSubmit = async (data: TBank) => {
     let body: TBankArray = {
       bank: [data],
-      CorporateCode: corporateCode,
+      registerId: registerId,
       BankId: choosedEditData?.BankId,
     };
     dispatch(setTestCorporateData(body));

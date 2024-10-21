@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface TimerState {
-  [corporateCode: string]: number;
+  [registerId: string]: number;
 }
 
 const initialState: TimerState = {};
@@ -11,8 +11,8 @@ const timersSlice = createSlice({
   name: 'timers',
   initialState,
   reducers: {
-    setTimer: (state, action: PayloadAction<{ corporateCode: string; time: number }>) => {
-      state[action.payload.corporateCode] = action.payload.time;
+    setTimer: (state, action: PayloadAction<{ registerId: string; time: number }>) => {
+      state[action.payload.registerId] = action.payload.time;
     },
     decrementTimer: (state, action: PayloadAction<string>) => {
       if (state[action.payload] > 0) {

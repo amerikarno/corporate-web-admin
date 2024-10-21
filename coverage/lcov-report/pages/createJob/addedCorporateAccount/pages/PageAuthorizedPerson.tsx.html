@@ -537,11 +537,11 @@ export function PageAuthorizedPerson({
 <span class="cstat-no" title="statement not covered" >    setChoosedEditData(undefined);</span>
   };
   const corporatesInfo = useSelector&lt;RootState&gt;((state) =&gt; state.editCorporate) as TCorporateData;
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
 &nbsp;
   const fetchedData = async () =&gt; {
     try{
-      const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
+      const res = await axios.post("/api/v1/corporate/query", { registerId }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -570,10 +570,10 @@ export function PageAuthorizedPerson({
   }
 &nbsp;
   useEffect(() =&gt; {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2305771956_81_6_81_44_4`,"corporateCode not found"))</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2305771956_81_6_81_44_4`,"registerId not found"))</span>
     }
   }, []);
   
@@ -661,7 +661,7 @@ export function PageAuthorizedPerson({
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -695,7 +695,7 @@ export function PageAuthorizedPerson({
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitAuthorize}
-          corporateCode={corporateCode}
+          registerId={registerId}
         /&gt;
       &lt;/div&gt;
     &lt;/&gt;

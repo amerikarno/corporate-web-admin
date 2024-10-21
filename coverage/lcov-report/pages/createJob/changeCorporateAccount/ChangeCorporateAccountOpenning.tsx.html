@@ -545,8 +545,8 @@ export default function ChangeCorporateAccountOpenning({
   const [corporateData, setCorporateData] = useState&lt;TCorporateData[]&gt;([]);
   const [disableDate, setDisableDate] = useState&lt;boolean&gt;(false);
   const [disableCode, setDisableCode] = useState&lt;boolean&gt;(false);
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
+    { registerId: number }[]
   &gt;([]);
 &nbsp;
   const handleDisableDate = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
@@ -556,7 +556,7 @@ export default function ChangeCorporateAccountOpenning({
 <span class="cstat-no" title="statement not covered" >      setDisableDate(false);</span>
     }
   };
-  const fetchCorporateCodes = async () =&gt; {
+  const fetchregisterIds = async () =&gt; {
     try {
       const token = getCookies();
 &nbsp;
@@ -572,10 +572,10 @@ export default function ChangeCorporateAccountOpenning({
       );
       if (res.status === 200) {
         // console.log(res);
-        const corporateCodes = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+          registerId: item.registerId,
         }));
-<span class="cstat-no" title="statement not covered" >        setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >        setFetchedregisterIds(registerIds);</span>
       }
     } catch (error) {
       /* eslint-disable */console.log(...oo_oo(`879330825_86_6_86_59_4`,"Error fetching corporate codes:", error));
@@ -583,9 +583,9 @@ export default function ChangeCorporateAccountOpenning({
   };
 &nbsp;
   const initData = async () =&gt; {
-    await fetchCorporateCodes();
+    await fetchregisterIds();
     const data: TCorporateAccountOpening = {
-      corporateCode: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
@@ -596,8 +596,8 @@ export default function ChangeCorporateAccountOpenning({
   };
 &nbsp;
   useEffect(() =&gt; {
-    // fetchCorporateCodes();
-    // console.log("all-corporate Code", mockedCorporateCodes);
+    // fetchregisterIds();
+    // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
 &nbsp;
@@ -635,19 +635,19 @@ export default function ChangeCorporateAccountOpenning({
             &lt;SideLabelInput title="Juristic ID"&gt;
               &lt;Input
                 data-testid="juristicId"
-                {...register("corporateCode")}
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               /&gt;
               {errors &amp;&amp; (
-                &lt;p className="text-red-500"&gt;{errors.corporateCode?.message}&lt;/p&gt;
+                &lt;p className="text-red-500"&gt;{errors.registerId?.message}&lt;/p&gt;
               )}
               &lt;datalist id="juristicId"&gt;
-                {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                  &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                    {code.corporateCode}
+                {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                  &lt;option key={index} v</span>alue={code.registerId}&gt;
+                    {code.registerId}
                   &lt;/option&gt;
                 ))}
               &lt;/datalist&gt;

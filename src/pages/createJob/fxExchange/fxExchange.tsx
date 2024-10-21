@@ -113,11 +113,11 @@ export default function FxExchangeEdit() {
     setExchangeRate(parseFloat(inputValue) || null);
   };
 
-  const [selectedCorporateCode, setSelectedCorporateCode] =
+  const [selectedregisterId, setSelectedregisterId] =
     useState<string>("");
 
     // const mockeddata: TFxExchange[] = [{
-    //   corporateCode: 80000014,
+    //   registerId: 80000014,
     //   exchangeRate: 231,
     //   exchangeSpread: 132,
     //   operationSpread: 546,
@@ -125,8 +125,8 @@ export default function FxExchangeEdit() {
     //   transactionStatus: 0,
     // }]
 
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState<
+    { registerId: number }[]
   >([]);
   const [choosedEditData, setChoosedEditData] = useState<TFxExchange>();
   const clearChoosedEditData = () => {
@@ -152,7 +152,7 @@ export default function FxExchangeEdit() {
     (state) => state.fxExchange?.fxExchanges || []
   ) as TFxExchange[];
 
-  const fetchCorporateCodes = async () => {
+  const fetchregisterIds = async () => {
     try {
       const token = getCookies();
 
@@ -166,10 +166,10 @@ export default function FxExchangeEdit() {
         }
       );
       if (res.status === 200) {
-        const corporateCodes = res.data.map((item: any) => ({
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map((item: any) => ({
+          registerId: item.registerId,
         }));
-        setFetchedCorporateCodes(corporateCodes);
+        setFetchedregisterIds(registerIds);
       } else {
         console.log("Failed to fetch corporate codes");
       }
@@ -248,7 +248,7 @@ export default function FxExchangeEdit() {
   const columnsFxExchange: TableColumn<TFxExchange>[] = [
     {
       name: "Corporate Code",
-      selector: (row: TFxExchange) => row.corporateCode || "",
+      selector: (row: TFxExchange) => row.registerId || "",
     },
     {
       name:"Buy Amount",
@@ -306,7 +306,7 @@ export default function FxExchangeEdit() {
 
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: null,
+      registerId: null,
       exchangeRate:undefined,
       exchangeSpread:undefined,
       operationSpread:undefined,
@@ -317,7 +317,7 @@ export default function FxExchangeEdit() {
     handleSelectPair({0 : firstVariable , 1 : secondVariable});
     setYouSend(firstVariable);
     setRecipientGets(secondVariable);
-    setSelectedCorporateCode(choosedEditData?.corporateCode?.toString() || "");
+    setSelectedregisterId(choosedEditData?.registerId?.toString() || "");
     // const exchangeSpreadToFloat = Number(choosedEditData?.exchangeSpread ?? 0) / 10000 || 0;
     // const operationSpreadToFloat = Number(choosedEditData?.operationSpread ?? 0) / 10000 || 0;
     // const exchangeRateToFloat = Number(choosedEditData?.exchangeRate ?? 0) / 10000 || 0;
@@ -349,13 +349,13 @@ export default function FxExchangeEdit() {
 
   useEffect(() => {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 
-  const handleCorporateCodeChange = (
+  const handleregisterIdChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSelectedCorporateCode(event.target.value);
+    setSelectedregisterId(event.target.value);
   };
 
   const onSubmit = async (data: TFxExchange) => {
@@ -363,7 +363,7 @@ export default function FxExchangeEdit() {
     let body: TFxExchange = {
       ...data,
       id: choosedEditData?.id,
-      corporateCode: Number(selectedCorporateCode),
+      registerId: Number(selectedregisterId),
       transactionStatus: choosedEditData?.transactionStatus,
       exchange:`${youSend}/${recipientGets}`,
       exchangeSpread:handleFloatValue(exchangeSpread),
@@ -386,7 +386,7 @@ export default function FxExchangeEdit() {
           reset();
           setExchangeResult(0);
           clearChoosedEditData();
-          setSelectedCorporateCode("");
+          setSelectedregisterId("");
           console.log("edit successful");
           fetchOrderList();
         } else {
@@ -402,7 +402,7 @@ export default function FxExchangeEdit() {
           reset();
           setExchangeResult(0);
           clearChoosedEditData();
-          setSelectedCorporateCode("");
+          setSelectedregisterId("");
           console.log("save successful");
           fetchOrderList();
         } else {
@@ -425,26 +425,26 @@ export default function FxExchangeEdit() {
             </div>
             <div className="">
                 <Input
-                    {...register("corporateCode")}
+                    {...register("registerId")}
                     label="Corporate Code"
-                    id="corporateCode"
+                    id="registerId"
                     type="number"
-                    data-testid="corporateCodeInput"
+                    data-testid="registerIdInput"
                     disabled={isSubmitting}
-                    onChange={handleCorporateCodeChange}
-                    list="corporateCodes"
+                    onChange={handleregisterIdChange}
+                    list="registerIds"
                     autoComplete="off"
                     inputClassName="w-[20rem] md:w-[25rem]"
                 />
-                {errors.corporateCode && !selectedCorporateCode && (
+                {errors.registerId && !selectedregisterId && (
                     <p className="text-red-500 text-sm px-2">
-                    {errors.corporateCode.message}
+                    {errors.registerId.message}
                     </p>
                 )}
-                <datalist id="corporateCodes">
-                    {mockedCorporateCodes.map((code, index) => (
-                    <option key={index} value={code.corporateCode}>
-                        {code.corporateCode}
+                <datalist id="registerIds">
+                    {mockedregisterIds.map((code, index) => (
+                    <option key={index} value={code.registerId}>
+                        {code.registerId}
                     </option>
                     ))}
                 </datalist>

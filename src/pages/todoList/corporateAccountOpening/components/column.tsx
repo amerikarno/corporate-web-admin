@@ -20,7 +20,7 @@ const handleApproveClick = (row: TCorporateData) => {
 export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
   {
     name: "Juristic ID",
-    selector: (row: TCorporateData) => row.CorporateCode || "",
+    selector: (row: TCorporateData) => row.registerId || "",
   },
   {
     name: "Juristic Name",
@@ -37,7 +37,7 @@ export const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col">
-              <span>{`Juristic ID : ${row.CorporateCode}`}</span>
+              <span>{`Juristic ID : ${row.registerId}`}</span>
               <span>{`Juristic Name : ${row.Info.name}`}</span>
             </div>
           </AlertDialogDescription>

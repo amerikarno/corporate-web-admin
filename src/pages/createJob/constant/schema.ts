@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const corporateAccountOpeningSchema = z
   .object({
-    corporateCode: z.string(),
+    registerId: z.string(),
     dateFrom: z.string().optional(),
     dateTo: z.string().optional(),
   })
@@ -30,7 +30,7 @@ export const corporateInfoSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   name: z.string(),
   registrationNo: z.string(),
   taxId: z.string(),
@@ -42,7 +42,7 @@ export const corporateCountrySchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   // isThailand: z.boolean().optional(),
   other: z.string(),
   types: z.number(),
@@ -53,7 +53,7 @@ export const corporateSubAddressSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   addressNo: z.string(),
   mooNo: z.string(),
   building: z.string(),
@@ -79,7 +79,7 @@ export const corporateFinancialsSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   registeredCapital: z.number(),
   revenuePerYear: z.number(),
   netProfitLoss: z.number(),
@@ -91,7 +91,7 @@ export const corporateTypesSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   istaxExempt: z.boolean(),
 });
 
@@ -100,7 +100,7 @@ export const businessTypesSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   ishotelRestaurant: z.boolean(),
   otherBusinessType: z.string(),
 });
@@ -110,7 +110,7 @@ export const sourceOfIncomesSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   isotherIncome: z.boolean(),
   otherIncome: z.string(),
 });
@@ -119,7 +119,7 @@ export const countrySourceIncomesSchema = z.object({
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
   corporateCountry: corporateCountrySchema,
-  isliquidation: z.boolean(),
+  isLiquidation: z.boolean(),
   otherInvestment: z.string(),
 });
 
@@ -139,12 +139,12 @@ export const contactSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   fullnames: z.array(contactFullNameSchema),
   telephone: z.string().optional(),
   email: z.string(),
   types: z.number(),
-  personalID: z.string(),
+  personalId: z.string(),
   position: z.string(),
   division: z.string(),
 });
@@ -181,7 +181,7 @@ export const directorSchema = z.object({
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
   personalId: z.string(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   fullnames: z.array(fullNameSchema),
   addresses: z.array(addressSchema),
   passportId: z.string(),
@@ -196,7 +196,7 @@ export const authorizedPersonSchema = z.object({
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
   personalId: z.string(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   fullnames: z.array(fullNameSchema),
   addresses: z.array(addressSchema),
   passportId: z.string(),
@@ -211,7 +211,7 @@ export const individualShareholderSchema = z.object({
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
   personalId: z.string(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   fullnames: z.array(fullNameSchema),
   passportId: z.string(),
   expiryDate: z.string(),
@@ -225,7 +225,7 @@ export const juristicSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   juristicName: z.string(),
   registrationNo: z.string(),
   registeredCountry: z.string(),
@@ -237,7 +237,7 @@ export const bankSchema = z.object({
   createBy: z.string(),
   CreatedAt: z.string(),
   DeletedAt: z.string().nullable(),
-  corporateCode: z.number(),
+  registerId: z.number(),
   accountType: z.string(),
   bankName: z.string(),
   accountNo: z.string(),
@@ -246,7 +246,7 @@ export const bankSchema = z.object({
 });
 
 export const corporateDataSchema = z.object({
-  CorporateCode: z.number(),
+  registerId: z.number(),
   Info: corporateInfoSchema,
   CorporateCountry: z.array(corporateCountrySchema),
   CorporateAddress: z.array(corporateAddressSchema),

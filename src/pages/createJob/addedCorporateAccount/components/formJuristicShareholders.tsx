@@ -15,13 +15,13 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 
 type TJuristicsShareholdersFormProps = {
   onsubmit: (data: TJuristicsShareholders) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TJuristicsShareholders | null;
   clearChoosedEditData: () => void;
 };
 export function FormJuristicShareholders({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TJuristicsShareholdersFormProps) {
@@ -55,7 +55,7 @@ export function FormJuristicShareholders({
   const onSubmit = async (data: TIndividualsJuristicShareholdersSchema) => {
     const body = {
       ...data,
-      corporateCode: corporateCode,
+      registerId: registerId,
       juristicId: choosedEditData?.juristicId,
       sharePercentage: handleFloatValue(data.sharePercentage),
     };
@@ -71,7 +71,7 @@ export function FormJuristicShareholders({
       juristicName: "",
       registrationNo: "",
       registeredCountry: "",
-      sharePercentage: 0,
+      sharePercentage: null,
     };
     reset(juristicData);
     console.log("use effect", juristicData);

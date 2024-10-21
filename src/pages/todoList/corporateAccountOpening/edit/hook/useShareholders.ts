@@ -27,7 +27,7 @@ export function useShareholders() {
   ) => {
     let body = {
       fullNames: data.fullNames,
-      corporateCode: data.corporateCode ?? "",
+      registerId: data.registerId ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
       expiryDate: data.expiryDate ?? "",

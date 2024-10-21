@@ -56,7 +56,7 @@ export function FormCorporateInfo({
 
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
   const [placeIncorporateValue, setPlaceIncorporateValue] = useState<string>(
-    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : "place-radio-1"
+    corporatesInfo?.registerId.toString() ? "place-radio-2" : "place-radio-1"
   );
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 601
@@ -306,7 +306,7 @@ export function FormCorporateInfo({
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      corporateCode: corporatesInfo?.CorporateCode.toString(),
+      registerId: corporatesInfo?.registerId.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:

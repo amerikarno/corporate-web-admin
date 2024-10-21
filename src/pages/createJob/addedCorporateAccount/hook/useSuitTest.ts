@@ -76,7 +76,7 @@ export function useSuitTest() {
 
       const grade = giveGrade(score);
       const ans = {
-        corporateCode: corporatesInfo.CorporateCode.toString(),
+        registerId: corporatesInfo.registerId.toString(),
         totalScore: score,
         level: grade,
         investorTypeRisk: mapScore[grade],
@@ -179,13 +179,13 @@ export function useSuitTest() {
   };
 
   const fetchSuitData = async () => {
-    const code = localStorage.getItem("corporateCode");
+    const code = localStorage.getItem("registerId");
     if (code && code !== null) {
       if (isEmptyObject(suitData)) {
         try {
           const res = await axios.post(
             "/api/v1/corporate/query",
-            { corporateCode: code },
+            { registerId: code },
             {
               headers: {
                 "Content-Type": "application/json",

@@ -13,7 +13,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { TAuthorizedPerson as TAuthorizedPersonEdit, TCorporateData} from "../../constant/type";
-import { mapDataToTAuthoirzedPerson } from "../libs/utils";
+import { mapDataToTAuthoirzedPerson, mockedCorporateData } from "../libs/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -42,11 +42,11 @@ export function PageAuthorizedPerson({
     setChoosedEditData(undefined);
   };
   const corporatesInfo = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
 
   const fetchedData = async () => {
     try{
-      const res = await axios.post("/api/v1/corporate/query", { corporateCode }, {
+      const res = await axios.post("/api/v1/corporate/query", { registerId }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -75,10 +75,10 @@ export function PageAuthorizedPerson({
   }
 
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
   }, []);
   
@@ -98,7 +98,7 @@ export function PageAuthorizedPerson({
       }catch(error){
         console.log("delete fail ,",error)
       }
-    };;
+    };
 
   const columnsAuthorizePerson: TableColumn<TAuthorizePerson>[] = [
     {
@@ -166,7 +166,7 @@ export function PageAuthorizedPerson({
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -200,7 +200,7 @@ export function PageAuthorizedPerson({
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitAuthorize}
-          corporateCode={corporateCode}
+          registerId={registerId}
         />
       </div>
     </>

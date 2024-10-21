@@ -1443,7 +1443,7 @@ export function FormCorporateInfo({
 &nbsp;
   const [shouldScrollUp, setShouldScrollUp] = useState&lt;boolean&gt;(false);
   const [placeIncorporateValue, setPlaceIncorporateValue] = useState&lt;string&gt;(
-    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : <span class="branch-1 cbranch-no" title="branch not covered" >"place-radio-1"</span>
+    corporatesInfo?.registerId.toString() ? "place-radio-2" : <span class="branch-1 cbranch-no" title="branch not covered" >"place-radio-1"</span>
   );
 &nbsp;
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
@@ -1702,7 +1702,7 @@ export function FormCorporateInfo({
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      corporateCode: corporatesInfo?.CorporateCode.toString(),
+      registerId: corporatesInfo?.registerId.toString(),
       dateofincorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:

@@ -761,7 +761,7 @@ const TransactionList = () =&gt; {
             // console.log(item);
             return {
               id: item.id || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
-              corporateCode: item.corporateCode || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span>
+              registerId: item.registerId || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span>
               operations: item.operations || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
               cryptoAmount: item.cryptoAmount/100000 || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span>
               cryptoPrice: item.cryptoPrice/100000 || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span>
@@ -815,7 +815,7 @@ const TransactionList = () =&gt; {
     },
     {
       name: "Corporate Code",
-      selector: (row: TTransaction) =&gt; row.corporateCode || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
+      selector: (row: TTransaction) =&gt; row.registerId || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
     },
     {
       name: "Buy/Sell",

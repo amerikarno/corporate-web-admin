@@ -131,7 +131,7 @@ const LandingPageCorporate = () => {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporateData?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporateData?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -787,7 +787,7 @@ const LandingPageCorporate = () => {
                     <DocumentBox
                       key={index}
                       fileName={document?.fileName}
-                      corporateCode={document?.corporateCode}
+                      registerId={document?.registerId}
                       id={document?.id}
                     />
                   ))

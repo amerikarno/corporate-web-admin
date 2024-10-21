@@ -263,14 +263,14 @@ export function PageJuristicType() {
 &nbsp;
   const dispatch = useDispatch();
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  const corporateCode = localStorage.getItem("corporateCode");
+  const registerId = localStorage.getItem("registerId");
 &nbsp;
   useEffect(() =&gt; {
     const fetchCorpInfo = async () =&gt; {
       try {
         const queryResponse = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
+          { registerId: registerId },
           {
             headers: {
               "Content-type": "application/json",
@@ -288,7 +288,7 @@ export function PageJuristicType() {
       }
     };
 &nbsp;
-    if (corporateCode !== null) {
+    if (registerId !== null) {
       fetchCorpInfo();
     }
   }, [dispatch]);
@@ -302,7 +302,7 @@ export function PageJuristicType() {
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporateData?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporateData?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;

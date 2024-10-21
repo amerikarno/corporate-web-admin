@@ -50,8 +50,8 @@ export default function ChangeCorporateAccountOpenning({
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState<
+    { registerId: number }[]
   >([]);
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ export default function ChangeCorporateAccountOpenning({
       setDisableDate(false);
     }
   };
-  const fetchCorporateCodes = async () => {
+  const fetchregisterIds = async () => {
     try {
       const token = getCookies();
 
@@ -77,10 +77,10 @@ export default function ChangeCorporateAccountOpenning({
       );
       if (res.status === 200) {
         // console.log(res);
-        const corporateCodes = res.data.map((item: any) => ({
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map((item: any) => ({
+          registerId: item.registerId,
         }));
-        setFetchedCorporateCodes(corporateCodes);
+        setFetchedregisterIds(registerIds);
       }
     } catch (error) {
       console.log("Error fetching corporate codes:", error);
@@ -88,9 +88,9 @@ export default function ChangeCorporateAccountOpenning({
   };
 
   const initData = async () => {
-    await fetchCorporateCodes();
+    await fetchregisterIds();
     const data: TCorporateAccountOpening = {
-      corporateCode: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
@@ -101,8 +101,8 @@ export default function ChangeCorporateAccountOpenning({
   };
 
   useEffect(() => {
-    // fetchCorporateCodes();
-    // console.log("all-corporate Code", mockedCorporateCodes);
+    // fetchregisterIds();
+    // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
 
@@ -140,19 +140,19 @@ export default function ChangeCorporateAccountOpenning({
             <SideLabelInput title="Juristic ID">
               <Input
                 data-testid="juristicId"
-                {...register("corporateCode")}
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.corporateCode?.message}</p>
+                <p className="text-red-500">{errors.registerId?.message}</p>
               )}
               <datalist id="juristicId">
-                {mockedCorporateCodes.map((code, index) => (
-                  <option key={index} value={code.corporateCode}>
-                    {code.corporateCode}
+                {mockedregisterIds.map((code, index) => (
+                  <option key={index} value={code.registerId}>
+                    {code.registerId}
                   </option>
                 ))}
               </datalist>

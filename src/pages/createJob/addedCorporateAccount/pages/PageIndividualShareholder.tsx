@@ -29,6 +29,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { mockedCorporateData } from "../libs/utils";
 
 type TPageIndividualShareholderProps = {};
 
@@ -47,13 +48,13 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
   const corporatesInfo: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
 
   const fetchedData = async () => {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,7 +67,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
           const updateIndividualShareholder = individualshareholder.map(
             (data: TIndividualShareholderEdit) =>({
               ...data,
-              sharePercentage: data.sharePercentage/100000
+              sharePercentage: (data.sharePercentage ?? 0) / 100000
             })
           )
           dispatch(setIndividualShareholder(updateIndividualShareholder));
@@ -86,10 +87,10 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
   };
 
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
   }, []);
 
@@ -190,7 +191,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -229,7 +230,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitShareholders}
-          corporateCode={corporateCode}
+          registerId={registerId}
         />
       </div>
     </>

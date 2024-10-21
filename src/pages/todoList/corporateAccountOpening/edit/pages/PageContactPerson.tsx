@@ -37,7 +37,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
   const token = getCookies();
   const { handleSubmitContactPerson } = useContactPerson();
   const [choosedEditData, setChoosedEditData] = useState<TContact>();
@@ -48,7 +48,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
       const res = await axios
       .post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
         const updatedContacts: TContact[] = contacts.map((contact: any) => {
           return {
             ...contact,
-            personalId: contact.personalID,
+            personalId: contact.personalId,
           };
         });
         dispatch(setContactPersons(updatedContacts));
@@ -73,10 +73,10 @@ export function PageContactPerson({}: TPageContactPersonProps) {
     }
   }
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
   }, []);
 
@@ -174,7 +174,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -209,7 +209,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitContactPerson}
-          corporateCode={corporateCode}
+          registerId={registerId}
         />
       </div>
     </>

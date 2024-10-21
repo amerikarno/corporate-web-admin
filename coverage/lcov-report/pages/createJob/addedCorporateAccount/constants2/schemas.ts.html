@@ -917,7 +917,7 @@ export const bankSchema = z.object({
 export type TBankSchema = z.infer&lt;typeof bankSchema&gt;;
 &nbsp;
 export const authorizedPersonSchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
@@ -928,7 +928,7 @@ export const authorizedPersonSchema = z.object({
 });
 &nbsp;
 export const attorneySchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
@@ -981,7 +981,7 @@ export type TIndividualsDirectorSchema = z.infer&lt;
 &gt;;
 &nbsp;
 export const individualsJuristicShareholdersSchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
   registrationNo: z.string().min(1, "Registration number cannot be empty"),
   registeredCountry: z

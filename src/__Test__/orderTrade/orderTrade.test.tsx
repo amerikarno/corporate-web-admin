@@ -31,7 +31,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-18T05:19:40.673Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000001,
+        "registerId": 80000001,
         "cryptoAmount": 112345,
         "fiatAmount": 100010,
         "currency": "THB",
@@ -46,7 +46,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-18T05:20:28.135Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000001,
+        "registerId": 80000001,
         "cryptoAmount": 111112,
         "fiatAmount": 110,
         "currency": "THB",
@@ -61,7 +61,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-20T07:18:30.022Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000001,
+        "registerId": 80000001,
         "cryptoAmount": 1000000,
         "fiatAmount": 1000000,
         "currency": "THB",
@@ -76,7 +76,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-20T08:47:10.109Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000001,
+        "registerId": 80000001,
         "cryptoAmount": 100000,
         "fiatAmount": 300000,
         "currency": "THB",
@@ -91,7 +91,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-20T08:17:01.019Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 8001,
+        "registerId": 8001,
         "cryptoAmount": 100000,
         "fiatAmount": 100000,
         "currency": "THB",
@@ -106,7 +106,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-20T08:42:32.227Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000006,
+        "registerId": 80000006,
         "cryptoAmount": 100000,
         "fiatAmount": 100000,
         "currency": "THB",
@@ -121,7 +121,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-20T08:03:17.852Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000010,
+        "registerId": 80000010,
         "cryptoAmount": 100000,
         "fiatAmount": 100000,
         "currency": "THB",
@@ -136,7 +136,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-20T08:03:30.146Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000012,
+        "registerId": 80000012,
         "cryptoAmount": 200000,
         "fiatAmount": 200000,
         "currency": "USD",
@@ -151,7 +151,7 @@ const orderTradeMock =
         "CreatedAt": "2024-10-03T02:36:38.059Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 234,
+        "registerId": 234,
         "cryptoAmount": 23400000,
         "fiatAmount": 23400000,
         "currency": "THB",
@@ -166,7 +166,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-18T05:19:59.279Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000001,
+        "registerId": 80000001,
         "cryptoAmount": 112000,
         "fiatAmount": 123000,
         "currency": "THB",
@@ -181,7 +181,7 @@ const orderTradeMock =
         "CreatedAt": "2024-09-24T05:34:20.727Z",
         "DeletedAt": null,
         "operations": "buy",
-        "corporateCode": 80000005,
+        "registerId": 80000005,
         "cryptoAmount": 100000,
         "fiatAmount": 100000,
         "currency": "THB",
@@ -211,10 +211,10 @@ describe("test order trade", () => {
         </Provider>
       );
 
-      const corporateCode = screen.getByLabelText("Corporate Code");
-      expect(corporateCode).toBeInTheDocument();
+      const registerId = screen.getByLabelText("Corporate Code");
+      expect(registerId).toBeInTheDocument();
       await act(async () => {
-        fireEvent.change(corporateCode, { target: { value: 80000001 } });
+        fireEvent.change(registerId, { target: { value: 80000001 } });
       })
 
       userEvent.selectOptions(
@@ -260,8 +260,8 @@ describe("test order trade", () => {
       })
 
       // await waitFor(() => {
-      //   const corporateCodeError = screen.getByText("Corporate Code is required");
-      //   expect(corporateCodeError).toBeInTheDocument();
+      //   const registerIdError = screen.getByText("Corporate Code is required");
+      //   expect(registerIdError).toBeInTheDocument();
       // })
       
       //Expected form data
@@ -271,7 +271,7 @@ describe("test order trade", () => {
           fiatAmount: 10000000,
           currency: 'THB',
           cryptoPrice: 10000000,
-          corporateCode: 80000001,
+          registerId: 80000001,
           operations: 'buy',
           id: undefined,
           pair: 'THB/USDC'
@@ -299,10 +299,10 @@ describe("test order trade", () => {
         </Provider>
       );
 
-      const corporateCode = screen.getByLabelText("Corporate Code");
-      expect(corporateCode).toBeInTheDocument();
+      const registerId = screen.getByLabelText("Corporate Code");
+      expect(registerId).toBeInTheDocument();
       await act(async () => {
-        fireEvent.change(corporateCode, { target: { value: 80000001 } });
+        fireEvent.change(registerId, { target: { value: 80000001 } });
       })
 
       userEvent.selectOptions(
@@ -348,8 +348,8 @@ describe("test order trade", () => {
       })
 
       // await waitFor(() => {
-      //   const corporateCodeError = screen.getByText("Corporate Code is required");
-      //   expect(corporateCodeError).toBeInTheDocument();
+      //   const registerIdError = screen.getByText("Corporate Code is required");
+      //   expect(registerIdError).toBeInTheDocument();
       // })
       //Expected form data
       const expectedFormData = {
@@ -358,7 +358,7 @@ describe("test order trade", () => {
           fiatAmount: 10000000,
           currency: 'USDC',
           cryptoPrice: 10000000,
-          corporateCode: 80000001,
+          registerId: 80000001,
           operations: 'sell',
           id: undefined,
           pair: 'THB/USDC'
@@ -421,7 +421,7 @@ describe("test order trade", () => {
       //Expected form data
       const expectedFormData = {
         data: {
-          corporateCode: 80000001,
+          registerId: 80000001,
           cryptoAmount: 112345,
           fiatAmount: 100010,
           currency: 'THB',

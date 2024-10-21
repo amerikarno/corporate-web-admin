@@ -540,8 +540,8 @@ export default function TodoIndividualAccount() {
   const [fetchData, setFetchData] = useState&lt;TIndividualData[]&gt;([]);
   const [disableDate, setDisableDate] = useState&lt;boolean&gt;(false);
   const [disableCode, setDisableCode] = useState&lt;boolean&gt;(false);
-    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;
-      { corporateCode: number }[]
+    const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
+      { registerId: number }[]
     &gt;([]);
 &nbsp;
   const handleDisableDate = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
@@ -551,7 +551,7 @@ export default function TodoIndividualAccount() {
 <span class="cstat-no" title="statement not covered" >      setDisableDate(false);</span>
     }
   };
-    const fetchCorporateCodes = async () =&gt; {
+    const fetchregisterIds = async () =&gt; {
       try {
         const token = getCookies();
 &nbsp;
@@ -567,15 +567,15 @@ export default function TodoIndividualAccount() {
         );
         if (res.status === 200) {
           /* eslint-disable */console.log(...oo_oo(`2330771507_72_10_72_26_4`,res));
-          const corporateCodes = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-            corporateCode: item.id,
+          const registerIds = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+            registerId: item.id,
           }));
-<span class="cstat-no" title="statement not covered" >          setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >          setFetchedregisterIds(registerIds);</span>
 &nbsp;
           // const dateFrom = new Date();
           // dateFrom.setDate(dateFrom.getDate() + 7);
           // const data: TCorporateAccountOpening = {
-          //   corporateCode: "",
+          //   registerId: "",
           //   // dateFrom: dateToyyyyMMdd(dateFrom),
           //   // dateTo: dateToyyyyMMdd(dateFrom),
           //   dateFrom: dateToyyyyMMdd(new Date()),
@@ -591,7 +591,7 @@ export default function TodoIndividualAccount() {
     };
 &nbsp;
   const initData = async () =&gt; {
-    // await fetchCorporateCodes();
+    // await fetchregisterIds();
     const data: TSearchIndividualSchema = {
       AccountID: "",
       dateFrom: dateToyyyyMMdd(new Date()),
@@ -602,8 +602,8 @@ export default function TodoIndividualAccount() {
   };
 &nbsp;
   useEffect(() =&gt; {
-    fetchCorporateCodes();
-    // console.log("all-corporate Code", mockedCorporateCodes);
+    fetchregisterIds();
+    // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
 &nbsp;
@@ -648,9 +648,9 @@ export default function TodoIndividualAccount() {
                 &lt;p className="text-red-500"&gt;{errors.AccountID?.message}&lt;/p&gt;
               )}
               &lt;datalist id="juristicId"&gt;
-                {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                  &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                    {code.corporateCode}
+                {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                  &lt;option key={index} v</span>alue={code.registerId}&gt;
+                    {code.registerId}
                   &lt;/option&gt;
                 ))}
               &lt;/datalist&gt;

@@ -134,7 +134,7 @@
 // };
 &nbsp;
 export const fxExchangeSchema = z.object({
-//   corporateCode: z.coerce.number().min(1, "Corporate Code is required"),
+//   registerId: z.coerce.number().min(1, "Corporate Code is required"),
 //   exchangeRate: z.preprocess(preprocessNumber, z.number().min(0, "Please fill this field first").nullable()),
 //   exchangeSpread: z.preprocess(preprocessNumber, z.number().min(0, "Please fill this field first").nullable()),
 //   operationSpread: z.preprocess(preprocessNumber, z.number().min(0, "Please fill this field first").nullable()),
@@ -145,7 +145,7 @@ export const fxExchangeSchema = z.object({
 });
 &nbsp;
 export type TFxExchange = {
-  corporateCode: number | null;
+  registerId: number | null;
   exchangeRate: number | null;
   exchangeSpread: number | null;
   operationSpread: number | null;

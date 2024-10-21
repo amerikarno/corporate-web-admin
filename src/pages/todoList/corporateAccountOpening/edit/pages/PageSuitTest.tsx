@@ -40,7 +40,7 @@ export function PageSuitTest() {
           <div className="w-1/2 space-y-4">
             <div className="flex flex-row gap-4">
               <h1 className="font-bold">Juristic ID</h1>
-              <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
             </div>
             <div className="flex flex-row gap-4">
               <h1 className="font-bold">Juristic Investor Name</h1>

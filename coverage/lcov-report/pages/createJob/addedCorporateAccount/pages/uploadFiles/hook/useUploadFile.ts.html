@@ -276,7 +276,7 @@ export function <span class="fstat-no" title="function not covered" >useUploadFi
     }
   };
 &nbsp;
-  const handleUpload = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async </span>(file: File | null, corporateCode: string) =&gt; {</span>
+  const handleUpload = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async </span>(file: File | null, registerId: string) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (file &amp;&amp; file !== null) {</span>
 <span class="cstat-no" title="statement not covered" >      if (acceptedFileTypes.includes(file.type)) {</span>
         const fileSizeInMB = <span class="cstat-no" title="statement not covered" >file.size / (1024 * 1024);</span>
@@ -287,7 +287,7 @@ export function <span class="fstat-no" title="function not covered" >useUploadFi
           // formData.append("flieName", file.name);
           // formData.append("fileTypes", file.type);
 <span class="cstat-no" title="statement not covered" >          formData.append("docType", documentType.value);</span>
-<span class="cstat-no" title="statement not covered" >          formData.append("corporateCode", corporateCode);</span>
+<span class="cstat-no" title="statement not covered" >          formData.append("registerId", registerId);</span>
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3318372443_40_10_40_37_4`,"uploading..."))</span>
 <span class="cstat-no" title="statement not covered" >          try {</span>
             const response = <span class="cstat-no" title="statement not covered" >await axios.post(</span>
@@ -303,7 +303,7 @@ export function <span class="fstat-no" title="function not covered" >useUploadFi
 <span class="cstat-no" title="statement not covered" >            if (response.status === 200) {</span>
               /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3318372443_53_14_53_70_4`,"File uploaded successfully", response.data));</span>
               let fileinfo=<span class="cstat-no" title="statement not covered" >{</span>
-                corporateCode:Number(corporateCode),
+                registerId:Number(registerId),
                 docType:documentType.value,
                 fileName:file.name,
                 fileTypes:file.type,

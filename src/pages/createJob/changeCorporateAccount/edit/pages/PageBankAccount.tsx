@@ -32,7 +32,7 @@ type TPageBankAccountProps = {
 };
 
 type TBankWithID = {
-  CorporateCode?: string;
+  registerId?: string;
   bank: TBank[];
   BankId?: string;
 };
@@ -45,7 +45,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
 
   const token = getCookies();
   const [choosedEditData, setChoosedEditData] = useState<TBankWithID>();
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
@@ -55,7 +55,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -80,10 +80,10 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
 
 
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchBankData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
   }, []);
 
@@ -179,7 +179,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -212,7 +212,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
         </Card>
         <FormBank
           onsubmit={handleSubmitBank}
-          corporateCode={corporateCode}
+          registerId={registerId}
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
         />

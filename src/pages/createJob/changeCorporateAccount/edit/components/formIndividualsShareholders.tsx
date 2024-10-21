@@ -19,14 +19,14 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TIndividualShareholderEdit | null;
   clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsShareholders({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TShareHoldersFormProps) {
@@ -60,7 +60,7 @@ export function FormIndividualsShareholders({
       tmp = { ...tmp, citizenId: "" };
     }
     tmp.types = 301;
-    tmp.corporateCode = corporateCode;
+    tmp.registerId = registerId;
     tmp.personalId = choosedEditData?.personalId || "";
     tmp.citizenId = dropDownChoosed === "ID" ? curInputText : "",
     tmp.passportId = dropDownChoosed === "Passport" ? curInputText : ""

@@ -1494,13 +1494,13 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //       return null
 //     }
 //     const result : TCorporateData = {
-//       CorporateCode: Number(data.corporateCode ?? 0),
+//       registerId: Number(data.registerId ?? 0),
 //       Info: {
 //         id: "",
 //         createBy: "",
 //         CreatedAt: "",
 //         DeletedAt: null,
-//         corporateCode: Number(data.corporateCode ?? 0),
+//         registerId: Number(data.registerId ?? 0),
 //         name: data.name ?? "",
 //         registrationNo: data.registrationNo ?? "",
 //         taxId: data.taxId ?? "",
@@ -1512,7 +1512,7 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //           createBy: "",
 //           CreatedAt: "",
 //           DeletedAt: null,
-//           corporateCode: Number(data.corporateCode ?? 0),
+//           registerId: Number(data.registerId ?? 0),
 //           isThailand: data.registered === "Thailand" ? true : false,
 //           other: data.registeredOther ?? "",
 //         }
@@ -1523,7 +1523,7 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //         createBy: "",
 //         CreatedAt: "",
 //         DeletedAt: null,
-//         corporateCode: 0,
+//         registerId: 0,
 //         registeredCapital: 0,
 //         revenuePerYear: 0,
 //         netProfitLoss: 0,
@@ -1534,7 +1534,7 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //         DeletedAt: null,
 //         id: "",
 //         createBy: "",
-//         corporateCode: 0,
+//         registerId: 0,
 //         isJuristicThailand: false,
 //         isTaxExempt: false,
 //         isNonTaxExempt: false,
@@ -1551,7 +1551,7 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //         CreatedAt: "",
 //         DeletedAt: null,
 //         id: "",
-//         corporateCode: 0,
+//         registerId: 0,
 //         isAntiqueTrading: false,
 //         isHotelRestaurant: false,
 //         isArmament: false,
@@ -1575,7 +1575,7 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //         CreatedAt: "",
 //         DeletedAt: null,
 //         id: "",
-//         corporateCode: 0,
+//         registerId: 0,
 //         isDonation: false,
 //         isLoan: false,
 //         isOtherIncome: false,
@@ -1767,7 +1767,7 @@ export const mapDataToTIndividualShareholder = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0];
     const result: TIndividualsShareholders = {
-      corporateCode: String(data.corporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
+      registerId: String(data.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
       fullNames: [
         {
           title: data.fullNames[0].title ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
@@ -1800,7 +1800,7 @@ export const mapDataToTJuristicShareholder = (
     }
 &nbsp;
     const result: TJuristicsShareholders = {
-      corporateCode: String(data.corporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
+      registerId: String(data.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
       juristicName: data.juristicName ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
       registrationNo: data.registrationNo ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
       registeredCountry: data.registeredCountry ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
@@ -1824,7 +1824,7 @@ export const mapDataToTAuthoirzedPerson = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
     const result: TAuthorizePerson = {
-      corporateCode: String(data.corporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
+      registerId: String(data.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
       fullNames: [
         {
           title: data?.fullNames[0].title ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
@@ -1885,7 +1885,7 @@ export const mapDataToTAttorney = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0];
     const result: TAttorney = {
-      corporateCode: String(data.corporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
+      registerId: String(data.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
       fullNames: [
         {
           title: data?.fullNames[0].title ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
@@ -1940,7 +1940,7 @@ export const mapDataToTAttorney = (
 };
 &nbsp;
 type TBankWithID = {
-  CorporateCode?: string;
+  registerId?: string;
   bank: TBank[];
   BankId?: string;
 };
@@ -1951,7 +1951,7 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null =&gt;
     }
 &nbsp;
     const result: TBankWithID = {
-      CorporateCode: String(data.corporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
+      registerId: String(data.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>,
       BankId: data.id ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
       bank: [
         {
@@ -2003,7 +2003,7 @@ export const getFrom2Response = <span class="fstat-no" title="function not cover
   /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3746178294_570_2_570_23_4`,corpData));</span>
   // const juristicType = useSelector((state: RootState) =&gt; state.juristicType);
   // console.log(JSON.stringify(juristicType, null, 2));
-  // if (juristicType.corporateCode === 0) {
+  // if (juristicType.registerId === 0) {
 &nbsp;
   const {
     jrType,
@@ -2082,7 +2082,7 @@ export const mapToForm2Create = (
       otherIncome: data.otherIncome,
       otherCountry: data.corporateCountry?.other,
       otherInvestment: data.otherInvestment,
-      corporateCode: data.corporateCode?.toString(),
+      registerId: data.registerId?.toString(),
     };
     return result;
   } catch (error) {
@@ -2100,7 +2100,7 @@ export const mapToUploadFile = <span class="fstat-no" title="function not covere
 <span class="cstat-no" title="statement not covered" >    return {</span>
       id: data?.id || "",
       filePath: data?.filePath || "",
-      corporateCode: data?.corporateCode || 0,
+      registerId: data?.registerId || 0,
       docType: data?.docType || "",
       fileName: data?.fileName || "",
       fileTypes: data?.fileTypes || "",

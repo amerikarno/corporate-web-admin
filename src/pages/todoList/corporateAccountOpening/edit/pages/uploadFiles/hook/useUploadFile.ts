@@ -25,7 +25,7 @@ export function useUploadFile() {
     }
   };
 
-  const handleUpload = async (file: File | null, corporateCode: string) => {
+  const handleUpload = async (file: File | null, registerId: string) => {
     if (file && file !== null) {
       if (acceptedFileTypes.includes(file.type)) {
         const fileSizeInMB = file.size / (1024 * 1024);
@@ -34,10 +34,10 @@ export function useUploadFile() {
           const formData = new FormData();
           formData.append("file", file);
           formData.append("docTypes", documentType.value);
-          formData.append("corporateCode", corporateCode);
+          formData.append("registerId", registerId);
 
           console.log("uploading files");
-          console.log("corporateCode", corporateCode);
+          console.log("registerId", registerId);
           console.log("docTypes", documentType.value);
 
           try {
@@ -54,7 +54,7 @@ export function useUploadFile() {
             if (response.status === 200) {
               console.log("File uploaded successfully", response.data);
               let fileinfo={
-                corporateCode:Number(corporateCode),
+                registerId:Number(registerId),
                 docTypes:documentType.value,
                 fileName:file.name,
                 fileTypes:file.type,

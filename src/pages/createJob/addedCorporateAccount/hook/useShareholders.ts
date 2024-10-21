@@ -27,7 +27,7 @@ export function useShareholders() {
   ) => {
     let body = {
       fullNames: data.fullNames,
-      corporateCode: data.corporateCode ?? "",
+      registerId: data.registerId ?? "",
       passportId: data.passportId ?? "",
       citizenId: data.citizenId ?? "",
       expiryDate: data.expiryDate ?? "",
@@ -36,7 +36,7 @@ export function useShareholders() {
       types: Number(data.types) ?? 301,
       personalId: data.personalId,
     };
-    let dataWithStringDate = { ...body, expiryDate: new Date(data.expiryDate) };
+    let dataWithStringDate = { ...body, expiryDate: new Date(data.expiryDate ?? "") };
     //console.log("body", body);
     try {
       console.log("sending data to dispatch : ", body);
@@ -56,8 +56,8 @@ export function useShareholders() {
           dispatch(updateIndividualShareholder(
            { personalId: body.personalId!,
              newPersonalId: res.data.personalId,
-             individualShareholder:{...body,sharePercentage: body.sharePercentage/100000}}
-          )); //expiryใน body  เป็น date
+             individualShareholder:{...body,sharePercentage: (body.sharePercentage ?? 0)/100000}
+        })); //expiryใน body  เป็น date
         } else {
           console.log("Edit failed");
         }
@@ -79,7 +79,7 @@ export function useShareholders() {
             addIndividualShareholder({
               ...body,
               personalId: res.data.personalId,
-              sharePercentage: data.sharePercentage/100000
+              sharePercentage: (data.sharePercentage ?? 0) / 100000
             })
           );
         } else {

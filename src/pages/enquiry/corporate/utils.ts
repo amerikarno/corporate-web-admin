@@ -12,7 +12,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
     let resCorpPrimaryCountry = data.CorporateCountry.find((item) => item.types === 602);
   
     const result: TCorporateData = {
-      CorporateCode: data.CorporateCode,
+      registerId: data.registerId,
       Info: {
         ...data.Info,
         dateOfIncorporation: data.Info.dateOfIncorporation.split("T")[0]
@@ -24,7 +24,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
           createBy: resCorpRegisterCountry?.createBy || "",
           CreatedAt: resCorpRegisterCountry?.CreatedAt || "",
           DeletedAt: resCorpRegisterCountry?.DeletedAt || "",
-          corporateCode: resCorpRegisterCountry?.corporateCode || 0,
+          registerId: resCorpRegisterCountry?.registerId || 0,
           types: resCorpRegisterCountry?.types || 0,
           other: resCorpRegisterCountry?.other || ""
         },
@@ -34,7 +34,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
           createBy: resCorpPrimaryCountry?.createBy || "",
           CreatedAt: resCorpPrimaryCountry?.CreatedAt || "",
           DeletedAt: resCorpPrimaryCountry?.DeletedAt || "",
-          corporateCode: resCorpPrimaryCountry?.corporateCode || 0,
+          registerId: resCorpPrimaryCountry?.registerId || 0,
           types: resCorpPrimaryCountry?.types || 0,
           other: resCorpPrimaryCountry?.other || ""
         }
@@ -122,7 +122,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
         return directors.map(director => {
           return {
             ...director,
-            corporateCode: String(director.corporateCode),
+            registerId: String(director.registerId),
           } 
         });
       };
@@ -133,7 +133,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
         return juristics.map(juristic => {
           return {
             ...juristic,
-            corporateCode: String(juristic.corporateCode), 
+            registerId: String(juristic.registerId), 
           } as TJuristicsShareholders; 
         });
       };
@@ -144,7 +144,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
         return authorizedPersons.map(person => {
           return {
             ...person,
-            corporateCode: String(person.corporateCode), 
+            registerId: String(person.registerId), 
           } as TAuthorizePerson; 
         });
       };
@@ -155,7 +155,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
         return attorneys.map(attorney => {
           return {
             ...attorney,
-            corporateCode: String(attorney.corporateCode), 
+            registerId: String(attorney.registerId), 
           };
         });
       };
@@ -215,7 +215,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
               selector: (row: TAuthorizePerson) => row.nationality || "",
             }]
             type TBankWithID = {
-              CorporateCode?: string;
+              registerId?: string;
               bank: TBank[];
               BankId?: string;
             };
@@ -325,13 +325,13 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
         }]
 
 export const mockedCorporateData : TCorporateData[] = [{
-    "CorporateCode": 80000009,
+    "registerId": 80000009,
     "Info": {
         "id": "fbc3283c-ca57-4421-887d-ecfac813eb20",
         "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
         "CreatedAt": "2024-08-21T06:46:29.634Z",
         "DeletedAt": null,
-        "corporateCode": 80000009,
+        "registerId": 80000009,
         "name": "Test Company",
         "registrationNo": "11200000",
         "taxId": "1234567890",
@@ -343,7 +343,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
             "CreatedAt": "2024-08-21T06:46:29.637Z",
             "DeletedAt": null,
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "isThailand": true,
             "other": "",
             "types": 601
@@ -353,7 +353,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
             "CreatedAt": "2024-08-21T06:46:29.637Z",
             "DeletedAt": null,
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "isThailand": false,
             "other": "test2",
             "types": 602
@@ -363,7 +363,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
             "CreatedAt": "2024-08-21T06:49:06.23Z",
             "DeletedAt": null,
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "isThailand": false,
             "other": "source of income other mocked",
             "types": 603
@@ -377,7 +377,7 @@ export const mockedCorporateData : TCorporateData[] = [{
                     "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
                     "CreatedAt": "2024-08-21T06:46:29.642Z",
                     "DeletedAt": null,
-                    "corporateCode": 80000009,
+                    "registerId": 80000009,
                     "addressNo": "123",
                     "mooNo": "-",
                     "building": "Tisco Tower",
@@ -402,7 +402,7 @@ export const mockedCorporateData : TCorporateData[] = [{
                     "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
                     "CreatedAt": "2024-08-21T06:46:29.644Z",
                     "DeletedAt": null,
-                    "corporateCode": 80000009,
+                    "registerId": 80000009,
                     "addressNo": "1234",
                     "building": "Tisco Tower1",
                     "floor": "16+1",
@@ -426,7 +426,7 @@ export const mockedCorporateData : TCorporateData[] = [{
         "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
         "CreatedAt": "2024-08-21T06:46:29.639Z",
         "DeletedAt": null,
-        "corporateCode": 80000009,
+        "registerId": 80000009,
         "registeredCapital": 10000000,
         "revenuePerYear": 3600000,
         "netProfitLoss": 1200000,
@@ -437,7 +437,7 @@ export const mockedCorporateData : TCorporateData[] = [{
         "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
         "CreatedAt": "2024-08-21T06:49:06.219Z",
         "DeletedAt": null,
-        "corporateCode": 80000009,
+        "registerId": 80000009,
         "isJuristicThailand": true,
         "isTaxExempt": true,
         "isNonTaxExempt": false,
@@ -454,7 +454,7 @@ export const mockedCorporateData : TCorporateData[] = [{
         "id": "ca94d4eb-19a6-40dc-9ee9-5be5f5d8f23e",
         "CreatedAt": "2024-08-21T06:49:06.222Z",
         "DeletedAt": null,
-        "corporateCode": 80000009,
+        "registerId": 80000009,
         "isAntiqueTrading": false,
         "isHotelRestaurant": false,
         "isArmament": false,
@@ -478,7 +478,7 @@ export const mockedCorporateData : TCorporateData[] = [{
         "id": "221807c9-8d7b-4519-9cc1-2abd91cedb38",
         "CreatedAt": "2024-08-21T06:49:06.225Z",
         "DeletedAt": null,
-        "corporateCode": 80000009,
+        "registerId": 80000009,
         "isRevenue": true,
         "isStock": false,
         "isDonation": false,
@@ -496,14 +496,14 @@ export const mockedCorporateData : TCorporateData[] = [{
                 "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
                 "CreatedAt": "2024-08-21T06:49:06.23Z",
                 "DeletedAt": null,
-                "corporateCode": 80000009,
+                "registerId": 80000009,
                 "isThailand": true,
                 "other": "",
                 "types": 603
             },
             "otherCountry": "",
             "investmentObject": "",
-            "isliquidation": false,
+            "isLiquidation": false,
             "isLiquidation": true,
             "isInvestment": false,
             "isCashManagement": false,
@@ -517,7 +517,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
             "CreatedAt": "2024-08-21T06:50:57.157Z",
             "DeletedAt": null,
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "fullNames": [
                 {
                     "id": "7146f867-0f17-4b1d-a5b4-f98be0666dc6",
@@ -543,7 +543,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
             "CreatedAt": "2024-08-21T06:52:19.636Z",
             "DeletedAt": null,
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "fullNames": [
                 {
                     "id": "7c204aa3-e35a-4142-b106-5ec5bd725665",
@@ -572,7 +572,7 @@ export const mockedCorporateData : TCorporateData[] = [{
   "CreatedAt": "2024-08-21T07:52:23.503Z",
   "DeletedAt": null,
   "personalId": "c1547bed-8430-4ce6-b79d-a137a7d9a5ba",
-  "corporateCode": 80000009,
+  "registerId": 80000009,
   "fullNames": [
     {
       "id": "a90589a6-3b12-4998-9d0c-7eb9bde806f4",
@@ -619,7 +619,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "CreatedAt": "2024-08-21T08:03:57.539Z",
             "DeletedAt": null,
             "personalId": "585c3e4e-d1f5-494b-a0df-b60b3c331fa1",
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "fullNames": [
                 {
                     "id": "e7eee781-84be-4f07-a448-dabd58f2d5cc",
@@ -668,7 +668,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "CreatedAt": "2024-08-26T09:15:29.436Z",
             "DeletedAt": null,
             "personalId": "6a71bb84-2b25-4a7c-a8e4-cb91bafe8183",
-            "corporateCode": 80000014,
+            "registerId": 80000014,
             "fullNames": [
                 {
                     "id": "07f5a3d3-1937-4ca7-ac79-a3069d58b909",
@@ -711,7 +711,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "CreatedAt": "2024-08-21T08:09:01.66Z",
             "DeletedAt": null,
             "personalId": "a5e62927-287b-42a0-93fb-b536f4f5b0a2",
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "fullNames": [
                 {
                     "id": "c21ada9c-d7e6-47dc-a9c4-556f3db15d71",
@@ -739,7 +739,7 @@ export const mockedCorporateData : TCorporateData[] = [{
           "CreatedAt": "2024-09-12T04:00:13.134Z",
           "DeletedAt": null,
           "personalId": "394d06e0-3281-4bb3-b8c1-782749105236",
-          "corporateCode": 80000044,
+          "registerId": 80000044,
           "fullNames": [
               {
                   "id": "5d1ecbef-9041-4e19-9df7-70aa1b340d42",
@@ -783,7 +783,7 @@ export const mockedCorporateData : TCorporateData[] = [{
             "createBy": "10591b95-af75-41fe-97d2-bd716f8ae232",
             "CreatedAt": "2024-08-21T08:12:16.355Z",
             "DeletedAt": null,
-            "corporateCode": 80000009,
+            "registerId": 80000009,
             "juristicName": "Nook Company",
             "registrationNo": "1234567852145",
             "registeredCountry": "Thailand",
@@ -796,7 +796,7 @@ export const mockedCorporateData : TCorporateData[] = [{
           "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
           "CreatedAt": "2024-09-12T02:09:44.974Z",
           "DeletedAt": null,
-          "corporateCode": 80000044,
+          "registerId": 80000044,
           "accountType": "12",
           "bankName": "2",
           "accountNo": "2",
@@ -809,7 +809,7 @@ export const mockedCorporateData : TCorporateData[] = [{
       {
           "id": "03715454-0713-43ef-9b8d-5570c877fc6d",
           "docTypes": "id",
-          "corporateCode": 80000010,
+          "registerId": 80000010,
           "fileName": "test.png",
           "fileTypes": "image/png",
           "filePath": "uploads/80000044/id/Screenshot 2024-07-30 101633.png"
@@ -817,14 +817,14 @@ export const mockedCorporateData : TCorporateData[] = [{
       {
         "id": "03733454-0713-43ef-9b8d-5570c877fc6d",
         "docTypes": "id",
-        "corporateCode": 80000045,
+        "registerId": 80000045,
         "fileName": "window.png",
         "fileTypes": "image/png",
         "filePath": "uploads/80000044/id/Screenshot 2024-07-30 101633.png"
     }
   ],
    "SuitTestResult": {
-            "corporateCode": "80000091",
+            "registerId": "80000091",
             "accountID": "",
             "totalScore": 22,
             "level": 3,

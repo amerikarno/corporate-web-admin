@@ -54,7 +54,7 @@ const initialState: TCorporateInfo = {
   primary: "",
   isPrimaryCountry: true,
   isPrimaryOther: false,
-  corporateCode: "",
+  registerId: "",
 };
 
 const currentCorporateInfoSlice = createSlice({

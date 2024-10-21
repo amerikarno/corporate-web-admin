@@ -1,5 +1,5 @@
 export const mockJuristicType = {
-  corporateCode: "50feb95e-d771-466d-a028-09fcee10065f",
+  registerId: "50feb95e-d771-466d-a028-09fcee10065f",
   corpprateType: {
     "11": 0,
     "12": 0,

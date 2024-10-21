@@ -21,12 +21,12 @@ export function PageCorporateInfo() {
 
   const fetchCorporateData = async () => {
     try {
-      const corporateCode = localStorage.getItem("corporateCode") || "";
+      const registerId = localStorage.getItem("registerId") || "";
 
-      if (corporateCode) {
+      if (registerId) {
         const response = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
+          { registerId: registerId },
           {
             headers: {
               Authorization: `Bearer ${getCookies()}`,
@@ -37,7 +37,7 @@ export function PageCorporateInfo() {
         dispatch(setCorporateData(response.data[0]));
       } else {
         dispatch(clearCorporateData());
-        // console.log("corporateCode not found");
+        // console.log("registerId not found");
       }
     } catch (error) {
       console.error("Error fetching corporate data:", error);

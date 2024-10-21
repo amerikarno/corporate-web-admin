@@ -71,12 +71,12 @@ export default function BasicInfo() {
     resolver: zodResolver(basicInfoSchema),
   });
 
-  const fetchIndividualData = async (AccountID: string) => {
+  const fetchIndividualData = async (registerId: string) => {
     try {
-      console.log(AccountID);
+      console.log(registerId);
       const res = await axios.post(
         "/api/v1/individual/list",
-        { AccountID },
+        { registerId },
         {
           headers: {
             "Content-Type": "application/json",
@@ -94,11 +94,11 @@ export default function BasicInfo() {
     (state: RootState) => state.individualData.individualDatas
   );
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
-    if (cidValue) {
-      fetchIndividualData(cidValue || "");
+    const registerIdValue = localStorage.getItem("registerId");
+    if (registerIdValue) {
+      fetchIndividualData(registerIdValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
 
@@ -245,7 +245,7 @@ export default function BasicInfo() {
       },
     };
     let body = {
-      cid: localStorage.getItem("cid"),
+      registerId: localStorage.getItem("registerId"),
       investment: prebody.investment,
       occupation: prebody.occupation,
       addresses: [
@@ -254,7 +254,6 @@ export default function BasicInfo() {
         prebody.officeAddress,
       ],
       banks: [prebody.firstBankAccount, prebody.secondBankAccountBody],
-      pageID: 300,
     };
     console.log(body);
     dispatch(setTestCorporateData(body));

@@ -10,7 +10,7 @@ import { yyyyMMddToDate } from "@/lib/utils";
 type TBody = {
   dateFrom: Date | null;
   dateTo: Date | null;
-  corporateCode: string;
+  registerId: string;
 };
 export function useAccountOpening() {
   const [searchResult, setSearchResult] = useState<TCorporateData[]>();
@@ -27,7 +27,7 @@ export function useAccountOpening() {
 
     // console.log(body);
     if (
-      body.corporateCode === "" &&
+      body.registerId === "" &&
       body.dateFrom === null &&
       body.dateTo === null
     ) {
@@ -54,9 +54,9 @@ export function useAccountOpening() {
       try {
         // console.log(body);
         let formatBody;
-        if (body.corporateCode) {
+        if (body.registerId) {
           formatBody = {
-            corporateCode: body.corporateCode,
+            registerId: body.registerId,
           };
         } else {
           formatBody = body;

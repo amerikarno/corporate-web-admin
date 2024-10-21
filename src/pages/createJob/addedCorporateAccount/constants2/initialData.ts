@@ -85,7 +85,7 @@ export const initAddress = {
 };
 
 export const initialCorporateTypeAndIncome: TJuristicTypeAll = {
-  corporateCode: "",
+  registerId: "",
   corporateType: {
     "11": 0,
     "12": 0,

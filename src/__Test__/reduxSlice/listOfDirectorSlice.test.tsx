@@ -11,7 +11,7 @@ import reducer, {
   
   const mockDirector: TDirector = {
     personalId: "director1",
-    corporateCode: "123456",
+    registerId: "123456",
     fullNames: [
       {
         title: "Mr.",
@@ -43,7 +43,7 @@ import reducer, {
   
   const updatedDirector: TDirector = {
     personalId: "director1",
-    corporateCode: "123456",
+    registerId: "123456",
     fullNames: [
       {
         title: "Mr.",

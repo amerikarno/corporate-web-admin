@@ -18,13 +18,13 @@ import { useDispatch } from "react-redux";
 
 type TAttorneyFormProps = {
   onsubmit: (data: TAttorney) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TAttorney | null;
   clearChoosedEditData: () => void;
 };
 export function FormAttorney({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TAttorneyFormProps) {
@@ -112,7 +112,7 @@ export function FormAttorney({
         types: 302,
         addresses: data.addresses,
         fullNames: data.fullNames,
-        corporateCode: corporateCode,
+        registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",

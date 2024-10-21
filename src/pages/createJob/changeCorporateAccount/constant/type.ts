@@ -1,7 +1,7 @@
 import { SuitTestResult } from "../edit/constants/types";
 
 export type TCorporateAccountOpeningInfo = {
-  corporateCode: string;
+  registerId: string;
   // corporateName: string;
   // taxId: number;
   dateFrom: Date;
@@ -13,7 +13,7 @@ export type TCorporateInfo = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   name: string;
   registrationNo: string;
   taxId: string;
@@ -25,7 +25,7 @@ export type TCorporateCountry = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   isThailand?: boolean;
   other: string;
   types: number;
@@ -42,7 +42,7 @@ export type TCorporateSubAddress = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   addressNo: string;
   mooNo: string;
   building: string;
@@ -63,7 +63,7 @@ export type TAttorney = {
   CreatedAt: string;
   DeletedAt: string | null;
   personalId: string;
-  corporateCode: number;
+  registerId: string;
   fullNames: TFullName[];
   addresses: TAddress[];
   passportId?: string;
@@ -80,7 +80,7 @@ export type TCorporateFinancials = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   registeredCapital: number;
   revenuePerYear: number;
   netProfitLoss: number;
@@ -92,7 +92,7 @@ export type TCorporateTypes = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   isJuristicThailand: boolean;
   isTaxExempt: boolean;
   isNonTaxExempt: boolean;
@@ -110,7 +110,7 @@ export type TBusinessTypes = {
   CreatedAt: string;
   DeletedAt: string | null;
   id: string;
-  corporateCode: number;
+  registerId: string;
   isAntiqueTrading: boolean;
   isHotelRestaurant: boolean;
   isArmament: boolean;
@@ -135,7 +135,7 @@ export type TSourceOfIncomes = {
   CreatedAt: string;
   DeletedAt: string | null;
   id: string;
-  corporateCode: number;
+  registerId: string;
   isDonation: boolean;
   isLoan: boolean;
   isOtherIncome: boolean;
@@ -149,7 +149,6 @@ export type TCountrySourceIncomes = {
   CreatedAt: string;
   DeletedAt: string | null;
   corporateCountry: TCorporateCountry;
-  isliquidation: boolean;
   otherInvestment: string;
   investmentObject: string;
   isCashManagement: boolean;
@@ -164,7 +163,7 @@ export type TContact = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   fullNames: TContactFullName[];
   telephone?: string;
   email: string;
@@ -224,11 +223,11 @@ export type TDirector = {
   CreatedAt: string;
   DeletedAt: string | null;
   personalId: string;
-  corporateCode: number;
+  registerId: string;
   fullNames: TFullName[];
   addresses: TAddress[];
-  citizenId: string;
-  passportId: string;
+  citizenId?: string;
+  passportId?: string;
   expiryDate: string;
   nationality: string;
   types: number;
@@ -240,7 +239,7 @@ export type TAuthorizedPerson = {
   CreatedAt: string;
   DeletedAt: string | null;
   personalId: string;
-  corporateCode: number;
+  registerId: string;
   fullNames: TFullName[];
   addresses: TAddress[];
   passportId?: string;
@@ -256,14 +255,14 @@ export type TIndividualShareholder = {
   CreatedAt: string;
   DeletedAt: string | null;
   personalId: string;
-  corporateCode: number;
+  registerId: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string | null;
+  expiryDate: string;
   nationality: string;
   types: number;
-  sharePercentage: number;
+  sharePercentage: number | null;
 };
 
 export type TJuristic = {
@@ -271,7 +270,7 @@ export type TJuristic = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
@@ -283,26 +282,26 @@ export type TBank = {
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;
-  corporateCode: number;
+  registerId: string;
   accountType: string;
   bankName: string;
   accountNo: string;
   accountLocation: string;
   swiftCode: string;
-  BankId: string;
+  BankId?: string;
 };
 
 export type TDocuments = {
   id?: string;
   filePath?: string;
-  corporateCode: number;
+  registerId: string;
   docTypes: string;
   fileName: string;
   fileTypes: string;
 };
 
 export type TCorporateData = {
-  CorporateCode: number;
+  registerId: string;
   Info: TCorporateInfo;
   CorporateCountry: TCorporateCountry[];
   CorporateAddress: TCorporateAddress[];
@@ -331,7 +330,7 @@ export type CorporateResponse = {
   createBy?: string;
   CreatedAt?: string;
   DeletedAt?: null | string;
-  corporateCode?: number;
+  registerId?: string;
   isJuristicThailand?: boolean;
   isTaxExempt?: boolean;
   isNonTaxExempt?: boolean;
@@ -386,7 +385,7 @@ export type CorporateCountryResponse = {
   createBy?: string;
   CreatedAt?: string;
   DeletedAt?: null | string;
-  corporateCode?: number;
+  registerId?: string;
   isThailand?: boolean;
   other?: string;
   types?: number;

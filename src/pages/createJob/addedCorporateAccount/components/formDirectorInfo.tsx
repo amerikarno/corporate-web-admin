@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
-  corporateCode: string;
+  registerId: string;
   personalId?: string;
   choosedEditData?: TDirector | null;
   clearChoosedEditData: () => void;
@@ -26,7 +26,7 @@ type TDirectorFormProps = {
 
 export function FormIndividualsDirector({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TDirectorFormProps) {
@@ -35,10 +35,6 @@ export function FormIndividualsDirector({
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
-  const [hasDate, setHasDate] = useState<boolean>(
-    choosedEditData?.expiryDate ? true : false
-  );
-
   const dispatch = useDispatch();
   const handleDropboxChoice = (choice: string) => {
     console.log(choice);
@@ -100,7 +96,6 @@ export function FormIndividualsDirector({
       fullNames: [{ title: "", firstName: "", lastName: "" }],
       citizenId: "",
       passportId: "",
-      expiryDate: "mm/dd/yyyy",
       nationality: "",
       addresses: [
         {
@@ -119,7 +114,6 @@ export function FormIndividualsDirector({
       ],
     };
     reset(directorData);
-    setHasDate(true);
   }, [choosedEditData, reset]);
 
   const valideID = () => {
@@ -148,7 +142,7 @@ export function FormIndividualsDirector({
         types: 101,
         addresses: data.addresses,
         fullNames: data.fullNames,
-        corporateCode: corporateCode,
+        registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
@@ -293,21 +287,6 @@ export function FormIndividualsDirector({
                   )}
                 </div>
               </div>
-              {hasDate ? (
-                <div className="w-full md:w-1/2">
-                  <Input
-                    data-testid="expiredDate"
-                    {...register("expiryDate")}
-                    id="Date of Expired"
-                    onClick={() => setHasDate(false)}
-                  />
-                  {errors.expiryDate && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.expiryDate.message}
-                    </p>
-                  )}
-                </div>
-              ) : (
                 <div className="w-full md:w-1/2">
                   <Input
                     {...register("expiryDate")}
@@ -322,7 +301,6 @@ export function FormIndividualsDirector({
                     </p>
                   )}
                 </div>
-              )}
             </div>
 
             <div className="flex flex-row space-x-0 md:space-x-4">

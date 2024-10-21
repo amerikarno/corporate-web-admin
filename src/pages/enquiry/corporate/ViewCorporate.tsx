@@ -23,7 +23,7 @@ import { setCorporateData as setCorporateData2 } from "@/features/editCorporateD
 type TBody = {
   dateFrom: Date | null;
   dateTo: Date | null;
-  corporateCode: string;
+  registerId: string;
 }
 
 const ViewCorporate = () => {
@@ -41,7 +41,7 @@ const ViewCorporate = () => {
   const columnsCorporateInfo: TableColumn<TCorporateData>[] = [
     {
       name: "Juristic ID",
-      selector: (row: TCorporateData) => row.CorporateCode || "",
+      selector: (row: TCorporateData) => row.registerId || "",
     },
     {
       name: "Juristic Name",
@@ -114,7 +114,7 @@ const ViewCorporate = () => {
 
     // console.log(body);
     if (
-      body.corporateCode === "" &&
+      body.registerId === "" &&
       body.dateFrom === null &&
       body.dateTo === null
     ) {
@@ -141,9 +141,9 @@ const ViewCorporate = () => {
       try {
         // console.log(body);
         let formatBody;
-        if (body.corporateCode) {
+        if (body.registerId) {
           formatBody = {
-            corporateCode: body.corporateCode,
+            registerId: body.registerId,
           };
         } else {
           formatBody = body;
@@ -171,8 +171,8 @@ const ViewCorporate = () => {
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState<
+    { registerId: number }[]
   >([]);
   
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +182,7 @@ const ViewCorporate = () => {
       setDisableDate(false);
     }
   };
-  const fetchCorporateCodes = async () => {
+  const fetchregisterIds = async () => {
     try {
       const token = getCookies();
 
@@ -198,10 +198,10 @@ const ViewCorporate = () => {
       );
       if (res.status === 200) {
         // console.log(res);
-        const corporateCodes = res.data.map((item: any) => ({
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map((item: any) => ({
+          registerId: item.registerId,
         }));
-        setFetchedCorporateCodes(corporateCodes);
+        setFetchedregisterIds(registerIds);
       }
     } catch (error) {
       console.log("Error fetching corporate codes:", error);
@@ -209,9 +209,9 @@ const ViewCorporate = () => {
   };
 
   const initData = async () => {
-    await fetchCorporateCodes();
+    await fetchregisterIds();
     const data: TCorporateAccountOpening = {
-      corporateCode: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
@@ -220,8 +220,8 @@ const ViewCorporate = () => {
   };
 
   useEffect(() => {
-    // fetchCorporateCodes();
-    // console.log("all-corporate Code", mockedCorporateCodes);
+    // fetchregisterIds();
+    // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
 
@@ -259,19 +259,19 @@ const ViewCorporate = () => {
             <SideLabelInput title="Juristic ID">
               <Input
                 data-testid="juristicId"
-                {...register("corporateCode")}
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.corporateCode?.message}</p>
+                <p className="text-red-500">{errors.registerId?.message}</p>
               )}
               <datalist id="juristicId">
-                {mockedCorporateCodes.map((code, index) => (
-                  <option key={index} value={code.corporateCode}>
-                    {code.corporateCode}
+                {mockedregisterIds.map((code, index) => (
+                  <option key={index} value={code.registerId}>
+                    {code.registerId}
                   </option>
                 ))}
               </datalist>

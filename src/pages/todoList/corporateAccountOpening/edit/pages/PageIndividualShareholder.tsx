@@ -40,7 +40,7 @@ export function PageIndividualShareholder({
   ) as TIndividualShareholderEdit[];
   const [choosedEditData, setChoosedEditData] =
     useState<TIndividualShareholderEdit>();
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
   const clearChoosedEditData = () => {
     setChoosedEditData(undefined);
   };
@@ -50,7 +50,7 @@ export function PageIndividualShareholder({
       const res = await axios
       .post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -86,10 +86,10 @@ export function PageIndividualShareholder({
   }
 
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
   }, []);
 
@@ -186,7 +186,7 @@ export function PageIndividualShareholder({
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -221,7 +221,7 @@ export function PageIndividualShareholder({
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitShareholders}
-          corporateCode={corporateCode}
+          registerId={registerId}
         />
       </div>
     </>

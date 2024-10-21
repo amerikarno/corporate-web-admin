@@ -146,15 +146,9 @@ export const individualsShareholdersSchema = z.object({
   passportId: z.string().optional(),
   expiryDate: z.string().min(1, "date cannot be empty"),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
-  // sharePercentage: z.preprocess(
-  //   (a) => parseFloat(z.string().parse(a)),
-  //   z.number({
-  //     invalid_type_error: "Price must be Number",
-  //   })
-  // ),
   sharePercentage: z.coerce
     .number()
-    .max(100, { message: "Share percentage cannot be more than 100" }),
+    .max(100, { message: "Share percentage cannot be more than 100" }).nullable(),
 });
 
 export type TIndividualsShareholdersSchema = z.infer<
@@ -182,7 +176,7 @@ export const bankSchema = z.object({
 export type TBankSchema = z.infer<typeof bankSchema>;
 
 export const authorizedPersonSchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
@@ -193,7 +187,7 @@ export const authorizedPersonSchema = z.object({
 });
 
 export const attorneySchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
@@ -246,7 +240,7 @@ export type TIndividualsDirectorSchema = z.infer<
 >;
 
 export const individualsJuristicShareholdersSchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
   registrationNo: z.string().min(1, "Registration number cannot be empty"),
   registeredCountry: z
@@ -254,7 +248,7 @@ export const individualsJuristicShareholdersSchema = z.object({
     .min(1, { message: "Register Country cannot be empty" }),
   sharePercentage: z.coerce
     .number()
-    .max(100, { message: "Share percentage cannot be more than 100" }),
+    .max(100, { message: "Share percentage cannot be more than 100" }).nullable(),
   // sharePercentage: z.preprocess(
   //   (a) => parseFloat(z.string().parse(a)),
   //   z.number({

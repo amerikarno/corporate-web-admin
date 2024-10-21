@@ -18,13 +18,13 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 
 type TAuthorizePersonFormProps = {
   onsubmit: (data: TAuthorizePerson) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TAuthorizePerson | null;
   clearChoosedEditData: () => void;
 };
 export function FormAuthorizedPerson({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TAuthorizePersonFormProps) {
@@ -111,7 +111,7 @@ export function FormAuthorizedPerson({
         types: 201,
         addresses: data.addresses,
         fullNames: data.fullNames,
-        corporateCode: corporateCode,
+        registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",

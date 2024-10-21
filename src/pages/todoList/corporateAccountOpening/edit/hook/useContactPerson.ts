@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 
 type TContactPersonArray = {
   contacts: TContactPerson[];
-  corporateCode?: string;
+  registerId?: string;
   personalId?: string;
 };
 

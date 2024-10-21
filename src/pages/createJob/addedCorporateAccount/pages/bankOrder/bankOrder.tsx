@@ -25,11 +25,11 @@ export default function BankOrderEdit() {
   }
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("depostie");
-  //   const [selectedCorporateCode, setSelectedCorporateCode] =
+  //   const [selectedregisterId, setSelectedregisterId] =
   //     useState<string>("");
   //   const [selectedTradingPair, setSelectedTradingPair] = useState<string>("");
-    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-      { corporateCode: number }[]
+    const [mockedregisterIds, setFetchedregisterIds] = useState<
+      { registerId: number }[]
     >([]);
   const [choosedEditData, setChoosedEditData] = useState<TBankOrder>();
   const clearChoosedEditData = () => {
@@ -78,7 +78,7 @@ export default function BankOrderEdit() {
     (state) => state.bankOrder?.bankOrders || []
   ) as TBankOrder[];
 
-    const fetchCorporateCodes = async () => {
+    const fetchregisterIds = async () => {
       try {
         const token = getCookies();
 
@@ -92,10 +92,10 @@ export default function BankOrderEdit() {
           }
         );
         if (res.status === 200) {
-          const corporateCodes = res.data.map((item: any) => ({
-            corporateCode: item.CorporateCode,
+          const registerIds = res.data.map((item: any) => ({
+            registerId: item.registerId,
           }));
-          setFetchedCorporateCodes(corporateCodes);
+          setFetchedregisterIds(registerIds);
         } else {
           console.log("Failed to fetch corporate codes");
         }
@@ -137,7 +137,7 @@ export default function BankOrderEdit() {
 
   const columnsOrderTrade: TableColumn<TBankOrder>[] = [
     {
-      name: "CorporateCode",
+      name: "registerId",
       selector: (row: TBankOrder) => row.accountId || "",
     },
     {
@@ -208,7 +208,7 @@ export default function BankOrderEdit() {
 
   useEffect(() => {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 
   const onSubmit = async (data: TBankOrder) => {
@@ -233,7 +233,7 @@ export default function BankOrderEdit() {
           reset();
           setBankRemove(false)
           clearChoosedEditData();
-          //   setSelectedCorporateCode("");
+          //   setSelectedregisterId("");
           console.log("edit successful");
             fetchOrderList();
         } else {
@@ -249,7 +249,7 @@ export default function BankOrderEdit() {
           reset();
           setBankRemove(false)
           clearChoosedEditData();
-          //   setSelectedCorporateCode("");
+          //   setSelectedregisterId("");
           console.log("save successful");
           fetchOrderList();
         } else {
@@ -276,17 +276,17 @@ export default function BankOrderEdit() {
                       label="Corporate Code"
                       id="accountId"
                       disabled={isSubmitting}
-                      list="corporateCodes"
+                      list="registerIds"
                     />
                     {errors.accountId && (
                       <p className="text-red-500 text-sm px-2">
                         {errors.accountId.message}
                       </p>
                     )}
-                    <datalist id="corporateCodes">
-                      {mockedCorporateCodes.map((code, index) => (
-                        <option key={index} value={code.corporateCode}>
-                          {code.corporateCode}
+                    <datalist id="registerIds">
+                      {mockedregisterIds.map((code, index) => (
+                        <option key={index} value={code.registerId}>
+                          {code.registerId}
                         </option>
                       ))}
                     </datalist>

@@ -13,7 +13,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { TCorporateData } from "../../constant/type";
-import { mapDataToTAttorney } from "../libs/utils";
+import { mapDataToTAttorney, mockedCorporateData } from "../libs/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -44,13 +44,13 @@ export function PageAttorney({}: TPageAttorneyProps) {
   const corporatesInfo: TCorporateData = useSelector<RootState>(
     (state) => state.editCorporate
   ) as TCorporateData;
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
 
   const fetchedData = async () => {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,10 +84,10 @@ export function PageAttorney({}: TPageAttorneyProps) {
   };
 
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
   }, []);
 
@@ -200,7 +200,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -238,7 +238,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitAttorney}
-          corporateCode={corporateCode}
+          registerId={registerId}
         />
       </div>
     </>

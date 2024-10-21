@@ -16,7 +16,7 @@ export function useCorporateInfo() {
   const dispatch = useDispatch();
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) => {
     if (!isExpiredToken()) {
-      if (data.corporateCode === "0" || !data.corporateCode) {
+      if (data.registerId === "0" || !data.registerId) {
         await createCorporateInfo(data);
       } else {
         await saveCorporateInfo(data);
@@ -55,18 +55,18 @@ export function useCorporateInfo() {
       }
 
       const newData = { ...data };
-      // const corporateCode = createResponse.data.corporateCode;
+      // const registerId = createResponse.data.registerId;
       localStorage.setItem(
-        "corporateCode",
-        createResponse.data.corporateCode.toString()
+        "registerId",
+        createResponse.data.registerId.toString()
       );
-      const corporateCode = localStorage.getItem("corporateCode") || "";
-      newData.corporateCode = corporateCode;
-      console.log("Corporate Data with corporateCode:", newData);
+      const registerId = localStorage.getItem("registerId") || "";
+      newData.registerId = registerId;
+      console.log("Corporate Data with registerId:", newData);
 
       const queryResponse = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -99,7 +99,7 @@ export function useCorporateInfo() {
     let body = {
       ...data,
       dateofincorporation: new Date(data.dateofincorporation),
-      corporateCode: data.corporateCode,
+      registerId: data.registerId,
     };
     console.log("body", body);
     try {
@@ -112,7 +112,7 @@ export function useCorporateInfo() {
       if (res.status === 200) {
         console.log(res);
         let newData = copy(data);
-        newData.corporateCode = res.data.CorporateCode;
+        newData.registerId = res.data.registerId;
         setCorporatesInfo([...corporatesInfo, newData]);
         dispatch(setCurrentCorporateInfo(newData));
         // setCurrentCorporatesInfo(data);

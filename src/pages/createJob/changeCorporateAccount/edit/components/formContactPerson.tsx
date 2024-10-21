@@ -18,19 +18,19 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 import { useDispatch } from "react-redux";
 type TContactPersonArray = {
   contacts: TContactPerson[];
-  corporateCode?: string;
+  registerId?: string;
   personalId?: string;
 };
 
 type TContactPersonFormProps = {
   onsubmit: (data: TContactPersonArray) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TContact | null;
   clearChoosedEditData: () => void;
 };
 export function FormIndividualsContactPerson({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData
 }: TContactPersonFormProps) {
@@ -64,7 +64,7 @@ export function FormIndividualsContactPerson({
     console.log(data)
     let formData: TContactPersonArray = {
       contacts: [{...data,personalId:choosedEditData?.personalId}],
-      corporateCode: corporateCode,
+      registerId: registerId,
     };
     dispatch(setTestCorporateData(formData));
     await sleep(500);

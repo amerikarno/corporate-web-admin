@@ -7,7 +7,7 @@ import { addBank, updateBank } from "@/features/bankSlice/bankSlice";
 
 type TBankArray = {
   bank: TBank[];
-  CorporateCode?: string;
+  registerId?: string;
   BankId?: string;
 };
 

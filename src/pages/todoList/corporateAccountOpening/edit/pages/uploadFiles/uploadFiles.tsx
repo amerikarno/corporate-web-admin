@@ -29,7 +29,7 @@ export default function UploadFiles({
   const uploadFile: TDocuments[] = useSelector<RootState>(
     (state) => state.uploadFile?.files || []
   ) as TDocuments[];
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
   const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   console.log(uploadFile);
   const token = getCookies();
@@ -39,7 +39,7 @@ export default function UploadFiles({
       try {
         const res = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode },
+          { registerId },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -60,12 +60,12 @@ export default function UploadFiles({
         console.error("Error fetching upload File data:", error);
       }
     };
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found");
+      console.log("registerId not found");
     }
-  }, [corporateCode, dispatch, token]);
+  }, [registerId, dispatch, token]);
   return (
     <div className="p-4">
       <Card className=" p-4 space-y-6">
@@ -74,7 +74,7 @@ export default function UploadFiles({
           <div className="w-1/2 space-y-4">
             <div className="flex flex-row gap-4">
               <h1 className="font-bold">Juristic ID</h1>
-              <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+              <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
             </div>
             <div className="flex flex-row gap-4">
               <h1 className="font-bold">Juristic Investor Name</h1>
@@ -110,7 +110,7 @@ export default function UploadFiles({
                   <DocumentBox
                     key={index}
                     fileName={document.fileName}
-                    corporateCode={document.corporateCode}
+                    registerId={document.registerId}
                     id={document.id}
                   />
                 ))
@@ -130,7 +130,7 @@ export default function UploadFiles({
           {documentType !== null && (
             <div className="space-y-4">
               <Input type="file" onChange={handleInputChange} data-testid="inputfile"/>
-              <Button onClick={() => handleUpload(file, corporateCode)}>
+              <Button onClick={() => handleUpload(file, registerId)}>
                 Upload
               </Button>
             </div>
