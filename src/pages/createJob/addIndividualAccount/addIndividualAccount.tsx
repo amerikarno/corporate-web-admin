@@ -38,10 +38,10 @@ export default function AddIndividualAccount() {
   const dispatch = useDispatch();
   const token = getCookies();
 
-  const fetchIndividualData = async (AccountID: string) => {
+  const fetchIndividualData = async (registerId: string) => {
     try {
-      console.log(AccountID);
-      const res = await axios.post("/api/v1/individual/list", { AccountID }, {
+      console.log(registerId);
+      const res = await axios.post("/api/v1/individual/list", { registerId }, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -53,13 +53,15 @@ export default function AddIndividualAccount() {
       console.log(error);
     }
    };
-  
+
   const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
 
   useEffect(() => {
-    const cidValue = localStorage.getItem('cid');
-    if(cidValue){
-      fetchIndividualData(cidValue || "");
+    const registerIdValue = localStorage.getItem("registerId");
+    if (registerIdValue) {
+      fetchIndividualData(registerIdValue || "");
+    }else{
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
 
@@ -148,14 +150,12 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    console.log(data)
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
+    let body = { ...data, birthDate: new Date(data.birthDate) ,  registerId: localStorage.getItem('registerId')?.toString() };
     dispatch(setTestCorporateData({...body,birthDate: new Date(data.birthDate).toISOString()}));
     try {
       const token = getCookies();
       console.log("body to send ",body)
-      if(individualData?.id){
-        console.log("api : /api/v1/individual/update/pre")
+      if(localStorage.getItem('registerId')?.toString()){
         const res = await axios.post("/api/v1/individual/update/pre", body, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -164,17 +164,16 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("registerId", res.data.registerId);
           localStorage.setItem("age", age.toString());
           console.log(age);
           console.log("update success", res, data);
 
-          navigate("/create-job/added-individual-account/2");
+          navigate("/create-job/added-corporate-account/2");
           window.scrollTo(0, 0);
         }
       }
       else{
-        console.log("api : /api/v1/individual/precreate ",body)
         const res = await axios.post("/api/v1/individual/precreate", body, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -183,11 +182,11 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("registerId", res.data.registerId);
           localStorage.setItem("age", age.toString());
           console.log("create success", res, data);
 
-          navigate("/create-job/added-individual-account/2");
+          navigate("/create-job/added-corporate-account/2");
           window.scrollTo(0, 0);
         }
       }
@@ -196,9 +195,9 @@ export default function AddIndividualAccount() {
 
       // const todo = "remove all below";
       // const age = calculateAge(body.birthDate);
-      // localStorage.setItem("cid", "90000001");
+      // localStorage.setItem("registerId", "90000001");
       // localStorage.setItem("age", age.toString());
-      // navigate("/create-job/added-individual-account/basicinfo");
+      // navigate("/create-job/added-corporate-account/2");
       // window.scrollTo(0, 0);
     }
   };
@@ -348,9 +347,9 @@ export default function AddIndividualAccount() {
               <div className="w-1/2">
                 <Input
                   type="date"
+                  data-testid="birthDate"
                   {...register("birthDate")}
                   label="วัน/เดือน/ปี เกิด"
-                  data-testid ="birthDate"
                 />
                 {errors.birthDate && (
                   <span className="text-red-500">
@@ -415,8 +414,8 @@ export default function AddIndividualAccount() {
                 <input
                   type="checkbox"
                   id="agreement"
+                  data-testid="agreement"
                   {...register("agreement")}
-                  data-testid ="agreement"
                 />
                 <label htmlFor="agreement" className="text-gray-500">
                   ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัว

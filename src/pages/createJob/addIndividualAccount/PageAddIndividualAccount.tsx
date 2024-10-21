@@ -21,7 +21,7 @@ type TPage = {
   page?: string;
 };
 
-export default function PageAddIndividualAccount() {
+export default function ChangePageAddIndividualAccount() {
   //   if (!isAllowedPage(2001)) {
   //     return <UnAuthorize />;
   //   }
@@ -56,12 +56,12 @@ export default function PageAddIndividualAccount() {
 
   const handlePages = (type: string) => {
     if (type == "next") {
-      navigate(`/create-job/added-individual-account/${pageId + 1}`);
+      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
     } else if (type == "Done") {
       localStorage.clear();
-      navigate(`/create-job/added-individual-account/`);
+      navigate(`/create-job/added-corporate-account/`);
     } else {
-      navigate(`/create-job/added-individual-account/${pageId - 1}`);
+      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
     }
   };
 

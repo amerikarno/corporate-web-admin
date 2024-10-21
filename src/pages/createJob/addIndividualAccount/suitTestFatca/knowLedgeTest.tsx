@@ -185,12 +185,12 @@ type AnswersType = {
     const dispatch = useDispatch();
     const token = getCookies();
 
-    const fetchIndividualData = async (AccountID: string) => {
+    const fetchIndividualData = async (registerId: string) => {
         try {
-          console.log(AccountID);
+          console.log(registerId);
           const res = await axios.post(
             "/api/v1/individual/list",
-            { AccountID },
+            { registerId },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -209,8 +209,8 @@ type AnswersType = {
       );
       
     useEffect(() => {
-        const cidValue = localStorage.getItem("cid");
-        fetchIndividualData(cidValue || "");
+        const registerIdValue = localStorage.getItem("registerId");
+        fetchIndividualData(registerIdValue || "");
       }, [token, dispatch,]);
 
     useEffect(()=>{

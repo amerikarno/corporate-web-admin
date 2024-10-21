@@ -115,7 +115,7 @@ export default function ChangeCorporateAccountOpenning({
   };
 
   const onSubmit = async (data: TCorporateAccountOpening) => {
-    // console.log(data);
+    console.log(data);
     await handleSearch(data);
     //reset();
   };

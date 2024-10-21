@@ -96,7 +96,7 @@ export default function ChangeTodoIndividualAccount() {
   const initData = async () => {
     // await fetchregisterIds();
     const data: TSearchIndividualSchema = {
-      AccountID: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
@@ -140,15 +140,15 @@ export default function ChangeTodoIndividualAccount() {
           >
             <SideLabelInput title="Individual ID">
               <Input
-                data-testid="accountId"
-                {...register("AccountID")}
+                data-testid="registerId"
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.AccountID?.message}</p>
+                <p className="text-red-500">{errors.registerId?.message}</p>
               )}
               <datalist id="juristicId">
                 {mockedregisterIds.map((code, index) => (

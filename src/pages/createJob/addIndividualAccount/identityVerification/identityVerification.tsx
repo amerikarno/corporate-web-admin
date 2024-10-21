@@ -30,12 +30,12 @@ export default function IdentityVerification() {
   const token = getCookies();
   const dispatch = useDispatch();
 
-  const fetchIndividualData = async (AccountID: string) => {
+  const fetchIndividualData = async (registerId: string) => {
     try {
-      console.log(AccountID);
+      console.log(registerId);
       const res = await axios.post(
         "/api/v1/individual/list",
-        { AccountID },
+        { registerId },
         {
           headers: {
             "Content-Type": "application/json",
@@ -53,19 +53,20 @@ export default function IdentityVerification() {
     (state: RootState) => state.individualData.individualDatas
   );
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
-    if (cidValue) {
-      fetchIndividualData(cidValue || "");
+    const registerIdValue = localStorage.getItem("registerId");
+    if (registerIdValue) {
+      fetchIndividualData(registerIdValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
+
 
   const [alertVisible, setAlertVisible] = useState(false);
   const handleClose = () => {
     if(alertType === "success"){
       setAlertVisible(false);
-      navigate("/create-job/added-individual-account");
+      navigate("/create-job/added-corporate-account");
       dispatch(clearIndividualData());
       localStorage.clear();
     }
@@ -74,11 +75,11 @@ export default function IdentityVerification() {
 
   const [alertType,setAlertType] = useState("");
   // const [alertMessage,setAlertMessage] = useState("");
-
+  
   const handleNdid = async () => {
     let body = {
       ndid:true,
-      cid:localStorage.getItem('cid')
+      registerId:localStorage.getItem('registerId')
     }
     dispatch(setTestCorporateData(body));
     console.log("ndid choosed : ",body)
@@ -126,7 +127,7 @@ export default function IdentityVerification() {
   const handlethaiid = async () => {
     let body = {
       thaid:true,
-      cid:localStorage.getItem('cid')
+      registerId:localStorage.getItem('registerId')
     }
     dispatch(setTestCorporateData(body));
     console.log("thaid choosed : ",body)
@@ -173,7 +174,7 @@ export default function IdentityVerification() {
   }
   return (
     <div className="flex flex-col items-center p-8 pt-16 space-y-8 md:mx-16">
-          {alertVisible && (
+        {alertVisible && (
             <Alert
               type={alertType}
               onClose={handleClose}
@@ -194,7 +195,7 @@ export default function IdentityVerification() {
           <span className="text-sm md:text-base">1. ยืนยันตัวตนและสมัคร NDID กับธนาคารที่ท่านใช้บริการเรียบร้อยแล้วเท่านั้น</span>
           <span className="text-sm md:text-base">2. ทำรายการให้สำเร็จภายใน 1 ชม.</span>
           <span className="p-4 pl-0 md:pl-4 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
-          <div  className="absolute bottom-4 left-[43%]">
+          <div className="absolute bottom-4 left-[43%]">
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="outline" data-testid="ndidButton" className="bg-slate-800 text-white hover:bg-slate-700 hover:text-white w-36 font-bold">ตกลง</Button>

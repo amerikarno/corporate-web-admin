@@ -1,7 +1,7 @@
 import { z } from "zod";
 export const searchIndividualSchema = z
   .object({
-    AccountID: z.string(),
+    registerId: z.string(),
     dateFrom: z.string().optional(),
     dateTo: z.string().optional(),
   })
