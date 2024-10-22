@@ -238,11 +238,13 @@ export default function BasicInfo() {
         types: 1,
         is_default: true,
       },
-      secondBankAccountBody: {
-        ...data.secondBankAccountBody,
-        types: 2,
-        is_default: false,
-      },
+      ...((data.secondBankAccountBody.bankName && {
+        secondBankAccountBody: {
+          ...data.secondBankAccountBody,
+          types: 2,
+          is_default: false,
+        },
+      }) || { secondBankAccountBody: undefined }),
     };
     let body = {
       registerId: localStorage.getItem("registerId"),
@@ -653,7 +655,7 @@ export default function BasicInfo() {
                 >
                   <option value="">ระดับการศึกษาสูงสุด</option>
                   {educationTypes.map((status) => (
-                    <option key={status.id} value={status.id} data-testid={`education-${status.name}`}>
+                    <option key={status.id} value={status.name} data-testid={`education-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -669,7 +671,7 @@ export default function BasicInfo() {
                 >
                   <option value="">แหล่งที่มาของเงินลงทุน</option>
                   {sourceOfIncome.map((status) => (
-                    <option key={status.id} value={status.id} data-testid={`sourceOfIncome-${status.name}`}>
+                    <option key={status.id} value={status.name} data-testid={`sourceOfIncome-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -687,7 +689,7 @@ export default function BasicInfo() {
                 >
                   <option value="">อาชีพปัจจุบัน</option>
                   {careerTypes.map((status) => (
-                    <option key={status.id} value={status.id} data-testid={`currentOccupation-${status.name}`}>
+                    <option key={status.id} value={status.name} data-testid={`currentOccupation-${status.name}`}>
                       {status.name}
                     </option>
                   ))}
@@ -721,7 +723,7 @@ export default function BasicInfo() {
                   >
                     <option value="">รายได้ต่อเดือน</option>
                     {salaryRange.map((status) => (
-                      <option key={status.id} value={status.id}>
+                      <option key={status.id} value={status.name}>
                         {status.name}
                       </option>
                     ))}
@@ -741,7 +743,7 @@ export default function BasicInfo() {
                   >
                     <option value="">ประเภทธุระกิจ</option>
                     {businessTypes.map((status) => (
-                      <option key={status.id} value={status.id} data-testid={`typeOfBusiness-${status.name}`}>
+                      <option key={status.id} value={status.name} data-testid={`typeOfBusiness-${status.name}`}>
                         {status.name}
                       </option>
                     ))}
@@ -759,7 +761,7 @@ export default function BasicInfo() {
                   >
                     <option value="">รายได้ต่อเดือน</option>
                     {salaryRange.map((status) => (
-                      <option key={status.id} value={status.id}>
+                      <option key={status.id} value={status.name}>
                         {status.name}
                       </option>
                     ))}
@@ -791,7 +793,7 @@ export default function BasicInfo() {
                   >
                     <option value="">รายได้ต่อเดือน</option>
                     {salaryRange.map((status) => (
-                      <option key={status.id} value={status.id} data-testid={`salaryRange-${status.name}`}>
+                      <option key={status.id} value={status.name} data-testid={`salaryRange-${status.name}`}>
                         {status.name}
                       </option>
                     ))}
