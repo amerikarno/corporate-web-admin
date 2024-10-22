@@ -118,6 +118,7 @@ export function FormIndividualsShareholders({
       sharePercentage: null,
       citizenId: "",
       passportId: "",
+      expiryDate:null
     };
     reset(individualShareholderData);
   }, [choosedEditData, reset]);
@@ -140,6 +141,7 @@ export function FormIndividualsShareholders({
       setTriggeriderror("");
       setCurInput(false);
       reset();
+      setValue("expiryDate",null);
       dispatch(setTestCorporateData(formData));
       console.log(formData);
       clearChoosedEditData();

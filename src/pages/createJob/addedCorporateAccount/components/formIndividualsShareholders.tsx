@@ -141,6 +141,7 @@ export function FormIndividualsShareholders({
       setTriggeriderror("");
       setCurInput(false);
       reset();
+      setValue("expiryDate",null);
       dispatch(setTestCorporateData(formData));
       console.log(formData);
       clearChoosedEditData();

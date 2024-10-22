@@ -105,11 +105,11 @@ export function FormAttorney({
         ...formData,
         types: 302,
         addresses: data.addresses.map((address): TAddress => ({
-          id: "", // Provide appropriate id
-          createBy: "", // Provide appropriate createBy
-          CreatedAt: "", // Provide appropriate CreatedAt
-          DeletedAt: null, // Provide appropriate DeletedAt
-          ReferenceID: "", // Provide appropriate ReferenceID
+          id: "",
+          createBy: "", 
+          CreatedAt: "", 
+          DeletedAt: null,
+          ReferenceID: "", 
           addressNo: address.addressNo || "",
           building: address.building,
           floor: address.floor,
@@ -121,21 +121,23 @@ export function FormAttorney({
           province: address.province || "",
           postalCode: address.postalCode || "",
           country: address.country || "",
-          types: 0, // Provide appropriate types
+          types: 0,
         })),
         fullNames: data.fullNames,
         registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
-        telephone: data.telephone || "", // Ensure telephone is a string
-        email: data.email || "", // Ensure email is a string
+        telephone: data.telephone || "", 
+        email: data.email || "", 
+        expiryDate:null
       };
       dispatch(setTestCorporateData(body))
 
       console.log(body);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       clearChoosedEditData();
       onsubmit(body);
     } else {

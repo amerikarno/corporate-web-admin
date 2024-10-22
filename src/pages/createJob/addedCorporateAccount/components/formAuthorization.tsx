@@ -117,6 +117,7 @@ export function FormAuthorizedPerson({
       console.log(body);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       clearChoosedEditData();
       onsubmit(body);
     } else {
@@ -134,6 +135,7 @@ export function FormAuthorizedPerson({
       passportId:'',
       citizenId: '',
       nationality:'',
+      expiryDate:null,
       addresses: [
         { addressNo: "",
           building: "",

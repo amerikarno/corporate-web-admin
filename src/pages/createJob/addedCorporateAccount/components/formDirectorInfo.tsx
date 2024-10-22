@@ -110,7 +110,7 @@ export function FormIndividualsDirector({
           province: "",
           postalCode: "",
           country: "",
-          expiryDate: null
+          expiryDate: ""
         },
       ],
     };
@@ -136,6 +136,7 @@ export function FormIndividualsDirector({
       setCurInput(false);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       // console.log(formData);
 
       let body: TDirector = {

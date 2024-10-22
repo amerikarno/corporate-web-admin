@@ -50,6 +50,21 @@ export function FormAuthorizedPerson({
     if (tmp.passportId) {
       tmp = { ...tmp, citizenId: "" };
     }
+    
+    tmp.addresses = tmp.addresses.map((address) => ({
+      addressNo: address.addressNo || "",
+      building: address.building || "",
+      floor: address.floor || "",
+      mooNo: address.mooNo || "",
+      soi: address.soi || "",
+      road: address.road || "",
+      tambon: address.tambon || "",
+      amphoe: address.amphoe || "",
+      province: address.province || "",
+      postalCode: address.postalCode || "",
+      country: address.country || ""
+    }));
+    
     //tmp = { ...tmp, types: "201" };
     return tmp;
   };
@@ -106,17 +121,31 @@ export function FormAuthorizedPerson({
       let body: TAuthorizePerson = {
         ...formData,
         types: 201,
-        addresses: data.addresses,
+        addresses: data.addresses.map((address) => ({
+          addressNo: address.addressNo || "",
+          building: address.building || "",
+          floor: address.floor || "",
+          mooNo: address.mooNo || "",
+          soi: address.soi || "",
+          road: address.road || "",
+          tambon: address.tambon || "",
+          amphoe: address.amphoe || "",
+          province: address.province || "",
+          postalCode: address.postalCode || "",
+          country: address.country || "",
+        })),
         fullNames: data.fullNames,
         registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
+        expiryDate:null
       };
       dispatch(setTestCorporateData(body))
       console.log(body);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       clearChoosedEditData();
       onsubmit(body);
     } else {

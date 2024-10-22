@@ -78,7 +78,7 @@ export const directorInfoSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty").nullable(),
   // .transform((str, ctx) => {
   //   const date = new Date(str);
   //   if (!isNaN(date.getTime())) {
@@ -182,7 +182,7 @@ export const authorizedPersonSchema = z.object({
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportId: z.string().optional(),
   personalId: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty").nullable(),
   addresses: z.array(subAddressSchema),
 });
 
@@ -193,7 +193,7 @@ export const attorneySchema = z.object({
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   passportId: z.string().optional(),
   personalId: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty").nullable(),
   addresses: z.array(subAddressSchema),
   telephone: z.string().optional(),
   email: z.string().optional(),
@@ -217,7 +217,7 @@ export const individualsDirectorSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty").nullable(),
   // .transform((str, ctx) => {
   //   const date = new Date(str);
   //   if (!isNaN(date.getTime())) {

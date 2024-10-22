@@ -103,7 +103,7 @@ export type TIndividualsShareholders = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   sharePercentage: number | null;
   types?: number;
@@ -116,17 +116,17 @@ export type SuitTestResultAnswer = {
 };
 
 export type TSubAddress = {
-  addressNo: string;
+  addressNo?: string;
   building?: string;
   floor?: string;
   mooNo?: string;
   soi?: string;
   road?: string;
-  tambon: string;
-  amphoe: string;
-  province: string;
-  postalCode: string;
-  country: string;
+  tambon?: string;
+  amphoe?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
   //type?: number;
 };
 
@@ -135,7 +135,7 @@ export type TAuthorizePerson = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
@@ -256,7 +256,7 @@ export type TAttorney = {
   addresses: TAddress[];
   passportId?: string;
   citizenId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   types?: number;
   telephone?: string;
@@ -419,7 +419,7 @@ export type TDirector = {
   addresses: TAddress[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   types?: number;
 };

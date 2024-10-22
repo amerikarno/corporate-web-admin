@@ -119,7 +119,7 @@ export type TAttorney = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   telephone?: string;
@@ -133,7 +133,7 @@ export type TAuthorizePerson = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
@@ -154,7 +154,7 @@ export type TDirector = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;

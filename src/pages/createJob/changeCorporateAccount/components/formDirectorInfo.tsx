@@ -97,6 +97,7 @@ export function FormIndividualsDirector({
       citizenId: "",
       passportId: "",
       nationality: "",
+      expiryDate:null,
       addresses: [
         {
           addressNo: "",
@@ -135,6 +136,7 @@ export function FormIndividualsDirector({
       setCurInput(false);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       // console.log(formData);
 
       let body: TDirector = {

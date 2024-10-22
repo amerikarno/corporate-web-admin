@@ -119,6 +119,7 @@ export function FormAttorney({
       console.log(body);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       clearChoosedEditData();
       onsubmit(body);
     } else {
@@ -136,6 +137,7 @@ export function FormAttorney({
       passportId:'',
       citizenId: '',
       nationality:'',
+      expiryDate:null,
       addresses: [
         { addressNo: "",
           building: "",
