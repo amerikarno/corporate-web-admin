@@ -19,7 +19,7 @@ const AddedIcoKeyInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const icoCode = localStorage.getItem("icoCode")
+  const registerId = localStorage.getItem("registerId")
 
   const keyInfoList =[
     { name: "Please Select Key" },
@@ -130,7 +130,7 @@ const AddedIcoKeyInfo = () => {
     let body:any = convertToTAssetKeyInfo({ keyInformation: keyValuePairs });
     body = { 
       keyInformation: {
-        icoCode, 
+        registerId, 
         ...body.keyInformation,
         creationTime: !isNaN(Date.parse(body?.keyInformation?.creationTime)) ? new Date(body?.keyInformation?.creationTime).toISOString() : undefined,
         releaseTime: !isNaN(Date.parse(body?.keyInformation?.releaseTime)) ? new Date(body?.keyInformation?.releaseTime).toISOString() : undefined,
@@ -140,7 +140,7 @@ const AddedIcoKeyInfo = () => {
     dispatch(setTestCorporateData(body));
     console.log(body);
 
-    if(icoCode){
+    if(registerId){
       if(fetchedData?.keyInformation === null){
         try{
           const res = await axios.post('/api/v1/ico/keyInformation/create',body, {

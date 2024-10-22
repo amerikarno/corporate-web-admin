@@ -19,7 +19,7 @@ const AddedIcoInfo = () => {
 
     const fetchedData = useSelector((state: RootState) => state.assetData.data);
 
-    const icoCode = localStorage?.getItem("icoCode") || "";
+    const registerId = localStorage?.getItem("registerId") || "";
 
     const mapFetchedToInfo = (fetchedData: TAssetData) => {
         return {
@@ -129,14 +129,14 @@ const AddedIcoInfo = () => {
                 ...data,
                 asset: {
                     ...data.asset,
-                    icoCode: icoCode,
+                    registerId: registerId,
                     image:file,
                     logo:"fixed image",
                     title:"Elite Consulting",
                 },
                 info:{
                     ...data.info,
-                    icoCode: icoCode,
+                    registerId: registerId,
                     totalIssuance:data.info.totalIssuance ? `${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`
                     : undefined,
                     totalAmountRaised:data.info.totalAmountRaised ? `${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`
@@ -164,7 +164,7 @@ const AddedIcoInfo = () => {
                 dispatch(setTestCorporateData(body));
               }
 
-            if(!icoCode){
+            if(!registerId){
                 try{
                     const res = await axios.post("/api/v1/ico/asset/create", body, {
                         headers: {
@@ -174,12 +174,12 @@ const AddedIcoInfo = () => {
                     if(res.status === 200){
                         console.log("create ico form1 success",res)
                         if(res.data){
-                            localStorage.setItem("icoCode", res.data.icoCode.toString())
-                            console.log("ico code received :", res.data.icoCode.toString())
+                            localStorage.setItem("registerId", res.data.registerId)
+                            console.log("ico code received :", res.data.registerId)
                             navigate("/create-job/added-ico/2");
     
                         }else{
-                            console.log("create success but didn't get icoCode back!")
+                            console.log("create success but didn't get registerId back!")
                         }
                     }else{
                         console.log("create ico form1 fail",res)

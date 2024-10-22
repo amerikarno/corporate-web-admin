@@ -14,7 +14,7 @@ import { mockedAssetData } from './utils';
 import { Button } from '@/components/ui/button';
 
 interface IcoInfo {
-  icoCode: string;
+  registerId: string;
 }
 
 const ViewIco = () => {
@@ -27,14 +27,14 @@ const ViewIco = () => {
     window.scrollTo(0, 0);
   }
 
-  const [icoCodeInput,setIcoCodeInput] = useState('');
-  const [icoCodeList, setIcoCodeList] = useState<IcoInfo[]>([]);
+  const [registerIdInput,setRegisterIdInput] = useState('');
+  const [registerIdList, setRegisterIdList] = useState<IcoInfo[]>([]);
   const [icoAccountList, setIcoAccountList] = useState<TAssetData[]>([]);
 
   const ColumnsIcoSearch: TableColumn<TAssetData>[] = [
     {
-      name: "ICO Code",
-      selector: (row: TAssetData) => row.icoCode || "",
+      name: "registerId",
+      selector: (row: TAssetData) => row.registerId || "",
       maxWidth: '120px'
     },
     {
@@ -68,11 +68,11 @@ const ViewIco = () => {
   ];
 
   const handleSearch = async () =>{
-    if(icoCodeInput === ''){
+    if(registerIdInput === ''){
         fetchIcoAccount();
     }else{
         try{
-            const res = await axios.post("/api/v1/ico/query/code",{icoCode:icoCodeInput},{
+            const res = await axios.post("/api/v1/ico/query/code",{registerId:registerIdInput},{
                 headers: {
                     Authorization: `Bearer ${getCookies()}`,
                   },
@@ -96,8 +96,8 @@ const ViewIco = () => {
       });
       console.log(res)
       if (res.status === 200) {
-        const icoCodes = res.data.map((icoInfo: IcoInfo) => icoInfo);
-        setIcoCodeList(icoCodes);
+        const registerIds = res.data.map((icoInfo: IcoInfo) => icoInfo);
+        setRegisterIdList(registerIds);
         setIcoAccountList(res.data);
       } else {
         console.log("fetch all ico fail",res);
@@ -123,13 +123,13 @@ const ViewIco = () => {
                 list="juristicId"
                 autoComplete="off"
                 inputClassName="h-10 w-full bg-white"
-                onChange={(e)=>setIcoCodeInput(e.target.value)}
-                value={icoCodeInput}
+                onChange={(e)=>setRegisterIdInput(e.target.value)}
+                value={registerIdInput}
                 />
                 <datalist id="juristicId">
-                {icoCodeList.map((code, index) => (
-                    <option key={index} value={code.icoCode}>
-                    {code.icoCode}
+                {registerIdList.map((code, index) => (
+                    <option key={index} value={code.registerId}>
+                    {code.registerId}
                     </option>
                 ))}
                 </datalist>

@@ -60,7 +60,7 @@ export default function LandingPageIco() {
 
       const updatedMembers = assetData?.companyMembers.map((member) => ({
         ...member,
-        icoCode: String(member.icoCode),
+        registerId: String(member.registerId),
       })) || [];
 
       useEffect(() => {

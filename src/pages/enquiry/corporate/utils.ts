@@ -324,7 +324,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData): TCorporateData =>
           selector: (row: TAttorney) => row.email || "",
         }]
 
-export const mockedCorporateData : TCorporateData[] = [
+export const mockedCorporateData = [
   {
       "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
       "Info": {

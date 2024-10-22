@@ -8,6 +8,33 @@ export type TCorporateAccountOpeningInfo = {
   dateTo: Date;
 };
 
+export type TSubAddress = {
+  addressNo?: string;
+  building?: string;
+  floor?: string;
+  mooNo?: string;
+  soi?: string;
+  road?: string;
+  tambon?: string;
+  amphoe?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
+  //type?: number;
+};
+
+export type TRegisterBusinessAddress = {
+  address: TSubAddress[];
+  emailAddress?: string;
+  telephone?: string;
+};
+export type TPlaceIncorporateAddress = {
+  address: TSubAddress[];
+  emailAddress?: string;
+  telephone?: string;
+};
+
+
 export type TCorporateInfo = {
   id: string;
   createBy: string;
@@ -18,6 +45,18 @@ export type TCorporateInfo = {
   registrationNo: string;
   taxId: string;
   dateOfIncorporation: string;
+  isRegisteredThailand?: boolean;
+  isPrimaryCountry?: boolean;
+  registered: string;
+  isRegisteredOther?: boolean;
+  primary: string;
+  isPrimaryOther?: boolean;
+  registeredBusiness: TRegisterBusinessAddress;
+  placeofIncorporation: TPlaceIncorporateAddress;
+  registeredCapital: number;
+  revenuePerYear: number;
+  netProFitLoss: number;
+  shareholderEquity: number;
 };
 
 export type TCorporateCountry = {

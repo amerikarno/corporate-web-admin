@@ -13,7 +13,7 @@ import { getCookies } from '@/lib/Cookies';
 import { FaSearch } from "react-icons/fa";
 
 interface IcoInfo {
-  icoCode: string;
+  registerId: string;
 }
 
 const ChangeAddedIcoSearch = () => {
@@ -24,7 +24,7 @@ const ChangeAddedIcoSearch = () => {
     const handleEditClick = () => {
       console.log(row);
       dispatch(setAssetData(row));
-      localStorage.setItem('icoCode', row.icoCode!.toString());
+      localStorage.setItem('registerId', row.registerId!);
       navigate("/create-job/change-ico/edit/1", {
         state: row,
       });
@@ -35,14 +35,14 @@ const ChangeAddedIcoSearch = () => {
     );
   };
 
-  const [icoCodeInput,setIcoCodeInput] = useState('');
-  const [icoCodeList, setIcoCodeList] = useState<IcoInfo[]>([]);
+  const [registerIdInput,setRegisterIdInput] = useState('');
+  const [registerIdList, setRegisterIdList] = useState<IcoInfo[]>([]);
   const [icoAccountList, setIcoAccountList] = useState<TAssetData[]>([]);
 
   const ColumnsIcoSearch: TableColumn<TAssetData>[] = [
     {
-      name: "ICO Code",
-      selector: (row: TAssetData) => row.icoCode || "",
+      name: "registerId",
+      selector: (row: TAssetData) => row.registerId || "",
       maxWidth: '120px'
     },
     {
@@ -67,11 +67,11 @@ const ChangeAddedIcoSearch = () => {
   ];
 
   const handleSearch = async () =>{
-    if(icoCodeInput === ''){
+    if(registerIdInput === ''){
         fetchIcoAccount();
     }else{
         try{
-            const res = await axios.post("/api/v1/ico/query/code",{icoCode:icoCodeInput},{
+            const res = await axios.post("/api/v1/ico/query/code",{registerId:registerIdInput},{
                 headers: {
                     Authorization: `Bearer ${getCookies()}`,
                   },
@@ -95,8 +95,8 @@ const ChangeAddedIcoSearch = () => {
       });
       console.log(res)
       if (res.status === 200) {
-        const icoCodes = res.data.map((icoInfo: IcoInfo) => icoInfo);
-        setIcoCodeList(icoCodes);
+        const registerIds = res.data.map((icoInfo: IcoInfo) => icoInfo);
+        setRegisterIdList(registerIds);
         setIcoAccountList(res.data);
       } else {
         console.log("fetch all ico fail",res);
@@ -115,20 +115,20 @@ const ChangeAddedIcoSearch = () => {
       <Card >
         <div className="flex items-center w-full space-x-4 p-4 px-8 bg-[#002f18] text-white rounded-md">
             <div className="font-bold">
-                Search by ICO code
+                Search by Register Id
             </div>
             <div className="max-w-96 w-full">
                 <Input
                 list="juristicId"
                 autoComplete="off"
                 inputClassName="h-10 w-full bg-white"
-                onChange={(e)=>setIcoCodeInput(e.target.value)}
-                value={icoCodeInput}
+                onChange={(e)=>setRegisterIdInput(e.target.value)}
+                value={registerIdInput}
                 />
                 <datalist id="juristicId">
-                {icoCodeList.map((code, index) => (
-                    <option key={index} value={code.icoCode}>
-                    {code.icoCode}
+                {registerIdList.map((code, index) => (
+                    <option key={index} value={code.registerId}>
+                    {code.registerId}
                     </option>
                 ))}
                 </datalist>

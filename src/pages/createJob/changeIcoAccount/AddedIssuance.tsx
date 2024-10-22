@@ -29,7 +29,7 @@ const AddedIssuance = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
   
-    const icoCode = localStorage.getItem("icoCode")
+    const registerId = localStorage.getItem("registerId")
     
     useEffect(() => {
         if(fetchedData?.issuanceTerms){
@@ -85,7 +85,7 @@ const AddedIssuance = () => {
     const body = {
         issuanceTerms:{
             ...data.issuanceTerms,
-            icoCode:icoCode,
+            registerId:registerId,
             investmentPeriod: data.issuanceTerms.investmentPeriod 
             ? `${data.issuanceTerms.investmentPeriod} ${investmentPeriodUnit || "Days"}` 
             : undefined,
@@ -109,7 +109,7 @@ const AddedIssuance = () => {
     dispatch(setTestCorporateData(body));
     console.log(body);
 
-    if(icoCode){
+    if(registerId){
       if(fetchedData?.issuanceTerms === null){
         try{
           const res = await axios.post('/api/v1/ico/issuance/create',body, {

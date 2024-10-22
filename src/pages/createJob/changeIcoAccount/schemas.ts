@@ -129,7 +129,7 @@ export const TAssetDataSchema = z.object({
 
 export const searchIcoSchema = z
   .object({
-    icoCode: z.string(),
+    registerId: z.string(),
     dateFrom: z.string().optional(),
     dateTo: z.string().optional(),
   })
