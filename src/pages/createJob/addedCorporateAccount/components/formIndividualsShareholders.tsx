@@ -118,6 +118,7 @@ export function FormIndividualsShareholders({
       sharePercentage: null,
       citizenId: "",
       passportId: "",
+      expiryDate: null
     };
     reset(individualShareholderData);
   }, [choosedEditData, reset]);

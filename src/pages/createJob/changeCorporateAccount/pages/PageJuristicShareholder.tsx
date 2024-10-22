@@ -28,6 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageJuristicShareholderProps = {
 };
@@ -72,11 +73,12 @@ export function PageJuristicShareholder({
           .map((juristic: TJuristicEdit) => ({
             ...juristic,
             juristicId: juristic.id,
-            sharePercentage: juristic.sharePercentage/100000,
+            sharePercentage: juristic.sharePercentage !== null ? juristic.sharePercentage / 100000 : 0
           }))
           .map(mapDataToTJuristicShareholder)
           .filter((item: any) => item !== null) as TJuristicsShareholders[];
         dispatch(setJuristicShareholder(updateJuristic));
+        dispatch(setCorporateData(res.data[0]))
         console.log("juristic data fetched successfully.", updateJuristic);
       } else {
         console.log("Failed to fetch juristic data or data is not an array.");

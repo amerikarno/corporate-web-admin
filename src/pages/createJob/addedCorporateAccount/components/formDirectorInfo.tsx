@@ -110,6 +110,7 @@ export function FormIndividualsDirector({
           province: "",
           postalCode: "",
           country: "",
+          expiryDate: null
         },
       ],
     };

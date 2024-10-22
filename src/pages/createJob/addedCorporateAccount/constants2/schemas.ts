@@ -144,7 +144,7 @@ export const individualsShareholdersSchema = z.object({
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   passportId: z.string().optional(),
-  expiryDate: z.string().min(1, "date cannot be empty"),
+  expiryDate: z.string().min(1, "date cannot be empty").nullable(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
   sharePercentage: z.coerce
     .number()

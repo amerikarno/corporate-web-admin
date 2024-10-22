@@ -66,7 +66,7 @@ export default function IdentityVerification() {
   const handleClose = () => {
     if(alertType === "success"){
       setAlertVisible(false);
-      navigate("/create-job/added-corporate-account");
+      navigate("/create-job/added-individual-account/");
       dispatch(clearIndividualData());
       localStorage.clear();
     }

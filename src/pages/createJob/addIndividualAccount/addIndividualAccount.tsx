@@ -169,7 +169,7 @@ export default function AddIndividualAccount() {
           console.log(age);
           console.log("update success", res, data);
 
-          navigate("/create-job/added-corporate-account/2");
+          navigate("/create-job/added-individual-account/2");
           window.scrollTo(0, 0);
         }
       }
@@ -186,7 +186,7 @@ export default function AddIndividualAccount() {
           localStorage.setItem("age", age.toString());
           console.log("create success", res, data);
 
-          navigate("/create-job/added-corporate-account/2");
+          navigate("/create-job/added-individual-account/2");
           window.scrollTo(0, 0);
         }
       }
@@ -197,7 +197,7 @@ export default function AddIndividualAccount() {
       // const age = calculateAge(body.birthDate);
       // localStorage.setItem("registerId", "90000001");
       // localStorage.setItem("age", age.toString());
-      // navigate("/create-job/added-corporate-account/2");
+      // navigate("/create-job/added-individual-account/2");
       // window.scrollTo(0, 0);
     }
   };

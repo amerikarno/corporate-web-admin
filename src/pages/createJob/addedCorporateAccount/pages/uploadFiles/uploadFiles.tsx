@@ -13,6 +13,7 @@ import axios from "@/api/axios";
 import { setFiles } from "@/features/uploadFile/uploadFileSlice";
 import { mapToUploadFile } from "../../libs/utils";
 import DocumentBox from "@/components/ui/BoxOfUploaded";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TUploadFilesProps = {
 };
@@ -54,6 +55,7 @@ export default function UploadFiles({}: TUploadFilesProps) {
           .filter((item: any) => item !== null);
         console.log(uploadFiles)
         dispatch(setFiles(uploadFiles));
+        dispatch(setCorporateData(res.data[0]));
       }
     } catch (error) {
       console.error("Error fetching upload File data:", error);

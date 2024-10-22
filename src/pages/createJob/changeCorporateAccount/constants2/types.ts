@@ -421,7 +421,7 @@ export type TDirector = {
   passportId?: string;
   expiryDate: string;
   nationality: string;
-  types: number;
+  types?: number;
 };
 
 export type TAuthorizedPerson = {

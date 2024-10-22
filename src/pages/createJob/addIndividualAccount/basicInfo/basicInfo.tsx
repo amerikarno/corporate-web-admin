@@ -267,7 +267,7 @@ export default function BasicInfo() {
         });
         if (res.status === 200) {
           console.log("update basic info success", res);
-          navigate("/create-job/added-corporate-account/3");
+          navigate("/create-job/added-individual-account/3");
           window.scrollTo(0, 0);
         } else {
           console.log("update basic info unsuccess x", res);
@@ -278,7 +278,7 @@ export default function BasicInfo() {
         });
         if (res.status === 200) {
           console.log("submit basic info success", res);
-          navigate("/create-job/added-corporate-account/3");
+          navigate("/create-job/added-individual-account/3");
           window.scrollTo(0, 0);
         } else {
           console.log("submit basic info unsuccess x", res);

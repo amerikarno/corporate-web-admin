@@ -332,7 +332,7 @@ export const mapDataToTIndividualShareholder = (
     if (data === null) {
       return null;
     }
-    const dateFormatted = data.expiryDate?.split("T")[0] ?? "mm/dd/yyyy";
+    const dateFormatted = data.expiryDate?.split("T")[0];
     const result: TIndividualsShareholders = {
       registerId: String(data.registerId ?? ""),
       fullNames: [
@@ -344,7 +344,7 @@ export const mapDataToTIndividualShareholder = (
       ],
       citizenId: data.citizenId ?? "",
       passportId: data.passportId ?? "",
-      expiryDate: dateFormatted,
+      expiryDate: dateFormatted ?? "",
       nationality: data.nationality ?? "",
       sharePercentage: data.sharePercentage ?? null,
       personalId: data.personalId ?? null,
@@ -677,7 +677,7 @@ export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
   }
 };
 
-export const mockedCorporateData : TCorporateData = 
+export const mockedCorporateData  = 
   {
     "registerId": "5ce7a417-fc23-4108-a8a6-76e4512161c5",
     "Info": {

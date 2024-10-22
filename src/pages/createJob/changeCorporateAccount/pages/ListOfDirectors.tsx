@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TListOfDirectorsProps = {
 };
@@ -71,6 +72,7 @@ export function ListOfDirectors({}: TListOfDirectorsProps) {
           .filter((item: any) => item !== null) as TDirector[];
 
         dispatch(setDirectorEdit(updateDirector));
+        dispatch(setCorporateData(res.data[0]));
         console.log("director data fetched successfully.", updateDirector);
       } else {
         console.log(

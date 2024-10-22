@@ -56,12 +56,12 @@ export default function ChangePageAddIndividualAccount() {
 
   const handlePages = (type: string) => {
     if (type == "next") {
-      navigate(`/create-job/added-corporate-account/${pageId + 1}`);
+      navigate(`/create-job/added-individual-account/${pageId + 1}`);
     } else if (type == "Done") {
       localStorage.clear();
-      navigate(`/create-job/added-corporate-account/`);
+      navigate(`/create-job/added-individual-account/`);
     } else {
-      navigate(`/create-job/added-corporate-account/${pageId - 1}`);
+      navigate(`/create-job/added-individual-account/${pageId - 1}`);
     }
   };
 

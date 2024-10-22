@@ -30,6 +30,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { mockedCorporateData } from "../libs/utils";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageIndividualShareholderProps = {};
 
@@ -71,6 +72,7 @@ export function PageIndividualShareholder({}: TPageIndividualShareholderProps) {
             })
           )
           dispatch(setIndividualShareholder(updateIndividualShareholder));
+          dispatch(setCorporateData(res.data[0]));
           console.log(
             "indivudual data fetched successfully.",
             individualshareholder

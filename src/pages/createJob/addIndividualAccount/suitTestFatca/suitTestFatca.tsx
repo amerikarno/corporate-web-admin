@@ -140,7 +140,7 @@ export default function SuitTestFatca() {
             console.log(res)
             if (res.status === 200) {
               console.log("suit test edit success", res.data);
-              navigate("/create-job/added-corporate-account/4");
+              navigate("/create-job/added-individual-account/4");
             }else{
               console.log("suit test edit not success")
             }
@@ -159,7 +159,7 @@ export default function SuitTestFatca() {
             console.log(res)
             if (res.status === 200) {
               console.log("suit test save success", res.data);
-              navigate("/create-job/added-corporate-account/4");
+              navigate("/create-job/added-individual-account/4");
             }else{
               console.log("suit test save not success")
             }

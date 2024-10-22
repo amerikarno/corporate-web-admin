@@ -26,6 +26,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { mockedCorporateData } from "../libs/utils";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageContactPersonProps = {
 };
@@ -69,6 +70,7 @@ export function PageContactPerson({
           };
         });
         dispatch(setContactPersons(updatedContacts));
+        dispatch(setCorporateData(res.data[0]));
         console.log("Contact data fetched successfully.", contacts);
       } else {
         console.log("Failed to fetch contact data or data is not an array.");
