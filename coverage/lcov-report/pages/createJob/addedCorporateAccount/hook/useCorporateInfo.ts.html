@@ -359,7 +359,7 @@ export function useCorporateInfo() {
   const dispatch = useDispatch();
   const handleSubmitCorporateInfo = async (data: TCorporateInfo) =&gt; {
     if (!isExpiredToken()) {
-      if (data.corporateCode === "0" || <span class="branch-1 cbranch-no" title="branch not covered" >!data.corporateCode)</span> {
+      if (data.registerId === "0" || <span class="branch-1 cbranch-no" title="branch not covered" >!data.registerId)</span> {
         await createCorporateInfo(data);
       } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >        await saveCorporateInfo(data);</span>
@@ -375,7 +375,7 @@ export function useCorporateInfo() {
 &nbsp;
     let body = {
       ...data,
-      dateofincorporation: new Date(data.dateofincorporation),
+      dateOfIncorporation: new Date(data.dateOfIncorporation),
     };
     /* eslint-disable */console.log(...oo_oo(`2159818844_37_4_37_38_4`,"Request Body:", body));
 &nbsp;
@@ -398,18 +398,18 @@ export function useCorporateInfo() {
       }
 &nbsp;
       const newData = <span class="cstat-no" title="statement not covered" >{ ...data };</span>
-      // const corporateCode = createResponse.data.corporateCode;
+      // const registerId = createResponse.data.registerId;
 <span class="cstat-no" title="statement not covered" >      localStorage.setItem(</span>
-        "corporateCode",
-        createResponse.data.corporateCode.toString()
+        "registerId",
+        createResponse.data.registerId.toString()
       );
-      const corporateCode = <span class="cstat-no" title="statement not covered" >localStorage.getItem("corporateCode") || "";</span>
-<span class="cstat-no" title="statement not covered" >      newData.corporateCode = corporateCode;</span>
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2159818844_65_6_65_64_4`,"Corporate Data with corporateCode:", newData));</span>
+      const registerId = <span class="cstat-no" title="statement not covered" >localStorage.getItem("registerId") || "";</span>
+<span class="cstat-no" title="statement not covered" >      newData.registerId = registerId;</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2159818844_65_6_65_64_4`,"Corporate Data with registerId:", newData));</span>
 &nbsp;
       const queryResponse = <span class="cstat-no" title="statement not covered" >await axios.post(</span>
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -441,8 +441,8 @@ export function useCorporateInfo() {
     /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2159818844_98_4_98_21_4`,data));</span>
     let body = <span class="cstat-no" title="statement not covered" >{</span>
       ...data,
-      dateofincorporation: new Date(data.dateofincorporation),
-      corporateCode: data.corporateCode,
+      dateOfIncorporation: new Date(data.dateOfIncorporation),
+      registerId: data.registerId,
     };
     /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2159818844_104_4_104_29_4`,"body", body));</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
@@ -455,7 +455,7 @@ export function useCorporateInfo() {
 <span class="cstat-no" title="statement not covered" >      if (res.status === 200) {</span>
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2159818844_113_8_113_24_4`,res));</span>
         let newData = <span class="cstat-no" title="statement not covered" >copy(data);</span>
-<span class="cstat-no" title="statement not covered" >        newData.corporateCode = res.data.CorporateCode;</span>
+<span class="cstat-no" title="statement not covered" >        newData.registerId = res.data.registerId;</span>
 <span class="cstat-no" title="statement not covered" >        setCorporatesInfo([...corporatesInfo, newData]);</span>
 <span class="cstat-no" title="statement not covered" >        dispatch(setCurrentCorporateInfo(newData));</span>
         // setCurrentCorporatesInfo(data);

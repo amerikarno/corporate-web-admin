@@ -11,7 +11,7 @@ import reducer, {
   
   const mockFxExchange: TFxExchange = {
     id: "exchange1",
-    corporateCode: 123456,
+    registerId: 123456,
     exchangeRate: 30.0,
     exchangeSpread: 0.1,
     operationSpread: 0.05,
@@ -22,7 +22,7 @@ import reducer, {
   
   const updatedFxExchange: TFxExchange = {
     id: "exchange1",
-    corporateCode: 123456,
+    registerId: 123456,
     exchangeRate: 30.0,
     exchangeSpread: 0.1,
     operationSpread: 0.05,

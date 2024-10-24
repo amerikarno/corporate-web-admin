@@ -19,7 +19,7 @@ const AddedIcoInfoDemo = () => {
 
     const fetchedData = useSelector((state: RootState) => state.assetData.data);
 
-    const icoCode = localStorage?.getItem("icoCode") || "";
+    const registerId = localStorage?.getItem("registerId") || "";
 
     const mapFetchedToInfo = (fetchedData: TAssetData) => {
         return {
@@ -127,14 +127,14 @@ const AddedIcoInfoDemo = () => {
                 ...data,
                 asset: {
                     ...data.asset,
-                    icoCode: icoCode,
+                    registerId: registerId,
                     image:file ? formData : undefined,
                     logo:"fixed image",
                     title:"Elite Consulting",
                 },
                 info:{
                     ...data.info,
-                    icoCode: icoCode,
+                    icoregisterIdCode: registerId,
                     totalIssuance:`${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`,
                     totalAmountRaised:`${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`,
                     minimumInvestmentAmount:`${data.info.minimumInvestmentAmount} ${minimumInvestmentAmountUnit ? minimumInvestmentAmountUnit : "Baht"}`,
@@ -156,7 +156,7 @@ const AddedIcoInfoDemo = () => {
                 dispatch(setTestCorporateData(body));
               }
 
-            if(!icoCode){
+            if(!registerId){
                 try{
                     const res = await axios.post("/api/v1/ico/asset/create", body, {
                         headers: {
@@ -166,11 +166,11 @@ const AddedIcoInfoDemo = () => {
                     if(res.status === 200){
                         console.log("create ico form1 success",res)
                         if(res.data){
-                            localStorage.setItem("icoCode", res.data.icoCode.toString())
+                            localStorage.setItem("registerId", res.data.registerId.toString())
                             navigate("/create-job/change-ico/edit/2");
     
                         }else{
-                            console.log("create success but didn't get icoCode back!")
+                            console.log("create success but didn't get registerId back!")
                         }
                     }else{
                         console.log("create ico form1 fail",res)

@@ -4,7 +4,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch } from "react-redux";
 
 
-const DocumentBox = ({corporateCode , fileName,id}:any) => {
+const DocumentBox = ({registerId , fileName,id}:any) => {
     const dispatch = useDispatch();
     const handleDeleteFile = async () => {
         console.log("body : ", {id : id})
@@ -35,7 +35,7 @@ const DocumentBox = ({corporateCode , fileName,id}:any) => {
       focus:outline-none text-white bg-slate-800 hover:bg-red-500 
       focus:ring-4 focus:ring-red-300 rounded-full dark:bg-red-600
     dark:hover:bg-red-700 dark:focus:ring-red-900 text-s px-1.5" onClick={handleDeleteFile}>x</div>
-      <div></div><span><span className="font-bold">Corporate Code : </span>{corporateCode}</span>
+      <div></div><span><span className="font-bold">Corporate Code : </span>{registerId}</span>
       <span><span className="font-bold">File Name : </span>{fileName}</span>
     </div>
   );

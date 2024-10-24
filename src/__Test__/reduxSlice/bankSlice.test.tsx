@@ -11,7 +11,7 @@ import reducer, {
     createBy: "Admin",
     CreatedAt: "2023-01-01T00:00:00Z",
     DeletedAt: null,
-    corporateCode: 9876,
+    registerId: 9876,
     accountType: "Checking",
     bankName: "Example Bank",
     accountNo: "1234567890",

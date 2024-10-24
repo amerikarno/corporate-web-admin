@@ -1428,11 +1428,11 @@ export default function FxExchangeEdit() {
     setExchangeRate(parseFloat(inputValue) || <span class="branch-1 cbranch-no" title="branch not covered" >null)</span>;
   };
 &nbsp;
-  const [selectedCorporateCode, setSelectedCorporateCode] =
+  const [selectedregisterId, setSelectedregisterId] =
     useState&lt;string&gt;("");
 &nbsp;
     // const mockeddata: TFxExchange[] = [{
-    //   corporateCode: 80000014,
+    //   registerId: 80000014,
     //   exchangeRate: 231,
     //   exchangeSpread: 132,
     //   operationSpread: 546,
@@ -1440,8 +1440,8 @@ export default function FxExchangeEdit() {
     //   transactionStatus: 0,
     // }]
 &nbsp;
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
+    { registerId: number }[]
   &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TFxExchange&gt;();
   const clearChoosedEditData = () =&gt; {
@@ -1467,7 +1467,7 @@ export default function FxExchangeEdit() {
     (state) =&gt; state.fxExchange?.fxExchanges || <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
   ) as TFxExchange[];
 &nbsp;
-  const fetchCorporateCodes = async () =&gt; {
+  const fetchregisterIds = async () =&gt; {
     try {
       const token = getCookies();
 &nbsp;
@@ -1481,10 +1481,10 @@ export default function FxExchangeEdit() {
         }
       );
       if (res.status === 200) {
-        const corporateCodes = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+          registerId: item.registerId,
         }));
-<span class="cstat-no" title="statement not covered" >        setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >        setFetchedregisterIds(registerIds);</span>
       } else <span class="missing-if-branch" title="else path not taken" >E</span>{
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2959919721_174_8_174_54_4`,"Failed to fetch corporate codes"));</span>
       }
@@ -1563,7 +1563,7 @@ export default function FxExchangeEdit() {
   const columnsFxExchange: TableColumn&lt;TFxExchange&gt;[] = [
     {
       name: "Corporate Code",
-      selector: (row: TFxExchange) =&gt; row.corporateCode || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
+      selector: (row: TFxExchange) =&gt; row.registerId || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
     },
     {
       name:"Buy Amount",
@@ -1621,7 +1621,7 @@ export default function FxExchangeEdit() {
 &nbsp;
   useEffect(() =&gt; {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: null,
+      registerId: null,
       exchangeRate:undefined,
       exchangeSpread:undefined,
       operationSpread:undefined,
@@ -1632,7 +1632,7 @@ export default function FxExchangeEdit() {
     handleSelectPair({0 : firstVariable , 1 : secondVariable});
     setYouSend(firstVariable);
     setRecipientGets(secondVariable);
-    setSelectedCorporateCode(choosedEditData?.corporateCode?.toString() || "");
+    setSelectedregisterId(choosedEditData?.registerId?.toString() || "");
     // const exchangeSpreadToFloat = Number(choosedEditData?.exchangeSpread ?? 0) / 10000 || 0;
     // const operationSpreadToFloat = Number(choosedEditData?.operationSpread ?? 0) / 10000 || 0;
     // const exchangeRateToFloat = Number(choosedEditData?.exchangeRate ?? 0) / 10000 || 0;
@@ -1664,13 +1664,13 @@ export default function FxExchangeEdit() {
 &nbsp;
   useEffect(() =&gt; {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 &nbsp;
-  const handleCorporateCodeChange = (
+  const handleregisterIdChange = (
     event: React.ChangeEvent&lt;HTMLInputElement&gt;
   ) =&gt; {
-    setSelectedCorporateCode(event.target.value);
+    setSelectedregisterId(event.target.value);
   };
 &nbsp;
   const onSubmit = async (data: TFxExchange) =&gt; {
@@ -1678,7 +1678,7 @@ export default function FxExchangeEdit() {
     let body: TFxExchange = {
       ...data,
       id: choosedEditData?.id,
-      corporateCode: Number(selectedCorporateCode),
+      registerId: Number(selectedregisterId),
       transactionStatus: choosedEditData?.transactionStatus,
       exchange:`${youSend}/${recipientGets}`,
       exchangeSpread:handleFloatValue(exchangeSpread),
@@ -1701,7 +1701,7 @@ export default function FxExchangeEdit() {
           reset();
           setExchangeResult(0);
           clearChoosedEditData();
-          setSelectedCorporateCode("");
+          setSelectedregisterId("");
           /* eslint-disable */console.log(...oo_oo(`2959919721_390_10_390_40_4`,"edit successful"));
           fetchOrderList();
         } else <span class="missing-if-branch" title="else path not taken" >E</span>{
@@ -1717,7 +1717,7 @@ export default function FxExchangeEdit() {
           reset();
           setExchangeResult(0);
           clearChoosedEditData();
-          setSelectedCorporateCode("");
+          setSelectedregisterId("");
           /* eslint-disable */console.log(...oo_oo(`2959919721_406_10_406_40_4`,"save successful"));
           fetchOrderList();
         } else <span class="missing-if-branch" title="else path not taken" >E</span>{
@@ -1740,26 +1740,26 @@ export default function FxExchangeEdit() {
             &lt;/div&gt;
             &lt;div className=""&gt;
                 &lt;Input
-                    {...register("corporateCode")}
+                    {...register("registerId")}
                     label="Corporate Code"
-                    id="corporateCode"
+                    id="registerId"
                     type="number"
-                    data-testid="corporateCodeInput"
+                    data-testid="registerIdInput"
                     disabled={isSubmitting}
-                    onChange={handleCorporateCodeChange}
-                    list="corporateCodes"
+                    onChange={handleregisterIdChange}
+                    list="registerIds"
                     autoComplete="off"
                     inputClassName="w-[20rem] md:w-[25rem]"
                 /&gt;
-                {errors.corporateCode &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!selectedCorporateCode </span>&amp;&amp; (
+                {errors.registerId &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!selectedregisterId </span>&amp;&amp; (
 <span class="branch-2 cbranch-no" title="branch not covered" >                    &lt;p className="text-red-500 text-sm px-2"&gt;</span>
-                    {errors.corporateCode.message}
+                    {errors.registerId.message}
                     &lt;/p&gt;
                 )}
-                &lt;datalist id="corporateCodes"&gt;
-                    {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                    &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                        {code.corporateCode}
+                &lt;datalist id="registerIds"&gt;
+                    {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                    &lt;option key={index} v</span>alue={code.registerId}&gt;
+                        {code.registerId}
                     &lt;/option&gt;
                     ))}
                 &lt;/datalist&gt;

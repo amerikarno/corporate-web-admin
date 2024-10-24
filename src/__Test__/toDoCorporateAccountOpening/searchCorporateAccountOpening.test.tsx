@@ -23,13 +23,13 @@ jest.mock(
 
 // Define a mock object that matches the TCorporateData type
 const mockTCorporateData: TCorporateData = {
-  CorporateCode: 80000001,
+  registerId: 80000001,
   Info: {
     id: "1",
     createBy: "user",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
-    corporateCode: 80000001,
+    registerId: 80000001,
     name: "name-80000001",
     registrationNo: "123456789",
     taxId: "123456789",
@@ -42,7 +42,7 @@ const mockTCorporateData: TCorporateData = {
     createBy: "user",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
-    corporateCode: 80000001,
+    registerId: 80000001,
     registeredCapital: 1000000,
     revenuePerYear: 500000,
     netProfitLoss: 100000,
@@ -53,7 +53,7 @@ const mockTCorporateData: TCorporateData = {
     createBy: "user",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
-    corporateCode: 80000001,
+    registerId: 80000001,
     isJuristicThailand: true,
     isTaxExempt: false,
     isNonTaxExempt: false,
@@ -70,7 +70,7 @@ const mockTCorporateData: TCorporateData = {
     CreatedAt: "2023-01-01",
     DeletedAt: null,
     id: "1",
-    corporateCode: 80000001,
+    registerId: 80000001,
     isAntiqueTrading: false,
     isHotelRestaurant: false,
     isArmament: false,
@@ -94,7 +94,7 @@ const mockTCorporateData: TCorporateData = {
     CreatedAt: "2023-01-01",
     DeletedAt: null,
     id: "1",
-    corporateCode: 80000001,
+    registerId: 80000001,
     isDonation: false,
     isLoan: false,
     isOtherIncome: false,
@@ -165,7 +165,7 @@ describe("test todo corporate", () => {
     );
 
     await act(async () => {
-      await handleSearch({ corporateCode: "80000001" });
+      await handleSearch({ registerId: "80000001" });
     });
 
     await waitFor(
@@ -194,7 +194,7 @@ describe("test todo corporate", () => {
     }-${ddPrev > 9 ? ddPrev : `0${ddPrev}`}`;
 
     let data = {
-      corporateCode: "",
+      registerId: "",
       dateFrom: dateStr,
       dateTo: dateStr,
     };

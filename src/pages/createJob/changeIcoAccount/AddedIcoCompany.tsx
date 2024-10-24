@@ -37,7 +37,7 @@ const AddedIcoCompany = () => {
         },
       })
       if(res.status == 200){
-        const matchedData = res.data.find((item: { icoCode: string }) => item.icoCode === icoCode);
+        const matchedData = res.data.find((item: { registerId: string }) => item.registerId === registerId);
         if (matchedData) {
           const assetData:TAssetData = matchedData;
           dispatch(setAssetData(assetData));
@@ -53,13 +53,13 @@ const AddedIcoCompany = () => {
   
   const dispatch = useDispatch();
 
-  const icoCode = localStorage.getItem("icoCode");
+  const registerId = localStorage.getItem("registerId");
   
   useEffect(() => {
     if (fetchedData?.companyMembers) {
       const updatedMembers = fetchedData.companyMembers.map((member) => ({
         ...member,
-        icoCode: member.icoCode.toString(),
+        registerId: member.registerId.toString(),
       }));
       setListOfMembers(updatedMembers);
     }
@@ -144,11 +144,24 @@ useEffect(() => {
       const decodedPicture = atob(choosedEditData.picture);
       const pictureArray = new Uint8Array(decodedPicture.length);
       for (let i = 0; i < decodedPicture.length; i++) {
-      pictureArray[i] = decodedPicture.charCodeAt(i);
+        pictureArray[i] = decodedPicture.charCodeAt(i);
       }
       setFile(pictureArray);
   }
     reset(mapChoosedDataToMmeber(choosedEditData));
+  }else{
+    reset({
+      companyMembers: [{
+        firstName: "",
+        midName: "",
+        lastName: "",
+        position: "",
+        history: "",
+        picture: undefined,
+        registerId: "",
+        memberId: ""
+      }]
+    });
   }
 }, [choosedEditData]);
 
@@ -163,12 +176,12 @@ useEffect(() => {
 
   const onSubmit = async (data: TCompanyMember) => {
 
-    if(icoCode){
+    if(registerId){
       if ((file && (file.length / (1024 * 1024) < 2.0)) || !file) {
               const body = { 
                 companyMembers: [{
                     ...data.companyMembers[0],
-                    icoCode:icoCode.toString(),
+                    registerId:registerId.toString(),
                     picture:file,
                     memberId:choosedEditData?.id
                 }]

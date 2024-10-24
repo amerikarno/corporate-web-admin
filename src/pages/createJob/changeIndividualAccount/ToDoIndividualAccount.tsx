@@ -43,8 +43,8 @@ export default function ChangeTodoIndividualAccount() {
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-      { corporateCode: number }[]
+    const [mockedregisterIds, setFetchedregisterIds] = useState<
+      { registerId: number }[]
     >([]);
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ export default function ChangeTodoIndividualAccount() {
       setDisableDate(false);
     }
   };
-    const fetchCorporateCodes = async () => {
+    const fetchregisterIds = async () => {
       try {
         const token = getCookies();
 
@@ -70,15 +70,15 @@ export default function ChangeTodoIndividualAccount() {
         );
         if (res.status === 200) {
           console.log(res);
-          const corporateCodes = res.data.map((item: any) => ({
-            corporateCode: item.id,
+          const registerIds = res.data.map((item: any) => ({
+            registerId: item.id,
           }));
-          setFetchedCorporateCodes(corporateCodes);
+          setFetchedregisterIds(registerIds);
 
           // const dateFrom = new Date();
           // dateFrom.setDate(dateFrom.getDate() + 7);
           // const data: TCorporateAccountOpening = {
-          //   corporateCode: "",
+          //   registerId: "",
           //   // dateFrom: dateToyyyyMMdd(dateFrom),
           //   // dateTo: dateToyyyyMMdd(dateFrom),
           //   dateFrom: dateToyyyyMMdd(new Date()),
@@ -94,9 +94,9 @@ export default function ChangeTodoIndividualAccount() {
     };
 
   const initData = async () => {
-    // await fetchCorporateCodes();
+    // await fetchregisterIds();
     const data: TSearchIndividualSchema = {
-      AccountID: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
@@ -105,8 +105,8 @@ export default function ChangeTodoIndividualAccount() {
   };
 
   useEffect(() => {
-    fetchCorporateCodes();
-    // console.log("all-corporate Code", mockedCorporateCodes);
+    fetchregisterIds();
+    // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
 
@@ -140,20 +140,20 @@ export default function ChangeTodoIndividualAccount() {
           >
             <SideLabelInput title="Individual ID">
               <Input
-                data-testid="accountId"
-                {...register("AccountID")}
+                data-testid="registerId"
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.AccountID?.message}</p>
+                <p className="text-red-500">{errors.registerId?.message}</p>
               )}
               <datalist id="juristicId">
-                {mockedCorporateCodes.map((code, index) => (
-                  <option key={index} value={code.corporateCode}>
-                    {code.corporateCode}
+                {mockedregisterIds.map((code, index) => (
+                  <option key={index} value={code.registerId}>
+                    {code.registerId}
                   </option>
                 ))}
               </datalist>

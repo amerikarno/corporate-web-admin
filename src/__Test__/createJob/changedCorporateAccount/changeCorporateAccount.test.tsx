@@ -77,13 +77,13 @@ import {
   const mockAxios = new MockAdapter(axios);
   
   const mockCorporateData: TCorporateData = {
-    CorporateCode: 80000001,
+    registerId: 80000001,
     Info: {
       id: "1",
       createBy: "user",
       CreatedAt: "2023-01-01",
       DeletedAt: null,
-      corporateCode: 80000001,
+      registerId: 80000001,
       name: "Test Corporate",
       registrationNo: "123456789",
       taxId: "TAXID789",
@@ -95,7 +95,7 @@ import {
         createBy: "user",
         CreatedAt: "2023-01-01",
         DeletedAt: null,
-        corporateCode: 80000001,
+        registerId: 80000001,
         isThailand: true,
         other: "N/A",
         types: 1,
@@ -109,7 +109,7 @@ import {
             createBy: "user",
             CreatedAt: "2023-01-01",
             DeletedAt: null,
-            corporateCode: 80000001,
+            registerId: 80000001,
             addressNo: "123",
             mooNo: "2",
             building: "Business Building",
@@ -133,7 +133,7 @@ import {
       createBy: "user",
       CreatedAt: "2023-01-01",
       DeletedAt: null,
-      corporateCode: 80000001,
+      registerId: 80000001,
       registeredCapital: 1000000,
       revenuePerYear: 5000000,
       netProfitLoss: 200000,
@@ -144,7 +144,7 @@ import {
       createBy: "user",
       CreatedAt: "2023-01-01",
       DeletedAt: null,
-      corporateCode: 80000001,
+      registerId: 80000001,
       isJuristicThailand: true,
       isTaxExempt: false,
       isNonTaxExempt: true,
@@ -161,7 +161,7 @@ import {
       CreatedAt: "2023-01-01",
       DeletedAt: null,
       id: "1",
-      corporateCode: 80000001,
+      registerId: 80000001,
       isAntiqueTrading: false,
       isHotelRestaurant: true,
       isArmament: false,
@@ -185,7 +185,7 @@ import {
       CreatedAt: "2023-01-01",
       DeletedAt: null,
       id: "1",
-      corporateCode: 80000001,
+      registerId: 80000001,
       isDonation: false,
       isLoan: false,
       isOtherIncome: false,
@@ -203,12 +203,12 @@ import {
           createBy: "user",
           CreatedAt: "2023-01-01",
           DeletedAt: null,
-          corporateCode: 80000001,
+          registerId: 80000001,
           isThailand: true,
           other: "N/A",
           types: 1,
         },
-        isliquidation: false,
+        isLiquidation: false,
         otherInvestment: "N/A",
         investmentObject: "N/A",
         isCashManagement: false,
@@ -224,7 +224,7 @@ import {
         createBy: "user",
         CreatedAt: "2023-01-01",
         DeletedAt: null,
-        corporateCode: 80000001,
+        registerId: 80000001,
         fullNames: [
           {
             id: "1",
@@ -253,7 +253,7 @@ import {
         CreatedAt: "2023-01-01",
         DeletedAt: null,
         personalId: "123456789",
-        corporateCode: 80000001,
+        registerId: 80000001,
         fullNames: [
           {
             id: "1",
@@ -302,7 +302,7 @@ import {
         CreatedAt: "2023-01-01",
         DeletedAt: null,
         personalId: "123456789",
-        corporateCode: 80000001,
+        registerId: 80000001,
         fullNames: [
           {
             id: "1",
@@ -351,7 +351,7 @@ import {
         CreatedAt: "2023-01-01",
         DeletedAt: null,
         personalId: "123456789",
-        corporateCode: 80000001,
+        registerId: 80000001,
         fullNames: [
           {
             id: "1",
@@ -379,7 +379,7 @@ import {
         createBy: "user",
         CreatedAt: "2023-01-01",
         DeletedAt: null,
-        corporateCode: 80000001,
+        registerId: 80000001,
         juristicName: "Juristic Name",
         registrationNo: "987654321",
         registeredCountry: "Thailand",
@@ -392,7 +392,7 @@ import {
         createBy: "user",
         CreatedAt: "2023-01-01",
         DeletedAt: null,
-        corporateCode: 80000001,
+        registerId: 80000001,
         accountType: "Savings",
         bankName: "Bank of Thailand",
         accountNo: "1234567890",
@@ -405,8 +405,8 @@ import {
       {
         id: "1",
         filePath: "/documents/doc1.pdf",
-        corporateCode: 80000001,
-        docType: "Registration",
+        registerId: 80000001,
+        docTypes: "Registration",
         fileName: "registration.pdf",
         fileTypes: "PDF",
       },
@@ -418,7 +418,7 @@ import {
         CreatedAt: "2023-01-01",
         DeletedAt: null,
         personalId: "123456789",
-        corporateCode: 80000001,
+        registerId: 80000001,
         fullNames: [
           {
             id: "1",
@@ -476,7 +476,7 @@ import {
     });
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -613,7 +613,7 @@ import {
           CreatedAt: "",
           DeletedAt: null,
           id: "",
-          corporateCode: 0,
+          registerId: 0,
           isAntiqueTrading: true,
           isHotelRestaurant: false,
           isArmament: false,
@@ -989,7 +989,7 @@ import {
           CreatedAt: '',
           DeletedAt: null,
           id: '',
-          corporateCode: 0,
+          registerId: 0,
           isAntiqueTrading: true,
           isHotelRestaurant: false,
           isArmament: false,
@@ -1067,7 +1067,7 @@ import {
           CreatedAt: "2023-01-01",
           DeletedAt: null,
           id: "1",
-          corporateCode: 80000001,
+          registerId: 80000001,
           isAntiqueTrading: false,
           isHotelRestaurant: true,
           isArmament: false,
@@ -1110,12 +1110,12 @@ import {
             createBy: "user",
             CreatedAt: "2023-01-01",
             DeletedAt: null,
-            corporateCode: 80000001,
+            registerId: 80000001,
             isThailand: true,
             other: "N/A",
             types: 1,
           },
-          isliquidation: false,
+          isLiquidation: false,
           otherInvestment: "N/A",
           investmentObject: "N/A",
           isCashManagement: false,
@@ -1140,7 +1140,7 @@ import {
     createBy: "user_001",
     CreatedAt: "2023-10-01T12:00:00Z",
     DeletedAt: null,
-    corporateCode: 123,
+    registerId: 123,
     fullNames: [
       {
         id: "name_001",
@@ -1165,7 +1165,7 @@ import {
   describe("test create corporate form3 (contact person)", () => {
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -1391,7 +1391,7 @@ import {
               personalId: 'A123456789'
             }
           ],
-          corporateCode: '80000001'
+          registerId: '80000001'
         }
       };
   
@@ -1412,14 +1412,14 @@ import {
   
       const mockOnSubmit = jest.fn();
       const mockClearChoosedEditData = jest.fn();
-      const mockCorporateCode = "0";
+      const mockregisterId = "0";
   
       render(
         <Provider store={store}>
           <MemoryRouter>
             <FormIndividualsContactPerson
               onsubmit={mockOnSubmit}
-              corporateCode={mockCorporateCode}
+              registerId={mockregisterId}
               clearChoosedEditData={mockClearChoosedEditData}
             />
           </MemoryRouter>
@@ -1483,7 +1483,7 @@ import {
               personalId: undefined
             }
           ],
-          corporateCode: '0'
+          registerId: '0'
         }
       };
   
@@ -1502,7 +1502,7 @@ import {
     CreatedAt: "2023-01-01T00:00:00Z",
     DeletedAt: null,
     personalId: "9876543210987",
-    corporateCode: 123456,
+    registerId: 123456,
     fullNames: [
       {
         id: "name001",
@@ -1547,7 +1547,7 @@ import {
   describe("test create corporate form4 (list of director)", () => {
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -1615,7 +1615,7 @@ import {
   
     test("test form4 (PageListOfDirector) DELETE", async () => {
       store.dispatch(setCorporateData(mockCorporateData));
-      store.dispatch(setDirectorEdit([{...mockDirector,corporateCode:mockDirector.corporateCode.toString()}]));
+      store.dispatch(setDirectorEdit([{...mockDirector,registerId:mockDirector.registerId.toString()}]));
   
       render(
         <Provider store={store}>
@@ -1735,7 +1735,7 @@ import {
       window.alert = jest.fn();
   
       store.dispatch(setCorporateData(mockCorporateData));
-      store.dispatch(setDirectorEdit([{...mockDirector,corporateCode:mockDirector.corporateCode.toString()}]));
+      store.dispatch(setDirectorEdit([{...mockDirector,registerId:mockDirector.registerId.toString()}]));
   
       render(
         <Provider store={store}>
@@ -1877,7 +1877,7 @@ import {
             }
           ],
           types: 101,
-          corporateCode: '80000001',
+          registerId: '80000001',
           personalId: '9876543210987'
         }
       };
@@ -1902,14 +1902,14 @@ import {
     // test("test input data(multiple input type)", async () => {
     //   const mockOnSubmit = jest.fn();
     //   const mockClearChoosedEditData = jest.fn();
-    //   const mockCorporateCode = "0";
+    //   const mockregisterId = "0";
   
     //   render(
     //     <Provider store={store}>
     //       <MemoryRouter>
     //         <FormIndividualsDirector
     //           onsubmit={mockOnSubmit}
-    //           corporateCode={mockCorporateCode}
+    //           registerId={mockregisterId}
     //           clearChoosedEditData={mockClearChoosedEditData}
     //         />
     //       </MemoryRouter>
@@ -2039,7 +2039,7 @@ import {
     //         },
     //       ],
     //       types: 101,
-    //       corporateCode: "0",
+    //       registerId: "0",
     //       personalId: undefined,
     //     },
     //   };
@@ -2059,7 +2059,7 @@ import {
     CreatedAt: "2022-01-01T00:00:00.000Z",
     DeletedAt: null,
     personalId: "PID001",
-    corporateCode: 12345,
+    registerId: 12345,
     fullNames: [
       {
         id: "FN001",
@@ -2084,7 +2084,7 @@ import {
   
   describe("test create corporate form5 (individual shareholder)", () => {
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -2152,7 +2152,7 @@ import {
   
     test("test form5 (PageIndividualShareholder) DELETE", async () => {
       store.dispatch(setCorporateData(mockCorporateData));
-      store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, corporateCode:individualShareholderMock.corporateCode.toString()}]));
+      store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, registerId:individualShareholderMock.registerId.toString()}]));
   
       render(
         <Provider store={store}>
@@ -2222,7 +2222,7 @@ import {
   
     test("test form5 (PageIndividualShareholder) EDIT", async () => {
       store.dispatch(setCorporateData(mockCorporateData));
-      store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, corporateCode:individualShareholderMock.corporateCode.toString()}]));
+      store.dispatch(setIndividualShareholder([{...individualShareholderMock, expiryDate: individualShareholderMock.expiryDate as string, registerId:individualShareholderMock.registerId.toString()}]));
   
       render(
         <Provider store={store}>
@@ -2288,7 +2288,7 @@ import {
           expiryDate: '2025-01-01',
           nationality: 'Thai',
           sharePercentage: 3000000,
-          corporateCode: '80000001',
+          registerId: '80000001',
           personalId: "PID001",
           types: 301,
         }
@@ -2312,14 +2312,14 @@ import {
     test("test input data(multiple input type)", async () => {
       const mockOnSubmit = jest.fn();
       const mockClearChoosedEditData = jest.fn();
-      const mockCorporateCode = "0";
+      const mockregisterId = "0";
   
       render(
         <Provider store={store}>
           <MemoryRouter>
             <FormIndividualsShareholders
               onsubmit={mockOnSubmit}
-              corporateCode={mockCorporateCode}
+              registerId={mockregisterId}
               clearChoosedEditData={mockClearChoosedEditData}
             />
           </MemoryRouter>
@@ -2381,7 +2381,7 @@ import {
           nationality: "Thai",
           sharePercentage: 1234500,
           types: 301,
-          corporateCode: "0",
+          registerId: "0",
           personalId: "",
         },
       };
@@ -2400,7 +2400,7 @@ import {
     createBy: "user123",
     CreatedAt: "2023-10-01T12:00:00Z",
     DeletedAt: null,
-    corporateCode: 12345,
+    registerId: 12345,
     juristicName: "Acme Juristic Individual Corporation",
     registrationNo: "REG123456",
     registeredCountry: "Thailand",
@@ -2409,7 +2409,7 @@ import {
   
   describe("test create corporate form6 (juristics shareholder)", () => {
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -2619,7 +2619,7 @@ import {
       //Expected form data
       const expectedFormData = {
         data: {
-          corporateCode: '80000001',
+          registerId: '80000001',
           juristicName: 'Acme Juristic Individual Corporation',
           registrationNo: 'REG123456',
           registeredCountry: 'Thailand',
@@ -2644,14 +2644,14 @@ import {
     test("test input data(multiple input type)", async () => {
       const mockOnSubmit = jest.fn();
       const mockClearChoosedEditData = jest.fn();
-      const mockCorporateCode = "0";
+      const mockregisterId = "0";
   
       render(
         <Provider store={store}>
           <MemoryRouter>
             <FormJuristicShareholders
               onsubmit={mockOnSubmit}
-              corporateCode={mockCorporateCode}
+              registerId={mockregisterId}
               clearChoosedEditData={mockClearChoosedEditData}
             />
           </MemoryRouter>
@@ -2695,7 +2695,7 @@ import {
           registrationNo: "2571817668244",
           registeredCountry: "Thailand",
           sharePercentage: 1234500,
-          corporateCode: "0",
+          registerId: "0",
           juristicId: undefined,
         },
       };
@@ -2715,7 +2715,7 @@ import {
                   "CreatedAt": "2024-08-13T05:15:29.523Z",
                   "DeletedAt": null,
                   "personalId": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
-                  "corporateCode": 80000003,
+                  "registerId": 80000003,
                   "fullNames": [
                       {
                           "id": "b0d9459f-465d-4ea1-aaac-5d03ac4c2763",
@@ -2760,7 +2760,7 @@ import {
   describe("test create corporate form7 (authorized person)", () => {
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -2975,14 +2975,14 @@ import {
   
     //   const mockOnSubmit = jest.fn();
     //   const mockClearChoosedEditData = jest.fn();
-    //   const mockCorporateCode = "0";
+    //   const mockregisterId = "0";
   
     //   render(
     //     <Provider store={store}>
     //       <MemoryRouter>
     //         <FormAuthorizedPerson
     //           onsubmit={mockOnSubmit}
-    //           corporateCode={mockCorporateCode}
+    //           registerId={mockregisterId}
     //           clearChoosedEditData={mockClearChoosedEditData}
     //         />
     //       </MemoryRouter>
@@ -3112,7 +3112,7 @@ import {
     //         },
     //       ],
     //       types: 201,
-    //       corporateCode: "0",
+    //       registerId: "0",
     //       personalId: undefined,
     //     },
     //   };
@@ -3134,7 +3134,7 @@ import {
                   "CreatedAt": "2024-09-12T04:00:13.134Z",
                   "DeletedAt": null,
                   "personalId": "394d06e0-3281-4bb3-b8c1-782749105236",
-                  "corporateCode": 80000044,
+                  "registerId": 80000044,
                   "fullNames": [
                       {
                           "id": "5d1ecbef-9041-4e19-9df7-70aa1b340d42",
@@ -3187,7 +3187,7 @@ import {
   });
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -3393,14 +3393,14 @@ import {
     // test("test input data(multiple input type)", async () => {
     //   const mockOnSubmit = jest.fn();
     //   const mockClearChoosedEditData = jest.fn();
-    //   const mockCorporateCode = "0";
+    //   const mockregisterId = "0";
   
     //   render(
     //     <Provider store={store}>
     //       <MemoryRouter>
     //         <FormAttorney
     //           onsubmit={mockOnSubmit}
-    //           corporateCode={mockCorporateCode}
+    //           registerId={mockregisterId}
     //           clearChoosedEditData={mockClearChoosedEditData}
     //         />
     //       </MemoryRouter>
@@ -3530,7 +3530,7 @@ import {
     //         },
     //       ],
     //       types: 302,
-    //       corporateCode: "0",
+    //       registerId: "0",
     //       personalId: undefined,
     //     },
     //   };
@@ -3551,7 +3551,7 @@ import {
     "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
     "CreatedAt": "2024-09-12T02:09:44.974Z",
     "DeletedAt": null,
-    "corporateCode": 80000044,
+    "registerId": 80000044,
     "accountType": "12",
     "bankName": "2",
     "accountNo": "2",
@@ -3569,7 +3569,7 @@ import {
     });
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -3713,14 +3713,14 @@ import {
     test("test input data(multiple input type)", async () => {
       const mockOnSubmit = jest.fn();
       const mockClearChoosedEditData = jest.fn();
-      const mockCorporateCode = "0";
+      const mockregisterId = "0";
   
       render(
         <Provider store={store}>
           <MemoryRouter>
             <FormBank
               onsubmit={mockOnSubmit}
-              corporateCode={mockCorporateCode}
+              registerId={mockregisterId}
               clearChoosedEditData={mockClearChoosedEditData}
             />
           </MemoryRouter>
@@ -3775,7 +3775,7 @@ import {
               swiftCode: "swift code",
             },
           ],
-          CorporateCode: "0",
+          registerId: "0",
           BankId: undefined,
         },
       };
@@ -3803,7 +3803,7 @@ import {
     });
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -4199,7 +4199,7 @@ import {
     });
   
     beforeAll(() => {
-      localStorage.setItem('corporateCode', '80000001');
+      localStorage.setItem('registerId', '80000001');
     });
   
     afterAll(() => {
@@ -4221,7 +4221,7 @@ import {
         fetchSuitData: jest.fn(),
         additionalQuiz: { current: [] },
         corporatesInfo: {
-          CorporateCode: '12345',
+          registerId: '12345',
           Info: {
             name: 'Test Corp',
             registrationNo: '67890',

@@ -300,7 +300,7 @@ export function useListOfDirector() {
       /* eslint-disable */console.log(...oo_oo(`3507966158_25_6_29_8_4`,"sending data to update : ", {
         ...data,
         personalId: data.personalId,
-        corporateCode: data.corporateCode,
+        registerId: data.registerId,
       }));
       if (data.personalId) {
         //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
@@ -309,7 +309,7 @@ export function useListOfDirector() {
           {
             ...body,
             personalId: data.personalId,
-            corporateCode: data.corporateCode,
+            registerId: data.registerId,
           },
           {
             headers: { Authorization: `Bearer ${token}` },

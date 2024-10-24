@@ -27,7 +27,7 @@ const {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const icoCode = localStorage.getItem("icoCode")
+  const registerId = localStorage.getItem("registerId")
 
   const keyInformationForSelector = [{ name: "BNB Smart Chain Mainnet" }];
 
@@ -54,7 +54,7 @@ const {
     const body = {
         keyInformation:{
             ...data.keyInformation,
-            icoCode: icoCode,
+            registerId: registerId,
             creationTime: data?.keyInformation?.creationTime
             ? new Date(data.keyInformation.creationTime)
             : undefined,
@@ -68,7 +68,7 @@ const {
     };
     dispatch(setTestCorporateData({keyInformation:{
         ...data.keyInformation,
-        icoCode: icoCode,
+        registerId: registerId,
         creationTime: data?.keyInformation?.creationTime
         ? new Date(data.keyInformation.creationTime).toISOString()
         : undefined,
@@ -81,7 +81,7 @@ const {
     }}));
     console.log(body);
 
-    if(icoCode){
+    if(registerId){
       if(fetchedData?.keyInformation === null){
         try{
           const res = await axios.post('/api/v1/ico/keyInformation/create',body, {

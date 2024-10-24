@@ -14,7 +14,7 @@ import reducer, {
   
     const mockAttorney: TAttorney = {
         personalId: "123",
-        corporateCode: "1234",
+        registerId: "1234",
         fullNames: [
           {
             title: "Mr.",

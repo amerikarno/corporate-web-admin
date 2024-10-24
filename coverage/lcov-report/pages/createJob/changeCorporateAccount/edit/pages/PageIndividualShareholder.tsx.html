@@ -575,7 +575,7 @@ export function PageIndividualShareholder({
   ) as TIndividualShareholderEdit[];
   const [choosedEditData, setChoosedEditData] =
     useState&lt;TIndividualShareholderEdit&gt;();
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
   const clearChoosedEditData = () =&gt; {
     setChoosedEditData(undefined);
   };
@@ -585,7 +585,7 @@ export function PageIndividualShareholder({
       const res = await axios
       .post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -621,10 +621,10 @@ export function PageIndividualShareholder({
   }
 &nbsp;
   useEffect(() =&gt; {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3990653376_92_6_92_44_4`,"corporateCode not found"))</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3990653376_92_6_92_44_4`,"registerId not found"))</span>
     }
   }, []);
 &nbsp;
@@ -721,7 +721,7 @@ export function PageIndividualShareholder({
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -756,7 +756,7 @@ export function PageIndividualShareholder({
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitShareholders}
-          corporateCode={corporateCode}
+          registerId={registerId}
         /&gt;
       &lt;/div&gt;
     &lt;/&gt;

@@ -613,13 +613,13 @@ export function PageAttorney({}: TPageAttorneyProps) {
   const corporatesInfo: TCorporateData = useSelector&lt;RootState&gt;(
     (state) =&gt; state.editCorporate
   ) as TCorporateData;
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
 &nbsp;
   const fetchedData = async () =&gt; {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -653,10 +653,10 @@ export function PageAttorney({}: TPageAttorneyProps) {
   };
 &nbsp;
   useEffect(() =&gt; {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`888219366_90_6_90_44_4`,"corporateCode not found"))</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`888219366_90_6_90_44_4`,"registerId not found"))</span>
     }
   }, []);
 &nbsp;
@@ -769,7 +769,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -807,7 +807,7 @@ export function PageAttorney({}: TPageAttorneyProps) {
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitAttorney}
-          corporateCode={corporateCode}
+          registerId={registerId}
         /&gt;
       &lt;/div&gt;
     &lt;/&gt;

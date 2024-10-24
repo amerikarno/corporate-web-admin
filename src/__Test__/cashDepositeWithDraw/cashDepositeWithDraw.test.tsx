@@ -26,7 +26,7 @@ const mockedCashDesositeWithdraw =
       "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
       "CreatedAt": "2024-09-18T05:21:28.452Z",
       "DeletedAt": null,
-      "corporateCode": 0,
+      "registerId": 0,
       "accountId": 80000010,
       "bankName": "ธนาคารซูมิโตโม มิตซุย แบงกิ้ง คอร์ปอเรชั่น",
       "bankAccount": "1",
@@ -40,7 +40,7 @@ const mockedCashDesositeWithdraw =
       "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
       "CreatedAt": "2024-10-07T01:52:27.535Z",
       "DeletedAt": null,
-      "corporateCode": 0,
+      "registerId": 0,
       "accountId": 80000010,
       "bankName": "ธนาคารยูโอบี จำกัด (มหาชน)",
       "bankAccount": "1212312121",
@@ -54,7 +54,7 @@ const mockedCashDesositeWithdraw =
       "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
       "CreatedAt": "2024-10-04T01:39:18.119Z",
       "DeletedAt": null,
-      "corporateCode": 0,
+      "registerId": 0,
       "accountId": 80000011,
       "bankName": "ธนาคารกสิกรไทย จำกัด (มหาชน)",
       "bankAccount": "1212312121",
@@ -68,7 +68,7 @@ const mockedCashDesositeWithdraw =
       "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
       "CreatedAt": "2024-10-07T01:52:40.803Z",
       "DeletedAt": null,
-      "corporateCode": 0,
+      "registerId": 0,
       "accountId": 12345,
       "bankName": "ธนาคารกรุงเทพ จำกัด (มหาชน)",
       "bankAccount": "12345",
@@ -82,7 +82,7 @@ const mockedCashDesositeWithdraw =
       "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
       "CreatedAt": "2024-09-18T05:21:16.367Z",
       "DeletedAt": null,
-      "corporateCode": 0,
+      "registerId": 0,
       "accountId": 80000010,
       "bankName": "ธนาคารกรุงเทพ จำกัด (มหาชน)",
       "bankAccount": "1",
@@ -96,7 +96,7 @@ const mockedCashDesositeWithdraw =
       "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
       "CreatedAt": "2024-10-04T01:54:47.958Z",
       "DeletedAt": null,
-      "corporateCode": 0,
+      "registerId": 0,
       "accountId": 80000001,
       "bankName": "ธนาคารกสิกรไทย จำกัด (มหาชน)",
       "bankAccount": "753285427852",
@@ -138,10 +138,10 @@ describe("test cash deposite withdraw", () => {
     );
 
     // Select Corporate Code
-    const corporateCode = screen.getByLabelText("Corporate Code");
-    expect(corporateCode).toBeInTheDocument();
+    const registerId = screen.getByLabelText("Corporate Code");
+    expect(registerId).toBeInTheDocument();
     await act(async () => {
-      fireEvent.change(corporateCode, { target: { value: "80000001" } });
+      fireEvent.change(registerId, { target: { value: "80000001" } });
     });
 
     await waitFor(() => {
@@ -231,10 +231,10 @@ describe("test cash deposite withdraw", () => {
       );
 
       
-      const corporateCode = screen.getByLabelText("Corporate Code");
-      expect(corporateCode).toBeInTheDocument();
+      const registerId = screen.getByLabelText("Corporate Code");
+      expect(registerId).toBeInTheDocument();
       await act(async () => {
-          fireEvent.change(corporateCode, { target: { value: 80000001 } });
+          fireEvent.change(registerId, { target: { value: 80000001 } });
       });
 
       await waitFor(() => {
@@ -351,10 +351,10 @@ mockAxios.onPost("/api/v1/transaction/bank/get/individual").reply(200, {
     );
 
     
-    const corporateCode = screen.getByLabelText("Corporate Code");
-    expect(corporateCode).toBeInTheDocument();
+    const registerId = screen.getByLabelText("Corporate Code");
+    expect(registerId).toBeInTheDocument();
     await act(async () => {
-        fireEvent.change(corporateCode, { target: { value: 80000001 } });
+        fireEvent.change(registerId, { target: { value: 80000001 } });
     });
 
     await waitFor(() => {

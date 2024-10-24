@@ -77,7 +77,7 @@ const contacts: TContact[] = [
         types: 1
       }
     ],
-    corporateCode: 123,
+    registerId: 123,
     position: 'Manager',
     division: 'Sales',
     telephone: '123-456-7890',
@@ -103,7 +103,7 @@ const contacts: TContact[] = [
         types: 2
       }
     ],
-    corporateCode: 456,
+    registerId: 456,
     position: 'Developer',
     division: 'IT',
     telephone: '987-654-3210',
@@ -112,8 +112,8 @@ const contacts: TContact[] = [
 ];
       const actual = contactPersonReducer(initialState, setContactPersons(contacts));
       expect(actual.contactPersons).toHaveLength(2);
-      expect(actual.contactPersons[0].corporateCode).toBe('123');
-      expect(actual.contactPersons[1].corporateCode).toBe('456');
+      expect(actual.contactPersons[0].registerId).toBe('123');
+      expect(actual.contactPersons[1].registerId).toBe('456');
     });
   
     it('should handle updateContactPerson', () => {

@@ -3,9 +3,9 @@ import axios from "axios";
 // import log from "@/log/log";
 
 // const BASE_URL = window.origin;
-
+const BASE_URL = "http://localhost:3000";
 // const BASE_URL = "http://cwa-alb-607898773.eu-north-1.elb.amazonaws.com";
-const BASE_URL = "https://sit-corporate-admin.finansiada.com"
+// const BASE_URL = "https://sit-corporate-admin.finansiada.com"
 // console.log("base url:", BASE_URL);
 
 export default axios.create({

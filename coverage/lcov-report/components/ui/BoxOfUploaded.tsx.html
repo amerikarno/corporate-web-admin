@@ -171,7 +171,7 @@ import { getCookies } from "@/lib/Cookies";
 import { useDispatch } from "react-redux";
 &nbsp;
 &nbsp;
-const DocumentBox = <span class="fstat-no" title="function not covered" >({</span>corporateCode , fileName,id}:any) =&gt; {
+const DocumentBox = <span class="fstat-no" title="function not covered" >({</span>registerId , fileName,id}:any) =&gt; {
     const dispatch = <span class="cstat-no" title="statement not covered" >useDispatch();</span>
     const handleDeleteFile = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async </span>() =&gt; {</span>
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2748339036_10_8_10_41_4`,"body : ", {id : id}))</span>
@@ -202,7 +202,7 @@ const DocumentBox = <span class="fstat-no" title="function not covered" >({</spa
       focus:outline-none text-white bg-slate-800 hover:bg-red-500 
       focus:ring-4 focus:ring-red-300 rounded-full dark:bg-red-600
     dark:hover:bg-red-700 dark:focus:ring-red-900 text-s px-1.5" onClick={handleDeleteFile}&gt;x&lt;/div&gt;
-      &lt;div&gt;&lt;/div&gt;&lt;span&gt;&lt;span className="font-bold"&gt;Corporate Code : &lt;/span&gt;{corporateCode}&lt;/span&gt;
+      &lt;div&gt;&lt;/div&gt;&lt;span&gt;&lt;span className="font-bold"&gt;Corporate Code : &lt;/span&gt;{registerId}&lt;/span&gt;
       &lt;span&gt;&lt;span className="font-bold"&gt;File Name : &lt;/span&gt;{fileName}&lt;/span&gt;
     &lt;/div&gt;
   );

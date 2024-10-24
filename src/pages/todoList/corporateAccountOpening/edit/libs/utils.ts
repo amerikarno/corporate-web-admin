@@ -65,7 +65,7 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       (item) => item.types === 601
     );
     let resCorpPrimaryCountry = data.CorporateCountry.find(
-      (item) => item.types === 601
+      (item) => item.types === 602
     );
 
     // const timeStamp = Date.parse(data.Info.dateOfIncorporation);
@@ -75,9 +75,9 @@ export const mapDataToTCorporateInfo = (data: TCorporateData) => {
       name: data.Info.name,
       registrationNo: data.Info.registrationNo,
       taxId: data.Info.taxId,
-      dateofincorporation: data.Info.dateOfIncorporation.split("T")[0],
-      // dateofincorporation: dt,
-      // dateofincorporation: new Date(timeStamp),
+      dateOfIncorporation: data.Info.dateOfIncorporation.split("T")[0],
+      // dateOfIncorporation: dt,
+      // dateOfIncorporation: new Date(timeStamp),
       registered: resCorpRegisterCountry?.other || "",
       primary: resCorpPrimaryCountry?.other || "",
       registeredBusiness: {
@@ -222,7 +222,7 @@ export const mapDataToTIndividualShareholder = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0];
     const result: TIndividualsShareholders = {
-      corporateCode: String(data.corporateCode ?? ""),
+      registerId: String(data.registerId ?? ""),
       fullNames: [
         {
           title: data.fullNames[0].title ?? "",
@@ -255,7 +255,7 @@ export const mapDataToTJuristicShareholder = (
     }
 
     const result: TJuristicsShareholders = {
-      corporateCode: String(data.corporateCode ?? ""),
+      registerId: String(data.registerId ?? ""),
       juristicName: data.juristicName ?? "",
       registrationNo: data.registrationNo ?? "",
       registeredCountry: data.registeredCountry ?? "",
@@ -285,7 +285,7 @@ export const mapDataToTAuthoirzedPerson = (
     //   Number(dateParts[2])
     // );
     const result: TAuthorizedPersonSchema = {
-      corporateCode: String(data.corporateCode ?? ""),
+      registerId: String(data.registerId ?? ""),
       fullNames: [
         {
           title: data?.fullNames[0].title ?? "",
@@ -326,7 +326,7 @@ export const mapDataToTAuthoirzedPerson = (
 };
 
 type TBankWithID = {
-  CorporateCode?: string;
+  registerId?: string;
   bank: TBank[];
   BankId?: string;
 };
@@ -337,7 +337,7 @@ export const mapDataToTBank = (data: TBankEdit | null): TBankWithID | null => {
     }
 
     const result: TBankWithID = {
-      CorporateCode: String(data.corporateCode ?? ""),
+      registerId: String(data.registerId ?? ""),
       BankId: data.id ?? "",
       bank: [
         {
@@ -384,7 +384,7 @@ export const getFrom2Response = () => {
   const corpData = useSelector((state: RootState) => state.editCorporate);
   // const juristicType = useSelector((state: RootState) => state.juristicType);
   // console.log(JSON.stringify(juristicType, null, 2));
-  // if (juristicType.corporateCode === 0) {
+  // if (juristicType.registerId === 0) {
   const {
     jrType,
     buType,
@@ -418,7 +418,7 @@ export const mapDataToTAttorney = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0];
     const result: TAttorney = {
-      corporateCode: String(data.corporateCode ?? ""),
+      registerId: String(data.registerId ?? ""),
       fullNames: [
         {
           title: data?.fullNames[0].title ?? "",
@@ -522,7 +522,7 @@ export const mapToForm2Create = (data:CorporateResponse) :CorporateTypeBody | an
       otherIncome: data.otherIncome,
       otherCountry: data.corporateCountry?.other,
       otherInvestment: data.otherInvestment,
-      corporateCode: data.corporateCode?.toString(),
+      registerId: data.registerId?.toString(),
     }
     return result
   }catch(error){
@@ -541,8 +541,8 @@ export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
     return {
       id:data?.id || "",
       filePath: data?.filePath || "",
-      corporateCode: data?.corporateCode || 0,
-      docType: data?.docType || "",
+      registerId: data?.registerId || 0,
+      docTypes: data?.docTypes || "",
       fileName: data?.fileName || "",
       fileTypes: data?.fileTypes || "",
     };

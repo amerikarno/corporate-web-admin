@@ -132,7 +132,7 @@ const TransactionList = () => {
             // console.log(item);
             return {
               id: item.id || "",
-              corporateCode: item.corporateCode || 0,
+              registerId: item.registerId || 0,
               operations: item.operations || "",
               cryptoAmount: item.cryptoAmount/100000 || 0,
               cryptoPrice: item.cryptoPrice/100000 || 0,
@@ -186,7 +186,7 @@ const TransactionList = () => {
     },
     {
       name: "Corporate Code",
-      selector: (row: TTransaction) => row.corporateCode || "",
+      selector: (row: TTransaction) => row.registerId || "",
     },
     {
       name: "Buy/Sell",

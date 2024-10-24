@@ -13,6 +13,8 @@ import { dateToyyyyMMdd } from "@/lib/utils";
 import { useToDoIndividualAccount } from "./useToDoIndividualAccount";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
+import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { store } from "@/app/store";
 
 export default function ChangeTodoIndividualAccount() {
   //   if (!isAllowedPage(3001)) {
@@ -41,8 +43,8 @@ export default function ChangeTodoIndividualAccount() {
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-      { corporateCode: number }[]
+    const [mockedregisterIds, setFetchedregisterIds] = useState<
+      { registerId: number }[]
     >([]);
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +54,7 @@ export default function ChangeTodoIndividualAccount() {
       setDisableDate(false);
     }
   };
-    const fetchCorporateCodes = async () => {
+    const fetchregisterIds = async () => {
       try {
         const token = getCookies();
 
@@ -68,15 +70,15 @@ export default function ChangeTodoIndividualAccount() {
         );
         if (res.status === 200) {
           console.log(res);
-          const corporateCodes = res.data.map((item: any) => ({
-            corporateCode: item.id,
+          const registerIds = res.data.map((item: any) => ({
+            registerId: item.id,
           }));
-          setFetchedCorporateCodes(corporateCodes);
+          setFetchedregisterIds(registerIds);
 
           // const dateFrom = new Date();
           // dateFrom.setDate(dateFrom.getDate() + 7);
           // const data: TCorporateAccountOpening = {
-          //   corporateCode: "",
+          //   registerId: "",
           //   // dateFrom: dateToyyyyMMdd(dateFrom),
           //   // dateTo: dateToyyyyMMdd(dateFrom),
           //   dateFrom: dateToyyyyMMdd(new Date()),
@@ -92,18 +94,19 @@ export default function ChangeTodoIndividualAccount() {
     };
 
   const initData = async () => {
-    // await fetchCorporateCodes();
+    // await fetchregisterIds();
     const data: TSearchIndividualSchema = {
       AccountID: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
+    store.dispatch(setTestCorporateData(data));
     await handleSearch(data);
   };
 
   useEffect(() => {
-    fetchCorporateCodes();
-    // console.log("all-corporate Code", mockedCorporateCodes);
+    fetchregisterIds();
+    // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
 
@@ -137,6 +140,7 @@ export default function ChangeTodoIndividualAccount() {
           >
             <SideLabelInput title="Individual ID">
               <Input
+                data-testid="accountId"
                 {...register("AccountID")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
@@ -147,9 +151,9 @@ export default function ChangeTodoIndividualAccount() {
                 <p className="text-red-500">{errors.AccountID?.message}</p>
               )}
               <datalist id="juristicId">
-                {mockedCorporateCodes.map((code, index) => (
-                  <option key={index} value={code.corporateCode}>
-                    {code.corporateCode}
+                {mockedregisterIds.map((code, index) => (
+                  <option key={index} value={code.registerId}>
+                    {code.registerId}
                   </option>
                 ))}
               </datalist>
@@ -157,6 +161,7 @@ export default function ChangeTodoIndividualAccount() {
             <div className="col-start-1">
               <SideLabelInput title="Date From">
                 <Input
+                  data-testid="dateFrom"
                   type="date"
                   {...register("dateFrom")}
                   onChange={handleDisableCode}
@@ -171,6 +176,7 @@ export default function ChangeTodoIndividualAccount() {
             </div>
             <SideLabelInput title="Date To">
               <Input
+                data-testid="dateTo"
                 type="date"
                 {...register("dateTo")}
                 onChange={handleDisableCode}
@@ -183,7 +189,7 @@ export default function ChangeTodoIndividualAccount() {
               )}
             </SideLabelInput>
             <div className="col-start-2 flex justify-end">
-              <Button type="submit">
+              <Button type="submit" data-testid="searchBtn">
                 {isSubmitting ? "Search..." : "Search"}
               </Button>
             </div>

@@ -56,7 +56,7 @@ export function FormCorporateInfo({
 
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
   const [placeIncorporateValue, setPlaceIncorporateValue] = useState<string>(
-    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : "place-radio-1"
+    corporatesInfo?.registerId.toString() ? "place-radio-2" : "place-radio-1"
   );
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
     (item) => item.types === 601
@@ -299,15 +299,15 @@ export function FormCorporateInfo({
     return Math.round(parseFloat(newValue) * 100);
   };
   const onSubmit = async (data: TCorporateInfoSchema) => {
-    const dateData = Date.parse(data.dateofincorporation);
+    const dateData = Date.parse(data.dateOfIncorporation);
     const formData: TCorporateInfo = {
       ...data,
       registeredCapital: formatFinancialValue(data.registeredCapital),
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      corporateCode: corporatesInfo?.CorporateCode.toString(),
-      dateofincorporation: new Date(dateData).toISOString(),
+      registerId: corporatesInfo?.registerId.toString(),
+      dateOfIncorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
         registeredCountryPrimaryCountryOperation.isRegisteredOther,
@@ -436,14 +436,14 @@ export function FormCorporateInfo({
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
-              {...register("dateofincorporation")}
-              name="dateofincorporation"
+              {...register("dateOfIncorporation")}
+              name="dateOfIncorporation"
               type="date"
               disabled={isSubmitting}
             />
-            {errors.dateofincorporation && (
+            {errors.dateOfIncorporation && (
               <p className="text-red-500">
-                {errors.dateofincorporation.message}
+                {errors.dateOfIncorporation.message}
               </p>
             )}
           </div>

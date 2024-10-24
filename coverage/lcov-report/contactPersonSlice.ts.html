@@ -230,7 +230,7 @@ export const contactPersonSlice = createSlice({
     setContactPersons: (state, action: PayloadAction&lt;TContact[]&gt;) =&gt; {
       state.contactPersons = action.payload.map((contact) =&gt; ({
         ...contact,
-        corporateCode: String(contact.corporateCode),
+        registerId: String(contact.registerId),
       })) as TContactPerson[];
     },
     updateContactPerson: (state, action: PayloadAction&lt;{ personalId: string, newPersonalId: string, contactPerson: TContactPerson }&gt;) =&gt; {

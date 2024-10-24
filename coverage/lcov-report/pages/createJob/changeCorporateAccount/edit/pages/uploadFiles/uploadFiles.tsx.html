@@ -390,7 +390,7 @@ export default function UploadFiles({
   const uploadFile: TDocuments[] = useSelector&lt;RootState&gt;(
     (state) =&gt; state.uploadFile?.files || <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
   ) as TDocuments[];
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
   const corporatesInfo: TCorporateData = useSelector&lt;RootState&gt;((state) =&gt; state.editCorporate) as TCorporateData;
   /* eslint-disable */console.log(...oo_oo(`2215832738_34_2_34_25_4`,uploadFile));
   const token = getCookies();
@@ -400,7 +400,7 @@ export default function UploadFiles({
       try {
         const res = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode },
+          { registerId },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -421,12 +421,12 @@ export default function UploadFiles({
         /* eslint-disable */console.error(...oo_tx(`2215832738_60_8_60_64_11`,"Error fetching upload File data:", error));
       }
     };
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2215832738_66_6_66_44_4`,"corporateCode not found"));</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2215832738_66_6_66_44_4`,"registerId not found"));</span>
     }
-  }, [corporateCode, dispatch, token]);
+  }, [registerId, dispatch, token]);
   return (
     &lt;div className="p-4"&gt;
       &lt;Card className=" p-4 space-y-6"&gt;
@@ -435,7 +435,7 @@ export default function UploadFiles({
           &lt;div className="w-1/2 space-y-4"&gt;
             &lt;div className="flex flex-row gap-4"&gt;
               &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-              &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+              &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
             &lt;/div&gt;
             &lt;div className="flex flex-row gap-4"&gt;
               &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -471,7 +471,7 @@ export default function UploadFiles({
 <span class="cstat-no" title="statement not covered" >                  &lt;DocumentBox</span>
                     key={index}
                     fileName={document.fileName}
-                    corporateCode={document.corporateCode}
+                    registerId={document.registerId}
                     id={document.id}
                   /&gt;
                 ))
@@ -491,7 +491,7 @@ export default function UploadFiles({
           {documentType !== null &amp;&amp; (
             &lt;div className="space-y-4"&gt;
               &lt;Input type="file" onChange={handleInputChange} data-testid="inputfile"/&gt;
-              &lt;Button onClick={() =&gt; handleUpload(file, corporateCode)}&gt;
+              &lt;Button onClick={() =&gt; handleUpload(file, registerId)}&gt;
                 Upload
               &lt;/Button&gt;
             &lt;/div&gt;

@@ -1443,7 +1443,7 @@ export function FormCorporateInfo({
 &nbsp;
   const [shouldScrollUp, setShouldScrollUp] = useState&lt;boolean&gt;(false);
   const [placeIncorporateValue, setPlaceIncorporateValue] = useState&lt;string&gt;(
-    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : <span class="branch-1 cbranch-no" title="branch not covered" >"place-radio-1"</span>
+    corporatesInfo?.registerId.toString() ? "place-radio-2" : <span class="branch-1 cbranch-no" title="branch not covered" >"place-radio-1"</span>
   );
 &nbsp;
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
@@ -1695,15 +1695,15 @@ export function FormCorporateInfo({
 &nbsp;
   const onSubmit = async (data: TCorporateInfoSchema) =&gt; {
     /* eslint-disable */console.log(...oo_oo(`946745860_310_4_310_21_4`,data))
-    const dateData = Date.parse(data.dateofincorporation);
+    const dateData = Date.parse(data.dateOfIncorporation);
     const formData: TCorporateInfo = {
       ...data,
       registeredCapital: formatFinancialValue(data.registeredCapital),
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      corporateCode: corporatesInfo?.CorporateCode.toString(),
-      dateofincorporation: new Date(dateData).toISOString(),
+      registerId: corporatesInfo?.registerId.toString(),
+      dateOfIncorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
         registeredCountryPrimaryCountryOperation.isRegisteredOther,
@@ -1832,14 +1832,14 @@ export function FormCorporateInfo({
             &lt;Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
-              {...register("dateofincorporation")}
-              name="dateofincorporation"
+              {...register("dateOfIncorporation")}
+              name="dateOfIncorporation"
               type="date"
               disabled={isSubmitting}
             /&gt;
-            {errors.dateofincorporation &amp;&amp; (
+            {errors.dateOfIncorporation &amp;&amp; (
 <span class="branch-1 cbranch-no" title="branch not covered" >              &lt;p className="text-red-500"&gt;</span>
-                {errors.dateofincorporation.message}
+                {errors.dateOfIncorporation.message}
               &lt;/p&gt;
             )}
           &lt;/div&gt;

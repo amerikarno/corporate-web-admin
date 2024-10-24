@@ -894,11 +894,11 @@ export default function BankOrderEdit() {
   }
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState&lt;string&gt;("depostie");
-  //   const [selectedCorporateCode, setSelectedCorporateCode] =
+  //   const [selectedregisterId, setSelectedregisterId] =
   //     useState&lt;string&gt;("");
   //   const [selectedTradingPair, setSelectedTradingPair] = useState&lt;string&gt;("");
-    const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;
-      { corporateCode: number }[]
+    const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
+      { registerId: number }[]
     &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TBankOrder&gt;();
   const clearChoosedEditData = () =&gt; {
@@ -947,7 +947,7 @@ export default function BankOrderEdit() {
     (state) =&gt; state.bankOrder?.bankOrders || <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
   ) as TBankOrder[];
 &nbsp;
-    const fetchCorporateCodes = async () =&gt; {
+    const fetchregisterIds = async () =&gt; {
       try {
         const token = getCookies();
 &nbsp;
@@ -961,10 +961,10 @@ export default function BankOrderEdit() {
           }
         );
         if (res.status === 200) {
-          const corporateCodes = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-            corporateCode: item.CorporateCode,
+          const registerIds = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+            registerId: item.registerId,
           }));
-<span class="cstat-no" title="statement not covered" >          setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >          setFetchedregisterIds(registerIds);</span>
         } else <span class="missing-if-branch" title="else path not taken" >E</span>{
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3591135787_100_10_100_56_4`,"Failed to fetch corporate codes"));</span>
         }
@@ -1006,7 +1006,7 @@ export default function BankOrderEdit() {
 &nbsp;
   const columnsOrderTrade: TableColumn&lt;TBankOrder&gt;[] = [
     {
-      name: "CorporateCode",
+      name: "registerId",
       selector: (row: TBankOrder) =&gt; row.accountId || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
     },
     {
@@ -1077,7 +1077,7 @@ export default function BankOrderEdit() {
 &nbsp;
   useEffect(() =&gt; {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 &nbsp;
   const onSubmit = async (data: TBankOrder) =&gt; {
@@ -1102,7 +1102,7 @@ export default function BankOrderEdit() {
           reset();
           setBankRemove(false)
           clearChoosedEditData();
-          //   setSelectedCorporateCode("");
+          //   setSelectedregisterId("");
           /* eslint-disable */console.log(...oo_oo(`3591135787_237_10_237_40_4`,"edit successful"));
             fetchOrderList();
         } else <span class="missing-if-branch" title="else path not taken" >E</span>{
@@ -1118,7 +1118,7 @@ export default function BankOrderEdit() {
 <span class="cstat-no" title="statement not covered" >          reset();</span>
 <span class="cstat-no" title="statement not covered" >          setBankRemove(false)</span>
 <span class="cstat-no" title="statement not covered" >          clearChoosedEditData();</span>
-          //   setSelectedCorporateCode("");
+          //   setSelectedregisterId("");
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3591135787_253_10_253_40_4`,"save successful"));</span>
 <span class="cstat-no" title="statement not covered" >          fetchOrderList();</span>
         } else {
@@ -1145,17 +1145,17 @@ export default function BankOrderEdit() {
                       label="Corporate Code"
                       id="accountId"
                       disabled={isSubmitting}
-                      list="corporateCodes"
+                      list="registerIds"
                     /&gt;
                     {errors.accountId &amp;&amp; (
 <span class="branch-1 cbranch-no" title="branch not covered" >                      &lt;p className="text-red-500 text-sm px-2"&gt;</span>
                         {errors.accountId.message}
                       &lt;/p&gt;
                     )}
-                    &lt;datalist id="corporateCodes"&gt;
-                      {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                        &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                          {code.corporateCode}
+                    &lt;datalist id="registerIds"&gt;
+                      {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                        &lt;option key={index} v</span>alue={code.registerId}&gt;
+                          {code.registerId}
                         &lt;/option&gt;
                       ))}
                     &lt;/datalist&gt;

@@ -19,7 +19,7 @@ const AddedIcoInfo = () => {
 
     const fetchedData = useSelector((state: RootState) => state.assetData.data);
 
-    const icoCode = localStorage?.getItem("icoCode") || "";
+    const registerId = localStorage?.getItem("registerId") || "";
 
     const mapFetchedToInfo = (fetchedData: TAssetData) => {
         return {
@@ -51,31 +51,31 @@ const AddedIcoInfo = () => {
                 setFile(pictureArray);
             }
             reset(mapFetchedToInfo(fetchedData))
-            if(fetchedData.info.totalAmountRaised){
+            if(fetchedData?.info?.totalAmountRaised){
                 const value = fetchedData.info.totalAmountRaised.split(" ")[0];
                 const unit = fetchedData.info.totalAmountRaised.split(" ")[1];
                 setValue("info.totalAmountRaised",value);
                 setTotalAmountRaisedUnit(unit);
             }
-            if(fetchedData.info.totalIssuance){
+            if(fetchedData?.info?.totalIssuance){
                 const value = fetchedData.info.totalIssuance.split(" ")[0];
                 const unit = fetchedData.info.totalIssuance.split(" ")[1];
                 setValue("info.totalIssuance",value);
                 setTotalIssuanceUnit(unit);
             }
-            if(fetchedData.info.minimumInvestmentAmount){
+            if(fetchedData?.info?.minimumInvestmentAmount){
                 const value = fetchedData.info.minimumInvestmentAmount.split(" ")[0];
                 const unit = fetchedData.info.minimumInvestmentAmount.split(" ")[1];
                 setValue("info.minimumInvestmentAmount",value);
                 setMinimumInvestmentAmountUnit(unit);
             }
-            if(fetchedData.info.minimumInvestmentQuantity){
+            if(fetchedData?.info?.minimumInvestmentQuantity){
                 const value = fetchedData.info.minimumInvestmentQuantity.split(" ")[0];
                 const unit = fetchedData.info.minimumInvestmentQuantity.split(" ")[1];
                 setValue("info.minimumInvestmentQuantity",value);
                 setMinimumInvestmentQuantityUnit(unit);
             }
-            if(fetchedData.info.issueUnitPrice){
+            if(fetchedData?.info?.issueUnitPrice){
                 const value = fetchedData.info.issueUnitPrice.split(" ")[0];
                 const unit = fetchedData.info.issueUnitPrice.split(" ")[1];
                 setValue("info.issueUnitPrice",value);
@@ -129,14 +129,14 @@ const AddedIcoInfo = () => {
                 ...data,
                 asset: {
                     ...data.asset,
-                    icoCode: icoCode,
+                    registerId: registerId,
                     image:file,
                     logo:"fixed image",
                     title:"Elite Consulting",
                 },
                 info:{
                     ...data.info,
-                    icoCode: icoCode,
+                    registerId: registerId,
                     totalIssuance:data.info.totalIssuance ? `${data.info.totalIssuance} ${totalIssuanceUnit ? totalIssuanceUnit : "Baht"}`
                     : undefined,
                     totalAmountRaised:data.info.totalAmountRaised ? `${data.info.totalAmountRaised} ${totalAmountRaisedUnit ? totalAmountRaisedUnit : "Baht"}`
@@ -164,7 +164,7 @@ const AddedIcoInfo = () => {
                 dispatch(setTestCorporateData(body));
               }
 
-            if(!icoCode){
+            if(!registerId){
                 try{
                     const res = await axios.post("/api/v1/ico/asset/create", body, {
                         headers: {
@@ -174,12 +174,12 @@ const AddedIcoInfo = () => {
                     if(res.status === 200){
                         console.log("create ico form1 success",res)
                         if(res.data){
-                            localStorage.setItem("icoCode", res.data.icoCode.toString())
-                            console.log("ico code received :", res.data.icoCode.toString())
+                            localStorage.setItem("registerId", res.data.registerId)
+                            console.log("ico code received :", res.data.registerId)
                             navigate("/create-job/change-ico/edit/2");
     
                         }else{
-                            console.log("create success but didn't get icoCode back!")
+                            console.log("create success but didn't get registerId back!")
                         }
                     }else{
                         console.log("create ico form1 fail",res)

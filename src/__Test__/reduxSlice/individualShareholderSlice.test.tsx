@@ -11,7 +11,7 @@ import reducer, {
   
   const mockIndividualShareholder: TIndividualsShareholders = {
     personalId: "shareholder1",
-    corporateCode: "123456",
+    registerId: "123456",
     fullNames: [
       {
         title: "Mr.",
@@ -29,7 +29,7 @@ import reducer, {
   
   const updatedIndividualShareholder: TIndividualsShareholders = {
     personalId: "shareholder1",
-    corporateCode: "123456",
+    registerId: "123456",
     fullNames: [
       {
         title: "Mr.",
@@ -97,7 +97,7 @@ import reducer, {
         {
           ...updatedIndividualShareholder,
           personalId: "shareholder2",
-          corporateCode: String(updatedIndividualShareholder.corporateCode),
+          registerId: String(updatedIndividualShareholder.registerId),
         },
       ]);
     });

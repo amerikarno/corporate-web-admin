@@ -64,14 +64,14 @@ export const urlConfig: TUrlConfig[] = [
     pages: [2000, 2023],
     children: [
       {
-        label: "corporate account",
-        href: "/create-job/added-corporate-account",
-        pageId: 2001,
-      },
-      {
         label: "individual account",
         href: "/create-job/added-individual-account",
         pageId: 2002,
+      },
+      {
+        label: "corporate account",
+        href: "/create-job/added-corporate-account",
+        pageId: 2001,
       },
       {
         label: "ICO campaign",
@@ -79,14 +79,14 @@ export const urlConfig: TUrlConfig[] = [
         pageId: 2008,
       },
       {
-        label: "edit corporate account",
-        href: "/create-job/change-corporate-account",
-        pageId: 2003,
-      },
-      {
         label: "edit individual account",
         href: "/create-job/change-individual-account",
         pageId: 2004,
+      },
+      {
+        label: "edit corporate account",
+        href: "/create-job/change-corporate-account",
+        pageId: 2003,
       },
       {
         label: "edit ICO campaign",
@@ -206,6 +206,11 @@ export const urlConfig: TUrlConfig[] = [
     pages: [3000, 3016],
     children: [
       {
+        label: "individual account",
+        href: "/todo-list/individual-account-opening",
+        pageId: 3002,
+      },
+      {
         label: "corporate account",
         href: "/todo-list/corporate-account-opening",
         pageId: 3001,
@@ -215,11 +220,6 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/todo-list/individual-account-opening",
       //   pageId: 3002,
       // },
-      {
-        label: "individual account",
-        href: "/todo-list/individual-account-opening",
-        pageId: 3002,
-      },
       {
         label: "ICO compaign",
         href: "/todo-list/added-ico",
@@ -308,6 +308,21 @@ export const urlConfig: TUrlConfig[] = [
     icon: "icon",
     pages: [4000, 4007],
     children: [
+      {
+        label: "individual account",
+        href: "/enquiry/individual",
+        pageId: 4002,
+      },
+      {
+        label: "corporate account",
+        href: "/enquiry/corporate",
+        pageId: 4001,
+      },
+      {
+        label: "ICO  campaign",
+        href: "/enquiry/ico-campaign",
+        pageId: 4003,
+      },
       // {
       //   label: "deposit/withdraw list",
       //   href: "/enquiry/deposit-withdraw-list",

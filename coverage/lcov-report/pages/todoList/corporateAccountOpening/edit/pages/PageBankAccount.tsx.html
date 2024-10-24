@@ -553,7 +553,7 @@ type TPageBankAccountProps = {
 };
 &nbsp;
 type TBankWithID = {
-  CorporateCode?: string;
+  registerId?: string;
   bank: TBank[];
   BankId?: string;
 };
@@ -566,7 +566,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
 &nbsp;
   const token = getCookies();
   const [choosedEditData, setChoosedEditData] = useState&lt;TBankWithID&gt;();
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
   const clearChoosedEditData = <span class="fstat-no" title="function not covered" >() =</span>&gt; {
 <span class="cstat-no" title="statement not covered" >    setChoosedEditData(undefined);</span>
   };
@@ -576,7 +576,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -601,10 +601,10 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
 &nbsp;
 &nbsp;
   useEffect(() =&gt; {
-    if(corporateCode)
+    if(registerId)
       fetchBankData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2989264006_86_6_86_44_4`,"corporateCode not found"))</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2989264006_86_6_86_44_4`,"registerId not found"))</span>
     }
   }, []);
 &nbsp;
@@ -700,7 +700,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? ""}&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? ""}&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -733,7 +733,7 @@ export function PageBankAccount({corporatesInfo }: TPageBankAccountProps) {
         &lt;/Card&gt;
         &lt;FormBank
           onsubmit={handleSubmitBank}
-          corporateCode={corporateCode}
+          registerId={registerId}
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
         /&gt;

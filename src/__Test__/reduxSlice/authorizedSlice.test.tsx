@@ -8,7 +8,7 @@ import reducer, {
   import { TAuthorizePerson } from '@/pages/createJob/addedCorporateAccount/constants2/types';
   const mockAuthorizePerson: TAuthorizePerson = {
     personalId: "AUTH123456",
-    corporateCode: "CORP1234",
+    registerId: "CORP1234",
     fullNames: [
       {
         title: "Ms.",

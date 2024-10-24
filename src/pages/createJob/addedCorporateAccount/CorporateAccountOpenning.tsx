@@ -14,8 +14,10 @@ import { PageSuitTest } from "./pages/PageSuitTest";
 import { useDispatch } from "react-redux";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import { clearCorporateData } from "@/features/editCorporateData/editCorporateData";
+import { clearCorporateData, setCorporateData } from "@/features/editCorporateData/editCorporateData";
 import { PageAttorney } from "./pages/PageAttorney";
+import { useEffect } from "react";
+import { mockedCorporateData } from "./libs/utils";
 
 type TPage = {
   page?: string;

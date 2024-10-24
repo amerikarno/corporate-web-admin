@@ -1,4 +1,4 @@
-import { TIndividualData } from '@/pages/todoList/addIndividualAccount/type';
+import { TIndividualData } from '@/pages/createJob/changeIndividualAccount/type';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type SuitState = {

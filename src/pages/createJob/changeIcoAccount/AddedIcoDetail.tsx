@@ -57,21 +57,21 @@ const AddedIcoDetail = () => {
     setFaqs([...faqs, {answer:'', question: ''}]);
   };
 
-  const icoCode = localStorage.getItem("icoCode");
+  const registerId = localStorage.getItem("registerId");
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const body = {
-      faq: faqs.map(faq => ({ ...faq, icoCode })),
+      faq: faqs.map(faq => ({ ...faq, registerId })),
       details: [
-        { icoCode, header: "Company Information", content: companyInformation },
-        { icoCode, header: "Business Model", content: businessModel },
-        { icoCode, header: "Use of Proceeds", content: useOfProceeds },
-        { icoCode, header: "Fundraising Milestone", content: fundraisingMileStone }
+        { registerId, header: "Company Information", content: companyInformation },
+        { registerId, header: "Business Model", content: businessModel },
+        { registerId, header: "Use of Proceeds", content: useOfProceeds },
+        { registerId, header: "Fundraising Milestone", content: fundraisingMileStone }
       ]
     };
     console.log(body)
     dispatch(setTestCorporateData(body))
-    if(icoCode){
+    if(registerId){
       if(fetchedData?.details && fetchedData?.details.length === 0){
         try{
           const res = await axios.post('/api/v1/ico/details/create',body,{

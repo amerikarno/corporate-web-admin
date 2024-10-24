@@ -1,18 +1,30 @@
-import { TCorporateData } from "@/pages/todoList/corporateAccountOpening/constant/type";
+import { TCorporateData } from "@/pages/createJob/constant/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: TCorporateData = {
-  CorporateCode: 0,
+  registerId: "",
   Info: {
     id: "",
     createBy: "",
     CreatedAt: "",
     DeletedAt: null,
-    corporateCode: 0,
+    registerId: "",
     name: "",
     registrationNo: "",
     taxId: "",
     dateOfIncorporation: "",
+    registered: "", // Add this property
+    primary: "", // Add this property
+    registeredBusiness: {
+      address: [], // Add this property with appropriate type
+      emailAddress: "", // Add this property
+      telephone: "" // Add this property
+    },
+    placeofIncorporation: {
+      address: [], // Add this property with appropriate type
+      emailAddress: "", // Add this property
+      telephone: "" // Add this property
+    }
   },
   CorporateCountry: [],
   CorporateAddress: [],
@@ -21,7 +33,7 @@ const initialState: TCorporateData = {
     createBy: "",
     CreatedAt: "",
     DeletedAt: null,
-    corporateCode: 0,
+    registerId: "",
     registeredCapital: 0,
     revenuePerYear: 0,
     netProfitLoss: 0,
@@ -32,7 +44,7 @@ const initialState: TCorporateData = {
     DeletedAt: null,
     id: "",
     createBy: "",
-    corporateCode: 0,
+    registerId: "",
     isJuristicThailand: false,
     isTaxExempt: false,
     isNonTaxExempt: false,
@@ -46,10 +58,11 @@ const initialState: TCorporateData = {
     isTaxExemptCompany: false,
   },
   BusinessTypes: {
+    createBy:"",
     CreatedAt: "",
     DeletedAt: null,
     id: "",
-    corporateCode: 0,
+    registerId: "",
     isAntiqueTrading: false,
     isHotelRestaurant: false,
     isArmament: false,
@@ -70,10 +83,11 @@ const initialState: TCorporateData = {
     otherBusinessType: "",
   },
   SourceOfIncomes: {
+    createBy:"",
     CreatedAt: "",
     DeletedAt: null,
     id: "",
-    corporateCode: 0,
+    registerId: "",
     isDonation: false,
     isLoan: false,
     isOtherIncome: false,

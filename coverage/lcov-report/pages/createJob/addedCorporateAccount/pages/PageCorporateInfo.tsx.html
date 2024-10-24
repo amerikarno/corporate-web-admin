@@ -246,12 +246,12 @@ export function PageCorporateInfo() {
 &nbsp;
   const fetchCorporateData = async () =&gt; {
     try {
-      const corporateCode = localStorage.getItem("corporateCode") || "";
+      const registerId = localStorage.getItem("registerId") || "";
 &nbsp;
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (corporateCode) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (registerId) {
         const response = <span class="cstat-no" title="statement not covered" >await axios.post(</span>
           "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
+          { registerId: registerId },
           {
             headers: {
               Authorization: `Bearer ${getCookies()}`,
@@ -262,7 +262,7 @@ export function PageCorporateInfo() {
 <span class="cstat-no" title="statement not covered" >        dispatch(setCorporateData(response.data[0]));</span>
       } else {
         dispatch(clearCorporateData());
-        // console.log("corporateCode not found");
+        // console.log("registerId not found");
       }
     } catch (error) {
       /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.error(...oo_tx(`2051592518_43_6_43_60_11`,"Error fetching corporate data:", error));</span>

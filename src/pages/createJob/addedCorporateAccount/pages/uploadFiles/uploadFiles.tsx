@@ -13,6 +13,7 @@ import axios from "@/api/axios";
 import { setFiles } from "@/features/uploadFile/uploadFileSlice";
 import { mapToUploadFile } from "../../libs/utils";
 import DocumentBox from "@/components/ui/BoxOfUploaded";
+import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TUploadFilesProps = {
 };
@@ -25,7 +26,7 @@ export default function UploadFiles({}: TUploadFilesProps) {
     handleUpload,
   } = useUploadFile();
 
-  const corporateCode = localStorage.getItem("corporateCode") || "";
+  const registerId = localStorage.getItem("registerId") || "";
   const corporatesInfo: TCorporateData = useSelector<RootState>((state) => state.editCorporate) as TCorporateData;
   const uploadFile: TDocuments[] = useSelector<RootState>(
     (state) => state.uploadFile?.files || []
@@ -38,7 +39,7 @@ export default function UploadFiles({}: TUploadFilesProps) {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -54,18 +55,19 @@ export default function UploadFiles({}: TUploadFilesProps) {
           .filter((item: any) => item !== null);
         console.log(uploadFiles)
         dispatch(setFiles(uploadFiles));
+        dispatch(setCorporateData(res.data[0]));
       }
     } catch (error) {
       console.error("Error fetching upload File data:", error);
     }
   };
   useEffect(() => {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else{
-      console.log("corporateCode not found")
+      console.log("registerId not found")
     }
-  }, [corporateCode,dispatch,token]);
+  }, [registerId,dispatch,token]);
 
   return (
     <div className="p-4">
@@ -76,7 +78,7 @@ export default function UploadFiles({}: TUploadFilesProps) {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporatesInfo?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporatesInfo?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -106,7 +108,7 @@ export default function UploadFiles({}: TUploadFilesProps) {
             <DocumentBox 
               key={index} 
               fileName={document.fileName} 
-              corporateCode={document.corporateCode} 
+              registerId={document.registerId} 
               id={document.id}
             />
           ))
@@ -131,7 +133,7 @@ export default function UploadFiles({}: TUploadFilesProps) {
                 onChange={handleInputChange} 
                 data-testid="inputfile"
               />
-              <Button onClick={() => handleUpload(file, corporateCode)}>
+              <Button onClick={() => handleUpload(file, registerId)}>
                 Upload
               </Button>
             </div>

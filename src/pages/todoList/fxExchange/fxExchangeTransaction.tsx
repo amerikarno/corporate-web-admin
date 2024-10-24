@@ -10,7 +10,7 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 type TTransaction = {
   id: string;
   buyCurrency: number;
-  corporateCode: number;
+  registerId: number;
   exchangeSpread: number;
   operationSpread: number;
   exchangeRate: number;
@@ -139,7 +139,7 @@ const FxExchangeTransactionList = () => {
             return {
               id: item.id,
               buyCurrency: item.buyCurrency/100000,
-              corporateCode: item.corporateCode,
+              registerId: item.registerId,
               exchangeSpread: item.exchangeSpread/100000,
               operationSpread: item.operationSpread/100000,
               exchangeRate: item.exchangeRate/100000,
@@ -191,7 +191,7 @@ const FxExchangeTransactionList = () => {
     },
     {
       name: "Corporate Code",
-      selector: (row: TTransaction) => row.corporateCode || "",
+      selector: (row: TTransaction) => row.registerId || "",
     },
     {
       name: "Buy Amount",

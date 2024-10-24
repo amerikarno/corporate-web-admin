@@ -1171,8 +1171,8 @@ export default function FxExchangeEdit2() {
   const [exchangeRate, setExchangeRate] = useState&lt;number | null&gt;(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedPair, setSelectedPair] = useState('THB / USD');
-  const [selectedCorporateCode, setSelectedCorporateCode] = useState&lt;string&gt;("");
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;{ corporateCode: number }[]&gt;([]);
+  const [selectedregisterId, setSelectedregisterId] = useState&lt;string&gt;("");
+  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;{ registerId: number }[]&gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TFxExchange&gt;();
 &nbsp;
   // Handle outside click for dropdown
@@ -1190,7 +1190,7 @@ export default function FxExchangeEdit2() {
   }, []);
 &nbsp;
   // Fetch methods
-  const fetchCorporateCodes = async () =&gt; {
+  const fetchregisterIds = async () =&gt; {
     try {
       const token = getCookies();
       const res = await axios.post(
@@ -1199,10 +1199,10 @@ export default function FxExchangeEdit2() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.status === 200) {
-        const corporateCodes = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+          registerId: item.registerId,
         }));
-<span class="cstat-no" title="statement not covered" >        setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >        setFetchedregisterIds(registerIds);</span>
       } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >        console.log("Failed to fetch corporate codes");</span>
       }
@@ -1330,12 +1330,12 @@ export default function FxExchangeEdit2() {
   // Effect hooks
   useEffect(() =&gt; {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 &nbsp;
   useEffect(() =&gt; {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: null,
+      registerId: null,
       exchangeRate: undefined,
       exchangeSpread: undefined,
       operationSpread: undefined,
@@ -1393,7 +1393,7 @@ export default function FxExchangeEdit2() {
   const columnsFxExchange: TableColumn&lt;TFxExchange&gt;[] = [
     {
       name: "Corporate Code",
-      selector: <span class="fstat-no" title="function not covered" >(r</span>ow: TFxExchange) =&gt; <span class="cstat-no" title="statement not covered" >row.corporateCode?.toString() || "",</span>
+      selector: <span class="fstat-no" title="function not covered" >(r</span>ow: TFxExchange) =&gt; <span class="cstat-no" title="statement not covered" >row.registerId?.toString() || "",</span>
     },
     {
       name: "Buy Amount",
@@ -1457,7 +1457,7 @@ export default function FxExchangeEdit2() {
         reset();
         setExchangeResult(0);
         clearChoosedEditData();
-        setSelectedCorporateCode("");
+        setSelectedregisterId("");
         fetchOrderList();
       } else <span class="missing-if-branch" title="else path not taken" >E</span>{
 <span class="cstat-no" title="statement not covered" >        console.log(body.id ? "edit failed" : "save failed");</span>
@@ -1487,26 +1487,26 @@ export default function FxExchangeEdit2() {
             
             {/* Corporate Code Input */}
             &lt;Input
-              {...register("corporateCode")}
+              {...register("registerId")}
               label="Corporate Code"
-              id="corporateCode"
+              id="registerId"
               type="number"
               disabled={isSubmitting}
-              data-testid="corporateCodeInput"
-              onChange={(e) =&gt; setSelectedCorporateCode(e.target.value)}
-              list="corporateCodes"
+              data-testid="registerIdInput"
+              onChange={(e) =&gt; setSelectedregisterId(e.target.value)}
+              list="registerIds"
               autoComplete="off"
               inputClassName="w-[20rem] md:w-[25rem]"
             /&gt;
-            {errors.corporateCode &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!selectedCorporateCode </span>&amp;&amp; (
+            {errors.registerId &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!selectedregisterId </span>&amp;&amp; (
 <span class="branch-2 cbranch-no" title="branch not covered" >              &lt;p className="text-red-500 text-sm px-2"&gt;</span>
-                {errors.corporateCode.message}
+                {errors.registerId.message}
               &lt;/p&gt;
             )}
-            &lt;datalist id="corporateCodes"&gt;
-              {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                  {code.corporateCode}
+            &lt;datalist id="registerIds"&gt;
+              {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                &lt;option key={index} v</span>alue={code.registerId}&gt;
+                  {code.registerId}
                 &lt;/option&gt;
               ))}
             &lt;/datalist&gt;

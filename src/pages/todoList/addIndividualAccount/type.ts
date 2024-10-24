@@ -2,22 +2,22 @@ export type SuitAnswer = {
   ans: number | number[];
 };
 
-export type SuitTestResultAnswer = {
+export type SuiteTestResultAnswer = {
   answer: { [key: string]: SuitAnswer };
 };
 
-export type NestedSuitTestResult = {
+export type NestedSuiteTestResult = {
   cid: string;
   investorTypeRisk: string;
   level: number;
   totalScore: number;
-  suitTestResult: SuitTestResultAnswer;
+  suiteTestResult: SuiteTestResultAnswer;
 };
 
 export type SuiteTestResult = {
   createBy: string;
   id: string;
-  suiteTestResult: NestedSuitTestResult;
+  suiteTestResult: NestedSuiteTestResult;
   isFatca: boolean;
   fatcaInfo: any | null;
   isKnowLedgeDone: boolean;
