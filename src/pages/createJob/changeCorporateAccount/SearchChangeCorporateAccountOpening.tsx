@@ -60,6 +60,7 @@ export default function SearchChangeCorporateAccount({
     },
   });
 
+  const [loading, setLoading] = useState(false);
   const [curDateSearchBody,setCurDateSearchBody] = useState<TCorporateAccountOpening>();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
@@ -83,12 +84,15 @@ export default function SearchChangeCorporateAccount({
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
       onChangePage(nextPage, rowCount);
+      setLoading(true);
       if (curDateSearchBody) {
         handleSearch({
           registerId: curDateSearchBody.registerId,
           dateFrom: curDateSearchBody.dateFrom,
           dateTo: curDateSearchBody.dateTo,
           page: currentPage + 1
+        }).then(() =>{
+            setLoading(false);
         });
       }
     };
@@ -97,12 +101,15 @@ export default function SearchChangeCorporateAccount({
       const prevPage = currentPage - 1;
       setCurrentPage(prevPage);
       onChangePage(prevPage, rowCount);
+      setLoading(true);
       if (curDateSearchBody) {
         handleSearch({
           registerId: curDateSearchBody.registerId,
           dateFrom: curDateSearchBody.dateFrom,
           dateTo: curDateSearchBody.dateTo,
           page: currentPage - 1
+        }).then(() =>{
+            setLoading(false);
         });
       }
     };
@@ -201,15 +208,20 @@ export default function SearchChangeCorporateAccount({
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
-    await handleSearch({...data,page:1});
+    setLoading(true);
+    await handleSearch({...data,page:1}).then(() =>{
+        setLoading(false);
+    });
     if (onDataFetched) {
       onDataFetched(JSON.stringify(data));
     }
   };
 
   useEffect(() => {
-    // console.log("all-corporate Code", mockedregisterIds);
-    initData();
+    setLoading(true);
+    initData().then(() =>{
+        setLoading(false);
+    });
   }, []);
 
   const handleDisableCode = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,7 +234,10 @@ export default function SearchChangeCorporateAccount({
 
   const onSubmit = async (data: TCorporateAccountOpening) => {
     setCurrentPage(1);
-    await handleSearch({...data,page:1});
+    setLoading(true);
+    await handleSearch({...data,page:1}).then(() =>{
+        setLoading(false);
+    });
     //reset();
   };
 
@@ -309,17 +324,18 @@ export default function SearchChangeCorporateAccount({
         <CardContent className="overflow-x-auto h-full">
             <DataTable
               className="overflow-scroll"
-              title="Test Coporate List"
               columns={columnsCorporateInfo}
               data={corporateData}
             //   data={updatedMockedCorporateData}
               paginationPerPage={20}
+              progressPending={loading}
               noDataComponent={
                 <div className="">
-                    Loading Data...
+                  No Data Available
                 </div>
-                }
+              }
               pagination
+            //   paginationTotalRows={}
               paginationComponentOptions={{ noRowsPerPage: false }}
               paginationComponent={(props) => (
                 <CustomPagination

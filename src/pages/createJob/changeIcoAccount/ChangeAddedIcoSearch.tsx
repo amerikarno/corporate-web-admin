@@ -10,10 +10,18 @@ import { Input } from '@/components/Input';
 import axios from '@/api/axios';
 import { getCookies } from '@/lib/Cookies';
 // import { Button } from '@/components/ui/button';
-import { FaSearch } from "react-icons/fa";
+import { FaBackward, FaForward, FaSearch } from "react-icons/fa";
+import { Button } from '@/components/ui/button';
 
 interface IcoInfo {
   registerId: string;
+}
+
+type CustomPaginationProps = {
+  rowsPerPage: number;
+  rowCount: number;
+  onChangePage: (page: number, totalRows: number) => void;
+  currentPage: number;
 }
 
 const ChangeAddedIcoSearch = () => {
@@ -35,6 +43,31 @@ const ChangeAddedIcoSearch = () => {
     );
   };
 
+  const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, }: CustomPaginationProps) => {
+    const handleNextPage = () => {
+      const nextPage = currentPage + 1;
+      onChangePage(nextPage, rowCount);
+    };
+  
+    const handlePreviousPage = () => {
+      const prevPage = currentPage - 1;
+      onChangePage(prevPage, rowCount);
+    };
+  
+    return (
+      <div className="m-4 mt-8 flex justify-center items-center space-x-8">
+        <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
+        <FaBackward />
+        </Button>
+        <span>{`Page ${currentPage} of ${Math.ceil(rowCount / rowsPerPage)}`}</span>
+        <Button onClick={handleNextPage} disabled={currentPage === Math.ceil(rowCount / rowsPerPage)}>
+        <FaForward />
+        </Button>
+      </div>
+    );
+  };
+
+  const [loading, setLoading] = useState(false);
   const [registerIdInput,setRegisterIdInput] = useState('');
   const [registerIdList, setRegisterIdList] = useState<IcoInfo[]>([]);
   const [icoAccountList, setIcoAccountList] = useState<TAssetData[]>([]);
@@ -68,7 +101,10 @@ const ChangeAddedIcoSearch = () => {
 
   const handleSearch = async () =>{
     if(registerIdInput === ''){
-        fetchIcoAccount();
+        setLoading(true);
+        fetchIcoAccount().then(() => {
+          setLoading(false);
+        });
     }else{
         try{
             const res = await axios.post("/api/v1/ico/query/code",{registerId:registerIdInput},{
@@ -107,7 +143,10 @@ const ChangeAddedIcoSearch = () => {
   };
 
   useEffect(() => {
-    fetchIcoAccount();
+    setLoading(true);
+    fetchIcoAccount().then(() => {
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -142,8 +181,22 @@ const ChangeAddedIcoSearch = () => {
         <CardHeader>
           <CardTitle>ICO Account Information</CardTitle>
         </CardHeader>
-        <CardContent className="overflow-x-auto max-h-[45rem]">
-          <DataTable columns={ColumnsIcoSearch} data={icoAccountList} />
+        <CardContent className="overflow-x-auto h-full">
+          <DataTable
+            columns={ColumnsIcoSearch}
+            data={icoAccountList}
+            paginationPerPage={20}
+            progressPending={loading}
+            noDataComponent={
+              <div className="">
+                No Data Available
+              </div>
+            }
+              pagination
+            //   paginationTotalRows={}
+            paginationComponentOptions={{ noRowsPerPage: false }}
+            paginationComponent={CustomPagination}
+          />
         </CardContent>
       </Card>
     </div>

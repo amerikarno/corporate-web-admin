@@ -61,6 +61,7 @@ export default function SearchIndividualAccount() {
   }));
 
   // console.log("reset:", reset);
+  const [loading, setLoading] = useState(false);
   const [curDateSearchBody,setCurDateSearchBody] = useState<TSearchIndividualSchema>();
   const [currentPage, setCurrentPage] = useState(1);
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
@@ -167,11 +168,14 @@ export default function SearchIndividualAccount() {
           setCurrentPage(nextPage);
           onChangePage(nextPage, rowCount);
           if (curDateSearchBody) {
+            setLoading(true);
             handleSearch({
               registerId: curDateSearchBody.registerId,
               dateFrom: curDateSearchBody.dateFrom,
               dateTo: curDateSearchBody.dateTo,
               page: currentPage + 1
+            }).then(() =>{
+                setLoading(false);
             });
           }
         };
@@ -181,11 +185,14 @@ export default function SearchIndividualAccount() {
           setCurrentPage(prevPage);
           onChangePage(prevPage, rowCount);
           if (curDateSearchBody) {
+            setLoading(true);
             handleSearch({
               registerId: curDateSearchBody.registerId,
               dateFrom: curDateSearchBody.dateFrom,
               dateTo: curDateSearchBody.dateTo,
               page: currentPage - 1
+            }).then(() =>{
+                setLoading(false);
             });
           }
         };
@@ -211,13 +218,19 @@ export default function SearchIndividualAccount() {
       dateTo: dateToyyyyMMdd(new Date()),
     };
     store.dispatch(setTestCorporateData(data));
-    await handleSearch({...data,page:1});
+    setLoading(true);
+    await handleSearch({...data,page:1}).then(() =>{
+        setLoading(false);
+    });
   };
 
   useEffect(() => {
     fetchregisterIds();
-    // console.log("all-corporate Code", mockedregisterIds);
-    initData();
+
+    setLoading(true);
+    initData().then(() =>{
+        setLoading(false);
+    });
   }, []);
 
   const handleDisableCode = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -231,7 +244,10 @@ export default function SearchIndividualAccount() {
   const onSubmit = async (data: TSearchIndividualSchema) => {
     console.log(data);
     setCurrentPage(1);
-    await handleSearch({...data,page:1});
+    setLoading(true);
+    await handleSearch({...data,page:1}).then(() =>{
+        setLoading(false);
+    });
     //reset();
   };
 
@@ -318,12 +334,14 @@ export default function SearchIndividualAccount() {
            data={fetchData} 
             // data = {updatedMockedIndividualData}
            paginationPerPage={20}
+           progressPending={loading}
            noDataComponent={
-            <div className="">
-                Loading Data...
-            </div>
-            }
+             <div className="">
+               No Data Available
+             </div>
+           }
            pagination
+        //    paginationTotalRows={}
            paginationComponentOptions={{ noRowsPerPage: false }}
            paginationComponent={(props) => (
             <CustomPagination
