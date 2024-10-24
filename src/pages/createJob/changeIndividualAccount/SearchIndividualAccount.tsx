@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { ColumnsOfIndividualSearch } from "./column";
 import { dateToyyyyMMdd, yyyyMMddToDate } from "@/lib/utils";
-import { useToDoIndividualAccount } from "./useToDoIndividualAccount";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
@@ -61,6 +60,7 @@ export default function SearchIndividualAccount() {
   }));
 
   // console.log("reset:", reset);
+  const [total,setTotal] = useState(1);
   const [loading, setLoading] = useState(false);
   const [curDateSearchBody,setCurDateSearchBody] = useState<TSearchIndividualSchema>();
   const [currentPage, setCurrentPage] = useState(1);
@@ -92,6 +92,7 @@ export default function SearchIndividualAccount() {
             }
           }else{
             formatBody = body
+            fetchAllRowByTime(body);
             setCurDateSearchBody(data);
             console.log("setCurDateSearchBody:",data)
           }
@@ -114,6 +115,25 @@ export default function SearchIndividualAccount() {
           return null;
         }
     };
+
+    const fetchAllRowByTime = async (data : TBody) => {
+
+        try {
+            const res = await axios.post(
+                "/api/v1/individual/total",
+                {data},
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${getCookies()}`,
+                  },
+                }
+              );
+            setTotal(res.data.total);        
+        }catch(error){
+            console.log(error)
+        }
+      }
 
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -341,7 +361,7 @@ export default function SearchIndividualAccount() {
              </div>
            }
            pagination
-        //    paginationTotalRows={}
+           paginationTotalRows={total}
            paginationComponentOptions={{ noRowsPerPage: false }}
            paginationComponent={(props) => (
             <CustomPagination

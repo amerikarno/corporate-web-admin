@@ -60,6 +60,7 @@ export default function SearchChangeCorporateAccount({
     },
   });
 
+  const [total,setTotal] = useState(1);
   const [loading, setLoading] = useState(false);
   const [curDateSearchBody,setCurDateSearchBody] = useState<TCorporateAccountOpening>();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
@@ -144,7 +145,8 @@ export default function SearchChangeCorporateAccount({
             registerId: body.registerId,
           };
         } else {
-            formatBody = body
+            formatBody = body;
+            fetchAllRowByTime(body);
             setCurDateSearchBody(data);
             console.log("setCurDateSearchBody:",data)
         }
@@ -175,6 +177,25 @@ export default function SearchChangeCorporateAccount({
       setDisableDate(false);
     }
   };
+
+  const fetchAllRowByTime = async (data : TBody) => {
+
+    try {
+        const res = await axios.post(
+            "/api/v1/corporate/total",
+            {data},
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getCookies()}`,
+              },
+            }
+          );
+        setTotal(res.data.total);        
+    }catch(error){
+        console.log(error)
+    }
+  }
   const fetchregisterIds = async () => {
     try {
       const token = getCookies();
@@ -335,7 +356,7 @@ export default function SearchChangeCorporateAccount({
                 </div>
               }
               pagination
-            //   paginationTotalRows={}
+              paginationTotalRows={total}
               paginationComponentOptions={{ noRowsPerPage: false }}
               paginationComponent={(props) => (
                 <CustomPagination
