@@ -61,13 +61,13 @@ export const findAddress = (data: TCorporateData, type: number) => {
 //       return null
 //     }
 //     const result : TCorporateData = {
-//       registerId: Number(data.registerId ?? 0),
+//       registerId: string(data.registerId ?? 0),
 //       Info: {
 //         id: "",
 //         createBy: "",
 //         CreatedAt: "",
 //         DeletedAt: null,
-//         registerId: Number(data.registerId ?? 0),
+//         registerId: string(data.registerId ?? 0),
 //         name: data.name ?? "",
 //         registrationNo: data.registrationNo ?? "",
 //         taxId: data.taxId ?? "",
@@ -79,7 +79,7 @@ export const findAddress = (data: TCorporateData, type: number) => {
 //           createBy: "",
 //           CreatedAt: "",
 //           DeletedAt: null,
-//           registerId: Number(data.registerId ?? 0),
+//           registerId: string(data.registerId ?? 0),
 //           isThailand: data.registered === "Thailand" ? true : false,
 //           other: data.registeredOther ?? "",
 //         }
@@ -296,7 +296,7 @@ export const mapDataToTDirector = (
       passportId: data?.passportId ?? "",
       expiryDate: dateFormatted ?? "",
       nationality: data?.nationality ?? "",
-      types: data?.types ?? "",
+      types: data?.types,
       personalId: data?.personalId ?? "",
       addresses:
     data?.addresses?.length > 0

@@ -1441,7 +1441,7 @@ export default function FxExchangeEdit() {
     // }]
 &nbsp;
   const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
-    { registerId: number }[]
+    { registerId: string }[]
   &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TFxExchange&gt;();
   const clearChoosedEditData = () =&gt; {
@@ -1678,7 +1678,7 @@ export default function FxExchangeEdit() {
     let body: TFxExchange = {
       ...data,
       id: choosedEditData?.id,
-      registerId: Number(selectedregisterId),
+      registerId: string(selectedregisterId),
       transactionStatus: choosedEditData?.transactionStatus,
       exchange:`${youSend}/${recipientGets}`,
       exchangeSpread:handleFloatValue(exchangeSpread),

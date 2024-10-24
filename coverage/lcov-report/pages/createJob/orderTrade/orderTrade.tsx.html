@@ -1092,7 +1092,7 @@ export default function OrderTradeEdit() {
   const [selectedTradingPair, setSelectedTradingPair] =
     useState&lt;string&gt;("THB/USDT");
   const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
-    { registerId: number }[]
+    { registerId: string }[]
   &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TOrderTrade&gt;();
   const clearChoosedEditData = () =&gt; {

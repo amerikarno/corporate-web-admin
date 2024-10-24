@@ -29,7 +29,7 @@ export default function BankOrderEdit() {
   //     useState<string>("");
   //   const [selectedTradingPair, setSelectedTradingPair] = useState<string>("");
     const [mockedregisterIds, setFetchedregisterIds] = useState<
-      { registerId: number }[]
+      { registerId: string }[]
     >([]);
   const [choosedEditData, setChoosedEditData] = useState<TBankOrder>();
   const clearChoosedEditData = () => {

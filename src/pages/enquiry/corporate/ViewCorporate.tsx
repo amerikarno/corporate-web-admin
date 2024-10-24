@@ -172,7 +172,7 @@ const ViewCorporate = () => {
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
   const [mockedregisterIds, setFetchedregisterIds] = useState<
-    { registerId: number }[]
+    { registerId: string }[]
   >([]);
   
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {

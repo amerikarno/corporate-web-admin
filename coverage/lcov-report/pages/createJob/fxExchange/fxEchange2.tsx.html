@@ -1172,7 +1172,7 @@ export default function FxExchangeEdit2() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedPair, setSelectedPair] = useState('THB / USD');
   const [selectedregisterId, setSelectedregisterId] = useState&lt;string&gt;("");
-  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;{ registerId: number }[]&gt;([]);
+  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;{ registerId: string }[]&gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TFxExchange&gt;();
 &nbsp;
   // Handle outside click for dropdown

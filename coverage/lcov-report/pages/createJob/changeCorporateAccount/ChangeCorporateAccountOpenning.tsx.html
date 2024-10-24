@@ -546,7 +546,7 @@ export default function ChangeCorporateAccountOpenning({
   const [disableDate, setDisableDate] = useState&lt;boolean&gt;(false);
   const [disableCode, setDisableCode] = useState&lt;boolean&gt;(false);
   const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
-    { registerId: number }[]
+    { registerId: string }[]
   &gt;([]);
 &nbsp;
   const handleDisableDate = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {

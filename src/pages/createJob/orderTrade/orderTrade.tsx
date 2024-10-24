@@ -25,11 +25,11 @@ export default function OrderTradeEdit() {
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("buy");
   const [selectedregisterId, setSelectedregisterId] =
-    useState<number | null>(null);
+    useState<string | null>(null);
   const [selectedTradingPair, setSelectedTradingPair] =
     useState<string>("THB/USDT");
   const [mockedregisterIds, setFetchedregisterIds] = useState<
-    { registerId: number }[]
+    { registerId: string }[]
   >([]);
   const [choosedEditData, setChoosedEditData] = useState<TOrderTrade>();
   const clearChoosedEditData = () => {
@@ -240,7 +240,7 @@ export default function OrderTradeEdit() {
   const handleregisterIdChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSelectedregisterId(Number(event.target.value) || null);
+    setSelectedregisterId(event.target.value || null);
   };
 
   const handleTradingPairChange = (

@@ -18,8 +18,9 @@ export const subAddressSchema = z.object({
 export const corporateAccountOpeningSchema = z
   .object({
     registerId: z.string(),
-    dateFrom: z.string().optional(),
-    dateTo: z.string().optional(),
+    dateFrom: z.string().optional().nullable(),
+    dateTo: z.string().optional().nullable(),
+    page:z.number().optional(),
   })
   .refine(
     (data) => {

@@ -2,7 +2,6 @@ import { SideLabelInput } from "@/components/SideLabelInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useAccountOpening } from "./hook/useAccountOpening";
 import { TCorporateData } from "./constants2/types";
 import {
   corporateAccountOpeningSchema,
@@ -13,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { columnsCorporateInfo } from "./components/column";
-import { dateToyyyyMMdd, isAllowedPage } from "@/lib/utils";
+import { dateToyyyyMMdd, isAllowedPage, yyyyMMddToDate } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
@@ -23,15 +22,22 @@ import { FaBackward, FaForward } from "react-icons/fa";
 type TTodoCorporateAccountOpening = {
   onDataFetched?: (data: any) => void;
 };
-
+type TBody = {
+    dateFrom: Date | null;
+    dateTo: Date | null;
+    registerId: string;
+    page?:number;
+  };
+  
 type CustomPaginationProps = {
   rowsPerPage: number;
   rowCount: number;
   onChangePage: (page: number, totalRows: number) => void;
   currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function ChangeCorporateAccountOpenning({
+export default function SearchChangeCorporateAccount({
   onDataFetched,
 }: TTodoCorporateAccountOpening) {
   if (!isAllowedPage(3001)) {
@@ -54,8 +60,7 @@ export default function ChangeCorporateAccountOpenning({
     },
   });
 
-  // console.log("reset:", reset);
-  const { handleSearch, searchResult } = useAccountOpening();
+  const [curDateSearchBody,setCurDateSearchBody] = useState<TCorporateAccountOpening>();
   const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
@@ -63,6 +68,7 @@ export default function ChangeCorporateAccountOpenning({
     { registerId: string }[]
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchResult, setSearchResult] = useState<TCorporateData[]>();
 
   const updatedMockedCorporateData = Array(40).fill(null).map((_, index) => ({
     ...mockedCorporateData,
@@ -72,17 +78,33 @@ export default function ChangeCorporateAccountOpenning({
       name: `Name ${index + 1}` 
     }
   }));
-  const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage }: CustomPaginationProps) => {
+  const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, setCurrentPage }: CustomPaginationProps) => {
     const handleNextPage = () => {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
       onChangePage(nextPage, rowCount);
+      if (curDateSearchBody) {
+        handleSearch({
+          registerId: curDateSearchBody.registerId,
+          dateFrom: curDateSearchBody.dateFrom,
+          dateTo: curDateSearchBody.dateTo,
+          page: currentPage + 1
+        });
+      }
     };
   
     const handlePreviousPage = () => {
       const prevPage = currentPage - 1;
       setCurrentPage(prevPage);
       onChangePage(prevPage, rowCount);
+      if (curDateSearchBody) {
+        handleSearch({
+          registerId: curDateSearchBody.registerId,
+          dateFrom: curDateSearchBody.dateFrom,
+          dateTo: curDateSearchBody.dateTo,
+          page: currentPage - 1
+        });
+      }
     };
   
     return (
@@ -96,6 +118,47 @@ export default function ChangeCorporateAccountOpenning({
         </Button>
       </div>
     );
+  };
+
+  const handleSearch = async (data: TCorporateAccountOpening) => {
+    const { dateFrom, dateTo } = data;
+
+    // Set invalid dates to null
+    const body: TBody = {
+      ...data,
+      dateFrom: dateFrom ? yyyyMMddToDate(dateFrom) : null,
+      dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
+    };
+      try {
+        // console.log(body);
+        let formatBody;
+        if (body.registerId) {
+          formatBody = {
+            registerId: body.registerId,
+          };
+        } else {
+            formatBody = body
+            setCurDateSearchBody(data);
+            console.log("setCurDateSearchBody:",data)
+        }
+        console.log("formatBody:", formatBody);
+        const res = await axios.post("/api/v1/corporate/query", formatBody, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getCookies()}`,
+          },
+        });
+        setSearchResult(res.data);
+        // console.log(res);
+        return res.data;
+      } catch (error) {
+        console.log(error);
+        if (data.dateFrom === data.dateTo) {
+        } else {
+          alert("No data found.");
+        }
+        return null;
+      }
   };
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,16 +200,14 @@ export default function ChangeCorporateAccountOpenning({
       registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
-      page:currentPage
     };
-    await handleSearch(data);
+    await handleSearch({...data,page:1});
     if (onDataFetched) {
       onDataFetched(JSON.stringify(data));
     }
   };
 
   useEffect(() => {
-    // fetchregisterIds();
     // console.log("all-corporate Code", mockedregisterIds);
     initData();
   }, []);
@@ -160,9 +221,8 @@ export default function ChangeCorporateAccountOpenning({
   };
 
   const onSubmit = async (data: TCorporateAccountOpening) => {
-    console.log({...data,page:currentPage});
     setCurrentPage(1);
-    await handleSearch({...data,page:currentPage});
+    await handleSearch({...data,page:1});
     //reset();
   };
 
@@ -177,80 +237,6 @@ export default function ChangeCorporateAccountOpenning({
 
   return (
     <div className="p-4 space-y-10">
-      {/* <Card>
-        <CardContent>
-          <form
-            className="grid grid-cols-2 gap-4 pt-4"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <SideLabelInput title="Juristic ID">
-              <Input
-                data-testid="juristicId"
-                {...register("registerId")}
-                onChange={handleDisableDate}
-                disabled={disableCode}
-                list="juristicId"
-                autoComplete="off"
-              />
-              {errors && (
-                <p className="text-red-500">{errors.registerId?.message}</p>
-              )}
-              <datalist id="juristicId">
-                {mockedregisterIds.map((code, index) => (
-                  <option key={index} value={code.registerId}>
-                    {code.registerId}
-                  </option>
-                ))}
-              </datalist>
-            </SideLabelInput>
-            <div className="col-start-1">
-              <SideLabelInput title="Date From">
-                <Input
-                  data-testid="dateFrom"
-                  type="date"
-                  {...register("dateFrom")}
-                  onChange={handleDisableCode}
-                  disabled={disableDate}
-                />
-                {errors && (
-                  <p className="w-full text-red-500 py-1">
-                    {errors.dateFrom?.message}
-                  </p>
-                )}
-              </SideLabelInput>
-            </div>
-            <SideLabelInput title="Date To">
-              <Input
-                data-testid="dateTo"
-                type="date"
-                {...register("dateTo")}
-                onChange={handleDisableCode}
-                disabled={disableDate}
-              />
-              {errors && (
-                <p className="w-full py-1 text-red-500">
-                  {errors.dateTo?.message}
-                </p>
-              )}
-            </SideLabelInput>
-            <div className="col-start-2 flex justify-end">
-              <Button type="submit" data-testid="searchBtn">
-                {isSubmitting ? "Search..." : "Search"}
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Corporates Infomations</CardTitle>
-        </CardHeader>
-        <CardContent className="overflow-x-auto h-[360px]">
-          <DataTable columns={columnsCorporateInfo} data={corporateData} />
-        </CardContent>
-      </Card> */}
-
       <Card>
         <CardContent>
           <form
@@ -325,12 +311,23 @@ export default function ChangeCorporateAccountOpenning({
               className="overflow-scroll"
               title="Test Coporate List"
               columns={columnsCorporateInfo}
-              // data={corporateData}
-              data={updatedMockedCorporateData}
+              data={corporateData}
+            //   data={updatedMockedCorporateData}
               paginationPerPage={20}
+              noDataComponent={
+                <div className="">
+                    Loading Data...
+                </div>
+                }
               pagination
               paginationComponentOptions={{ noRowsPerPage: false }}
-              paginationComponent={CustomPagination}
+              paginationComponent={(props) => (
+                <CustomPagination
+                  {...props}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              )}
             />
         </CardContent>
       </Card>

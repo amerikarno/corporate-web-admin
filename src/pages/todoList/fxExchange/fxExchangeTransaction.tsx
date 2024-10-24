@@ -10,7 +10,7 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 type TTransaction = {
   id: string;
   buyCurrency: number;
-  registerId: number;
+  registerId: string;
   exchangeSpread: number;
   operationSpread: number;
   exchangeRate: number;

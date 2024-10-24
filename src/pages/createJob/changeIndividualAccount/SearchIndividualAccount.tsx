@@ -1,139 +1,40 @@
-
 import { SideLabelInput } from "@/components/SideLabelInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { TIndividualData } from "@/pages/createJob/changeIndividualAccount/type";
-import { searchIndividualSchema, TSearchIndividualSchema } from "@/pages/createJob/changeIndividualAccount/schema";
+import { TIndividualData } from "./type";
+import { searchIndividualSchema, TSearchIndividualSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
+import DataTable from "react-data-table-component";
+import { ColumnsOfIndividualSearch } from "./column";
 import { dateToyyyyMMdd, yyyyMMddToDate } from "@/lib/utils";
+import { useToDoIndividualAccount } from "./useToDoIndividualAccount";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 import { store } from "@/app/store";
-import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividualDataSlice";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { mockedIndividualeData } from "./utils";
-
+import { FaBackward, FaForward } from "react-icons/fa";
+import { mockedIndividualData } from "./lib/utils";
 
 type TBody = {
     dateFrom: Date | null;
     dateTo: Date | null;
-    AccountID: string;
+    registerId: string;
   };
-export default function ViewIndividual() {
+  type CustomPaginationProps = {
+    rowsPerPage: number;
+    rowCount: number;
+    onChangePage: (page: number, totalRows: number) => void;
+    currentPage: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  }
+
+export default function SearchIndividualAccount() {
   //   if (!isAllowedPage(3001)) {
   //     return <UnAuthorize />;
   //   }
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleViewClick = (row: TIndividualData) => {
-    dispatch(setIndividualData(row));
-    navigate("/enquiry/individual/view");
-    window.scrollTo(0, 0);
-  }
-
-  const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
-    {
-      name: "Individualc ID",
-      selector: (row: TIndividualData) => row.id || "",
-    },
-    {
-      name: "Individual Name",
-      selector: (row: TIndividualData) => row.thName || "",
-    },
-    {
-      name: "Individual Email",
-      selector: (row: TIndividualData) => row.email || "",
-    },
-    {
-        name: "",
-        cell: (row) => (
-            <Button
-            className="bg-[#082c1c] hover:bg-[#5cc95c] hover:font-bold max-w-[85px] transition-all text-white hover:text-black"
-            onClick={() => {
-                handleViewClick(row);
-            }}
-            >
-            View
-            </Button>
-        ),
-        ignoreRowClick: true,
-        },
-  ];
-
-  const [searchResult, setSearchResult] = useState<TIndividualData>();
-
-  const handleSearch = async (data: TSearchIndividualSchema) => {
-    const { dateFrom, dateTo } = data;
-
-    // Set invalid dates to null
-    const body: TBody = {
-      ...data,
-      dateFrom: dateFrom ? yyyyMMddToDate(dateFrom) : null,
-      dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
-    };
-    
-    console.log(body);
-    if (
-      body.AccountID === "" &&
-      body.dateFrom === null &&
-      body.dateTo === null
-    ) {
-      try {
-        const res = await axios.post(
-          "/api/v1/individual/list",
-          {},
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${getCookies()}`,
-            },
-          }
-        );
-        setSearchResult(res.data);
-        console.log(res);
-        return res.data;
-      } catch (error) {
-        console.log(error);
-        alert("No data found.");
-        return null;
-      }
-    } else {
-      try {
-        console.log(body);
-        let formatBody
-        if(body.AccountID){
-          formatBody = {
-            accountID: body.AccountID
-          }
-        }else{
-          formatBody = body
-        }
-        console.log("formatBody:",formatBody);
-        const res = await axios.post("/api/v1/individual/list", formatBody, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getCookies()}`,
-          },
-        });
-        setSearchResult(res.data);
-        console.log(res);
-        return res.data;
-      } catch (error) {
-        console.log(error);
-        if (data.dateFrom === data.dateTo) {
-        } else {
-          alert("No data found.");
-        }
-        return null;
-      }
-    }
-  };
 
   const prev7Days = new Date();
   prev7Days.setDate(prev7Days.getDate() - 7);
@@ -152,12 +53,67 @@ export default function ViewIndividual() {
     },
   });
 
+  const updatedMockedIndividualData = Array(100).fill(null).map((_, index) => ({
+    ...mockedIndividualData[0],
+    registerId: (index + 1).toString(),
+    name: `Name ${index + 1}`,
+    id: (index + 1).toString(),
+  }));
+
+  // console.log("reset:", reset);
+  const [curDateSearchBody,setCurDateSearchBody] = useState<TSearchIndividualSchema>();
+  const [currentPage, setCurrentPage] = useState(1);
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
-    const [mockedregisterIds, setFetchedregisterIds] = useState<
+  const [mockedregisterIds, setFetchedregisterIds] = useState<
       { registerId: string }[]
     >([]);
+    const [searchResult, setSearchResult] = useState<TIndividualData>();
+
+    const handleSearch = async (data: TSearchIndividualSchema) => {
+      const { dateFrom, dateTo } = data;
+      console.log("handle search before formatted : ",data)
+      // Set invalid dates to null
+      const body: TBody = {
+        ...data,
+        dateFrom: dateFrom ? yyyyMMddToDate(dateFrom) : null,
+        dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
+      };
+      
+      console.log(body);
+        try {
+          console.log(body);
+          let formatBody
+          if(body.registerId){
+            formatBody = {
+              registerId: body.registerId
+            }
+          }else{
+            formatBody = body
+            setCurDateSearchBody(data);
+            console.log("setCurDateSearchBody:",data)
+          }
+          console.log("formatBody:",formatBody);
+          const res = await axios.post("/api/v1/individual/list", formatBody, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getCookies()}`,
+            },
+          });
+          setSearchResult(res.data);
+          console.log(res);
+          return res.data;
+        } catch (error) {
+          console.log(error);
+          if (data.dateFrom === data.dateTo) {
+          } else {
+            alert("No data found.");
+          }
+          return null;
+        }
+    };
+
 
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
@@ -205,15 +161,57 @@ export default function ViewIndividual() {
       }
     };
 
+    const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, setCurrentPage }: CustomPaginationProps) => {
+        const handleNextPage = () => {
+          const nextPage = currentPage + 1;
+          setCurrentPage(nextPage);
+          onChangePage(nextPage, rowCount);
+          if (curDateSearchBody) {
+            handleSearch({
+              registerId: curDateSearchBody.registerId,
+              dateFrom: curDateSearchBody.dateFrom,
+              dateTo: curDateSearchBody.dateTo,
+              page: currentPage + 1
+            });
+          }
+        };
+      
+        const handlePreviousPage = () => {
+          const prevPage = currentPage - 1;
+          setCurrentPage(prevPage);
+          onChangePage(prevPage, rowCount);
+          if (curDateSearchBody) {
+            handleSearch({
+              registerId: curDateSearchBody.registerId,
+              dateFrom: curDateSearchBody.dateFrom,
+              dateTo: curDateSearchBody.dateTo,
+              page: currentPage - 1
+            });
+          }
+        };
+      
+        return (
+          <div className="m-4 mt-8 flex justify-center items-center space-x-8">
+            <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
+            <FaBackward />
+            </Button>
+            <span>{`Page ${currentPage} of ${Math.ceil(rowCount / rowsPerPage)}`}</span>
+            <Button onClick={handleNextPage} disabled={currentPage === Math.ceil(rowCount / rowsPerPage)}>
+            <FaForward />
+            </Button>
+          </div>
+        );
+      };
+
   const initData = async () => {
     // await fetchregisterIds();
     const data: TSearchIndividualSchema = {
-      AccountID: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
     store.dispatch(setTestCorporateData(data));
-    await handleSearch(data);
+    await handleSearch({...data,page:1});
   };
 
   useEffect(() => {
@@ -232,7 +230,8 @@ export default function ViewIndividual() {
 
   const onSubmit = async (data: TSearchIndividualSchema) => {
     console.log(data);
-    await handleSearch(data);
+    setCurrentPage(1);
+    await handleSearch({...data,page:1});
     //reset();
   };
 
@@ -252,15 +251,15 @@ export default function ViewIndividual() {
           >
             <SideLabelInput title="Individual ID">
               <Input
-                data-testid="accountId"
-                {...register("AccountID")}
+                data-testid="registerId"
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.AccountID?.message}</p>
+                <p className="text-red-500">{errors.registerId?.message}</p>
               )}
               <datalist id="juristicId">
                 {mockedregisterIds.map((code, index) => (
@@ -313,8 +312,27 @@ export default function ViewIndividual() {
         <CardHeader>
           <CardTitle>Individual Account Infomations</CardTitle>
         </CardHeader>
-        <CardContent className="overflow-x-auto h-[360px]">
-          <DataTable columns={ColumnsOfIndividualSearch} data={mockedIndividualeData} />
+        <CardContent className="overflow-x-auto h-full">
+          <DataTable
+           columns={ColumnsOfIndividualSearch}
+           data={fetchData} 
+            // data = {updatedMockedIndividualData}
+           paginationPerPage={20}
+           noDataComponent={
+            <div className="">
+                Loading Data...
+            </div>
+            }
+           pagination
+           paginationComponentOptions={{ noRowsPerPage: false }}
+           paginationComponent={(props) => (
+            <CustomPagination
+              {...props}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
+            />
         </CardContent>
       </Card>
     </div>

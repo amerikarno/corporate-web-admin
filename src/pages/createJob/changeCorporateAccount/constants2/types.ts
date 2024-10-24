@@ -194,18 +194,6 @@ export type TCorporateInfo = {
   registrationNo: string;
   taxId: string;
   dateOfIncorporation: string;
-  isRegisteredThailand?: boolean;
-  isPrimaryCountry?: boolean;
-  registered: string;
-  isRegisteredOther?: boolean;
-  primary: string;
-  isPrimaryOther?: boolean;
-  registeredBusiness: TRegisterBusinessAddress;
-  placeofIncorporation: TPlaceIncorporateAddress;
-  registeredCapital: number;
-  revenuePerYear: number;
-  netProFitLoss: number;
-  shareholderEquity: number;
 };
 
 export type TCorporateCountry = {
@@ -435,7 +423,7 @@ export type TAuthorizedPerson = {
   addresses: TAddress[];
   passportId?: string;
   citizenId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   types: number;
 };
@@ -450,7 +438,7 @@ export type TIndividualShareholder = {
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   types: number;
   sharePercentage: number | null;

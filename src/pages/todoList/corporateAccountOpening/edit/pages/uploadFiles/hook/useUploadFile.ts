@@ -54,7 +54,7 @@ export function useUploadFile() {
             if (response.status === 200) {
               console.log("File uploaded successfully", response.data);
               let fileinfo={
-                registerId:Number(registerId),
+                registerId:registerId,
                 docTypes:documentType.value,
                 fileName:file.name,
                 fileTypes:file.type,

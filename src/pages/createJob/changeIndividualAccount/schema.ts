@@ -2,8 +2,9 @@ import { z } from "zod";
 export const searchIndividualSchema = z
   .object({
     registerId: z.string(),
-    dateFrom: z.string().optional(),
-    dateTo: z.string().optional(),
+    dateFrom: z.string().nullable(),
+    dateTo: z.string().nullable(),
+    page:z.number().optional(),
   })
   .refine(
     (data) => {

@@ -12,7 +12,7 @@ export const fxExchangeSchema = z.object({
 });
 
 export type TFxExchange = {
-  registerId: number | null;
+  registerId: string | null;
   exchangeRate: string | number;
   exchangeSpread: string | number;
   operationSpread: string | number;

@@ -897,7 +897,7 @@ export default function BankOrderEdit() {
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState&lt;string&gt;("deposite");
   const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
-    { registerId: number }[]
+    { registerId: string }[]
   &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TBankOrder&gt;();
   const [bankRemove, setBankRemove] = useState(false);

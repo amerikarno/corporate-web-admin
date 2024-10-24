@@ -1494,13 +1494,13 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //       return null
 //     }
 //     const result : TCorporateData = {
-//       registerId: Number(data.registerId ?? 0),
+//       registerId: string(data.registerId ?? 0),
 //       Info: {
 //         id: "",
 //         createBy: "",
 //         CreatedAt: "",
 //         DeletedAt: null,
-//         registerId: Number(data.registerId ?? 0),
+//         registerId: string(data.registerId ?? 0),
 //         name: data.name ?? "",
 //         registrationNo: data.registrationNo ?? "",
 //         taxId: data.taxId ?? "",
@@ -1512,7 +1512,7 @@ export const findAddress = (data: TCorporateData, type: number) =&gt; {
 //           createBy: "",
 //           CreatedAt: "",
 //           DeletedAt: null,
-//           registerId: Number(data.registerId ?? 0),
+//           registerId: string(data.registerId ?? 0),
 //           isThailand: data.registered === "Thailand" ? true : false,
 //           other: data.registeredOther ?? "",
 //         }
