@@ -296,7 +296,7 @@ export const mapDataToTDirector = (
       passportId: data?.passportId ?? "",
       expiryDate: dateFormatted ?? "",
       nationality: data?.nationality ?? "",
-      types: data?.types ?? "",
+      types: data?.types ?? undefined,
       personalId: data?.personalId ?? "",
       addresses:
         data?.addresses?.length > 0
@@ -334,7 +334,7 @@ export const mapDataToTIndividualShareholder = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0] ?? "mm/dd/yyyy";
     const result: TIndividualsShareholders = {
-      registerId: String(data.registerId ?? ""),
+      registerId: data.registerId ?? "",
       fullNames: [
         {
           title: data.fullNames[0].title ?? "",
@@ -367,7 +367,7 @@ export const mapDataToTJuristicShareholder = (
     }
 
     const result: TJuristicsShareholders = {
-      registerId: String(data.registerId ?? ""),
+      registerId: data.registerId ?? "",
       juristicName: data.juristicName ?? "",
       registrationNo: data.registrationNo ?? "",
       registeredCountry: data.registeredCountry ?? "",
@@ -391,7 +391,7 @@ export const mapDataToTAuthoirzedPerson = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0]; // "2024-08-29"
     const result: TAuthorizePerson = {
-      registerId: String(data.registerId ?? ""),
+      registerId: data.registerId ?? "",
       fullNames: [
         {
           title: data?.fullNames[0].title ?? "",
@@ -452,7 +452,7 @@ export const mapDataToTAttorney = (
     }
     const dateFormatted = data.expiryDate?.split("T")[0];
     const result: TAttorney = {
-      registerId: String(data.registerId ?? ""),
+      registerId: data.registerId ?? "",
       fullNames: [
         {
           title: data?.fullNames[0].title ?? "",

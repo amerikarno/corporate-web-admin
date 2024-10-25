@@ -25,7 +25,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { mockedCorporateData } from "../libs/utils";
 import { setCorporateData } from "@/features/editCorporateData/editCorporateData";
 
 type TPageContactPersonProps = {

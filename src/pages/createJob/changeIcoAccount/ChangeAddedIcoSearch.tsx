@@ -22,6 +22,8 @@ type CustomPaginationProps = {
   rowCount: number;
   onChangePage: (page: number, totalRows: number) => void;
   currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+
 }
 
 const ChangeAddedIcoSearch = () => {
@@ -43,15 +45,25 @@ const ChangeAddedIcoSearch = () => {
     );
   };
 
-  const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, }: CustomPaginationProps) => {
+  const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, setCurrentPage }: CustomPaginationProps) => {
     const handleNextPage = () => {
       const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
       onChangePage(nextPage, rowCount);
+      setLoading(true);
+      handleSearch(nextPage).then(() => {
+        setLoading(false);
+      });
     };
   
     const handlePreviousPage = () => {
       const prevPage = currentPage - 1;
+      setCurrentPage(prevPage);
       onChangePage(prevPage, rowCount);
+      setLoading(true);
+      handleSearch(prevPage).then(() => {
+        setLoading(false);
+      });
     };
   
     return (
@@ -67,7 +79,9 @@ const ChangeAddedIcoSearch = () => {
     );
   };
 
+  const [total,setTotal] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [registerIdInput,setRegisterIdInput] = useState('');
   const [registerIdList, setRegisterIdList] = useState<IcoInfo[]>([]);
   const [icoAccountList, setIcoAccountList] = useState<TAssetData[]>([]);
@@ -99,10 +113,10 @@ const ChangeAddedIcoSearch = () => {
     },
   ];
 
-  const handleSearch = async () =>{
+  const handleSearch = async (page:number) =>{
     if(registerIdInput === ''){
         setLoading(true);
-        fetchIcoAccount().then(() => {
+        fetchIcoAccount(page).then(() => {
           setLoading(false);
         });
     }else{
@@ -122,9 +136,9 @@ const ChangeAddedIcoSearch = () => {
     }
   }
 
-  const fetchIcoAccount = async () => {
+  const fetchAllIcoAccount = async () => {
     try {
-      const res = await axios.get("/api/v1/ico/query", {
+      const res = await axios.post("/api/v1/ico/query",{}, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
@@ -133,7 +147,24 @@ const ChangeAddedIcoSearch = () => {
       if (res.status === 200) {
         const registerIds = res.data.map((icoInfo: IcoInfo) => icoInfo);
         setRegisterIdList(registerIds);
+      } else {
+        console.log("fetch all ico fail",res);
+      }
+    } catch (error) {
+      console.log("fetch all ico error", error);
+    }
+  };
+  const fetchIcoAccount = async (page:number) => {
+    try {
+      const res = await axios.post("/api/v1/ico/query",{page}, {
+        headers: {
+          Authorization: `Bearer ${getCookies()}`,
+        },
+      });
+      console.log(res)
+      if (res.status === 200) {
         setIcoAccountList(res.data);
+        setTotal(res.data.totalRows);
       } else {
         console.log("fetch all ico fail",res);
       }
@@ -143,8 +174,9 @@ const ChangeAddedIcoSearch = () => {
   };
 
   useEffect(() => {
+    fetchAllIcoAccount();
     setLoading(true);
-    fetchIcoAccount().then(() => {
+    fetchIcoAccount(currentPage).then(() => {
       setLoading(false);
     });
   }, []);
@@ -172,7 +204,7 @@ const ChangeAddedIcoSearch = () => {
                 ))}
                 </datalist>
             </div>
-            <div className="bg-[#5cc95c] cursor-pointer hover:bg-[#51b351] text-black flex p-3 px-3 rounded-md" onClick={handleSearch}>
+            <div className="bg-[#5cc95c] cursor-pointer hover:bg-[#51b351] text-black flex p-3 px-3 rounded-md" onClick={()=>handleSearch}>
                     <FaSearch />
             </div>
         </div>
@@ -193,9 +225,15 @@ const ChangeAddedIcoSearch = () => {
               </div>
             }
               pagination
-            //   paginationTotalRows={}
+              paginationTotalRows={total}
             paginationComponentOptions={{ noRowsPerPage: false }}
-            paginationComponent={CustomPagination}
+            paginationComponent={(props) => (
+              <CustomPagination
+                {...props}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            )}
           />
         </CardContent>
       </Card>

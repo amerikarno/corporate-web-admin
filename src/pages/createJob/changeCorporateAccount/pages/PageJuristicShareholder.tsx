@@ -16,7 +16,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { TCorporateData, TJuristic as TJuristicEdit } from "../../constant/type";
 import { useEffect, useState } from "react";
-import { mapDataToTJuristicShareholder, mockedCorporateData } from "../libs/utils";
+import { mapDataToTJuristicShareholder } from "../libs/utils";
 import {
   AlertDialog,
   AlertDialogAction,

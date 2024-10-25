@@ -17,7 +17,7 @@ export function useListOfDirector() {
     console.log("data", data);
     let body = {
       ...data,
-      expiryDate: new Date(data.expiryDate),
+      expiryDate: new Date(data.expiryDate ?? ''),
     };
     console.log("body", body);
     const token = getCookies();

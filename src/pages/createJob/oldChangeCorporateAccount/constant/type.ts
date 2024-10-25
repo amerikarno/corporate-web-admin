@@ -218,7 +218,7 @@ export type TAddress = {
 };
 
 export type TDirector = {
-  id: string;
+  id?: string;
   createBy: string;
   CreatedAt: string;
   DeletedAt: string | null;

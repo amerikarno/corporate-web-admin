@@ -15,7 +15,7 @@ import {
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-import { mapDataToTDirector, mockedCorporateData } from "../libs/utils";
+import { mapDataToTDirector } from "../libs/utils";
 import {
   AlertDialog,
   AlertDialogAction,

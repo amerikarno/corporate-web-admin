@@ -296,6 +296,7 @@ export function FormIndividualsDirector({
                     id="Date of Expired"
                     disabled={isSubmitting}
                     type="date"
+                    data-testid="expiredDate"
                   />
                   {errors.expiryDate && (
                     <p className="text-red-500 text-sm px-2">

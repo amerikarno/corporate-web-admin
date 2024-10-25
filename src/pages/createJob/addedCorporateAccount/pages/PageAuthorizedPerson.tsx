@@ -13,7 +13,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { TAuthorizedPerson as TAuthorizedPersonEdit, TCorporateData} from "../../constant/type";
-import { mapDataToTAuthoirzedPerson, mockedCorporateData } from "../libs/utils";
+import { mapDataToTAuthoirzedPerson } from "../libs/utils";
 import {
   AlertDialog,
   AlertDialogAction,

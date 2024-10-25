@@ -578,6 +578,7 @@ export function FormCorporateInfo({
                     id="radio-2"
                     name="radio-for-placeincorporate"
                     type="radio"
+                    data-testid="placeofIncorporation-radio-2"
                     checked={placeIncorporateValue === "place-radio-2"}
                     onChange={() => setPlaceIncorporateValue("place-radio-2")}
                   />

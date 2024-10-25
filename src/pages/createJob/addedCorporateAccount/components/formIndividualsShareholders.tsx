@@ -308,6 +308,7 @@ export function FormIndividualsShareholders({
                     label="Date of Expired"
                     id="Date of Expired"
                     disabled={isSubmitting}
+                    data-testid="expiredDate"
                     type="date"
                   />
                   {errors.expiryDate && (

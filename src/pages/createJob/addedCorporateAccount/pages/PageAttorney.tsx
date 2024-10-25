@@ -13,7 +13,7 @@ import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
 import { TCorporateData } from "../../constant/type";
-import { mapDataToTAttorney, mockedCorporateData } from "../libs/utils";
+import { mapDataToTAttorney } from "../libs/utils";
 import {
   AlertDialog,
   AlertDialogAction,

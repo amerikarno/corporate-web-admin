@@ -251,11 +251,11 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/todo-list/individual-account-opening",
       //   pageId: 3002,
       // },
-      // {
-      //   label: "change info",
-      //   href: "/todo-list/change-info",
-      //   pageId: 3004,
-      // },
+      {
+        label: "account lock/unlock",
+        href: "/todo-list/account-lockunlock",
+        pageId: 3004,
+      },
       // {
       //   label: "review KYB",
       //   href: "/todo-list/review-kyb",

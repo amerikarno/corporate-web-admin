@@ -7,10 +7,8 @@ import {
   TDocuments,
   TJuristic,
 } from "../../constant/type";
-import {
-  TAuthorizedPersonSchema,
-  TCorporateInfoSchema,
-} from "../constants/schemas";
+
+import { TAuthorizedPersonSchema,TCorporateInfoSchema } from "@/pages/createJob/addedCorporateAccount/constants2/schemas";
 import {
   TAttorney,
   TAuthorizePerson,
@@ -18,7 +16,7 @@ import {
   TDirector,
   TIndividualsShareholders,
   TJuristicsShareholders,
-} from "../constants/types";
+} from "@/pages/createJob/addedCorporateAccount/constants2/types";
 import { TDirector as TDirectorEdit } from "../../constant/type";
 import { TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
 import { TAuthorizedPerson as TAuthorizedPersonEdit } from "../../constant/type";
@@ -184,7 +182,7 @@ export const mapDataToTDirector = (
       passportId: data?.passportId ?? "",
       expiryDate: dateFormatted ?? "",
       nationality: data?.nationality ?? "",
-      types: data?.types ?? "",
+      types: data?.types ?? undefined,
       personalId: data?.personalId ?? "",
       addresses:
         data?.addresses?.length > 0
@@ -541,7 +539,7 @@ export const mapToUploadFile = (data: TDocuments): TDocuments | null => {
     return {
       id:data?.id || "",
       filePath: data?.filePath || "",
-      registerId: data?.registerId || 0,
+      registerId: data?.registerId || "",
       docTypes: data?.docTypes || "",
       fileName: data?.fileName || "",
       fileTypes: data?.fileTypes || "",

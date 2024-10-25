@@ -21,17 +21,17 @@ export type TFullNameForCorporateInfo = [
 ];
 
 export type TSubAddress = {
-  addressNo: string;
+  addressNo?: string;
   building?: string;
   floor?: string;
   mooNo?: string;
   soi?: string;
   road?: string;
-  tambon: string;
-  amphoe: string;
-  province: string;
-  postalCode: string;
-  country: string;
+  tambon?: string;
+  amphoe?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
   //type?: number;
 };
 

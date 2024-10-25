@@ -12,7 +12,7 @@ import { removeBank, setBank } from "@/features/bankSlice/bankSlice";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
 import { useEffect, useState } from "react";
-import { mapDataToTBank, mockedCorporateData } from "../libs/utils";
+import { mapDataToTBank } from "../libs/utils";
 import { TCorporateData } from "../../constant/type";
 import {
   AlertDialog,
