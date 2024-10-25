@@ -149,14 +149,14 @@ const ChangeAddedIcoSearch = () => {
 
   const fetchTotalRow = async () => {
     try {
-      const res = await axios.post("/api/v1/ico/total", {
+      const res = await axios.post("/api/v1/ico/total",{}, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
       });
       if (res.status === 200) {
         console.log("fetch total row success", res);
-        setTotal(res.data);
+        setTotal(res.data.total);
       } else {
         console.log("fetch total row not success", res);
       }

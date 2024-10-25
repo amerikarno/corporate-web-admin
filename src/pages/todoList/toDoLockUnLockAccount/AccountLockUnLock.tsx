@@ -145,7 +145,7 @@ const AccountLockUnLock = () => {
 
   const fetchTotalRow = async () => {
     try {
-        const res = await axios.get("/api/v1/user/individual/total", {
+        const res = await axios.post("/api/v1/user/individual/total",{}, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${getCookies()}`,
@@ -153,7 +153,7 @@ const AccountLockUnLock = () => {
         });
         if (res.status === 200) {
             console.log("fetch total row success", res);
-            setTotal(res.data);
+            setTotal(res.data.total);
         } else {
             console.log("fetch total row not success", res);
         }
