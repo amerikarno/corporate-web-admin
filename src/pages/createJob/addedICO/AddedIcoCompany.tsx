@@ -138,33 +138,6 @@ const AddedIcoCompany = () => {
     }
   };
 
-useEffect(() => {
-  if (choosedEditData) {
-    if (choosedEditData.picture && isBase64(choosedEditData.picture)) {
-      const decodedPicture = atob(choosedEditData.picture);
-      const pictureArray = new Uint8Array(decodedPicture.length);
-      for (let i = 0; i < decodedPicture.length; i++) {
-        pictureArray[i] = decodedPicture.charCodeAt(i);
-      }
-      setFile(pictureArray);
-  }
-    reset(mapChoosedDataToMmeber(choosedEditData));
-  }else{
-    reset({
-      companyMembers: [{
-        firstName: "",
-        midName: "",
-        lastName: "",
-        position: "",
-        history: "",
-        picture: undefined,
-        registerId: "",
-        memberId: ""
-      }]
-    });
-  }
-}, [choosedEditData]);
-
   const {
     register,
     handleSubmit,
@@ -173,6 +146,33 @@ useEffect(() => {
   } = useForm<TCompanyMember>({
     resolver: zodResolver(TAssetCompanyMemberSchema),
   });
+
+  useEffect(() => {
+    if (choosedEditData) {
+      if (choosedEditData.picture && isBase64(choosedEditData.picture)) {
+        const decodedPicture = atob(choosedEditData.picture);
+        const pictureArray = new Uint8Array(decodedPicture.length);
+        for (let i = 0; i < decodedPicture.length; i++) {
+          pictureArray[i] = decodedPicture.charCodeAt(i);
+        }
+        setFile(pictureArray);
+    }
+      reset(mapChoosedDataToMmeber(choosedEditData));
+    }else{
+      reset({
+        companyMembers: [{
+          firstName: "",
+          midName: "",
+          lastName: "",
+          position: "",
+          history: "",
+          picture: undefined,
+          registerId: "",
+          memberId: ""
+        }]
+      });
+    }
+  }, [choosedEditData]);
 
   const onSubmit = async (data: TCompanyMember) => {
 

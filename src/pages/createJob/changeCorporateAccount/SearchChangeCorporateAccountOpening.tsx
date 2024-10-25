@@ -144,6 +144,7 @@ export default function SearchChangeCorporateAccount({
           formatBody = {
             registerId: body.registerId,
           };
+          setTotal(1);
         } else {
             formatBody = body;
             fetchAllRowByTime(body);
@@ -179,11 +180,14 @@ export default function SearchChangeCorporateAccount({
   };
 
   const fetchAllRowByTime = async (data : TBody) => {
-
+    let body = {
+      dateFrom : data.dateFrom,
+      dateTo : data.dateTo,
+    }
     try {
         const res = await axios.post(
             "/api/v1/corporate/total",
-            {data},
+            {body},
             {
               headers: {
                 "Content-Type": "application/json",

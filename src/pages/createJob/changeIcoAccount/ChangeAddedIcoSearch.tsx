@@ -120,6 +120,7 @@ const ChangeAddedIcoSearch = () => {
           setLoading(false);
         });
     }else{
+        setTotal(1);
         try{
             const res = await axios.post("/api/v1/ico/query/code",{registerId:registerIdInput},{
                 headers: {
@@ -135,6 +136,24 @@ const ChangeAddedIcoSearch = () => {
         }
     }
   }
+
+  const fetchTotalRow = async () => {
+    try {
+      const res = await axios.get("/api/v1/ico/total", {
+        headers: {
+          Authorization: `Bearer ${getCookies()}`,
+        },
+      });
+      if (res.status === 200) {
+        console.log("fetch total row success", res);
+        setTotal(res.data);
+      } else {
+        console.log("fetch total row not success", res);
+      }
+    } catch (error) {
+      console.log("fetch total row error", error);
+    }
+  };
 
   const fetchAllIcoAccount = async () => {
     try {
@@ -155,6 +174,7 @@ const ChangeAddedIcoSearch = () => {
     }
   };
   const fetchIcoAccount = async (page:number) => {
+    fetchTotalRow();
     try {
       const res = await axios.post("/api/v1/ico/query",{page}, {
         headers: {
@@ -164,7 +184,6 @@ const ChangeAddedIcoSearch = () => {
       console.log(res)
       if (res.status === 200) {
         setIcoAccountList(res.data);
-        setTotal(res.data.totalRows);
       } else {
         console.log("fetch all ico fail",res);
       }
