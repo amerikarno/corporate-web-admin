@@ -304,10 +304,10 @@ const AccountLockUnLock = () => {
       };
   
   const fetchTableData = async (page:number) => {
-    console.log(page);
+    console.log({page});
     fetchTotalRow();
     try{
-      const res = await axios.post("/api/v1/user/individual/status",page,{
+      const res = await axios.post("/api/v1/user/individual/status",{page},{
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getCookies()}`,
