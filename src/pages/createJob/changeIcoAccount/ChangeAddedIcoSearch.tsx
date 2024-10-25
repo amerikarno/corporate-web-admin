@@ -149,7 +149,7 @@ const ChangeAddedIcoSearch = () => {
 
   const fetchTotalRow = async () => {
     try {
-      const res = await axios.get("/api/v1/ico/total", {
+      const res = await axios.post("/api/v1/ico/total", {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
