@@ -147,7 +147,6 @@ const AccountLockUnLock = () => {
     try {
         const res = await axios.post("/api/v1/user/individual/total",{}, {
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${getCookies()}`,
             },
         });
