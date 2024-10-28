@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   TCorporateInfo,
   TRegisteredCountryPrimaryCountryOperation,
-} from "../constants2/types";
+} from "@/pages/createJob/addedCorporateAccount/constants2/types";
 import { sleep } from "@/lib/utils";
 //import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -315,8 +315,8 @@ export function FormCorporateInfo({
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      registerId: corporatesInfo?.registerId,
-      dateOfIncorporation: new Date(dateData).toISOString(),
+      registerId: corporatesInfo?.registerId ?? "",
+      dateOfIncorporation: new Date(dateData).toString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
         registeredCountryPrimaryCountryOperation.isRegisteredOther,

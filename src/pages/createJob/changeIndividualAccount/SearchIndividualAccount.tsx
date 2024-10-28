@@ -15,7 +15,6 @@ import axios from "@/api/axios";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 import { store } from "@/app/store";
 import { FaBackward, FaForward } from "react-icons/fa";
-import { mockedIndividualData } from "./lib/utils";
 
 type TBody = {
     dateFrom: Date | null;
@@ -62,12 +61,12 @@ export default function SearchIndividualAccount() {
     },
   });
 
-  const updatedMockedIndividualData = Array(100).fill(null).map((_, index) => ({
-    ...mockedIndividualData[0],
-    registerId: (index + 1).toString(),
-    name: `Name ${index + 1}`,
-    id: (index + 1).toString(),
-  }));
+  // const updatedMockedIndividualData = Array(100).fill(null).map((_, index) => ({
+  //   ...mockedIndividualData[0],
+  //   registerId: (index + 1).toString(),
+  //   name: `Name ${index + 1}`,
+  //   id: (index + 1).toString(),
+  // }));
 
   // console.log("reset:", reset);
   const [total,setTotal] = useState(1);

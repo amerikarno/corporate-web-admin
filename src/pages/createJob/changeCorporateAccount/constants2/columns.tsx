@@ -7,10 +7,11 @@ import {
   // TBodyFormIndividualsShareholders,
   TIndividualsShareholders,
   TContactPerson,
-  TCorporateInfo,
   TDirector,
   TJuristicsShareholders,
 } from "./types";
+
+import { TCorporateInfo } from "../../addedCorporateAccount/constants2/types";
 
 export const columnsCorporateInfo = [
   {

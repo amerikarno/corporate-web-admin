@@ -64,7 +64,7 @@ export function PageIndividualShareholder({
           const updateIndividualShareholder = individualshareholder.map(
             (data: TIndividualShareholderEdit) =>({
               ...data,
-              sharePercentage: data.sharePercentage/100000
+              sharePercentage: (data.sharePercentage ?? 0) / 100000
             })
           )
           dispatch(setIndividualShareholder(updateIndividualShareholder));

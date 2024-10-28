@@ -56,7 +56,8 @@ export default function ChangeCorporateAccountOpenning({
 
   // console.log("reset:", reset);
   const { handleSearch, searchResult } = useAccountOpening();
-  const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
+  // const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
+  const [_, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
   const [mockedregisterIds, setFetchedregisterIds] = useState<

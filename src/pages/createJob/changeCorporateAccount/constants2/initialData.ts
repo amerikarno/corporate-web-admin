@@ -3,7 +3,8 @@ import {
   TInitailJuristicTypeAndIncome,
   TJuristicTypeAll,
   TRegisteredCountryPrimaryCountryOperation,
-} from "./types";
+} from "../../addedCorporateAccount/constants2/types";
+
 
 export const emptyRegisteredCountryPrimaryCountryOperation: TRegisteredCountryPrimaryCountryOperation =
   {

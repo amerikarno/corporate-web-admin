@@ -61,7 +61,7 @@ export type TIndividualData = {
   CreatedAt?: string;
   DeletedAt?: string | null;
   agreement?: boolean;
-  registerId:string;
+  registerId: string;
   id: string;
   thTitle: string;
   thName: string;

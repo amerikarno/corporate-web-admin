@@ -50,13 +50,13 @@ const navigate = useNavigate();
   const token = getCookies();
 
 //   const mockedData = {
-//     "icoCode": "1",
+//     "registerId": "1",
 //     "asset": {
 //         "id": "5c5796d5-3e6f-4a4a-91dc-e369d5dffbb9",
 //         "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //         "CreatedAt": "2024-09-27T12:14:54+07:00",
 //         "DeletedAt": null,
-//         "icoCode": 1,
+//         "registerId": 1,
 //         "title": "Digital Asset",
 //         "logo": "getImages",
 //         "issueBy": "Issue By Digital Asset",
@@ -71,7 +71,7 @@ const navigate = useNavigate();
 //     "info": {
 //         "CreatedAt": "0001-01-01T00:00:00Z",
 //         "DeletedAt": null,
-//         "icoCode": "1",
+//         "registerId": "1",
 //         "totalIssuance": "1000.00 DA",
 //         "totalAmountRaised": "50000.00 USD",
 //         "contractInfomation": "0xC92Ff5e3A94...89e7e8a5b378b",
@@ -85,7 +85,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "header": "Business Model",
 //             "content": "Lorem laborum dolore laborum laboris enim officia labore est ex duis sunt occaecat excepteur dolore est officia qui mollit excepteur fugiat dolore esse anim enim eiusmod nulla enim duis Lorem dolor ullamco ut mollit est dolore voluptate ex mollit aliquip nisi pariatur nisi sunt sit aute voluptate sit nostrud eu ut est dolor minim ea quis sit in sit reprehenderit tempor qui laboris sunt exercitation enim ad ipsum ad anim culpa incididunt labore duis aliqua tempor pariatur consequat cillum Lorem ut fugiat in cupidatat est aliqua do laborum eiusmod duis eu occaecat fugiat incididunt veniam velit ut id voluptate reprehenderit fugiat excepteur et pariatur labore aliqua deserunt tempor cillum nulla reprehenderit voluptate ad sunt labore sunt officia elit deserunt enim eiusmod amet adipisicing ad est do dolor velit eu nostrud nulla Lorem et labore est tempor occaecat Lorem nostrud veniam occaecat in aliquip occaecat enim velit quis reprehenderit sunt officia"
 //         },
@@ -94,7 +94,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "header": "Fundraising Milestone",
 //             "content": "consequat elit deserunt dolore sint veniam nulla labore minim exercitation Lorem reprehenderit ut Lorem nisi quis exercitation exercitation incididunt eu sit irure sint fugiat cupidatat id voluptate aliqua aute sint nisi dolor nulla nisi aliqua pariatur ex in velit culpa irure esse adipisicing aliquip fugiat dolore nulla commodo tempor magna occaecat duis sint excepteur cupidatat sit irure ex occaecat do laboris Lorem veniam fugiat cillum cillum reprehenderit excepteur incididunt anim do eu fugiat dolor enim ipsum quis id mollit non et velit elit cillum deserunt nulla nulla adipisicing qui nulla quis irure do laborum duis consectetur nostrud eiusmod officia nostrud"
 //         },
@@ -103,7 +103,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "header": "Use of Proceeds",
 //             "content": "aliqua nulla ullamco in mollit duis magna Lorem dolor dolor in laborum mollit enim et fugiat nostrud aliquip eiusmod ullamco laboris labore mollit aute excepteur laboris ullamco minim eiusmod Lorem pariatur non commodo magna elit ullamco labore ad ullamco dolor sit quis veniam ullamco duis laborum non dolor culpa qui Lorem enim ea officia sint aliquip in occaecat incididunt cupidatat incididunt officia enim deserunt Lorem cupidatat ut laboris ea eiusmod aute sunt aliquip excepteur incididunt fugiat fugiat sunt esse id eiusmod consequat esse nostrud deserunt incididunt sint consequat culpa officia consectetur dolore aute quis aliquip elit voluptate magna eu dolor occaecat quis magna ipsum pariatur occaecat ea consectetur esse reprehenderit adipisicing ea mollit labore non reprehenderit mollit occaecat nisi minim velit consequat ad ea culpa labore ea irure nostrud fugiat eu amet laborum veniam incididunt duis duis officia nostrud dolore commodo aliquip non fugiat eiusmod culpa in id sit ut"
 //         },
@@ -112,7 +112,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "header": "Company Information",
 //             "content": "tempor excepteur dolor occaecat et in ex do adipisicing enim incididunt dolore aliqua aliqua eiusmod reprehenderit ad veniam adipisicing irure irure consectetur excepteur commodo aliquip commodo est tempor anim veniam consequat dolore dolore esse incididunt veniam nostrud labore velit ea ullamco adipisicing aute commodo minim irure enim eiusmod quis anim esse proident nulla exercitation ullamco minim sunt consequat irure aliquip esse veniam aliqua aute commodo eu commodo labore nisi qui reprehenderit velit nulla tempor do fugiat incididunt incididunt ex sit labore fugiat reprehenderit anim ex ex occaecat magna officia elit magna ad id enim aliquip ad aliquip nisi aute pariatur"
 //         }
@@ -126,7 +126,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "question": "How long is the investment period?",
 //             "answer": "The investment period is 5 years."
 //         },
@@ -135,7 +135,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "question": "What is the minimum investment?",
 //             "answer": "The minimum investment is $1000."
 //         },
@@ -144,7 +144,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:20+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "question": "What is the expected return?",
 //             "answer": "The expected return is 10% annually."
 //         }
@@ -152,7 +152,7 @@ const navigate = useNavigate();
 //     "keyInformation": {
 //         "CreatedAt": "0001-01-01T00:00:00Z",
 //         "DeletedAt": null,
-//         "icoCode": "1",
+//         "registerId": "1",
 //         "network": "BNB Smart Chain Mainnet",
 //         "precision": "5",
 //         "capitalStructure": "Independent Fund",
@@ -165,7 +165,7 @@ const navigate = useNavigate();
 //     "issuanceTerms": {
 //         "CreatedAt": "0001-01-01T00:00:00Z",
 //         "DeletedAt": null,
-//         "icoCode": "1",
+//         "registerId": "1",
 //         "investmentPeriod": "120 yays",
 //         "dividendYield": "20.00 %",
 //         "grossMargin": "20.00",
@@ -181,7 +181,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:42+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "picture": "img.png",
 //             "firstName": "Emily",
 //             "midName": "C",
@@ -194,7 +194,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:42+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "picture": "img.png",
 //             "firstName": "John",
 //             "midName": "A",
@@ -207,7 +207,7 @@ const navigate = useNavigate();
 //             "createBy": "163e6a07-bd7d-453d-9f57-c7ca8d7e34ba",
 //             "CreatedAt": "2024-09-27T12:07:42+07:00",
 //             "DeletedAt": null,
-//             "icoCode": 1,
+//             "registerId": 1,
 //             "picture": "img.png",
 //             "firstName": "Jane",
 //             "midName": "B",
@@ -219,7 +219,7 @@ const navigate = useNavigate();
 // };
 // dispatch(setAssetData(mockedData));
 
-  const icoCode = localStorage.getItem("icoCode");
+  const registerId = localStorage.getItem("registerId");
   const fetchData = async () => {
     try{
       const res = await axios.get("/api/v1/ico/query", {
@@ -228,7 +228,7 @@ const navigate = useNavigate();
         },
       })
       if(res.status == 200){
-        const matchedData = res.data.find((item: { icoCode: string }) => item.icoCode === icoCode);
+        const matchedData = res.data.find((item: { registerId: string }) => item.registerId === registerId);
         if (matchedData) {
           const assetData:TAssetData = matchedData;
           dispatch(setAssetData(assetData));
@@ -241,10 +241,10 @@ const navigate = useNavigate();
   }
 
   useEffect(() => {
-    if(icoCode){
+    if(registerId){
       fetchData();
     }else{
-      console.log("no icoCode")
+      console.log("no registerId")
     }
   }, [pageId,token,dispatch]);
 

@@ -1359,7 +1359,7 @@ const mockContact: TContact = {
   createBy: "user_001",
   CreatedAt: "2023-10-01T12:00:00Z",
   DeletedAt: null,
-  registerId: 123,
+  registerId: "123",
   fullNames: [
     {
       id: "name_001",
@@ -1721,7 +1721,7 @@ const mockDirector: TDirector = {
   CreatedAt: "2023-01-01T00:00:00Z",
   DeletedAt: null,
   personalId: "9876543210987",
-  registerId: 123456,
+  registerId: "123456",
   fullNames: [
     {
       id: "name001",
@@ -1832,7 +1832,7 @@ describe("test create corporate form4 (list of director)", () => {
 
   test("test form4 (PageListOfDirector) DELETE", async () => {
     store.dispatch(setCorporateData(mockCorporateData));
-    store.dispatch(setDirectorEdit([{...mockDirector,registerId:mockDirector.registerId.toString()}]));
+    store.dispatch(setDirectorEdit([{...mockDirector,registerId:mockDirector?.registerId?.toString()}]));
 
     render(
       <Provider store={store}>
@@ -1952,7 +1952,7 @@ describe("test create corporate form4 (list of director)", () => {
     window.alert = jest.fn();
 
     store.dispatch(setCorporateData(mockCorporateData));
-    store.dispatch(setDirectorEdit([{...mockDirector,registerId:mockDirector.registerId.toString()}]));
+    store.dispatch(setDirectorEdit([{...mockDirector,registerId:mockDirector?.registerId?.toString()}]));
 
     render(
       <Provider store={store}>
@@ -2276,7 +2276,7 @@ const individualShareholderMock: TIndividualShareholder = {
   CreatedAt: "2022-01-01T00:00:00.000Z",
   DeletedAt: null,
   personalId: "PID001",
-  registerId: 12345,
+  registerId: "12345",
   fullNames: [
     {
       id: "FN001",
@@ -2616,7 +2616,7 @@ const juristicMock: TJuristic = {
   createBy: "user123",
   CreatedAt: "2023-10-01T12:00:00Z",
   DeletedAt: null,
-  registerId: 12345,
+  registerId: "12345",
   juristicName: "Acme Juristic Individual Corporation",
   registrationNo: "REG123456",
   registeredCountry: "Thailand",
@@ -2701,7 +2701,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
           .map((juristic: TJuristic) => ({
             ...juristic,
             juristicId: juristic.id,
-            sharePercentage: juristic.sharePercentage/100000,
+            sharePercentage: (juristic.sharePercentage ?? 0) / 100000
           }))
           .map(mapDataToTJuristicShareholder)
           .filter((item: any) => item !== null) as TJuristicsShareholders[];
@@ -2779,7 +2779,7 @@ describe("test create corporate form6 (juristics shareholder)", () => {
           .map((juristic: TJuristic) => ({
             ...juristic,
             juristicId: juristic.id,
-            sharePercentage: juristic.sharePercentage/100000,
+            sharePercentage: (juristic.sharePercentage ?? 0) / 100000
           }))
           .map(mapDataToTJuristicShareholder)
           .filter((item: any) => item !== null) as TJuristicsShareholders[];
@@ -2930,7 +2930,7 @@ const authorizedMock = {
                 "CreatedAt": "2024-08-13T05:15:29.523Z",
                 "DeletedAt": null,
                 "personalId": "3c2dfdb5-a140-4ef5-89d5-1326cbf632bc",
-                "registerId": 80000003,
+                "registerId": "80000003",
                 "fullNames": [
                     {
                         "id": "b0d9459f-465d-4ea1-aaac-5d03ac4c2763",

@@ -26,198 +26,194 @@ jest.mock("@/lib/utils", () => ({
   const mockAxios = new MockAdapter(axios);
 
 const mockIndividualData = 
-  {
-      "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      "CreatedAt": "2024-09-23T06:15:58.847Z",
-      "DeletedAt": undefined,
-      "id": 90000085,
-      "thTitle": "นาย",
-      "thName": "test-ndid-true",
-      "thSurname": "ทดสอบ-ndid-true",
-      "engTitle": "Mr.",
-      "engName": "getter",
-      "engSurname": "getter",
-      "email": "test@example.us",
-      "mobile": "0987654321",
-      "agreement": true,
-      "birthDate": "2024-09-18T00:00:00Z",
-      "marriageStatus": "โสด",
-      "citizenId": "123123",
-      "laserCode": "123",
-      "education": "1",
-      "sourceOfIncome": "1",
-      "currentOccupation": "13",
-      "officeName": "ทิสโก้ทาวเวอร์",
-      "typeOfBusiness": "2",
-      "positionName": "ทิสโก้ทาวเวอร์",
-      "salaryRange": "1",
-      "shortTermInvestment": true,
-      "longTermInvestment": true,
-      "taxesInvestment": true,
-      "retireInvestment": true,
-      "address": [
-          {
-              "CreatedAt": "2024-09-23T06:16:04.213Z",
-              "DeletedAt": null,
-              "id": "90000085",
-              "homeNumber": "70/178 ramintra65 yak 2-4",
-              "villageNumber": "floor",
-              "villageName": "moo",
-              "subStreetName": "soi",
-              "streetName": "road",
-              "subDistrictName": "บ้านพานถม",
-              "districtName": "เขตพระโขนง",
-              "provinceName": "ระยอง",
-              "zipCode": "10400",
-              "countryName": "ออสเตรีย",
-              "types": 1
-          },
-          {
-              "CreatedAt": "2024-09-23T06:16:04.213Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "homeNumber": "70/178 ramintra65 yak 2-4",
-              "villageNumber": "floor",
-              "villageName": "moo",
-              "subStreetName": "soi",
-              "streetName": "road",
-              "subDistrictName": "บ้านพานถม",
-              "districtName": "เขตพระโขนง",
-              "provinceName": "ระยอง",
-              "zipCode": "10400",
-              "countryName": "ออสเตรีย",
-              "types": 2
-          },
-          {
-              "CreatedAt": "2024-09-23T06:16:04.213Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "homeNumber": "70/178 ramintra65 yak 2-4",
-              "villageNumber": "floor",
-              "villageName": "moo",
-              "subStreetName": "soi",
-              "streetName": "road",
-              "subDistrictName": "บ้านพานถม",
-              "districtName": "เขตพระโขนง",
-              "provinceName": "ระยอง",
-              "zipCode": "10400",
-              "countryName": "ออสเตรีย",
-              "types": 3
+{
+  "id": "29b11256-c7ae-4e6d-b9ab-4d11012b0a53",
+  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+  "CreatedAt": "2024-10-16T10:54:45+07:00",
+  "DeletedAt": null,
+  "registerId": "90000003",
+  "thTitle": "นาย",
+  "thName": "เกตเต้อ-ชื่อ",
+  "thSurname": "เกตเต้อ-นามสกุล",
+  "engTitle": "Mr.",
+  "engName": "getter-name",
+  "engSurname": "getter-surname",
+  "email": "test1@example.com",
+  "mobile": "0884744411",
+  "birthDate": "2024-10-02T07:00:00+07:00",
+  "marriageStatus": "โสด",
+  "citizenId": "1103703348990",
+  "laserCode": "12123",
+  "education": "1",
+  "sourceOfIncome": "6",
+  "currentOccupation": "13",
+  "officeName": "1",
+  "typeOfBusiness": "16",
+  "positionName": "1",
+  "salaryRange": "9",
+  "taxesInvestment": true,
+  "address": [
+      {
+          "id": "23421bcb-5fbf-4a6d-b95d-8b0579fdb3a1",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "homeNumber": "1",
+          "villageNumber": "1",
+          "villageName": "1",
+          "subStreetName": "1",
+          "streetName": "1",
+          "subDistrictName": "1",
+          "districtName": "1",
+          "provinceName": "1",
+          "zipCode": "11",
+          "countryName": "1",
+          "types": 1
+      },
+      {
+          "id": "423f53a1-bf82-4415-ad0f-c9b93c26637f",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "homeNumber": "1",
+          "villageNumber": "1",
+          "villageName": "1",
+          "subStreetName": "1",
+          "streetName": "1",
+          "subDistrictName": "1",
+          "districtName": "1",
+          "provinceName": "1",
+          "zipCode": "11",
+          "countryName": "1",
+          "types": 2
+      },
+      {
+          "id": "ad0f1dc1-a81a-43a8-b58a-b0d7b44f08d9",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "homeNumber": "1",
+          "villageNumber": "1",
+          "villageName": "1",
+          "subStreetName": "1",
+          "streetName": "1",
+          "subDistrictName": "1",
+          "districtName": "1",
+          "provinceName": "1",
+          "zipCode": "11",
+          "countryName": "1",
+          "types": 3
+      }
+  ],
+  "bank": [
+      {
+          "id": "27314179-b2a0-466e-b830-77ac62c50820",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "bankName": "ธนาคารไทยพาณิชย์ จำกัด (มหาชน)",
+          "bankBranchName": "11",
+          "bankAccountNumber": "1",
+          "types": 1
+      },
+  ],
+  "SuiteTestResult": {
+      "createBy": "",
+      "deletedBy": "",
+      "registerId": "90000003",
+      "suiteTestResult": {
+          "registerId": "219c16d8-693e-49bb-a550-106e90c0d496",
+          "investorTypeRisk": "เสี่ยงสูง",
+          "level": 4,
+          "totalScore": 35,
+          "suiteTestResult": {
+              "answer": {
+                  "0": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "1": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "2": {
+                      "ans": [
+                          0,
+                          1,
+                          1
+                      ]
+                  },
+                  "3": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "4": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "5": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "6": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "7": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "8": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  }
+              }
           }
-      ],
-      "bank": [
-          {
-              "CreatedAt": "2024-09-23T06:16:04.216Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "bankName": "ธนาคารยูโอบี จำกัด (มหาชน)",
-              "bankBranchName": "bank2",
-              "bankAccountNumber": "bankaccountid2",
-              "types": 2
-          },
-          {
-              "CreatedAt": "2024-09-23T06:16:04.216Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "bankName": "ธนาคารกสิกรไทย จำกัด (มหาชน)",
-              "bankBranchName": "bank1",
-              "bankAccountNumber": "bankaccountid1",
-              "types": 1
-          }
-      ],
-      "SuiteTestResult": {
-            "createBy": "",
-            "deletedBy": "",
-            "id": "90000085",
-            "suiteTestResult": {
-                "cid": "3dd079e5-5553-410d-83e9-be1b8cd412a4",
-                "investorTypeRisk": "เสี่ยงตํ่า",
-                "level": 1,
-                "totalScore": 9,
-                "suitTestResult": {
-                    "answer": {
-                        "0": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "1": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "2": {
-                            "ans": [
-                                1,
-                                0,
-                                0
-                            ]
-                        },
-                        "3": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "4": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "5": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "6": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "7": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "8": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        }
-                    }
-                }
-            },
-            "isFatca": false,
-            "fatcaInfo": null,
-            "isKnowLedgeDone": false,
-            "knowLedgeTestResult": 0
-        },
-      "ndid": true,
-      "thaid": false
-  }
+      },
+      "isFatca": false,
+      "fatcaInfo": null,
+      "isKnowLedgeDone": true,
+      "knowLedgeTestResult": 15
+  },
+  "ndid": false,
+  "thaid": true
+}
 
 
 describe("test create individual form1 (preinfo)", () => {

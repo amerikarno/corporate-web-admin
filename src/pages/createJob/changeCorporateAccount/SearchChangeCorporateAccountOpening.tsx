@@ -16,7 +16,6 @@ import { dateToyyyyMMdd, isAllowedPage, yyyyMMddToDate } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { mockedCorporateData } from "./libs/utils";
 import { FaBackward, FaForward } from "react-icons/fa";
 
 
@@ -83,14 +82,14 @@ export default function SearchChangeCorporateAccount({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchResult, setSearchResult] = useState<TCorporateData[]>();
 
-  const updatedMockedCorporateData = Array(40).fill(null).map((_, index) => ({
-    ...mockedCorporateData,
-    registerId: (index + 1).toString(),
-    Info: {
-      ...mockedCorporateData.Info,
-      name: `Name ${index + 1}` 
-    }
-  }));
+  // const updatedMockedCorporateData = Array(40).fill(null).map((_, index) => ({
+  //   ...mockedCorporateData,
+  //   registerId: (index + 1).toString(),
+  //   Info: {
+  //     ...mockedCorporateData.Info,
+  //     name: `Name ${index + 1}` 
+  //   }
+  // }));
   const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, setCurrentPage }: CustomPaginationProps) => {
     const handleNextPage = () => {
       const nextPage = currentPage + 1;

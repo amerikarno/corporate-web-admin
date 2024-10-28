@@ -74,7 +74,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
           .map((juristic: TJuristicEdit) => ({
             ...juristic,
             juristicId: juristic.id,
-            sharePercentage: juristic.sharePercentage/100000,
+            sharePercentage: (juristic.sharePercentage ?? 0) / 100000
           }))
           .map(mapDataToTJuristicShareholder)
           .filter((item: any) => item !== null) as TJuristicsShareholders[];

@@ -18,15 +18,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-type TSearchBody = {
-    corporateCode?: string;
-    accountId?:string;
-    page?:number;
-}
+// type TSearchBody = {
+//     corporateCode?: string;
+//     accountId?:string;
+//     page?:number;
+// }
 
-type TSearchAccount = {
-
-}
 
 // type TCorporateTable = {
 //     corporateCode:string;
@@ -122,26 +119,26 @@ const AccountLockUnLock = () => {
     }
 };
 
-    const mockedCustomerData: TAccountTable[] = [
-      {
-          "customerCode": "90000003",
-          "name": "เกตเต้อ-ชื่อ เกตเต้อ-นามสกุล",
-          "citizenId": "1103703348990",
-          "isLock": false
-      },
-      {
-          "customerCode": "90000002",
-          "name": "เกตเต้อ-ชื่อ เกตเต้อ-นามสกุล",
-          "citizenId": "1103703348990",
-          "isLock": false
-      },
-      {
-          "customerCode": "90000001",
-          "name": "เกตเต้อ-ชื่อ เกตเต้อ-นามสกุล",
-          "citizenId": "1103703348990",
-          "isLock": true
-      }
-  ]
+  //   const mockedCustomerData: TAccountTable[] = [
+  //     {
+  //         "customerCode": "90000003",
+  //         "name": "เกตเต้อ-ชื่อ เกตเต้อ-นามสกุล",
+  //         "citizenId": "1103703348990",
+  //         "isLock": false
+  //     },
+  //     {
+  //         "customerCode": "90000002",
+  //         "name": "เกตเต้อ-ชื่อ เกตเต้อ-นามสกุล",
+  //         "citizenId": "1103703348990",
+  //         "isLock": false
+  //     },
+  //     {
+  //         "customerCode": "90000001",
+  //         "name": "เกตเต้อ-ชื่อ เกตเต้อ-นามสกุล",
+  //         "citizenId": "1103703348990",
+  //         "isLock": true
+  //     }
+  // ]
 
   const fetchTotalRow = async () => {
     try {
@@ -161,13 +158,13 @@ const AccountLockUnLock = () => {
     }
   }
 
-  const duplicateArrayUntilLength = (desiredLength: number = 100): TAccountTable[] => {
-    let result = [...mockedCustomerData];
-    while (result.length < desiredLength) {
-        result = [...result, ...mockedCustomerData];
-    }
-    return result.slice(0, desiredLength);
-};
+//   const duplicateArrayUntilLength = (desiredLength: number = 100): TAccountTable[] => {
+//     let result = [...mockedCustomerData];
+//     while (result.length < desiredLength) {
+//         result = [...result, ...mockedCustomerData];
+//     }
+//     return result.slice(0, desiredLength);
+// };
 
     // const corporateCoulmn: TableColumn<TCorporateTable>[] = [
     //     {

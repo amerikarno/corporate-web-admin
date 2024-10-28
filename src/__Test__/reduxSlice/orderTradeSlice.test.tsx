@@ -8,7 +8,7 @@ import reducer, {
   import { TOrderTrade } from "@/pages/createJob/orderTrade/constant/type";
   
   const mockOrderTrade: TOrderTrade = {
-    registerId: 123456,
+    registerId: "123456",
     operations: "Buy",
     cryptoAmount: 0.5,
     fiatAmount: 5000,

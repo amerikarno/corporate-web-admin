@@ -44,7 +44,7 @@ const ToDoAddedIcoSearch = () => {
   const ColumnsIcoSearch: TableColumn<TAssetData>[] = [
     {
       name: "ICO Code",
-      selector: (row: TAssetData) => row.icoCode || "",
+      selector: (row: TAssetData) => row.registerId || "",
       maxWidth: '120px'
     },
     {

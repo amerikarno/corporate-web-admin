@@ -7,7 +7,6 @@ import DataTable, { createTheme } from "react-data-table-component";
 import { useForm } from "react-hook-form";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { FaCircle, FaKey, FaQuestionCircle } from "react-icons/fa";
-import { FaCirclePlus } from "react-icons/fa6";
 import { RiProfileLine } from "react-icons/ri";
 import { TbMoneybag } from "react-icons/tb";
 import { useSelector } from "react-redux";
@@ -19,7 +18,7 @@ export default function LandingPageIco() {
 
     const {
         register,
-        handleSubmit,
+        // handleSubmit,
         reset,
         setValue,
       } = useForm<TAssetData>({

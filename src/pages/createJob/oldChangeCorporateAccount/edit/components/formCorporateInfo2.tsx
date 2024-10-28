@@ -465,7 +465,7 @@ export function FormCorporateTypeAndIncome() {
     // console.log(resFrom2);
     dispatch(setTestCorporateData(resFrom2));
     // if (corporateData.CountrySourceIncomes) {
-    if (corporateData.CorporateTypes.registerId !== 0) {
+    if (corporateData.CorporateTypes.registerId !== "") {
       console.log("do update");
       await saveJuristicType(resFrom2);
     } else {

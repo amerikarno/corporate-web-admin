@@ -11,8 +11,8 @@ export type TCorporateAccountOpeningInfo = {
 export type TRegisteredCountryPrimaryCountryOperation = {
   registered: string;
   primary: string;
-  isRegisteredThailand: boolean | undefined;
-  isPrimaryCountry: boolean | undefined;
+  isRegisteredThailand?: boolean;
+  isPrimaryCountry?: boolean;
   isRegisteredOther?: boolean | undefined;
   isPrimaryOther?: boolean | undefined;
 };
@@ -283,7 +283,7 @@ export type TCorporateTypes = {
 };
 
 export type TBusinessTypes = {
-  createBy: string;
+  createBy?: string;
   CreatedAt: string;
   DeletedAt: string | null;
   id: string;
@@ -309,7 +309,7 @@ export type TBusinessTypes = {
 };
 
 export type TSourceOfIncomes = {
-  createBy: string;
+  createBy?: string;
   CreatedAt: string;
   DeletedAt: string | null;
   id: string;

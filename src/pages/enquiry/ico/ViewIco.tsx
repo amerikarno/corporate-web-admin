@@ -4,7 +4,6 @@ import { TAssetData } from '@/pages/createJob/changeIcoAccount/types';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAssetData } from '@/features/addedIcoData/AddedIcoData';
-import { Pencil } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/Input';
 import axios from '@/api/axios';
@@ -29,7 +28,8 @@ const ViewIco = () => {
 
   const [registerIdInput,setRegisterIdInput] = useState('');
   const [registerIdList, setRegisterIdList] = useState<IcoInfo[]>([]);
-  const [icoAccountList, setIcoAccountList] = useState<TAssetData[]>([]);
+  const [_, setIcoAccountList] = useState<TAssetData[]>([]);
+  // const [icoAccountList, setIcoAccountList] = useState<TAssetData[]>([]);
 
   const ColumnsIcoSearch: TableColumn<TAssetData>[] = [
     {

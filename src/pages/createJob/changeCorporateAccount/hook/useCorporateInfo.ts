@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TCorporateInfo } from "../constants2/types";
+import { TCorporateInfo } from "@/pages/createJob/addedCorporateAccount/constants2/types";
 import { copy, isExpiredToken } from "@/lib/utils";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";

@@ -77,7 +77,7 @@ const contacts: TContact[] = [
         types: 1
       }
     ],
-    registerId: 123,
+    registerId: "123",
     position: 'Manager',
     division: 'Sales',
     telephone: '123-456-7890',
@@ -103,7 +103,7 @@ const contacts: TContact[] = [
         types: 2
       }
     ],
-    registerId: 456,
+    registerId: "456",
     position: 'Developer',
     division: 'IT',
     telephone: '987-654-3210',

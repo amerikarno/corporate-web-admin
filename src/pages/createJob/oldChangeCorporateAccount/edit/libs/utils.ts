@@ -184,26 +184,35 @@ export const mapDataToTDirector = (
       passportId: data?.passportId ?? "",
       expiryDate: dateFormatted ?? "",
       nationality: data?.nationality ?? "",
-      types: data?.types ?? "",
+      types: data?.types,
       personalId: data?.personalId ?? "",
-      addresses:
-        data?.addresses?.length > 0
-          ? data?.addresses
-          : [
-              {
-                addressNo: "",
-                building: "",
-                floor: "",
-                mooNo: "",
-                soi: "",
-                road: "",
-                tambon: "",
-                amphoe: "",
-                province: "",
-                postalCode: "",
-                country: "",
-              },
-            ],
+      addresses: data?.addresses?.length > 0
+  ? data.addresses.map(address => ({
+      addressNo: address.addressNo ?? "", 
+      building: address.building ?? "",
+      floor: address.floor ?? "",
+      mooNo: address.mooNo ?? "",
+      soi: address.soi ?? "",
+      road: address.road ?? "",
+      tambon: address.tambon ?? "",
+      amphoe: address.amphoe ?? "",
+      province: address.province ?? "",
+      postalCode: address.postalCode ?? "",
+      country: address.country ?? "",
+    }))
+  : [{
+      addressNo: "",
+      building: "",
+      floor: "",
+      mooNo: "",
+      soi: "",
+      road: "",
+      tambon: "",
+      amphoe: "",
+      province: "",
+      postalCode: "",
+      country: "",
+    }],
     };
 
     return result;
@@ -298,24 +307,33 @@ export const mapDataToTAuthoirzedPerson = (
       expiryDate: dateFormatted ?? "",
       nationality: data?.nationality ?? "",
       personalId: data?.personalId ?? "",
-      addresses:
-        data?.addresses?.length > 0
-          ? data?.addresses
-          : [
-              {
-                addressNo: "",
-                building: "",
-                floor: "",
-                mooNo: "",
-                soi: "",
-                road: "",
-                tambon: "",
-                amphoe: "",
-                province: "",
-                postalCode: "",
-                country: "",
-              },
-            ],
+      addresses: data?.addresses?.length > 0
+        ? data.addresses.map(address => ({
+            addressNo: address.addressNo ?? "", 
+            building: address.building ?? "",
+            floor: address.floor ?? "",
+            mooNo: address.mooNo ?? "",
+            soi: address.soi ?? "",
+            road: address.road ?? "",
+            tambon: address.tambon ?? "",
+            amphoe: address.amphoe ?? "",
+            province: address.province ?? "",
+            postalCode: address.postalCode ?? "",
+            country: address.country ?? "",
+          }))
+        : [{
+            addressNo: "",
+            building: "",
+            floor: "",
+            mooNo: "",
+            soi: "",
+            road: "",
+            tambon: "",
+            amphoe: "",
+            province: "",
+            postalCode: "",
+            country: "",
+          }],
     };
 
     return result;

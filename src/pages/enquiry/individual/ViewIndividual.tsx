@@ -23,7 +23,7 @@ import { mockedIndividualeData } from "./utils";
 type TBody = {
     dateFrom: Date | null;
     dateTo: Date | null;
-    AccountID: string;
+    registerId: string;
   };
 export default function ViewIndividual() {
   //   if (!isAllowedPage(3001)) {
@@ -80,7 +80,7 @@ export default function ViewIndividual() {
     
     console.log(body);
     if (
-      body.AccountID === "" &&
+      body.registerId === "" &&
       body.dateFrom === null &&
       body.dateTo === null
     ) {
@@ -107,9 +107,9 @@ export default function ViewIndividual() {
       try {
         console.log(body);
         let formatBody
-        if(body.AccountID){
+        if(body.registerId){
           formatBody = {
-            accountID: body.AccountID
+            registerId: body.registerId
           }
         }else{
           formatBody = body
@@ -152,7 +152,8 @@ export default function ViewIndividual() {
     },
   });
 
-  const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
+  // const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
+  const [_, setFetchData] = useState<TIndividualData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
     const [mockedregisterIds, setFetchedregisterIds] = useState<
@@ -208,7 +209,7 @@ export default function ViewIndividual() {
   const initData = async () => {
     // await fetchregisterIds();
     const data: TSearchIndividualSchema = {
-      AccountID: "",
+      registerId: "",
       dateFrom: dateToyyyyMMdd(new Date()),
       dateTo: dateToyyyyMMdd(new Date()),
     };
@@ -252,15 +253,15 @@ export default function ViewIndividual() {
           >
             <SideLabelInput title="Individual ID">
               <Input
-                data-testid="accountId"
-                {...register("AccountID")}
+                data-testid="registerId"
+                {...register("registerId")}
                 onChange={handleDisableDate}
                 disabled={disableCode}
                 list="juristicId"
                 autoComplete="off"
               />
               {errors && (
-                <p className="text-red-500">{errors.AccountID?.message}</p>
+                <p className="text-red-500">{errors.registerId?.message}</p>
               )}
               <datalist id="juristicId">
                 {mockedregisterIds.map((code, index) => (

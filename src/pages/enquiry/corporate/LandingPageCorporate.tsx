@@ -55,7 +55,8 @@ const LandingPageCorporate = () => {
       } = useForm<TCorporateData>({
       });
 
-      const [resFrom2, setResForm2] = useState<CorporateResponse>(
+      // const [resFrom2, setResForm2] = useState<CorporateResponse>(
+      const [resFrom2, _] = useState<CorporateResponse>(
         () => {
           // console.log(corpData);
           const {

@@ -174,6 +174,8 @@ const ViewCorporate = () => {
   const [mockedregisterIds, setFetchedregisterIds] = useState<
     { registerId: string }[]
   >([]);
+
+  console.log(corporateData)
   
   const handleDisableDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {

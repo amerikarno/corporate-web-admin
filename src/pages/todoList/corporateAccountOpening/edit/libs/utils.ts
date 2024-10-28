@@ -283,7 +283,7 @@ export const mapDataToTAuthoirzedPerson = (
     //   Number(dateParts[2])
     // );
     const result: TAuthorizedPersonSchema = {
-      registerId: String(data.registerId ?? ""),
+      registerId: data.registerId ?? "",
       fullNames: [
         {
           title: data?.fullNames[0].title ?? "",
