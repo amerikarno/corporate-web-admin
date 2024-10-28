@@ -19,7 +19,7 @@ const EditButtonCell = ({ row }: { row: TIndividualData }) => {
   };
 
   return (
-    <Pencil data-testid={`editButton-${row.id}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
+    <Pencil data-testid={`editButton-${row.registerId}`} className="h-4 hover:cursor-pointer" onClick={handleEditClick} />
   );
 };
 

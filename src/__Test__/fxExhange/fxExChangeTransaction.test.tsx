@@ -44,7 +44,7 @@ const mockListOfFxExChange = [
         "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
         "CreatedAt": "2024-10-07T03:35:53.899Z",
         "DeletedAt": null,
-        "registerId": 80000001,
+        "registerId": "80000001",
         "accountId": 0,
         "exchange": "THB/USD",
         "exchangeRate": 3000000,

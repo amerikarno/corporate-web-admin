@@ -91,7 +91,7 @@ export default function TodoCorporateAccountOpenning() {
     fetchTotalRow();
     console.log({page:page})
     try{
-      const res = await axios.post('/api/v1/corporate/list/pending',{page:page},{
+      const res = await axios.post('/api/v1/corporate/query/pending',{page:page},{
         headers: {
           Authorization: `Bearer ${getCookies()}`
         }
@@ -109,7 +109,7 @@ export default function TodoCorporateAccountOpenning() {
 
   const fetchTotalRow = async () => {
     try {
-      const res = await axios.post("/api/v1/corporate/list/total/pending",{}, {
+      const res = await axios.post("/api/v1/corporate/total/pending",{}, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },

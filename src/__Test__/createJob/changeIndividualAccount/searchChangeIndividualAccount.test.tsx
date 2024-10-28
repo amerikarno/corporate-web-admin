@@ -259,7 +259,7 @@ describe("test change individual", () => {
     }-${ddPrev > 9 ? ddPrev : `0${ddPrev}`}`;
 
     let data = {
-      AccountID: "",
+      registerId: "",
       dateFrom: dateStr,
       dateTo: dateStr,
     };
@@ -300,7 +300,7 @@ describe("test change individual", () => {
       </Provider>
     );
 
-    const id = screen.getByTestId(/accountId/i);
+    const id = screen.getByTestId(/registerId/i);
     const datefrom = screen.getByTestId(/dateFrom/i);
     const dateto = screen.getByTestId(/dateTo/i);
 

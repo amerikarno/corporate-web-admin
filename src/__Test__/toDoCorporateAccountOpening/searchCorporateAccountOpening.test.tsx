@@ -203,9 +203,6 @@ describe("test todo corporate", () => {
       <Provider store={store}>
         <MemoryRouter>
           <TodoCorporateAccountOpenning
-            onDataFetched={(data) => {
-              fetchedData = data;
-            }}
           />
         </MemoryRouter>
       </Provider>

@@ -267,7 +267,7 @@ describe("test change individual", () => {
     );
 
     await act(async () => {
-      await handleSearch({ AccountID: "90000006" });
+      await handleSearch({ registerId: "90000006" });
     });
 
     await waitFor(

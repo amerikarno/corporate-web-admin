@@ -60,7 +60,7 @@ const mockListOfTransaction = [
         "CreatedAt": "2024-09-18T05:19:59.279Z",
         "DeletedAt": null,
         "operations": "buy",
-        "registerId": 80000001,
+        "registerId": "80000001",
         "cryptoAmount": 112000,
         "fiatAmount": 123000,
         "currency": "THB",
