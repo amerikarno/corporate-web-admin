@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { FaBackward, FaForward, FaSearch } from "react-icons/fa";
+import { FaBackward, FaForward } from "react-icons/fa";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -284,8 +284,8 @@ export default function TodoIndividualAccount() {
   const [total,setTotal] = useState(1);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [registerIdInput,setRegisterIdInput] = useState('');
-  const [registerIdList, setRegisterIdList] = useState<TIndividualData[]>([]);
+  // const [registerIdInput,setRegisterIdInput] = useState('');
+  // const [registerIdList, setRegisterIdList] = useState<TIndividualData[]>([]);
   const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
 
   const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, setCurrentPage }: CustomPaginationProps) => {
@@ -352,10 +352,10 @@ export default function TodoIndividualAccount() {
       if(res.status === 200){
         console.log("Query for Pending User success",res)
         setFetchData(res.data);
-        const registerIds = res.data.map((item: TIndividualData) => ({
-          registerId: item.registerId,
-        }));
-        setRegisterIdList(registerIds);
+        // const registerIds = res.data.map((item: TIndividualData) => ({
+        //   registerId: item.registerId,
+        // }));
+        // setRegisterIdList(registerIds);
       }else{
         console.log("Query for Pending User fail ",res)
       }
@@ -546,7 +546,7 @@ export default function TodoIndividualAccount() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Individual Account Infomations</CardTitle>
+          <CardTitle>Individual Account Opening</CardTitle>
         </CardHeader>
         <CardContent className="overflow-x-auto">
           <DataTable 

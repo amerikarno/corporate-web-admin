@@ -332,6 +332,7 @@ export type TDocuments = {
 
 export type TCorporateData = {
   registerId: string;
+  status?: number;
   Info: TCorporateInfo;
   CorporateCountry: TCorporateCountry[];
   CorporateAddress: TCorporateAddress[];
