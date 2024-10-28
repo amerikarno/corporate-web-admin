@@ -79,7 +79,7 @@ export default function SearchIndividualAccount() {
   const [mockedregisterIds, setFetchedregisterIds] = useState<
       { registerId: string }[]
     >([]);
-    const [searchResult, setSearchResult] = useState<TIndividualData>();
+  const [searchResult, setSearchResult] = useState<TIndividualData>();
 
     const handleSearch = async (data: TSearchIndividualSchema) => {
       const { dateFrom, dateTo } = data;

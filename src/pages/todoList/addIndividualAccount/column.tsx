@@ -19,8 +19,8 @@ import { Button } from "@/components/ui/button";
 
 export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
   {
-    name: "Individualc ID",
-    selector: (row: TIndividualData) => row.id || "",
+    name: "Register ID",
+    selector: (row: TIndividualData) => row.registerId || "",
   },
   {
     name: "Individual Name",
@@ -31,6 +31,19 @@ export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
     selector: (row: TIndividualData) => row.email || "",
   },
   {
+    name: "status",
+    selector: (row: TIndividualData) => {
+      if (row.status === -1) {
+        return "Rejected";
+      } else if (row.status === 0) {
+        return "Pending";
+      } else if (row.status === 1) {
+        return "Approved";
+      }
+      return "Unknown";
+    }
+  },
+  {
     cell: (row: TIndividualData) => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -38,10 +51,10 @@ export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>Are you sure? Approve</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-col">
-              <span>{`Individualc ID : ${row.id}`}</span>
+              <span>{`Register ID : ${row.id}`}</span>
               <span>{`Individual Name : ${row.thName}`}</span>
               <span>{`Individual Email : ${row.email}`}</span>
             </div>
@@ -50,6 +63,32 @@ export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={()=>handleApproveClick(row)}>Approve</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    ),
+    ignoreRowClick: true,
+  },
+  {
+    cell: (row: TIndividualData) => (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline" className="bg-[#002f18] hover:bg-[#ca4047] hover:font-bold hover:text-white w-[85px] transition-all text-white">Reject</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure? Reject</AlertDialogTitle>
+          <AlertDialogDescription>
+            <div className="flex flex-col">
+              <span>{`Register ID : ${row.id}`}</span>
+              <span>{`Individual Name : ${row.thName}`}</span>
+              <span>{`Individual Email : ${row.email}`}</span>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={()=>handleApproveClick(row)}>Reject</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

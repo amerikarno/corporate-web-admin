@@ -97,6 +97,7 @@ type TDetail = {
   
   export interface TAssetData {
     registerId?: string;
+    status?:number;
     asset: {
       id:string;
       registerId?: string;

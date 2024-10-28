@@ -63,6 +63,7 @@ export type TIndividualData = {
   agreement?: boolean;
   registerId: string;
   id: string;
+  status?:number;
   thTitle: string;
   thName: string;
   thSurname: string;
