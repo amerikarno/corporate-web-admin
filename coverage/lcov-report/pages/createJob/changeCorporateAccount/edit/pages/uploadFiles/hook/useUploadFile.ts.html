@@ -280,7 +280,7 @@ export function <span class="fstat-no" title="function not covered" >useUploadFi
     }
   };
 &nbsp;
-  const handleUpload = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async </span>(file: File | null, corporateCode: string) =&gt; {</span>
+  const handleUpload = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async </span>(file: File | null, registerId: string) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (file &amp;&amp; file !== null) {</span>
 <span class="cstat-no" title="statement not covered" >      if (acceptedFileTypes.includes(file.type)) {</span>
         const fileSizeInMB = <span class="cstat-no" title="statement not covered" >file.size / (1024 * 1024);</span>
@@ -289,10 +289,10 @@ export function <span class="fstat-no" title="function not covered" >useUploadFi
           const formData = <span class="cstat-no" title="statement not covered" >new FormData();</span>
 <span class="cstat-no" title="statement not covered" >          formData.append("file", file);</span>
 <span class="cstat-no" title="statement not covered" >          formData.append("docType", documentType.value);</span>
-<span class="cstat-no" title="statement not covered" >          formData.append("corporateCode", corporateCode);</span>
+<span class="cstat-no" title="statement not covered" >          formData.append("registerId", registerId);</span>
 &nbsp;
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`763595951_39_10_39_40_4`,"uploading files"));</span>
-          /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`763595951_40_10_40_53_4`,"corporateCode", corporateCode));</span>
+          /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`763595951_40_10_40_53_4`,"registerId", registerId));</span>
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`763595951_41_10_41_52_4`,"docType", documentType.value));</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >          try {</span>
@@ -309,7 +309,7 @@ export function <span class="fstat-no" title="function not covered" >useUploadFi
 <span class="cstat-no" title="statement not covered" >            if (response.status === 200) {</span>
               /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`763595951_55_14_55_70_4`,"File uploaded successfully", response.data));</span>
               let fileinfo=<span class="cstat-no" title="statement not covered" >{</span>
-                corporateCode:Number(corporateCode),
+                registerId:Number(registerId),
                 docType:documentType.value,
                 fileName:file.name,
                 fileTypes:file.type,

@@ -84,7 +84,7 @@ export function FormCorporateTypeAndIncome() {
       ...corporateData.SourceOfIncomes,
       ...corporateData.CountrySourceIncomes?.[0],
     });
-  }, [dispatch, corporateData.CorporateCode]);
+  }, [dispatch, corporateData.registerId]);
 
   const setStoreData = (data: CorporateResponse) => {
     let tmp = copy(corporateData);
@@ -208,7 +208,7 @@ export function FormCorporateTypeAndIncome() {
         createBy: undefined,
         corporateCountry: undefined,
         deleteBy: undefined,
-        corporateCode: corporateData.CorporateCode?.toString(),
+        registerId: corporateData.registerId?.toString(),
         isThailand: data.corporateCountry?.isThailand
           ? data.corporateCountry?.isThailand
             ? true
@@ -249,7 +249,7 @@ export function FormCorporateTypeAndIncome() {
         let body = mapToForm2Create(data);
         body = {
           ...body,
-          corporateCode: corporateData.CorporateCode.toString(),
+          registerId: corporateData.registerId.toString(),
           isThailand: data.corporateCountry?.isThailand ? true : false,
           otherCountry: data.corporateCountry?.other,
         };
@@ -465,7 +465,7 @@ export function FormCorporateTypeAndIncome() {
     // console.log(resFrom2);
     dispatch(setTestCorporateData(resFrom2));
     // if (corporateData.CountrySourceIncomes) {
-    if (corporateData.CorporateTypes.corporateCode !== 0) {
+    if (corporateData.CorporateTypes.registerId !== "") {
       console.log("do update");
       await saveJuristicType(resFrom2);
     } else {

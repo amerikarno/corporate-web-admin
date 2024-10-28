@@ -18,13 +18,13 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 
 type TAttorneyFormProps = {
   onsubmit: (data: TAttorney) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TAttorney | null;
   clearChoosedEditData: () => void;
 };
 export function FormAttorney({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TAttorneyFormProps) {
@@ -33,9 +33,6 @@ export function FormAttorney({
   const [initError, setInitError] = useState<boolean>(false);
   const [curInput, setCurInput] = useState<boolean>(false);
   const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
-  const [hasDate, setHasDate] = useState<boolean>(
-    choosedEditData?.expiryDate ? true : false
-  );
   const dispatch = useDispatch();
 
   const handleChange = (e: any) => {
@@ -110,7 +107,7 @@ export function FormAttorney({
         types: 302,
         addresses: data.addresses,
         fullNames: data.fullNames,
-        corporateCode: corporateCode,
+        registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : "",
         passportId: dropDownChoosed === "Passport" ? curInputText : "",
@@ -122,6 +119,7 @@ export function FormAttorney({
       console.log(body);
       await sleep(500);
       reset();
+      setValue("expiryDate",null);
       clearChoosedEditData();
       onsubmit(body);
     } else {
@@ -138,8 +136,8 @@ export function FormAttorney({
       }],
       passportId:'',
       citizenId: '',
-      expiryDate: "mm/dd/yyyy",
       nationality:'',
+      expiryDate:null,
       addresses: [
         { addressNo: "",
           building: "",
@@ -158,7 +156,6 @@ export function FormAttorney({
       email:"",
     }
     reset(attorneyData);
-    setHasDate(true);
   }, [choosedEditData, reset]);
 
   return (
@@ -277,27 +274,13 @@ export function FormAttorney({
               )}
             </div>
           </div>
-          {hasDate ? (
-                <div className="w-full md:w-1/2">
-                  <Input
-                    {...register("expiryDate")}
-                    id="Date of Expired"
-                    onClick={() => setHasDate(false)}
-                    data-testid="expiredDate"
-                  />
-                  {errors.expiryDate && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.expiryDate.message}
-                    </p>
-                  )}
-                </div>
-              ) : (
                 <div className="w-full md:w-1/2">
                   <Input
                     {...register("expiryDate")}
                     label="Date of Expired"
                     id="Date of Expired"
                     disabled={isSubmitting}
+                    data-testid="expiredDate"
                     type="date"
                   />
                   {errors.expiryDate && (
@@ -306,7 +289,6 @@ export function FormAttorney({
                     </p>
                   )}
                 </div>
-              )}
         </div>
 
         <div className="flex flex-row space-x-0 md:space-x-4">

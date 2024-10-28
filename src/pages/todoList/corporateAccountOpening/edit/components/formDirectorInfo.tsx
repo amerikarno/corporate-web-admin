@@ -1,96 +1,33 @@
-import { Input } from "@/components/Input";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   directorInfoSchema,
-  TIndividualsDirectorSchema,
 } from "../constants/schemas";
-import { sleep } from "@/lib/utils";
 import { TDirector } from "../constants/types";
-import { DirectorAddressForm } from "./directorAddressForm";
-import { useEffect, useState } from "react";
-import Dropbox from "@/components/Dropbox";
-import { checkFormatIDCard } from "@/lib/utils";
-import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
 
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) => void;
-  corporateCode: string;
+  registerId: string;
   personalId?: string;
   choosedEditData?: TDirector | null;
   clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsDirector({
-  onsubmit,
-  corporateCode,
   choosedEditData,
-  clearChoosedEditData,
+
 }: TDirectorFormProps) {
-  const [triggeriderror, setTriggeriderror] = useState<string>("");
-  const [curInputText, setCurInputText] = useState<string>("");
-  const [initError, setInitError] = useState<boolean>(false);
-  const [curInput, setCurInput] = useState<boolean>(false);
-  const [dropDownChoosed, setDropDownChoosed] = useState<string>("ID");
-  const [hasDate, setHasDate] = useState<boolean>(
-    choosedEditData?.expiryDate ? true : false
-  );
-  const handleDropboxChoice = (choice: string) => {
-    console.log(choice);
-    setCurInputText("");
-    resetField("passportId");
-    resetField("citizenId");
-    setDropDownChoosed(choice);
-  };
 
-  const handleChange = (e: any) => {
-    setCurInputText(e.target.value);
-    setInitError(false);
-    setCurInput(e.target.value !== "");
-  };
-
-  const validateData = (data: TDirector): TDirector => {
-    let tmp = { ...data };
-
-    if (tmp.citizenId) {
-      tmp = { ...tmp, passportId: "" };
-    }
-    if (tmp.passportId) {
-      tmp = { ...tmp, citizenId: "" };
-    }
-    //tmp = { ...tmp, types: "101" };
-    return tmp;
-  };
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
     reset,
-    resetField,
-    setValue,
   } = useForm<TDirector>({
     resolver: zodResolver(directorInfoSchema),
   });
 
-  useEffect(() => {
-    if (choosedEditData?.citizenId) {
-      setDropDownChoosed("ID");
-      setValue("citizenId", choosedEditData.citizenId);
-    } else if (choosedEditData?.passportId) {
-      setDropDownChoosed("Passport");
-      setValue("passportId", choosedEditData.passportId);
-    } else {
-      setDropDownChoosed("ID");
-    }
-    setCurInputText(
-      choosedEditData?.citizenId || choosedEditData?.passportId || ""
-    );
-    setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
-  }, [choosedEditData, setValue]);
+
 
   useEffect(() => {
 
@@ -117,50 +54,8 @@ export function FormIndividualsDirector({
       ],
     };
     reset(directorData);
-    setHasDate(true);
   }, [choosedEditData, reset]);
 
-  const valideID = () => {
-    if (dropDownChoosed === "ID") {
-      if (checkFormatIDCard(curInputText)) return true;
-      setTriggeriderror("Invalid ID.");
-    }
-    if (dropDownChoosed === "Passport") return true;
-    return false;
-  };
-  const dispatch = useDispatch();
-  const onSubmit = async (data: TIndividualsDirectorSchema) => {
-    // console.log(curInputText);
-    // console.log(dropDownChoosed);
-    if (curInput && valideID()) {
-      const formData = validateData(data);
-      setCurInputText("");
-      setTriggeriderror("");
-      setCurInput(false);
-      await sleep(500);
-      reset();
-      // console.log(formData);
-
-      let body: TDirector = {
-        ...formData,
-        types: 101,
-        addresses: data.addresses,
-        fullNames: data.fullNames,
-        corporateCode: corporateCode,
-        personalId: choosedEditData?.personalId,
-        citizenId: dropDownChoosed === "ID" ? curInputText : "",
-        passportId: dropDownChoosed === "Passport" ? curInputText : "",
-      };
-
-      dispatch(setTestCorporateData(body));
-
-      console.log(body);
-      clearChoosedEditData();
-      onsubmit(body);
-    } else {
-      setInitError(true);
-    }
-  };
 
   return (
     <>
@@ -175,7 +70,7 @@ export function FormIndividualsDirector({
           />
         </Card> */}
 
-        <Card className="p-4">
+        {/* <Card className="p-4">
           <h1 className="font-bold text-xl py-4">List of Director</h1>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row space-x-4">
@@ -361,7 +256,7 @@ export function FormIndividualsDirector({
               </Button>
             </div>
           </form>
-        </Card>
+        </Card> */}
       </div>
     </>
   );

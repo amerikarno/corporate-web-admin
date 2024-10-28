@@ -1,23 +1,24 @@
 export type SuitAnswer = {
-  ans: number | number[];
+  ans: number[];
 };
 
-export type SuitTestResultAnswer = {
+export type SuiteTestResultAnswer = {
   answer: { [key: string]: SuitAnswer };
 };
 
-export type NestedSuitTestResult = {
-  cid: string;
+export type NestedSuiteTestResult = {
+  registerId: string;
   investorTypeRisk: string;
   level: number;
   totalScore: number;
-  suitTestResult: SuitTestResultAnswer;
+  suiteTestResult: SuiteTestResultAnswer;
 };
 
 export type SuiteTestResult = {
   createBy: string;
-  id: string;
-  suiteTestResult: NestedSuitTestResult;
+  deletedBy: string;
+  registerId: string;
+  suiteTestResult: NestedSuiteTestResult;
   isFatca: boolean;
   fatcaInfo: any | null;
   isKnowLedgeDone: boolean;
@@ -25,9 +26,11 @@ export type SuiteTestResult = {
 };
 
 export type TBasicinfoAddress = {
+  createBy?: string;
   CreatedAt?: string;
   DeletedAt?: string | null;
   id: string;
+  registerId: string;
   homeNumber: string;
   villageNumber: string;
   villageName: string;
@@ -42,9 +45,11 @@ export type TBasicinfoAddress = {
 };
 
 export type TBasicInfoBank = {
+  createBy?: string;
   CreatedAt?: string;
   DeletedAt?: string | null;
   id: string;
+  registerId: string;
   bankName: string;
   bankBranchName: string;
   bankAccountNumber: string;
@@ -52,10 +57,12 @@ export type TBasicInfoBank = {
 };
 
 export type TIndividualData = {
-  createBy?:string;
+  createBy?: string;
   CreatedAt?: string;
   DeletedAt?: string | null;
-  id: number;
+  agreement?: boolean;
+  registerId: string;
+  id: string;
   thTitle: string;
   thName: string;
   thSurname: string;
@@ -72,7 +79,6 @@ export type TIndividualData = {
   sourceOfIncome: string;
   currentOccupation: string;
   officeName: string;
-  agreement?:boolean;
   typeOfBusiness: string;
   positionName: string;
   salaryRange: string;

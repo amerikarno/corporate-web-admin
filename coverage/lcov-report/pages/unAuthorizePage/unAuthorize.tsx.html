@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">22.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/22</span>
+                <span class='fraction'>5/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/20</span>
+                <span class='fraction'>5/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -132,16 +132,14 @@
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,29 +169,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -205,9 +205,9 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 &nbsp;
-export default function UnAuthorize() {
-  const user = useSelector((state: RootState) =&gt; state.user.user);
-  const navigate = useNavigate();
+export default function <span class="fstat-no" title="function not covered" >UnAuthorize(</span>) {
+  const user = <span class="cstat-no" title="statement not covered" >useSelector(<span class="fstat-no" title="function not covered" >(s</span>tate: RootState) =&gt; <span class="cstat-no" title="statement not covered" >state.user.user)</span>;</span>
+  const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
 &nbsp;
   // const getNavigateLinkByRoles = () =&gt; {
   //   let link = null;
@@ -239,29 +239,29 @@ export default function UnAuthorize() {
   //   return link;
   // };
 &nbsp;
-  const getNavigateLinkByRoles = (): string | null =&gt; {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!user || !user.groups) <span class="cstat-no" title="statement not covered" >return null;</span>
+  const getNavigateLinkByRoles = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(): string | null =</span>&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!user || !user.groups) <span class="cstat-no" title="statement not covered" >return null;</span></span>
 &nbsp;
-    for (const url of urlConfig) {
-      const foundChild = url.children.find((child) =&gt;
-        user.groups!.includes(child.pageId)
+<span class="cstat-no" title="statement not covered" >    for (const url of urlConfig) {</span>
+      const foundChild = <span class="cstat-no" title="statement not covered" >url.children.find(<span class="fstat-no" title="function not covered" >(c</span>hild) =&gt;</span>
+<span class="cstat-no" title="statement not covered" >        user.groups!.includes(child.pageId)</span>
       );
-      if (foundChild) {
-        return foundChild.href;
+<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (foundChild) {</span>
+<span class="cstat-no" title="statement not covered" >        return foundChild.href;</span>
       }
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return null;</span>
   };
 &nbsp;
-  useEffect(() =&gt; {
-    const link = getNavigateLinkByRoles();
-    if (link) {
-      navigate(link);
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+    const link = <span class="cstat-no" title="statement not covered" >getNavigateLinkByRoles();</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (link) {</span>
+<span class="cstat-no" title="statement not covered" >      navigate(link);</span>
     }
   }, []);
 &nbsp;
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div&gt;
       &lt;h1&gt;You're UnAuthorize.&lt;/h1&gt;
     &lt;/div&gt;
@@ -274,7 +274,7 @@ export default function UnAuthorize() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-15T09:03:20.888Z
+                at 2024-10-25T05:28:47.919Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

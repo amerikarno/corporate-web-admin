@@ -1,6 +1,6 @@
 import reducer, { setSuit, resetSuit } from "@/features/suit/suitSlice";
 type SuitTestResult = {
-    corporateCode?: string;
+    registerId?: string;
     totalScore?: number;
     level?: number;
     invsetorTypeRisk?: string;
@@ -33,7 +33,7 @@ const mockSuitTestResultAnswer: SuitTestResultAnswer = {
 };
 
 const mockSuitTestResult: SuitTestResult = {
-  corporateCode: "ABC123",
+  registerId: "ABC123",
   totalScore: 100,
   level: 5,
   invsetorTypeRisk: "High",

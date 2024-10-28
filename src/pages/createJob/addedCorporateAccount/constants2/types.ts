@@ -54,13 +54,13 @@ export type TPlaceIncorporateAddress = {
 };
 
 export type TCorporateInfo = {
-  corporateCode?: string;
+  registerId?: string;
   name: string;
   registrationNo: string;
   taxId: string;
-  dateofincorporation: string;
-  isRegisteredThailand: boolean | undefined;
-  isPrimaryCountry: boolean | undefined;
+  dateOfIncorporation: string;
+  isRegisteredThailand?: boolean;
+  isPrimaryCountry?: boolean;
   registered: string;
   isRegisteredOther?: boolean | undefined;
   primary: string;
@@ -88,20 +88,20 @@ export type TCorporateTypeAndIncome = {
 export type TRegisteredCountryPrimaryCountryOperation = {
   registered: string;
   primary: string;
-  isRegisteredThailand: boolean | undefined;
-  isPrimaryCountry: boolean | undefined;
+  isRegisteredThailand?: boolean;
+  isPrimaryCountry?: boolean;
   isRegisteredOther?: boolean | undefined;
   isPrimaryOther?: boolean | undefined;
 };
 
 export type TIndividualsShareholders = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
-  sharePercentage: number;
+  sharePercentage: number | null;
   types?: number;
   personalId?: string;
 };
@@ -115,11 +115,11 @@ export type TBank = {
 };
 
 export type TAttorney = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   telephone?: string;
@@ -129,18 +129,18 @@ export type TAttorney = {
 }
 
 export type TAuthorizePerson = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
   personalId?: string;
 };
 export type TContactPerson = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   position: string;
   division: string;
@@ -150,11 +150,11 @@ export type TContactPerson = {
 };
 
 export type TDirector = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
-  expiryDate: string;
+  expiryDate: string | null;
   nationality: string;
   addresses: TSubAddress[];
   types?: number;
@@ -162,11 +162,11 @@ export type TDirector = {
 };
 
 export type TJuristicsShareholders = {
-  corporateCode?: string;
+  registerId?: string;
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
-  sharePercentage: number;
+  sharePercentage: number | null;
   juristicId?: string;
 };
 
@@ -202,7 +202,7 @@ export type TJuristicBusinessType = TNumber;
 export type TJuristicSourceOfIncome = TNumber;
 export type TJusristicInvestmentObjective = TNumber;
 export type TJuristicTypeAll = {
-  corporateCode: string;
+  registerId: string;
   corporateType: TCorporateType;
   businessType: TJuristicBusinessType;
   businessTypeOther: string;
@@ -220,7 +220,7 @@ export type TMapPages = {
 
 // export type TBodyFormIndividualsShareholders = {
 //   fullNames: TFullName[];
-//   corporateCode: string;
+//   registerId: string;
 //   passportId?: string;
 //   citizenId?: string;
 //   expiryDate: string;
@@ -321,7 +321,7 @@ export type CorporateTypeBody = {
   otherIncome?: string;
   otherCountry?: string;
   otherInvestment?: string;
-  corporateCode?: string;
+  registerId?: string;
 };
 
 export type TErrors = {
@@ -331,7 +331,7 @@ export type TErrors = {
 };
 
 export type SuitTestResult = {
-  corporateCode?: string;
+  registerId?: string;
   totalScore?: number;
   level?: number;
   invsetorTypeRisk?: string;

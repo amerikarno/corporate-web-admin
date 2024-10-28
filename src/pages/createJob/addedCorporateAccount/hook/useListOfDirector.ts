@@ -17,7 +17,7 @@ export function useListOfDirector() {
     console.log("data", data);
     let body = {
       ...data,
-      expiryDate: new Date(data.expiryDate),
+      expiryDate: new Date(data.expiryDate ?? ""),
     };
     console.log("body", body);
     const token = getCookies();
@@ -25,7 +25,7 @@ export function useListOfDirector() {
       console.log("sending data to update : ", {
         ...data,
         personalId: data.personalId,
-        corporateCode: data.corporateCode,
+        registerId: data.registerId,
       });
       if (data.personalId) {
         //ถ้าส่งแบบมี personalId แปลว่าเป็นการ update
@@ -34,7 +34,7 @@ export function useListOfDirector() {
           {
             ...body,
             personalId: data.personalId,
-            corporateCode: data.corporateCode,
+            registerId: data.registerId,
           },
           {
             headers: { Authorization: `Bearer ${token}` },

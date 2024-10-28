@@ -56,7 +56,7 @@ export function FormCorporateInfo({
 
   const [shouldScrollUp, setShouldScrollUp] = useState<boolean>(false);
   const [placeIncorporateValue, setPlaceIncorporateValue] = useState<string>(
-    corporatesInfo?.CorporateCode.toString() ? "place-radio-2" : "place-radio-1"
+    corporatesInfo?.registerId ? "place-radio-2" : "place-radio-1"
   );
 
   const resCorpRegisterCountry = corporatesInfo?.CorporateCountry.find(
@@ -308,15 +308,15 @@ export function FormCorporateInfo({
 
   const onSubmit = async (data: TCorporateInfoSchema) => {
     console.log(data)
-    const dateData = Date.parse(data.dateofincorporation);
+    const dateData = Date.parse(data.dateOfIncorporation);
     const formData: TCorporateInfo = {
       ...data,
       registeredCapital: formatFinancialValue(data.registeredCapital),
       revenuePerYear: formatFinancialValue(data.revenuePerYear),
       netProFitLoss: formatFinancialValue(data.netProFitLoss),
       shareholderEquity: formatFinancialValue(data.shareholderEquity),
-      corporateCode: corporatesInfo?.CorporateCode.toString(),
-      dateofincorporation: new Date(dateData).toISOString(),
+      registerId: corporatesInfo?.registerId,
+      dateOfIncorporation: new Date(dateData).toISOString(),
       registered: registeredCountryPrimaryCountryOperation.registered,
       isRegisteredOther:
         registeredCountryPrimaryCountryOperation.isRegisteredOther,
@@ -445,14 +445,14 @@ export function FormCorporateInfo({
             <Input
               id={"Date Of Incorporation"}
               label={"Date of Incorporation"}
-              {...register("dateofincorporation")}
-              name="dateofincorporation"
+              {...register("dateOfIncorporation")}
+              name="dateOfIncorporation"
               type="date"
               disabled={isSubmitting}
             />
-            {errors.dateofincorporation && (
+            {errors.dateOfIncorporation && (
               <p className="text-red-500">
-                {errors.dateofincorporation.message}
+                {errors.dateOfIncorporation.message}
               </p>
             )}
           </div>
@@ -578,6 +578,7 @@ export function FormCorporateInfo({
                     id="radio-2"
                     name="radio-for-placeincorporate"
                     type="radio"
+                    data-testid="placeofIncorporation-radio-2"
                     checked={placeIncorporateValue === "place-radio-2"}
                     onChange={() => setPlaceIncorporateValue("place-radio-2")}
                   />
@@ -604,6 +605,7 @@ export function FormCorporateInfo({
               id={"Registered Capital"}
               label={"Registered Capital"}
               {...register("registeredCapital")}
+              type="number"
               name="registeredCapital"
               disabled={isSubmitting}
               data-testid="registeredCapital"
@@ -616,6 +618,7 @@ export function FormCorporateInfo({
               id={"Revenue Per Year"}
               label={"Revenue Per Year"}
               {...register("revenuePerYear")}
+              type="number"
               name="revenuePerYear"
               disabled={isSubmitting}
               data-testid="revenuePerYear"
@@ -628,6 +631,7 @@ export function FormCorporateInfo({
               id={"Net Profit (Loss)"}
               label={"Net Profit (Loss)"}
               {...register("netProFitLoss")}
+              type="number"
               name="netProFitLoss"
               disabled={isSubmitting}
               data-testid="netProFitLoss"
@@ -640,6 +644,7 @@ export function FormCorporateInfo({
               id={"Operating Expense Per Year"}
               label={"Shareholder's equity"}
               {...register("shareholderEquity")}
+              type="number"
               name="shareholderEquity"
               disabled={isSubmitting}
               data-testid="shareholderEquity"

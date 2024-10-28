@@ -794,14 +794,14 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 &nbsp;
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) =&gt; void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TIndividualShareholderEdit | null;
   clearChoosedEditData: () =&gt; void;
 };
 &nbsp;
 export function FormIndividualsShareholders({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TShareHoldersFormProps) {
@@ -835,7 +835,7 @@ export function FormIndividualsShareholders({
 <span class="cstat-no" title="statement not covered" >      tmp = { ...tmp, citizenId: "" };</span>
     }
     tmp.types = 301;
-    tmp.corporateCode = corporateCode;
+    tmp.registerId = registerId;
     tmp.personalId = choosedEditData?.personalId || "";
     tmp.citizenId = dropDownChoosed === "ID" ? curInputText : <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
     tmp.passportId = dropDownChoosed === "Passport" ? <span class="branch-0 cbranch-no" title="branch not covered" >curInputText </span>: ""

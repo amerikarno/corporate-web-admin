@@ -251,11 +251,11 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/todo-list/individual-account-opening",
       //   pageId: 3002,
       // },
-      // {
-      //   label: "change info",
-      //   href: "/todo-list/change-info",
-      //   pageId: 3004,
-      // },
+      {
+        label: "account lock/unlock",
+        href: "/todo-list/account-lockunlock",
+        pageId: 3004,
+      },
       // {
       //   label: "review KYB",
       //   href: "/todo-list/review-kyb",
@@ -308,6 +308,21 @@ export const urlConfig: TUrlConfig[] = [
     icon: "icon",
     pages: [4000, 4007],
     children: [
+      {
+        label: "individual account",
+        href: "/enquiry/individual",
+        pageId: 4002,
+      },
+      {
+        label: "corporate account",
+        href: "/enquiry/corporate",
+        pageId: 4001,
+      },
+      {
+        label: "ICO  campaign",
+        href: "/enquiry/ico-campaign",
+        pageId: 4003,
+      },
       // {
       //   label: "deposit/withdraw list",
       //   href: "/enquiry/deposit-withdraw-list",

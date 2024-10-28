@@ -831,7 +831,7 @@ import { useDispatch } from "react-redux";
 &nbsp;
 type TDirectorFormProps = {
   onsubmit: (data: TDirector) =&gt; void;
-  corporateCode: string;
+  registerId: string;
   personalId?: string;
   choosedEditData?: TDirector | null;
   clearChoosedEditData: () =&gt; void;
@@ -839,7 +839,7 @@ type TDirectorFormProps = {
 &nbsp;
 export function FormIndividualsDirector({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TDirectorFormProps) {
@@ -959,7 +959,7 @@ export function FormIndividualsDirector({
         types: 101,
         addresses: data.addresses,
         fullNames: data.fullNames,
-        corporateCode: corporateCode,
+        registerId: registerId,
         personalId: choosedEditData?.personalId,
         citizenId: dropDownChoosed === "ID" ? curInputText : <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
         passportId: dropDownChoosed === "Passport" ? <span class="branch-0 cbranch-no" title="branch not covered" >curInputText </span>: "",

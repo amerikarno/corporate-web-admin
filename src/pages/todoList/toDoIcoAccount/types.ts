@@ -3,14 +3,14 @@ type TDetail = {
     createBy?:string;
     CreatedAt?:string;
     DeletedAt?:string | null;
-    icoCode:number;
+    registerId: string;
     header: string;
     content: string;
   };
   
   type TFaq = {
     id?: string;
-    icoCode:number;
+    registerId: string;
     createBy?:string;
     CreatedAt?:string;
     DeletedAt?:string | null;
@@ -24,7 +24,7 @@ type TDetail = {
     createBy?:string;
     CreatedAt?:string;
     DeletedAt?:string | null;
-    icoCode: string;
+    registerId: string;
     picture?: string;
     firstName: string;
     midName: string;
@@ -69,7 +69,7 @@ type TDetail = {
 
   export interface TAssetIssuance {
     issuanceTerms: {
-        icoCode?: string;
+        registerId?: string;
         investmentPeriod?: string;
         dividendYield?: string;
         grossMargin?: string;
@@ -83,7 +83,7 @@ type TDetail = {
 
   export interface TAssetKeyInfo {
       keyInformation?: {
-      icoCode?: string;
+      registerId?: string;
       network?: string;
       precision?: string;
       capitalStructure?: string;
@@ -96,10 +96,10 @@ type TDetail = {
   }
   
   export interface TAssetData {
-    icoCode?: string;
+    registerId?: string;
     asset: {
       id:string;
-      icoCode?: number;
+      registerId?: string;
       createBy?:string;
       CreatedAt?:string;
       DeletedAt?:string | null;
@@ -115,7 +115,7 @@ type TDetail = {
       minimum: string;
     };
     info: {
-      icoCode?: string;
+      registerId?: string;
       CreatedAt?:string;
       DeletedAt?:string | null;
       totalIssuance: string;
@@ -131,7 +131,7 @@ type TDetail = {
     videos: string[] | null;
     faq: TFaq[];
     keyInformation: {
-      icoCode:string;
+      registerId:string;
       createBy?:string;
       CreatedAt?:string;
       DeletedAt?:string | null;
@@ -148,7 +148,7 @@ type TDetail = {
       createBy?:string;
       CreatedAt?:string;
       DeletedAt?:string | null;
-      icoCode:string;
+      registerId:string;
       investmentPeriod: string;
       dividendYield: string;
       grossMargin: string;
@@ -163,7 +163,7 @@ type TDetail = {
       createBy?:string;
       CreatedAt?:string;
       DeletedAt?:string | null;
-      icoCode: number;
+      registerId: string;
       picture?: string;
       firstName: string;
       midName: string;

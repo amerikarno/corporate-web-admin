@@ -13,20 +13,19 @@ import Dropbox from "@/components/Dropbox";
 import { Button } from "@/components/ui/button";
 import { checkFormatIDCard } from "@/lib/utils";
 import { TIndividualShareholder as TIndividualShareholderEdit } from "../../constant/type";
-import { mapDataToTIndividualShareholder } from "../libs/utils";
 import { useDispatch } from "react-redux";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TIndividualShareholderEdit | null;
   clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsShareholders({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TShareHoldersFormProps) {
@@ -60,7 +59,7 @@ export function FormIndividualsShareholders({
       tmp = { ...tmp, citizenId: "" };
     }
     tmp.types = 301;
-    tmp.corporateCode = corporateCode;
+    tmp.registerId = registerId;
     tmp.personalId = choosedEditData?.personalId || "";
     tmp.citizenId = dropDownChoosed === "ID" ? curInputText : "",
     tmp.passportId = dropDownChoosed === "Passport" ? curInputText : ""
@@ -106,22 +105,7 @@ export function FormIndividualsShareholders({
     }
     setCurInputText(choosedEditData?.citizenId || choosedEditData?.passportId || "");
     setCurInput(!!choosedEditData?.citizenId || !!choosedEditData?.passportId);
-  }, [choosedEditData, setValue]);
-
-  useEffect(() => {
-    const individualShareholderData = mapDataToTIndividualShareholder(
-      choosedEditData || null
-    ) || {
-      fullNames: [{ title: "", firstName: "", lastName: "" }],
-      nationality: "",
-      sharePercentage: 0,
-      citizenId: "",
-      passportId: "",
-      expiryDate: "mm/dd/yyyy",
-    };
-    reset(individualShareholderData);
-    setHasDate(true);
-  }, [choosedEditData, reset]);
+  }, [choosedEditData, setValue]);;
 
   const [hasDate, setHasDate] = useState<boolean>(
     choosedEditData?.expiryDate ? true : false

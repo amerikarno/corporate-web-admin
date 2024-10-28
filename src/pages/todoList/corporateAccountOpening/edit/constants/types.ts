@@ -21,17 +21,17 @@ export type TFullNameForCorporateInfo = [
 ];
 
 export type TSubAddress = {
-  addressNo: string;
+  addressNo?: string;
   building?: string;
   floor?: string;
   mooNo?: string;
   soi?: string;
   road?: string;
-  tambon: string;
-  amphoe: string;
-  province: string;
-  postalCode: string;
-  country: string;
+  tambon?: string;
+  amphoe?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
   //type?: number;
 };
 
@@ -54,11 +54,11 @@ export type TPlaceIncorporateAddress = {
 };
 
 export type TCorporateInfo = {
-  corporateCode?: string;
+  registerId?: string;
   name: string;
   registrationNo: string;
   taxId: string;
-  dateofincorporation: string;
+  dateOfIncorporation: string;
   isRegisteredThailand: boolean;
   isPrimaryCountry: boolean;
   registered: string;
@@ -95,7 +95,7 @@ export type TRegisteredCountryPrimaryCountryOperation = {
 };
 
 export type TIndividualsShareholders = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
@@ -115,7 +115,7 @@ export type TBank = {
 };
 
 export type TAttorney = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
@@ -129,7 +129,7 @@ export type TAttorney = {
 };
 
 export type TAuthorizePerson = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
@@ -140,7 +140,7 @@ export type TAuthorizePerson = {
   personalId?: string;
 };
 export type TContactPerson = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   position: string;
   division: string;
@@ -150,7 +150,7 @@ export type TContactPerson = {
 };
 
 export type TDirector = {
-  corporateCode?: string;
+  registerId?: string;
   fullNames: TFullName[];
   citizenId?: string;
   passportId?: string;
@@ -162,7 +162,7 @@ export type TDirector = {
 };
 
 export type TJuristicsShareholders = {
-  corporateCode?: string;
+  registerId?: string;
   juristicName: string;
   registrationNo: string;
   registeredCountry: string;
@@ -202,7 +202,7 @@ export type TJuristicBusinessType = TNumber;
 export type TJuristicSourceOfIncome = TNumber;
 export type TJusristicInvestmentObjective = TNumber;
 export type TJuristicTypeAll = {
-  corporateCode: string;
+  registerId: string;
   corporateType: TCorporateType;
   businessType: TJuristicBusinessType;
   businessTypeOther: string;
@@ -220,7 +220,7 @@ export type TMapPages = {
 
 // export type TBodyFormIndividualsShareholders = {
 //   fullNames: TFullName[];
-//   corporateCode: string;
+//   registerId: string;
 //   passportId?: string;
 //   citizenId?: string;
 //   expiryDate: string;
@@ -321,7 +321,7 @@ export type CorporateTypeBody = {
   otherIncome?: string;
   otherCountry?: string;
   otherInvestment?: string;
-  corporateCode?: string;
+  registerId?: string;
 };
 
 export type TErrors = {
@@ -331,7 +331,9 @@ export type TErrors = {
 };
 
 export type SuitTestResult = {
-  corporateCode?: string;
+  CreatedAt?: string;
+  DeletedAt?: string | null;
+  registerId?: string;
   accountID?: string;
   totalScore?: number;
   level?: number;

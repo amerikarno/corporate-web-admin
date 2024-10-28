@@ -18,13 +18,13 @@ jest.mock("@/lib/utils", () => ({
 
 const corporateListMock = [
     {
-        "CorporateCode": 80000001,
+        "registerId": 80000001,
         "Info": {
             "id": "dedc36d2-5b9b-4199-93e1-5c0ddc3eb292",
             "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
             "CreatedAt": "2024-09-20T03:37:01.802Z",
             "DeletedAt": null,
-            "corporateCode": 80000001,
+            "registerId": 80000001,
             "name": "name-80000001",
             "registrationNo": "312321",
             "taxId": "312312",
@@ -36,7 +36,7 @@ const corporateListMock = [
                 "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                 "CreatedAt": "2024-09-20T03:37:05.993Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "isThailand": true,
                 "other": "",
                 "types": 603
@@ -46,7 +46,7 @@ const corporateListMock = [
                 "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                 "CreatedAt": "2024-09-20T03:37:01.853Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "isThailand": true,
                 "other": "",
                 "types": 601
@@ -56,7 +56,7 @@ const corporateListMock = [
                 "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                 "CreatedAt": "2024-09-20T03:37:01.853Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "isThailand": true,
                 "other": "",
                 "types": 602
@@ -64,14 +64,14 @@ const corporateListMock = [
         ],
         "CorporateAddress": [
             {
-                "corporateCode": "",
+                "registerId": "",
                 "address": [
                     {
                         "id": "08ca4a07-bc45-4370-9242-b6de82b89b35",
                         "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                         "CreatedAt": "2024-09-20T03:37:01.942Z",
                         "DeletedAt": null,
-                        "corporateCode": 80000001,
+                        "registerId": 80000001,
                         "addressNo": "1111",
                         "tambon": "aa",
                         "amphoe": "88",
@@ -85,14 +85,14 @@ const corporateListMock = [
                 "telephone": ""
             },
             {
-                "corporateCode": "",
+                "registerId": "",
                 "address": [
                     {
                         "id": "5fb14656-d562-4ef0-b33b-42470a85672e",
                         "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                         "CreatedAt": "2024-09-20T03:37:02.021Z",
                         "DeletedAt": null,
-                        "corporateCode": 80000001,
+                        "registerId": 80000001,
                         "addressNo": "054",
                         "tambon": "eeee",
                         "amphoe": "eee",
@@ -111,7 +111,7 @@ const corporateListMock = [
             "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
             "CreatedAt": "2024-09-20T03:37:01.883Z",
             "DeletedAt": null,
-            "corporateCode": 80000001,
+            "registerId": 80000001,
             "registeredCapital": 0,
             "revenuePerYear": 0,
             "netProfitLoss": 0,
@@ -122,7 +122,7 @@ const corporateListMock = [
             "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
             "CreatedAt": "2024-09-20T03:37:05.898Z",
             "DeletedAt": null,
-            "corporateCode": 80000001,
+            "registerId": 80000001,
             "isJuristicThailand": true,
             "isTaxExempt": false,
             "isNonTaxExempt": true,
@@ -140,7 +140,7 @@ const corporateListMock = [
             "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
             "CreatedAt": "2024-09-20T03:37:05.933Z",
             "DeletedAt": null,
-            "corporateCode": 80000001,
+            "registerId": 80000001,
             "isAntiqueTrading": false,
             "isHotelRestaurant": true,
             "isArmament": false,
@@ -165,7 +165,7 @@ const corporateListMock = [
             "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
             "CreatedAt": "2024-09-20T03:37:05.966Z",
             "DeletedAt": null,
-            "corporateCode": 80000001,
+            "registerId": 80000001,
             "isRevenue": false,
             "isStock": true,
             "isDonation": false,
@@ -178,13 +178,13 @@ const corporateListMock = [
             {
                 "CreatedAt": "0001-01-01T00:00:00Z",
                 "DeletedAt": null,
-                "corporateCode": 0,
+                "registerId": 0,
                 "corporateCountry": {
                     "id": "6df41df6-92d9-4c0a-9c13-9db236a83019",
                     "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                     "CreatedAt": "2024-09-20T03:37:05.993Z",
                     "DeletedAt": null,
-                    "corporateCode": 80000001,
+                    "registerId": 80000001,
                     "isThailand": true,
                     "other": "",
                     "types": 603
@@ -206,7 +206,7 @@ const corporateListMock = [
                 "CreatedAt": "2024-08-07T08:12:03.024Z",
                 "DeletedAt": null,
                 "personalId": "8628fe0d-2141-4b3a-ae22-6f75b9167c53",
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "fullNames": [
                     {
                         "id": "3070a944-796a-47fc-aa63-8b58d1c0baae",
@@ -242,7 +242,7 @@ const corporateListMock = [
                 "CreatedAt": "2024-08-07T08:11:32.325Z",
                 "DeletedAt": null,
                 "personalId": "17ac8021-d805-4d1c-b5b0-cf6c2d1b9d21",
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "fullNames": [
                     {
                         "id": "3da2e2fc-3d96-40c6-9850-9c3d98453388",
@@ -276,7 +276,7 @@ const corporateListMock = [
                 "CreatedAt": "2024-08-07T08:11:13.253Z",
                 "DeletedAt": null,
                 "personalId": "abe201e1-4642-432c-bd76-260330e98d78",
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "fullNames": [
                     {
                         "id": "4dd52f2f-8da5-4d80-8355-860287a39de0",
@@ -312,7 +312,7 @@ const corporateListMock = [
                 "CreatedAt": "2024-08-07T08:11:22.416Z",
                 "DeletedAt": null,
                 "personalId": "15c4feb9-6db1-4bb1-bd41-775ef39082c1",
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "fullNames": [
                     {
                         "id": "25bda293-c935-4577-ae39-31ac52e824bc",
@@ -349,7 +349,7 @@ const corporateListMock = [
                 "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                 "CreatedAt": "2024-09-13T07:29:35.483Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "juristicName": "a",
                 "registrationNo": "4",
                 "registeredCountry": "a",
@@ -360,7 +360,7 @@ const corporateListMock = [
                 "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
                 "CreatedAt": "2024-09-12T02:25:26.668Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "juristicName": "dD",
                 "registrationNo": "312321",
                 "registeredCountry": "aa",
@@ -373,7 +373,7 @@ const corporateListMock = [
                 "createBy": "3",
                 "CreatedAt": "2024-08-14T09:31:04.558Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "accountType": "fixed",
                 "bankName": "Bank I",
                 "accountNo": "9988776655",
@@ -385,7 +385,7 @@ const corporateListMock = [
                 "createBy": "3",
                 "CreatedAt": "2024-08-14T09:31:04.558Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "accountType": "investment",
                 "bankName": "Bank H",
                 "accountNo": "2233445566",
@@ -397,7 +397,7 @@ const corporateListMock = [
                 "createBy": "3",
                 "CreatedAt": "2024-08-14T09:31:04.558Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "accountType": "savings",
                 "bankName": "Bank G",
                 "accountNo": "5566778899",
@@ -409,7 +409,7 @@ const corporateListMock = [
                 "createBy": "fab122dc-77c7-49fc-8e0d-865eca652b80",
                 "CreatedAt": "2024-09-12T08:44:10.337Z",
                 "DeletedAt": null,
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "accountType": "savings",
                 "bankName": "Bank G",
                 "accountNo": "5566778899",
@@ -424,7 +424,7 @@ const corporateListMock = [
                 "CreatedAt": "2024-09-27T07:53:29.637Z",
                 "DeletedAt": null,
                 "docTypes": "authorize",
-                "corporateCode": 80000001,
+                "registerId": 80000001,
                 "fileName": "download (4).jpg",
                 "fileTypes": "image/jpeg",
                 "FilePath": "uploads/80000001/authorize/download (4).jpg"
@@ -433,7 +433,7 @@ const corporateListMock = [
         "SuitTestResult": {
             "CreatedAt": "0001-01-01T00:00:00Z",
             "DeletedAt": null,
-            "corporateCode": "80000001",
+            "registerId": "80000001",
             "accountID": "",
             "totalScore": 12,
             "level": 1,
@@ -522,7 +522,7 @@ const mockFxExhange = [
         "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
         "CreatedAt": "2024-09-18T05:22:17.91Z",
         "DeletedAt": null,
-        "corporateCode": 80000005,
+        "registerId": 80000005,
         "accountId": 0,
         "exchange": "THB/USD",
         "exchangeRate": 12312300,
@@ -537,7 +537,7 @@ const mockFxExhange = [
         "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
         "CreatedAt": "2024-09-18T05:22:35.524Z",
         "DeletedAt": null,
-        "corporateCode": 80000007,
+        "registerId": 80000007,
         "accountId": 0,
         "exchange": "THB/USD",
         "exchangeRate": 1200000,
@@ -600,7 +600,7 @@ const mockAxios = new MockAdapter(axios);
           userEvent.click(pairOption);
       })
       await act(async () => {
-        fireEvent.change(screen.getByTestId("corporateCodeInput"), {
+        fireEvent.change(screen.getByTestId("registerIdInput"), {
           target: { value: 80000001 }
         });
         fireEvent.change(screen.getByTestId("exchangeRateInput"), {
@@ -618,7 +618,7 @@ const mockAxios = new MockAdapter(axios);
       });
 
       await waitFor(() => {
-        expect(screen.getByTestId("corporateCodeInput")).toHaveValue(80000001);
+        expect(screen.getByTestId("registerIdInput")).toHaveValue(80000001);
         expect(screen.getByTestId("exchangeRateInput")).toHaveValue(30);
         expect(screen.getByTestId("exchangeSpreadInput")).toHaveValue(0.1);
         expect(screen.getByTestId("operationSpreadInput")).toHaveValue(0.05);
@@ -699,7 +699,7 @@ const mockAxios = new MockAdapter(axios);
 
         const expectedFormData = {
             data: {
-                corporateCode: 80000005,
+                registerId: 80000005,
                 exchangeRate: 12312300,
                 exchangeSpread: 12312300,
                 operationSpread: 12312300,

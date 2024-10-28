@@ -26,7 +26,7 @@ const EditButtonCell = ({ row }: { row: TIndividualData }) => {
 export const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
   {
     name: "Individualc ID",
-    selector: (row: TIndividualData) => row.id || "",
+    selector: (row: TIndividualData) => row.registerId || "",
   },
   {
     name: "Individual Name",

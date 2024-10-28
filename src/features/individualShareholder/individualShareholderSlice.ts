@@ -50,7 +50,7 @@ export const individualShareholderSlice = createSlice({
         state.individualShareholders[index] = {
           ...action.payload.individualShareholder,
           personalId: action.payload.newPersonalId,
-          corporateCode: String(action.payload.individualShareholder.corporateCode),
+          registerId: String(action.payload.individualShareholder.registerId),
         };
       }
     },

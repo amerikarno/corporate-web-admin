@@ -896,8 +896,8 @@ export default function BankOrderEdit() {
   }
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState&lt;string&gt;("deposite");
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
+    { registerId: string }[]
   &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TBankOrder&gt;();
   const [bankRemove, setBankRemove] = useState(false);
@@ -945,7 +945,7 @@ export default function BankOrderEdit() {
     (state) =&gt; state.bankOrder?.bankOrders || <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
   ) as TBankOrder[];
 &nbsp;
-  const fetchCorporateCodes = async () =&gt; {
+  const fetchregisterIds = async () =&gt; {
     try {
       const token = getCookies();
       const res = await axios.post(
@@ -959,10 +959,10 @@ export default function BankOrderEdit() {
       );
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (res.status === 200) {</span>
-        const corporateCodes = <span class="cstat-no" title="statement not covered" >res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-          corporateCode: item.CorporateCode,
+        const registerIds = <span class="cstat-no" title="statement not covered" >res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+          registerId: item.registerId,
         }));
-<span class="cstat-no" title="statement not covered" >        setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >        setFetchedregisterIds(registerIds);</span>
       } else {
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`87894040_96_8_96_54_4`,"Failed to fetch corporate codes"));</span>
       }
@@ -1005,7 +1005,7 @@ export default function BankOrderEdit() {
 &nbsp;
   const columnsOrderTrade: TableColumn&lt;TBankOrder&gt;[] = [
     {
-      name: "CorporateCode",
+      name: "registerId",
       selector: <span class="fstat-no" title="function not covered" >(r</span>ow: TBankOrder) =&gt; <span class="cstat-no" title="statement not covered" >row.accountId || "",</span>
     },
     {
@@ -1079,7 +1079,7 @@ export default function BankOrderEdit() {
 &nbsp;
   useEffect(() =&gt; {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 &nbsp;
   const onSubmit = <span class="fstat-no" title="function not covered" >async </span>(data: TBankOrder) =&gt; {
@@ -1147,17 +1147,17 @@ export default function BankOrderEdit() {
                     label="Corporate Code"
                     id="accountId"
                     disabled={isSubmitting}
-                    list="corporateCodes"
+                    list="registerIds"
                   /&gt;
                   {errors.accountId &amp;&amp; (
                     &lt;p className="text-red-500 text-sm px-2"&gt;
                       {errors.accountId.message}
                     &lt;/p&gt;
                   )}
-                  &lt;datalist id="corporateCodes"&gt;
-                    {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                      &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                        {code.corporateCode}
+                  &lt;datalist id="registerIds"&gt;
+                    {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                      &lt;option key={index} v</span>alue={code.registerId}&gt;
+                        {code.registerId}
                       &lt;/option&gt;
                     ))}
                   &lt;/datalist&gt;

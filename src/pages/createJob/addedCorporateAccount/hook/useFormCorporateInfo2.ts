@@ -21,10 +21,10 @@ export function useFormCorporateInfo2() {
     const fetchCorporateTypeData = async () => {
       try {
         const token = getCookies();
-        const corporateCodeString = corp.CorporateCode.toString();
+        const registerIdString = corp.registerId.toString();
         const res = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode: corporateCodeString },
+          { registerId: registerIdString },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ export function useFormCorporateInfo2() {
     };
 
     fetchCorporateTypeData();
-  }, [dispatch, corp.CorporateCode]);
+  }, [dispatch, corp.registerId]);
   
   console.log(corp)
   
@@ -164,7 +164,7 @@ export function useFormCorporateInfo2() {
         createBy: undefined,
         corporateCountry: undefined,
         deleteBy: undefined,
-        corporateCode: corp.CorporateCode?.toString(),
+        registerId: corp.registerId?.toString(),
         isThailand: data.corporateCountry?.isThailand  ? (data.corporateCountry?.isThailand ? true : false) : false,
         otherCountry: data.corporateCountry?.isThailand ? "" : data.corporateCountry?.other,
       };
@@ -199,7 +199,7 @@ export function useFormCorporateInfo2() {
         let body = mapToForm2Create(data)
         body={
           ...body,
-          corporateCode: corporateData.CorporateCode.toString(),
+          registerId: corporateData.registerId.toString(),
           isThailand: data.corporateCountry?.isThailand ? true : false,
           otherCountry: data.corporateCountry?.other,
         }

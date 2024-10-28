@@ -16,14 +16,14 @@ export function PageJuristicType() {
 
   const dispatch = useDispatch();
   const initFormData = mapDataToTCorporateInfo(corporateData);
-  const corporateCode = localStorage.getItem("corporateCode");
+  const registerId = localStorage.getItem("registerId");
 
   useEffect(() => {
     const fetchCorpInfo = async () => {
       try {
         const queryResponse = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
+          { registerId: registerId },
           {
             headers: {
               "Content-type": "application/json",
@@ -41,7 +41,7 @@ export function PageJuristicType() {
       }
     };
 
-    if (corporateCode !== null) {
+    if (registerId !== null) {
       fetchCorpInfo();
     }
   }, [dispatch]);
@@ -55,7 +55,7 @@ export function PageJuristicType() {
             <div className="w-1/2 space-y-4">
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic ID</h1>
-                <h1 className="">: {corporateData?.CorporateCode ?? ""}</h1>
+                <h1 className="">: {corporateData?.registerId ?? ""}</h1>
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Juristic Investor Name</h1>
@@ -73,7 +73,7 @@ export function PageJuristicType() {
               </div>
               <div className="flex flex-row gap-4">
                 <h1 className="font-bold">Date Of Incorporation</h1>
-                <h1 className="">: {initFormData?.dateofincorporation}</h1>
+                <h1 className="">: {initFormData?.dateOfIncorporation}</h1>
               </div>
             </div>
           </div>

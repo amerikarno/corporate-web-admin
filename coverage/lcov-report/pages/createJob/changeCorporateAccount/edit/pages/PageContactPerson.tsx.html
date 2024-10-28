@@ -548,7 +548,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
   const clearChoosedEditData = () =&gt; {
     setChoosedEditData(undefined);
   };
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
   const token = getCookies();
   const { handleSubmitContactPerson } = useContactPerson();
   const [choosedEditData, setChoosedEditData] = useState&lt;TContact&gt;();
@@ -559,7 +559,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
       const res = await axios
       .post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -571,7 +571,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
         const updatedContacts: TContact[] = <span class="cstat-no" title="statement not covered" >contacts.map(<span class="fstat-no" title="function not covered" >(c</span>ontact: any) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          return {</span>
             ...contact,
-            personalId: contact.personalID,
+            personalId: contact.personalId,
           };
         });
 <span class="cstat-no" title="statement not covered" >        dispatch(setContactPersons(updatedContacts));</span>
@@ -584,10 +584,10 @@ export function PageContactPerson({}: TPageContactPersonProps) {
     }
   }
   useEffect(() =&gt; {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2774769777_79_6_79_44_4`,"corporateCode not found"))</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`2774769777_79_6_79_44_4`,"registerId not found"))</span>
     }
   }, []);
 &nbsp;
@@ -685,7 +685,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -720,7 +720,7 @@ export function PageContactPerson({}: TPageContactPersonProps) {
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitContactPerson}
-          corporateCode={corporateCode}
+          registerId={registerId}
         /&gt;
       &lt;/div&gt;
     &lt;/&gt;

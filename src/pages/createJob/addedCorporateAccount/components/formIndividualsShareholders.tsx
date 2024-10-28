@@ -18,14 +18,14 @@ import { useDispatch } from "react-redux";
 
 type TShareHoldersFormProps = {
   onsubmit: (data: TIndividualsShareholders) => void;
-  corporateCode: string;
+  registerId: string;
   choosedEditData?: TIndividualShareholderEdit | null;
   clearChoosedEditData: () => void;
 };
 
 export function FormIndividualsShareholders({
   onsubmit,
-  corporateCode,
+  registerId,
   choosedEditData,
   clearChoosedEditData,
 }: TShareHoldersFormProps) {
@@ -61,7 +61,7 @@ export function FormIndividualsShareholders({
       tmp = { ...tmp, citizenId: "" };
     }
     tmp.types = 301;
-    tmp.corporateCode = corporateCode;
+    tmp.registerId = registerId;
     tmp.personalId = choosedEditData?.personalId || "";
     tmp.citizenId = dropDownChoosed === "ID" ? curInputText : "",
     tmp.passportId = dropDownChoosed === "Passport" ? curInputText : ""
@@ -115,18 +115,14 @@ export function FormIndividualsShareholders({
     ) || {
       fullNames: [{ title: "", firstName: "", lastName: "" }],
       nationality: "",
-      sharePercentage: 0,
+      sharePercentage: null,
       citizenId: "",
       passportId: "",
-      expiryDate: "mm/dd/yyyy",
+      expiryDate: null
     };
     reset(individualShareholderData);
-    setHasDate(true);
   }, [choosedEditData, reset]);
 
-  const [hasDate, setHasDate] = useState<boolean>(
-    choosedEditData?.expiryDate ? true : false
-  );
   const valideID = () => {
     if (dropDownChoosed === "ID") {
       if (checkFormatIDCard(curInputText)) return true;
@@ -145,6 +141,7 @@ export function FormIndividualsShareholders({
       setTriggeriderror("");
       setCurInput(false);
       reset();
+      setValue("expiryDate",null);
       dispatch(setTestCorporateData(formData));
       console.log(formData);
       clearChoosedEditData();
@@ -305,27 +302,13 @@ export function FormIndividualsShareholders({
                   </>
                 )}
               </div>
-              {hasDate ? (
-                <div className="w-1/3">
-                  <Input
-                    {...register("expiryDate")}
-                    id="Date of Expired"
-                    onClick={() => setHasDate(false)}
-                    data-testid="expiredDate"
-                  />
-                  {errors.expiryDate && (
-                    <p className="text-red-500 text-sm px-2">
-                      {errors.expiryDate.message}
-                    </p>
-                  )}
-                </div>
-              ) : (
                 <div className="w-1/3">
                   <Input
                     {...register("expiryDate")}
                     label="Date of Expired"
                     id="Date of Expired"
                     disabled={isSubmitting}
+                    data-testid="expiredDate"
                     type="date"
                   />
                   {errors.expiryDate && (
@@ -334,7 +317,6 @@ export function FormIndividualsShareholders({
                     </p>
                   )}
                 </div>
-              )}
             </div>
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>

@@ -24,12 +24,12 @@ export default function OrderTradeEdit() {
 
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState<string>("buy");
-  const [selectedCorporateCode, setSelectedCorporateCode] =
-    useState<number | null>(null);
+  const [selectedregisterId, setSelectedregisterId] =
+    useState<string | null>(null);
   const [selectedTradingPair, setSelectedTradingPair] =
     useState<string>("THB/USDT");
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState<
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState<
+    { registerId: string }[]
   >([]);
   const [choosedEditData, setChoosedEditData] = useState<TOrderTrade>();
   const clearChoosedEditData = () => {
@@ -58,7 +58,7 @@ export default function OrderTradeEdit() {
     return Math.round(parseFloat(newValue) * 100000);
   };
 
-  const fetchCorporateCodes = async () => {
+  const fetchregisterIds = async () => {
     try {
       const token = getCookies();
 
@@ -72,10 +72,10 @@ export default function OrderTradeEdit() {
         }
       );
       if (res.status === 200) {
-        const corporateCodes = res.data.map((item: any) => ({
-          corporateCode: item.CorporateCode,
+        const registerIds = res.data.map((item: any) => ({
+          registerId: item.registerId,
         }));
-        setFetchedCorporateCodes(corporateCodes);
+        setFetchedregisterIds(registerIds);
       } else {
         console.log("Failed to fetch corporate codes");
       }
@@ -135,7 +135,7 @@ export default function OrderTradeEdit() {
   const columnsOrderTrade: TableColumn<TOrderTrade>[] = [
     {
       name: "Corporate Code",
-      selector: (row: TOrderTrade) => row.corporateCode || "",
+      selector: (row: TOrderTrade) => row.registerId || "",
     },
     {
       name: "Buy/Sell",
@@ -183,15 +183,15 @@ export default function OrderTradeEdit() {
 
   useEffect(() => {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: null,
+      registerId: null,
       cryptoAmount: null,
       cryptoPrice: null,
       currency: "",
       fiatAmount: null,
     };
     reset(orderListDatatoInputField);
-    if(choosedEditData?.corporateCode){
-      setSelectedCorporateCode(choosedEditData?.corporateCode);
+    if(choosedEditData?.registerId){
+      setSelectedregisterId(choosedEditData?.registerId);
     }
 
     if(choosedEditData?.pair){
@@ -234,13 +234,13 @@ export default function OrderTradeEdit() {
 
   useEffect(() => {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 
-  const handleCorporateCodeChange = (
+  const handleregisterIdChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSelectedCorporateCode(Number(event.target.value) || null);
+    setSelectedregisterId(event.target.value || null);
   };
 
   const handleTradingPairChange = (
@@ -256,7 +256,7 @@ export default function OrderTradeEdit() {
     const currency = buySell === "sell" ? sellCurrency : data.currency;
     let body: TOrderTrade = {
       ...data,
-      corporateCode:selectedCorporateCode || null,
+      registerId:selectedregisterId || null,
       operations: buySell,
       currency: currency,
       id: choosedEditData?.id,
@@ -280,7 +280,7 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode(null);
+          setSelectedregisterId(null);
           console.log("edit successful");
           fetchOrderList();
         } else {
@@ -295,7 +295,7 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode(null);
+          setSelectedregisterId(null);
           console.log("save successful");
           fetchOrderList();
         } else {
@@ -318,26 +318,26 @@ export default function OrderTradeEdit() {
               <div className="w-full flex justify-center items-center">
                 <div className="w-2/3">
                   <Input
-                    {...register("corporateCode")}
+                    {...register("registerId")}
                     label="Corporate Code"
-                    id="corporateCode"
+                    id="registerId"
                     disabled={isSubmitting}
-                    value={selectedCorporateCode !== null ? selectedCorporateCode : ""}
-                    onChange={handleCorporateCodeChange}
+                    value={selectedregisterId !== null ? selectedregisterId : ""}
+                    onChange={handleregisterIdChange}
                     type="number"
-                    list="corporateCodes"
+                    list="registerIds"
                     autoComplete="off"
                     inputClassName=""
                   />
-                  {errors.corporateCode && !selectedCorporateCode && (
+                  {errors.registerId && !selectedregisterId && (
                     <p className="text-red-500 text-sm px-2">
-                      {errors.corporateCode.message}
+                      {errors.registerId.message}
                     </p>
                   )}
-                  <datalist id="corporateCodes">
-                    {mockedCorporateCodes.map((code, index) => (
-                      <option key={index} value={code.corporateCode}>
-                        {code.corporateCode}
+                  <datalist id="registerIds">
+                    {mockedregisterIds.map((code, index) => (
+                      <option key={index} value={code.registerId}>
+                        {code.registerId}
                       </option>
                     ))}
                   </datalist>

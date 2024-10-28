@@ -591,7 +591,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
   // console.log(juristicShareholderData);
   const dispatch = useDispatch();
   const token = getCookies();
-  const corporateCode = localStorage.getItem("corporateCode") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+  const registerId = localStorage.getItem("registerId") || <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
   const corporatesInfo: TCorporateData = useSelector&lt;RootState&gt;(
     (state) =&gt; state.editCorporate
   ) as TCorporateData;
@@ -606,7 +606,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
     try {
       const res = await axios.post(
         "/api/v1/corporate/query",
-        { corporateCode },
+        { registerId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -637,10 +637,10 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
   };
 &nbsp;
   useEffect(() =&gt; {
-    if(corporateCode)
+    if(registerId)
       fetchedData();
     else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3344651682_96_6_96_44_4`,"corporateCode not found"))</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3344651682_96_6_96_44_4`,"registerId not found"))</span>
     }
   }, []);
 &nbsp;
@@ -735,7 +735,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
             &lt;div className="w-1/2 space-y-4"&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic ID&lt;/h1&gt;
-                &lt;h1 className=""&gt;: {corporatesInfo?.CorporateCode ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
+                &lt;h1 className=""&gt;: {corporatesInfo?.registerId ?? <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>&lt;/h1&gt;
               &lt;/div&gt;
               &lt;div className="flex flex-row gap-4"&gt;
                 &lt;h1 className="font-bold"&gt;Juristic Investor Name&lt;/h1&gt;
@@ -774,7 +774,7 @@ export function PageJuristicShareholder({}: TPageJuristicShareholderProps) {
           clearChoosedEditData={clearChoosedEditData}
           choosedEditData={choosedEditData}
           onsubmit={handleSubmitJuristics}
-          corporateCode={corporateCode}
+          registerId={registerId}
         /&gt;
       &lt;/div&gt;
     &lt;/&gt;

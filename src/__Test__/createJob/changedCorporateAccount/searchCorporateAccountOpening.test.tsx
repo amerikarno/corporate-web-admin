@@ -1,4 +1,4 @@
-import TodoCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/ChangeCorporateAccountOpenning";
+import TodoCorporateAccountOpenning from "@/pages/createJob/changeCorporateAccount/ChangeCorproateAccountOpening";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
@@ -7,7 +7,7 @@ import { store } from "@/app/store";
 import { setUser } from "@/features/user/userSlice";
 import { mockUser } from "@/__Test__/utils";
 import { useAccountOpening } from "@/pages/createJob/changeCorporateAccount/hook/useAccountOpening";
-import { TCorporateData } from "@/pages/createJob/changeCorporateAccount/constant/type";
+import { TCorporateData } from "@/pages/createJob/changeCorporateAccount/constants2/types";
 import { act } from "react";
 import MockAdapter from "axios-mock-adapter";
 import axios from "@/api/axios";
@@ -23,13 +23,13 @@ jest.mock(
 
 // Define a mock object that matches the TCorporateData type
 const mockTCorporateData: TCorporateData = {
-  CorporateCode: 80000001,
+  registerId: "80000001",
   Info: {
     id: "1",
     createBy: "user",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
-    corporateCode: 80000001,
+    registerId: "80000001",
     name: "name-80000001",
     registrationNo: "123456789",
     taxId: "123456789",
@@ -42,7 +42,7 @@ const mockTCorporateData: TCorporateData = {
     createBy: "user",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
-    corporateCode: 80000001,
+    registerId: "80000001",
     registeredCapital: 1000000,
     revenuePerYear: 500000,
     netProfitLoss: 100000,
@@ -53,7 +53,7 @@ const mockTCorporateData: TCorporateData = {
     createBy: "user",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
-    corporateCode: 80000001,
+    registerId: "80000001",
     isJuristicThailand: true,
     isTaxExempt: false,
     isNonTaxExempt: false,
@@ -67,10 +67,11 @@ const mockTCorporateData: TCorporateData = {
     isTaxExemptCompany: false,
   },
   BusinessTypes: {
+    createBy:"",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
     id: "1",
-    corporateCode: 80000001,
+    registerId: "80000001",
     isAntiqueTrading: false,
     isHotelRestaurant: false,
     isArmament: false,
@@ -91,10 +92,11 @@ const mockTCorporateData: TCorporateData = {
     otherBusinessType: "",
   },
   SourceOfIncomes: {
+    createBy:"",
     CreatedAt: "2023-01-01",
     DeletedAt: null,
     id: "1",
-    corporateCode: 80000001,
+    registerId: "80000001",
     isDonation: false,
     isLoan: false,
     isOtherIncome: false,
@@ -165,7 +167,7 @@ describe("test change corporate", () => {
     );
 
     await act(async () => {
-      await handleSearch({ corporateCode: "80000001" });
+      await handleSearch({ registerId: "80000001" });
     });
 
     await waitFor(
@@ -194,7 +196,7 @@ describe("test change corporate", () => {
     }-${ddPrev > 9 ? ddPrev : `0${ddPrev}`}`;
 
     let data = {
-      corporateCode: "",
+      registerId: "",
       dateFrom: dateStr,
       dateTo: dateStr,
     };
@@ -203,7 +205,7 @@ describe("test change corporate", () => {
       <Provider store={store}>
         <MemoryRouter>
           <TodoCorporateAccountOpenning
-            onDataFetched={(data) => {
+            onDataFetched={(data : any) => {
               fetchedData = data;
             }}
           />

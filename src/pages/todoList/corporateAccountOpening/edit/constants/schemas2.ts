@@ -78,7 +78,7 @@ export const corporateInfoSchema = z.object({
     .string()
     .min(1, "taxId cannot be empty")
     .regex(/^\d+$/, "taxId must be a numbers"),
-  dateofincorporation: z.string().min(1, "date cannot be empty"),
+  dateOfIncorporation: z.string().min(1, "date cannot be empty"),
   registered: z.string().optional(),
   primary: z.string().optional(),
   registeredBusiness: registerBusinessAddressSchema,
@@ -196,7 +196,7 @@ export const bankSchema = z.object({
 export type TBankSchema = z.infer<typeof bankSchema>;
 
 export const authorizedPersonSchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   fullNames: fullNamesSchema,
   citizenId: z.string().optional(),
   nationality: z.string().min(1, { message: "Nationality cannot be empty" }),
@@ -247,7 +247,7 @@ export type TIndividualsDirectorSchema = z.infer<
 >;
 
 export const individualsJuristicShareholdersSchema = z.object({
-  corporateCode: z.string().optional(),
+  registerId: z.string().optional(),
   juristicName: z.string().min(1, { message: "Name cannot be empty" }),
   registrationNo: z.string().min(1, "Registration number cannot be empty"),
   registeredCountry: z

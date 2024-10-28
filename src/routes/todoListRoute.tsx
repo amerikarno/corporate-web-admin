@@ -10,6 +10,7 @@ import FxExchangeTransactionList from "@/pages/todoList/fxExchange/fxExchangeTra
 import AccountApproval from "@/pages/todoList/accountApproval/AccountApproval";
 import ToDoAddedIcoSearch from "@/pages/todoList/toDoIcoAccount/ToDoAddedIcoSearch";
 import ToDoPageAddedIco from "@/pages/todoList/toDoIcoAccount/PageToDoAddedIco";
+import AccountLockUnLock from "@/pages/todoList/toDoLockUnLockAccount/AccountLockUnLock";
 
 export const todoListRoutes = () => {
   return (
@@ -69,6 +70,7 @@ export const todoListRoutes = () => {
         element={<BankTransactionList />}
         // element={<BlankPage name="cash deposit/withdraw transaction is developing"/>}
       />
+      <Route path="account-lockunlock" element={<AccountLockUnLock/>} />
       <Route path="fx-exchange" element={<FxExchangeTransactionList />} />
     </Route>
   );

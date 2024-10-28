@@ -1087,12 +1087,12 @@ export default function OrderTradeEdit() {
 &nbsp;
   const dispatch = useDispatch();
   const [buySell, setBuySell] = useState&lt;string&gt;("buy");
-  const [selectedCorporateCode, setSelectedCorporateCode] =
+  const [selectedregisterId, setSelectedregisterId] =
     useState&lt;number | null&gt;(null);
   const [selectedTradingPair, setSelectedTradingPair] =
     useState&lt;string&gt;("THB/USDT");
-  const [mockedCorporateCodes, setFetchedCorporateCodes] = useState&lt;
-    { corporateCode: number }[]
+  const [mockedregisterIds, setFetchedregisterIds] = useState&lt;
+    { registerId: string }[]
   &gt;([]);
   const [choosedEditData, setChoosedEditData] = useState&lt;TOrderTrade&gt;();
   const clearChoosedEditData = () =&gt; {
@@ -1121,7 +1121,7 @@ export default function OrderTradeEdit() {
     return Math.round(parseFloat(newValue) * 100000);
   };
 &nbsp;
-  const fetchCorporateCodes = async () =&gt; {
+  const fetchregisterIds = async () =&gt; {
     try {
       const token = getCookies();
 &nbsp;
@@ -1135,10 +1135,10 @@ export default function OrderTradeEdit() {
         }
       );
 <span class="cstat-no" title="statement not covered" >      if (res.status === 200) {</span>
-        const corporateCodes = <span class="cstat-no" title="statement not covered" >res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-          corporateCode: item.CorporateCode,
+        const registerIds = <span class="cstat-no" title="statement not covered" >res.data.map(<span class="fstat-no" title="function not covered" >(i</span>tem: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+          registerId: item.registerId,
         }));
-<span class="cstat-no" title="statement not covered" >        setFetchedCorporateCodes(corporateCodes);</span>
+<span class="cstat-no" title="statement not covered" >        setFetchedregisterIds(registerIds);</span>
       } else {
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3952246218_80_8_80_54_4`,"Failed to fetch corporate codes"));</span>
       }
@@ -1198,7 +1198,7 @@ export default function OrderTradeEdit() {
   const columnsOrderTrade: TableColumn&lt;TOrderTrade&gt;[] = [
     {
       name: "Corporate Code",
-      selector: (row: TOrderTrade) =&gt; row.corporateCode || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
+      selector: (row: TOrderTrade) =&gt; row.registerId || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
     },
     {
       name: "Buy/Sell",
@@ -1246,15 +1246,15 @@ export default function OrderTradeEdit() {
 &nbsp;
   useEffect(() =&gt; {
     const orderListDatatoInputField = choosedEditData || {
-      corporateCode: null,
+      registerId: null,
       cryptoAmount: null,
       cryptoPrice: null,
       currency: "",
       fiatAmount: null,
     };
     reset(orderListDatatoInputField);
-    if(choosedEditData?.corporateCode){
-      setSelectedCorporateCode(choosedEditData?.corporateCode);
+    if(choosedEditData?.registerId){
+      setSelectedregisterId(choosedEditData?.registerId);
     }
 &nbsp;
     if(choosedEditData?.pair){
@@ -1297,13 +1297,13 @@ export default function OrderTradeEdit() {
 &nbsp;
   useEffect(() =&gt; {
     fetchOrderList();
-    fetchCorporateCodes();
+    fetchregisterIds();
   }, [reset]);
 &nbsp;
-  const handleCorporateCodeChange = (
+  const handleregisterIdChange = (
     event: React.ChangeEvent&lt;HTMLInputElement&gt;
   ) =&gt; {
-    setSelectedCorporateCode(Number(event.target.value) || <span class="branch-1 cbranch-no" title="branch not covered" >null)</span>;
+    setSelectedregisterId(Number(event.target.value) || <span class="branch-1 cbranch-no" title="branch not covered" >null)</span>;
   };
 &nbsp;
   const handleTradingPairChange = (
@@ -1319,7 +1319,7 @@ export default function OrderTradeEdit() {
     const currency = buySell === "sell" ? sellCurrency : data.currency;
     let body: TOrderTrade = {
       ...data,
-      corporateCode:selectedCorporateCode || <span class="branch-1 cbranch-no" title="branch not covered" >null,</span>
+      registerId:selectedregisterId || <span class="branch-1 cbranch-no" title="branch not covered" >null,</span>
       operations: buySell,
       currency: currency,
       id: choosedEditData?.id,
@@ -1343,7 +1343,7 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode(null);
+          setSelectedregisterId(null);
           /* eslint-disable */console.log(...oo_oo(`3952246218_284_10_284_40_4`,"edit successful"));
           fetchOrderList();
         } else <span class="missing-if-branch" title="else path not taken" >E</span>{
@@ -1358,7 +1358,7 @@ export default function OrderTradeEdit() {
         if (res.status === 200) {
           reset();
           clearChoosedEditData();
-          setSelectedCorporateCode(null);
+          setSelectedregisterId(null);
           /* eslint-disable */console.log(...oo_oo(`3952246218_299_10_299_40_4`,"save successful"));
           fetchOrderList();
         } else <span class="missing-if-branch" title="else path not taken" >E</span>{
@@ -1381,26 +1381,26 @@ export default function OrderTradeEdit() {
               &lt;div className="w-full flex justify-center items-center"&gt;
                 &lt;div className="w-2/3"&gt;
                   &lt;Input
-                    {...register("corporateCode")}
+                    {...register("registerId")}
                     label="Corporate Code"
-                    id="corporateCode"
+                    id="registerId"
                     disabled={isSubmitting}
-                    value={selectedCorporateCode !== null ? selectedCorporateCode : ""}
-                    onChange={handleCorporateCodeChange}
+                    value={selectedregisterId !== null ? selectedregisterId : ""}
+                    onChange={handleregisterIdChange}
                     type="number"
-                    list="corporateCodes"
+                    list="registerIds"
                     autoComplete="off"
                     inputClassName=""
                   /&gt;
-                  {errors.corporateCode &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!selectedCorporateCode </span>&amp;&amp; (
+                  {errors.registerId &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!selectedregisterId </span>&amp;&amp; (
 <span class="branch-2 cbranch-no" title="branch not covered" >                    &lt;p className="text-red-500 text-sm px-2"&gt;</span>
-                      {errors.corporateCode.message}
+                      {errors.registerId.message}
                     &lt;/p&gt;
                   )}
-                  &lt;datalist id="corporateCodes"&gt;
-                    {mockedCorporateCodes.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                      &lt;option key={index} v</span>alue={code.corporateCode}&gt;
-                        {code.corporateCode}
+                  &lt;datalist id="registerIds"&gt;
+                    {mockedregisterIds.map(<span class="fstat-no" title="function not covered" >(c</span>ode, index) =&gt; (
+<span class="cstat-no" title="statement not covered" >                      &lt;option key={index} v</span>alue={code.registerId}&gt;
+                        {code.registerId}
                       &lt;/option&gt;
                     ))}
                   &lt;/datalist&gt;

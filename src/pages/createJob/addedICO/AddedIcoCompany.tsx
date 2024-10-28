@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { TCompanyMember, TMember } from "./types";
+import { TAssetData, TCompanyMember, TMember } from "./types";
 import { TAssetCompanyMemberSchema } from "./schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/Input";
@@ -25,20 +25,41 @@ import { Card } from "@/components/ui/card";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 import axios from "@/api/axios";
 import { getCookies } from "@/lib/Cookies";
+import { setAssetData } from "@/features/addedIcoData/AddedIcoData";
 
 const AddedIcoCompany = () => {
+
+  const callFetchData = async () => {
+    try{
+      const res = await axios.get("/api/v1/ico/query", {
+        headers: {
+          Authorization: `Bearer ${getCookies()}`,
+        },
+      })
+      if(res.status == 200){
+        const matchedData = res.data.find((item: { registerId: string }) => item.registerId === registerId);
+        if (matchedData) {
+          const assetData:TAssetData = matchedData;
+          dispatch(setAssetData(assetData));
+        }
+      }
+    }catch(error){
+      console.log("can not query data", error)
+    }
+
+  }
 
   const fetchedData = useSelector((state: RootState) => state.assetData.data);
   
   const dispatch = useDispatch();
 
-  const icoCode = localStorage.getItem("icoCode");
+  const registerId = localStorage.getItem("registerId");
   
   useEffect(() => {
     if (fetchedData?.companyMembers) {
       const updatedMembers = fetchedData.companyMembers.map((member) => ({
         ...member,
-        icoCode: member.icoCode.toString(),
+        registerId: member.registerId,
       }));
       setListOfMembers(updatedMembers);
     }
@@ -117,20 +138,6 @@ const AddedIcoCompany = () => {
     }
   };
 
-useEffect(() => {
-  if (choosedEditData) {
-    if (choosedEditData.picture && isBase64(choosedEditData.picture)) {
-      const decodedPicture = atob(choosedEditData.picture);
-      const pictureArray = new Uint8Array(decodedPicture.length);
-      for (let i = 0; i < decodedPicture.length; i++) {
-      pictureArray[i] = decodedPicture.charCodeAt(i);
-      }
-      setFile(pictureArray);
-  }
-    reset(mapChoosedDataToMmeber(choosedEditData));
-  }
-}, [choosedEditData]);
-
   const {
     register,
     handleSubmit,
@@ -140,16 +147,43 @@ useEffect(() => {
     resolver: zodResolver(TAssetCompanyMemberSchema),
   });
 
+  useEffect(() => {
+    if (choosedEditData) {
+      if (choosedEditData.picture && isBase64(choosedEditData.picture)) {
+        const decodedPicture = atob(choosedEditData.picture);
+        const pictureArray = new Uint8Array(decodedPicture.length);
+        for (let i = 0; i < decodedPicture.length; i++) {
+          pictureArray[i] = decodedPicture.charCodeAt(i);
+        }
+        setFile(pictureArray);
+    }
+      reset(mapChoosedDataToMmeber(choosedEditData));
+    }else{
+      reset({
+        companyMembers: [{
+          firstName: "",
+          midName: "",
+          lastName: "",
+          position: "",
+          history: "",
+          picture: undefined,
+          registerId: "",
+          memberId: ""
+        }]
+      });
+    }
+  }, [choosedEditData]);
+
   const onSubmit = async (data: TCompanyMember) => {
 
-    if(icoCode){
+    if(registerId){
       if ((file && (file.length / (1024 * 1024) < 2.0)) || !file) {
               const body = { 
                 companyMembers: [{
                     ...data.companyMembers[0],
-                    icoCode:icoCode.toString(),
+                    registerId:registerId,
                     picture:file,
-                    memberId:choosedEditData?.memberId
+                    memberId:choosedEditData?.id
                 }]
             }
           console.log("form5 ico body :", body);
@@ -176,10 +210,7 @@ useEffect(() => {
               if(res.status === 200){
                 reset();
                 console.log("update ico form5 success",res)
-                const updatedMembers = listOfMembers.map(member => 
-                  member.memberId === choosedEditData.memberId ? { ...body.companyMembers[0], picture: body.companyMembers[0].picture?.toString() , memberId:res.data.memberId } : member
-                );
-                setListOfMembers(updatedMembers);
+                callFetchData();
                 setChoosedEditData(null);
               }else{
                 console.log("update ico form5 fail",res)
@@ -197,7 +228,7 @@ useEffect(() => {
               if(res.status === 200){
                 reset();
                 console.log("create ico form5 success",res);
-                setListOfMembers([...listOfMembers, {...data.companyMembers[0], memberId: res.data.memberId[0]}]);
+                callFetchData();
               }else{
                 console.log("create ico form5 fail",res)
               }
@@ -217,9 +248,10 @@ useEffect(() => {
   const handleDelete = async (data: TMember) => {
     try {
       const token = getCookies();
+      console.log(data)
       const res = await axios.post(
-        "/api/v1/ico/delete",
-        { memberId: data.memberId },
+        "/api/v1/ico/members/delete",
+        { memberId: data.id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -229,8 +261,8 @@ useEffect(() => {
       if (res.status === 200) {
         reset();
         console.log("delete successful");
-        const updatedMembers = listOfMembers.filter(member => member.memberId !== data.memberId);
-        setListOfMembers(updatedMembers);
+        callFetchData();
+        setChoosedEditData(null);
       }
     } catch (error) {
       console.log("delete failed", error);

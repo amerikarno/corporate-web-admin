@@ -1,6 +1,6 @@
 export type TTransaction = {
   id: string;
-  corporateCode: number;
+  registerId: string;
   operations: string;
   cryptoAmount: number;
   cryptoPrice: number;

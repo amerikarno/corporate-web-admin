@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type SuitTestResult = {
-  corporateCode?: string;
+  registerId?: string;
   totalScore?: number;
   level?: number;
   invsetorTypeRisk?: string;

@@ -24,204 +24,135 @@ jest.mock("@/lib/utils", () => ({
   }));
 
 const mockIndividualData = 
-  {
-      "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-      "CreatedAt": "2024-09-23T06:15:58.847Z",
-      "DeletedAt": undefined,
-      "id": 90000085,
-      "thTitle": "นาย",
-      "thName": "test-ndid-true",
-      "thSurname": "ทดสอบ-ndid-true",
-      "engTitle": "Mr.",
-      "engName": "getter",
-      "engSurname": "getter",
-      "email": "test@example.us",
-      "mobile": "0987654321",
-      "agreement": true,
-      "birthDate": "2024-09-18T00:00:00Z",
-      "marriageStatus": "โสด",
-      "citizenId": "123123",
-      "laserCode": "123",
-      "education": "1",
-      "sourceOfIncome": "1",
-      "currentOccupation": "13",
-      "officeName": "ทิสโก้ทาวเวอร์",
-      "typeOfBusiness": "2",
-      "positionName": "ทิสโก้ทาวเวอร์",
-      "salaryRange": "1",
-      "shortTermInvestment": true,
-      "longTermInvestment": true,
-      "taxesInvestment": true,
-      "retireInvestment": true,
-      "address": [
-          {
-              "CreatedAt": "2024-09-23T06:16:04.213Z",
-              "DeletedAt": null,
-              "id": "90000085",
-              "homeNumber": "70/178 ramintra65 yak 2-4",
-              "villageNumber": "floor",
-              "villageName": "moo",
-              "subStreetName": "soi",
-              "streetName": "road",
-              "subDistrictName": "บ้านพานถม",
-              "districtName": "เขตพระโขนง",
-              "provinceName": "ระยอง",
-              "zipCode": "10400",
-              "countryName": "ออสเตรีย",
-              "types": 1
-          },
-          {
-              "CreatedAt": "2024-09-23T06:16:04.213Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "homeNumber": "70/178 ramintra65 yak 2-4",
-              "villageNumber": "floor",
-              "villageName": "moo",
-              "subStreetName": "soi",
-              "streetName": "road",
-              "subDistrictName": "บ้านพานถม",
-              "districtName": "เขตพระโขนง",
-              "provinceName": "ระยอง",
-              "zipCode": "10400",
-              "countryName": "ออสเตรีย",
-              "types": 2
-          },
-          {
-              "CreatedAt": "2024-09-23T06:16:04.213Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "homeNumber": "70/178 ramintra65 yak 2-4",
-              "villageNumber": "floor",
-              "villageName": "moo",
-              "subStreetName": "soi",
-              "streetName": "road",
-              "subDistrictName": "บ้านพานถม",
-              "districtName": "เขตพระโขนง",
-              "provinceName": "ระยอง",
-              "zipCode": "10400",
-              "countryName": "ออสเตรีย",
-              "types": 3
+{
+  "id": "20521f76-4a30-4b61-b0be-3bb5b552d1c1",
+  "CreatedAt": "2024-10-10T15:17:25+07:00",
+  "DeletedAt": null,
+  "registerId": "90000001",
+  "thTitle": "นาย",
+  "thName": "เกตเต้อ-ชื่อ",
+  "thSurname": "เกตเต้อ-นามสกุล",
+  "engTitle": "Mr.",
+  "engName": "getter-name",
+  "engSurname": "getter-surname",
+  "email": "test@gmail.com",
+  "mobile": "0884744411",
+  "agreement": true,
+  "birthDate": "2024-08-20T07:00:00+07:00",
+  "marriageStatus": "โสด",
+  "citizenId": "1103703348990",
+  "laserCode": "12123",
+  "education": "2",
+  "sourceOfIncome": "4",
+  "currentOccupation": "5",
+  "officeName": "ทิสโก้ทาวเวอร์",
+  "typeOfBusiness": "6",
+  "positionName": "ทิสโก้ทาวเวอร์",
+  "salaryRange": "3",
+  "shortTermInvestment": true,
+  "taxesInvestment": true,
+  "address": [
+      {
+          "id": "1fe4cb92-8803-4869-90a7-ec592b5e4693",
+          "CreatedAt": "2024-10-10T15:17:57+07:00",
+          "DeletedAt": null,
+          "registerId": "90000001",
+          "homeNumber": "homeAddress",
+          "villageNumber": "homeAddress",
+          "villageName": "homeAddress",
+          "subStreetName": "homeAddress",
+          "streetName": "homeAddress",
+          "subDistrictName": "ตลาดยอด",
+          "districtName": "เขตมีนบุรี",
+          "provinceName": "ตราด",
+          "zipCode": "10400",
+          "countryName": "หมู่เกาะอะแลนด์",
+          "types": 1
+      },
+      {
+          "id": "d44a48eb-bfb0-49ad-9e2c-f4c639477c40",
+          "CreatedAt": "2024-10-10T15:17:57+07:00",
+          "DeletedAt": null,
+          "registerId": "90000001",
+          "homeNumber": "officeAddress",
+          "villageNumber": "officeAddress",
+          "villageName": "officeAddress",
+          "subStreetName": "officeAddress",
+          "streetName": "officeAddress",
+          "subDistrictName": "คลองสิบ",
+          "districtName": "เขตภาษีเจริญ",
+          "provinceName": "สุรินทร์",
+          "zipCode": "10160",
+          "countryName": "บูร์กินาฟาโซ",
+          "types": 3
+      },
+      {
+          "id": "e2e7c862-5821-4693-9c16-951399a6ac61",
+          "CreatedAt": "2024-10-10T15:17:57+07:00",
+          "DeletedAt": null,
+          "registerId": "90000001",
+          "homeNumber": "currentAddress",
+          "villageNumber": "currentAddress",
+          "villageName": "currentAddress",
+          "subStreetName": "currentAddress",
+          "streetName": "currentAddress",
+          "subDistrictName": "กระทุ่มราย",
+          "districtName": "เขตตลิ่งชัน",
+          "provinceName": "สุรินทร์",
+          "zipCode": "10170",
+          "countryName": "เบลเยียม",
+          "types": 2
+      }
+  ],
+  "bank": [
+      {
+          "id": "b72f56c0-d283-440f-838e-cefedc79dd1b",
+          "CreatedAt": "2024-10-10T15:17:57+07:00",
+          "DeletedAt": null,
+          "registerId": "90000001",
+          "bankName": "ธนาคารกรุงเทพ จำกัด (มหาชน)",
+          "bankBranchName": "bank1",
+          "bankAccountNumber": "bankaccountid1",
+          "types": 1
+      },
+      {
+          "id": "e20f92ec-e743-486f-b549-fd86f387e664",
+          "CreatedAt": "2024-10-10T15:17:57+07:00",
+          "DeletedAt": null,
+          "registerId": "90000001",
+          "bankName": "ธนาคารกรุงศรีอยุธยา จำกัด (มหาชน)",
+          "bankBranchName": "bank2",
+          "bankAccountNumber": "bankaccountid2",
+          "types": 0
+      }
+  ],
+  "SuiteTestResult": {
+      "createBy": "",
+      "deletedBy": "",
+      "registerId": "90000001",
+      "suiteTestResult": {
+          "registerId": "",
+          "investorTypeRisk": "",
+          "level": 0,
+          "totalScore": 0,
+          "suiteTestResult": {
+              "answer": {}
           }
-      ],
-      "bank": [
-          {
-              "CreatedAt": "2024-09-23T06:16:04.216Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "bankName": "ธนาคารยูโอบี จำกัด (มหาชน)",
-              "bankBranchName": "bank2",
-              "bankAccountNumber": "bankaccountid2",
-              "types": 2
-          },
-          {
-              "CreatedAt": "2024-09-23T06:16:04.216Z",
-              "DeletedAt": undefined,
-              "id": "90000085",
-              "bankName": "ธนาคารกสิกรไทย จำกัด (มหาชน)",
-              "bankBranchName": "bank1",
-              "bankAccountNumber": "bankaccountid1",
-              "types": 1
-          }
-      ],
-      "SuiteTestResult": {
-            "createBy": "",
-            "deletedBy": "",
-            "id": "90000085",
-            "suiteTestResult": {
-                "cid": "3dd079e5-5553-410d-83e9-be1b8cd412a4",
-                "investorTypeRisk": "เสี่ยงตํ่า",
-                "level": 1,
-                "totalScore": 9,
-                "suitTestResult": {
-                    "answer": {
-                        "0": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "1": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "2": {
-                            "ans": [
-                                1,
-                                0,
-                                0
-                            ]
-                        },
-                        "3": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "4": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "5": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "6": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "7": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        },
-                        "8": {
-                            "ans": [
-                                1,
-                                0,
-                                0,
-                                0
-                            ]
-                        }
-                    }
-                }
-            },
-            "isFatca": false,
-            "fatcaInfo": null,
-            "isKnowLedgeDone": false,
-            "knowLedgeTestResult": 0
-        },
-      "ndid": true,
-      "thaid": false
-  }
+      },
+      "isFatca": false,
+      "fatcaInfo": null,
+      "isKnowLedgeDone": false,
+      "knowLedgeTestResult": 0
+  },
+  "ndid": true,
+  "thaid": false
+}
 
 
 describe("test create individual form1 (preinfo)", () => {
 
   beforeAll(() => {
-    localStorage.setItem('cid', '90000001');
+    localStorage.setItem('registerId', '90000001');
   })
   afterAll(() => {
     localStorage.clear();
@@ -423,8 +354,7 @@ describe("test create individual form1 (preinfo)", () => {
           citizenId: '1234567890123',
           laserCode: '1234567890123',
           agreement: true,
-          pageId: 100,
-          cid: "90000001"
+          registerId: '90000001'
         }
       };
 
@@ -458,20 +388,19 @@ describe("test create individual form1 (preinfo)", () => {
         const expectedFormData = {
           data: {
             thTitle: 'นาย',
-            thName: 'test-ndid-true',
-            thSurname: 'ทดสอบ-ndid-true',
+            thName: 'เกตเต้อ-ชื่อ',
+            thSurname: 'เกตเต้อ-นามสกุล',
             engTitle: 'Mr.',
-            engName: 'getter',
-            engSurname: 'getter',
-            email: 'test@example.us',
-            mobile: '0987654321',
-            birthDate: '2024-09-18T00:00:00.000Z',
+            engName: 'getter-name',
+            engSurname: 'getter-surname',
+            email: 'test@gmail.com',
+            mobile: '0884744411',
+            birthDate: '2024-08-20T00:00:00.000Z',
             marriageStatus: 'โสด',
-            citizenId: '123123',
-            laserCode: '123',
+            citizenId: '1103703348990',
+            laserCode: '12123',
             agreement: true,
-            pageId: 100,
-            cid: '90000001'
+            registerId: '90000001'
           }
         };
       
@@ -490,7 +419,7 @@ describe("test create individual form1 (preinfo)", () => {
   describe("test create individual form2 (basicinfo)", () => {
 
     beforeAll(() => {
-      localStorage.setItem('cid', '90000001');
+      localStorage.setItem('registerId', '90000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -502,6 +431,8 @@ describe("test create individual form1 (preinfo)", () => {
     });
   
     test("test input data(multiple input type)", async () => {
+
+      localStorage.clear();
 
       render(
         <Provider store={store}>
@@ -643,7 +574,7 @@ describe("test create individual form1 (preinfo)", () => {
       await waitFor(() => {
         const education = screen.getByTestId("education") as HTMLInputElement;
         console.log(education.value);
-        expect(education.value).toBe("2");
+        expect(education.value).toBe("มัธยม");
       });
 
       userEvent.selectOptions(
@@ -655,7 +586,7 @@ describe("test create individual form1 (preinfo)", () => {
       await waitFor(() => {
         const sourceOfIncome = screen.getByTestId("sourceOfIncome") as HTMLInputElement;
         console.log(sourceOfIncome.value);
-        expect(sourceOfIncome.value).toBe("1");
+        expect(sourceOfIncome.value).toBe("เงินเดือน");
       });
 
       userEvent.selectOptions(
@@ -667,7 +598,7 @@ describe("test create individual form1 (preinfo)", () => {
       await waitFor(() => {
         const currentOccupation = screen.getByTestId("currentOccupation") as HTMLInputElement;
         console.log(currentOccupation.value);
-        expect(currentOccupation.value).toBe("13");
+        expect(currentOccupation.value).toBe("เจ้าของธุรกิจ/ธุรกิจส่วนตัว");
       });
 
       const officeName = screen.getByLabelText("ชื่อสถานที่ทำงาน");
@@ -685,7 +616,7 @@ describe("test create individual form1 (preinfo)", () => {
       await waitFor(() => {
         const typeOfBusiness = screen.getByTestId("typeOfBusiness") as HTMLInputElement;
         console.log(typeOfBusiness.value);
-        expect(typeOfBusiness.value).toBe("2");
+        expect(typeOfBusiness.value).toBe("โรงแรม / ภัตตาคาร");
       });
 
       const jobPosition = screen.getByLabelText("ตำแหน่งงาน");
@@ -703,7 +634,7 @@ describe("test create individual form1 (preinfo)", () => {
       await waitFor(() => {
         const salaryRange = screen.getByTestId("salaryRange") as HTMLInputElement;
         console.log(salaryRange.value);
-        expect(salaryRange.value).toBe("1");
+        expect(salaryRange.value).toBe("<15,000");
       });
 
       //work address
@@ -888,8 +819,8 @@ describe("test create individual form1 (preinfo)", () => {
       
       //Expected form data
       const expectedFormData = {
-        data:  {
-          cid: '90000001',
+        data: {
+          registerId: null,
           investment: {
             shortTermInvestment: true,
             longTermInvestment: true,
@@ -897,13 +828,13 @@ describe("test create individual form1 (preinfo)", () => {
             retireInvestment: false
           },
           occupation: {
-            education: '2',
-            sourceOfIncome: '1',
-            currentOccupation: '13',
+            education: 'มัธยม',
+            sourceOfIncome: 'เงินเดือน',
+            currentOccupation: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
             officeName: 'office name',
-            typeOfBusiness: '2',
+            typeOfBusiness: 'โรงแรม / ภัตตาคาร',
             positionName: 'job position',
-            salaryRange: '1'
+            salaryRange: '<15,000'
           },
           addresses: [
             {
@@ -961,8 +892,7 @@ describe("test create individual form1 (preinfo)", () => {
               types: 2,
               is_default: false
             }
-          ],
-          pageID: 300
+          ]
         }
       };
 
@@ -976,7 +906,7 @@ describe("test create individual form1 (preinfo)", () => {
     }, 40000);
 
     test("update basicinfo", async () => {
-
+      localStorage.setItem("registerId", "90000001");
       store.dispatch(setIndividualData(mockIndividualData));
       render(
         <Provider store={store}>
@@ -996,80 +926,73 @@ describe("test create individual form1 (preinfo)", () => {
       //Expected form data
         const expectedFormData = {
           data: {
-            cid: '90000001',
+            registerId: "90000001",
             investment: {
               shortTermInvestment: true,
-              longTermInvestment: true,
+              longTermInvestment: false,
               taxesInvestment: true,
-              retireInvestment: true
+              retireInvestment: false
             },
             occupation: {
-              education: '1',
-              sourceOfIncome: '1',
-              currentOccupation: '13',
+              education: '2',
+              sourceOfIncome: '4',
+              currentOccupation: '5',
               officeName: 'ทิสโก้ทาวเวอร์',
-              typeOfBusiness: '2',
+              typeOfBusiness: '6',
               positionName: 'ทิสโก้ทาวเวอร์',
-              salaryRange: '1'
+              salaryRange: '3'
             },
             addresses: [
               {
-                homeNumber: '70/178 ramintra65 yak 2-4',
-                villageNumber: 'floor',
-                villageName: 'moo',
-                subStreetName: 'soi',
-                streetName: 'road',
-                subDistrictName: 'บ้านพานถม',
-                districtName: 'เขตพระโขนง',
-                provinceName: 'ระยอง',
+                homeNumber: 'homeAddress',
+                villageNumber: 'homeAddress',
+                villageName: 'homeAddress',
+                subStreetName: 'homeAddress',
+                streetName: 'homeAddress',
+                subDistrictName: 'ตลาดยอด',
+                districtName: 'เขตมีนบุรี',
+                provinceName: 'ตราด',
                 zipCode: '10400',
-                countryName: 'ออสเตรีย',
+                countryName: 'หมู่เกาะอะแลนด์',
                 types: 1
               },
               {
-                homeNumber: '70/178 ramintra65 yak 2-4',
-                villageNumber: 'floor',
-                villageName: 'moo',
-                subStreetName: 'soi',
-                streetName: 'road',
-                subDistrictName: 'บ้านพานถม',
-                districtName: 'เขตพระโขนง',
-                provinceName: 'ระยอง',
-                zipCode: '10400',
-                countryName: 'ออสเตรีย',
+                homeNumber: 'currentAddress',
+                villageNumber: 'currentAddress',
+                villageName: 'currentAddress',
+                subStreetName: 'currentAddress',
+                streetName: 'currentAddress',
+                subDistrictName: 'กระทุ่มราย',
+                districtName: 'เขตตลิ่งชัน',
+                provinceName: 'สุรินทร์',
+                zipCode: '10170',
+                countryName: 'เบลเยียม',
                 types: 2
               },
               {
-                homeNumber: '70/178 ramintra65 yak 2-4',
-                villageNumber: 'floor',
-                villageName: 'moo',
-                subStreetName: 'soi',
-                streetName: 'road',
-                subDistrictName: 'บ้านพานถม',
-                districtName: 'เขตพระโขนง',
-                provinceName: 'ระยอง',
-                zipCode: '10400',
-                countryName: 'ออสเตรีย',
+                homeNumber: 'officeAddress',
+                villageNumber: 'officeAddress',
+                villageName: 'officeAddress',
+                subStreetName: 'officeAddress',
+                streetName: 'officeAddress',
+                subDistrictName: 'คลองสิบ',
+                districtName: 'เขตภาษีเจริญ',
+                provinceName: 'สุรินทร์',
+                zipCode: '10160',
+                countryName: 'บูร์กินาฟาโซ',
                 types: 3
               }
             ],
             banks: [
               {
-                bankName: 'ธนาคารกสิกรไทย จำกัด (มหาชน)',
+                bankName: 'ธนาคารกรุงเทพ จำกัด (มหาชน)',
                 bankBranchName: 'bank1',
                 bankAccountNumber: 'bankaccountid1',
                 types: 1,
                 is_default: true
               },
-              {
-                bankName: 'ธนาคารยูโอบี จำกัด (มหาชน)',
-                bankBranchName: 'bank2',
-                bankAccountNumber: 'bankaccountid2',
-                types: 2,
-                is_default: false
-              }
-            ],
-            pageID: 300
+              undefined
+            ]
           }
         };
       
@@ -1088,7 +1011,7 @@ describe("test create individual form1 (preinfo)", () => {
   describe("test create individual form3 (suite test)", () => {
 
     beforeAll(() => {
-      localStorage.setItem('cid', '90000001');
+      localStorage.setItem('registerId', '90000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -1184,32 +1107,31 @@ describe("test create individual form1 (preinfo)", () => {
       //Expected form data
       const expectedFormData = {
         data: {
-            id: "90000001",
+          registerId: '90000001',
+          suiteTestResult: {
+            registerId: '90000001',
+            investorTypeRisk: 'เสี่ยงตํ่า',
+            level: 1,
+            totalScore: 9,
             suiteTestResult: {
-              cid: "90000001",
-              investorTypeRisk: 'เสี่ยงตํ่า',
-              level: 1,
-              totalScore: 9,
-              suitTestResult: {
-                answer: {
-                  0: { ans: [ 1, 0, 0, 0 ] },
-                  1: { ans: [ 1, 0, 0, 0 ] },
-                  2: { ans: [ 1 ] },
-                  3: { ans: [ 1, 0, 0, 0 ] },
-                  4: { ans: [ 1, 0, 0, 0 ] },
-                  5: { ans: [ 1, 0, 0, 0 ] },
-                  6: { ans: [ 1, 0, 0, 0 ] },
-                  7: { ans: [ 1, 0, 0, 0 ] },
-                  8: { ans: [ 1, 0, 0, 0 ] }
-                }
+              answer: {
+                0: { ans: [ 1, 0, 0, 0 ] },
+                1: { ans: [ 1, 0, 0, 0 ] },
+                2: { ans: [ 1 ] },
+                3: { ans: [ 1, 0, 0, 0 ] },
+                4: { ans: [ 1, 0, 0, 0 ] },
+                5: { ans: [ 1, 0, 0, 0 ] },
+                6: { ans: [ 1, 0, 0, 0 ] },
+                7: { ans: [ 1, 0, 0, 0 ] },
+                8: { ans: [ 1, 0, 0, 0 ] }
               }
-            },
-            isFatca: false,
-            fatcaInfo: [],
-            isKnowLedgeDone: false,
-            knowLedgeTestResult: 0,
-            pageID: 400
-          }
+            }
+          },
+          isFatca: false,
+          fatcaInfo: [],
+          isKnowLedgeDone: false,
+          knowLedgeTestResult: 0
+        }
       };
 
       await waitFor(() => {
@@ -1370,13 +1292,13 @@ describe("test create individual form1 (preinfo)", () => {
       //Expected form data
         const expectedFormData = {
           data: {
-            id: '90000001',
+            registerId: '90000001',
             suiteTestResult: {
-              cid: '90000001',
+              registerId: '90000001',
               investorTypeRisk: 'เสี่ยงตํ่า',
               level: 1,
               totalScore: 9,
-              suitTestResult: {
+              suiteTestResult: {
                 answer: {
                   0: { ans: [ 1, 0, 0, 0 ] },
                   1: { ans: [ 1, 0, 0, 0 ] },
@@ -1393,8 +1315,7 @@ describe("test create individual form1 (preinfo)", () => {
             isFatca: false,
             fatcaInfo: [],
             isKnowLedgeDone: false,
-            knowLedgeTestResult: 0,
-            pageID: 400
+            knowLedgeTestResult: 0
           }
         };
       
@@ -1415,7 +1336,7 @@ describe("test create individual form1 (preinfo)", () => {
   describe("test create individual form4 (identity verification)", () => {
 
     beforeAll(() => {
-      localStorage.setItem('cid', '90000001');
+      localStorage.setItem('registerId', '90000001');
     })
     afterAll(() => {
       localStorage.clear();
@@ -1453,7 +1374,7 @@ describe("test create individual form1 (preinfo)", () => {
       const expectedFormData = {
         data: { 
           ndid: true, 
-          cid: "90000001"
+          registerId: "90000001"
          }
       };
       await waitFor(() => {
@@ -1495,7 +1416,7 @@ describe("test create individual form1 (preinfo)", () => {
       const expectedFormData = {
         data: { 
           thaid: true, 
-          cid: "90000001"
+          registerId: "90000001"
          }
       };
       await waitFor(() => {
@@ -1538,7 +1459,7 @@ describe("test create individual form1 (preinfo)", () => {
       const expectedFormData = {
         data: { 
           thaid: true, 
-          cid: "90000001"
+          registerId: "90000001"
          }
       };
       await waitFor(() => {
@@ -1586,7 +1507,7 @@ describe("test create individual form1 (preinfo)", () => {
 
       //Expected form data
         const expectedFormData = {
-          data: { ndid: true, cid: '90000001'}
+          data: { ndid: true, registerId: '90000001' }
         };
       
         await waitFor(() => {
@@ -1628,7 +1549,7 @@ describe("test create individual form1 (preinfo)", () => {
 
       //Expected form data
         const expectedFormData = {
-          data: { ndid: true, cid: '90000001'}
+          data: { ndid: true, registerId: '90000001' }
         };
       
         await waitFor(() => {
@@ -1644,7 +1565,7 @@ describe("test create individual form1 (preinfo)", () => {
 
     },20000);
 
-    test("test no cid in localstorage", async () => {
+    test("test no registerId in localstorage", async () => {
 
       localStorage.clear();
       render(
@@ -1678,12 +1599,7 @@ describe("test create individual form1 (preinfo)", () => {
       })
       
       //Expected form data
-      const expectedFormData = {
-        data: { 
-          ndid: true, 
-          cid: null
-         }
-      };
+      const expectedFormData = { data: { ndid: true, registerId: null } };
       await waitFor(() => {
         const state = store.getState();
         const corporateState = state.corporateTest;

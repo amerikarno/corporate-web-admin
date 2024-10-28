@@ -1,32 +1,24 @@
-import { Card } from "@/components/ui/card";
-import { FormCorporateInfo } from "../components/formCorporateInfo";
-import { TCorporateData } from "../../constant/type";
 import { useEffect } from "react";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   clearCorporateData,
   setCorporateData,
 } from "@/features/editCorporateData/editCorporateData";
-import { useCorporateInfo } from "../hook/useCorporateInfo";
-import { mapDataToTCorporateInfo } from "../libs/utils";
-import { RootState } from "@/app/store";
 
 export function PageCorporateInfo() {
-  const corporateData: TCorporateData = useSelector<RootState>(
-    (state) => state.editCorporate
-  ) as TCorporateData;
+  
   const dispatch = useDispatch();
 
   const fetchCorporateData = async () => {
     try {
-      const corporateCode = localStorage.getItem("corporateCode") || "";
+      const registerId = localStorage.getItem("registerId") || "";
 
-      if (corporateCode) {
+      if (registerId) {
         const response = await axios.post(
           "/api/v1/corporate/query",
-          { corporateCode: corporateCode },
+          { registerId: registerId },
           {
             headers: {
               Authorization: `Bearer ${getCookies()}`,
@@ -37,7 +29,7 @@ export function PageCorporateInfo() {
         dispatch(setCorporateData(response.data[0]));
       } else {
         dispatch(clearCorporateData());
-        // console.log("corporateCode not found");
+        // console.log("registerId not found");
       }
     } catch (error) {
       console.error("Error fetching corporate data:", error);
@@ -48,12 +40,12 @@ export function PageCorporateInfo() {
     fetchCorporateData();
   }, [dispatch]);
 
-  const initFormData = mapDataToTCorporateInfo(corporateData);
-  const { handleSubmitCorporateInfo } = useCorporateInfo();
+  // const initFormData = mapDataToTCorporateInfo(corporateData);
+  // const { handleSubmitCorporateInfo } = useCorporateInfo();
 
   return (
     <>
-      <div className="p-4 space-y-8">
+      {/* <div className="p-4 space-y-8">
         <Card className="p-4">
           <p className="text-xl font-bold">Instructions</p>
           <div className="pt-4">
@@ -68,7 +60,7 @@ export function PageCorporateInfo() {
           initData={initFormData}
           corporatesInfo={corporateData}
         />
-      </div>
+      </div> */}
     </>
   );
 }

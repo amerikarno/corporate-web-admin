@@ -1,9 +1,10 @@
 import { z } from "zod";
 export const searchIndividualSchema = z
   .object({
-    AccountID: z.string(),
-    dateFrom: z.string().optional(),
-    dateTo: z.string().optional(),
+    registerId: z.string(),
+    dateFrom: z.string().nullable(),
+    dateTo: z.string().nullable(),
+    page:z.number().optional(),
   })
   .refine(
     (data) => {

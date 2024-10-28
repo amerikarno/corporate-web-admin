@@ -610,9 +610,49 @@
 <a name='L545'></a><a href='#L545'>545</a>
 <a name='L546'></a><a href='#L546'>546</a>
 <a name='L547'></a><a href='#L547'>547</a>
-<a name='L548'></a><a href='#L548'>548</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L548'></a><a href='#L548'>548</a>
+<a name='L549'></a><a href='#L549'>549</a>
+<a name='L550'></a><a href='#L550'>550</a>
+<a name='L551'></a><a href='#L551'>551</a>
+<a name='L552'></a><a href='#L552'>552</a>
+<a name='L553'></a><a href='#L553'>553</a>
+<a name='L554'></a><a href='#L554'>554</a>
+<a name='L555'></a><a href='#L555'>555</a>
+<a name='L556'></a><a href='#L556'>556</a>
+<a name='L557'></a><a href='#L557'>557</a>
+<a name='L558'></a><a href='#L558'>558</a>
+<a name='L559'></a><a href='#L559'>559</a>
+<a name='L560'></a><a href='#L560'>560</a>
+<a name='L561'></a><a href='#L561'>561</a>
+<a name='L562'></a><a href='#L562'>562</a>
+<a name='L563'></a><a href='#L563'>563</a>
+<a name='L564'></a><a href='#L564'>564</a>
+<a name='L565'></a><a href='#L565'>565</a>
+<a name='L566'></a><a href='#L566'>566</a>
+<a name='L567'></a><a href='#L567'>567</a>
+<a name='L568'></a><a href='#L568'>568</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1218,37 +1258,37 @@ export const urlConfig: TUrlConfig[] = [
     ],
   },
   {
-    header: "Create Job",
+    header: "Customer Management",
     icon: "icon",
     pages: [2000, 2023],
     children: [
       {
-        label: "added corporate account",
-        href: "/create-job/added-corporate-account",
-        pageId: 2001,
-      },
-      {
-        label: "added individual account",
+        label: "individual account",
         href: "/create-job/added-individual-account",
         pageId: 2002,
       },
       {
-        label: "added ico",
+        label: "corporate account",
+        href: "/create-job/added-corporate-account",
+        pageId: 2001,
+      },
+      {
+        label: "ICO campaign",
         href: "/create-job/added-ico",
         pageId: 2008,
       },
       {
-        label: "change corporate account",
-        href: "/create-job/change-corporate-account",
-        pageId: 2003,
-      },
-      {
-        label: "change individual account",
+        label: "edit individual account",
         href: "/create-job/change-individual-account",
         pageId: 2004,
       },
       {
-        label: "change ico account",
+        label: "edit corporate account",
+        href: "/create-job/change-corporate-account",
+        pageId: 2003,
+      },
+      {
+        label: "edit ICO campaign",
         href: "/create-job/change-ico",
         pageId: 2009,
       },
@@ -1262,11 +1302,11 @@ export const urlConfig: TUrlConfig[] = [
         href: "/create-job/cash-deposit-withdraw",
         pageId: 2006,
       },
-      {
-        label: "fx exchange",
-        href: "/create-job/fx-exchange",
-        pageId: 2007,
-      },
+      // {
+      //   label: "fx exchange",
+      //   href: "/create-job/fx-exchange",
+      //   pageId: 2007,
+      // },
       // {
       //   label: "special edd",
       //   href: "/create-job/special-edd",
@@ -1360,12 +1400,17 @@ export const urlConfig: TUrlConfig[] = [
     ],
   },
   {
-    header: "TO DO List",
+    header: "Approval",
     icon: "icon",
     pages: [3000, 3016],
     children: [
       {
-        label: "corporate account opening",
+        label: "individual account",
+        href: "/todo-list/individual-account-opening",
+        pageId: 3002,
+      },
+      {
+        label: "corporate account",
         href: "/todo-list/corporate-account-opening",
         pageId: 3001,
       },
@@ -1375,20 +1420,15 @@ export const urlConfig: TUrlConfig[] = [
       //   pageId: 3002,
       // },
       {
-        label: "individual account opening",
-        href: "/todo-list/individual-account-opening",
-        pageId: 3002,
-      },
-      {
-        label: "ico approval",
+        label: "ICO compaign",
         href: "/todo-list/added-ico",
         pageId: 3007,
       },
-      {
-        label:"account approval",
-        href: "/todo-list/account-approval",
-        pageId:3006
-      },
+      // {
+      //   label:"account approval",
+      //   href: "/todo-list/account-approval",
+      //   pageId:3006
+      // },
       // {
       //   label: "orders/trades",
       //   href: "/todo-list/orders-trades",
@@ -1399,22 +1439,22 @@ export const urlConfig: TUrlConfig[] = [
         href: "/todo-list/cash-deposit-withdraw",
         pageId: 3004,
       },
-      {
-        label:"fx exchange",
-        href: "/todo-list/fx-exchange",
-        pageId:3005
-      },
+      // {
+      //   label:"fx exchange",
+      //   href: "/todo-list/fx-exchange",
+      //   pageId:3005
+      // },
 &nbsp;
       // {
       //   label: "individual account opening",
       //   href: "/todo-list/individual-account-opening",
       //   pageId: 3002,
       // },
-      // {
-      //   label: "change info",
-      //   href: "/todo-list/change-info",
-      //   pageId: 3004,
-      // },
+      {
+        label: "account lock/unlock",
+        href: "/todo-list/account-lockunlock",
+        pageId: 3004,
+      },
       // {
       //   label: "review KYB",
       //   href: "/todo-list/review-kyb",
@@ -1467,6 +1507,21 @@ export const urlConfig: TUrlConfig[] = [
     icon: "icon",
     pages: [4000, 4007],
     children: [
+      {
+        label: "individual account",
+        href: "/enquiry/individual",
+        pageId: 4002,
+      },
+      {
+        label: "corporate account",
+        href: "/enquiry/corporate",
+        pageId: 4001,
+      },
+      {
+        label: "ICO  campaign",
+        href: "/enquiry/ico-campaign",
+        pageId: 4003,
+      },
       // {
       //   label: "deposit/withdraw list",
       //   href: "/enquiry/deposit-withdraw-list",
@@ -1499,11 +1554,11 @@ export const urlConfig: TUrlConfig[] = [
       // },
     ],
   },
-  {
-    header: "Reports",
-    icon: "icon",
-    pages: [5000, 5038],
-    children: [
+  // {
+  //   header: "Reports",
+  //   icon: "icon",
+    // pages: [5000, 5038],
+    // children: [
       // {
       //   label: "Customer Proxy Wallet (Deposit)",
       //   href: "/reports/customer-proxy-wallet-deposit",
@@ -1689,18 +1744,23 @@ export const urlConfig: TUrlConfig[] = [
       //   href: "/reports/da-deposit",
       //   pageId: 5037,
       // },
-    ],
-  },
+    // ],
+  // },
   {
-    header: "SEC Reports",
+    header: "Reports",
     icon: "icon",
     pages: [6000, 6002],
     children: [
       {
-        label: "reports",
-        href: "/sec-reports/reports",
+        label: "SEC Reports",
+        href: "reports/sec-reports",
         pageId: 6001,
       },
+      // {
+      //   label: "NC Reports",
+      //   href: "reports/nc-reports",
+      //   pageId: 6002,
+      // },
     ],
   },
 ];
@@ -1711,7 +1771,7 @@ export const urlConfig: TUrlConfig[] = [
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-15T09:03:20.888Z
+                at 2024-10-25T05:28:47.919Z
             </div>
         <script src="../prettify.js"></script>
         <script>

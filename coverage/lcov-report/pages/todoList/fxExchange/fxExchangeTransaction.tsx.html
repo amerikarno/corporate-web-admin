@@ -641,7 +641,7 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 type TTransaction = {
   id: string;
   buyCurrency: number;
-  corporateCode: number;
+  registerId: string;
   exchangeSpread: number;
   operationSpread: number;
   exchangeRate: number;
@@ -770,7 +770,7 @@ const FxExchangeTransactionList = () =&gt; {
             return {
               id: item.id,
               buyCurrency: item.buyCurrency/100000,
-              corporateCode: item.corporateCode,
+              registerId: item.registerId,
               exchangeSpread: item.exchangeSpread/100000,
               operationSpread: item.operationSpread/100000,
               exchangeRate: item.exchangeRate/100000,
@@ -822,7 +822,7 @@ const FxExchangeTransactionList = () =&gt; {
     },
     {
       name: "Corporate Code",
-      selector: (row: TTransaction) =&gt; row.corporateCode || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
+      selector: (row: TTransaction) =&gt; row.registerId || <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
     },
     {
       name: "Buy Amount",

@@ -23,141 +23,193 @@ jest.mock(
 
 // Define a mock object that matches the TIndividualData type
 const mockTIndividualData: TIndividualData = {
-    createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
-    CreatedAt: "2024-09-10T01:48:32.941Z",
-    DeletedAt: null,
-    id: 90000006,
-    thTitle: "นาย",
-    thName: "test3",
-    thSurname: "test3",
-    engTitle: "Mr.",
-    engName: "test",
-    engSurname: "test",
-    email: "1",
-    mobile: "1",
-    agreement: true,
-    birthDate: "2024-09-27T00:00:00Z",
-    marriageStatus: "สมรส",
-    citizenId: "1",
-    laserCode: "1",
-    education: "2",
-    sourceOfIncome: "3",
-    currentOccupation: "14",
-    officeName: "1",
-    typeOfBusiness: "14",
-    positionName: "1",
-    salaryRange: "5",
-    shortTermInvestment: true,
-    taxesInvestment: true,
-    address: [
-        {
-            CreatedAt: "2024-09-10T03:53:27.44Z",
-            DeletedAt: null,
-            id: "90000006",
-            homeNumber: "70/178 ramintra65 yak 2-4",
-            villageNumber: "123",
-            villageName: "Some Village",
-            subStreetName: "Some Sub Street",
-            streetName: "Main Street",
-            subDistrictName: "บ้านพานถม",
-            districtName: "เขตลาดกระบัง",
-            provinceName: "ระยอง",
-            zipCode: "10100",
-            countryName: "อารูบา",
-            types: 1
-        },
-        {
-            CreatedAt: "2024-09-10T03:53:27.44Z",
-            DeletedAt: null,
-            id: "90000006",
-            homeNumber: "70/178 ramintra65 yak 2-4",
-            villageNumber: "123",
-            villageName: "Some Village",
-            subStreetName: "Some Sub Street",
-            streetName: "Main Street",
-            subDistrictName: "บ้านพานถม",
-            districtName: "เขตลาดกระบัง",
-            provinceName: "ระยอง",
-            zipCode: "10100",
-            countryName: "อารูบา",
-            types: 2
-        },
-        {
-            CreatedAt: "2024-09-10T03:53:27.44Z",
-            DeletedAt: null,
-            id: "90000006",
-            homeNumber: "70/178 ramintra65 yak 2-4",
-            villageNumber: "123",
-            villageName: "Some Village",
-            subStreetName: "Some Sub Street",
-            streetName: "Main Street",
-            subDistrictName: "บ้านพานถม",
-            districtName: "เขตลาดกระบัง",
-            provinceName: "ระยอง",
-            zipCode: "10100",
-            countryName: "อารูบา",
-            types: 3
-        }
-    ],
-    bank: [
-        {
-            CreatedAt: "2024-09-10T03:53:27.443Z",
-            DeletedAt: null,
-            id: "90000006",
-            bankName: "ธนาคารอาร์ เอช บี จำกัด",
-            bankBranchName: "1",
-            bankAccountNumber: "bankaccountid1",
-            types: 0
-        }
-    ],
-    SuiteTestResult: {
-        createBy: "",
-        id: "90000006",
-        suiteTestResult: {
-            cid: "893d7e4c-e22d-4af4-b808-a570e2f3f13e",
-            investorTypeRisk: "เสี่ยงปานกลางค่อนสูง",
-            level: 3,
-            totalScore: 23,
-            suitTestResult: {
-                answer: {
-                    "0": {
-                        ans: [0, 1, 0, 0]
-                    },
-                    "1": {
-                        ans: [0, 0, 1, 0]
-                    },
-                    "2": {
-                        ans: [0, 1, 1, 0]
-                    },
-                    "3": {
-                        ans: [0, 1, 0, 0]
-                    },
-                    "4": {
-                        ans: [0, 0, 1, 0]
-                    },
-                    "5": {
-                        ans: [0, 1, 0, 0]
-                    },
-                    "6": {
-                        ans: [0, 0, 1, 0]
-                    },
-                    "7": {
-                        ans: [0, 0, 1, 0]
-                    },
-                    "8": {
-                        ans: [0, 1, 0, 0]
-                    }
-                }
-            }
-        },
-        isFatca: false,
-        fatcaInfo: null,
-        isKnowLedgeDone: false,
-        knowLedgeTestResult: 0
-    },
-    ndid: true,
-    thaid: false
-};
+  "id": "29b11256-c7ae-4e6d-b9ab-4d11012b0a53",
+  "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+  "CreatedAt": "2024-10-16T10:54:45+07:00",
+  "DeletedAt": null,
+  "registerId": "90000003",
+  "thTitle": "นาย",
+  "thName": "เกตเต้อ-ชื่อ",
+  "thSurname": "เกตเต้อ-นามสกุล",
+  "engTitle": "Mr.",
+  "engName": "getter-name",
+  "engSurname": "getter-surname",
+  "email": "test1@example.com",
+  "mobile": "0884744411",
+  "birthDate": "2024-10-02T07:00:00+07:00",
+  "marriageStatus": "โสด",
+  "citizenId": "1103703348990",
+  "laserCode": "12123",
+  "education": "1",
+  "sourceOfIncome": "6",
+  "currentOccupation": "13",
+  "officeName": "1",
+  "typeOfBusiness": "16",
+  "positionName": "1",
+  "salaryRange": "9",
+  "taxesInvestment": true,
+  "address": [
+      {
+          "id": "23421bcb-5fbf-4a6d-b95d-8b0579fdb3a1",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "homeNumber": "1",
+          "villageNumber": "1",
+          "villageName": "1",
+          "subStreetName": "1",
+          "streetName": "1",
+          "subDistrictName": "1",
+          "districtName": "1",
+          "provinceName": "1",
+          "zipCode": "11",
+          "countryName": "1",
+          "types": 1
+      },
+      {
+          "id": "423f53a1-bf82-4415-ad0f-c9b93c26637f",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "homeNumber": "1",
+          "villageNumber": "1",
+          "villageName": "1",
+          "subStreetName": "1",
+          "streetName": "1",
+          "subDistrictName": "1",
+          "districtName": "1",
+          "provinceName": "1",
+          "zipCode": "11",
+          "countryName": "1",
+          "types": 2
+      },
+      {
+          "id": "ad0f1dc1-a81a-43a8-b58a-b0d7b44f08d9",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "homeNumber": "1",
+          "villageNumber": "1",
+          "villageName": "1",
+          "subStreetName": "1",
+          "streetName": "1",
+          "subDistrictName": "1",
+          "districtName": "1",
+          "provinceName": "1",
+          "zipCode": "11",
+          "countryName": "1",
+          "types": 3
+      }
+  ],
+  "bank": [
+      {
+          "id": "27314179-b2a0-466e-b830-77ac62c50820",
+          "createBy": "9b84c76d-fe84-4113-ba30-17014a02b6b5",
+          "CreatedAt": "2024-10-16T10:55:34+07:00",
+          "DeletedAt": null,
+          "registerId": "90000003",
+          "bankName": "ธนาคารไทยพาณิชย์ จำกัด (มหาชน)",
+          "bankBranchName": "11",
+          "bankAccountNumber": "1",
+          "types": 1
+      },
+  ],
+  "SuiteTestResult": {
+      "createBy": "",
+      "deletedBy": "",
+      "registerId": "90000003",
+      "suiteTestResult": {
+          "registerId": "219c16d8-693e-49bb-a550-106e90c0d496",
+          "investorTypeRisk": "เสี่ยงสูง",
+          "level": 4,
+          "totalScore": 35,
+          "suiteTestResult": {
+              "answer": {
+                  "0": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "1": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "2": {
+                      "ans": [
+                          0,
+                          1,
+                          1
+                      ]
+                  },
+                  "3": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "4": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "5": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "6": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "7": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  },
+                  "8": {
+                      "ans": [
+                          0,
+                          0,
+                          0,
+                          1
+                      ]
+                  }
+              }
+          }
+      },
+      "isFatca": false,
+      "fatcaInfo": null,
+      "isKnowLedgeDone": true,
+      "knowLedgeTestResult": 15
+  },
+  "ndid": false,
+  "thaid": true
+}
 
 const mockHandleSearch = jest.fn();
 const mockUseToDoIndividualAccount = useToDoIndividualAccount as jest.MockedFunction<

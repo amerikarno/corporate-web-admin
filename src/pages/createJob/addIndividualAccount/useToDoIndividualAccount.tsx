@@ -24,7 +24,7 @@ export function useToDoIndividualAccount() {
       dateFrom: dateFrom ? yyyyMMddToDate(dateFrom) : null,
       dateTo: dateTo ? yyyyMMddToDate(dateTo, true) : null,
     };
-
+    
     console.log(body);
     if (
       body.AccountID === "" &&

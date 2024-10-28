@@ -27,7 +27,7 @@ export default function ChangePageAddIndividualAccount() {
   //   }
 
   //   const dispatch = useDispatch();
-  //   const [corporateCode, setCorporateCode] = useState("");
+  //   const [registerId, setregisterId] = useState("");
 
   //   const corporateData: TCorporateData = useSelector<RootState>(
   //     (state) => state.editCorporate
@@ -42,7 +42,7 @@ export default function ChangePageAddIndividualAccount() {
   //   const { handleSubmitCorporateInfo, currentCorporatesInfo } =
   //     useCorporateInfo();
 
-  //const corporateCode: string = corporateData?.CorporateCode.toString() ?? "";
+  //const registerId: string = corporateData?.registerId.toString() ?? "";
 
   type TMapPages = {
     [key: number]: JSX.Element;

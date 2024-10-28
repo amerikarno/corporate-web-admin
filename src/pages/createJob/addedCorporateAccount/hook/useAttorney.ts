@@ -14,7 +14,7 @@ export function useAttorney() {
   const saveAttorney = async (data: TAttorney) => {
     let body = {
       ...data,
-      expiryDate: new Date(data.expiryDate),
+      expiryDate: new Date(data.expiryDate ?? ""),
     };
     console.log(body);
     try {

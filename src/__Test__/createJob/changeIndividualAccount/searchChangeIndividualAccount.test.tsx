@@ -26,8 +26,9 @@ const mockTIndividualData: TIndividualData = {
     createBy: "9b84c76d-fe84-4113-ba30-17014a02b6b5",
     CreatedAt: "2024-09-10T01:48:32.941Z",
     DeletedAt: null,
-    id: 90000006,
+    registerId: "90000006",
     thTitle: "นาย",
+    id:"getter",
     thName: "test3",
     thSurname: "test3",
     engTitle: "Mr.",
@@ -53,7 +54,8 @@ const mockTIndividualData: TIndividualData = {
         {
             CreatedAt: "2024-09-10T03:53:27.44Z",
             DeletedAt: null,
-            id: "90000006",
+            id:"90000006",
+            registerId: "90000006",
             homeNumber: "70/178 ramintra65 yak 2-4",
             villageNumber: "123",
             villageName: "Some Village",
@@ -69,7 +71,8 @@ const mockTIndividualData: TIndividualData = {
         {
             CreatedAt: "2024-09-10T03:53:27.44Z",
             DeletedAt: null,
-            id: "90000006",
+            id:"90000006",
+            registerId: "90000006",
             homeNumber: "70/178 ramintra65 yak 2-4",
             villageNumber: "123",
             villageName: "Some Village",
@@ -85,7 +88,8 @@ const mockTIndividualData: TIndividualData = {
         {
             CreatedAt: "2024-09-10T03:53:27.44Z",
             DeletedAt: null,
-            id: "90000006",
+            id:"90000006",
+            registerId: "90000006",
             homeNumber: "70/178 ramintra65 yak 2-4",
             villageNumber: "123",
             villageName: "Some Village",
@@ -103,7 +107,8 @@ const mockTIndividualData: TIndividualData = {
         {
             CreatedAt: "2024-09-10T03:53:27.443Z",
             DeletedAt: null,
-            id: "90000006",
+            id:"90000006",
+            registerId: "90000006",
             bankName: "ธนาคารอาร์ เอช บี จำกัด",
             bankBranchName: "1",
             bankAccountNumber: "bankaccountid1",
@@ -112,13 +117,14 @@ const mockTIndividualData: TIndividualData = {
     ],
     SuiteTestResult: {
         createBy: "",
-        id: "90000006",
+        deletedBy:"",
+        registerId: "90000006",
         suiteTestResult: {
-            cid: "893d7e4c-e22d-4af4-b808-a570e2f3f13e",
+            registerId: "893d7e4c-e22d-4af4-b808-a570e2f3f13e",
             investorTypeRisk: "เสี่ยงปานกลางค่อนสูง",
             level: 3,
             totalScore: 23,
-            suitTestResult: {
+            suiteTestResult: {
                 answer: {
                     "0": {
                         ans: [0, 1, 0, 0]
@@ -215,7 +221,7 @@ describe("test change individual", () => {
     );
 
     await act(async () => {
-      await handleSearch({ AccountID: "90000006" });
+      await handleSearch({ registerId: "90000006" , dateFrom : null , dateTo : null });
     });
 
     await waitFor(

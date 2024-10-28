@@ -756,7 +756,7 @@ export function <span class="fstat-no" title="function not covered" >useSuitTest
 &nbsp;
       const grade = <span class="cstat-no" title="statement not covered" >giveGrade(score);</span>
       const ans = <span class="cstat-no" title="statement not covered" >{</span>
-        corporateCode: corporatesInfo.CorporateCode.toString(),
+        registerId: corporatesInfo.registerId.toString(),
         totalScore: score,
         level: grade,
         investorTypeRisk: mapScore[grade],
@@ -858,13 +858,13 @@ export function <span class="fstat-no" title="function not covered" >useSuitTest
   };
 &nbsp;
   const fetchSuitData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async </span>() =&gt; {</span>
-    const code = <span class="cstat-no" title="statement not covered" >localStorage.getItem("corporateCode");</span>
+    const code = <span class="cstat-no" title="statement not covered" >localStorage.getItem("registerId");</span>
 <span class="cstat-no" title="statement not covered" >    if (code &amp;&amp; code !== null) {</span>
 <span class="cstat-no" title="statement not covered" >      if (isEmptyObject(suitData)) {</span>
 <span class="cstat-no" title="statement not covered" >        try {</span>
           const res = <span class="cstat-no" title="statement not covered" >await axios.post(</span>
             "/api/v1/corporate/query",
-            { corporateCode: code },
+            { registerId: code },
             {
               headers: {
                 "Content-Type": "application/json",

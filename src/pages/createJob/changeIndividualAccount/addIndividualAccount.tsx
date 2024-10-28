@@ -38,10 +38,10 @@ export default function AddIndividualAccount() {
   const dispatch = useDispatch();
   const token = getCookies();
 
-  const fetchIndividualData = async (AccountID: string) => {
+  const fetchIndividualData = async (registerId: string) => {
     try {
-      console.log(AccountID);
-      const res = await axios.post("/api/v1/individual/list", { AccountID }, {
+      console.log(registerId);
+      const res = await axios.post("/api/v1/individual/list", { registerId }, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -53,15 +53,15 @@ export default function AddIndividualAccount() {
       console.log(error);
     }
    };
-  
+
   const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
 
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
-    if (cidValue) {
-      fetchIndividualData(cidValue || "");
+    const registerIdValue = localStorage.getItem("registerId");
+    if (registerIdValue) {
+      fetchIndividualData(registerIdValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
 
@@ -150,12 +150,12 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , cid: localStorage.getItem('cid')?.toString() };
+    let body = { ...data, birthDate: new Date(data.birthDate) ,  registerId: localStorage.getItem('registerId')?.toString() };
     dispatch(setTestCorporateData({...body,birthDate: new Date(data.birthDate).toISOString()}));
     try {
       const token = getCookies();
       console.log("body to send ",body)
-      if(individualData?.id){
+      if(localStorage.getItem('registerId')?.toString()){
         const res = await axios.post("/api/v1/individual/update/pre", body, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -164,7 +164,7 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("registerId", res.data.registerId);
           localStorage.setItem("age", age.toString());
           console.log(age);
           console.log("update success", res, data);
@@ -182,7 +182,7 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("cid", res.data.id);
+          localStorage.setItem("registerId", res.data.registerId);
           localStorage.setItem("age", age.toString());
           console.log("create success", res, data);
 
@@ -195,7 +195,7 @@ export default function AddIndividualAccount() {
 
       // const todo = "remove all below";
       // const age = calculateAge(body.birthDate);
-      // localStorage.setItem("cid", "90000001");
+      // localStorage.setItem("registerId", "90000001");
       // localStorage.setItem("age", age.toString());
       // navigate("/create-job/added-individual-account/basicinfo");
       // window.scrollTo(0, 0);

@@ -131,7 +131,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
     (state: RootState) => state.individualData.individualDatas
   );
 
-  const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suitTestResult.answer;
+  const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suiteTestResult.answer;
   const fetchedData = Object.keys(fetchSuitTestResult || []).map(key => fetchSuitTestResult?.[key].ans);
   console.log(fetchedData);
   // const fetchedData = [[0, 0, 0, 0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0], [0, 0, 0, 0],[0,0,0,0],[0,0,0,0]];
@@ -184,7 +184,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
 
   useEffect(() => {
     if (individualData) {
-      const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suitTestResult.answer;
+      const fetchSuitTestResult = individualData?.SuiteTestResult.suiteTestResult.suiteTestResult.answer;
       const fetchedData = Object.keys(fetchSuitTestResult || []).map(key => fetchSuitTestResult?.[key].ans);
       console.log(fetchedData);
 

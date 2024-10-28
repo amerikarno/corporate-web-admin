@@ -37,6 +37,7 @@ export default function Reports() {
   const handleViewClick = (row: TReportData) => {
     console.log(row);
     navigate(`/reports/sec-reports/${row.type}`);
+    window.scrollTo(0, 0);
   }
 
   const columnsReports: TableColumn<TReportData>[] = [
