@@ -699,7 +699,7 @@ const mockAxios = new MockAdapter(axios);
 
         const expectedFormData = {
             data: {
-                registerId: 80000005,
+                registerId: "80000005",
                 exchangeRate: 12312300,
                 exchangeSpread: 12312300,
                 operationSpread: 12312300,
