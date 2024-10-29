@@ -28,21 +28,21 @@ const AddedIssuance = () => {
             const newKeyValuePairs = Object.keys(fetchedData.issuanceTerms).map(keyHeader => {
             switch (keyHeader) {
               case "investmentPeriod":
-                return { key: "Investment Period", type: "text", value: fetchedData.issuanceTerms.investmentPeriod.split(" ")[0] };
+                return { key: "Investment Period", type: "text", value: fetchedData.issuanceTerms!.investmentPeriod.split(" ")[0] };
               case "dividendYield":
-                return { key: "Dividend Yield", type: "text", value: fetchedData.issuanceTerms.dividendYield.split(" ")[0] };
+                return { key: "Dividend Yield", type: "text", value: fetchedData.issuanceTerms!.dividendYield.split(" ")[0] };
               case "grossMargin":
-                return { key: "Gross Margin", type: "text", value: fetchedData.issuanceTerms.grossMargin.split(" ")[0] };
+                return { key: "Gross Margin", type: "text", value: fetchedData.issuanceTerms!.grossMargin.split(" ")[0] };
               case "equityMultiple":
-                return { key: "Equity Multiple", type: "text", value: fetchedData.issuanceTerms.equityMultiple.split(" ")[0] };
+                return { key: "Equity Multiple", type: "text", value: fetchedData.issuanceTerms!.equityMultiple.split(" ")[0] };
               case "profit":
-                return { key: "Profit", type: "text", value: fetchedData.issuanceTerms.profit.split(" ")[0] };
+                return { key: "Profit", type: "text", value: fetchedData.issuanceTerms!.profit.split(" ")[0] };
               case "leverage":
-                return { key: "Leverage", type: "text", value: fetchedData.issuanceTerms.leverage.split(" ")[0]};
+                return { key: "Leverage", type: "text", value: fetchedData.issuanceTerms!.leverage.split(" ")[0]};
               case "investmentStructure":
-                return { key: "Investment Structure", type: "text", value: fetchedData.issuanceTerms.investmentStructure};
+                return { key: "Investment Structure", type: "text", value: fetchedData.issuanceTerms!.investmentStructure};
               case "distributionFrequency":
-                return { key: "Distribution Frequency", type: "text", value: fetchedData.issuanceTerms.distributionFrequency};
+                return { key: "Distribution Frequency", type: "text", value: fetchedData.issuanceTerms!.distributionFrequency};
               default:
                 return null;
             }

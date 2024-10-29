@@ -44,21 +44,21 @@ const AddedIcoKeyInfo = () => {
       const newKeyValuePairs = Object.keys(fetchedData.keyInformation).map(keyHeader => {
         switch (keyHeader) {
           case "network":
-            return { key: "Network", type: "selector", value: fetchedData.keyInformation.network };
+            return { key: "Network", type: "selector", value: fetchedData.keyInformation!.network };
           case "precision":
-            return { key: "Precision", type: "text", value: fetchedData.keyInformation.precision };
+            return { key: "Precision", type: "text", value: fetchedData.keyInformation!.precision };
           case "capitalStructure":
-            return { key: "Capital Structure", type: "text", value: fetchedData.keyInformation.capitalStructure };
+            return { key: "Capital Structure", type: "text", value: fetchedData.keyInformation!.capitalStructure };
           case "classiFication":
-            return { key: "Classification", type: "text", value: fetchedData.keyInformation.classiFication };
+            return { key: "Classification", type: "text", value: fetchedData.keyInformation!.classiFication };
           case "productType":
-            return { key: "Product Type", type: "text", value: fetchedData.keyInformation.productType };
+            return { key: "Product Type", type: "text", value: fetchedData.keyInformation!.productType };
           case "creationTime":
-            return { key: "Creation Time", type: "date", value: fetchedData.keyInformation.creationTime.split("T")[0] };
+            return { key: "Creation Time", type: "date", value: fetchedData.keyInformation!.creationTime.split("T")[0] };
           case "releaseTime":
-            return { key: "Release Time", type: "date", value: fetchedData.keyInformation.releaseTime.split("T")[0] };
+            return { key: "Release Time", type: "date", value: fetchedData.keyInformation!.releaseTime.split("T")[0] };
           case "compleationTime":
-            return { key: "Completion Time", type: "date", value: fetchedData.keyInformation.compleationTime.split("T")[0] };
+            return { key: "Completion Time", type: "date", value: fetchedData.keyInformation!.compleationTime.split("T")[0] };
           default:
             return null;
         }

@@ -51,31 +51,31 @@ const AddedIcoInfo = () => {
                 setFile(pictureArray);
             }
             reset(mapFetchedToInfo(fetchedData))
-            if(fetchedData.info.totalAmountRaised){
+            if(fetchedData?.info?.totalAmountRaised){
                 const value = fetchedData.info.totalAmountRaised.split(" ")[0];
                 const unit = fetchedData.info.totalAmountRaised.split(" ")[1];
                 setValue("info.totalAmountRaised",value);
                 setTotalAmountRaisedUnit(unit);
             }
-            if(fetchedData.info.totalIssuance){
+            if(fetchedData?.info?.totalIssuance){
                 const value = fetchedData.info.totalIssuance.split(" ")[0];
                 const unit = fetchedData.info.totalIssuance.split(" ")[1];
                 setValue("info.totalIssuance",value);
                 setTotalIssuanceUnit(unit);
             }
-            if(fetchedData.info.minimumInvestmentAmount){
+            if(fetchedData?.info?.minimumInvestmentAmount){
                 const value = fetchedData.info.minimumInvestmentAmount.split(" ")[0];
                 const unit = fetchedData.info.minimumInvestmentAmount.split(" ")[1];
                 setValue("info.minimumInvestmentAmount",value);
                 setMinimumInvestmentAmountUnit(unit);
             }
-            if(fetchedData.info.minimumInvestmentQuantity){
+            if(fetchedData?.info?.minimumInvestmentQuantity){
                 const value = fetchedData.info.minimumInvestmentQuantity.split(" ")[0];
                 const unit = fetchedData.info.minimumInvestmentQuantity.split(" ")[1];
                 setValue("info.minimumInvestmentQuantity",value);
                 setMinimumInvestmentQuantityUnit(unit);
             }
-            if(fetchedData.info.issueUnitPrice){
+            if(fetchedData?.info?.issueUnitPrice){
                 const value = fetchedData.info.issueUnitPrice.split(" ")[0];
                 const unit = fetchedData.info.issueUnitPrice.split(" ")[1];
                 setValue("info.issueUnitPrice",value);

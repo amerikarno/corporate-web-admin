@@ -65,23 +65,23 @@ export default function LandingPageIco() {
       useEffect(() => {
         if(assetData){
             reset(assetData)
-            if(assetData.info.totalAmountRaised){
+            if(assetData?.info?.totalAmountRaised){
                 const value = assetData.info.totalAmountRaised.split(" ")[0];
                 setValue("info.totalAmountRaised",value);
             }
-            if(assetData.info.totalIssuance){
+            if(assetData?.info?.totalIssuance){
                 const value = assetData.info.totalIssuance.split(" ")[0];
                 setValue("info.totalIssuance",value);
             }
-            if(assetData.info.minimumInvestmentAmount){
+            if(assetData?.info?.minimumInvestmentAmount){
                 const value = assetData.info.minimumInvestmentAmount.split(" ")[0];
                 setValue("info.minimumInvestmentAmount",value);
             }
-            if(assetData.info.minimumInvestmentQuantity){
+            if(assetData?.info?.minimumInvestmentQuantity){
                 const value = assetData.info.minimumInvestmentQuantity.split(" ")[0];
                 setValue("info.minimumInvestmentQuantity",value);
             }
-            if(assetData.info.issueUnitPrice){
+            if(assetData?.info?.issueUnitPrice){
                 const value = assetData.info.issueUnitPrice.split(" ")[0];
                 setValue("info.issueUnitPrice",value);
             }
@@ -94,22 +94,22 @@ export default function LandingPageIco() {
             if(assetData?.keyInformation?.compleationTime){
                 setValue("keyInformation.compleationTime",assetData?.keyInformation?.compleationTime.split("T")[0]);
             }
-            if(assetData?.issuanceTerms.investmentPeriod){
+            if(assetData?.issuanceTerms?.investmentPeriod){
                 setValue("issuanceTerms.investmentPeriod", assetData?.issuanceTerms.investmentPeriod.split(" ")[0]);
             }
-            if(assetData?.issuanceTerms.dividendYield){
+            if(assetData?.issuanceTerms?.dividendYield){
                 setValue("issuanceTerms.dividendYield", assetData?.issuanceTerms.dividendYield.split(" ")[0]);
             }
-            if(assetData?.issuanceTerms.grossMargin){
+            if(assetData?.issuanceTerms?.grossMargin){
                 setValue("issuanceTerms.grossMargin", assetData?.issuanceTerms.grossMargin.split(" ")[0]);
             }
-            if(assetData?.issuanceTerms.equityMultiple){
+            if(assetData?.issuanceTerms?.equityMultiple){
                 setValue("issuanceTerms.equityMultiple", assetData?.issuanceTerms.equityMultiple.split(" ")[0]);
             }
-            if(assetData?.issuanceTerms.profit){
+            if(assetData?.issuanceTerms?.profit){
                 setValue("issuanceTerms.profit", assetData?.issuanceTerms.profit.split(" ")[0]);
             }
-            if(assetData?.issuanceTerms.leverage){
+            if(assetData?.issuanceTerms?.leverage){
                 setValue("issuanceTerms.leverage", assetData?.issuanceTerms.leverage.split(" ")[0]);
             }
         }
