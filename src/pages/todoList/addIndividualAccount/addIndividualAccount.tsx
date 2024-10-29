@@ -57,11 +57,11 @@ export default function AddIndividualAccount() {
   const individualData = useSelector((state: RootState) => state.individualData.individualDatas);
 
   useEffect(() => {
-    const cidValue = localStorage.getItem("registerid");
+    const cidValue = localStorage.getItem("registerId");
     if (cidValue) {
       fetchIndividualData(cidValue || "");
     }else{
-      console.log("registerid not found");
+      console.log("registerId not found");
     }
   }, [token, dispatch]);
 
@@ -150,7 +150,7 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , registerid: localStorage.getItem('registerid')?.toString() };
+    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , registerId: localStorage.getItem('registerId')?.toString() };
     try {
       const token = getCookies();
       console.log("body to send ",body)
@@ -164,7 +164,7 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("registerid", res.data.id);
+          localStorage.setItem("registerId", res.data.id);
           localStorage.setItem("age", age.toString());
           console.log(age);
           console.log("update success", res, data);
@@ -182,7 +182,7 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("registerid", res.data.id);
+          localStorage.setItem("registerId", res.data.id);
           localStorage.setItem("age", age.toString());
           console.log("create success", res, data);
 
@@ -195,7 +195,7 @@ export default function AddIndividualAccount() {
 
       // const todo = "remove all below";
       // const age = calculateAge(body.birthDate);
-      // localStorage.setItem("registerid", "90000001");
+      // localStorage.setItem("registerId", "90000001");
       // localStorage.setItem("age", age.toString());
       // navigate("/create-job/added-individual-account/basicinfo");
       // window.scrollTo(0, 0);

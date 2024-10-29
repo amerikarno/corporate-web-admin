@@ -150,12 +150,12 @@ export default function AddIndividualAccount() {
   };
 
   const onSubmit = async (data: TIndividualAccount) => {
-    let body = { ...data, birthDate: new Date(data.birthDate) ,  registerId: localStorage.getItem('registerId')?.toString() };
+    let body = { ...data, birthDate: new Date(data.birthDate) ,  registerId: localStorage.getItem('registerId')};
     dispatch(setTestCorporateData({...body,birthDate: new Date(data.birthDate).toISOString()}));
     try {
       const token = getCookies();
       console.log("body to send ",body)
-      if(localStorage.getItem('registerId')?.toString()){
+      if(body.registerId !== ""){
         const res = await axios.post("/api/v1/individual/update/pre", body, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -164,7 +164,6 @@ export default function AddIndividualAccount() {
         console.log(res);
         if (res.status === 200) {
           const age = calculateAge(body.birthDate);
-          localStorage.setItem("registerId", res.data.registerId);
           localStorage.setItem("age", age.toString());
           console.log(age);
           console.log("update success", res, data);

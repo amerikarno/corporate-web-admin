@@ -7,7 +7,7 @@ import reducer, {
   } from '@/features/addIndividual/addIndividualSlice';
 
   interface AddIndividualState {
-    registerid?: string;
+    registerId?: string;
     thTitle?: string;
     thName?: string;
     thSurname?: string;
@@ -24,7 +24,7 @@ import reducer, {
   
   describe('addIndividualSlice', () => {
     const initialState: AddIndividualState = {
-      registerid: "",
+      registerId: "",
       thTitle: "",
       thName: "",
       thSurname: "",
@@ -45,7 +45,7 @@ import reducer, {
   
     it('should handle setAddIndividual', () => {
       const newState: AddIndividualState = {
-        registerid: "123",
+        registerId: "123",
         thTitle: "Mr.",
         thName: "John",
         thSurname: "Doe",
@@ -65,7 +65,7 @@ import reducer, {
   
     it('should handle setCid', () => {
       const actual = reducer(initialState, setCid("12345"));
-      expect(actual.registerid).toEqual("12345");
+      expect(actual.registerId).toEqual("12345");
     });
   
     it('should handle setIndividualEmail', () => {
@@ -81,7 +81,7 @@ import reducer, {
     it('should handle clearAddIndividual', () => {
       const modifiedState: AddIndividualState = {
         ...initialState,
-        registerid: "123",
+        registerId: "123",
         thTitle: "Mr.",
       };
       const actual = reducer(modifiedState, clearAddIndividual());

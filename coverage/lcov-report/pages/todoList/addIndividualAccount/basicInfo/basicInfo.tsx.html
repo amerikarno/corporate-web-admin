@@ -2521,11 +2521,11 @@ export default function BasicInfo() {
     (state: RootState) =&gt; state.individualData.individualDatas
   );
   useEffect(() =&gt; {
-    const cidValue = localStorage.getItem("registerid");
+    const cidValue = localStorage.getItem("registerId");
     if (cidValue) {
       fetchIndividualData(cidValue || <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>;
     }else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3664996983_101_6_101_41_4`,"registerid not found"));</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`3664996983_101_6_101_41_4`,"registerId not found"));</span>
     }
   }, [token, dispatch]);
 &nbsp;
@@ -2672,7 +2672,7 @@ export default function BasicInfo() {
       },
     };
     let body = {
-      registerid: localStorage.getItem("registerid"),
+      registerId: localStorage.getItem("registerId"),
       investment: prebody.investment,
       occupation: prebody.occupation,
       addresses: [
