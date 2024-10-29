@@ -3,7 +3,7 @@ export type TBankOrder = {
     bankAccount: string;
     operations? : string;
     orderValue:number | string |null;
-    registerId:string | null;
+    accountId:number | null;
     id?:string;
     transactionStatus?: number;
 }

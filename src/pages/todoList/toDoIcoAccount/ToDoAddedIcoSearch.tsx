@@ -1378,7 +1378,7 @@ const ToDoAddedIcoSearch = () => {
       setCurrentPage(nextPage);
       onChangePage(nextPage, rowCount);
       setLoading(true);
-      fetchQueryApproved(nextPage).then(() => {
+      fetchQueryPending(nextPage).then(() => {
         setLoading(false);
       });
     };
@@ -1388,7 +1388,7 @@ const ToDoAddedIcoSearch = () => {
       setCurrentPage(prevPage);
       onChangePage(prevPage, rowCount);
       setLoading(true);
-      fetchQueryApproved(prevPage).then(() => {
+      fetchQueryPending(prevPage).then(() => {
         setLoading(false);
       });
     };
@@ -1424,7 +1424,7 @@ const ToDoAddedIcoSearch = () => {
     }
   };
 
-const fetchQueryApproved = async (page:number) => {
+const fetchQueryPending = async (page:number) => {
   fetchTotalRow();
   console.log({page:page})
   try{
@@ -1464,7 +1464,7 @@ const handleApproveClick = async (row: TAssetData) => {
 
     if(res.status === 200){
       console.log("Approve User success",res)
-      fetchQueryApproved(currentPage);
+      fetchQueryPending(currentPage);
 
     }else{
       console.log("Approve User fail ",res)
@@ -1489,7 +1489,7 @@ const handleRejectClick = async (row: TAssetData) => {
 
     if(res.status === 200){
       console.log("Reject User success",res)
-      fetchQueryApproved(currentPage);
+      fetchQueryPending(currentPage);
     }else{
       console.log("Reject User fail ",res)
     }
@@ -1518,8 +1518,23 @@ const handleRejectClick = async (row: TAssetData) => {
       style: { maxWidth: "300px" },
     },
     {
-      name: "Issue By",
+      name: "Issued By",
       selector: (row: TAssetData) => row.asset.issueBy || "",
+    },
+    {
+      name: "Status",
+      selector: (row: TAssetData) => {
+        if (row.status === -1) {
+          return "Rejected";
+        } else if (row.status === 0) {
+          return "Pending";
+        } else if (row.status === 1) {
+          return "Approved";
+        }
+        return "Unknown";
+      },
+      width: "200px",
+      style: { maxWidth: "200px" },
     },
     {
       cell: (row: TAssetData) => (
@@ -1572,7 +1587,7 @@ const handleRejectClick = async (row: TAssetData) => {
   useEffect(() => {
     fetchTotalRow();
     setLoading(true);
-    fetchQueryApproved(currentPage).then(() => {
+    fetchQueryPending(currentPage).then(() => {
       setLoading(false);
     });
   }, []);

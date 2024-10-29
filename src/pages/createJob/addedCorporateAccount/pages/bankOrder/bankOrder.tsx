@@ -138,7 +138,7 @@ export default function BankOrderEdit() {
   const columnsOrderTrade: TableColumn<TBankOrder>[] = [
     {
       name: "registerId",
-      selector: (row: TBankOrder) => row.registerId || "",
+      selector: (row: TBankOrder) => row.accountId || "",
     },
     {
       name: "Bank Name",
@@ -181,7 +181,7 @@ export default function BankOrderEdit() {
       bankAccount: "",
       operations: "",
       orderValue: null,
-      registerId: null,
+      accountId: null,
     };
     if(choosedEditData?.bankName){
       setBankRemove(true)
@@ -272,15 +272,15 @@ export default function BankOrderEdit() {
               <div className="flex justify-center ">
                 <div className="w-2/3">
                 <Input
-                      {...register("registerId")}
+                      {...register("accountId")}
                       label="Corporate Code"
-                      id="registerId"
+                      id="accountId"
                       disabled={isSubmitting}
                       list="registerIds"
                     />
-                    {errors.registerId && (
+                    {errors.accountId && (
                       <p className="text-red-500 text-sm px-2">
-                        {errors.registerId.message}
+                        {errors.accountId.message}
                       </p>
                     )}
                     <datalist id="registerIds">
