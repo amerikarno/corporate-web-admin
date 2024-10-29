@@ -17,7 +17,7 @@ import { dateToyyyyMMdd, isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
 import { getCookies } from "@/lib/Cookies";
 import axios from "@/api/axios";
-import { mockedCorporateData } from "./libs/utils";
+// import { mockedCorporateData } from "./libs/utils";
 import { FaBackward, FaForward } from "react-icons/fa";
 
 type TTodoCorporateAccountOpening = {
@@ -57,7 +57,7 @@ export default function ChangeCorporateAccountOpenning({
   // console.log("reset:", reset);
   const { handleSearch, searchResult } = useAccountOpening();
   // const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
-  const [_, setCorporateData] = useState<TCorporateData[]>([]);
+  const [corporateData, setCorporateData] = useState<TCorporateData[]>([]);
   const [disableDate, setDisableDate] = useState<boolean>(false);
   const [disableCode, setDisableCode] = useState<boolean>(false);
   const [mockedregisterIds, setFetchedregisterIds] = useState<
@@ -65,14 +65,14 @@ export default function ChangeCorporateAccountOpenning({
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const updatedMockedCorporateData = Array(40).fill(null).map((_, index) => ({
-    ...mockedCorporateData,
-    registerId: (index + 1).toString(),
-    Info: {
-      ...mockedCorporateData.Info,
-      name: `Name ${index + 1}` 
-    }
-  }));
+  // const updatedMockedCorporateData = Array(40).fill(null).map((_, index) => ({
+  //   ...mockedCorporateData,
+  //   registerId: (index + 1).toString(),
+  //   Info: {
+  //     ...mockedCorporateData.Info,
+  //     name: `Name ${index + 1}` 
+  //   }
+  // }));
   const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage }: CustomPaginationProps) => {
     const handleNextPage = () => {
       const nextPage = currentPage + 1;
@@ -326,8 +326,8 @@ export default function ChangeCorporateAccountOpenning({
               className="overflow-scroll"
               title="Test Coporate List"
               columns={columnsCorporateInfo}
-              // data={corporateData}
-              data={updatedMockedCorporateData}
+              data={corporateData}
+              // data={updatedMockedCorporateData}
               paginationPerPage={20}
               pagination
               paginationComponentOptions={{ noRowsPerPage: false }}

@@ -199,6 +199,7 @@ describe("test change corporate", () => {
       registerId: "",
       dateFrom: dateStr,
       dateTo: dateStr,
+      page:1
     };
 
     render(
@@ -263,6 +264,7 @@ describe("test change corporate", () => {
     );
 
     const editBtn = screen.getByTestId("editButton-80000001");
+    await waitFor(() => expect(editBtn).toBeInTheDocument());
     expect(editBtn).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(editBtn);

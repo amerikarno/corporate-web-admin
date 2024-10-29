@@ -10,7 +10,7 @@ import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlic
 
 type TTransaction ={
     id: string;
-    accountId: number;
+    registerId: number;
     bankName: string;
     bankAccount:string;
     operations?:string;
@@ -136,7 +136,7 @@ const BankTransactionList = () => {
             // console.log(item);
             return {
                 id: item.id,
-                accountId: item.accountId,
+                registerId: item.registerId,
                 bankName: item.bankName,
                 bankAccount: item.bankAccount,
                 operations: item.operations,
@@ -188,7 +188,7 @@ const BankTransactionList = () => {
     },
     {
       name: "Corporate Code",
-      selector: (row: TTransaction) => row.accountId || "",
+      selector: (row: TTransaction) => row.registerId || "",
     },
     {
       name: "Bank Name",
