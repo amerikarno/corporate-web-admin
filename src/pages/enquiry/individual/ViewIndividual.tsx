@@ -39,8 +39,8 @@ export default function ViewIndividual() {
 
   const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
     {
-      name: "Individualc ID",
-      selector: (row: TIndividualData) => row.id || "",
+      name: "RegisterId ID",
+      selector: (row: TIndividualData) => row.registerId || "",
     },
     {
       name: "Individual Name",

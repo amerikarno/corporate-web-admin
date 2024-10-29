@@ -668,6 +668,7 @@ const customStyles = {
 
 export default function TodoCorporateAccountOpenning() {
 
+  const [aprroveResponse,setApproveResponse] = useState<TApproveResponse>();
   const [total,setTotal] = useState(1);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -766,6 +767,7 @@ export default function TodoCorporateAccountOpenning() {
         console.log("Approve User success",res)
         fetchQueryPending(currentPage);
         setAlertVisible(true);
+        setApproveResponse(res.data)
 
       }else{
         console.log("Approve User fail ",res)
@@ -898,10 +900,10 @@ export default function TodoCorporateAccountOpenning() {
               onClose={handleClose}
               data-testid="alertResponse"
               info={{
-                name: "getter",
-                corporateCode: "12345",
-                username: "username",
-                password: "password"
+                name: aprroveResponse?.name ?? "no name received",
+                corporateCode: aprroveResponse?.corporateCode ?? "no corporate code received",
+                username: aprroveResponse?.username ?? "no username received",
+                password: aprroveResponse?.password ?? "no password received"
               }}
             />
           )}

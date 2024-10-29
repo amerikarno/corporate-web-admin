@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AddIndividualState {
-  registerid?: string;
+  registerId?: string;
   thTitle?: string;
   thName?: string;
   thSurname?: string;
@@ -17,7 +17,7 @@ interface AddIndividualState {
 }
 
 const initialState: AddIndividualState = {
-  registerid: "",
+  registerId: "",
   thTitle: "",
   thName: "",
   thSurname: "",
@@ -41,7 +41,7 @@ const addIndividualSlice = createSlice({
       return state;
     },
     setCid: (state, action: PayloadAction<string>) => {
-      state.registerid = action.payload;
+      state.registerId = action.payload;
     },
     setIndividualEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;

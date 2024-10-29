@@ -44,7 +44,7 @@ const ChangeAddedIcoSearch = () => {
     const handleEditClick = () => {
       console.log(row);
       dispatch(setAssetData(row));
-      localStorage.setItem('registerId', row.registerId!);
+      localStorage.setItem('registerId', row?.registerId ?? "");
       navigate("/create-job/change-ico/edit/1", {
         state: row,
       });

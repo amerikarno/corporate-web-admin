@@ -1014,11 +1014,11 @@ export default function AddIndividualAccount() {
   const individualData = useSelector((state: RootState) =&gt; state.individualData.individualDatas);
 &nbsp;
   useEffect(() =&gt; {
-    const cidValue = localStorage.getItem("registerid");
+    const cidValue = localStorage.getItem("registerId");
     if (cidValue) {
       fetchIndividualData(cidValue || <span class="branch-1 cbranch-no" title="branch not covered" >"")</span>;
     }else<span class="missing-if-branch" title="else path not taken" >E</span>{
-      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_64_6_64_41_4`,"registerid not found"));</span>
+      /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_64_6_64_41_4`,"registerId not found"));</span>
     }
   }, [token, dispatch]);
 &nbsp;
@@ -1107,7 +1107,7 @@ export default function AddIndividualAccount() {
   };
 &nbsp;
   const onSubmit = async (data: TIndividualAccount) =&gt; {
-    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , registerid: localStorage.getItem('registerid')?.toString() };
+    let body = { ...data, birthDate: new Date(data.birthDate), pageId: 100 , registerId: localStorage.getItem('registerId')?.toString() };
     try {
       const token = getCookies();
       /* eslint-disable */console.log(...oo_oo(`532964819_156_6_156_39_4`,"body to send ",body))
@@ -1121,7 +1121,7 @@ export default function AddIndividualAccount() {
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_164_8_164_24_4`,res));</span>
 <span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (res.status === 200) {</span>
           const age = <span class="cstat-no" title="statement not covered" >calculateAge(body.birthDate);</span>
-<span class="cstat-no" title="statement not covered" >          localStorage.setItem("registerid", res.data.id);</span>
+<span class="cstat-no" title="statement not covered" >          localStorage.setItem("registerId", res.data.id);</span>
 <span class="cstat-no" title="statement not covered" >          localStorage.setItem("age", age.toString());</span>
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_169_10_169_26_4`,age));</span>
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_170_10_170_50_4`,"update success", res, data));</span>
@@ -1139,7 +1139,7 @@ export default function AddIndividualAccount() {
         /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_182_8_182_24_4`,res));</span>
 <span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (res.status === 200) {</span>
           const age = <span class="cstat-no" title="statement not covered" >calculateAge(body.birthDate);</span>
-<span class="cstat-no" title="statement not covered" >          localStorage.setItem("registerid", res.data.id);</span>
+<span class="cstat-no" title="statement not covered" >          localStorage.setItem("registerId", res.data.id);</span>
 <span class="cstat-no" title="statement not covered" >          localStorage.setItem("age", age.toString());</span>
           /* eslint-disable */<span class="cstat-no" title="statement not covered" >console.log(...oo_oo(`532964819_187_10_187_50_4`,"create success", res, data));</span>
 &nbsp;
@@ -1152,7 +1152,7 @@ export default function AddIndividualAccount() {
 &nbsp;
       // const todo = "remove all below";
       // const age = calculateAge(body.birthDate);
-      // localStorage.setItem("registerid", "90000001");
+      // localStorage.setItem("registerId", "90000001");
       // localStorage.setItem("age", age.toString());
       // navigate("/create-job/added-individual-account/basicinfo");
       // window.scrollTo(0, 0);
