@@ -254,7 +254,7 @@ const AccountLockUnLock = () => {
                 },
           })
           if (res.status === 200){
-            if (Array.isArray(res.data)) setCustomerData(res.data[0]);
+              setCustomerData(res.data);
               console.log("search by customer code success", res.data);
           }
        }catch(error){
@@ -312,7 +312,7 @@ const AccountLockUnLock = () => {
       })
       if(res.status === 200){
         console.log("fetch all account success",res);
-        if (Array.isArray(res.data)) setCustomerData(res.data[0]);
+        setCustomerData(res.data);
         const customerCodes = res.data.map((customerCode: TAccountTable) => customerCode);
         setCustomerCodeList(customerCodes);
       }else{
@@ -363,7 +363,7 @@ const AccountLockUnLock = () => {
               title="Lock / UnLock Account"
               className="overflow-scroll h-full"
               columns={accountCoulmn}
-              data={Array.isArray(customerData) ? customerData : []}
+              data={customerData ? customerData : []}
               // data={duplicateArrayUntilLength(120)}
               paginationPerPage={20}
               progressComponent={<CustomLoader />}
