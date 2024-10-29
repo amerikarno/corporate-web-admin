@@ -200,9 +200,14 @@ describe("test order trade", () => {
     });
   
     test("test input data(multiple input type) create (buy)", async () => {
-      mockAxios.onPost("/api/v1/transaction/order/create").reply(200, {
-        message: "create successful"
+
+      let capturedRequestBody: any = null;
+
+      mockAxios.onPost("/api/v1/transaction/order/create").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
       });
+
       render(
         <Provider store={store}>
           <MemoryRouter>
@@ -266,31 +271,30 @@ describe("test order trade", () => {
       
       //Expected form data
       const expectedFormData = {
-        data: {
           cryptoAmount: 10000000,
           fiatAmount: 10000000,
           currency: 'THB',
           cryptoPrice: 10000000,
           registerId: "80000001",
           operations: 'buy',
-          id: undefined,
           pair: 'THB/USDC'
-        }
       };
 
       await waitFor(() => {
-        const state = store.getState();
-        const corporateState = state.corporateTest;
-        console.log("Corporate State After Submission:", corporateState);
-        expect(corporateState).toMatchObject(expectedFormData);
+        expect(capturedRequestBody).toEqual(expectedFormData);
       })
   
     }, 20000);
 
     test("test input data(multiple input type) create (sell)", async () => {
-      mockAxios.onPost("/api/v1/transaction/order/create").reply(200, {
-        message: "create successful"
+
+      let capturedRequestBody: any = null;
+
+      mockAxios.onPost("/api/v1/transaction/order/create").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
       });
+
       render(
         <Provider store={store}>
           <MemoryRouter>
@@ -353,31 +357,30 @@ describe("test order trade", () => {
       // })
       //Expected form data
       const expectedFormData = {
-        data: {
           cryptoAmount: 10000000,
           fiatAmount: 10000000,
           currency: 'USDC',
           cryptoPrice: 10000000,
           registerId: "80000001",
           operations: 'sell',
-          id: undefined,
           pair: 'THB/USDC'
-        }
       };
 
       await waitFor(() => {
-        const state = store.getState();
-        const corporateState = state.corporateTest;
-        console.log("Corporate State After Submission:", corporateState);
-        expect(corporateState).toMatchObject(expectedFormData);
+        expect(capturedRequestBody).toEqual(expectedFormData);
       })
   
     }, 20000);
 
     test("test input data(multiple input type) update", async () => {
-      mockAxios.onPost("/api/v1/transaction/order/edit").reply(200, {
-        message: "edit successful"
+
+      let capturedRequestBody: any = null;
+
+      mockAxios.onPost("/api/v1/transaction/order/edit").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
       });
+
       render(
         <Provider store={store}>
           <MemoryRouter>
@@ -420,22 +423,18 @@ describe("test order trade", () => {
 
       //Expected form data
       const expectedFormData = {
-        data: {
           registerId: "80000001",
           cryptoAmount: 112345,
           fiatAmount: 100010,
           currency: 'THB',
           cryptoPrice: 110000,
           operations: 'buy',
+          pair: "THB/USDT",
           id: '0614ff48-c498-4f2b-a70f-c86d639ce4c9'
-        }
       };
 
       await waitFor(() => {
-        const state = store.getState();
-        const corporateState = state.corporateTest;
-        console.log("Corporate State After Submission:", corporateState);
-        expect(corporateState).toMatchObject(expectedFormData);
+        expect(capturedRequestBody).toEqual(expectedFormData);
       })
   
     }, 20000);

@@ -6,10 +6,9 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { TTransaction } from "./constant/type";
 import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
-import { RootState, store } from "@/app/store";
+import { RootState } from "@/app/store";
 import { isAllowedPage } from "@/lib/utils";
 import UnAuthorize from "@/pages/unAuthorizePage/unAuthorize";
-import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 const TransactionList = () => {
   if (!isAllowedPage(3003)) {
@@ -71,7 +70,6 @@ const TransactionList = () => {
       .filter((data) => data.ReviewStatus !== undefined);
 
     console.log(dataToSend);
-    store.dispatch(setTestCorporateData(dataToSend));
     try {
       const response = await axios.post(
         "/api/v1/transaction/order/review",

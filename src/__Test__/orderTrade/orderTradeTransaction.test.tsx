@@ -124,14 +124,16 @@ describe("test order trade transaction", () => {
     }, 20000);
 
     test("test approve button", async () => {
+
+      let capturedRequestBody: any = null;
+
       mockAxios.onGet("/api/v1/transaction/order/get").reply(200, 
         mockListOfTransaction,
       );
-      mockAxios.onPost("/api/v1/transaction/order/review").reply(200, 
-        {
-            message:"aprrove success"
-        },
-      );
+      mockAxios.onPost("/api/v1/transaction/order/review").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
+      });
   
       render(
         <Provider store={store}>
@@ -158,31 +160,30 @@ describe("test order trade transaction", () => {
         fireEvent.click(submitBtn);
       });
 
-      const expectedFormData = {data: [
+      const expectedFormData = [
         {
           transactionId: 'f607968e-cfc9-40a3-bee1-fe6bc5ed6ed2',
           ReviewStatus: true
         }
-      ]}
+      ]
 
       await waitFor(() => {
-        const state = store.getState();
-        const corporateState = state.corporateTest;
-        console.log("orderTrade State After Submission:", corporateState);
-        expect(corporateState).toMatchObject(expectedFormData);
-    });
+        expect(capturedRequestBody).toEqual(expectedFormData);
+      });
       
     }, 20000);
 
     test("test reject button", async () => {
+
+      let capturedRequestBody: any = null;
+
         mockAxios.onGet("/api/v1/transaction/order/get").reply(200, 
           mockListOfTransaction,
         );
-        mockAxios.onPost("/api/v1/transaction/order/review").reply(200, 
-            {
-                message:"reject success"
-            },
-          );
+        mockAxios.onPost("/api/v1/transaction/order/review").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
+      });
     
         render(
           <Provider store={store}>
@@ -209,19 +210,16 @@ describe("test order trade transaction", () => {
           fireEvent.click(submitBtn);
         });
   
-        const expectedFormData = {data: [
+        const expectedFormData = [
           {
             transactionId: 'f607968e-cfc9-40a3-bee1-fe6bc5ed6ed2',
             ReviewStatus: false
           }
-        ]}
+        ]
   
         await waitFor(() => {
-          const state = store.getState();
-          const corporateState = state.corporateTest;
-          console.log("orderTrade State After Submission:", corporateState);
-          expect(corporateState).toMatchObject(expectedFormData);
-      });
+          expect(capturedRequestBody).toEqual(expectedFormData);
+        })
         
       }, 20000);
   });

@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { MdCurrencyExchange } from "react-icons/md";
 import { IoReceiptOutline } from "react-icons/io5";
-import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 export default function OrderTradeEdit() {
   if (!isAllowedPage(2005)) {
     return <UnAuthorize />;
@@ -265,7 +264,6 @@ export default function OrderTradeEdit() {
       cryptoPrice: handleFloatValue(Number(data.cryptoPrice)),
       pair:selectedTradingPair,
     };
-    dispatch(setTestCorporateData(body));
     console.log(choosedEditData);
     console.log(body);
 

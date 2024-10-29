@@ -567,8 +567,12 @@ const mockAxios = new MockAdapter(axios);
       });
   
     test("test fxExchange create", async ()=>{
-      mockAxios.onPost("/api/v1/transaction/exchange/create").reply(200, {
-        message: "create fxExchange success"
+
+      let capturedRequestBody: any = null;
+
+      mockAxios.onPost("/api/v1/transaction/exchange/create").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
       });
 
       mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
@@ -630,29 +634,29 @@ const mockAxios = new MockAdapter(axios);
       });
 
       const expectedFormData = {
-        data: {
             exchange: 'THB/USD',
             exchangeSpread: 10000,
             operationSpread: 5000,
             exchangeRate: 3000000,
-            buyCurrency: 100000000
-          }
+            buyCurrency: 100000000,
+            registerId: "80000001"
       }
 
       await waitFor(() => {
-        const state = store.getState();
-        const corporateState = state.corporateTest;
-        console.log("Corporate State After Submission:", corporateState);
-        expect(corporateState).toMatchObject(expectedFormData);
-    });
+        expect(capturedRequestBody).toEqual(expectedFormData);
+      })
 
     }, 40000)
     
 
     test("test fxExchange edit", async ()=>{
-        mockAxios.onPost("/api/v1/transaction/exchange/edit").reply(200, {
-          message: "edit fxExchange success"
-        });
+
+        let capturedRequestBody: any = null;
+
+        mockAxios.onPost("/api/v1/transaction/exchange/edit").reply((config) => {
+            capturedRequestBody = JSON.parse(config.data);
+            return [200, {}];
+          });
   
         mockAxios.onPost("/api/v1/corporate/query/all").reply(200, {
             data: corporateListMock
@@ -698,7 +702,6 @@ const mockAxios = new MockAdapter(axios);
         });
 
         const expectedFormData = {
-            data: {
                 registerId: "80000005",
                 exchangeRate: 12312300,
                 exchangeSpread: 12312300,
@@ -707,14 +710,11 @@ const mockAxios = new MockAdapter(axios);
                 transactionStatus: 0,
                 exchange: 'THB/USD',
                 buyCurrency: 12300000
-              }
           }
-        await waitFor(() => {
-          const state = store.getState();
-          const corporateState = state.corporateTest;
-          console.log("Corporate State After Submission:", corporateState);
-          expect(corporateState).toMatchObject(expectedFormData);
-      });
+
+          await waitFor(() => {
+            expect(capturedRequestBody).toEqual(expectedFormData);
+          })
     }, 40000)
 
 })

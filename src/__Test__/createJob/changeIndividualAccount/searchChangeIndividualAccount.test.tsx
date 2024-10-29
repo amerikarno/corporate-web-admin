@@ -234,6 +234,7 @@ describe("test change individual", () => {
   }, 40000);
 
   test("test init first data", async () => {
+    
     mockAxios.onPost("/api/v1/individual/list/all").reply(200, {
       data:mockTIndividualData
     });

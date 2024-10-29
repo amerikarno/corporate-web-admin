@@ -118,8 +118,12 @@ jest.mock("@/lib/utils", () => ({
 
     test("test click approve/reject", async () => {
 
-      mockAxios.onPost("/api/v1/ico/approve").reply(200, {
-      })
+      let capturedRequestBody: any = null;
+
+      mockAxios.onPost("/api/v1/ico/approve").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
+      });
 
       render(
         <Provider store={store}>
@@ -143,8 +147,17 @@ jest.mock("@/lib/utils", () => ({
       await waitFor(() => {
         expect(screen.getByText("Are you sure? Approve")).toBeInTheDocument();
       })
+
+      fireEvent.change(screen.getByPlaceholderText("Please specify the ICO code..."), { target: { value: "12345" } });
       fireEvent.click(screen.getByRole('button', { name: 'Approve' }));
 
+      await waitFor(() => {
+        expect(capturedRequestBody).toEqual({
+          registerId: "5ef8861b-0c10-4c60-a073-645376aae700",
+          icoCode: "12345",
+          status: 1,
+        });
+      });
     })
     test("test change page", async () => {
 

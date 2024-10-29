@@ -282,6 +282,8 @@ jest.mock("@/lib/utils", () => ({
 
     test("test click approve/reject", async () => {
 
+      let capturedRequestBody: any = null;
+
       mockAxios.onPost("/api/v1/individual/total/pending").reply(200, {
         total:100
       })
@@ -290,8 +292,10 @@ jest.mock("@/lib/utils", () => ({
         [mockIndividualData]
       )
 
-      mockAxios.onPost("/api/v1/user/individual/approve").reply(200, {
-      })
+      mockAxios.onPost("/api/v1/user/individual/approve").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
+      });
 
       render(
         <Provider store={store}>
@@ -316,7 +320,13 @@ jest.mock("@/lib/utils", () => ({
         expect(screen.getByText("Are you sure? Approve")).toBeInTheDocument();
       })
       fireEvent.click(screen.getByRole('button', { name: 'Approve' }));
-
+      await waitFor(() => {
+        expect(capturedRequestBody).toEqual({
+          registerId: "90000002",
+          status: 1,
+        });
+      })
+      
     })
     test("test change page", async () => {
 

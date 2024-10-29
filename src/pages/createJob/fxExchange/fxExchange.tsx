@@ -18,7 +18,6 @@ import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { SiExpertsexchange } from "react-icons/si";
 // import { FaMoneyBillWave } from "react-icons/fa6";
 import "./scrollbar.css";
-import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
 
 export default function FxExchangeEdit() {
   // if (!isAllowedPage(2005)) {
@@ -373,7 +372,6 @@ export default function FxExchangeEdit() {
     };
     console.log("choosedEditData ",choosedEditData);
     console.log(body);
-    dispatch(setTestCorporateData(body));
     try {
       const token = getCookies();
       if (body.id) {

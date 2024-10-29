@@ -153,14 +153,16 @@ describe("test cash deposite/withdraw transaction", () => {
     }, 20000);
 
     test("test approve button", async () => {
+
+      let capturedRequestBody: any = null;
+
       mockAxios.onGet("/api/v1/transaction/exchange/get/corporate").reply(200, 
         mockListOfFxExChange,
       );
-      mockAxios.onPost("/api/v1/transaction/exchange/review").reply(200, 
-        {
-            message:"aprrove success"
-        },
-      );
+      mockAxios.onPost("/api/v1/transaction/exchange/review").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
+      });
   
       render(
         <Provider store={store}>
@@ -187,31 +189,30 @@ describe("test cash deposite/withdraw transaction", () => {
         fireEvent.click(submitBtn);
       });
 
-      const expectedFormData = {data: [
+      const expectedFormData = [
         {
           transactionId: '0438df56-d8d1-42b7-aaeb-cdd8fcba8426',
           ReviewStatus: true
         }
-      ]}
+      ]
 
       await waitFor(() => {
-        const state = store.getState();
-        const corporateState = state.corporateTest;
-        console.log("orderTrade State After Submission:", corporateState);
-        expect(corporateState).toMatchObject(expectedFormData);
-    });
+        expect(capturedRequestBody).toEqual(expectedFormData);
+      })
       
     }, 20000);
 
     test("test reject button", async () => {
+
+      let capturedRequestBody: any = null;
+
         mockAxios.onGet("/api/v1/transaction/exchange/get/corporate").reply(200, 
             mockListOfFxExChange,
         );
-        mockAxios.onPost("/api/v1/transaction/exchange/review").reply(200, 
-            {
-                message:"reject success"
-            },
-          );
+        mockAxios.onPost("/api/v1/transaction/exchange/review").reply((config) => {
+        capturedRequestBody = JSON.parse(config.data);
+        return [200, {}];
+      });
     
         render(
           <Provider store={store}>
@@ -238,19 +239,16 @@ describe("test cash deposite/withdraw transaction", () => {
           fireEvent.click(submitBtn);
         });
   
-        const expectedFormData = {data: [
+        const expectedFormData =  [
           {
             transactionId: '0438df56-d8d1-42b7-aaeb-cdd8fcba8426',
             ReviewStatus: false
           }
-        ]}
-  
+        ]
+
         await waitFor(() => {
-          const state = store.getState();
-          const corporateState = state.corporateTest;
-          console.log("orderTrade State After Submission:", corporateState);
-          expect(corporateState).toMatchObject(expectedFormData);
-      });
+          expect(capturedRequestBody).toEqual(expectedFormData);
+        })
         
       }, 20000);
   });

@@ -13,7 +13,7 @@ const EditButtonCell = ({ row }: { row: TCorporateData }) => {
     console.log(row);
     dispatch(setCorporateData(row));
     localStorage.setItem('registerId', row.registerId.toString());
-    navigate("/todo-list/corporate-account-opening/edit/1", {
+    navigate("/create-job/change-corporate-account/edit/1", {
       state: row,
     });
   };
