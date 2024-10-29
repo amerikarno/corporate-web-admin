@@ -265,7 +265,7 @@ const CustomLoader = () => (
 //     },
 //     "ndid": true,
 //     "thaid": false
-// }
+// },
 // ]
 
 // const updatedMocked = Array.from({ length: 100 }).flatMap((_, index) => 
@@ -285,7 +285,7 @@ export default function TodoIndividualAccount() {
   const [currentPage, setCurrentPage] = useState(1);
   // const [registerIdInput,setRegisterIdInput] = useState('');
   // const [registerIdList, setRegisterIdList] = useState<TIndividualData[]>([]);
-  const [fetchData, setFetchData] = useState<TIndividualData[]>([]);
+  const [ fetchData , setFetchData] = useState<TIndividualData[]>([]);
 
   const CustomPagination = ({ rowsPerPage, rowCount, onChangePage, currentPage, setCurrentPage }: CustomPaginationProps) => {
     const handleNextPage = () => {
@@ -293,7 +293,7 @@ export default function TodoIndividualAccount() {
       setCurrentPage(nextPage);
       onChangePage(nextPage, rowCount);
       setLoading(true);
-      fetchQueryApproved(nextPage).then(() => {
+      fetchQueryPending(nextPage).then(() => {
         setLoading(false);
       });
     };
@@ -303,18 +303,18 @@ export default function TodoIndividualAccount() {
       setCurrentPage(prevPage);
       onChangePage(prevPage, rowCount);
       setLoading(true);
-      fetchQueryApproved(prevPage).then(() => {
+      fetchQueryPending(prevPage).then(() => {
         setLoading(false);
       });
     };
   
     return (
       <div className="m-4 mt-8 flex justify-center items-center space-x-8">
-        <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
+        <Button onClick={handlePreviousPage} data-testid="prevBtn" disabled={currentPage === 1}>
         <FaBackward />
         </Button>
         <span>{`Page ${currentPage} of ${Math.ceil(rowCount / rowsPerPage)}`}</span>
-        <Button onClick={handleNextPage} disabled={currentPage === Math.ceil(rowCount / rowsPerPage)}>
+        <Button onClick={handleNextPage} data-testid="nextBtn" disabled={currentPage === Math.ceil(rowCount / rowsPerPage)}>
         <FaForward />
         </Button>
       </div>
@@ -339,7 +339,7 @@ export default function TodoIndividualAccount() {
       }
     };
   
-  const fetchQueryApproved = async (page:number) => {
+  const fetchQueryPending = async (page:number) => {
     fetchTotalRow();
     console.log({page:page})
     try{
@@ -378,7 +378,7 @@ export default function TodoIndividualAccount() {
 
       if(res.status === 200){
         console.log("Approve User success",res)
-        fetchQueryApproved(currentPage);
+        fetchQueryPending(currentPage);
 
       }else{
         console.log("Approve User fail ",res)
@@ -403,7 +403,7 @@ export default function TodoIndividualAccount() {
 
       if(res.status === 200){
         console.log("Reject User success",res)
-        fetchQueryApproved(currentPage);
+        fetchQueryPending(currentPage);
       }else{
         console.log("Reject User fail ",res)
       }
@@ -414,7 +414,7 @@ export default function TodoIndividualAccount() {
   
   const ColumnsOfIndividualSearch: TableColumn<TIndividualData>[] = [
     {
-      name: "Individualc ID",
+      name: "Register ID",
       selector: (row: TIndividualData) => row.registerId || "",
       width: "200px",
       style: { maxWidth: "200px" },
@@ -432,7 +432,7 @@ export default function TodoIndividualAccount() {
       style: { maxWidth: "200px" },
     },
     {
-      name: "status",
+      name: "Status",
       selector: (row: TIndividualData) => {
         if (row.status === -1) {
           return "Rejected";
@@ -498,7 +498,7 @@ export default function TodoIndividualAccount() {
   useEffect(() => {
     fetchTotalRow();
     setLoading(true);
-    fetchQueryApproved(currentPage).then(() => {
+    fetchQueryPending(currentPage).then(() => {
       setLoading(false);
     });
   }, []);
@@ -551,7 +551,7 @@ export default function TodoIndividualAccount() {
           <DataTable 
             columns={ColumnsOfIndividualSearch}
             data = {fetchData}
-            // data = {updatedMocked}
+            // data = {mockedQueryApprove}
             paginationPerPage={20}
             progressComponent={<CustomLoader />}
             progressPending={loading}

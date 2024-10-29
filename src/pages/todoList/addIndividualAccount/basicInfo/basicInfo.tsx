@@ -94,11 +94,11 @@ export default function BasicInfo() {
     (state: RootState) => state.individualData.individualDatas
   );
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
+    const cidValue = localStorage.getItem("registerid");
     if (cidValue) {
       fetchIndividualData(cidValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerid not found");
     }
   }, [token, dispatch]);
 
@@ -245,7 +245,7 @@ export default function BasicInfo() {
       },
     };
     let body = {
-      cid: localStorage.getItem("cid"),
+      registerid: localStorage.getItem("registerid"),
       investment: prebody.investment,
       occupation: prebody.occupation,
       addresses: [

@@ -125,7 +125,7 @@ type TDetail = {
       minimumInvestmentAmount: string;
       minimumInvestmentQuantity: string;
       issueUnitPrice: string;
-    };
+    } | null;
     details: TDetail[];
     documents: string[] | null;
     images: string[] | null;
@@ -144,7 +144,7 @@ type TDetail = {
       creationTime: string;
       releaseTime: string;
       compleationTime: string;
-    };
+    } | null;
     issuanceTerms: {
       createBy?:string;
       CreatedAt?:string;
@@ -158,7 +158,7 @@ type TDetail = {
       leverage: string;
       investmentStructure: string;
       distributionFrequency: string;
-    };
+    } | null;
     companyMembers: {
       id?: string;
       createBy?:string;

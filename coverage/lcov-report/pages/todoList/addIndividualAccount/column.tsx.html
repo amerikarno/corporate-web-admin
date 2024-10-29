@@ -177,7 +177,7 @@ const EditButtonCell = ({ row }: { row: TIndividualData }) =&gt; {
   const handleEditClick = () =&gt; {
     /* eslint-disable */console.log(...oo_oo(`4035800424_13_4_13_20_4`,row));
     dispatch(setIndividualData(row));
-    localStorage.setItem('cid', row.id.toString());
+    localStorage.setItem('registerid', row.id.toString());
     navigate("/todo-list/individual-account-opening/edit/1", {
       state: row,
     });

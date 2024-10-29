@@ -331,11 +331,11 @@ const AccountLockUnLock = () => {
   },[])
       
   return (
-    <div className="flex flex-col flex-center p-8 space-y-4">
+    <div className="flex flex-col flex-center p-8 space-y-4 pt-4">
       <Card >
         <div className="flex items-center w-full space-x-4 p-4 px-8 bg-[#002f18] text-white rounded-md">
             <div className="font-bold">
-                Search by Customer Code
+                Search by Register Id
             </div>
             <div className="max-w-96 w-full">
                 <Input

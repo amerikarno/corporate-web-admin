@@ -45,11 +45,11 @@ export default function SuitTestFatca() {
     (state: RootState) => state.individualData.individualDatas
   );
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
+    const cidValue = localStorage.getItem("registerid");
     if (cidValue) {
       fetchIndividualData(cidValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerid not found");
     }
   }, [token, dispatch]);
 
@@ -119,7 +119,7 @@ export default function SuitTestFatca() {
       (fatcaradio === "fatcaradio-2" || JSON.stringify(fatcaInfo) !== JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0]))
     ) {
       let body = {
-        id: localStorage.getItem("cid"),
+        id: localStorage.getItem("registerid"),
         suiteTestResult: suitTestResult,
         isFatca: fatcaradio === "fatcaradio-1",
         fatcaInfo: fatcaInfo === "" ? [] : fatcaInfo,

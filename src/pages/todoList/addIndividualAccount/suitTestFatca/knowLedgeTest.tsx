@@ -209,7 +209,7 @@ type AnswersType = {
       );
       
     useEffect(() => {
-        const cidValue = localStorage.getItem("cid");
+        const cidValue = localStorage.getItem("registerid");
         fetchIndividualData(cidValue || "");
       }, [token, dispatch,]);
 

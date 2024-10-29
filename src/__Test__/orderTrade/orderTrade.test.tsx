@@ -271,7 +271,7 @@ describe("test order trade", () => {
           fiatAmount: 10000000,
           currency: 'THB',
           cryptoPrice: 10000000,
-          registerId: 80000001,
+          registerId: "80000001",
           operations: 'buy',
           id: undefined,
           pair: 'THB/USDC'
@@ -358,7 +358,7 @@ describe("test order trade", () => {
           fiatAmount: 10000000,
           currency: 'USDC',
           cryptoPrice: 10000000,
-          registerId: 80000001,
+          registerId: "80000001",
           operations: 'sell',
           id: undefined,
           pair: 'THB/USDC'
@@ -421,7 +421,7 @@ describe("test order trade", () => {
       //Expected form data
       const expectedFormData = {
         data: {
-          registerId: 80000001,
+          registerId: "80000001",
           cryptoAmount: 112345,
           fiatAmount: 100010,
           currency: 'THB',

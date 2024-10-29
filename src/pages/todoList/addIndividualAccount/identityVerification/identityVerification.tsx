@@ -53,11 +53,11 @@ export default function IdentityVerification() {
     (state: RootState) => state.individualData.individualDatas
   );
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
+    const cidValue = localStorage.getItem("registerid");
     if (cidValue) {
       fetchIndividualData(cidValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerid not found");
     }
   }, [token, dispatch]);
 
@@ -78,7 +78,7 @@ export default function IdentityVerification() {
   const handleNdid = async () => {
     let body = {
       ndid:true,
-      cid:localStorage.getItem('cid')
+      registerid:localStorage.getItem('registerid')
     }
     dispatch(setTestCorporateData(body));
     console.log("ndid choosed : ",body)
@@ -126,7 +126,7 @@ export default function IdentityVerification() {
   const handlethaiid = async () => {
     let body = {
       thaid:true,
-      cid:localStorage.getItem('cid')
+      registerid:localStorage.getItem('registerid')
     }
     dispatch(setTestCorporateData(body));
     console.log("thaid choosed : ",body)

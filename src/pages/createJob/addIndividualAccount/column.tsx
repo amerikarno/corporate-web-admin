@@ -12,7 +12,7 @@ const EditButtonCell = ({ row }: { row: TIndividualData }) => {
   const handleEditClick = () => {
     console.log(row);
     dispatch(setIndividualData(row));
-    localStorage.setItem('cid', row.id.toString());
+    localStorage.setItem('registerid', row.id.toString());
     navigate("/create-job/change-individual-account/edit/1", {
       state: row,
     });

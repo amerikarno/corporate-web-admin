@@ -277,7 +277,7 @@ describe("test change individual", () => {
       timeout: 10000,
     });
 
-    const id = screen.getByTestId(/accountId/i);
+    const id = screen.getByTestId(/registerId/i);
     const datefrom = screen.getByTestId(/dateFrom/i);
     const dateto = screen.getByTestId(/dateTo/i);
 

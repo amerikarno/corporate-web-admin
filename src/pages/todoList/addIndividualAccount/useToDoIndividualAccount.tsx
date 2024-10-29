@@ -10,7 +10,7 @@ import { yyyyMMddToDate } from "@/lib/utils";
 type TBody = {
   dateFrom: Date | null;
   dateTo: Date | null;
-  AccountID: string;
+  registerId: string;
 };
 export function useToDoIndividualAccount() {
   const [searchResult, setSearchResult] = useState<TIndividualData>();
@@ -27,7 +27,7 @@ export function useToDoIndividualAccount() {
 
     console.log(body);
     if (
-      body.AccountID === "" &&
+      body.registerId === "" &&
       body.dateFrom === null &&
       body.dateTo === null
     ) {
@@ -54,9 +54,9 @@ export function useToDoIndividualAccount() {
       try {
         console.log(body);
         let formatBody
-        if(body.AccountID){
+        if(body.registerId){
           formatBody = {
-            accountID: body.AccountID
+            registerId: body.registerId
           }
         }else{
           formatBody = body

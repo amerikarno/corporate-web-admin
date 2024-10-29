@@ -174,11 +174,11 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
 
 
   useEffect(() => {
-    const cidValue = localStorage.getItem("cid");
+    const cidValue = localStorage.getItem("registerid");
     if (cidValue) {
       fetchIndividualData(cidValue || "");
     }else{
-      console.log("cid not found");
+      console.log("registerid not found");
     }
   }, [token, dispatch]);
 
@@ -358,7 +358,7 @@ export default function SubSuitTest({ onSuitTestDone,suitTestResult }: SubSuitTe
         // quiz: 1,
       }));
       let body = {
-        cid: localStorage.getItem("cid"),
+        registerid: localStorage.getItem("registerid"),
         investorTypeRisk: investorTypeTemp,
         level: giveGrade(scoreCalculator),
         totalScore: scoreCalculator,
