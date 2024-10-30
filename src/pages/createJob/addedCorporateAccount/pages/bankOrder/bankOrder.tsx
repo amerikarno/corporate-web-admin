@@ -203,7 +203,6 @@ const bankOrder = () => {
       })
       if(res.status === 200){
         setIndividualTransactionData(res.data)
-        fetchIndividualData();
         setChoosedEditData(null);
         console.log("fetch individual data success",res);
       }else{
@@ -223,7 +222,6 @@ const bankOrder = () => {
       })
       if(res.status === 200){
         setCorporateTransactionData(res.data)
-        fetchCorporateData();
         setChoosedEditData(null);
         console.log("fetch corporate data success",res);
       }else{
