@@ -31,7 +31,7 @@ const AddedIcoCompany = () => {
 
   const callFetchData = async () => {
     try{
-      const res = await axios.post("/api/v1/ico/query", {
+      const res = await axios.post("/api/v1/ico/query",{}, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
