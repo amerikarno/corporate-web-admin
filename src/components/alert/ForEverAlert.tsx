@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import './Alert.css';
+import './ForEverAlert.css';
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { TApproveResponse } from '@/pages/todoList/corporateAccountOpening/corporateAccountOpening';
+import { Card } from '../ui/card';
 
 interface AlertProps {
     type: string;
@@ -25,12 +26,14 @@ const Alert = ({ type, onClose,info }: AlertProps) => {
         <div className="alert-loader"></div>
         {/* <span className="alert-message">{message}</span> */}
         <button className="alert-close" data-testid="closeAlert" onClick={() => { setIsVisible(false); setTimeout(onClose, 500); }}>&times;</button>
-      </div>
-      <div className="w-[600px] absolute bg-white top-[15%] left-[41.5%] flex p-4  space-y-4 jurify-center flex-col">
-            <span className="flex space-x-4"><span className="font-bold">CorporateName:</span> <span>{info.name}</span></span>
-            <span className=""><span className="font-bold">CorporateCode:</span> <span>{info.corporateCode}</span></span>
+        <div className="w-[600px] absolute bg-white top-24 p-4 rounded-b-[20px]">
+          <Card className="flex p-4  space-y-4 jurify-center flex-col">
+            <span className="flex space-x-4"><span className="font-bold">Corporate name:</span> <span>{info.name}</span></span>
+            <span className=""><span className="font-bold">Corporate code:</span> <span>{info.corporateCode}</span></span>
             <span className=""><span className="font-bold">Username:</span> <span>{info.username}</span></span>
-            <span className=""><span className="font-bold">PassWord:</span> <span>{info.password}</span></span>
+            <span className=""><span className="font-bold">Password:</span> <span>{info.password}</span></span>
+          </Card>
+      </div>
       </div>
     </div>
   );
