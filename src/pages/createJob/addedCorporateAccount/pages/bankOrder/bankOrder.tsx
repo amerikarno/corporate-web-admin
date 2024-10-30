@@ -267,7 +267,7 @@ const bankOrder = () => {
   },[corporateIndividual])
 
   return (
-    <div className="flex md:flex-row flex-col md:space-x-4 justify-center pt-20 md:px-16 min-h-[40rem]">
+    <div className="flex md:flex-row flex-col md:space-x-4 justify-center pt-20 md:px-16 min-h-[40rem] lg:px-4">
       <form className="flex flex-col space-y-4 md:w-2/5 "onSubmit={()=>handleSubmit(onSubmit)}>
       {/* <form className="flex space-x-4" onSubmit={handleSubmit(onSubmit)}> */}
           <Card className="p-4 relative rounded-t-xl overflow-hidden max-h-40">
@@ -314,10 +314,14 @@ const bankOrder = () => {
                 </div>
                 <Input label="Bank Account ID" id="bankAccount" {...register("bankAccount")}/>
                 <div className="flex justify-center">
-                  <div onClick={()=>setDepositWithdraw("deposit")} className={`border-2 p-2 pl-6 pr-1 rounded-l-full hover:cursor-pointer bg-${depostieWithdraw === "deposit" ? "[#003019]" : ""} font-${depostieWithdraw === "deposit" ? "bold" : ""} text-${depostieWithdraw === "deposit" ? "white" : ""} transition-all duration-300`}>
+                  <div onClick={()=>setDepositWithdraw("deposit")} className={`border-2 p-2 pl-6 pr-1 rounded-l-full hover:cursor-pointer bg-${depostieWithdraw === "deposit" ? "[#003019]" : ""} font-${depostieWithdraw === "deposit" ? "bold" : ""} text-${depostieWithdraw === "deposit" ? "white" : ""} transition-all duration-300
+      sm:pl-4 sm:pr-2 md:pl-2 md:pr-1 lg:pl-6
+    `}>
                       Deposit
                   </div>
-                  <div onClick={()=>setDepositWithdraw("withdraw")} className={`border-2 p-2 pr-6 pl-1 rounded-r-full hover:cursor-pointer bg-${depostieWithdraw === "withdraw" ? "[#003019]" : ""} font-${depostieWithdraw === "withdraw" ? "bold" : ""} text-${depostieWithdraw === "withdraw" ? "white" : ""} transition-all duration-300`}>
+                  <div onClick={()=>setDepositWithdraw("withdraw")} className={`border-2 p-2 pr-6 pl-1 rounded-r-full hover:cursor-pointer bg-${depostieWithdraw === "withdraw" ? "[#003019]" : ""} font-${depostieWithdraw === "withdraw" ? "bold" : ""} text-${depostieWithdraw === "withdraw" ? "white" : ""} transition-all duration-300
+      sm:pr-4 sm:pl-2 md:pr-2 md:pl-1 lg:pr-6
+    `}>
                       Withdraw
                   </div>
                 </div>
