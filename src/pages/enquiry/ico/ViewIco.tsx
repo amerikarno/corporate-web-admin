@@ -89,7 +89,7 @@ const ViewIco = () => {
 
   const fetchIcoAccount = async () => {
     try {
-      const res = await axios.post("/api/v1/ico/query", {
+      const res = await axios.post("/api/v1/ico/query",{}, {
         headers: {
           Authorization: `Bearer ${getCookies()}`,
         },
