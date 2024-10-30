@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { BsBank2 } from "react-icons/bs";
 import { FaPeopleGroup, FaPerson } from "react-icons/fa6";
-import { mockCorporateTransactionData } from "./constant/utils";
+// import { mockCorporateTransactionData } from "./constant/utils";
 type TBankOrder = {
   corporateCode?: number | null;
   customerCode?: number | null;
@@ -202,8 +202,7 @@ const bankOrder = () => {
         }
       })
       if(res.status === 200){
-        setIndividualTransactionData(res.data)
-        fetchIndividualData();
+        setIndividualTransactionData(res?.data || [])
         setChoosedEditData(null);
         console.log("fetch individual data success",res);
       }else{
@@ -222,8 +221,7 @@ const bankOrder = () => {
         }
       })
       if(res.status === 200){
-        setCorporateTransactionData(res.data)
-        fetchCorporateData();
+        setCorporateTransactionData(res?.data || [])
         setChoosedEditData(null);
         console.log("fetch corporate data success",res);
       }else{
@@ -265,7 +263,7 @@ const bankOrder = () => {
       setLoading(false);
     });
     setChoosedEditData(null);
-    setCorporateTransactionData(mockCorporateTransactionData); //mock data here
+    // setCorporateTransactionData(mockCorporateTransactionData); //mock data here
   },[corporateIndividual])
 
   return (
