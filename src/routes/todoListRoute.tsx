@@ -11,6 +11,9 @@ import AccountApproval from "@/pages/todoList/accountApproval/AccountApproval";
 import ToDoAddedIcoSearch from "@/pages/todoList/toDoIcoAccount/ToDoAddedIcoSearch";
 import ToDoPageAddedIco from "@/pages/todoList/toDoIcoAccount/PageToDoAddedIco";
 import AccountLockUnLock from "@/pages/todoList/toDoLockUnLockAccount/AccountLockUnLock";
+import LandingPageIndividual from "@/pages/enquiry/individual/LandingPageIndividual";
+import LandingPageCorporate from "@/pages/enquiry/corporate/LandingPageCorporate";
+import LandingPageIco from "@/pages/enquiry/ico/LandingPageIco";
 
 export const todoListRoutes = () => {
   return (
@@ -22,6 +25,7 @@ export const todoListRoutes = () => {
           <Route index element={<EditCorporateAccount />} />
           <Route path=":page" element={<EditCorporateAccount />} />
         </Route>
+        <Route path="view" element={<LandingPageCorporate />} />
       </Route>
       <Route path="individual-account-opening" element={<Outlet />}>
         <Route index element={<TodoIndividualAccount />} />
@@ -29,6 +33,7 @@ export const todoListRoutes = () => {
           <Route index element={<EditPageAddIndividualAccount />} />
           <Route path=":page" element={<EditPageAddIndividualAccount />} />
         </Route>
+        <Route path="view" element={<LandingPageIndividual />} />
       </Route>
       <Route path="added-ico" element={<Outlet />}>
         <Route index element={<ToDoAddedIcoSearch />} />
@@ -36,6 +41,7 @@ export const todoListRoutes = () => {
           <Route index element={<ToDoPageAddedIco />} />
           <Route path=":page" element={<ToDoPageAddedIco />} />
         </Route>
+        <Route path="view" element={<LandingPageIco />} />
       </Route>
       <Route
         path="whitelist-bank"
