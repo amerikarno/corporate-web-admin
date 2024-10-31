@@ -192,6 +192,56 @@ const bankOrder = () => {
       customerCode: data.customerCode ? Number(data.customerCode) : undefined  
     }
     console.log(body)
+    if(body.id && corporateIndividual === "corporate"){
+      try{
+        const res = await axios.post("/api/v1/transaction/bank/corporate/edit",body,{
+          headers: {
+            Authorization: `Bearer ${getCookies()}`,
+          }
+        })
+        if(res.status === 200){
+          setChoosedEditData(null);
+          reset();
+          fetchCorporateData();
+          console.log("edit corporate deposit/withdraw success",res)
+        }
+      }catch(error){
+        console.log("edit corporate deposit/withdraw error",error)
+      }
+   } else if(body.id && corporateIndividual === "individual"){
+    try{
+      const res = await axios.post("/api/v1/transaction/bank/individual/review",body,{
+        headers: {
+          Authorization: `Bearer ${getCookies()}`,
+        }
+      })
+      if(res.status === 200){
+        setChoosedEditData(null);
+        reset();
+        fetchIndividualData();
+        console.log("edit individual deposit/withdraw success",res)
+      }
+    }catch(error){
+      console.log("edit individual deposit/withdraw error",error)
+    }
+   }else if (!body.id){
+    try{
+      const res = await axios.post("/api/v1/transaction/bank/create",body,{
+        headers: {
+          Authorization: `Bearer ${getCookies()}`,
+        }
+      })
+      if(res.status === 200){
+        setChoosedEditData(null);
+        reset();
+        fetchCorporateData();
+        fetchIndividualData();
+        console.log("add corporate deposit/withdraw success",res)
+      }
+    }catch(error){
+      console.log("add corporate deposit/withdraw error",error)
+    }
+    }
   };
 
   const fetchIndividualData = async () => {
@@ -268,7 +318,7 @@ const bankOrder = () => {
 
   return (
     <div className="flex md:flex-row flex-col md:space-x-4 justify-center pt-20 md:px-16 min-h-[40rem]">
-      <form className="flex flex-col space-y-4 md:w-2/5 "onSubmit={()=>handleSubmit(onSubmit)}>
+      <form className="flex flex-col space-y-4 md:w-2/5 "onSubmit={handleSubmit(onSubmit)}>
       {/* <form className="flex space-x-4" onSubmit={handleSubmit(onSubmit)}> */}
           <Card className="p-4 relative rounded-t-xl overflow-hidden max-h-40">
               <div className="w-full flex space-x-2 py-1 bg-[#003019] absolute top-0 left-0 justify-end">
