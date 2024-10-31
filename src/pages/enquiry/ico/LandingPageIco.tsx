@@ -193,6 +193,7 @@ export default function LandingPageIco() {
                         <Input
                         label="Unit"
                         value={totalAmountRaisedUnit}
+                        disabled
                         data-testid="totalAmountRaisedUnit"
                         />
                     </div>
@@ -213,6 +214,7 @@ export default function LandingPageIco() {
                             <Input
                             label="Unit"
                             value={totalIssuanceUnit}
+                            disabled
                             data-testid="totalIssuanceUnit"
                             />
                         </div>
@@ -231,6 +233,7 @@ export default function LandingPageIco() {
                             <Input
                             label="Unit"
                             value={minimumInvestmentAmountUnit}
+                            disabled
                             data-testid="minimumInvestmentAmountUnit"
                             />
                         </div>
@@ -251,6 +254,7 @@ export default function LandingPageIco() {
                             <Input
                             label="Unit"
                             value={minimumInvestmentQuantityUnit}
+                            disabled
                             data-testid="minimumInvestmentQuantityUnit"
                             />
                         </div>
@@ -269,6 +273,7 @@ export default function LandingPageIco() {
                                 <Input
                                 label="Unit"
                                 value={issueUnitPriceUnit}
+                                disabled
                                 data-testid="issueUnitPriceUnit"
                                 />
                             </div>
@@ -287,19 +292,19 @@ export default function LandingPageIco() {
                             </div>
                             <div className="w-full flex flex-col space-y-2">
                             <label htmlFor="message" className="font-medium text-gray-900 dark:text-white">Company Information</label>
-                            <textarea value={(assetData?.details?.find(detail => detail.header === "Company Information")?.content || '')}  id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your company information here..."></textarea>
+                            <textarea value={(assetData?.details?.find(detail => detail.header === "Company Information")?.content || '')}  disabled id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your company information here..."></textarea>
                             </div>
                             <div className="w-full flex flex-col space-y-2">
                             <label htmlFor="message" className="font-medium text-gray-900 dark:text-white">Business Model</label>
-                            <textarea value={(assetData?.details?.find(detail => detail.header === "Business Model")?.content || '')} id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your business model here..."></textarea>
+                            <textarea value={(assetData?.details?.find(detail => detail.header === "Business Model")?.content || '')} disabled id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your business model here..."></textarea>
                             </div>
                             <div className="w-full flex flex-col space-y-2">
                             <label htmlFor="message" className="font-medium text-gray-900 dark:text-white">Use of Proceeds</label>
-                            <textarea value={(assetData?.details?.find(detail => detail.header === "Use of Proceeds")?.content || '')} id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your use of proceeds here..."></textarea>
+                            <textarea value={(assetData?.details?.find(detail => detail.header === "Use of Proceeds")?.content || '')} disabled id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your use of proceeds here..."></textarea>
                             </div>
                             <div className="w-full flex flex-col space-y-2">
                             <label htmlFor="message" className="font-medium text-gray-900 dark:text-white">Fundraising Milestone</label>
-                            <textarea value={(assetData?.details?.find(detail => detail.header === "Fundraising Milestone")?.content || '')} id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your fundraising milestone here..."></textarea>
+                            <textarea value={(assetData?.details?.find(detail => detail.header === "Fundraising Milestone")?.content || '')} disabled id="message" rows={4} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your fundraising milestone here..."></textarea>
                             </div>           
                         </div>
                         <div className="ico-card space-y-8 relative rounded-t-[10px] mt-8">
@@ -317,6 +322,7 @@ export default function LandingPageIco() {
                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Write your question here..."
                                 value={faq.question}
+                                disabled
                                 />
                                 <textarea
                                 data-testid={`faq-answer-${index+1}`}
@@ -325,6 +331,7 @@ export default function LandingPageIco() {
                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Write your answer here..."
                                 value={faq.answer}
+                                disabled
                                 />
                             </div>
                             ))}
@@ -407,6 +414,7 @@ export default function LandingPageIco() {
                                     className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                     label="Unit"
                                     value={investmentPeriodUnit}
+                                    disabled
                                     data-testid="investmentPeriodUnit"
                                 />
                             </div>
@@ -425,6 +433,7 @@ export default function LandingPageIco() {
                                         className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         label="Unit"
                                         value={dividendYieldUnit}
+                                        disabled
                                         data-testid="dividendYieldUnit"
                                     />
                                 </div>
@@ -444,6 +453,7 @@ export default function LandingPageIco() {
                                         className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         label="Unit"
                                         value={grossMarginUnit}
+                                        disabled
                                         data-testid="grossMarginUnit"
                                     />
                                 </div>
@@ -463,6 +473,7 @@ export default function LandingPageIco() {
                                         className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         label="Unit"
                                         value={equityMultipleUnit}
+                                        disabled
                                         data-testid="equityMultipleUnit"
                                     />
                                 </div>
@@ -482,6 +493,7 @@ export default function LandingPageIco() {
                                         className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         label="Unit"
                                         value={profitUnit}
+                                        disabled
                                         data-testid="profitUnit"
                                     />
                                 </div>
@@ -501,6 +513,7 @@ export default function LandingPageIco() {
                                         className="w-full bg-gray-100 text-gray-900 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         label="Unit"
                                         value={leverageUnit}
+                                        disabled
                                         data-testid="leverageUnit"
                                     />
                                 </div>

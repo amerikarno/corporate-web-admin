@@ -206,7 +206,7 @@ const LandingPageCorporate = () => {
                       key={registeredCountryChoices[0]}
                       label={registeredCountryChoices[0]}
                       checked={resCorpRegisterCountry?.isThailand || false}
-                      disabled={true}
+                      readOnly
                       name={registeredCountryChoices[0]}
                       />
                   <div className="relative">
@@ -216,7 +216,7 @@ const LandingPageCorporate = () => {
                         key={registeredCountryChoices[1]}
                         label={registeredCountryChoices[1]}
                         checked={resCorpRegisterCountry?.other !== '' || false}
-                        disabled={true}
+                        readOnly
                         name={registeredCountryChoices[1]}
                     />
                     {resCorpRegisterCountry?.other && (
@@ -245,7 +245,7 @@ const LandingPageCorporate = () => {
                             key={PrimaryCountryOfOperationChoices[0]}
                             label={PrimaryCountryOfOperationChoices[0]}
                             checked={resCorpPrimaryCountry?.isThailand || false}
-                            disabled={true}
+                            readOnly
                             name={PrimaryCountryOfOperationChoices[0]}
                         />
                   <div className="relative">
@@ -255,7 +255,7 @@ const LandingPageCorporate = () => {
                 key={PrimaryCountryOfOperationChoices[1]}
                 label={PrimaryCountryOfOperationChoices[1]}
                 checked={resCorpPrimaryCountry?.other !== '' || false}
-                disabled={true}
+                readOnly
                 name={PrimaryCountryOfOperationChoices[1]}
               />
             {resCorpPrimaryCountry?.other && (
@@ -408,6 +408,7 @@ const LandingPageCorporate = () => {
                 label={mapKeyLabel[0].label}
                 name="juristicInfo"
                 checked={resFrom2?.isJuristicThailand || false}
+                readOnly
               />
             </div>
             <div className="w-2/3 flex flex-col space-y-2">
@@ -416,12 +417,14 @@ const LandingPageCorporate = () => {
                 label={mapKeyLabel[1].label}
                 name="juristicInfo"
                 checked={resFrom2?.isTaxExempt || false}
+                readOnly
               />
               <RadioCheckBox
                 id="2"
                 label={mapKeyLabel[2].label}
                 name="juristicInfo"
                 checked={resFrom2?.isNonTaxExempt || false}
+                readOnly
               />
             </div>
           </div>
@@ -432,6 +435,7 @@ const LandingPageCorporate = () => {
                 label={mapKeyLabel[3].label}
                 name="juristicInfo"
                 checked={resFrom2?.isJuristicForeign || false}
+                readOnly
               />
             </div>
             <div className="w-2/3 flex flex-col space-y-2">
@@ -440,12 +444,14 @@ const LandingPageCorporate = () => {
                 label={mapKeyLabel[4].label}
                 name="juristicInfo"
                 checked={resFrom2?.isOperatingInThailand || false}
+                readOnly
               />
               <RadioCheckBox
                 id="5"
                 label={mapKeyLabel[5].label}
                 name="juristicInfo"
                 checked={resFrom2?.isNonOperatingInThailand || false}
+                readOnly
               />
             </div>
           </div>
@@ -456,6 +462,7 @@ const LandingPageCorporate = () => {
                 label={mapKeyLabel[6].label}
                 name="juristicInfo"
                 checked={resFrom2?.isOther || false}
+                readOnly
               />
             </div>
             <div className="w-2/3 flex flex-col space-y-2">
@@ -464,24 +471,28 @@ const LandingPageCorporate = () => {
                 label={mapKeyLabel[7].label}
                 name="juristicInfo"
                 checked={resFrom2?.isPartnership || false}
+                readOnly
               />
               <RadioCheckBox
                 id="8"
                 label={mapKeyLabel[8].label}
                 name="juristicInfo"
                 checked={resFrom2?.isGovernmentStateEnterprise || false}
+                readOnly
               />
               <RadioCheckBox
                 id="9"
                 label={mapKeyLabel[9].label}
                 name="juristicInfo"
                 checked={resFrom2?.isCoOperative || false}
+                readOnly
               />
               <RadioCheckBox
                 id="10"
                 label={mapKeyLabel[10].label}
                 name="juristicInfo"
                 checked={resFrom2?.isTaxExemptCompany || false}
+                readOnly
               />
             </div>
           </div>
@@ -496,96 +507,112 @@ const LandingPageCorporate = () => {
             label={mapKeyLabel[11].label}
             name="businessType"
             checked={resFrom2?.isAntiqueTrading || false}
+            readOnly
           />
           <RadioCheckBox
             id="12"
             label={mapKeyLabel[12].label}
             name="businessType"
             checked={resFrom2?.isHotelRestaurant || false}
+            readOnly
           />
           <RadioCheckBox
             id="13"
             label={mapKeyLabel[13].label}
             name="businessType"
             checked={resFrom2?.isArmament || false}
+            readOnly
           />
           <RadioCheckBox
             id="14"
             label={mapKeyLabel[14].label}
             name="businessType"
             checked={resFrom2?.isInsuranceAssurance || false}
+            readOnly
           />
           <RadioCheckBox
             id="15"
             label={mapKeyLabel[15].label}
             name="businessType"
             checked={resFrom2?.isCasinoGambling || false}
+            readOnly
           />
           <RadioCheckBox
             id="16"
             label={mapKeyLabel[16].label}
             name="businessType"
             checked={resFrom2?.isJewelryGoldTrading || false}
+            readOnly
           />
           <RadioCheckBox
             id="17"
             label={mapKeyLabel[17].label}
             name="businessType"
             checked={resFrom2?.isFoundation || false}
+            readOnly
           />
           <RadioCheckBox
             id="18"
             label={mapKeyLabel[18].label}
             name="businessType"
             checked={resFrom2?.isPropertyRealEstate || false}
+            readOnly
           />
           <RadioCheckBox
             id="19"
             label={mapKeyLabel[19].label}
             name="businessType"
             checked={resFrom2?.isMoneyTransfer || false}
+            readOnly
           />
           <RadioCheckBox
             id="20"
             label={mapKeyLabel[20].label}
             name="businessType"
             checked={resFrom2?.isEmploymentAgency || false}
+            readOnly
           />
           <RadioCheckBox
             id="21"
             label={mapKeyLabel[21].label}
             name="businessType"
             checked={resFrom2?.isEntertainment || false}
+            readOnly
           />
           <RadioCheckBox
             id="22"
             label={mapKeyLabel[22].label}
             name="businessType"
             checked={resFrom2?.isTravel || false}
+            readOnly
           />
           <RadioCheckBox
             id="23"
             label={mapKeyLabel[23].label}
             name="businessType"
             checked={resFrom2?.isFinancial || false}
+            readOnly
           />
           <RadioCheckBox
             id="24"
             label={mapKeyLabel[24].label}
             name="businessType"
             checked={resFrom2?.isEducationCenter || false}
+            readOnly
           />
           <RadioCheckBox
             id="25"
             label={mapKeyLabel[25].label}
             name="businessType"
             checked={resFrom2?.isForeignCurrencyExchange || false}
+            readOnly
           />
           <RadioCheckBox
             id="26"
             label={mapKeyLabel[26].label}
             name="businessType"
             checked={resFrom2?.isCryptoRelated || false}
+            readOnly
           />
           <div className="flex flex-col space-y-4">
             <RadioCheckBox
@@ -593,6 +620,7 @@ const LandingPageCorporate = () => {
               label={mapKeyLabel[27].label}
               name="businessType"
               checked={resFrom2?.isOtherBusiness || false}
+              readOnly
             />
             {resFrom2?.isOtherBusiness && (
               <Input
@@ -614,30 +642,35 @@ const LandingPageCorporate = () => {
             label={mapKeyLabel[28].label}
             name="sourceOfIncome"
             checked={resFrom2?.isRevenue || false}
+            readOnly
           />
           <CheckBox
             id="29"
             label={mapKeyLabel[29].label}
             name="sourceOfIncome"
             checked={resFrom2?.isStock || false}
+            readOnly
           />
           <CheckBox
             id="30"
             label={mapKeyLabel[30].label}
             name="sourceOfIncome"
             checked={resFrom2?.isDonation || false}
+            readOnly
           />
           <CheckBox
             id="31"
             label={mapKeyLabel[31].label}
             name="sourceOfIncome"
             checked={resFrom2?.isLoan || false}
+            readOnly
           />
           <CheckBox
             id="32"
             label={mapKeyLabel[32].label}
             name="sourceOfIncome"
             checked={resFrom2?.isRevenueSelling || false}
+            readOnly
           />
           <div className="flex flex-col space-y-4">
             <CheckBox
@@ -645,6 +678,7 @@ const LandingPageCorporate = () => {
               label={mapKeyLabel[33].label}
               name="sourceOfIncome"
               checked={resFrom2?.isOtherIncome || false}
+              readOnly
               data-testid="sourceOfIncomeOther"
             />
             {resFrom2?.isOtherIncome && (
@@ -667,6 +701,7 @@ const LandingPageCorporate = () => {
             label={mapKeyLabel[34].label}
             name="countrySourceOfIncome"
             checked={resCorpCountrySourceOfInCome?.isThailand === true}
+            readOnly
           />
           <div className="flex flex-col space-y-4">
             <RadioCheckBox
@@ -674,6 +709,7 @@ const LandingPageCorporate = () => {
               label={mapKeyLabel[35].label}
               name="countrySourceOfIncome"
               checked={resCorpCountrySourceOfInCome?.isThailand === false}
+              readOnly
             />
             {resCorpCountrySourceOfInCome?.isThailand === false && (
               <Input
@@ -693,18 +729,21 @@ const LandingPageCorporate = () => {
             label={mapKeyLabel[36].label}
             name="investmentObjective"
             checked={resFrom2?.isLiquidation || false}
+            readOnly
           />
           <CheckBox
             id="37"
             label={mapKeyLabel[37].label}
             name="investmentObjective"
             checked={resFrom2?.isInvestment || false}
+            readOnly
           />
           <CheckBox
             id="38"
             label={mapKeyLabel[38].label}
             name="investmentObjective"
             checked={resFrom2?.isCashManagement || false}
+            readOnly
           />
           <div className="flex flex-col space-y-4">
             <CheckBox
@@ -712,6 +751,7 @@ const LandingPageCorporate = () => {
               label={mapKeyLabel[39].label}
               name="investmentObjective"
               checked={resFrom2?.isOtherInvestment || false}
+              readOnly
               data-testid="investmentObjectiveOther"
             />
             {resFrom2?.isOtherInvestment && (
@@ -799,8 +839,12 @@ const LandingPageCorporate = () => {
         {corporateData.SuitTestResult ? 
         (<SuitTableResult totalScore={corporateData?.SuitTestResult?.totalScore ?? 0} />) 
               :
-        (<div>
-          no suit test done
+        (<div className="m-4 flex items-center justify-center h-full">
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md text-center">
+            <p className="text-lg font-semibold text-gray-700">
+              No Suite Test Done
+            </p>
+          </div>
         </div>)
         }
         </Card>

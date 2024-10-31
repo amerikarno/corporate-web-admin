@@ -35,17 +35,20 @@ const ViewIco = () => {
     {
       name: "registerId",
       selector: (row: TAssetData) => row.registerId || "",
-      maxWidth: '120px'
+      width: "120px",
+      style: { maxWidth: "120px" },
     },
     {
       name: "Symbol",
       selector: (row: TAssetData) => row.asset.name || "",
-      maxWidth: '150px'
+      width: "150px",
+      style: { maxWidth: "150px" },
     },
     {
       name: "Company Name",
       selector: (row: TAssetData) => row.asset.description || "",
-      maxWidth: '300px'
+      width: "300px",
+      style: { maxWidth: "300px" },
     },
     {
       name: "Issue By",

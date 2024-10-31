@@ -72,6 +72,7 @@ const LandingPageIndividual = () => {
                   <select
                     {...register("thTitle")}
                     value={individualData?.thTitle}
+                    disabled
                     data-testid="thTitle"
                     className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
@@ -110,6 +111,7 @@ const LandingPageIndividual = () => {
                   <select
                     {...register("engTitle")}
                     value={individualData?.engTitle}
+                    disabled
                     data-testid="enTitle"
                     className="cursor-pointer hover:bg-slate-100 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-600 bg-transparent
                     rounded-lg border border-gray-600 dark:text-white dark:border-gray-500
@@ -216,6 +218,7 @@ const LandingPageIndividual = () => {
                   id="agreement"
                   data-testid="agreement"
                   {...register("agreement")}
+                  defaultChecked
                 />
                 <label htmlFor="agreement" className="text-gray-500">
                   ข้อพเจ้าได้อ่านและตกลงตามข้อกำหนดและเงื่อนไขและรับทราบนโยบายความเป็นส่วนตัว
@@ -245,6 +248,7 @@ const LandingPageIndividual = () => {
                     id="addressNoIDCard"
                     data-testid="addressNoIDCard"
                     value={registeredAddress?.homeNumber}
+                    disabled
                     className={
                       "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-600 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
                     }
@@ -257,6 +261,7 @@ const LandingPageIndividual = () => {
                     id="floorIDCard"
                     data-testid="floorIDCard"
                     value={registeredAddress?.villageNumber}
+                    disabled
                   />
                 </div>
               </div>
@@ -268,6 +273,7 @@ const LandingPageIndividual = () => {
                     id="mooIDCard"
                     data-testid="mooIDCard"
                     value={registeredAddress?.villageName}
+                    disabled
                   />
                 </div>
                 <div className="w-1/2">
@@ -277,6 +283,7 @@ const LandingPageIndividual = () => {
                     id="soiIDCard"
                     data-testid="soiIDCard"
                     value={registeredAddress?.subStreetName}
+                    disabled
                   />
                 </div>
               </div>
@@ -288,6 +295,7 @@ const LandingPageIndividual = () => {
                     id="roadIDCard"
                     data-testid="roadIDCard"
                     value={registeredAddress?.streetName}
+                    disabled
                   />
                 </div>
                 <div className="w-1/2">
@@ -298,6 +306,7 @@ const LandingPageIndividual = () => {
                     data-testid="tambonIDCard"
                     list="tambonIDCardList"
                     value={registeredAddress?.subDistrictName}
+                    disabled
                   />
                 </div>
               </div>
@@ -310,6 +319,7 @@ const LandingPageIndividual = () => {
                     data-testid="amphoeIDCard"
                     list="amphoeIDCardList"
                     value={registeredAddress?.subDistrictName}
+                    disabled
                   />
                 </div>
                 <div className="w-1/2">
@@ -320,6 +330,7 @@ const LandingPageIndividual = () => {
                     data-testid="provinceIDCard"
                     list="provinceIDCardList"
                     value={registeredAddress?.provinceName}
+                    disabled
                   />
                 </div>
               </div>
@@ -332,6 +343,7 @@ const LandingPageIndividual = () => {
                     data-testid="postalCodeIDCard"
                     list="postalCodeIDCardList"
                     value={registeredAddress?.zipCode}
+                    disabled
                   />
                 </div>
                 <div className="w-1/2">
@@ -342,6 +354,7 @@ const LandingPageIndividual = () => {
                     data-testid="countryIDCard"
                     list="countriesIDCard"
                     value={registeredAddress?.countryName}
+                    disabled
                   />
                 </div>
               </div>
@@ -364,6 +377,7 @@ const LandingPageIndividual = () => {
                     name="radio"
                     type="radio"
                     defaultChecked={true}
+                    readOnly
                   />
                   <label htmlFor="radio-2" className="radio-label">
                     ที่อยู่อื่น (โปรดระบุ)
@@ -380,6 +394,7 @@ const LandingPageIndividual = () => {
                       id="addressNoHome"
                       data-testid="addressNoHome"
                       value={currentAddress?.homeNumber}
+                      disabled
                     />
                   </div>
                   <div className="w-1/2">
@@ -389,6 +404,7 @@ const LandingPageIndividual = () => {
                       id="floorHome"
                       data-testid="floorHome"
                       value={currentAddress?.villageNumber}
+                      disabled
                     />
                   </div>
                 </div>
@@ -400,6 +416,7 @@ const LandingPageIndividual = () => {
                       id="mooHome"
                       data-testid="mooHome"
                       value={currentAddress?.villageName}
+                      disabled
                     />
                   </div>
                   <div className="w-1/2">
@@ -409,6 +426,7 @@ const LandingPageIndividual = () => {
                       id="soiHome"
                       data-testid="soiHome"
                       value={currentAddress?.subStreetName}
+                      disabled
                     />
                   </div>
                 </div>
@@ -420,6 +438,7 @@ const LandingPageIndividual = () => {
                       id="roadHome"
                       data-testid="roadHome"
                       value={currentAddress?.streetName}
+                      disabled
                     />
                   </div>
                   <div className="w-1/2">
@@ -430,6 +449,7 @@ const LandingPageIndividual = () => {
                       data-testid="tambonHome"
                       list="tambonHomeList"
                       value={currentAddress?.subDistrictName}
+                      disabled
                     />
                   </div>
                 </div>
@@ -442,6 +462,7 @@ const LandingPageIndividual = () => {
                       data-testid="amphoeHome"
                       list="amphoeHomeList"
                       value={currentAddress?.districtName}
+                      disabled
                     />
                   </div>
                   <div className="w-1/2">
@@ -452,6 +473,7 @@ const LandingPageIndividual = () => {
                       data-testid="provinceHome"
                       list="provinceHomeList"
                       value={currentAddress?.provinceName}
+                      disabled
                     />
                   </div>
                 </div>
@@ -464,6 +486,7 @@ const LandingPageIndividual = () => {
                       data-testid="postalCodeHome"
                       list="postalCodeHomeList"
                       value={currentAddress?.zipCode}
+                      disabled
                     />
                   </div>
                   <div className="w-1/2">
@@ -474,6 +497,7 @@ const LandingPageIndividual = () => {
                       data-testid="countryHome"
                       list="countriesHome"
                       value={currentAddress?.countryName}
+                      disabled
                     />
                   </div>
                 </div>
@@ -528,6 +552,7 @@ const LandingPageIndividual = () => {
                     label="ชื่อสถานที่ทำงาน"
                     id="workPlace"
                     value={individualData?.officeName}
+                    disabled
                   />
                 </div>
               ) : showWorkPosition ? (
@@ -537,6 +562,7 @@ const LandingPageIndividual = () => {
                     label="ตำแหน่งงาน"
                     id="่jobPosition"
                     value={individualData?.positionName}
+                    disabled
                   />
                 </div>
               ) : (
@@ -583,6 +609,7 @@ const LandingPageIndividual = () => {
                     label="ตำแหน่งงาน"
                     id="่jobPosition"
                     value={individualData?.positionName}
+                    disabled
                   />
                 </div>
               ) : (
@@ -622,6 +649,7 @@ const LandingPageIndividual = () => {
                     name="radio-for-work"
                     type="radio"
                     defaultChecked={true}
+                    readOnly
                   />
                   <label htmlFor="radio-5">ที่อยู่อื่น (โปรดระบุ)</label>
                 </div>
@@ -637,6 +665,7 @@ const LandingPageIndividual = () => {
                         id="addressNoWork"
                         data-testid="addressNoWork"
                         value={officeAddress?.homeNumber}
+                        disabled
                       />
                     </div>
                     <div className="w-1/2">
@@ -646,6 +675,7 @@ const LandingPageIndividual = () => {
                         id="floorWork"
                         data-testid="floorWork"
                         value={officeAddress?.villageNumber}
+                        disabled
                       />
                     </div>
                   </div>
@@ -657,6 +687,7 @@ const LandingPageIndividual = () => {
                         id="mooWork"
                         data-testid="mooWork"
                         value={officeAddress?.villageName}
+                        disabled
                       />
                     </div>
                     <div className="w-1/2">
@@ -666,6 +697,7 @@ const LandingPageIndividual = () => {
                         id="soiWork"
                         data-testid="soiWork"
                         value={officeAddress?.subStreetName}
+                        disabled
                       />
                     </div>
                   </div>
@@ -677,6 +709,7 @@ const LandingPageIndividual = () => {
                         id="roadWork"
                         data-testid="roadWork"
                         value={officeAddress?.streetName}
+                        disabled
                       />
                     </div>
                     <div className="w-1/2">
@@ -687,6 +720,7 @@ const LandingPageIndividual = () => {
                         data-testid="tambonWork"
                         list="tambonWorkList"
                         value={officeAddress?.subDistrictName}
+                        disabled
                       />
                     </div>
                   </div>
@@ -699,6 +733,7 @@ const LandingPageIndividual = () => {
                         data-testid="amphoeWork"
                         list="amphoeWorkList"
                         value={officeAddress?.districtName}
+                        disabled
                       />
                     </div>
                     <div className="w-1/2">
@@ -709,6 +744,7 @@ const LandingPageIndividual = () => {
                         data-testid="provinceWork"
                         list="provinceWorkList"
                         value={officeAddress?.provinceName}
+                        disabled
                       />
                     </div>
                   </div>
@@ -721,6 +757,7 @@ const LandingPageIndividual = () => {
                         data-testid="postalCodeWork"
                         list="postalCodeWorkList"
                         value={officeAddress?.zipCode}
+                        disabled
                       />
                     </div>
                     <div className="w-1/2">
@@ -731,6 +768,7 @@ const LandingPageIndividual = () => {
                         data-testid="countryWork"
                         list="countriesWork"
                         value={officeAddress?.countryName}
+                        disabled
                       />
                     </div>
                   </div>
@@ -752,7 +790,8 @@ const LandingPageIndividual = () => {
                   id="objectiveCheckbox-1"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  defaultChecked={true}
+                  checked={individualData?.shortTermInvestment || false}
+                  readOnly
                 />
                 <label htmlFor="objectiveCheckbox-1">
                   เพื่อการลงทุนระยะสั้น
@@ -765,6 +804,7 @@ const LandingPageIndividual = () => {
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   checked={individualData?.longTermInvestment || false}
+                  readOnly
                 />
                 <label htmlFor="objectiveCheckbox-2">
                   เพื่อการลงทุนระยะยาว
@@ -777,6 +817,7 @@ const LandingPageIndividual = () => {
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   checked={individualData?.taxesInvestment || false}
+                  readOnly
                 />
                 <label htmlFor="objectiveCheckbox-3">เพื่อเก็งกำไร</label>
               </div>
@@ -787,6 +828,7 @@ const LandingPageIndividual = () => {
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
                                     dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   checked={individualData?.retireInvestment || false}
+                  readOnly
                 />
                 <label htmlFor="objectiveCheckbox-4">เพื่อการออม</label>
               </div>
@@ -812,6 +854,7 @@ const LandingPageIndividual = () => {
                 <select
                   data-testid="firstBankName"
                   value={bank1?.bankName}
+                  disabled
                   className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -826,6 +869,7 @@ const LandingPageIndividual = () => {
                   data-testid="firstBankBranch"
                   id="bankBranch"
                   value={bank1?.bankBranchName}
+                  disabled
                 />
               </div>
               <div className="flex space-x-4">
@@ -835,6 +879,7 @@ const LandingPageIndividual = () => {
                   data-testid="firstBankAccount"
                   id="bankAccount"
                   value={bank1?.bankAccountNumber}
+                  disabled
                 />
               </div>
             </div>
@@ -849,7 +894,8 @@ const LandingPageIndividual = () => {
                       id="radio-6"
                       name="radio-for-bank"
                       type="radio"
-                      checked={bank2 !== null || false}
+                      checked={bank2?.bankName !== undefined || false}
+                      readOnly
                     />
                     <label htmlFor="radio-6">ใช้</label>
                   </div>
@@ -858,24 +904,26 @@ const LandingPageIndividual = () => {
                       id="radio-7"
                       name="radio-for-bank"
                       type="radio"
-                      checked={bank2 === null || false}
+                      checked={bank2?.bankName === undefined || false}
+                      readOnly
                     />
                     <label htmlFor="radio-7">ไม่ใช้</label>
                   </div>
                 </div>
               </div>
-              {bank2 !== null && (
+              {bank2?.bankName !== undefined && (
                 <div className="flex items-center text-[15px] text-gray-400">
                   <span className="text-red-500">*</span>
                   กรุณาระบุชื่อธนาคารก่อนกรอกชื่อสาขา
                 </div>
               )}
-              {bank2 !== null && (
+              {bank2?.bankName !== undefined && (
                 <div className="space-y-4 pt-4">
                   <div className="flex space-x-4">
                     <select
                       data-testid="secondBankName"
                       value={bank2?.bankName}
+                      disabled
                       className="px-2.5 pb-2.5 pt-4 cursor-pointer border border-gray-700 text-gray-600 pl-2 hover:bg-slate-100
                                             text-sm rounded-lg focus:ring-gray-700 focus:border-gray-700 block w-full h-full dark:bg-gray-700 dark:border-gray-600
                                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-700 dark:focus:border-gray-700"
@@ -890,6 +938,7 @@ const LandingPageIndividual = () => {
                       data-testid="secondBankBranch"
                       id="bankBranchAdditional"
                       value={bank2?.bankBranchName}
+                      disabled
                     />
                   </div>
                   <div className="flex space-x-4">
@@ -899,6 +948,7 @@ const LandingPageIndividual = () => {
                       data-testid="secondBankAccount"
                       id="bankAccountAdditional"
                       value={bank2?.bankAccountNumber}
+                      disabled
                     />
                   </div>
                 </div>
@@ -1055,6 +1105,7 @@ const LandingPageIndividual = () => {
                     name="radio-for-fatca"
                     type="radio"
                     checked={individualData?.SuiteTestResult.fatcaInfo !== null}
+                    readOnly
                   />
                   <label htmlFor="fatcaradio-1">ใช่</label>
                 </div>
@@ -1064,6 +1115,7 @@ const LandingPageIndividual = () => {
                     name="radio-for-fatca"
                     type="radio"
                     checked={individualData?.SuiteTestResult.fatcaInfo === null}
+                    readOnly
                   />
                   <label htmlFor="fatcaradio-2">ไม่ใช่</label>
                 </div>
@@ -1087,6 +1139,7 @@ const LandingPageIndividual = () => {
                           id={`fatcaCheckbox-${index + 1}`}
                           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           checked={individualData?.SuiteTestResult.fatcaInfo[index]}
+                          readOnly
                         />
                         <label htmlFor={`fatcaCheckbox-${index + 1}`}>
                           {label}
@@ -1138,6 +1191,7 @@ const LandingPageIndividual = () => {
                     name="radio-for-knowLedgeTest"
                     type="radio"
                     checked={individualData?.SuiteTestResult.isKnowLedgeDone === true || false}
+                    readOnly
                   />
                   <label htmlFor="knowLedgeTest-1">ทำแบบทดสอบแล้ว</label>
                 </div>
@@ -1147,6 +1201,7 @@ const LandingPageIndividual = () => {
                     name="radio-for-knowLedgeTest"
                     type="radio"
                     checked={individualData?.SuiteTestResult.isKnowLedgeDone !== true || false}
+                    readOnly
                   />
                   <label htmlFor="knowLedgeTest-2">ยังไม่ได้ทำแบบทดสอบ</label>
                 </div>
@@ -1155,7 +1210,7 @@ const LandingPageIndividual = () => {
           </div>
         </CardContent>
       </Card>
-      { individualData?.thaid ? 
+      { individualData?.ndid ? 
       (<Card className="flex items-center md:w-3/4 relative">
         <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
           <img src={ndid} alt="ndid"/>
@@ -1165,16 +1220,26 @@ const LandingPageIndividual = () => {
           <span className="text-sm md:text-base text-gray-400">ยืนยันตัวตนและสมัคร NDID กับธนาคารที่ท่านใช้บริการเรียบร้อยแล้วเท่านั้น</span>
           <span className="p-4 pl-0 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
         </div>
-      </Card>) : 
-      <Card className="flex items-center md:w-3/4 relative">
-      <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
-          <img src={thaid} alt="thaiid"/>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-slate-800 font-bold py-4 pb-0 text-lg md:text-2xl ">ยืนยันตัวผ่าน THAID</span>
-          <span className="p-4 pl-0 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
-        </div>
-      </Card>}
+      </Card>) : individualData?.thaid ?
+      (<Card className="flex items-center md:w-3/4 relative">
+        <div className="m-8 w-20 md:w-28 flex-shrink-0 flex">
+            <img src={thaid} alt="thaiid"/>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-slate-800 font-bold py-4 pb-0 text-lg md:text-2xl ">ยืนยันตัวผ่าน THAID</span>
+            <span className="p-4 pl-0 text-sm md:text-base"><span className="underline font-bold pr-4 text-sm md:text-base">หมายเหตุ</span>ถ้าทำรายการไม่สำเร็จต้องรอ 1 ชม. จึงจะเปลี่ยนวิธียืนยันตัวตนแบบอื่นได้</span>
+          </div>
+        </Card>) :
+        (
+          <div className="flex items-center justify-center h-full">
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md text-center">
+              <p className="text-lg font-semibold text-gray-700">
+                No Identification Selected
+              </p>
+            </div>
+          </div>
+        )
+        }
     </div>
   )
 }

@@ -27,6 +27,7 @@ import { setIndividualData } from "@/features/fetchIndividualData/fetchIndividua
 import { RootState } from "@/app/store";
 import { TBasicinfoAddress, TBasicInfoBank } from "../type";
 import { setTestCorporateData } from "@/features/corporateTest/corporateTestSlice";
+import { mockedQueryApprove } from "@/pages/todoList/addIndividualAccount/ToDoIndividualAccount";
 
 export default function BasicInfo() {
   if (!isAllowedPage(2002)) {
@@ -181,6 +182,13 @@ export default function BasicInfo() {
           retireInvestment: individualData?.retireInvestment || false,
         },
       };
+
+      if (secondBank?.bankName) {
+        setAddBankValue("radio-6");
+      } else {
+        setAddBankValue("radio-7");
+      }
+
       console.log(firstBank)
       console.log(fillData)
       reset(fillData);
@@ -238,7 +246,7 @@ export default function BasicInfo() {
         types: 1,
         is_default: true,
       },
-      ...((data.secondBankAccountBody.bankName && {
+      ...((addBankValue === "radio-6" && {
         secondBankAccountBody: {
           ...data.secondBankAccountBody,
           types: 2,

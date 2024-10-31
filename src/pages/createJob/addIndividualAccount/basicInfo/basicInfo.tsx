@@ -181,6 +181,13 @@ export default function BasicInfo() {
           retireInvestment: individualData?.retireInvestment || false,
         },
       };
+
+      if (secondBank?.bankName) {
+        setAddBankValue("radio-6");
+      } else {
+        setAddBankValue("radio-7");
+      }
+
       console.log(firstBank)
       console.log(fillData)
       reset(fillData);
@@ -238,7 +245,7 @@ export default function BasicInfo() {
         types: 1,
         is_default: true,
       },
-      ...((data.secondBankAccountBody.bankName && {
+      ...((addBankValue === "radio-6" && {
         secondBankAccountBody: {
           ...data.secondBankAccountBody,
           types: 2,
